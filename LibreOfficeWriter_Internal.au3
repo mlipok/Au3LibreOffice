@@ -42,7 +42,7 @@
 ; __LOWriter_CharStyleNameToggle
 ; __LOWriter_CharUnderLine
 ; __LOWriter_ColorRemoveAlpha
-; __LOWriter_ControlSetGetFontDesc
+; __LOWriter_FormConSetGetFontDesc
 ; __LOWriter_CreatePoint
 ; __LOWriter_CreateStruct
 ; __LOWriter_CursorGetText
@@ -56,8 +56,8 @@
 ; __LOWriter_FindFormatDeleteSetting
 ; __LOWriter_FindFormatRetrieveSetting
 ; __LOWriter_FooterBorder
-; __LOWriter_FormControlGetObj
-; __LOWriter_FormControlIdentify
+; __LOWriter_FormConGetObj
+; __LOWriter_FormConIdentify
 ; __LOWriter_GetPrinterSetting
 ; __LOWriter_GetShapeName
 ; __LOWriter_GradientNameInsert
@@ -1468,10 +1468,10 @@ Func __LOWriter_ColorRemoveAlpha($iColor)
 EndFunc   ;==>__LOWriter_ColorRemoveAlpha
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
-; Name ..........: __LOWriter_ControlSetGetFontDesc
+; Name ..........: __LOWriter_FormConSetGetFontDesc
 ; Description ...: Set or Retrieve a Control's Font values.
-; Syntax ........: __LOWriter_ControlSetGetFontDesc(ByRef $oControl[, $mFontDesc = Null])
-; Parameters ....: $oControl            - [in/out] an object. A Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: __LOWriter_FormConSetGetFontDesc(ByRef $oControl[, $mFontDesc = Null])
+; Parameters ....: $oControl            - [in/out] an object. A Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $mFontDesc           - [optional] a map. Default is Null. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ; Return values .: Success: 1 or Map
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1500,7 +1500,7 @@ EndFunc   ;==>__LOWriter_ColorRemoveAlpha
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_ControlSetGetFontDesc(ByRef $oControl, $mFontDesc = Null)
+Func __LOWriter_FormConSetGetFontDesc(ByRef $oControl, $mFontDesc = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1557,7 +1557,7 @@ Func __LOWriter_ControlSetGetFontDesc(ByRef $oControl, $mFontDesc = Null)
 	$iError = ($oControl.CharRelief() = $mFontDesc.CharRelief) ? ($iError) : (BitOR($iError, 512))
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>__LOWriter_ControlSetGetFontDesc
+EndFunc   ;==>__LOWriter_FormConSetGetFontDesc
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_CreatePoint
@@ -2373,9 +2373,9 @@ Func __LOWriter_FooterBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, 
 EndFunc   ;==>__LOWriter_FooterBorder
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
-; Name ..........: __LOWriter_FormControlGetObj
+; Name ..........: __LOWriter_FormConGetObj
 ; Description ...: Returns the Shape Object for a Control.
-; Syntax ........: __LOWriter_FormControlGetObj($oControl, $iControlType)
+; Syntax ........: __LOWriter_FormConGetObj($oControl, $iControlType)
 ; Parameters ....: $oControl            - an object. A Control Object rather than the Shape Object.
 ;                  $iControlType        - an integer value. The Shape type being called and looked for. See Constants $LOW_FORM_CONTROL_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: Object
@@ -2400,7 +2400,7 @@ EndFunc   ;==>__LOWriter_FooterBorder
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_FormControlGetObj($oControl, $iControlType)
+Func __LOWriter_FormConGetObj($oControl, $iControlType)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -2434,7 +2434,7 @@ Func __LOWriter_FormControlGetObj($oControl, $iControlType)
 			If $oShape.supportsService("com.sun.star.drawing.ControlShape") And ($oShape.Control.Parent() = $oParent) Then ; If shape is a single control, and is contained in the form.
 
 				$aoControls[$iCount][0] = $oShape
-				$aoControls[$iCount][1] = __LOWriter_FormControlIdentify($oShape)
+				$aoControls[$iCount][1] = __LOWriter_FormConIdentify($oShape)
 				If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 				$iCount += 1
 
@@ -2460,13 +2460,13 @@ Func __LOWriter_FormControlGetObj($oControl, $iControlType)
 	Next
 
 	Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0)
-EndFunc   ;==>__LOWriter_FormControlGetObj
+EndFunc   ;==>__LOWriter_FormConGetObj
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
-; Name ..........: __LOWriter_FormControlIdentify
+; Name ..........: __LOWriter_FormConIdentify
 ; Description ...: Identify the type of Control being called, or return the Service name of a control type.
-; Syntax ........: __LOWriter_FormControlIdentify($oShape[, $iControlType = Null])
-; Parameters ....: $oShape              - an object. A Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: __LOWriter_FormConIdentify($oShape[, $iControlType = Null])
+; Parameters ....: $oShape              - an object. A Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $iControlType        - [optional] an integer value (1-524288). Default is Null. The Control Type Constant. See Constants $LOW_FORM_CONTROL_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: Integer or String
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -2484,7 +2484,7 @@ EndFunc   ;==>__LOWriter_FormControlGetObj
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_FormControlIdentify($oShape, $iControlType = Null)
+Func __LOWriter_FormConIdentify($oShape, $iControlType = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -2515,7 +2515,7 @@ Func __LOWriter_FormControlIdentify($oShape, $iControlType = Null)
 	EndIf
 
 	Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-EndFunc   ;==>__LOWriter_FormControlIdentify
+EndFunc   ;==>__LOWriter_FormConIdentify
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_GetPrinterSetting

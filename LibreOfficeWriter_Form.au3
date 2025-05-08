@@ -24,57 +24,57 @@
 
 ; #CURRENT# =====================================================================================================================
 ; _LOWriter_FormAdd
-; _LOWriter_FormControlCheckBoxData
-; _LOWriter_FormControlCheckBoxGeneral
-; _LOWriter_FormControlCheckBoxState
-; _LOWriter_FormControlComboBoxData
-; _LOWriter_FormControlComboBoxGeneral
-; _LOWriter_FormControlComboBoxValue
-; _LOWriter_FormControlCurrencyFieldData
-; _LOWriter_FormControlCurrencyFieldGeneral
-; _LOWriter_FormControlCurrencyFieldValue
-; _LOWriter_FormControlDateFieldData
-; _LOWriter_FormControlDateFieldGeneral
-; _LOWriter_FormControlDateFieldValue
-; _LOWriter_FormControlDelete
-; _LOWriter_FormControlFileSelFieldGeneral
-; _LOWriter_FormControlFileSelFieldValue
-; _LOWriter_FormControlFormattedFieldData
-; _LOWriter_FormControlFormattedFieldGeneral
-; _LOWriter_FormControlFormattedFieldValue
-; _LOWriter_FormControlGetParent
-; _LOWriter_FormControlGroupBoxGeneral
-; _LOWriter_FormControlImageButtonGeneral
-; _LOWriter_FormControlImageControlData
-; _LOWriter_FormControlImageControlGeneral
-; _LOWriter_FormControlInsert
-; _LOWriter_FormControlLabelGeneral
-; _LOWriter_FormControlListBoxData
-; _LOWriter_FormControlListBoxGeneral
-; _LOWriter_FormControlListBoxGetCount
-; _LOWriter_FormControlListBoxSelection
-; _LOWriter_FormControlNavBarGeneral
-; _LOWriter_FormControlNumericFieldData
-; _LOWriter_FormControlNumericFieldGeneral
-; _LOWriter_FormControlNumericFieldValue
-; _LOWriter_FormControlOptionButtonData
-; _LOWriter_FormControlOptionButtonGeneral
-; _LOWriter_FormControlOptionButtonState
-; _LOWriter_FormControlPatternFieldData
-; _LOWriter_FormControlPatternFieldGeneral
-; _LOWriter_FormControlPatternFieldValue
-; _LOWriter_FormControlPosition
-; _LOWriter_FormControlPushButtonGeneral
-; _LOWriter_FormControlPushButtonState
-; _LOWriter_FormControlsGetList
-; _LOWriter_FormControlSize
-; _LOWriter_FormControlTableConGeneral
-; _LOWriter_FormControlTextBoxCreateTextCursor
-; _LOWriter_FormControlTextBoxData
-; _LOWriter_FormControlTextBoxGeneral
-; _LOWriter_FormControlTimeFieldData
-; _LOWriter_FormControlTimeFieldGeneral
-; _LOWriter_FormControlTimeFieldValue
+; _LOWriter_FormConCheckBoxData
+; _LOWriter_FormConCheckBoxGeneral
+; _LOWriter_FormConCheckBoxState
+; _LOWriter_FormConComboBoxData
+; _LOWriter_FormConComboBoxGeneral
+; _LOWriter_FormConComboBoxValue
+; _LOWriter_FormConCurrencyFieldData
+; _LOWriter_FormConCurrencyFieldGeneral
+; _LOWriter_FormConCurrencyFieldValue
+; _LOWriter_FormConDateFieldData
+; _LOWriter_FormConDateFieldGeneral
+; _LOWriter_FormConDateFieldValue
+; _LOWriter_FormConDelete
+; _LOWriter_FormConFileSelFieldGeneral
+; _LOWriter_FormConFileSelFieldValue
+; _LOWriter_FormConFormattedFieldData
+; _LOWriter_FormConFormattedFieldGeneral
+; _LOWriter_FormConFormattedFieldValue
+; _LOWriter_FormConGetParent
+; _LOWriter_FormConGroupBoxGeneral
+; _LOWriter_FormConImageButtonGeneral
+; _LOWriter_FormConImageControlData
+; _LOWriter_FormConImageControlGeneral
+; _LOWriter_FormConInsert
+; _LOWriter_FormConLabelGeneral
+; _LOWriter_FormConListBoxData
+; _LOWriter_FormConListBoxGeneral
+; _LOWriter_FormConListBoxGetCount
+; _LOWriter_FormConListBoxSelection
+; _LOWriter_FormConNavBarGeneral
+; _LOWriter_FormConNumericFieldData
+; _LOWriter_FormConNumericFieldGeneral
+; _LOWriter_FormConNumericFieldValue
+; _LOWriter_FormConOptionButtonData
+; _LOWriter_FormConOptionButtonGeneral
+; _LOWriter_FormConOptionButtonState
+; _LOWriter_FormConPatternFieldData
+; _LOWriter_FormConPatternFieldGeneral
+; _LOWriter_FormConPatternFieldValue
+; _LOWriter_FormConPosition
+; _LOWriter_FormConPushButtonGeneral
+; _LOWriter_FormConPushButtonState
+; _LOWriter_FormConsGetList
+; _LOWriter_FormConSize
+; _LOWriter_FormConTableConGeneral
+; _LOWriter_FormConTextBoxCreateTextCursor
+; _LOWriter_FormConTextBoxData
+; _LOWriter_FormConTextBoxGeneral
+; _LOWriter_FormConTimeFieldData
+; _LOWriter_FormConTimeFieldGeneral
+; _LOWriter_FormConTimeFieldValue
 ; _LOWriter_FormDelete
 ; _LOWriter_FormGetObjByIndex
 ; _LOWriter_FormParent
@@ -161,10 +161,10 @@ Func _LOWriter_FormAdd(ByRef $oObj, $sName)
 EndFunc   ;==>_LOWriter_FormAdd
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlCheckBoxData
+; Name ..........: _LOWriter_FormConCheckBoxData
 ; Description ...: Set or Retrieve Check Box Data Properties.
-; Syntax ........: _LOWriter_FormControlCheckBoxData(ByRef $oCheckBox[, $sDataField = Null[, $bInputRequired = Null]])
-; Parameters ....: $oCheckBox           - [in/out] an object. A Check Box Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConCheckBoxData(ByRef $oCheckBox[, $sDataField = Null[, $bInputRequired = Null]])
+; Parameters ....: $oCheckBox           - [in/out] an object. A Check Box Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sDataField          - [optional] a string value. Default is Null. The Datafield name to retrieve content from, either a Table name, SQL query, or other.
 ;                  $bInputRequired      - [optional] a boolean value. Default is Null. If True, the control requires input.
 ; Return values .: Success: 1 or Array
@@ -189,11 +189,11 @@ EndFunc   ;==>_LOWriter_FormAdd
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  $sDataField is not checked to make sure it exists in the referenced Database, it is the user's responsibility to do this.
 ;                  Reference Values are not included here as they are applicable to Calc only, as far as I can ascertain.
-; Related .......: _LOWriter_FormControlCheckBoxState, _LOWriter_FormControlCheckBoxGeneral
+; Related .......: _LOWriter_FormConCheckBoxState, _LOWriter_FormConCheckBoxGeneral
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlCheckBoxData(ByRef $oCheckBox, $sDataField = Null, $bInputRequired = Null)
+Func _LOWriter_FormConCheckBoxData(ByRef $oCheckBox, $sDataField = Null, $bInputRequired = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -202,7 +202,7 @@ Func _LOWriter_FormControlCheckBoxData(ByRef $oCheckBox, $sDataField = Null, $bI
 
 	If Not IsObj($oCheckBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oCheckBox) <> $LOW_FORM_CONTROL_TYPE_CHECK_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oCheckBox) <> $LOW_FORM_CONTROL_TYPE_CHECK_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
@@ -224,16 +224,16 @@ Func _LOWriter_FormControlCheckBoxData(ByRef $oCheckBox, $sDataField = Null, $bI
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlCheckBoxData
+EndFunc   ;==>_LOWriter_FormConCheckBoxData
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlCheckBoxGeneral
+; Name ..........: _LOWriter_FormConCheckBoxGeneral
 ; Description ...: Set or Retrieve general Checkbox control properties.
-; Syntax ........: _LOWriter_FormControlCheckBoxGeneral(ByRef $oCheckBox[, $sName = Null[, $sLabel = Null[, $oLabelField = Null[, $iTxtDir = Null[, $bEnabled = Null[, $bVisible = Null[, $bPrintable = Null[, $bTabStop = Null[, $iTabOrder = Null[, $iDefaultState = Null[, $mFont = Null[, $iStyle = Null[, $iAlign = Null[, $iVertAlign = Null[, $iBackColor = Null[, $bWordBreak = Null[, $sGraphics = Null[, $iGraphicAlign = Null[, $bTriState = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]]]])
-; Parameters ....: $oCheckBox           - [in/out] an object. A Checkbox Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConCheckBoxGeneral(ByRef $oCheckBox[, $sName = Null[, $sLabel = Null[, $oLabelField = Null[, $iTxtDir = Null[, $bEnabled = Null[, $bVisible = Null[, $bPrintable = Null[, $bTabStop = Null[, $iTabOrder = Null[, $iDefaultState = Null[, $mFont = Null[, $iStyle = Null[, $iAlign = Null[, $iVertAlign = Null[, $iBackColor = Null[, $bWordBreak = Null[, $sGraphics = Null[, $iGraphicAlign = Null[, $bTriState = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]]]])
+; Parameters ....: $oCheckBox           - [in/out] an object. A Checkbox Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sName               - [optional] a string value. Default is Null. The control name.
 ;                  $sLabel              - [optional] a string value. Default is Null. The control's label to display.
-;                  $oLabelField         - [optional] an object. Default is Null. A Label Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+;                  $oLabelField         - [optional] an object. Default is Null. A Label Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the control is visible.
@@ -317,11 +317,11 @@ EndFunc   ;==>_LOWriter_FormControlCheckBoxData
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $iDefaultState, $mFont, $sAddInfo.
-; Related .......: _LOWriter_FormControlCheckBoxState, _LOWriter_FormControlCheckBoxData
+; Related .......: _LOWriter_FormConCheckBoxState, _LOWriter_FormConCheckBoxData
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLabel = Null, $oLabelField = Null, $iTxtDir = Null, $bEnabled = Null, $bVisible = Null, $bPrintable = Null, $bTabStop = Null, $iTabOrder = Null, $iDefaultState = Null, $mFont = Null, $iStyle = Null, $iAlign = Null, $iVertAlign = Null, $iBackColor = Null, $bWordBreak = Null, $sGraphics = Null, $iGraphicAlign = Null, $bTriState = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+Func _LOWriter_FormConCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLabel = Null, $oLabelField = Null, $iTxtDir = Null, $bEnabled = Null, $bVisible = Null, $bPrintable = Null, $bTabStop = Null, $iTabOrder = Null, $iDefaultState = Null, $mFont = Null, $iStyle = Null, $iAlign = Null, $iVertAlign = Null, $iBackColor = Null, $bWordBreak = Null, $sGraphics = Null, $iGraphicAlign = Null, $bTriState = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -330,13 +330,13 @@ Func _LOWriter_FormControlCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLab
 
 	If Not IsObj($oCheckBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ( __LOWriter_FormControlIdentify($oCheckBox) <> $LOW_FORM_CONTROL_TYPE_CHECK_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If ( __LOWriter_FormConIdentify($oCheckBox) <> $LOW_FORM_CONTROL_TYPE_CHECK_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $sLabel, $oLabelField, $iTxtDir, $bEnabled, $bVisible, $bPrintable, $bTabStop, $iTabOrder, $iDefaultState, $mFont, $iStyle, $iAlign, $iVertAlign, $iBackColor, $bWordBreak, $sGraphics, $iGraphicAlign, $bTriState, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oCheckBox.Control.Name(), $oCheckBox.Control.Label(), __LOWriter_FormControlGetObj($oCheckBox.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oCheckBox.Control.WritingMode(), _
+		__LOWriter_ArrayFill($avControl, $oCheckBox.Control.Name(), $oCheckBox.Control.Label(), __LOWriter_FormConGetObj($oCheckBox.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oCheckBox.Control.WritingMode(), _
 				$oCheckBox.Control.Enabled(), $oCheckBox.Control.EnableVisible(), $oCheckBox.Control.Printable(), $oCheckBox.Control.Tabstop(), $oCheckBox.Control.TabIndex(), _
-				$oCheckBox.Control.DefaultState(), __LOWriter_ControlSetGetFontDesc($oCheckBox), $oCheckBox.Control.VisualEffect(), $oCheckBox.Control.Align(), $oCheckBox.Control.VerticalAlign(), _
+				$oCheckBox.Control.DefaultState(), __LOWriter_FormConSetGetFontDesc($oCheckBox), $oCheckBox.Control.VisualEffect(), $oCheckBox.Control.Align(), $oCheckBox.Control.VerticalAlign(), _
 				$oCheckBox.Control.BackgroundColor(), $oCheckBox.Control.MultiLine(), $oCheckBox.Control.Graphic(), $oCheckBox.Control.ImagePosition(), $oCheckBox.Control.TriState(), _
 				$oCheckBox.Control.Tag(), $oCheckBox.Control.HelpText(), $oCheckBox.Control.HelpURL())
 
@@ -366,7 +366,7 @@ Func _LOWriter_FormControlCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLab
 
 	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-		If (__LOWriter_FormControlIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oCheckBox.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oCheckBox.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -439,7 +439,7 @@ Func _LOWriter_FormControlCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLab
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
-		__LOWriter_ControlSetGetFontDesc($oCheckBox, $mFont)
+		__LOWriter_FormConSetGetFontDesc($oCheckBox, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 1024))
 	EndIf
 
@@ -545,13 +545,13 @@ Func _LOWriter_FormControlCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLab
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlCheckBoxGeneral
+EndFunc   ;==>_LOWriter_FormConCheckBoxGeneral
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlCheckBoxState
+; Name ..........: _LOWriter_FormConCheckBoxState
 ; Description ...: Set or Retrieve the current Checkbox state.
-; Syntax ........: _LOWriter_FormControlCheckBoxState(ByRef $oCheckBox[, $iState = Null])
-; Parameters ....: $oCheckBox           - [in/out] an object. A Checkbox Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConCheckBoxState(ByRef $oCheckBox[, $iState = Null])
+; Parameters ....: $oCheckBox           - [in/out] an object. A Checkbox Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $iState              - [optional] an integer value (0-2). Default is Null. The current checked state of the Checkbox, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_DEFINED is only available if $bTriState is True. See Constants $LOW_FORM_CONTROL_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Integer
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -572,11 +572,11 @@ EndFunc   ;==>_LOWriter_FormControlCheckBoxGeneral
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current check box state.
 ;                  Call $iState with Default keyword to reset the value to default.
-; Related .......: _LOWriter_FormControlCheckBoxGeneral, _LOWriter_FormControlCheckBoxData
+; Related .......: _LOWriter_FormConCheckBoxGeneral, _LOWriter_FormConCheckBoxData
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlCheckBoxState(ByRef $oCheckBox, $iState = Null)
+Func _LOWriter_FormConCheckBoxState(ByRef $oCheckBox, $iState = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -584,7 +584,7 @@ Func _LOWriter_FormControlCheckBoxState(ByRef $oCheckBox, $iState = Null)
 
 	If Not IsObj($oCheckBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oCheckBox) <> $LOW_FORM_CONTROL_TYPE_CHECK_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oCheckBox) <> $LOW_FORM_CONTROL_TYPE_CHECK_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iState) Then
@@ -604,13 +604,13 @@ Func _LOWriter_FormControlCheckBoxState(ByRef $oCheckBox, $iState = Null)
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlCheckBoxState
+EndFunc   ;==>_LOWriter_FormConCheckBoxState
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlComboBoxData
+; Name ..........: _LOWriter_FormConComboBoxData
 ; Description ...: Set or Retrieve Combo Box Data Properties.
-; Syntax ........: _LOWriter_FormControlComboBoxData(ByRef $oComboBox[, $sDataField = Null[, $bEmptyIsNull = Null[, $bInputRequired = Null[, $iType = Null[, $asListContent = Null]]]]])
-; Parameters ....: $oComboBox           - [in/out] an object. A Combo Box Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConComboBoxData(ByRef $oComboBox[, $sDataField = Null[, $bEmptyIsNull = Null[, $bInputRequired = Null[, $iType = Null[, $asListContent = Null]]]]])
+; Parameters ....: $oComboBox           - [in/out] an object. A Combo Box Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sDataField          - [optional] a string value. Default is Null. The Datafield name to retrieve content from, either a Table name, SQL query, or other.
 ;                  $bEmptyIsNull        - [optional] a boolean value. Default is Null. If True, an empty string will be treated as a Null value.
 ;                  $bInputRequired      - [optional] a boolean value. Default is Null. If True, the control requires input.
@@ -643,11 +643,11 @@ EndFunc   ;==>_LOWriter_FormControlCheckBoxState
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  $sDataField is not checked to make sure it exists in the referenced Database, it is the user's responsibility to do this.
-; Related .......: _LOWriter_FormControlComboBoxValue, _LOWriter_FormControlComboBoxGeneral
+; Related .......: _LOWriter_FormConComboBoxValue, _LOWriter_FormConComboBoxGeneral
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlComboBoxData(ByRef $oComboBox, $sDataField = Null, $bEmptyIsNull = Null, $bInputRequired = Null, $iType = Null, $sListContent = Null)
+Func _LOWriter_FormConComboBoxData(ByRef $oComboBox, $sDataField = Null, $bEmptyIsNull = Null, $bInputRequired = Null, $iType = Null, $sListContent = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -656,7 +656,7 @@ Func _LOWriter_FormControlComboBoxData(ByRef $oComboBox, $sDataField = Null, $bE
 
 	If Not IsObj($oComboBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oComboBox) <> $LOW_FORM_CONTROL_TYPE_COMBO_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oComboBox) <> $LOW_FORM_CONTROL_TYPE_COMBO_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $iType, $sListContent) Then
@@ -697,15 +697,15 @@ Func _LOWriter_FormControlComboBoxData(ByRef $oComboBox, $sDataField = Null, $bE
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlComboBoxData
+EndFunc   ;==>_LOWriter_FormConComboBoxData
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlComboBoxGeneral
+; Name ..........: _LOWriter_FormConComboBoxGeneral
 ; Description ...: Set or Retrieve general Combo Box Properties.
-; Syntax ........: _LOWriter_FormControlComboBoxGeneral(ByRef $oComboBox[, $sName = Null[, $oLabelField = Null[, $iTxtDir = Null[, $iMaxLen = Null[, $bEnabled = Null[, $bVisible = Null[, $bReadOnly = Null[, $bPrintable = Null[, $iMouseScroll = Null[, $bTabStop = Null[, $iTabOrder = Null[, $asList = Null[, $sDefaultTxt = Null[, $mFont = Null[, $iAlign = Null[, $iBackColor = Null[, $iBorder = Null[, $iBorderColor = Null[, $bDropdown = Null[, $iLines = Null[, $bAutoFill = Null[, $bHideSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]]]]]]])
-; Parameters ....: $oComboBox           - [in/out] an object. A Combo Box Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConComboBoxGeneral(ByRef $oComboBox[, $sName = Null[, $oLabelField = Null[, $iTxtDir = Null[, $iMaxLen = Null[, $bEnabled = Null[, $bVisible = Null[, $bReadOnly = Null[, $bPrintable = Null[, $iMouseScroll = Null[, $bTabStop = Null[, $iTabOrder = Null[, $asList = Null[, $sDefaultTxt = Null[, $mFont = Null[, $iAlign = Null[, $iBackColor = Null[, $iBorder = Null[, $iBorderColor = Null[, $bDropdown = Null[, $iLines = Null[, $bAutoFill = Null[, $bHideSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]]]]]]])
+; Parameters ....: $oComboBox           - [in/out] an object. A Combo Box Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sName               - [optional] a string value. Default is Null. The control name.
-;                  $oLabelField         - [optional] an object. Default is Null. A Label Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+;                  $oLabelField         - [optional] an object. Default is Null. A Label Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iMaxLen             - [optional] an integer value (-1-2147483647). Default is Null. The maximum text length that the Combo box will accept.
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
@@ -799,11 +799,11 @@ EndFunc   ;==>_LOWriter_FormControlComboBoxData
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $asList, $sDefaultTxt, $mFont, $sAddInfo.
-; Related .......: _LOWriter_FormControlComboBoxValue, _LOWriter_FormControlComboBoxData
+; Related .......: _LOWriter_FormConComboBoxValue, _LOWriter_FormConComboBoxData
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLabelField = Null, $iTxtDir = Null, $iMaxLen = Null, $bEnabled = Null, $bVisible = Null, $bReadOnly = Null, $bPrintable = Null, $iMouseScroll = Null, $bTabStop = Null, $iTabOrder = Null, $asList = Null, $sDefaultTxt = Null, $mFont = Null, $iAlign = Null, $iBackColor = Null, $iBorder = Null, $iBorderColor = Null, $bDropdown = Null, $iLines = Null, $bAutoFill = Null, $bHideSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+Func _LOWriter_FormConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLabelField = Null, $iTxtDir = Null, $iMaxLen = Null, $bEnabled = Null, $bVisible = Null, $bReadOnly = Null, $bPrintable = Null, $iMouseScroll = Null, $bTabStop = Null, $iTabOrder = Null, $asList = Null, $sDefaultTxt = Null, $mFont = Null, $iAlign = Null, $iBackColor = Null, $iBorder = Null, $iBorderColor = Null, $bDropdown = Null, $iLines = Null, $bAutoFill = Null, $bHideSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -812,13 +812,13 @@ Func _LOWriter_FormControlComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLab
 
 	If Not IsObj($oComboBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oComboBox) <> $LOW_FORM_CONTROL_TYPE_COMBO_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oComboBox) <> $LOW_FORM_CONTROL_TYPE_COMBO_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $iMaxLen, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $asList, $sDefaultTxt, $mFont, $iAlign, $iBackColor, $iBorder, $iBorderColor, $bDropdown, $iLines, $bAutoFill, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oComboBox.Control.Name(), __LOWriter_FormControlGetObj($oComboBox.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oComboBox.Control.WritingMode(), $oComboBox.Control.MaxTextLen(), _
+		__LOWriter_ArrayFill($avControl, $oComboBox.Control.Name(), __LOWriter_FormConGetObj($oComboBox.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oComboBox.Control.WritingMode(), $oComboBox.Control.MaxTextLen(), _
 				$oComboBox.Control.Enabled(), $oComboBox.Control.EnableVisible(), $oComboBox.Control.ReadOnly(), $oComboBox.Control.Printable(), $oComboBox.Control.MouseWheelBehavior(), _
-				$oComboBox.Control.Tabstop(), $oComboBox.Control.TabIndex(), $oComboBox.Control.StringItemList(), $oComboBox.Control.DefaultText(), __LOWriter_ControlSetGetFontDesc($oComboBox), _
+				$oComboBox.Control.Tabstop(), $oComboBox.Control.TabIndex(), $oComboBox.Control.StringItemList(), $oComboBox.Control.DefaultText(), __LOWriter_FormConSetGetFontDesc($oComboBox), _
 				$oComboBox.Control.Align(), $oComboBox.Control.BackgroundColor(), $oComboBox.Control.Border(), $oComboBox.Control.BorderColor(), $oComboBox.Control.Dropdown(), _
 				$oComboBox.Control.LineCount(), $oComboBox.Control.Autocomplete(), $oComboBox.Control.HideInactiveSelection(), $oComboBox.Control.Tag(), $oComboBox.Control.HelpText(), _
 				$oComboBox.Control.HelpURL())
@@ -841,7 +841,7 @@ Func _LOWriter_FormControlComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLab
 
 	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-		If (__LOWriter_FormControlIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oComboBox.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oComboBox.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -954,7 +954,7 @@ Func _LOWriter_FormControlComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLab
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
-		__LOWriter_ControlSetGetFontDesc($oComboBox, $mFont)
+		__LOWriter_FormConSetGetFontDesc($oComboBox, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 8192))
 	EndIf
 
@@ -1058,13 +1058,13 @@ Func _LOWriter_FormControlComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLab
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlComboBoxGeneral
+EndFunc   ;==>_LOWriter_FormConComboBoxGeneral
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlComboBoxValue
+; Name ..........: _LOWriter_FormConComboBoxValue
 ; Description ...: Set or Retrieve a Combo Box's current selection.
-; Syntax ........: _LOWriter_FormControlComboBoxValue(ByRef $oComboBox[, $sValue = Null])
-; Parameters ....: $oComboBox           - [in/out] an object. A Combo Box Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConComboBoxValue(ByRef $oComboBox[, $sValue = Null])
+; Parameters ....: $oComboBox           - [in/out] an object. A Combo Box Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sValue              - [optional] a string value. Default is Null. The current value in the Combo Box's entry field. Value doesn't need to match an available field.
 ; Return values .: Success: 1 or String
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1085,11 +1085,11 @@ EndFunc   ;==>_LOWriter_FormControlComboBoxGeneral
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the currently selected value.
 ;                  Call $sValue with Default keyword to reset the value to default.
-; Related .......: _LOWriter_FormControlComboBoxGeneral, _LOWriter_FormControlComboBoxData
+; Related .......: _LOWriter_FormConComboBoxGeneral, _LOWriter_FormConComboBoxData
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlComboBoxValue(ByRef $oComboBox, $sValue = Null)
+Func _LOWriter_FormConComboBoxValue(ByRef $oComboBox, $sValue = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1098,7 +1098,7 @@ Func _LOWriter_FormControlComboBoxValue(ByRef $oComboBox, $sValue = Null)
 
 	If Not IsObj($oComboBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oComboBox) <> $LOW_FORM_CONTROL_TYPE_COMBO_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oComboBox) <> $LOW_FORM_CONTROL_TYPE_COMBO_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sValue) Then
@@ -1118,13 +1118,13 @@ Func _LOWriter_FormControlComboBoxValue(ByRef $oComboBox, $sValue = Null)
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlComboBoxValue
+EndFunc   ;==>_LOWriter_FormConComboBoxValue
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlCurrencyFieldData
+; Name ..........: _LOWriter_FormConCurrencyFieldData
 ; Description ...: Set or Retrieve Currency Field Data Properties.
-; Syntax ........: _LOWriter_FormControlCurrencyFieldData(ByRef $oCurrencyField[, $sDataField = Null[, $bInputRequired = Null]])
-; Parameters ....: $oCurrencyField      - [in/out] an object. A Currency Field Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConCurrencyFieldData(ByRef $oCurrencyField[, $sDataField = Null[, $bInputRequired = Null]])
+; Parameters ....: $oCurrencyField      - [in/out] an object. A Currency Field Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sDataField          - [optional] a string value. Default is Null. The Datafield name to retrieve content from, either a Table name, SQL query, or other.
 ;                  $bInputRequired      - [optional] a boolean value. Default is Null. If True, the control requires input.
 ; Return values .: Success: 1 or Array
@@ -1148,11 +1148,11 @@ EndFunc   ;==>_LOWriter_FormControlComboBoxValue
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  $sDataField is not checked to make sure it exists in the referenced Database, it is the user's responsibility to do this.
-; Related .......: _LOWriter_FormControlCurrencyFieldValue, _LOWriter_FormControlCurrencyFieldGeneral
+; Related .......: _LOWriter_FormConCurrencyFieldValue, _LOWriter_FormConCurrencyFieldGeneral
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlCurrencyFieldData(ByRef $oCurrencyField, $sDataField = Null, $bInputRequired = Null)
+Func _LOWriter_FormConCurrencyFieldData(ByRef $oCurrencyField, $sDataField = Null, $bInputRequired = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1161,7 +1161,7 @@ Func _LOWriter_FormControlCurrencyFieldData(ByRef $oCurrencyField, $sDataField =
 
 	If Not IsObj($oCurrencyField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oCurrencyField) <> $LOW_FORM_CONTROL_TYPE_CURRENCY_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oCurrencyField) <> $LOW_FORM_CONTROL_TYPE_CURRENCY_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
@@ -1183,15 +1183,15 @@ Func _LOWriter_FormControlCurrencyFieldData(ByRef $oCurrencyField, $sDataField =
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlCurrencyFieldData
+EndFunc   ;==>_LOWriter_FormConCurrencyFieldData
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlCurrencyFieldGeneral
+; Name ..........: _LOWriter_FormConCurrencyFieldGeneral
 ; Description ...: Set or Retrieve general Currency Field properties.
-; Syntax ........: _LOWriter_FormControlCurrencyFieldGeneral(ByRef $oCurrencyField[, $sName = Null[, $oLabelField = Null[, $iTxtDir = Null[, $bStrict = Null[, $bEnabled = Null[, $bVisible = Null[, $bReadOnly = Null[, $bPrintable = Null[, $iMouseScroll = Null[, $bTabStop = Null[, $iTabOrder = Null[, $nMin = Null[, $nMax = Null[, $iIncr = Null[, $nDefault = Null[, $iDecimal = Null[, $bThousandsSep = Null[, $sCurrSymbol = Null[, $bPrefix = Null[, $bSpin = Null[, $bRepeat = Null[, $iDelay = Null[, $mFont = Null[, $iAlign = Null[, $iVertAlign = Null[, $iBackColor = Null[, $iBorder = Null[, $iBorderColor = Null[, $bHideSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]])
-; Parameters ....: $oCurrencyField      - [in/out] an object. A Currency Field Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConCurrencyFieldGeneral(ByRef $oCurrencyField[, $sName = Null[, $oLabelField = Null[, $iTxtDir = Null[, $bStrict = Null[, $bEnabled = Null[, $bVisible = Null[, $bReadOnly = Null[, $bPrintable = Null[, $iMouseScroll = Null[, $bTabStop = Null[, $iTabOrder = Null[, $nMin = Null[, $nMax = Null[, $iIncr = Null[, $nDefault = Null[, $iDecimal = Null[, $bThousandsSep = Null[, $sCurrSymbol = Null[, $bPrefix = Null[, $bSpin = Null[, $bRepeat = Null[, $iDelay = Null[, $mFont = Null[, $iAlign = Null[, $iVertAlign = Null[, $iBackColor = Null[, $iBorder = Null[, $iBorderColor = Null[, $bHideSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]])
+; Parameters ....: $oCurrencyField      - [in/out] an object. A Currency Field Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sName               - [optional] a string value. Default is Null. The control name.
-;                  $oLabelField         - [optional] an object. Default is Null. A Label Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+;                  $oLabelField         - [optional] an object. Default is Null. A Label Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bStrict             - [optional] a boolean value. Default is Null. If True, strict formatting is enabled.
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
@@ -1306,11 +1306,11 @@ EndFunc   ;==>_LOWriter_FormControlCurrencyFieldData
 ;                  If there is an error setting $sHelpURL, the @Extended value for Property setting error will be either -1, or if there are other errors present, a negative value of the error value.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $mFont, $sAddInfo.
-; Related .......: _LOWriter_FormControlCurrencyFieldValue, _LOWriter_FormControlCurrencyFieldData
+; Related .......: _LOWriter_FormConCurrencyFieldValue, _LOWriter_FormConCurrencyFieldData
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = Null, $oLabelField = Null, $iTxtDir = Null, $bStrict = Null, $bEnabled = Null, $bVisible = Null, $bReadOnly = Null, $bPrintable = Null, $iMouseScroll = Null, $bTabStop = Null, $iTabOrder = Null, $nMin = Null, $nMax = Null, $iIncr = Null, $nDefault = Null, $iDecimal = Null, $bThousandsSep = Null, $sCurrSymbol = Null, $bPrefix = Null, $bSpin = Null, $bRepeat = Null, $iDelay = Null, $mFont = Null, $iAlign = Null, $iVertAlign = Null, $iBackColor = Null, $iBorder = Null, $iBorderColor = Null, $bHideSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+Func _LOWriter_FormConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = Null, $oLabelField = Null, $iTxtDir = Null, $bStrict = Null, $bEnabled = Null, $bVisible = Null, $bReadOnly = Null, $bPrintable = Null, $iMouseScroll = Null, $bTabStop = Null, $iTabOrder = Null, $nMin = Null, $nMax = Null, $iIncr = Null, $nDefault = Null, $iDecimal = Null, $bThousandsSep = Null, $sCurrSymbol = Null, $bPrefix = Null, $bSpin = Null, $bRepeat = Null, $iDelay = Null, $mFont = Null, $iAlign = Null, $iVertAlign = Null, $iBackColor = Null, $iBorder = Null, $iBorderColor = Null, $bHideSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1319,17 +1319,17 @@ Func _LOWriter_FormControlCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = N
 
 	If Not IsObj($oCurrencyField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oCurrencyField) <> $LOW_FORM_CONTROL_TYPE_CURRENCY_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oCurrencyField) <> $LOW_FORM_CONTROL_TYPE_CURRENCY_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $bStrict, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $nMin, $nMax, $iIncr, $nDefault, $iDecimal, $bThousandsSep, $sCurrSymbol, $bPrefix, $bSpin, $bRepeat, $iDelay, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oCurrencyField.Control.Name(), __LOWriter_FormControlGetObj($oCurrencyField.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oCurrencyField.Control.WritingMode(), _
+		__LOWriter_ArrayFill($avControl, $oCurrencyField.Control.Name(), __LOWriter_FormConGetObj($oCurrencyField.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oCurrencyField.Control.WritingMode(), _
 				$oCurrencyField.Control.StrictFormat(), $oCurrencyField.Control.Enabled(), $oCurrencyField.Control.EnableVisible(), $oCurrencyField.Control.ReadOnly(), _
 				$oCurrencyField.Control.Printable(), $oCurrencyField.Control.MouseWheelBehavior(), $oCurrencyField.Control.Tabstop(), $oCurrencyField.Control.TabIndex(), _
 				$oCurrencyField.Control.ValueMin(), $oCurrencyField.Control.ValueMax(), $oCurrencyField.Control.ValueStep(), $oCurrencyField.Control.DefaultValue(), _
 				$oCurrencyField.Control.DecimalAccuracy(), $oCurrencyField.Control.ShowThousandsSeparator(), $oCurrencyField.Control.CurrencySymbol(), _
 				$oCurrencyField.Control.PrependCurrencySymbol(), $oCurrencyField.Control.Spin(), $oCurrencyField.Control.Repeat(), $oCurrencyField.Control.RepeatDelay(), _
-				__LOWriter_ControlSetGetFontDesc($oCurrencyField), $oCurrencyField.Control.Align(), $oCurrencyField.Control.VerticalAlign(), $oCurrencyField.Control.BackgroundColor(), _
+				__LOWriter_FormConSetGetFontDesc($oCurrencyField), $oCurrencyField.Control.Align(), $oCurrencyField.Control.VerticalAlign(), $oCurrencyField.Control.BackgroundColor(), _
 				$oCurrencyField.Control.Border(), $oCurrencyField.Control.BorderColor(), $oCurrencyField.Control.HideInactiveSelection(), $oCurrencyField.Control.Tag(), _
 				$oCurrencyField.Control.HelpText(), $oCurrencyField.Control.HelpURL())
 
@@ -1351,7 +1351,7 @@ Func _LOWriter_FormControlCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = N
 
 	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-		If (__LOWriter_FormControlIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oCurrencyField.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oCurrencyField.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -1541,7 +1541,7 @@ Func _LOWriter_FormControlCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = N
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
-		__LOWriter_ControlSetGetFontDesc($oCurrencyField, $mFont)
+		__LOWriter_FormConSetGetFontDesc($oCurrencyField, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 4194304))
 	EndIf
 
@@ -1627,13 +1627,13 @@ Func _LOWriter_FormControlCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = N
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlCurrencyFieldGeneral
+EndFunc   ;==>_LOWriter_FormConCurrencyFieldGeneral
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlCurrencyFieldValue
+; Name ..........: _LOWriter_FormConCurrencyFieldValue
 ; Description ...: Set or retrieve the current Currency field value.
-; Syntax ........: _LOWriter_FormControlCurrencyFieldValue(ByRef $oCurrencyField[, $nValue = Null])
-; Parameters ....: $oCurrencyField      - [in/out] an object. A Currency Field Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConCurrencyFieldValue(ByRef $oCurrencyField[, $nValue = Null])
+; Parameters ....: $oCurrencyField      - [in/out] an object. A Currency Field Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $nValue              - [optional] a general number value. Default is Null. The value to set the field to.
 ; Return values .: Success: 1 or Number
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1653,11 +1653,11 @@ EndFunc   ;==>_LOWriter_FormControlCurrencyFieldGeneral
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current value. Return will be Null if a value hasn't been set.
 ;                  Call $nValue with Default keyword to reset the value to default.
-; Related .......: _LOWriter_FormControlCurrencyFieldGeneral, _LOWriter_FormControlCurrencyFieldData
+; Related .......: _LOWriter_FormConCurrencyFieldGeneral, _LOWriter_FormConCurrencyFieldData
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlCurrencyFieldValue(ByRef $oCurrencyField, $nValue = Null)
+Func _LOWriter_FormConCurrencyFieldValue(ByRef $oCurrencyField, $nValue = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1666,7 +1666,7 @@ Func _LOWriter_FormControlCurrencyFieldValue(ByRef $oCurrencyField, $nValue = Nu
 
 	If Not IsObj($oCurrencyField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oCurrencyField) <> $LOW_FORM_CONTROL_TYPE_CURRENCY_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oCurrencyField) <> $LOW_FORM_CONTROL_TYPE_CURRENCY_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($nValue) Then
@@ -1686,13 +1686,13 @@ Func _LOWriter_FormControlCurrencyFieldValue(ByRef $oCurrencyField, $nValue = Nu
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlCurrencyFieldValue
+EndFunc   ;==>_LOWriter_FormConCurrencyFieldValue
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlDateFieldData
+; Name ..........: _LOWriter_FormConDateFieldData
 ; Description ...: Set or Retrieve Date Field Data Properties.
-; Syntax ........: _LOWriter_FormControlDateFieldData(ByRef $oDateField[, $sDataField = Null[, $bInputRequired = Null]])
-; Parameters ....: $oDateField          - [in/out] an object. A Date Field Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConDateFieldData(ByRef $oDateField[, $sDataField = Null[, $bInputRequired = Null]])
+; Parameters ....: $oDateField          - [in/out] an object. A Date Field Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sDataField          - [optional] a string value. Default is Null. The Datafield name to retrieve content from, either a Table name, SQL query, or other.
 ;                  $bInputRequired      - [optional] a boolean value. Default is Null. If True, the control requires input.
 ; Return values .: Success: 1 or Array
@@ -1716,11 +1716,11 @@ EndFunc   ;==>_LOWriter_FormControlCurrencyFieldValue
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  $sDataField is not checked to make sure it exists in the referenced Database, it is the user's responsibility to do this.
-; Related .......: _LOWriter_FormControlDateFieldValue, _LOWriter_FormControlDateFieldGeneral
+; Related .......: _LOWriter_FormConDateFieldValue, _LOWriter_FormConDateFieldGeneral
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlDateFieldData(ByRef $oDateField, $sDataField = Null, $bInputRequired = Null)
+Func _LOWriter_FormConDateFieldData(ByRef $oDateField, $sDataField = Null, $bInputRequired = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1729,7 +1729,7 @@ Func _LOWriter_FormControlDateFieldData(ByRef $oDateField, $sDataField = Null, $
 
 	If Not IsObj($oDateField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oDateField) <> $LOW_FORM_CONTROL_TYPE_DATE_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oDateField) <> $LOW_FORM_CONTROL_TYPE_DATE_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
@@ -1751,15 +1751,15 @@ Func _LOWriter_FormControlDateFieldData(ByRef $oDateField, $sDataField = Null, $
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlDateFieldData
+EndFunc   ;==>_LOWriter_FormConDateFieldData
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlDateFieldGeneral
+; Name ..........: _LOWriter_FormConDateFieldGeneral
 ; Description ...: Set or Retrieve general Date Field properties.
-; Syntax ........: _LOWriter_FormControlDateFieldGeneral(ByRef $oDateField[, $sName = Null[, $oLabelField = Null[, $iTxtDir = Null[, $bStrict = Null[, $bEnabled = Null[, $bVisible = Null[, $bReadOnly = Null[, $bPrintable = Null[, $iMouseScroll = Null[, $bTabStop = Null[, $iTabOrder = Null[, $tDateMin = Null[, $tDateMax = Null[, $iFormat = Null[, $tDateDefault = Null[, $bSpin = Null[, $bRepeat = Null[, $iDelay = Null[, $mFont = Null[, $iAlign = Null[, $iVertAlign = Null[, $iBackColor = Null[, $iBorder = Null[, $iBorderColor = Null[, $bDropdown = Null[, $bHideSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]]]]]]]]]]])
-; Parameters ....: $oDateField          - [in/out] an object. A Date Field Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConDateFieldGeneral(ByRef $oDateField[, $sName = Null[, $oLabelField = Null[, $iTxtDir = Null[, $bStrict = Null[, $bEnabled = Null[, $bVisible = Null[, $bReadOnly = Null[, $bPrintable = Null[, $iMouseScroll = Null[, $bTabStop = Null[, $iTabOrder = Null[, $tDateMin = Null[, $tDateMax = Null[, $iFormat = Null[, $tDateDefault = Null[, $bSpin = Null[, $bRepeat = Null[, $iDelay = Null[, $mFont = Null[, $iAlign = Null[, $iVertAlign = Null[, $iBackColor = Null[, $iBorder = Null[, $iBorderColor = Null[, $bDropdown = Null[, $bHideSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]]]]]]]]]]])
+; Parameters ....: $oDateField          - [in/out] an object. A Date Field Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sName               - [optional] a string value. Default is Null. The control name.
-;                  $oLabelField         - [optional] an object. Default is Null. A Label Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+;                  $oLabelField         - [optional] an object. Default is Null. A Label Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bStrict             - [optional] a boolean value. Default is Null. If True, strict formatting is enabled.
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
@@ -1869,11 +1869,11 @@ EndFunc   ;==>_LOWriter_FormControlDateFieldData
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $mFont, $sAddInfo.
-; Related .......: _LOWriter_FormControlDateFieldValue, _LOWriter_FormControlDateFieldData
+; Related .......: _LOWriter_FormConDateFieldValue, _LOWriter_FormConDateFieldData
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlDateFieldGeneral(ByRef $oDateField, $sName = Null, $oLabelField = Null, $iTxtDir = Null, $bStrict = Null, $bEnabled = Null, $bVisible = Null, $bReadOnly = Null, $bPrintable = Null, $iMouseScroll = Null, $bTabStop = Null, $iTabOrder = Null, $tDateMin = Null, $tDateMax = Null, $iFormat = Null, $tDateDefault = Null, $bSpin = Null, $bRepeat = Null, $iDelay = Null, $mFont = Null, $iAlign = Null, $iVertAlign = Null, $iBackColor = Null, $iBorder = Null, $iBorderColor = Null, $bDropdown = Null, $bHideSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+Func _LOWriter_FormConDateFieldGeneral(ByRef $oDateField, $sName = Null, $oLabelField = Null, $iTxtDir = Null, $bStrict = Null, $bEnabled = Null, $bVisible = Null, $bReadOnly = Null, $bPrintable = Null, $iMouseScroll = Null, $bTabStop = Null, $iTabOrder = Null, $tDateMin = Null, $tDateMax = Null, $iFormat = Null, $tDateDefault = Null, $bSpin = Null, $bRepeat = Null, $iDelay = Null, $mFont = Null, $iAlign = Null, $iVertAlign = Null, $iBackColor = Null, $iBorder = Null, $iBorderColor = Null, $bDropdown = Null, $bHideSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1883,7 +1883,7 @@ Func _LOWriter_FormControlDateFieldGeneral(ByRef $oDateField, $sName = Null, $oL
 
 	If Not IsObj($oDateField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oDateField) <> $LOW_FORM_CONTROL_TYPE_DATE_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oDateField) <> $LOW_FORM_CONTROL_TYPE_DATE_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $bStrict, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $tDateMin, $tDateMax, $iFormat, $tDateDefault, $bSpin, $bRepeat, $iDelay, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bDropdown, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
@@ -1920,10 +1920,10 @@ Func _LOWriter_FormControlDateFieldGeneral(ByRef $oDateField, $sName = Null, $oL
 			$tCurDefault = $tDate
 		EndIf
 
-		__LOWriter_ArrayFill($avControl, $oDateField.Control.Name(), __LOWriter_FormControlGetObj($oDateField.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oDateField.Control.WritingMode(), $oDateField.Control.StrictFormat(), _
+		__LOWriter_ArrayFill($avControl, $oDateField.Control.Name(), __LOWriter_FormConGetObj($oDateField.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oDateField.Control.WritingMode(), $oDateField.Control.StrictFormat(), _
 				$oDateField.Control.Enabled(), $oDateField.Control.EnableVisible(), $oDateField.Control.ReadOnly(), $oDateField.Control.Printable(), $oDateField.Control.MouseWheelBehavior(), _
 				$oDateField.Control.Tabstop(), $oDateField.Control.TabIndex(), $tCurMin, $tCurMax, $oDateField.Control.DateFormat(), $tCurDefault, $oDateField.Control.Spin(), _
-				$oDateField.Control.Repeat(), $oDateField.Control.RepeatDelay(), __LOWriter_ControlSetGetFontDesc($oDateField), $oDateField.Control.Align(), $oDateField.Control.VerticalAlign(), _
+				$oDateField.Control.Repeat(), $oDateField.Control.RepeatDelay(), __LOWriter_FormConSetGetFontDesc($oDateField), $oDateField.Control.Align(), $oDateField.Control.VerticalAlign(), _
 				$oDateField.Control.BackgroundColor(), $oDateField.Control.Border(), $oDateField.Control.BorderColor(), $oDateField.Control.Dropdown(), _
 				$oDateField.Control.HideInactiveSelection(), $oDateField.Control.Tag(), $oDateField.Control.HelpText(), $oDateField.Control.HelpURL())
 
@@ -1945,7 +1945,7 @@ Func _LOWriter_FormControlDateFieldGeneral(ByRef $oDateField, $sName = Null, $oL
 
 	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-		If (__LOWriter_FormControlIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oDateField.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oDateField.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -2123,7 +2123,7 @@ Func _LOWriter_FormControlDateFieldGeneral(ByRef $oDateField, $sName = Null, $oL
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
-		__LOWriter_ControlSetGetFontDesc($oDateField, $mFont)
+		__LOWriter_FormConSetGetFontDesc($oDateField, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 262144))
 	EndIf
 
@@ -2218,13 +2218,13 @@ Func _LOWriter_FormControlDateFieldGeneral(ByRef $oDateField, $sName = Null, $oL
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlDateFieldGeneral
+EndFunc   ;==>_LOWriter_FormConDateFieldGeneral
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlDateFieldValue
+; Name ..........: _LOWriter_FormConDateFieldValue
 ; Description ...: Set or retrieve the current Date field value.
-; Syntax ........: _LOWriter_FormControlDateFieldValue(ByRef $oDateField[, $tDateValue = Null])
-; Parameters ....: $oDateField          - [in/out] an object. A Date Field Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConDateFieldValue(ByRef $oDateField[, $tDateValue = Null])
+; Parameters ....: $oDateField          - [in/out] an object. A Date Field Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $tDateValue          - [optional] a dll struct value. Default is Null. The date to set the field to, created previously by _LOWriter_DateStructCreate.
 ; Return values .: Success: 1 or Structure
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -2247,11 +2247,11 @@ EndFunc   ;==>_LOWriter_FormControlDateFieldGeneral
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current Date value. Return will be Null if the Date hasn't been set.
 ;                  Call $tDateValue with Default keyword to reset the value to default.
-; Related .......: _LOWriter_FormControlDateFieldGeneral, _LOWriter_FormControlDateFieldData
+; Related .......: _LOWriter_FormConDateFieldGeneral, _LOWriter_FormConDateFieldData
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlDateFieldValue(ByRef $oDateField, $tDateValue = Null)
+Func _LOWriter_FormConDateFieldValue(ByRef $oDateField, $tDateValue = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -2260,7 +2260,7 @@ Func _LOWriter_FormControlDateFieldValue(ByRef $oDateField, $tDateValue = Null)
 
 	If Not IsObj($oDateField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oDateField) <> $LOW_FORM_CONTROL_TYPE_DATE_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oDateField) <> $LOW_FORM_CONTROL_TYPE_DATE_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($tDateValue) Then
@@ -2298,13 +2298,13 @@ Func _LOWriter_FormControlDateFieldValue(ByRef $oDateField, $tDateValue = Null)
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlDateFieldValue
+EndFunc   ;==>_LOWriter_FormConDateFieldValue
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlDelete
+; Name ..........: _LOWriter_FormConDelete
 ; Description ...: Delete a Form Control or Control from a Group.
-; Syntax ........: _LOWriter_FormControlDelete(ByRef $oControl)
-; Parameters ....: $oControl            - [in/out] an object. A Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConDelete(ByRef $oControl)
+; Parameters ....: $oControl            - [in/out] an object. A Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2317,11 +2317,11 @@ EndFunc   ;==>_LOWriter_FormControlDateFieldValue
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: You cannot delete the last control contained in a Grouped Control.
-; Related .......: _LOWriter_FormControlInsert, _LOWriter_FormControlsGetList
+; Related .......: _LOWriter_FormConInsert, _LOWriter_FormConsGetList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlDelete(ByRef $oControl)
+Func _LOWriter_FormConDelete(ByRef $oControl)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -2332,18 +2332,18 @@ Func _LOWriter_FormControlDelete(ByRef $oControl)
 	$oParent = $oControl.Parent() ; Retrieve the parent.
 	If Not IsObj($oParent) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If ($oParent.supportsService("com.sun.star.drawing.GroupShape") And ($oParent.Count() = 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If ($oParent.supportsService("com.sun.star.drawing.GroupShape") And ($oParent.Count() = 1)) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$oParent.remove($oControl)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
-EndFunc   ;==>_LOWriter_FormControlDelete
+EndFunc   ;==>_LOWriter_FormConDelete
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlFileSelFieldGeneral
+; Name ..........: _LOWriter_FormConFileSelFieldGeneral
 ; Description ...: Set or Retrieve general File Selection Field properties.
-; Syntax ........: _LOWriter_FormControlFileSelFieldGeneral(ByRef $oFileSel[, $sName = Null[, $iTxtDir = Null[, $bEnabled = Null[, $bVisible = Null[, $bReadOnly = Null[, $bPrintable = Null[, $bTabStop = Null[, $iTabOrder = Null[, $sDefaultTxt = Null[, $mFont = Null[, $iAlign = Null[, $iVertAlign = Null[, $iBackColor = Null[, $iBorder = Null[, $iBorderColor = Null[, $bHideSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]])
-; Parameters ....: $oFileSel            - [in/out] an object. A File Selection Field Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConFileSelFieldGeneral(ByRef $oFileSel[, $sName = Null[, $iTxtDir = Null[, $bEnabled = Null[, $bVisible = Null[, $bReadOnly = Null[, $bPrintable = Null[, $bTabStop = Null[, $iTabOrder = Null[, $sDefaultTxt = Null[, $mFont = Null[, $iAlign = Null[, $iVertAlign = Null[, $iBackColor = Null[, $iBorder = Null[, $iBorderColor = Null[, $bHideSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]])
+; Parameters ....: $oFileSel            - [in/out] an object. A File Selection Field Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sName               - [optional] a string value. Default is Null. The control name.
 ;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
@@ -2419,11 +2419,11 @@ EndFunc   ;==>_LOWriter_FormControlDelete
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $sDefaultTxt, $mFont, $sAddInfo.
-; Related .......: _LOWriter_FormControlFileSelFieldValue
+; Related .......: _LOWriter_FormConFileSelFieldValue
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlFileSelFieldGeneral(ByRef $oFileSel, $sName = Null, $iTxtDir = Null, $bEnabled = Null, $bVisible = Null, $bReadOnly = Null, $bPrintable = Null, $bTabStop = Null, $iTabOrder = Null, $sDefaultTxt = Null, $mFont = Null, $iAlign = Null, $iVertAlign = Null, $iBackColor = Null, $iBorder = Null, $iBorderColor = Null, $bHideSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+Func _LOWriter_FormConFileSelFieldGeneral(ByRef $oFileSel, $sName = Null, $iTxtDir = Null, $bEnabled = Null, $bVisible = Null, $bReadOnly = Null, $bPrintable = Null, $bTabStop = Null, $iTabOrder = Null, $sDefaultTxt = Null, $mFont = Null, $iAlign = Null, $iVertAlign = Null, $iBackColor = Null, $iBorder = Null, $iBorderColor = Null, $bHideSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -2432,13 +2432,13 @@ Func _LOWriter_FormControlFileSelFieldGeneral(ByRef $oFileSel, $sName = Null, $i
 
 	If Not IsObj($oFileSel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oFileSel) <> $LOW_FORM_CONTROL_TYPE_FILE_SELECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oFileSel) <> $LOW_FORM_CONTROL_TYPE_FILE_SELECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $iTxtDir, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $bTabStop, $iTabOrder, $sDefaultTxt, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
 		__LOWriter_ArrayFill($avControl, $oFileSel.Control.Name(), $oFileSel.Control.WritingMode(), $oFileSel.Control.Enabled(), $oFileSel.Control.EnableVisible(), _
 				$oFileSel.Control.ReadOnly(), $oFileSel.Control.Printable(), $oFileSel.Control.Tabstop(), $oFileSel.Control.TabIndex(), $oFileSel.Control.DefaultText(), _
-				__LOWriter_ControlSetGetFontDesc($oFileSel), $oFileSel.Control.Align(), $oFileSel.Control.VerticalAlign(), $oFileSel.Control.BackgroundColor(), $oFileSel.Control.Border(), _
+				__LOWriter_FormConSetGetFontDesc($oFileSel), $oFileSel.Control.Align(), $oFileSel.Control.VerticalAlign(), $oFileSel.Control.BackgroundColor(), $oFileSel.Control.Border(), _
 				$oFileSel.Control.BorderColor(), $oFileSel.Control.HideInactiveSelection(), $oFileSel.Control.Tag(), $oFileSel.Control.HelpText(), $oFileSel.Control.HelpURL())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
@@ -2531,7 +2531,7 @@ Func _LOWriter_FormControlFileSelFieldGeneral(ByRef $oFileSel, $sName = Null, $i
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
-		__LOWriter_ControlSetGetFontDesc($oFileSel, $mFont)
+		__LOWriter_FormConSetGetFontDesc($oFileSel, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 512))
 	EndIf
 
@@ -2617,13 +2617,13 @@ Func _LOWriter_FormControlFileSelFieldGeneral(ByRef $oFileSel, $sName = Null, $i
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlFileSelFieldGeneral
+EndFunc   ;==>_LOWriter_FormConFileSelFieldGeneral
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlFileSelFieldValue
+; Name ..........: _LOWriter_FormConFileSelFieldValue
 ; Description ...: Set or retrieve the current File Selection Field value.
-; Syntax ........: _LOWriter_FormControlFileSelFieldValue(ByRef $oFileSel[, $sValue = Null])
-; Parameters ....: $oFileSel            - [in/out] an object. A File Selection Field Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConFileSelFieldValue(ByRef $oFileSel[, $sValue = Null])
+; Parameters ....: $oFileSel            - [in/out] an object. A File Selection Field Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sValue              - [optional] a string value. Default is Null. The value to set the field to.
 ; Return values .: Success: 1 or String
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -2644,11 +2644,11 @@ EndFunc   ;==>_LOWriter_FormControlFileSelFieldGeneral
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current value.
 ;                  Call $sValue with Default keyword to reset the value to default.
-; Related .......: _LOWriter_FormControlFileSelFieldGeneral
+; Related .......: _LOWriter_FormConFileSelFieldGeneral
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlFileSelFieldValue(ByRef $oFileSel, $sValue = Null)
+Func _LOWriter_FormConFileSelFieldValue(ByRef $oFileSel, $sValue = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -2657,7 +2657,7 @@ Func _LOWriter_FormControlFileSelFieldValue(ByRef $oFileSel, $sValue = Null)
 
 	If Not IsObj($oFileSel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oFileSel) <> $LOW_FORM_CONTROL_TYPE_FILE_SELECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oFileSel) <> $LOW_FORM_CONTROL_TYPE_FILE_SELECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sValue) Then
@@ -2678,13 +2678,13 @@ Func _LOWriter_FormControlFileSelFieldValue(ByRef $oFileSel, $sValue = Null)
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlFileSelFieldValue
+EndFunc   ;==>_LOWriter_FormConFileSelFieldValue
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlFormattedFieldData
+; Name ..........: _LOWriter_FormConFormattedFieldData
 ; Description ...: Set or Retrieve Formatted Field Data Properties.
-; Syntax ........: _LOWriter_FormControlFormattedFieldData(ByRef $oFormatField[, $sDataField = Null[, $bEmptyIsNull = Null[, $bInputRequired = Null[, $bFilter = Null]]]])
-; Parameters ....: $oFormatField        - [in/out] an object. A Formatted Field Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConFormattedFieldData(ByRef $oFormatField[, $sDataField = Null[, $bEmptyIsNull = Null[, $bInputRequired = Null[, $bFilter = Null]]]])
+; Parameters ....: $oFormatField        - [in/out] an object. A Formatted Field Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sDataField          - [optional] a string value. Default is Null. The Datafield name to retrieve content from, either a Table name, SQL query, or other.
 ;                  $bEmptyIsNull        - [optional] a boolean value. Default is Null. If True, an empty string will be treated as a Null value.
 ;                  $bInputRequired      - [optional] a boolean value. Default is Null. If True, the control requires input.
@@ -2714,11 +2714,11 @@ EndFunc   ;==>_LOWriter_FormControlFileSelFieldValue
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  $sDataField is not checked to make sure it exists in the referenced Database, it is the user's responsibility to do this.
-; Related .......: _LOWriter_FormControlFormattedFieldValue, _LOWriter_FormControlFormattedFieldGeneral
+; Related .......: _LOWriter_FormConFormattedFieldValue, _LOWriter_FormConFormattedFieldGeneral
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlFormattedFieldData(ByRef $oFormatField, $sDataField = Null, $bEmptyIsNull = Null, $bInputRequired = Null, $bFilter = Null)
+Func _LOWriter_FormConFormattedFieldData(ByRef $oFormatField, $sDataField = Null, $bEmptyIsNull = Null, $bInputRequired = Null, $bFilter = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -2727,7 +2727,7 @@ Func _LOWriter_FormControlFormattedFieldData(ByRef $oFormatField, $sDataField = 
 
 	If Not IsObj($oFormatField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oFormatField) <> $LOW_FORM_CONTROL_TYPE_FORMATTED_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oFormatField) <> $LOW_FORM_CONTROL_TYPE_FORMATTED_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $bFilter) Then
@@ -2762,15 +2762,15 @@ Func _LOWriter_FormControlFormattedFieldData(ByRef $oFormatField, $sDataField = 
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlFormattedFieldData
+EndFunc   ;==>_LOWriter_FormConFormattedFieldData
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlFormattedFieldGeneral
+; Name ..........: _LOWriter_FormConFormattedFieldGeneral
 ; Description ...: Set or Retrieve general Formatted Field properties.
-; Syntax ........: _LOWriter_FormControlFormattedFieldGeneral(ByRef $oFormatField[, $sName = Null[, $oLabelField = Null[, $iTxtDir = Null[, $iMaxLen = Null[, $bEnabled = Null[, $bVisible = Null[, $bReadOnly = Null[, $bPrintable = Null[, $iMouseScroll = Null[, $bTabStop = Null[, $iTabOrder = Null[, $nMin = Null[, $nMax = Null[, $nDefault = Null[, $iFormat = Null[, $bSpin = Null[, $bRepeat = Null[, $iDelay = Null[, $mFont = Null[, $iAlign = Null[, $iVertAlign = Null[, $iBackColor = Null[, $iBorder = Null[, $iBorderColor = Null[, $bHideSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]]]]]]]]]])
-; Parameters ....: $oFormatField        - [in/out] an object. A Formatted Field Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConFormattedFieldGeneral(ByRef $oFormatField[, $sName = Null[, $oLabelField = Null[, $iTxtDir = Null[, $iMaxLen = Null[, $bEnabled = Null[, $bVisible = Null[, $bReadOnly = Null[, $bPrintable = Null[, $iMouseScroll = Null[, $bTabStop = Null[, $iTabOrder = Null[, $nMin = Null[, $nMax = Null[, $nDefault = Null[, $iFormat = Null[, $bSpin = Null[, $bRepeat = Null[, $iDelay = Null[, $mFont = Null[, $iAlign = Null[, $iVertAlign = Null[, $iBackColor = Null[, $iBorder = Null[, $iBorderColor = Null[, $bHideSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]]]]]]]]]])
+; Parameters ....: $oFormatField        - [in/out] an object. A Formatted Field Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sName               - [optional] a string value. Default is Null. The control name.
-;                  $oLabelField         - [optional] an object. Default is Null. A Label Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+;                  $oLabelField         - [optional] an object. Default is Null. A Label Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iMaxLen             - [optional] an integer value (-1-2147483647). Default is Null. The maximum text length that the Formatted field will accept.
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
@@ -2873,11 +2873,11 @@ EndFunc   ;==>_LOWriter_FormControlFormattedFieldData
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $mFont, $sAddInfo.
-; Related .......: _LOWriter_FormatKeyCreate, _LOWriter_FormatKeyList, _LOWriter_FormControlFormattedFieldValue, _LOWriter_FormControlFormattedFieldData
+; Related .......: _LOWriter_FormatKeyCreate, _LOWriter_FormatKeyList, _LOWriter_FormConFormattedFieldValue, _LOWriter_FormConFormattedFieldData
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlFormattedFieldGeneral(ByRef $oFormatField, $sName = Null, $oLabelField = Null, $iTxtDir = Null, $iMaxLen = Null, $bEnabled = Null, $bVisible = Null, $bReadOnly = Null, $bPrintable = Null, $iMouseScroll = Null, $bTabStop = Null, $iTabOrder = Null, $nMin = Null, $nMax = Null, $nDefault = Null, $iFormat = Null, $bSpin = Null, $bRepeat = Null, $iDelay = Null, $mFont = Null, $iAlign = Null, $iVertAlign = Null, $iBackColor = Null, $iBorder = Null, $iBorderColor = Null, $bHideSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+Func _LOWriter_FormConFormattedFieldGeneral(ByRef $oFormatField, $sName = Null, $oLabelField = Null, $iTxtDir = Null, $iMaxLen = Null, $bEnabled = Null, $bVisible = Null, $bReadOnly = Null, $bPrintable = Null, $iMouseScroll = Null, $bTabStop = Null, $iTabOrder = Null, $nMin = Null, $nMax = Null, $nDefault = Null, $iFormat = Null, $bSpin = Null, $bRepeat = Null, $iDelay = Null, $mFont = Null, $iAlign = Null, $iVertAlign = Null, $iBackColor = Null, $iBorder = Null, $iBorderColor = Null, $bHideSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -2887,15 +2887,15 @@ Func _LOWriter_FormControlFormattedFieldGeneral(ByRef $oFormatField, $sName = Nu
 
 	If Not IsObj($oFormatField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oFormatField) <> $LOW_FORM_CONTROL_TYPE_FORMATTED_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oFormatField) <> $LOW_FORM_CONTROL_TYPE_FORMATTED_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $iMaxLen, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $nMin, $nMax, $nDefault, $iFormat, $bSpin, $bRepeat, $iDelay, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oFormatField.Control.Name(), __LOWriter_FormControlGetObj($oFormatField.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oFormatField.Control.WritingMode(), $oFormatField.Control.MaxTextLen(), _
+		__LOWriter_ArrayFill($avControl, $oFormatField.Control.Name(), __LOWriter_FormConGetObj($oFormatField.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oFormatField.Control.WritingMode(), $oFormatField.Control.MaxTextLen(), _
 				$oFormatField.Control.Enabled(), $oFormatField.Control.EnableVisible(), $oFormatField.Control.ReadOnly(), $oFormatField.Control.Printable(), _
 				$oFormatField.Control.MouseWheelBehavior(), $oFormatField.Control.Tabstop(), $oFormatField.Control.TabIndex(), $oFormatField.Control.EffectiveMin(), _
 				$oFormatField.Control.EffectiveMax(), $oFormatField.Control.EffectiveDefault(), $oFormatField.Control.FormatKey(), $oFormatField.Control.Spin(), _
-				$oFormatField.Control.Repeat(), $oFormatField.Control.RepeatDelay(), __LOWriter_ControlSetGetFontDesc($oFormatField), $oFormatField.Control.Align(), _
+				$oFormatField.Control.Repeat(), $oFormatField.Control.RepeatDelay(), __LOWriter_FormConSetGetFontDesc($oFormatField), $oFormatField.Control.Align(), _
 				$oFormatField.Control.VerticalAlign(), $oFormatField.Control.BackgroundColor(), $oFormatField.Control.Border(), $oFormatField.Control.BorderColor(), _
 				$oFormatField.Control.HideInactiveSelection(), $oFormatField.Control.Tag(), $oFormatField.Control.HelpText(), $oFormatField.Control.HelpURL())
 
@@ -2916,7 +2916,7 @@ Func _LOWriter_FormControlFormattedFieldGeneral(ByRef $oFormatField, $sName = Nu
 
 	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-		If (__LOWriter_FormControlIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oFormatField.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oFormatField.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -3077,7 +3077,7 @@ Func _LOWriter_FormControlFormattedFieldGeneral(ByRef $oFormatField, $sName = Nu
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
-		__LOWriter_ControlSetGetFontDesc($oFormatField, $mFont)
+		__LOWriter_FormConSetGetFontDesc($oFormatField, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 262144))
 	EndIf
 
@@ -3163,13 +3163,13 @@ Func _LOWriter_FormControlFormattedFieldGeneral(ByRef $oFormatField, $sName = Nu
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlFormattedFieldGeneral
+EndFunc   ;==>_LOWriter_FormConFormattedFieldGeneral
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlFormattedFieldValue
+; Name ..........: _LOWriter_FormConFormattedFieldValue
 ; Description ...: Set or Retrieve the current Formatted Field value.
-; Syntax ........: _LOWriter_FormControlFormattedFieldValue(ByRef $oFormatField[, $nValue = Null])
-; Parameters ....: $oFormatField        - [in/out] an object. A Formatted Field Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConFormattedFieldValue(ByRef $oFormatField[, $nValue = Null])
+; Parameters ....: $oFormatField        - [in/out] an object. A Formatted Field Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $nValue              - [optional] a general number value. Default is Null. The Value to set the Formatted Field to.
 ; Return values .: Success: 1 or Number
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -3190,11 +3190,11 @@ EndFunc   ;==>_LOWriter_FormControlFormattedFieldGeneral
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current value.
 ;                  Call $nValue with Default keyword to reset the value to default.
-; Related .......: _LOWriter_FormControlFormattedFieldGeneral, _LOWriter_FormControlFormattedFieldData
+; Related .......: _LOWriter_FormConFormattedFieldGeneral, _LOWriter_FormConFormattedFieldData
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlFormattedFieldValue(ByRef $oFormatField, $nValue = Null)
+Func _LOWriter_FormConFormattedFieldValue(ByRef $oFormatField, $nValue = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -3202,7 +3202,7 @@ Func _LOWriter_FormControlFormattedFieldValue(ByRef $oFormatField, $nValue = Nul
 
 	If Not IsObj($oFormatField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oFormatField) <> $LOW_FORM_CONTROL_TYPE_FORMATTED_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oFormatField) <> $LOW_FORM_CONTROL_TYPE_FORMATTED_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($nValue) Then
@@ -3222,13 +3222,13 @@ Func _LOWriter_FormControlFormattedFieldValue(ByRef $oFormatField, $nValue = Nul
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlFormattedFieldValue
+EndFunc   ;==>_LOWriter_FormConFormattedFieldValue
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlGetParent
+; Name ..........: _LOWriter_FormConGetParent
 ; Description ...: Retrieve the Parent Form of the called Control.
-; Syntax ........: _LOWriter_FormControlGetParent(ByRef $oControl)
-; Parameters ....: $oControl            - [in/out] an object. A Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConGetParent(ByRef $oControl)
+; Parameters ....: $oControl            - [in/out] an object. A Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -3245,7 +3245,7 @@ EndFunc   ;==>_LOWriter_FormControlFormattedFieldValue
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlGetParent(ByRef $oControl)
+Func _LOWriter_FormConGetParent(ByRef $oControl)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -3272,13 +3272,13 @@ Func _LOWriter_FormControlGetParent(ByRef $oControl)
 	EndIf
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oOldParent)
-EndFunc   ;==>_LOWriter_FormControlGetParent
+EndFunc   ;==>_LOWriter_FormConGetParent
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlGroupBoxGeneral
+; Name ..........: _LOWriter_FormConGroupBoxGeneral
 ; Description ...: Set or Retrieve general GroupBox control properties.
-; Syntax ........: _LOWriter_FormControlGroupBoxGeneral(ByRef $oGroupBox[, $sName = Null[, $sLabel = Null[, $iTxtDir = Null[, $bEnabled = Null[, $bVisible = Null[, $bPrintable = Null[, $mFont = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]])
-; Parameters ....: $oGroupBox           - [in/out] an object. A Groupbox Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConGroupBoxGeneral(ByRef $oGroupBox[, $sName = Null[, $sLabel = Null[, $iTxtDir = Null[, $bEnabled = Null[, $bVisible = Null[, $bPrintable = Null[, $mFont = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]])
+; Parameters ....: $oGroupBox           - [in/out] an object. A Groupbox Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sName               - [optional] a string value. Default is Null. The control name.
 ;                  $sLabel              - [optional] a string value. Default is Null. The control's label to display.
 ;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
@@ -3331,7 +3331,7 @@ EndFunc   ;==>_LOWriter_FormControlGetParent
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlGroupBoxGeneral(ByRef $oGroupBox, $sName = Null, $sLabel = Null, $iTxtDir = Null, $bEnabled = Null, $bVisible = Null, $bPrintable = Null, $mFont = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+Func _LOWriter_FormConGroupBoxGeneral(ByRef $oGroupBox, $sName = Null, $sLabel = Null, $iTxtDir = Null, $bEnabled = Null, $bVisible = Null, $bPrintable = Null, $mFont = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -3340,12 +3340,12 @@ Func _LOWriter_FormControlGroupBoxGeneral(ByRef $oGroupBox, $sName = Null, $sLab
 
 	If Not IsObj($oGroupBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oGroupBox) <> $LOW_FORM_CONTROL_TYPE_GROUP_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oGroupBox) <> $LOW_FORM_CONTROL_TYPE_GROUP_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $bEnabled, $bVisible, $bPrintable, $mFont, $sAddInfo, $sHelpText, $sHelpURL) Then
 		__LOWriter_ArrayFill($avControl, $oGroupBox.Control.Name(), $oGroupBox.Control.Label(), $oGroupBox.Control.WritingMode(), $oGroupBox.Control.Enabled(), _
-				$oGroupBox.Control.EnableVisible(), $oGroupBox.Control.Printable(), __LOWriter_ControlSetGetFontDesc($oGroupBox), $oGroupBox.Control.Tag(), _
+				$oGroupBox.Control.EnableVisible(), $oGroupBox.Control.Printable(), __LOWriter_FormConSetGetFontDesc($oGroupBox), $oGroupBox.Control.Tag(), _
 				$oGroupBox.Control.HelpText(), $oGroupBox.Control.HelpURL())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
@@ -3410,7 +3410,7 @@ Func _LOWriter_FormControlGroupBoxGeneral(ByRef $oGroupBox, $sName = Null, $sLab
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
-		__LOWriter_ControlSetGetFontDesc($oGroupBox, $mFont)
+		__LOWriter_FormConSetGetFontDesc($oGroupBox, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
@@ -3442,13 +3442,13 @@ Func _LOWriter_FormControlGroupBoxGeneral(ByRef $oGroupBox, $sName = Null, $sLab
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlGroupBoxGeneral
+EndFunc   ;==>_LOWriter_FormConGroupBoxGeneral
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlImageButtonGeneral
+; Name ..........: _LOWriter_FormConImageButtonGeneral
 ; Description ...: Set or Retrieve general Image Button properties.
-; Syntax ........: _LOWriter_FormControlImageButtonGeneral(ByRef $oImageButton[, $sName = Null[, $iTxtDir = Null[, $bEnabled = Null[, $bVisible = Null[, $bPrintable = Null[, $bTabStop = Null[, $iTabOrder = Null[, $iBackColor = Null[, $iBorder = Null[, $iBorderColor = Null[, $iAction = Null[, $sURL = Null[, $sFrame = Null[, $sGraphics = Null[, $iScale = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]])
-; Parameters ....: $oImageButton        - [in/out] an object. A Image Button Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConImageButtonGeneral(ByRef $oImageButton[, $sName = Null[, $iTxtDir = Null[, $bEnabled = Null[, $bVisible = Null[, $bPrintable = Null[, $bTabStop = Null[, $iTabOrder = Null[, $iBackColor = Null[, $iBorder = Null[, $iBorderColor = Null[, $iAction = Null[, $sURL = Null[, $sFrame = Null[, $sGraphics = Null[, $iScale = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]])
+; Parameters ....: $oImageButton        - [in/out] an object. A Image Button Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sName               - [optional] a string value. Default is Null. The control name.
 ;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
@@ -3526,7 +3526,7 @@ EndFunc   ;==>_LOWriter_FormControlGroupBoxGeneral
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlImageButtonGeneral(ByRef $oImageButton, $sName = Null, $iTxtDir = Null, $bEnabled = Null, $bVisible = Null, $bPrintable = Null, $bTabStop = Null, $iTabOrder = Null, $iBackColor = Null, $iBorder = Null, $iBorderColor = Null, $iAction = Null, $sURL = Null, $sFrame = Null, $sGraphics = Null, $iScale = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+Func _LOWriter_FormConImageButtonGeneral(ByRef $oImageButton, $sName = Null, $iTxtDir = Null, $bEnabled = Null, $bVisible = Null, $bPrintable = Null, $bTabStop = Null, $iTabOrder = Null, $iBackColor = Null, $iBorder = Null, $iBorderColor = Null, $iAction = Null, $sURL = Null, $sFrame = Null, $sGraphics = Null, $iScale = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -3537,7 +3537,7 @@ Func _LOWriter_FormControlImageButtonGeneral(ByRef $oImageButton, $sName = Null,
 
 	If Not IsObj($oImageButton) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oImageButton) <> $LOW_FORM_CONTROL_TYPE_IMAGE_BUTTON) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oImageButton) <> $LOW_FORM_CONTROL_TYPE_IMAGE_BUTTON) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_NONE] = ""
@@ -3816,13 +3816,13 @@ Func _LOWriter_FormControlImageButtonGeneral(ByRef $oImageButton, $sName = Null,
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlImageButtonGeneral
+EndFunc   ;==>_LOWriter_FormConImageButtonGeneral
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlImageControlData
+; Name ..........: _LOWriter_FormConImageControlData
 ; Description ...: Set or Retrieve Image Control Data Properties.
-; Syntax ........: _LOWriter_FormControlImageControlData(ByRef $oImageControl[, $sDataField = Null[, $bInputRequired = Null]])
-; Parameters ....: $oImageControl       - [in/out] an object. A Image Control Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConImageControlData(ByRef $oImageControl[, $sDataField = Null[, $bInputRequired = Null]])
+; Parameters ....: $oImageControl       - [in/out] an object. A Image Control Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sDataField          - [optional] a string value. Default is Null. The Datafield name to retrieve content from, either a Table name, SQL query, or other.
 ;                  $bInputRequired      - [optional] a boolean value. Default is Null. If True, the control requires input.
 ; Return values .: Success: 1 or Array
@@ -3846,11 +3846,11 @@ EndFunc   ;==>_LOWriter_FormControlImageButtonGeneral
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  $sDataField is not checked to make sure it exists in the referenced Database, it is the user's responsibility to do this.
-; Related .......: _LOWriter_FormControlImageControlGeneral
+; Related .......: _LOWriter_FormConImageControlGeneral
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlImageControlData(ByRef $oImageControl, $sDataField = Null, $bInputRequired = Null)
+Func _LOWriter_FormConImageControlData(ByRef $oImageControl, $sDataField = Null, $bInputRequired = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -3859,7 +3859,7 @@ Func _LOWriter_FormControlImageControlData(ByRef $oImageControl, $sDataField = N
 
 	If Not IsObj($oImageControl) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oImageControl) <> $LOW_FORM_CONTROL_TYPE_IMAGE_CONTROL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oImageControl) <> $LOW_FORM_CONTROL_TYPE_IMAGE_CONTROL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
@@ -3881,15 +3881,15 @@ Func _LOWriter_FormControlImageControlData(ByRef $oImageControl, $sDataField = N
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlImageControlData
+EndFunc   ;==>_LOWriter_FormConImageControlData
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlImageControlGeneral
+; Name ..........: _LOWriter_FormConImageControlGeneral
 ; Description ...: Set or retrieve general Image control properties.
-; Syntax ........: _LOWriter_FormControlImageControlGeneral(ByRef $oImageControl[, $sName = Null[, $oLabelField = Null[, $iTxtDir = Null[, $bEnabled = Null[, $bVisible = Null[, $bReadOnly = Null[, $bPrintable = Null[, $bTabStop = Null[, $iTabOrder = Null[, $iBackColor = Null[, $iBorder = Null[, $iBorderColor = Null[, $sGraphics = Null[, $iScale = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]])
-; Parameters ....: $oImageControl       - [in/out] an object. A Image Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConImageControlGeneral(ByRef $oImageControl[, $sName = Null[, $oLabelField = Null[, $iTxtDir = Null[, $bEnabled = Null[, $bVisible = Null[, $bReadOnly = Null[, $bPrintable = Null[, $bTabStop = Null[, $iTabOrder = Null[, $iBackColor = Null[, $iBorder = Null[, $iBorderColor = Null[, $sGraphics = Null[, $iScale = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]])
+; Parameters ....: $oImageControl       - [in/out] an object. A Image Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sName               - [optional] a string value. Default is Null. The control name.
-;                  $oLabelField         - [optional] an object. Default is Null. A Label Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+;                  $oLabelField         - [optional] an object. Default is Null. A Label Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the control is visible.
@@ -3958,11 +3958,11 @@ EndFunc   ;==>_LOWriter_FormControlImageControlData
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $sAddInfo.
-; Related .......: _LOWriter_FormControlImageControlData
+; Related .......: _LOWriter_FormConImageControlData
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlImageControlGeneral(ByRef $oImageControl, $sName = Null, $oLabelField = Null, $iTxtDir = Null, $bEnabled = Null, $bVisible = Null, $bReadOnly = Null, $bPrintable = Null, $bTabStop = Null, $iTabOrder = Null, $iBackColor = Null, $iBorder = Null, $iBorderColor = Null, $sGraphics = Null, $iScale = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+Func _LOWriter_FormConImageControlGeneral(ByRef $oImageControl, $sName = Null, $oLabelField = Null, $iTxtDir = Null, $bEnabled = Null, $bVisible = Null, $bReadOnly = Null, $bPrintable = Null, $bTabStop = Null, $iTabOrder = Null, $iBackColor = Null, $iBorder = Null, $iBorderColor = Null, $sGraphics = Null, $iScale = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -3971,11 +3971,11 @@ Func _LOWriter_FormControlImageControlGeneral(ByRef $oImageControl, $sName = Nul
 
 	If Not IsObj($oImageControl) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oImageControl) <> $LOW_FORM_CONTROL_TYPE_IMAGE_CONTROL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oImageControl) <> $LOW_FORM_CONTROL_TYPE_IMAGE_CONTROL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $bTabStop, $iTabOrder, $iBackColor, $iBorder, $iBorderColor, $sGraphics, $iScale, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oImageControl.Control.Name(), __LOWriter_FormControlGetObj($oImageControl.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oImageControl.Control.WritingMode(), $oImageControl.Control.Enabled(), _
+		__LOWriter_ArrayFill($avControl, $oImageControl.Control.Name(), __LOWriter_FormConGetObj($oImageControl.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oImageControl.Control.WritingMode(), $oImageControl.Control.Enabled(), _
 				$oImageControl.Control.EnableVisible(), $oImageControl.Control.ReadOnly(), $oImageControl.Control.Printable(), $oImageControl.Control.Tabstop(), _
 				$oImageControl.Control.TabIndex(), $oImageControl.Control.BackgroundColor(), $oImageControl.Control.Border(), $oImageControl.Control.BorderColor(), _
 				$oImageControl.Control.Graphic(), $oImageControl.Control.ScaleMode(), $oImageControl.Control.Tag(), $oImageControl.Control.HelpText(), $oImageControl.Control.HelpURL())
@@ -3998,7 +3998,7 @@ Func _LOWriter_FormControlImageControlGeneral(ByRef $oImageControl, $sName = Nul
 
 	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-		If (__LOWriter_FormControlIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oImageControl.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oImageControl.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -4140,12 +4140,12 @@ Func _LOWriter_FormControlImageControlGeneral(ByRef $oImageControl, $sName = Nul
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlImageControlGeneral
+EndFunc   ;==>_LOWriter_FormConImageControlGeneral
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlInsert
+; Name ..........: _LOWriter_FormConInsert
 ; Description ...: Insert a control into a form and document.
-; Syntax ........: _LOWriter_FormControlInsert(ByRef $oParentForm, $iControl, $iX, $iY, $iWidth, $iHeight[, $sName = ""])
+; Syntax ........: _LOWriter_FormConInsert(ByRef $oParentForm, $iControl, $iX, $iY, $iWidth, $iHeight[, $sName = ""])
 ; Parameters ....: $oParentForm         - [in/out] an object. A Form object returned by a previous _LOWriter_FormAdd, _LOWriter_FormGetObjByIndex or _LOWriter_FormsGetList function.
 ;                  $iControl            - an integer value (1-524288). The control type to insert. See Constants $LOW_FORM_CONTROL_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iX                  - an integer value. The X Coordinate, in Micrometers.
@@ -4179,11 +4179,12 @@ EndFunc   ;==>_LOWriter_FormControlImageControlGeneral
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: When inserting a Grouped Control, a Group box will be automatically created and inserted into it.
-; Related .......: _LOWriter_FormControlsGetList, _LOWriter_FormControlDelete
+;                  I have not found a reliable and working way to add controls to a Group of Controls.
+; Related .......: _LOWriter_FormConsGetList, _LOWriter_FormConDelete
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlInsert(ByRef $oParentForm, $iControl, $iX, $iY, $iWidth, $iHeight, $sName = "")
+Func _LOWriter_FormConInsert(ByRef $oParentForm, $iControl, $iX, $iY, $iWidth, $iHeight, $sName = "")
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -4227,7 +4228,7 @@ Func _LOWriter_FormControlInsert(ByRef $oParentForm, $iControl, $iX, $iY, $iWidt
 
 	$sShapeName = "AU3_FORM_SHAPE_" & $iCount
 
-	$sControl = __LOWriter_FormControlIdentify(Null, $iControl)
+	$sControl = __LOWriter_FormConIdentify(Null, $iControl)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$oControl = $oDoc.createInstance($sControl)
@@ -4312,13 +4313,13 @@ Func _LOWriter_FormControlInsert(ByRef $oParentForm, $iControl, $iX, $iY, $iWidt
 	$oShape.Position = $tPos
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oShape)
-EndFunc   ;==>_LOWriter_FormControlInsert
+EndFunc   ;==>_LOWriter_FormConInsert
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlLabelGeneral
+; Name ..........: _LOWriter_FormConLabelGeneral
 ; Description ...: Set or Retrieve general Label control settings.
-; Syntax ........: _LOWriter_FormControlLabelGeneral(ByRef $oLabel[, $sName = Null[, $sLabel = Null[, $iTxtDir = Null[, $bEnabled = Null[, $bVisible = Null[, $bPrintable = Null[, $mFont = Null[, $iAlign = Null[, $iVertAlign = Null[, $iBackColor = Null[, $iBorder = Null[, $iBorderColor = Null[, $bWordBreak = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]])
-; Parameters ....: $oLabel              - [in/out] an object. A Label Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConLabelGeneral(ByRef $oLabel[, $sName = Null[, $sLabel = Null[, $iTxtDir = Null[, $bEnabled = Null[, $bVisible = Null[, $bPrintable = Null[, $mFont = Null[, $iAlign = Null[, $iVertAlign = Null[, $iBackColor = Null[, $iBorder = Null[, $iBorderColor = Null[, $bWordBreak = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]])
+; Parameters ....: $oLabel              - [in/out] an object. A Label Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sName               - [optional] a string value. Default is Null. The name of the Label control.
 ;                  $sLabel              - [optional] a string value. Default is Null. The Label of the control.
 ;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
@@ -4389,7 +4390,7 @@ EndFunc   ;==>_LOWriter_FormControlInsert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlLabelGeneral(ByRef $oLabel, $sName = Null, $sLabel = Null, $iTxtDir = Null, $bEnabled = Null, $bVisible = Null, $bPrintable = Null, $mFont = Null, $iAlign = Null, $iVertAlign = Null, $iBackColor = Null, $iBorder = Null, $iBorderColor = Null, $bWordBreak = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+Func _LOWriter_FormConLabelGeneral(ByRef $oLabel, $sName = Null, $sLabel = Null, $iTxtDir = Null, $bEnabled = Null, $bVisible = Null, $bPrintable = Null, $mFont = Null, $iAlign = Null, $iVertAlign = Null, $iBackColor = Null, $iBorder = Null, $iBorderColor = Null, $bWordBreak = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -4398,12 +4399,12 @@ Func _LOWriter_FormControlLabelGeneral(ByRef $oLabel, $sName = Null, $sLabel = N
 
 	If Not IsObj($oLabel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oLabel) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oLabel) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $bEnabled, $bVisible, $bPrintable, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bWordBreak, $sAddInfo, $sHelpText, $sHelpURL) Then
 		__LOWriter_ArrayFill($avControl, $oLabel.Control.Name(), $oLabel.Control.Label(), $oLabel.Control.WritingMode(), $oLabel.Control.Enabled(), $oLabel.Control.EnableVisible(), _
-				$oLabel.Control.Printable(), __LOWriter_ControlSetGetFontDesc($oLabel), $oLabel.Control.Align(), $oLabel.Control.VerticalAlign(), $oLabel.Control.BackgroundColor(), _
+				$oLabel.Control.Printable(), __LOWriter_FormConSetGetFontDesc($oLabel), $oLabel.Control.Align(), $oLabel.Control.VerticalAlign(), $oLabel.Control.BackgroundColor(), _
 				$oLabel.Control.Border(), $oLabel.Control.BorderColor(), $oLabel.Control.MultiLine(), $oLabel.Control.Tag(), $oLabel.Control.HelpText(), $oLabel.Control.HelpURL())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
@@ -4469,7 +4470,7 @@ Func _LOWriter_FormControlLabelGeneral(ByRef $oLabel, $sName = Null, $sLabel = N
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
-		__LOWriter_ControlSetGetFontDesc($oLabel, $mFont)
+		__LOWriter_FormConSetGetFontDesc($oLabel, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
@@ -4555,13 +4556,13 @@ Func _LOWriter_FormControlLabelGeneral(ByRef $oLabel, $sName = Null, $sLabel = N
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlLabelGeneral
+EndFunc   ;==>_LOWriter_FormConLabelGeneral
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlListBoxData
+; Name ..........: _LOWriter_FormConListBoxData
 ; Description ...: Set or Retrieve List Box Data Properties.
-; Syntax ........: _LOWriter_FormControlListBoxData(ByRef $oListBox[, $sDataField = Null[, $bInputRequired = Null[, $iType = Null[, $asListContent = Null[, $iBoundField = Null]]]]])
-; Parameters ....: $oListBox            - [in/out] an object. A List Box Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConListBoxData(ByRef $oListBox[, $sDataField = Null[, $bInputRequired = Null[, $iType = Null[, $asListContent = Null[, $iBoundField = Null]]]]])
+; Parameters ....: $oListBox            - [in/out] an object. A List Box Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sDataField          - [optional] a string value. Default is Null. The Datafield name to retrieve content from, either a Table name, SQL query, or other.
 ;                  $bInputRequired      - [optional] a boolean value. Default is Null. If True, the control requires input.
 ;                  $iType               - [optional] an integer value (0-5). Default is Null. The type of content to fill the control with. See Constants $LOW_FORM_CONTROL_SOURCE_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
@@ -4598,11 +4599,11 @@ EndFunc   ;==>_LOWriter_FormControlLabelGeneral
 ;                  $asListContent is not error checked for the same content, but only that the set array size is the same.
 ;                  $asListContent should be a single dimension array with a appropriate value in each element. e.g. If $iType is set to Table, the element will contain a Table name. Or if $iType is set to Value List, each element will contain a list item.
 ;                  For types other than Value list for $iType, the array sound contain a single element.
-; Related .......: _LOWriter_FormControlListBoxSelection, _LOWriter_FormControlListBoxGetCount, _LOWriter_FormControlListBoxGeneral
+; Related .......: _LOWriter_FormConListBoxSelection, _LOWriter_FormConListBoxGetCount, _LOWriter_FormConListBoxGeneral
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlListBoxData(ByRef $oListBox, $sDataField = Null, $bInputRequired = Null, $iType = Null, $asListContent = Null, $iBoundField = Null)
+Func _LOWriter_FormConListBoxData(ByRef $oListBox, $sDataField = Null, $bInputRequired = Null, $iType = Null, $asListContent = Null, $iBoundField = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -4611,7 +4612,7 @@ Func _LOWriter_FormControlListBoxData(ByRef $oListBox, $sDataField = Null, $bInp
 
 	If Not IsObj($oListBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oListBox) <> $LOW_FORM_CONTROL_TYPE_LIST_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oListBox) <> $LOW_FORM_CONTROL_TYPE_LIST_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sDataField, $bInputRequired, $iType, $asListContent, $iBoundField) Then
@@ -4653,15 +4654,15 @@ Func _LOWriter_FormControlListBoxData(ByRef $oListBox, $sDataField = Null, $bInp
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlListBoxData
+EndFunc   ;==>_LOWriter_FormConListBoxData
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlListBoxGeneral
+; Name ..........: _LOWriter_FormConListBoxGeneral
 ; Description ...: Set or Retrieve general List box properties.
-; Syntax ........: _LOWriter_FormControlListBoxGeneral(ByRef $oListBox[, $sName = Null[, $oLabelField = Null[, $iTxtDir = Null[, $bEnabled = Null[, $bVisible = Null[, $bReadOnly = Null[, $bPrintable = Null[, $iMouseScroll = Null[, $bTabStop = Null[, $iTabOrder = Null[, $asList = Null[, $mFont = Null[, $iAlign = Null[, $iBackColor = Null[, $iBorder = Null[, $iBorderColor = Null[, $bDropdown = Null[, $iLines = Null[, $bMultiSel = Null[, $aiDefaultSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]]]]])
-; Parameters ....: $oListBox            - [in/out] an object. A List Box Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConListBoxGeneral(ByRef $oListBox[, $sName = Null[, $oLabelField = Null[, $iTxtDir = Null[, $bEnabled = Null[, $bVisible = Null[, $bReadOnly = Null[, $bPrintable = Null[, $iMouseScroll = Null[, $bTabStop = Null[, $iTabOrder = Null[, $asList = Null[, $mFont = Null[, $iAlign = Null[, $iBackColor = Null[, $iBorder = Null[, $iBorderColor = Null[, $bDropdown = Null[, $iLines = Null[, $bMultiSel = Null[, $aiDefaultSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]]]]])
+; Parameters ....: $oListBox            - [in/out] an object. A List Box Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sName               - [optional] a string value. Default is Null. The control name.
-;                  $oLabelField         - [optional] an object. Default is Null. A Label Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+;                  $oLabelField         - [optional] an object. Default is Null. A Label Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the control is visible.
@@ -4753,11 +4754,11 @@ EndFunc   ;==>_LOWriter_FormControlListBoxData
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $asList, $mFont, $sAddInfo.
-; Related .......: _LOWriter_FormControlListBoxSelection, _LOWriter_FormControlListBoxGetCount, _LOWriter_FormControlListBoxData
+; Related .......: _LOWriter_FormConListBoxSelection, _LOWriter_FormConListBoxGetCount, _LOWriter_FormConListBoxData
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabelField = Null, $iTxtDir = Null, $bEnabled = Null, $bVisible = Null, $bReadOnly = Null, $bPrintable = Null, $iMouseScroll = Null, $bTabStop = Null, $iTabOrder = Null, $asList = Null, $mFont = Null, $iAlign = Null, $iBackColor = Null, $iBorder = Null, $iBorderColor = Null, $bDropdown = Null, $iLines = Null, $bMultiSel = Null, $aiDefaultSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+Func _LOWriter_FormConListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabelField = Null, $iTxtDir = Null, $bEnabled = Null, $bVisible = Null, $bReadOnly = Null, $bPrintable = Null, $iMouseScroll = Null, $bTabStop = Null, $iTabOrder = Null, $asList = Null, $mFont = Null, $iAlign = Null, $iBackColor = Null, $iBorder = Null, $iBorderColor = Null, $bDropdown = Null, $iLines = Null, $bMultiSel = Null, $aiDefaultSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -4766,13 +4767,13 @@ Func _LOWriter_FormControlListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabel
 
 	If Not IsObj($oListBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oListBox) <> $LOW_FORM_CONTROL_TYPE_LIST_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oListBox) <> $LOW_FORM_CONTROL_TYPE_LIST_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $asList, $mFont, $iAlign, $iBackColor, $iBorder, $iBorderColor, $bDropdown, $iLines, $bMultiSel, $aiDefaultSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oListBox.Control.Name(), __LOWriter_FormControlGetObj($oListBox.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oListBox.Control.WritingMode(), $oListBox.Control.Enabled(), _
+		__LOWriter_ArrayFill($avControl, $oListBox.Control.Name(), __LOWriter_FormConGetObj($oListBox.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oListBox.Control.WritingMode(), $oListBox.Control.Enabled(), _
 				$oListBox.Control.EnableVisible(), $oListBox.Control.ReadOnly(), $oListBox.Control.Printable(), $oListBox.Control.MouseWheelBehavior(), $oListBox.Control.Tabstop(), _
-				$oListBox.Control.TabIndex(), $oListBox.Control.StringItemList(), __LOWriter_ControlSetGetFontDesc($oListBox), $oListBox.Control.Align(), $oListBox.Control.BackgroundColor(), _
+				$oListBox.Control.TabIndex(), $oListBox.Control.StringItemList(), __LOWriter_FormConSetGetFontDesc($oListBox), $oListBox.Control.Align(), $oListBox.Control.BackgroundColor(), _
 				$oListBox.Control.Border(), $oListBox.Control.BorderColor(), $oListBox.Control.Dropdown(), $oListBox.Control.LineCount(), $oListBox.Control.MultiSelection(), _
 				$oListBox.Control.DefaultSelection(), $oListBox.Control.Tag(), $oListBox.Control.HelpText(), $oListBox.Control.HelpURL())
 
@@ -4794,7 +4795,7 @@ Func _LOWriter_FormControlListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabel
 
 	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-		If (__LOWriter_FormControlIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oListBox.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oListBox.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -4889,7 +4890,7 @@ Func _LOWriter_FormControlListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabel
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
-		__LOWriter_ControlSetGetFontDesc($oListBox, $mFont)
+		__LOWriter_FormConSetGetFontDesc($oListBox, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 2048))
 	EndIf
 
@@ -4998,13 +4999,13 @@ Func _LOWriter_FormControlListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabel
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlListBoxGeneral
+EndFunc   ;==>_LOWriter_FormConListBoxGeneral
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlListBoxGetCount
+; Name ..........: _LOWriter_FormConListBoxGetCount
 ; Description ...: Retrieve a count of values contained in a List Box.
-; Syntax ........: _LOWriter_FormControlListBoxGetCount(ByRef $oListBox)
-; Parameters ....: $oListBox            - [in/out] an object. A List Box Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConListBoxGetCount(ByRef $oListBox)
+; Parameters ....: $oListBox            - [in/out] an object. A List Box Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ; Return values .: Success: Integer
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -5018,11 +5019,11 @@ EndFunc   ;==>_LOWriter_FormControlListBoxGeneral
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FormControlListBoxGeneral, _LOWriter_FormControlListBoxData, _LOWriter_FormControlListBoxSelection
+; Related .......: _LOWriter_FormConListBoxGeneral, _LOWriter_FormConListBoxData, _LOWriter_FormConListBoxSelection
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlListBoxGetCount(ByRef $oListBox)
+Func _LOWriter_FormConListBoxGetCount(ByRef $oListBox)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -5030,20 +5031,20 @@ Func _LOWriter_FormControlListBoxGetCount(ByRef $oListBox)
 
 	If Not IsObj($oListBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oListBox) <> $LOW_FORM_CONTROL_TYPE_LIST_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oListBox) <> $LOW_FORM_CONTROL_TYPE_LIST_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$iCount = $oListBox.Control.ItemCount()
 	If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $iCount)
-EndFunc   ;==>_LOWriter_FormControlListBoxGetCount
+EndFunc   ;==>_LOWriter_FormConListBoxGetCount
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlListBoxSelection
+; Name ..........: _LOWriter_FormConListBoxSelection
 ; Description ...: Set or Retrieve the current List Box selection.
-; Syntax ........: _LOWriter_FormControlListBoxSelection(ByRef $oListBox[, $aiSelection = Null[, $bReturnValue = False]])
-; Parameters ....: $oListBox            - [in/out] an object. A List Box Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConListBoxSelection(ByRef $oListBox[, $aiSelection = Null[, $bReturnValue = False]])
+; Parameters ....: $oListBox            - [in/out] an object. A List Box Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $aiSelection         - [optional] an array of integers. Default is Null. A single dimension array of selection values. See remarks.
 ;                  $bReturnValue        - [optional] a boolean value. Default is False. If True, when retrieving the the current selection(s), the current selected VALUE, instead of the position is returned.
 ; Return values .: Success: 1 or Array.
@@ -5069,11 +5070,11 @@ EndFunc   ;==>_LOWriter_FormControlListBoxGetCount
 ; Remarks .......: The array called for $aiSelection should be a single dimension array, with one integer value, corresponding to the position in the List box value array, per array element, to indicate which value(s) is/are selected.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current Selection(s) of the List Box. If $bReturnValue is false, the return will be a single dimension array with each element containing an integer indicating which List Box value is selected, else if $bReturnValue is True, a single dimension array will be returned, with each element containing a selected value.
 ;                  Call $aiSelection with Default keyword to reset the value to default.
-; Related .......: _LOWriter_FormControlListBoxGeneral, _LOWriter_FormControlListBoxData, _LOWriter_FormControlListBoxGetCount
+; Related .......: _LOWriter_FormConListBoxGeneral, _LOWriter_FormConListBoxData, _LOWriter_FormConListBoxGetCount
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlListBoxSelection(ByRef $oListBox, $aiSelection = Null, $bReturnValue = False)
+Func _LOWriter_FormConListBoxSelection(ByRef $oListBox, $aiSelection = Null, $bReturnValue = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -5082,7 +5083,7 @@ Func _LOWriter_FormControlListBoxSelection(ByRef $oListBox, $aiSelection = Null,
 
 	If Not IsObj($oListBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oListBox) <> $LOW_FORM_CONTROL_TYPE_LIST_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oListBox) <> $LOW_FORM_CONTROL_TYPE_LIST_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If Not IsBool($bReturnValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
@@ -5118,13 +5119,13 @@ Func _LOWriter_FormControlListBoxSelection(ByRef $oListBox, $aiSelection = Null,
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlListBoxSelection
+EndFunc   ;==>_LOWriter_FormConListBoxSelection
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlNavBarGeneral
+; Name ..........: _LOWriter_FormConNavBarGeneral
 ; Description ...: Set or Retrieve general Navigation Bar properties.
-; Syntax ........: _LOWriter_FormControlNavBarGeneral(ByRef $oNavBar[, $sName = Null[, $iTxtDir = Null[, $bEnabled = Null[, $bVisible = Null[, $bTabStop = Null[, $iTabOrder = Null[, $iDelay = Null[, $mFont = Null[, $iBackColor = Null[, $iBorder = Null[, $bSmallIcon = Null[, $bShowPos = Null[, $bShowNav = Null[, $bShowActing = Null[, $bShowFiltering = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]])
-; Parameters ....: $oNavBar             - [in/out] an object. A Navigation Bar Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConNavBarGeneral(ByRef $oNavBar[, $sName = Null[, $iTxtDir = Null[, $bEnabled = Null[, $bVisible = Null[, $bTabStop = Null[, $iTabOrder = Null[, $iDelay = Null[, $mFont = Null[, $iBackColor = Null[, $iBorder = Null[, $bSmallIcon = Null[, $bShowPos = Null[, $bShowNav = Null[, $bShowActing = Null[, $bShowFiltering = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]])
+; Parameters ....: $oNavBar             - [in/out] an object. A Navigation Bar Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sName               - [optional] a string value. Default is Null. The control name.
 ;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
@@ -5201,7 +5202,7 @@ EndFunc   ;==>_LOWriter_FormControlListBoxSelection
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlNavBarGeneral(ByRef $oNavBar, $sName = Null, $iTxtDir = Null, $bEnabled = Null, $bVisible = Null, $bTabStop = Null, $iTabOrder = Null, $iDelay = Null, $mFont = Null, $iBackColor = Null, $iBorder = Null, $bSmallIcon = Null, $bShowPos = Null, $bShowNav = Null, $bShowActing = Null, $bShowFiltering = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+Func _LOWriter_FormConNavBarGeneral(ByRef $oNavBar, $sName = Null, $iTxtDir = Null, $bEnabled = Null, $bVisible = Null, $bTabStop = Null, $iTabOrder = Null, $iDelay = Null, $mFont = Null, $iBackColor = Null, $iBorder = Null, $bSmallIcon = Null, $bShowPos = Null, $bShowNav = Null, $bShowActing = Null, $bShowFiltering = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -5211,12 +5212,12 @@ Func _LOWriter_FormControlNavBarGeneral(ByRef $oNavBar, $sName = Null, $iTxtDir 
 
 	If Not IsObj($oNavBar) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oNavBar) <> $LOW_FORM_CONTROL_TYPE_NAV_BAR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oNavBar) <> $LOW_FORM_CONTROL_TYPE_NAV_BAR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $iTxtDir, $bEnabled, $bVisible, $bTabStop, $iTabOrder, $iDelay, $mFont, $iBackColor, $iBorder, $bSmallIcon, $bShowPos, $bShowNav, $bShowActing, $bShowFiltering, $sAddInfo, $sHelpText, $sHelpURL) Then
 		__LOWriter_ArrayFill($avControl, $oNavBar.Control.Name(), $oNavBar.Control.WritingMode(), $oNavBar.Control.Enabled(), $oNavBar.Control.EnableVisible(), _
-				$oNavBar.Control.Tabstop(), $oNavBar.Control.TabIndex(), $oNavBar.Control.RepeatDelay(), __LOWriter_ControlSetGetFontDesc($oNavBar), $oNavBar.Control.BackgroundColor(), _
+				$oNavBar.Control.Tabstop(), $oNavBar.Control.TabIndex(), $oNavBar.Control.RepeatDelay(), __LOWriter_FormConSetGetFontDesc($oNavBar), $oNavBar.Control.BackgroundColor(), _
 				$oNavBar.Control.Border(), (($oNavBar.Control.IconSize() = $__LOW_FORM_CONTROL_ICON_SMALL) ? (True) : (False)), _ ; Icon size.
 				$oNavBar.Control.ShowPosition(), $oNavBar.Control.ShowNavigation(), $oNavBar.Control.ShowRecordActions(), $oNavBar.Control.ShowFilterSort(), _
 				$oNavBar.Control.Tag(), $oNavBar.Control.HelpText(), $oNavBar.Control.HelpURL())
@@ -5293,7 +5294,7 @@ Func _LOWriter_FormControlNavBarGeneral(ByRef $oNavBar, $sName = Null, $iTxtDir 
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
-		__LOWriter_ControlSetGetFontDesc($oNavBar, $mFont)
+		__LOWriter_FormConSetGetFontDesc($oNavBar, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
@@ -5388,13 +5389,13 @@ Func _LOWriter_FormControlNavBarGeneral(ByRef $oNavBar, $sName = Null, $iTxtDir 
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlNavBarGeneral
+EndFunc   ;==>_LOWriter_FormConNavBarGeneral
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlNumericFieldData
+; Name ..........: _LOWriter_FormConNumericFieldData
 ; Description ...: Set or Retrieve Numeric Field Data Properties.
-; Syntax ........: _LOWriter_FormControlNumericFieldData(ByRef $oNumericField[, $sDataField = Null[, $bInputRequired = Null]])
-; Parameters ....: $oNumericField       - [in/out] an object. A Numeric Field Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConNumericFieldData(ByRef $oNumericField[, $sDataField = Null[, $bInputRequired = Null]])
+; Parameters ....: $oNumericField       - [in/out] an object. A Numeric Field Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sDataField          - [optional] a string value. Default is Null. The Datafield name to retrieve content from, either a Table name, SQL query, or other.
 ;                  $bInputRequired      - [optional] a boolean value. Default is Null. If True, the control requires input.
 ; Return values .: Success: 1 or Array
@@ -5418,11 +5419,11 @@ EndFunc   ;==>_LOWriter_FormControlNavBarGeneral
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  $sDataField is not checked to make sure it exists in the referenced Database, it is the user's responsibility to do this.
-; Related .......: _LOWriter_FormControlNumericFieldValue, _LOWriter_FormControlNumericFieldGeneral
+; Related .......: _LOWriter_FormConNumericFieldValue, _LOWriter_FormConNumericFieldGeneral
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlNumericFieldData(ByRef $oNumericField, $sDataField = Null, $bInputRequired = Null)
+Func _LOWriter_FormConNumericFieldData(ByRef $oNumericField, $sDataField = Null, $bInputRequired = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -5431,7 +5432,7 @@ Func _LOWriter_FormControlNumericFieldData(ByRef $oNumericField, $sDataField = N
 
 	If Not IsObj($oNumericField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oNumericField) <> $LOW_FORM_CONTROL_TYPE_NUMERIC_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oNumericField) <> $LOW_FORM_CONTROL_TYPE_NUMERIC_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
@@ -5453,15 +5454,15 @@ Func _LOWriter_FormControlNumericFieldData(ByRef $oNumericField, $sDataField = N
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlNumericFieldData
+EndFunc   ;==>_LOWriter_FormConNumericFieldData
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlNumericFieldGeneral
+; Name ..........: _LOWriter_FormConNumericFieldGeneral
 ; Description ...: Set or Retrieve general Numeric Field properties.
-; Syntax ........: _LOWriter_FormControlNumericFieldGeneral(ByRef $oNumericField[, $sName = Null[, $oLabelField = Null[, $iTxtDir = Null[, $bStrict = Null[, $bEnabled = Null[, $bVisible = Null[, $bReadOnly = Null[, $bPrintable = Null[, $iMouseScroll = Null[, $bTabStop = Null[, $iTabOrder = Null[, $nMin = Null[, $nMax = Null[, $iIncr = Null[, $nDefault = Null[, $iDecimal = Null[, $bThousandsSep = Null[, $bSpin = Null[, $bRepeat = Null[, $iDelay = Null[, $mFont = Null[, $iAlign = Null[, $iVertAlign = Null[, $iBackColor = Null[, $iBorder = Null[, $iBorderColor = Null[, $bHideSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]]]]]]]]]]]])
-; Parameters ....: $oNumericField       - [in/out] an object. A Numeric Field Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConNumericFieldGeneral(ByRef $oNumericField[, $sName = Null[, $oLabelField = Null[, $iTxtDir = Null[, $bStrict = Null[, $bEnabled = Null[, $bVisible = Null[, $bReadOnly = Null[, $bPrintable = Null[, $iMouseScroll = Null[, $bTabStop = Null[, $iTabOrder = Null[, $nMin = Null[, $nMax = Null[, $iIncr = Null[, $nDefault = Null[, $iDecimal = Null[, $bThousandsSep = Null[, $bSpin = Null[, $bRepeat = Null[, $iDelay = Null[, $mFont = Null[, $iAlign = Null[, $iVertAlign = Null[, $iBackColor = Null[, $iBorder = Null[, $iBorderColor = Null[, $bHideSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]]]]]]]]]]]])
+; Parameters ....: $oNumericField       - [in/out] an object. A Numeric Field Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sName               - [optional] a string value. Default is Null. The control name.
-;                  $oLabelField         - [optional] an object. Default is Null. A Label Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+;                  $oLabelField         - [optional] an object. Default is Null. A Label Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bStrict             - [optional] a boolean value. Default is Null. If True, strict formatting is enabled.
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
@@ -5575,11 +5576,11 @@ EndFunc   ;==>_LOWriter_FormControlNumericFieldData
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $mFont, $sAddInfo.
-; Related .......: _LOWriter_FormControlNumericFieldValue, _LOWriter_FormControlNumericFieldData
+; Related .......: _LOWriter_FormConNumericFieldValue, _LOWriter_FormConNumericFieldData
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlNumericFieldGeneral(ByRef $oNumericField, $sName = Null, $oLabelField = Null, $iTxtDir = Null, $bStrict = Null, $bEnabled = Null, $bVisible = Null, $bReadOnly = Null, $bPrintable = Null, $iMouseScroll = Null, $bTabStop = Null, $iTabOrder = Null, $nMin = Null, $nMax = Null, $iIncr = Null, $nDefault = Null, $iDecimal = Null, $bThousandsSep = Null, $bSpin = Null, $bRepeat = Null, $iDelay = Null, $mFont = Null, $iAlign = Null, $iVertAlign = Null, $iBackColor = Null, $iBorder = Null, $iBorderColor = Null, $bHideSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+Func _LOWriter_FormConNumericFieldGeneral(ByRef $oNumericField, $sName = Null, $oLabelField = Null, $iTxtDir = Null, $bStrict = Null, $bEnabled = Null, $bVisible = Null, $bReadOnly = Null, $bPrintable = Null, $iMouseScroll = Null, $bTabStop = Null, $iTabOrder = Null, $nMin = Null, $nMax = Null, $iIncr = Null, $nDefault = Null, $iDecimal = Null, $bThousandsSep = Null, $bSpin = Null, $bRepeat = Null, $iDelay = Null, $mFont = Null, $iAlign = Null, $iVertAlign = Null, $iBackColor = Null, $iBorder = Null, $iBorderColor = Null, $bHideSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -5588,16 +5589,16 @@ Func _LOWriter_FormControlNumericFieldGeneral(ByRef $oNumericField, $sName = Nul
 
 	If Not IsObj($oNumericField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oNumericField) <> $LOW_FORM_CONTROL_TYPE_NUMERIC_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oNumericField) <> $LOW_FORM_CONTROL_TYPE_NUMERIC_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $bStrict, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $nMin, $nMax, $iIncr, $nDefault, $iDecimal, $bThousandsSep, $bSpin, $bRepeat, $iDelay, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oNumericField.Control.Name(), __LOWriter_FormControlGetObj($oNumericField.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oNumericField.Control.WritingMode(), $oNumericField.Control.StrictFormat(), _
+		__LOWriter_ArrayFill($avControl, $oNumericField.Control.Name(), __LOWriter_FormConGetObj($oNumericField.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oNumericField.Control.WritingMode(), $oNumericField.Control.StrictFormat(), _
 				$oNumericField.Control.Enabled(), $oNumericField.Control.EnableVisible(), $oNumericField.Control.ReadOnly(), $oNumericField.Control.Printable(), _
 				$oNumericField.Control.MouseWheelBehavior(), $oNumericField.Control.Tabstop(), $oNumericField.Control.TabIndex(), $oNumericField.Control.ValueMin(), _
 				$oNumericField.Control.ValueMax(), $oNumericField.Control.ValueStep(), $oNumericField.Control.DefaultValue(), $oNumericField.Control.DecimalAccuracy(), _
 				$oNumericField.Control.ShowThousandsSeparator(), $oNumericField.Control.Spin(), $oNumericField.Control.Repeat(), $oNumericField.Control.RepeatDelay(), _
-				__LOWriter_ControlSetGetFontDesc($oNumericField), $oNumericField.Control.Align(), $oNumericField.Control.VerticalAlign(), $oNumericField.Control.BackgroundColor(), _
+				__LOWriter_FormConSetGetFontDesc($oNumericField), $oNumericField.Control.Align(), $oNumericField.Control.VerticalAlign(), $oNumericField.Control.BackgroundColor(), _
 				$oNumericField.Control.Border(), $oNumericField.Control.BorderColor(), $oNumericField.Control.HideInactiveSelection(), $oNumericField.Control.Tag(), _
 				$oNumericField.Control.HelpText(), $oNumericField.Control.HelpURL())
 
@@ -5619,7 +5620,7 @@ Func _LOWriter_FormControlNumericFieldGeneral(ByRef $oNumericField, $sName = Nul
 
 	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-		If (__LOWriter_FormControlIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oNumericField.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oNumericField.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -5791,7 +5792,7 @@ Func _LOWriter_FormControlNumericFieldGeneral(ByRef $oNumericField, $sName = Nul
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 24, 0)
-		__LOWriter_ControlSetGetFontDesc($oNumericField, $mFont)
+		__LOWriter_FormConSetGetFontDesc($oNumericField, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 1048576))
 	EndIf
 
@@ -5877,13 +5878,13 @@ Func _LOWriter_FormControlNumericFieldGeneral(ByRef $oNumericField, $sName = Nul
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlNumericFieldGeneral
+EndFunc   ;==>_LOWriter_FormConNumericFieldGeneral
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlNumericFieldValue
+; Name ..........: _LOWriter_FormConNumericFieldValue
 ; Description ...: Set or retrieve the current Numeric field value.
-; Syntax ........: _LOWriter_FormControlNumericFieldValue(ByRef $oNumericField[, $nValue = Null])
-; Parameters ....: $oNumericField       - [in/out] an object. A Numeric Field Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConNumericFieldValue(ByRef $oNumericField[, $nValue = Null])
+; Parameters ....: $oNumericField       - [in/out] an object. A Numeric Field Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $nValue              - [optional] a general number value. Default is Null. The value to set the field to.
 ; Return values .: Success: 1 or Number
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -5903,11 +5904,11 @@ EndFunc   ;==>_LOWriter_FormControlNumericFieldGeneral
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current value. Return will be Null if a value hasn't been set.
 ;                  Call $nValue with Default keyword to reset the value to default.
-; Related .......: _LOWriter_FormControlNumericFieldGeneral, _LOWriter_FormControlNumericFieldData
+; Related .......: _LOWriter_FormConNumericFieldGeneral, _LOWriter_FormConNumericFieldData
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlNumericFieldValue(ByRef $oNumericField, $nValue = Null)
+Func _LOWriter_FormConNumericFieldValue(ByRef $oNumericField, $nValue = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -5916,7 +5917,7 @@ Func _LOWriter_FormControlNumericFieldValue(ByRef $oNumericField, $nValue = Null
 
 	If Not IsObj($oNumericField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oNumericField) <> $LOW_FORM_CONTROL_TYPE_NUMERIC_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oNumericField) <> $LOW_FORM_CONTROL_TYPE_NUMERIC_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($nValue) Then
@@ -5936,13 +5937,13 @@ Func _LOWriter_FormControlNumericFieldValue(ByRef $oNumericField, $nValue = Null
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlNumericFieldValue
+EndFunc   ;==>_LOWriter_FormConNumericFieldValue
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlOptionButtonData
+; Name ..........: _LOWriter_FormConOptionButtonData
 ; Description ...: Set or Retrieve Option Button Data Properties.
-; Syntax ........: _LOWriter_FormControlOptionButtonData(ByRef $oOptionButton[, $sDataField = Null[, $bInputRequired = Null]])
-; Parameters ....: $oOptionButton       - [in/out] an object. A Option Button Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConOptionButtonData(ByRef $oOptionButton[, $sDataField = Null[, $bInputRequired = Null]])
+; Parameters ....: $oOptionButton       - [in/out] an object. A Option Button Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sDataField          - [optional] a string value. Default is Null. The Datafield name to retrieve content from, either a Table name, SQL query, or other.
 ;                  $bInputRequired      - [optional] a boolean value. Default is Null. If True, the control requires input.
 ; Return values .: Success: 1 or Array
@@ -5967,11 +5968,11 @@ EndFunc   ;==>_LOWriter_FormControlNumericFieldValue
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  $sDataField is not checked to make sure it exists in the referenced Database, it is the user's responsibility to do this.
 ;                  Reference Values are not included here as they are applicable to Calc only, as far as I can ascertain.
-; Related .......: _LOWriter_FormControlOptionButtonState, _LOWriter_FormControlOptionButtonGeneral
+; Related .......: _LOWriter_FormConOptionButtonState, _LOWriter_FormConOptionButtonGeneral
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlOptionButtonData(ByRef $oOptionButton, $sDataField = Null, $bInputRequired = Null)
+Func _LOWriter_FormConOptionButtonData(ByRef $oOptionButton, $sDataField = Null, $bInputRequired = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -5980,7 +5981,7 @@ Func _LOWriter_FormControlOptionButtonData(ByRef $oOptionButton, $sDataField = N
 
 	If Not IsObj($oOptionButton) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oOptionButton) <> $LOW_FORM_CONTROL_TYPE_OPTION_BUTTON) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oOptionButton) <> $LOW_FORM_CONTROL_TYPE_OPTION_BUTTON) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
@@ -6002,16 +6003,16 @@ Func _LOWriter_FormControlOptionButtonData(ByRef $oOptionButton, $sDataField = N
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlOptionButtonData
+EndFunc   ;==>_LOWriter_FormConOptionButtonData
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlOptionButtonGeneral
+; Name ..........: _LOWriter_FormConOptionButtonGeneral
 ; Description ...: Set or Retrieve general Option button properties.
-; Syntax ........: _LOWriter_FormControlOptionButtonGeneral(ByRef $oOptionButton[, $sName = Null[, $sLabel = Null[, $oLabelField = Null[, $iTxtDir = Null[, $sGroupName = Null[, $bEnabled = Null[, $bVisible = Null[, $bPrintable = Null[, $bTabStop = Null[, $iTabOrder = Null[, $iDefaultState = Null[, $mFont = Null[, $iStyle = Null[, $iAlign = Null[, $iVertAlign = Null[, $iBackColor = Null[, $bWordBreak = Null[, $sGraphics = Null[, $iGraphicAlign = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]]]])
-; Parameters ....: $oOptionButton       - [in/out] an object. A Option button Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConOptionButtonGeneral(ByRef $oOptionButton[, $sName = Null[, $sLabel = Null[, $oLabelField = Null[, $iTxtDir = Null[, $sGroupName = Null[, $bEnabled = Null[, $bVisible = Null[, $bPrintable = Null[, $bTabStop = Null[, $iTabOrder = Null[, $iDefaultState = Null[, $mFont = Null[, $iStyle = Null[, $iAlign = Null[, $iVertAlign = Null[, $iBackColor = Null[, $bWordBreak = Null[, $sGraphics = Null[, $iGraphicAlign = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]]]])
+; Parameters ....: $oOptionButton       - [in/out] an object. A Option button Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sName               - [optional] a string value. Default is Null. The control name.
 ;                  $sLabel              - [optional] a string value. Default is Null. The control's label to display.
-;                  $oLabelField         - [optional] an object. Default is Null. A Group Box Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+;                  $oLabelField         - [optional] an object. Default is Null. A Group Box Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $sGroupName          - [optional] a string value. Default is Null. The Group name the control is in.
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
@@ -6094,11 +6095,11 @@ EndFunc   ;==>_LOWriter_FormControlOptionButtonData
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $iDefaultState, $mFont, $sAddInfo.
-; Related .......: _LOWriter_FormControlOptionButtonState, _LOWriter_FormControlOptionButtonData
+; Related .......: _LOWriter_FormConOptionButtonState, _LOWriter_FormConOptionButtonData
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlOptionButtonGeneral(ByRef $oOptionButton, $sName = Null, $sLabel = Null, $oLabelField = Null, $iTxtDir = Null, $sGroupName = Null, $bEnabled = Null, $bVisible = Null, $bPrintable = Null, $bTabStop = Null, $iTabOrder = Null, $iDefaultState = Null, $mFont = Null, $iStyle = Null, $iAlign = Null, $iVertAlign = Null, $iBackColor = Null, $bWordBreak = Null, $sGraphics = Null, $iGraphicAlign = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+Func _LOWriter_FormConOptionButtonGeneral(ByRef $oOptionButton, $sName = Null, $sLabel = Null, $oLabelField = Null, $iTxtDir = Null, $sGroupName = Null, $bEnabled = Null, $bVisible = Null, $bPrintable = Null, $bTabStop = Null, $iTabOrder = Null, $iDefaultState = Null, $mFont = Null, $iStyle = Null, $iAlign = Null, $iVertAlign = Null, $iBackColor = Null, $bWordBreak = Null, $sGraphics = Null, $iGraphicAlign = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -6107,13 +6108,13 @@ Func _LOWriter_FormControlOptionButtonGeneral(ByRef $oOptionButton, $sName = Nul
 
 	If Not IsObj($oOptionButton) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oOptionButton) <> $LOW_FORM_CONTROL_TYPE_OPTION_BUTTON) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oOptionButton) <> $LOW_FORM_CONTROL_TYPE_OPTION_BUTTON) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $sLabel, $oLabelField, $iTxtDir, $sGroupName, $bEnabled, $bVisible, $bPrintable, $bTabStop, $iTabOrder, $iDefaultState, $mFont, $iStyle, $iAlign, $iVertAlign, $iBackColor, $bWordBreak, $sGraphics, $iGraphicAlign, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oOptionButton.Control.Name(), $oOptionButton.Control.Label(), __LOWriter_FormControlGetObj($oOptionButton.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_GROUP_BOX), $oOptionButton.Control.WritingMode(), _
+		__LOWriter_ArrayFill($avControl, $oOptionButton.Control.Name(), $oOptionButton.Control.Label(), __LOWriter_FormConGetObj($oOptionButton.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_GROUP_BOX), $oOptionButton.Control.WritingMode(), _
 				$oOptionButton.Control.GroupName(), $oOptionButton.Control.Enabled(), $oOptionButton.Control.EnableVisible(), $oOptionButton.Control.Printable(), _
-				$oOptionButton.Control.Tabstop(), $oOptionButton.Control.TabIndex(), $oOptionButton.Control.DefaultState(), __LOWriter_ControlSetGetFontDesc($oOptionButton), _
+				$oOptionButton.Control.Tabstop(), $oOptionButton.Control.TabIndex(), $oOptionButton.Control.DefaultState(), __LOWriter_FormConSetGetFontDesc($oOptionButton), _
 				$oOptionButton.Control.VisualEffect(), $oOptionButton.Control.Align(), $oOptionButton.Control.VerticalAlign(), $oOptionButton.Control.BackgroundColor(), _
 				$oOptionButton.Control.MultiLine(), $oOptionButton.Control.Graphic(), $oOptionButton.Control.ImagePosition(), $oOptionButton.Control.Tag(), _
 				$oOptionButton.Control.HelpText(), $oOptionButton.Control.HelpURL())
@@ -6145,7 +6146,7 @@ Func _LOWriter_FormControlOptionButtonGeneral(ByRef $oOptionButton, $sName = Nul
 
 	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-		If (__LOWriter_FormControlIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_GROUP_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_GROUP_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oOptionButton.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oOptionButton.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -6227,7 +6228,7 @@ Func _LOWriter_FormControlOptionButtonGeneral(ByRef $oOptionButton, $sName = Nul
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
-		__LOWriter_ControlSetGetFontDesc($oOptionButton, $mFont)
+		__LOWriter_FormConSetGetFontDesc($oOptionButton, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 2048))
 	EndIf
 
@@ -6323,13 +6324,13 @@ Func _LOWriter_FormControlOptionButtonGeneral(ByRef $oOptionButton, $sName = Nul
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlOptionButtonGeneral
+EndFunc   ;==>_LOWriter_FormConOptionButtonGeneral
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlOptionButtonState
+; Name ..........: _LOWriter_FormConOptionButtonState
 ; Description ...: Set or Retrieve the current Option button state.
-; Syntax ........: _LOWriter_FormControlOptionButtonState(ByRef $oOptionButton[, $iState = Null])
-; Parameters ....: $oOptionButton       - [in/out] an object. A Option Button Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConOptionButtonState(ByRef $oOptionButton[, $iState = Null])
+; Parameters ....: $oOptionButton       - [in/out] an object. A Option Button Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $iState              - [optional] an integer value (0-1). Default is Null. The current state of the Option Button. See Constants $LOW_FORM_CONTROL_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Integer
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -6350,11 +6351,11 @@ EndFunc   ;==>_LOWriter_FormControlOptionButtonGeneral
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current Option Button state.
 ;                  Call $iState with Default keyword to reset the value to default.
-; Related .......: _LOWriter_FormControlOptionButtonGeneral, _LOWriter_FormControlOptionButtonData
+; Related .......: _LOWriter_FormConOptionButtonGeneral, _LOWriter_FormConOptionButtonData
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlOptionButtonState(ByRef $oOptionButton, $iState = Null)
+Func _LOWriter_FormConOptionButtonState(ByRef $oOptionButton, $iState = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -6362,7 +6363,7 @@ Func _LOWriter_FormControlOptionButtonState(ByRef $oOptionButton, $iState = Null
 
 	If Not IsObj($oOptionButton) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oOptionButton) <> $LOW_FORM_CONTROL_TYPE_OPTION_BUTTON) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oOptionButton) <> $LOW_FORM_CONTROL_TYPE_OPTION_BUTTON) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iState) Then
@@ -6382,13 +6383,13 @@ Func _LOWriter_FormControlOptionButtonState(ByRef $oOptionButton, $iState = Null
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlOptionButtonState
+EndFunc   ;==>_LOWriter_FormConOptionButtonState
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlPatternFieldData
+; Name ..........: _LOWriter_FormConPatternFieldData
 ; Description ...: Set or Retrieve Pattern Field Data Properties.
-; Syntax ........: _LOWriter_FormControlPatternFieldData(ByRef $oPatternField[, $sDataField = Null[, $bEmptyIsNull = Null[, $bInputRequired = Null[, $bFilter = Null]]]])
-; Parameters ....: $oPatternField       - [in/out] an object. A Pattern Field Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConPatternFieldData(ByRef $oPatternField[, $sDataField = Null[, $bEmptyIsNull = Null[, $bInputRequired = Null[, $bFilter = Null]]]])
+; Parameters ....: $oPatternField       - [in/out] an object. A Pattern Field Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sDataField          - [optional] a string value. Default is Null. The Datafield name to retrieve content from, either a Table name, SQL query, or other.
 ;                  $bEmptyIsNull        - [optional] a boolean value. Default is Null. If True, an empty string will be treated as a Null value.
 ;                  $bInputRequired      - [optional] a boolean value. Default is Null. If True, the control requires input.
@@ -6418,11 +6419,11 @@ EndFunc   ;==>_LOWriter_FormControlOptionButtonState
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  $sDataField is not checked to make sure it exists in the referenced Database, it is the user's responsibility to do this.
-; Related .......: _LOWriter_FormControlPatternFieldValue, _LOWriter_FormControlPatternFieldGeneral
+; Related .......: _LOWriter_FormConPatternFieldValue, _LOWriter_FormConPatternFieldGeneral
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlPatternFieldData(ByRef $oPatternField, $sDataField = Null, $bEmptyIsNull = Null, $bInputRequired = Null, $bFilter = Null)
+Func _LOWriter_FormConPatternFieldData(ByRef $oPatternField, $sDataField = Null, $bEmptyIsNull = Null, $bInputRequired = Null, $bFilter = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -6431,7 +6432,7 @@ Func _LOWriter_FormControlPatternFieldData(ByRef $oPatternField, $sDataField = N
 
 	If Not IsObj($oPatternField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oPatternField) <> $LOW_FORM_CONTROL_TYPE_PATTERN_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oPatternField) <> $LOW_FORM_CONTROL_TYPE_PATTERN_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $bFilter) Then
@@ -6466,15 +6467,15 @@ Func _LOWriter_FormControlPatternFieldData(ByRef $oPatternField, $sDataField = N
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlPatternFieldData
+EndFunc   ;==>_LOWriter_FormConPatternFieldData
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlPatternFieldGeneral
+; Name ..........: _LOWriter_FormConPatternFieldGeneral
 ; Description ...: Set or Retrieve general Pattern Field properties.
-; Syntax ........: _LOWriter_FormControlPatternFieldGeneral(ByRef $oPatternField[, $sName = Null[, $oLabelField = Null[, $iTxtDir = Null[, $iMaxLen = Null[, $sEditMask = Null[, $sLiteralMask = Null[, $bStrict = Null[, $bEnabled = Null[, $bVisible = Null[, $bReadOnly = Null[, $bPrintable = Null[, $iMouseScroll = Null[, $bTabStop = Null[, $iTabOrder = Null[, $sDefaultTxt = Null[, $mFont = Null[, $iAlign = Null[, $iVertAlign = Null[, $iBackColor = Null[, $iBorder = Null[, $iBorderColor = Null[, $bHideSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]]]]]]])
-; Parameters ....: $oPatternField       - [in/out] an object. A Pattern Field Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConPatternFieldGeneral(ByRef $oPatternField[, $sName = Null[, $oLabelField = Null[, $iTxtDir = Null[, $iMaxLen = Null[, $sEditMask = Null[, $sLiteralMask = Null[, $bStrict = Null[, $bEnabled = Null[, $bVisible = Null[, $bReadOnly = Null[, $bPrintable = Null[, $iMouseScroll = Null[, $bTabStop = Null[, $iTabOrder = Null[, $sDefaultTxt = Null[, $mFont = Null[, $iAlign = Null[, $iVertAlign = Null[, $iBackColor = Null[, $iBorder = Null[, $iBorderColor = Null[, $bHideSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]]]]]]])
+; Parameters ....: $oPatternField       - [in/out] an object. A Pattern Field Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sName               - [optional] a string value. Default is Null. The control name.
-;                  $oLabelField         - [optional] an object. Default is Null. A Label Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+;                  $oLabelField         - [optional] an object. Default is Null. A Label Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iMaxLen             - [optional] an integer value (-1-2147483647). Default is Null. The maximum text length that the Pattern field will accept.
 ;                  $sEditMask           - [optional] a string value. Default is Null. The edit mask of the field.
@@ -6567,11 +6568,11 @@ EndFunc   ;==>_LOWriter_FormControlPatternFieldData
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $sDefaultTxt, $mFont, $sAddInfo.
-; Related .......: _LOWriter_FormControlPatternFieldValue, _LOWriter_FormControlPatternFieldData
+; Related .......: _LOWriter_FormConPatternFieldValue, _LOWriter_FormConPatternFieldData
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlPatternFieldGeneral(ByRef $oPatternField, $sName = Null, $oLabelField = Null, $iTxtDir = Null, $iMaxLen = Null, $sEditMask = Null, $sLiteralMask = Null, $bStrict = Null, $bEnabled = Null, $bVisible = Null, $bReadOnly = Null, $bPrintable = Null, $iMouseScroll = Null, $bTabStop = Null, $iTabOrder = Null, $sDefaultTxt = Null, $mFont = Null, $iAlign = Null, $iVertAlign = Null, $iBackColor = Null, $iBorder = Null, $iBorderColor = Null, $bHideSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+Func _LOWriter_FormConPatternFieldGeneral(ByRef $oPatternField, $sName = Null, $oLabelField = Null, $iTxtDir = Null, $iMaxLen = Null, $sEditMask = Null, $sLiteralMask = Null, $bStrict = Null, $bEnabled = Null, $bVisible = Null, $bReadOnly = Null, $bPrintable = Null, $iMouseScroll = Null, $bTabStop = Null, $iTabOrder = Null, $sDefaultTxt = Null, $mFont = Null, $iAlign = Null, $iVertAlign = Null, $iBackColor = Null, $iBorder = Null, $iBorderColor = Null, $bHideSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -6580,15 +6581,15 @@ Func _LOWriter_FormControlPatternFieldGeneral(ByRef $oPatternField, $sName = Nul
 
 	If Not IsObj($oPatternField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oPatternField) <> $LOW_FORM_CONTROL_TYPE_PATTERN_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oPatternField) <> $LOW_FORM_CONTROL_TYPE_PATTERN_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $iMaxLen, $sEditMask, $sLiteralMask, $bStrict, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $sDefaultTxt, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oPatternField.Control.Name(), __LOWriter_FormControlGetObj($oPatternField.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oPatternField.Control.WritingMode(), _
+		__LOWriter_ArrayFill($avControl, $oPatternField.Control.Name(), __LOWriter_FormConGetObj($oPatternField.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oPatternField.Control.WritingMode(), _
 				$oPatternField.Control.MaxTextLen(), $oPatternField.Control.EditMask(), $oPatternField.Control.LiteralMask(), $oPatternField.Control.StrictFormat(), _
 				$oPatternField.Control.Enabled(), $oPatternField.Control.EnableVisible(), $oPatternField.Control.ReadOnly(), $oPatternField.Control.Printable(), _
 				$oPatternField.Control.MouseWheelBehavior(), $oPatternField.Control.Tabstop(), $oPatternField.Control.TabIndex(), $oPatternField.Control.DefaultText(), _
-				__LOWriter_ControlSetGetFontDesc($oPatternField), $oPatternField.Control.Align(), $oPatternField.Control.VerticalAlign(), $oPatternField.Control.BackgroundColor(), _
+				__LOWriter_FormConSetGetFontDesc($oPatternField), $oPatternField.Control.Align(), $oPatternField.Control.VerticalAlign(), $oPatternField.Control.BackgroundColor(), _
 				$oPatternField.Control.Border(), $oPatternField.Control.BorderColor(), $oPatternField.Control.HideInactiveSelection(), $oPatternField.Control.Tag(), _
 				$oPatternField.Control.HelpText(), $oPatternField.Control.HelpURL())
 
@@ -6610,7 +6611,7 @@ Func _LOWriter_FormControlPatternFieldGeneral(ByRef $oPatternField, $sName = Nul
 
 	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-		If (__LOWriter_FormControlIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oPatternField.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oPatternField.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -6737,7 +6738,7 @@ Func _LOWriter_FormControlPatternFieldGeneral(ByRef $oPatternField, $sName = Nul
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
-		__LOWriter_ControlSetGetFontDesc($oPatternField, $mFont)
+		__LOWriter_FormConSetGetFontDesc($oPatternField, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 32768))
 	EndIf
 
@@ -6823,13 +6824,13 @@ Func _LOWriter_FormControlPatternFieldGeneral(ByRef $oPatternField, $sName = Nul
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlPatternFieldGeneral
+EndFunc   ;==>_LOWriter_FormConPatternFieldGeneral
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlPatternFieldValue
+; Name ..........: _LOWriter_FormConPatternFieldValue
 ; Description ...: Set or retrieve the current Pattern field value.
-; Syntax ........: _LOWriter_FormControlPatternFieldValue(ByRef $oPatternField[, $sValue = Null])
-; Parameters ....: $oPatternField       - [in/out] an object. A Pattern Field Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConPatternFieldValue(ByRef $oPatternField[, $sValue = Null])
+; Parameters ....: $oPatternField       - [in/out] an object. A Pattern Field Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sValue              - [optional] a string value. Default is Null. The value to set the field to.
 ; Return values .: Success: 1 or String
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -6850,11 +6851,11 @@ EndFunc   ;==>_LOWriter_FormControlPatternFieldGeneral
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current value.
 ;                  Call $sValue with Default keyword to reset the value to default.
-; Related .......: _LOWriter_FormControlPatternFieldGeneral, _LOWriter_FormControlPatternFieldData
+; Related .......: _LOWriter_FormConPatternFieldGeneral, _LOWriter_FormConPatternFieldData
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlPatternFieldValue(ByRef $oPatternField, $sValue = Null)
+Func _LOWriter_FormConPatternFieldValue(ByRef $oPatternField, $sValue = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -6863,7 +6864,7 @@ Func _LOWriter_FormControlPatternFieldValue(ByRef $oPatternField, $sValue = Null
 
 	If Not IsObj($oPatternField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oPatternField) <> $LOW_FORM_CONTROL_TYPE_PATTERN_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oPatternField) <> $LOW_FORM_CONTROL_TYPE_PATTERN_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sValue) Then
@@ -6884,13 +6885,13 @@ Func _LOWriter_FormControlPatternFieldValue(ByRef $oPatternField, $sValue = Null
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlPatternFieldValue
+EndFunc   ;==>_LOWriter_FormConPatternFieldValue
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlPosition
+; Name ..........: _LOWriter_FormConPosition
 ; Description ...: Set or Retrieve the Control's position settings.
-; Syntax ........: _LOWriter_FormControlPosition(ByRef $oControl[, $iX = Null[, $iY = Null[, $iAnchor = Null[, $bProtectPos = Null]]]])
-; Parameters ....: $oControl            - [in/out] an object. A Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConPosition(ByRef $oControl[, $iX = Null[, $iY = Null[, $iAnchor = Null[, $bProtectPos = Null]]]])
+; Parameters ....: $oControl            - [in/out] an object. A Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $iX                  - [optional] an integer value. Default is Null. The X position from the insertion point, in Micrometers.
 ;                  $iY                  - [optional] an integer value. Default is Null. The Y position from the insertion point, in Micrometers.
 ;                  $iAnchor             - [optional] an integer value(0-4). Default is Null. The anchoring position for the Control. See Constants, $LOW_ANCHOR_* as defined in LibreOfficeWriter_Constants.au3.
@@ -6917,11 +6918,11 @@ EndFunc   ;==>_LOWriter_FormControlPatternFieldValue
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_FormControlSize
+; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_FormConSize
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlPosition(ByRef $oControl, $iX = Null, $iY = Null, $iAnchor = Null, $bProtectPos = Null)
+Func _LOWriter_FormConPosition(ByRef $oControl, $iX = Null, $iY = Null, $iAnchor = Null, $bProtectPos = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -6970,13 +6971,13 @@ Func _LOWriter_FormControlPosition(ByRef $oControl, $iX = Null, $iY = Null, $iAn
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlPosition
+EndFunc   ;==>_LOWriter_FormConPosition
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlPushButtonGeneral
+; Name ..........: _LOWriter_FormConPushButtonGeneral
 ; Description ...: Set or Retrieve general Push Button properties.
-; Syntax ........: _LOWriter_FormControlPushButtonGeneral(ByRef $oPushButton[, $sName = Null[, $sLabel = Null[, $iTxtDir = Null[, $bEnabled = Null[, $bVisible = Null[, $bPrintable = Null[, $bTabStop = Null[, $iTabOrder = Null[, $bRepeat = Null[, $iDelay = Null[, $bTakeFocus = Null[, $bToggle = Null[, $iDefaultState = Null[, $mFont = Null[, $iAlign = Null[, $iVertAlign = Null[, $iBackColor = Null[, $bWordBreak = Null[, $iAction = Null[, $sURL = Null[, $sFrame = Null[, $bDefault = Null[, $sGraphics = Null[, $iGraphicAlign = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]]]]]]]]])
-; Parameters ....: $oPushButton         - [in/out] an object. A Push Button Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConPushButtonGeneral(ByRef $oPushButton[, $sName = Null[, $sLabel = Null[, $iTxtDir = Null[, $bEnabled = Null[, $bVisible = Null[, $bPrintable = Null[, $bTabStop = Null[, $iTabOrder = Null[, $bRepeat = Null[, $iDelay = Null[, $bTakeFocus = Null[, $bToggle = Null[, $iDefaultState = Null[, $mFont = Null[, $iAlign = Null[, $iVertAlign = Null[, $iBackColor = Null[, $bWordBreak = Null[, $iAction = Null[, $sURL = Null[, $sFrame = Null[, $bDefault = Null[, $sGraphics = Null[, $iGraphicAlign = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]]]]]]]]])
+; Parameters ....: $oPushButton         - [in/out] an object. A Push Button Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sName               - [optional] a string value. Default is Null. The control name.
 ;                  $sLabel              - [optional] a string value. Default is Null. The control's label to display.
 ;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
@@ -7078,11 +7079,11 @@ EndFunc   ;==>_LOWriter_FormControlPosition
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $iDefaultState, $mFont, $sAddInfo.
-; Related .......: _LOWriter_FormControlPushButtonState
+; Related .......: _LOWriter_FormConPushButtonState
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlPushButtonGeneral(ByRef $oPushButton, $sName = Null, $sLabel = Null, $iTxtDir = Null, $bEnabled = Null, $bVisible = Null, $bPrintable = Null, $bTabStop = Null, $iTabOrder = Null, $bRepeat = Null, $iDelay = Null, $bTakeFocus = Null, $bToggle = Null, $iDefaultState = Null, $mFont = Null, $iAlign = Null, $iVertAlign = Null, $iBackColor = Null, $bWordBreak = Null, $iAction = Null, $sURL = Null, $sFrame = Null, $bDefault = Null, $sGraphics = Null, $iGraphicAlign = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+Func _LOWriter_FormConPushButtonGeneral(ByRef $oPushButton, $sName = Null, $sLabel = Null, $iTxtDir = Null, $bEnabled = Null, $bVisible = Null, $bPrintable = Null, $bTabStop = Null, $iTabOrder = Null, $bRepeat = Null, $iDelay = Null, $bTakeFocus = Null, $bToggle = Null, $iDefaultState = Null, $mFont = Null, $iAlign = Null, $iVertAlign = Null, $iBackColor = Null, $bWordBreak = Null, $iAction = Null, $sURL = Null, $sFrame = Null, $bDefault = Null, $sGraphics = Null, $iGraphicAlign = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -7093,7 +7094,7 @@ Func _LOWriter_FormControlPushButtonGeneral(ByRef $oPushButton, $sName = Null, $
 
 	If Not IsObj($oPushButton) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oPushButton) <> $LOW_FORM_CONTROL_TYPE_PUSH_BUTTON) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oPushButton) <> $LOW_FORM_CONTROL_TYPE_PUSH_BUTTON) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_NONE] = ""
@@ -7159,7 +7160,7 @@ Func _LOWriter_FormControlPushButtonGeneral(ByRef $oPushButton, $sName = Null, $
 		__LOWriter_ArrayFill($avControl, $oPushButton.Control.Name(), $oPushButton.Control.Label(), $oPushButton.Control.WritingMode(), $oPushButton.Control.Enabled(), _
 				$oPushButton.Control.EnableVisible(), $oPushButton.Control.Printable(), $oPushButton.Control.Tabstop(), $oPushButton.Control.TabIndex(), _
 				$oPushButton.Control.Repeat(), $oPushButton.Control.RepeatDelay(), $oPushButton.Control.FocusOnClick(), $oPushButton.Control.Toggle(), _
-				$oPushButton.Control.DefaultState(), __LOWriter_ControlSetGetFontDesc($oPushButton), $oPushButton.Control.Align(), $oPushButton.Control.VerticalAlign(), _
+				$oPushButton.Control.DefaultState(), __LOWriter_FormConSetGetFontDesc($oPushButton), $oPushButton.Control.Align(), $oPushButton.Control.VerticalAlign(), _
 				$oPushButton.Control.BackgroundColor(), $oPushButton.Control.MultiLine(), $iBtnAction, $oPushButton.Control.TargetURL(), $oPushButton.Control.TargetFrame(), _
 				$oPushButton.Control.DefaultButton(), $oPushButton.Control.Graphic(), $oPushButton.Control.ImagePosition(), $oPushButton.Control.Tag(), _
 				$oPushButton.Control.HelpText(), $oPushButton.Control.HelpURL())
@@ -7290,7 +7291,7 @@ Func _LOWriter_FormControlPushButtonGeneral(ByRef $oPushButton, $sName = Null, $
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
-		__LOWriter_ControlSetGetFontDesc($oPushButton, $mFont)
+		__LOWriter_FormConSetGetFontDesc($oPushButton, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 8192))
 	EndIf
 
@@ -7456,13 +7457,13 @@ Func _LOWriter_FormControlPushButtonGeneral(ByRef $oPushButton, $sName = Null, $
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlPushButtonGeneral
+EndFunc   ;==>_LOWriter_FormConPushButtonGeneral
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlPushButtonState
+; Name ..........: _LOWriter_FormConPushButtonState
 ; Description ...: Set or Retrieve the current Push Button state.
-; Syntax ........: _LOWriter_FormControlPushButtonState(ByRef $oPushButton[, $iState = Null])
-; Parameters ....: $oPushButton         - [in/out] an object. A Push Button Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConPushButtonState(ByRef $oPushButton[, $iState = Null])
+; Parameters ....: $oPushButton         - [in/out] an object. A Push Button Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $iState              - [optional] an integer value (0-1). Default is Null. The state of the Push Button. See Constants $LOW_FORM_CONTROL_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Integer
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -7485,11 +7486,11 @@ EndFunc   ;==>_LOWriter_FormControlPushButtonGeneral
 ;                  Setting the state to selected DOES NOT simulate clicking the button.
 ;                  The Push button State is only valid when Toggle is active.
 ;                  Call $iState with Default keyword to reset the value to default.
-; Related .......: _LOWriter_FormControlPushButtonGeneral
+; Related .......: _LOWriter_FormConPushButtonGeneral
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlPushButtonState(ByRef $oPushButton, $iState = Null)
+Func _LOWriter_FormConPushButtonState(ByRef $oPushButton, $iState = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -7497,7 +7498,7 @@ Func _LOWriter_FormControlPushButtonState(ByRef $oPushButton, $iState = Null)
 
 	If Not IsObj($oPushButton) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oPushButton) <> $LOW_FORM_CONTROL_TYPE_PUSH_BUTTON) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oPushButton) <> $LOW_FORM_CONTROL_TYPE_PUSH_BUTTON) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iState) Then
@@ -7517,13 +7518,13 @@ Func _LOWriter_FormControlPushButtonState(ByRef $oPushButton, $iState = Null)
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlPushButtonState
+EndFunc   ;==>_LOWriter_FormConPushButtonState
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlsGetList
+; Name ..........: _LOWriter_FormConsGetList
 ; Description ...: Retrieve an array of Control Objects contained in a Document or a Form.
-; Syntax ........: _LOWriter_FormControlsGetList(ByRef $oObj[, $iType = $LOW_FORM_CONTROL_TYPE_ALL])
-; Parameters ....: $oObj                - [in/out] an object. Either a Document Object or a Form object, or a Grouped Control. See Remarks. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function, or a Form Object returned from a previous _LOWriter_FormsGetList, or _LOWriter_FormAdd function. Also a Grouped Control or Group Box returned from a _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConsGetList(ByRef $oObj[, $iType = $LOW_FORM_CONTROL_TYPE_ALL])
+; Parameters ....: $oObj                - [in/out] an object. Either a Document Object or a Form object, or a Grouped Control. See Remarks. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function, or a Form Object returned from a previous _LOWriter_FormsGetList, or _LOWriter_FormAdd function. Also a Grouped Control or Group Box returned from a _LOWriter_FormConsGetList function.
 ;                  $iType               - [optional] an integer value (1-1048575). Default is $LOW_FORM_CONTROL_TYPE_ALL. The type of control(s) to return in the array. Can be BitOr's together. See Constants $LOW_FORM_CONTROL_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -7544,11 +7545,11 @@ EndFunc   ;==>_LOWriter_FormControlPushButtonState
 ; Remarks .......: If a Document object is called in $oObj, all the controls are returned (except controls in a Grouped Control). If a Form Object is called in $oObj, only the controls contained in the Form are returned. And if a Grouped control is called, only controls in the group are returned.
 ;                  If there is a Grouped Control (a group containing a Group Box, and usually an option button) present, its object will be returned with the appropriate Constant, you can call this function with its object to obtain the controls grouped in the group box.
 ;                  Currently I am only able test a single layer Grouped control, as trying to nest Grouped controls crashes my LibreOffice.
-; Related .......: _LOWriter_FormControlInsert
+; Related .......: _LOWriter_FormConInsert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlsGetList(ByRef $oObj, $iType = $LOW_FORM_CONTROL_TYPE_ALL)
+Func _LOWriter_FormConsGetList(ByRef $oObj, $iType = $LOW_FORM_CONTROL_TYPE_ALL)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -7578,7 +7579,7 @@ Func _LOWriter_FormControlsGetList(ByRef $oObj, $iType = $LOW_FORM_CONTROL_TYPE_
 
 			If $oShape.supportsService("com.sun.star.drawing.ControlShape") And ($oShape.Control.Parent() = $oObj) Then ; If shape is a single control, and is contained in the form.
 
-				$iControlType = __LOWriter_FormControlIdentify($oShape)
+				$iControlType = __LOWriter_FormConIdentify($oShape)
 				If BitAND($iType, $iControlType) Then
 					$aoControls[$iCount][0] = $oShape
 					$aoControls[$iCount][1] = $iControlType
@@ -7587,7 +7588,7 @@ Func _LOWriter_FormControlsGetList(ByRef $oObj, $iType = $LOW_FORM_CONTROL_TYPE_
 				EndIf
 
 			ElseIf $oShape.supportsService("com.sun.star.drawing.GroupShape") And ($oShape.getByIndex(0).Control.Parent() = $oObj) Then ; If shape is a group control, and the first control contained in it is contained in the form.
-				$iControlType = __LOWriter_FormControlIdentify($oShape)
+				$iControlType = __LOWriter_FormConIdentify($oShape)
 				If BitAND($iType, $iControlType) Then
 					$aoControls[$iCount][0] = $oShape
 					$aoControls[$iCount][1] = $LOW_FORM_CONTROL_TYPE_GROUPED_CONTROL
@@ -7610,7 +7611,7 @@ Func _LOWriter_FormControlsGetList(ByRef $oObj, $iType = $LOW_FORM_CONTROL_TYPE_
 			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 			If $oShape.supportsService("com.sun.star.drawing.ControlShape") Or $oShape.supportsService("com.sun.star.drawing.GroupShape") Then
-				$iControlType = __LOWriter_FormControlIdentify($oShape)
+				$iControlType = __LOWriter_FormConIdentify($oShape)
 				If BitAND($iType, $iControlType) Then
 					$aoControls[$iCount][0] = $oShape
 					$aoControls[$iCount][1] = $iControlType
@@ -7630,7 +7631,7 @@ Func _LOWriter_FormControlsGetList(ByRef $oObj, $iType = $LOW_FORM_CONTROL_TYPE_
 			If Not IsObj($oControl) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
 			If $oControl.supportsService("com.sun.star.drawing.ControlShape") Then
-				$iControlType = __LOWriter_FormControlIdentify($oControl)
+				$iControlType = __LOWriter_FormConIdentify($oControl)
 				If BitAND($iType, $iControlType) Then
 					$aoControls[$iCount][0] = $oControl
 					$aoControls[$iCount][1] = $iControlType
@@ -7649,13 +7650,13 @@ Func _LOWriter_FormControlsGetList(ByRef $oObj, $iType = $LOW_FORM_CONTROL_TYPE_
 	ReDim $aoControls[$iCount][2]
 
 	Return SetError($__LO_STATUS_SUCCESS, $iCount, $aoControls)
-EndFunc   ;==>_LOWriter_FormControlsGetList
+EndFunc   ;==>_LOWriter_FormConsGetList
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlSize
+; Name ..........: _LOWriter_FormConSize
 ; Description ...: Set or Retrieve Control Size related settings.
-; Syntax ........: _LOWriter_FormControlSize(ByRef $oControl[, $iWidth = Null[, $iHeight = Null[, $bProtectSize = Null]]])
-; Parameters ....: $oControl            - [in/out] an object. A Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConSize(ByRef $oControl[, $iWidth = Null[, $iHeight = Null[, $bProtectSize = Null]]])
+; Parameters ....: $oControl            - [in/out] an object. A Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $iWidth              - [optional] an integer value. Default is Null. The width of the Shape, in Micrometers(uM). Min. 51.
 ;                  $iHeight             - [optional] an integer value. Default is Null. The height of the Shape, in Micrometers(uM). Min. 51.
 ;                  $bProtectSize        - [optional] a boolean value. Default is Null. If True, Locks the size of the Shape.
@@ -7681,11 +7682,11 @@ EndFunc   ;==>_LOWriter_FormControlsGetList
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  I have skipped Keep Ratio, as currently it seems unable to be set for controls.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_FormControlPosition
+; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_FormConPosition
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlSize(ByRef $oControl, $iWidth = Null, $iHeight = Null, $bProtectSize = Null)
+Func _LOWriter_FormConSize(ByRef $oControl, $iWidth = Null, $iHeight = Null, $bProtectSize = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -7728,13 +7729,13 @@ Func _LOWriter_FormControlSize(ByRef $oControl, $iWidth = Null, $iHeight = Null,
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlSize
+EndFunc   ;==>_LOWriter_FormConSize
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlTableConGeneral
+; Name ..........: _LOWriter_FormConTableConGeneral
 ; Description ...: Set or Retrieve general Table Control properties.
-; Syntax ........: _LOWriter_FormControlTableConGeneral(ByRef $oTableCon[, $sName = Null[, $iTxtDir = Null[, $bEnabled = Null[, $bVisible = Null[, $bPrintable = Null[, $bTabStop = Null[, $iTabOrder = Null[, $mFont = Null[, $nRowHeight = Null[, $iBackColor = Null[, $iBorder = Null[, $bNavBar = Null[, $bRecordMarker = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]])
-; Parameters ....: $oTableCon           - [in/out] an object. A Table Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConTableConGeneral(ByRef $oTableCon[, $sName = Null[, $iTxtDir = Null[, $bEnabled = Null[, $bVisible = Null[, $bPrintable = Null[, $bTabStop = Null[, $iTabOrder = Null[, $mFont = Null[, $nRowHeight = Null[, $iBackColor = Null[, $iBorder = Null[, $bNavBar = Null[, $bRecordMarker = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]])
+; Parameters ....: $oTableCon           - [in/out] an object. A Table Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sName               - [optional] a string value. Default is Null. The control name.
 ;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
@@ -7806,7 +7807,7 @@ EndFunc   ;==>_LOWriter_FormControlSize
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlTableConGeneral(ByRef $oTableCon, $sName = Null, $iTxtDir = Null, $bEnabled = Null, $bVisible = Null, $bPrintable = Null, $bTabStop = Null, $iTabOrder = Null, $mFont = Null, $nRowHeight = Null, $iBackColor = Null, $iBorder = Null, $bNavBar = Null, $bRecordMarker = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+Func _LOWriter_FormConTableConGeneral(ByRef $oTableCon, $sName = Null, $iTxtDir = Null, $bEnabled = Null, $bVisible = Null, $bPrintable = Null, $bTabStop = Null, $iTabOrder = Null, $mFont = Null, $nRowHeight = Null, $iBackColor = Null, $iBorder = Null, $bNavBar = Null, $bRecordMarker = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -7815,12 +7816,12 @@ Func _LOWriter_FormControlTableConGeneral(ByRef $oTableCon, $sName = Null, $iTxt
 
 	If Not IsObj($oTableCon) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oTableCon) <> $LOW_FORM_CONTROL_TYPE_TABLE_CONTROL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oTableCon) <> $LOW_FORM_CONTROL_TYPE_TABLE_CONTROL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $iTxtDir, $bEnabled, $bVisible, $bPrintable, $bTabStop, $iTabOrder, $mFont, $nRowHeight, $iBackColor, $iBorder, $bNavBar, $bRecordMarker, $sAddInfo, $sHelpText, $sHelpURL) Then
 		__LOWriter_ArrayFill($avControl, $oTableCon.Control.Name(), $oTableCon.Control.WritingMode(), $oTableCon.Control.Enabled(), $oTableCon.Control.EnableVisible(), _
-				$oTableCon.Control.Printable(), $oTableCon.Control.Tabstop(), $oTableCon.Control.TabIndex(), __LOWriter_ControlSetGetFontDesc($oTableCon), $oTableCon.Control.RowHeight(), _
+				$oTableCon.Control.Printable(), $oTableCon.Control.Tabstop(), $oTableCon.Control.TabIndex(), __LOWriter_FormConSetGetFontDesc($oTableCon), $oTableCon.Control.RowHeight(), _
 				$oTableCon.Control.BackgroundColor(), $oTableCon.Control.Border(), $oTableCon.Control.HasNavigationBar(), _
 				$oTableCon.Control.HasRecordMarker(), $oTableCon.Control.Tag(), $oTableCon.Control.HelpText(), $oTableCon.Control.HelpURL())
 
@@ -7896,7 +7897,7 @@ Func _LOWriter_FormControlTableConGeneral(ByRef $oTableCon, $sName = Null, $iTxt
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
-		__LOWriter_ControlSetGetFontDesc($oTableCon, $mFont)
+		__LOWriter_FormConSetGetFontDesc($oTableCon, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
@@ -7973,13 +7974,13 @@ Func _LOWriter_FormControlTableConGeneral(ByRef $oTableCon, $sName = Null, $iTxt
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlTableConGeneral
+EndFunc   ;==>_LOWriter_FormConTableConGeneral
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlTextBoxCreateTextCursor
+; Name ..........: _LOWriter_FormConTextBoxCreateTextCursor
 ; Description ...: Create a Text Cursor in a Text Box to add text etc.
-; Syntax ........: _LOWriter_FormControlTextBoxCreateTextCursor(ByRef $oTextBox)
-; Parameters ....: $oTextBox            - [in/out] an object. A Text Box Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConTextBoxCreateTextCursor(ByRef $oTextBox)
+; Parameters ....: $oTextBox            - [in/out] an object. A Text Box Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -7998,7 +7999,7 @@ EndFunc   ;==>_LOWriter_FormControlTableConGeneral
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlTextBoxCreateTextCursor(ByRef $oTextBox)
+Func _LOWriter_FormConTextBoxCreateTextCursor(ByRef $oTextBox)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -8006,20 +8007,20 @@ Func _LOWriter_FormControlTextBoxCreateTextCursor(ByRef $oTextBox)
 
 	If Not IsObj($oTextBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oTextBox) <> $LOW_FORM_CONTROL_TYPE_TEXT_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oTextBox) <> $LOW_FORM_CONTROL_TYPE_TEXT_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oCursor = $oTextBox.Control.createTextCursor()
 	If Not IsObj($oTextBox) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oCursor)
-EndFunc   ;==>_LOWriter_FormControlTextBoxCreateTextCursor
+EndFunc   ;==>_LOWriter_FormConTextBoxCreateTextCursor
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlTextBoxData
+; Name ..........: _LOWriter_FormConTextBoxData
 ; Description ...: Set or Retrieve Text Box Data Properties.
-; Syntax ........: _LOWriter_FormControlTextBoxData(ByRef $oTextBox[, $sDataField = Null[, $bEmptyIsNull = Null[, $bInputRequired = Null[, $bFilter = Null]]]])
-; Parameters ....: $oTextBox            - [in/out] an object. A Text Box Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConTextBoxData(ByRef $oTextBox[, $sDataField = Null[, $bEmptyIsNull = Null[, $bInputRequired = Null[, $bFilter = Null]]]])
+; Parameters ....: $oTextBox            - [in/out] an object. A Text Box Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sDataField          - [optional] a string value. Default is Null. The Datafield name to retrieve content from, either a Table name, SQL query, or other.
 ;                  $bEmptyIsNull        - [optional] a boolean value. Default is Null. If True, an empty string will be treated as a Null value.
 ;                  $bInputRequired      - [optional] a boolean value. Default is Null. If True, the control requires input.
@@ -8049,11 +8050,11 @@ EndFunc   ;==>_LOWriter_FormControlTextBoxCreateTextCursor
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  $sDataField is not checked to make sure it exists in the referenced Database, it is the user's responsibility to do this.
-; Related .......: _LOWriter_FormControlTextBoxGeneral
+; Related .......: _LOWriter_FormConTextBoxGeneral
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlTextBoxData(ByRef $oTextBox, $sDataField = Null, $bEmptyIsNull = Null, $bInputRequired = Null, $bFilter = Null)
+Func _LOWriter_FormConTextBoxData(ByRef $oTextBox, $sDataField = Null, $bEmptyIsNull = Null, $bInputRequired = Null, $bFilter = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -8062,7 +8063,7 @@ Func _LOWriter_FormControlTextBoxData(ByRef $oTextBox, $sDataField = Null, $bEmp
 
 	If Not IsObj($oTextBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oTextBox) <> $LOW_FORM_CONTROL_TYPE_TEXT_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oTextBox) <> $LOW_FORM_CONTROL_TYPE_TEXT_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $bFilter) Then
@@ -8097,15 +8098,15 @@ Func _LOWriter_FormControlTextBoxData(ByRef $oTextBox, $sDataField = Null, $bEmp
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlTextBoxData
+EndFunc   ;==>_LOWriter_FormConTextBoxData
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlTextBoxGeneral
+; Name ..........: _LOWriter_FormConTextBoxGeneral
 ; Description ...: Set or Retrieve general Textbox control properties.
-; Syntax ........: _LOWriter_FormControlTextBoxGeneral(ByRef $oTextBox[, $sName = Null[, $oLabelField = Null[, $iTxtDir = Null[, $iMaxLen = Null[, $bEnabled = Null[, $bVisible = Null[, $bReadOnly = Null[, $bPrintable = Null[, $bTabStop = Null[, $iTabOrder = Null[, $sDefaultTxt = Null[, $mFont = Null[, $iAlign = Null[, $iVertAlign = Null[, $iBackColor = Null[, $iBorder = Null[, $iBorderColor = Null[, $iTextType = Null[, $bEndWithLF = Null[, $iScrollbars = Null[, $iPassChar = Null[, $bHideSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]]]]]]])
-; Parameters ....: $oTextBox            - [in/out] an object. A Textbox Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConTextBoxGeneral(ByRef $oTextBox[, $sName = Null[, $oLabelField = Null[, $iTxtDir = Null[, $iMaxLen = Null[, $bEnabled = Null[, $bVisible = Null[, $bReadOnly = Null[, $bPrintable = Null[, $bTabStop = Null[, $iTabOrder = Null[, $sDefaultTxt = Null[, $mFont = Null[, $iAlign = Null[, $iVertAlign = Null[, $iBackColor = Null[, $iBorder = Null[, $iBorderColor = Null[, $iTextType = Null[, $bEndWithLF = Null[, $iScrollbars = Null[, $iPassChar = Null[, $bHideSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]]]]]]])
+; Parameters ....: $oTextBox            - [in/out] an object. A Textbox Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sName               - [optional] a string value. Default is Null. The control Name.
-;                  $oLabelField         - [optional] an object. Default is Null. A Label Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+;                  $oLabelField         - [optional] an object. Default is Null. A Label Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iMaxLen             - [optional] an integer value (-1-2147483647). Default is Null. The max length of text that can be entered. 0 = unlimited.
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
@@ -8198,11 +8199,11 @@ EndFunc   ;==>_LOWriter_FormControlTextBoxData
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $sDefaultTxt, $mFont, $sAddInfo.
-; Related .......: _LOWriter_FormControlTextBoxData
+; Related .......: _LOWriter_FormConTextBoxData
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabelField = Null, $iTxtDir = Null, $iMaxLen = Null, $bEnabled = Null, $bVisible = Null, $bReadOnly = Null, $bPrintable = Null, $bTabStop = Null, $iTabOrder = Null, $sDefaultTxt = Null, $mFont = Null, $iAlign = Null, $iVertAlign = Null, $iBackColor = Null, $iBorder = Null, $iBorderColor = Null, $iTextType = Null, $bEndWithLF = Null, $iScrollbars = Null, $iPassChar = Null, $bHideSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+Func _LOWriter_FormConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabelField = Null, $iTxtDir = Null, $iMaxLen = Null, $bEnabled = Null, $bVisible = Null, $bReadOnly = Null, $bPrintable = Null, $bTabStop = Null, $iTabOrder = Null, $sDefaultTxt = Null, $mFont = Null, $iAlign = Null, $iVertAlign = Null, $iBackColor = Null, $iBorder = Null, $iBorderColor = Null, $iTextType = Null, $bEndWithLF = Null, $iScrollbars = Null, $iPassChar = Null, $bHideSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -8213,13 +8214,13 @@ Func _LOWriter_FormControlTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabel
 
 	If Not IsObj($oTextBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oTextBox) <> $LOW_FORM_CONTROL_TYPE_TEXT_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oTextBox) <> $LOW_FORM_CONTROL_TYPE_TEXT_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $iMaxLen, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $bTabStop, $iTabOrder, $sDefaultTxt, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $iTextType, $bEndWithLF, $iScrollbars, $iPassChar, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oTextBox.Control.Name(), __LOWriter_FormControlGetObj($oTextBox.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oTextBox.Control.WritingMode(), $oTextBox.Control.MaxTextLen(), _
+		__LOWriter_ArrayFill($avControl, $oTextBox.Control.Name(), __LOWriter_FormConGetObj($oTextBox.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oTextBox.Control.WritingMode(), $oTextBox.Control.MaxTextLen(), _
 				$oTextBox.Control.Enabled(), $oTextBox.Control.EnableVisible(), $oTextBox.Control.ReadOnly(), $oTextBox.Control.Printable(), $oTextBox.Control.Tabstop(), _
-				$oTextBox.Control.TabIndex(), $oTextBox.Control.DefaultText(), __LOWriter_ControlSetGetFontDesc($oTextBox), $oTextBox.Control.Align(), $oTextBox.Control.VerticalAlign(), _
+				$oTextBox.Control.TabIndex(), $oTextBox.Control.DefaultText(), __LOWriter_FormConSetGetFontDesc($oTextBox), $oTextBox.Control.Align(), $oTextBox.Control.VerticalAlign(), _
 				$oTextBox.Control.BackgroundColor(), $oTextBox.Control.Border(), $oTextBox.Control.BorderColor(), _
 				((($oTextBox.Control.MultiLine() = False) And ($oTextBox.Control.RichText() = False)) ? ($LOW_FORM_CONTROL_TXT_TYPE_SINGLE_LINE) : (($oTextBox.Control.MultiLine() = True) And ($oTextBox.Control.RichText() = False)) ? ($LOW_FORM_CONTROL_TXT_TYPE_MULTI_LINE) : ($LOW_FORM_CONTROL_TXT_TYPE_MULTI_LINE_FORMATTED)), _ ; TextType setting.
 				(($oTextBox.Control.LineEndFormat() = $__LOW_FORM_CONTROL_LINE_END_LF) ? (True) : (False)), _ ; Line Ending format
@@ -8246,7 +8247,7 @@ Func _LOWriter_FormControlTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabel
 
 	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-		If (__LOWriter_FormControlIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oTextBox.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oTextBox.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -8337,7 +8338,7 @@ Func _LOWriter_FormControlTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabel
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
-		__LOWriter_ControlSetGetFontDesc($oTextBox, $mFont)
+		__LOWriter_FormConSetGetFontDesc($oTextBox, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 2048))
 	EndIf
 
@@ -8506,13 +8507,13 @@ Func _LOWriter_FormControlTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabel
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlTextBoxGeneral
+EndFunc   ;==>_LOWriter_FormConTextBoxGeneral
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlTimeFieldData
+; Name ..........: _LOWriter_FormConTimeFieldData
 ; Description ...: Set or Retrieve Time Field Data Properties.
-; Syntax ........: _LOWriter_FormControlTimeFieldData(ByRef $oTimeField[, $sDataField = Null[, $bInputRequired = Null]])
-; Parameters ....: $oTimeField          - [in/out] an object. A Time Field Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConTimeFieldData(ByRef $oTimeField[, $sDataField = Null[, $bInputRequired = Null]])
+; Parameters ....: $oTimeField          - [in/out] an object. A Time Field Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sDataField          - [optional] a string value. Default is Null. The Datafield name to retrieve content from, either a Table name, SQL query, or other.
 ;                  $bInputRequired      - [optional] a boolean value. Default is Null. If True, the control requires input.
 ; Return values .: Success: 1 or Array
@@ -8536,11 +8537,11 @@ EndFunc   ;==>_LOWriter_FormControlTextBoxGeneral
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  $sDataField is not checked to make sure it exists in the referenced Database, it is the user's responsibility to do this.
-; Related .......: _LOWriter_FormControlTimeFieldValue, _LOWriter_FormControlTimeFieldGeneral
+; Related .......: _LOWriter_FormConTimeFieldValue, _LOWriter_FormConTimeFieldGeneral
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlTimeFieldData(ByRef $oTimeField, $sDataField = Null, $bInputRequired = Null)
+Func _LOWriter_FormConTimeFieldData(ByRef $oTimeField, $sDataField = Null, $bInputRequired = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -8549,7 +8550,7 @@ Func _LOWriter_FormControlTimeFieldData(ByRef $oTimeField, $sDataField = Null, $
 
 	If Not IsObj($oTimeField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oTimeField) <> $LOW_FORM_CONTROL_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oTimeField) <> $LOW_FORM_CONTROL_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
@@ -8571,15 +8572,15 @@ Func _LOWriter_FormControlTimeFieldData(ByRef $oTimeField, $sDataField = Null, $
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlTimeFieldData
+EndFunc   ;==>_LOWriter_FormConTimeFieldData
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlTimeFieldGeneral
+; Name ..........: _LOWriter_FormConTimeFieldGeneral
 ; Description ...: Set or Retrieve general Time Field properties.
-; Syntax ........: _LOWriter_FormControlTimeFieldGeneral(ByRef $oTimeField[, $sName = Null[, $oLabelField = Null[, $iTxtDir = Null[, $bStrict = Null[, $bEnabled = Null[, $bVisible = Null[, $bReadOnly = Null[, $bPrintable = Null[, $iMouseScroll = Null[, $bTabStop = Null[, $iTabOrder = Null[, $tTimeMin = Null[, $tTimeMax = Null[, $iFormat = Null[, $tTimeDefault = Null[, $bSpin = Null[, $bRepeat = Null[, $iDelay = Null[, $mFont = Null[, $iAlign = Null[, $iVertAlign = Null[, $iBackColor = Null[, $iBorder = Null[, $iBorderColor = Null[, $bHideSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]]]]]]]]]])
-; Parameters ....: $oTimeField          - [in/out] an object.object. A Time Field Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConTimeFieldGeneral(ByRef $oTimeField[, $sName = Null[, $oLabelField = Null[, $iTxtDir = Null[, $bStrict = Null[, $bEnabled = Null[, $bVisible = Null[, $bReadOnly = Null[, $bPrintable = Null[, $iMouseScroll = Null[, $bTabStop = Null[, $iTabOrder = Null[, $tTimeMin = Null[, $tTimeMax = Null[, $iFormat = Null[, $tTimeDefault = Null[, $bSpin = Null[, $bRepeat = Null[, $iDelay = Null[, $mFont = Null[, $iAlign = Null[, $iVertAlign = Null[, $iBackColor = Null[, $iBorder = Null[, $iBorderColor = Null[, $bHideSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]]]]]]]]]])
+; Parameters ....: $oTimeField          - [in/out] an object.object. A Time Field Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sName               - [optional] a string value. Default is Null. The control name.
-;                  $oLabelField         - [optional] an object. Default is Null. A Label Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+;                  $oLabelField         - [optional] an object. Default is Null. A Label Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bStrict             - [optional] a boolean value. Default is Null. If True, strict formatting is enabled.
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
@@ -8686,11 +8687,11 @@ EndFunc   ;==>_LOWriter_FormControlTimeFieldData
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $mFont, $sAddInfo.
-; Related .......: _LOWriter_FormatKeyCreate, _LOWriter_FormatKeyList, _LOWriter_FormControlTimeFieldValue, _LOWriter_FormControlTimeFieldData
+; Related .......: _LOWriter_FormatKeyCreate, _LOWriter_FormatKeyList, _LOWriter_FormConTimeFieldValue, _LOWriter_FormConTimeFieldData
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oLabelField = Null, $iTxtDir = Null, $bStrict = Null, $bEnabled = Null, $bVisible = Null, $bReadOnly = Null, $bPrintable = Null, $iMouseScroll = Null, $bTabStop = Null, $iTabOrder = Null, $tTimeMin = Null, $tTimeMax = Null, $iFormat = Null, $tTimeDefault = Null, $bSpin = Null, $bRepeat = Null, $iDelay = Null, $mFont = Null, $iAlign = Null, $iVertAlign = Null, $iBackColor = Null, $iBorder = Null, $iBorderColor = Null, $bHideSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+Func _LOWriter_FormConTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oLabelField = Null, $iTxtDir = Null, $bStrict = Null, $bEnabled = Null, $bVisible = Null, $bReadOnly = Null, $bPrintable = Null, $iMouseScroll = Null, $bTabStop = Null, $iTabOrder = Null, $tTimeMin = Null, $tTimeMax = Null, $iFormat = Null, $tTimeDefault = Null, $bSpin = Null, $bRepeat = Null, $iDelay = Null, $mFont = Null, $iAlign = Null, $iVertAlign = Null, $iBackColor = Null, $iBorder = Null, $iBorderColor = Null, $bHideSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -8700,7 +8701,7 @@ Func _LOWriter_FormControlTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oL
 
 	If Not IsObj($oTimeField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oTimeField) <> $LOW_FORM_CONTROL_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oTimeField) <> $LOW_FORM_CONTROL_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $bStrict, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $tTimeMin, $tTimeMax, $iFormat, $tTimeDefault, $bSpin, $bRepeat, $iDelay, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
@@ -8743,10 +8744,10 @@ Func _LOWriter_FormControlTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oL
 			$tCurDefault = $tTime
 		EndIf
 
-		__LOWriter_ArrayFill($avControl, $oTimeField.Control.Name(), __LOWriter_FormControlGetObj($oTimeField.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oTimeField.Control.WritingMode(), $oTimeField.Control.StrictFormat(), _
+		__LOWriter_ArrayFill($avControl, $oTimeField.Control.Name(), __LOWriter_FormConGetObj($oTimeField.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oTimeField.Control.WritingMode(), $oTimeField.Control.StrictFormat(), _
 				$oTimeField.Control.Enabled(), $oTimeField.Control.EnableVisible(), $oTimeField.Control.ReadOnly(), $oTimeField.Control.Printable(), $oTimeField.Control.MouseWheelBehavior(), _
 				$oTimeField.Control.Tabstop(), $oTimeField.Control.TabIndex(), $tCurMin, $tCurMax, $oTimeField.Control.TimeFormat(), $tCurDefault, $oTimeField.Control.Spin(), _
-				$oTimeField.Control.Repeat(), $oTimeField.Control.RepeatDelay(), __LOWriter_ControlSetGetFontDesc($oTimeField), $oTimeField.Control.Align(), $oTimeField.Control.VerticalAlign(), _
+				$oTimeField.Control.Repeat(), $oTimeField.Control.RepeatDelay(), __LOWriter_FormConSetGetFontDesc($oTimeField), $oTimeField.Control.Align(), $oTimeField.Control.VerticalAlign(), _
 				$oTimeField.Control.BackgroundColor(), $oTimeField.Control.Border(), $oTimeField.Control.BorderColor(), $oTimeField.Control.HideInactiveSelection(), _
 				$oTimeField.Control.Tag(), $oTimeField.Control.HelpText(), $oTimeField.Control.HelpURL())
 
@@ -8768,7 +8769,7 @@ Func _LOWriter_FormControlTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oL
 
 	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-		If (__LOWriter_FormControlIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oTimeField.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oTimeField.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -8952,7 +8953,7 @@ Func _LOWriter_FormControlTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oL
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
-		__LOWriter_ControlSetGetFontDesc($oTimeField, $mFont)
+		__LOWriter_FormConSetGetFontDesc($oTimeField, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 262144))
 	EndIf
 
@@ -9038,13 +9039,13 @@ Func _LOWriter_FormControlTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oL
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlTimeFieldGeneral
+EndFunc   ;==>_LOWriter_FormConTimeFieldGeneral
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormControlTimeFieldValue
+; Name ..........: _LOWriter_FormConTimeFieldValue
 ; Description ...: Set or retrieve the current Time field value.
-; Syntax ........: _LOWriter_FormControlTimeFieldValue(ByRef $oTimeField[, $tTimeValue = Null])
-; Parameters ....: $oTimeField          - [in/out] an object. A Time Field Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Syntax ........: _LOWriter_FormConTimeFieldValue(ByRef $oTimeField[, $tTimeValue = Null])
+; Parameters ....: $oTimeField          - [in/out] an object. A Time Field Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $tTimeValue          - [optional] a dll struct value. Default is Null. The time value to set the field to, created previously by _LOWriter_DateStructCreate.
 ; Return values .: Success: 1 or Structure
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -9067,11 +9068,11 @@ EndFunc   ;==>_LOWriter_FormControlTimeFieldGeneral
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current Time value. Return will be Null if the Time hasn't been set.
 ;                  Call $tTimeValue with Default keyword to reset the value to default.
-; Related .......: _LOWriter_FormControlTimeFieldGeneral, _LOWriter_FormControlTimeFieldData
+; Related .......: _LOWriter_FormConTimeFieldGeneral, _LOWriter_FormConTimeFieldData
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormControlTimeFieldValue(ByRef $oTimeField, $tTimeValue = Null)
+Func _LOWriter_FormConTimeFieldValue(ByRef $oTimeField, $tTimeValue = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -9080,7 +9081,7 @@ Func _LOWriter_FormControlTimeFieldValue(ByRef $oTimeField, $tTimeValue = Null)
 
 	If Not IsObj($oTimeField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormControlIdentify($oTimeField) <> $LOW_FORM_CONTROL_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oTimeField) <> $LOW_FORM_CONTROL_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($tTimeValue) Then
@@ -9122,7 +9123,7 @@ Func _LOWriter_FormControlTimeFieldValue(ByRef $oTimeField, $tTimeValue = Null)
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FormControlTimeFieldValue
+EndFunc   ;==>_LOWriter_FormConTimeFieldValue
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FormDelete

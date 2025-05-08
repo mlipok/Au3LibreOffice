@@ -4,8 +4,8 @@
 Example()
 
 Func Example()
-	Local $oDoc, $oForm, $oLabel
-	Local $mFont
+	Local $oDoc, $oForm, $oControl
+	Local $avPos
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
@@ -15,17 +15,23 @@ Func Example()
 	$oForm = _LOWriter_FormAdd($oDoc, "AutoIt_Form")
 	If @error Then _ERROR($oDoc, "Failed to Create a form in the Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Create a Label Form Control
-	$oLabel = _LOWriter_FormConInsert($oForm, $LOW_FORM_CONTROL_TYPE_LABEL, 3500, 2300, 10000, 2000, "AutoIt_Form_Label_Control")
+	; Create a Form Control
+	$oControl = _LOWriter_FormConInsert($oForm, $LOW_FORM_CONTROL_TYPE_LIST_BOX, 500, 300, 6000, 2000, "AutoIt_Form_Control")
 	If @error Then _ERROR($oDoc, "Failed to insert a form control. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Create a Font Descriptor.
-	$mFont = _LOWriter_FontDescCreate("Times New Roman", $LOW_WEIGHT_BOLD, $LOW_POSTURE_ITALIC, 18, $LOW_COLOR_BRICK, $LOW_UNDERLINE_BOLD, $LOW_COLOR_GREEN, $LOW_STRIKEOUT_NONE, True, $LOW_RELIEF_NONE)
-	If @error Then _ERROR($oDoc, "Failed to create a Font Descriptor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Retrieve the current Position settings. Return will be an array of Strings.
+	$avPos = _LOWriter_FormConPosition($oControl)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Control's current position settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Modify the Control's General properties.
-	_LOWriter_FormConLabelGeneral($oLabel, Null, "A Label control insterted by AutoIt!", Null, Null, Null, Null, $mFont)
-	If @error Then _ERROR($oDoc, "Failed to modify a Control's properties. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Control's current position settings are: " & @CRLF & _
+			"The Control's X position is: " & $avPos[0] & @CRLF & _
+			"The Control's Y Position is: " & $avPos[1] & @CRLF & _
+			"The Control's anchor type is (See UDF Constants): " & $avPos[2] & @CRLF & _
+			"Is the Control's Position protected against user changes? True/False: " & $avPos[3])
+
+	; Modify the Control's position settings.
+	_LOWriter_FormConPosition($oControl, 2500, 3000, $LOW_ANCHOR_AT_CHARACTER, True)
+	If @error Then _ERROR($oDoc, "Failed to set Control's position settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

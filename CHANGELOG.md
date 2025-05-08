@@ -675,65 +675,65 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOW_FORM_SUBMIT_ENCODING_*
 	- $LOW_FORM_SUBMIT_METHOD_*
 - Internal Form Functions
-	- __LOWriter_FormControlIdentify
-	- __LOWriter_ControlSetGetFontDesc
-	- __LOWriter_FormControlGetObj
+	- __LOWriter_FormConIdentify
+	- __LOWriter_FormConGetObj
+	- __LOWriter_FormConSetGetFontDesc
 - Form functions
 	- _LOWriter_DocFormSettings
 	- _LOWriter_FontDescCreate
 	- _LOWriter_FontDescEdit
 	- _LOWriter_FormAdd
-	- _LOWriter_FormControlCheckBoxData
-	- _LOWriter_FormControlCheckBoxGeneral
-	- _LOWriter_FormControlCheckBoxState
-	- _LOWriter_FormControlComboBoxData
-	- _LOWriter_FormControlComboBoxGeneral
-	- _LOWriter_FormControlComboBoxValue
-	- _LOWriter_FormControlCurrencyFieldData
-	- _LOWriter_FormControlCurrencyFieldGeneral
-	- _LOWriter_FormControlCurrencyFieldValue
-	- _LOWriter_FormControlDateFieldData
-	- _LOWriter_FormControlDateFieldGeneral
-	- _LOWriter_FormControlDateFieldValue
-	- _LOWriter_FormControlDelete
-	- _LOWriter_FormControlFileSelFieldGeneral
-	- _LOWriter_FormControlFileSelFieldValue
-	- _LOWriter_FormControlFormattedFieldData
-	- _LOWriter_FormControlFormattedFieldGeneral
-	- _LOWriter_FormControlFormattedFieldValue
-	- _LOWriter_FormControlGetParent
-	- _LOWriter_FormControlGroupBoxGeneral
-	- _LOWriter_FormControlImageButtonGeneral
-	- _LOWriter_FormControlImageControlData
-	- _LOWriter_FormControlImageControlGeneral
-	- _LOWriter_FormControlInsert
-	- _LOWriter_FormControlLabelGeneral
-	- _LOWriter_FormControlListBoxData
-	- _LOWriter_FormControlListBoxGeneral
-	- _LOWriter_FormControlListBoxGetCount
-	- _LOWriter_FormControlListBoxSelection
-	- _LOWriter_FormControlNavBarGeneral
-	- _LOWriter_FormControlNumericFieldData
-	- _LOWriter_FormControlNumericFieldGeneral
-	- _LOWriter_FormControlNumericFieldValue
-	- _LOWriter_FormControlOptionButtonData
-	- _LOWriter_FormControlOptionButtonGeneral
-	- _LOWriter_FormControlOptionButtonState
-	- _LOWriter_FormControlPatternFieldData
-	- _LOWriter_FormControlPatternFieldGeneral
-	- _LOWriter_FormControlPatternFieldValue
-	- _LOWriter_FormControlPosition
-	- _LOWriter_FormControlPushButtonGeneral
-	- _LOWriter_FormControlPushButtonState
-	- _LOWriter_FormControlsGetList
-	- _LOWriter_FormControlSize
-	- _LOWriter_FormControlTableConGeneral
-	- _LOWriter_FormControlTextBoxCreateTextCursor
-	- _LOWriter_FormControlTextBoxData
-	- _LOWriter_FormControlTextBoxGeneral
-	- _LOWriter_FormControlTimeFieldData
-	- _LOWriter_FormControlTimeFieldGeneral
-	- _LOWriter_FormControlTimeFieldValue
+	- _LOWriter_FormConCheckBoxData
+	- _LOWriter_FormConCheckBoxGeneral
+	- _LOWriter_FormConCheckBoxState
+	- _LOWriter_FormConComboBoxData
+	- _LOWriter_FormConComboBoxGeneral
+	- _LOWriter_FormConComboBoxValue
+	- _LOWriter_FormConCurrencyFieldData
+	- _LOWriter_FormConCurrencyFieldGeneral
+	- _LOWriter_FormConCurrencyFieldValue
+	- _LOWriter_FormConDateFieldData
+	- _LOWriter_FormConDateFieldGeneral
+	- _LOWriter_FormConDateFieldValue
+	- _LOWriter_FormConDelete
+	- _LOWriter_FormConFileSelFieldGeneral
+	- _LOWriter_FormConFileSelFieldValue
+	- _LOWriter_FormConFormattedFieldData
+	- _LOWriter_FormConFormattedFieldGeneral
+	- _LOWriter_FormConFormattedFieldValue
+	- _LOWriter_FormConGetParent
+	- _LOWriter_FormConGroupBoxGeneral
+	- _LOWriter_FormConImageButtonGeneral
+	- _LOWriter_FormConImageControlData
+	- _LOWriter_FormConImageControlGeneral
+	- _LOWriter_FormConInsert
+	- _LOWriter_FormConLabelGeneral
+	- _LOWriter_FormConListBoxData
+	- _LOWriter_FormConListBoxGeneral
+	- _LOWriter_FormConListBoxGetCount
+	- _LOWriter_FormConListBoxSelection
+	- _LOWriter_FormConNavBarGeneral
+	- _LOWriter_FormConNumericFieldData
+	- _LOWriter_FormConNumericFieldGeneral
+	- _LOWriter_FormConNumericFieldValue
+	- _LOWriter_FormConOptionButtonData
+	- _LOWriter_FormConOptionButtonGeneral
+	- _LOWriter_FormConOptionButtonState
+	- _LOWriter_FormConPatternFieldData
+	- _LOWriter_FormConPatternFieldGeneral
+	- _LOWriter_FormConPatternFieldValue
+	- _LOWriter_FormConPosition
+	- _LOWriter_FormConPushButtonGeneral
+	- _LOWriter_FormConPushButtonState
+	- _LOWriter_FormConsGetList
+	- _LOWriter_FormConSize
+	- _LOWriter_FormConTableConGeneral
+	- _LOWriter_FormConTextBoxCreateTextCursor
+	- _LOWriter_FormConTextBoxData
+	- _LOWriter_FormConTextBoxGeneral
+	- _LOWriter_FormConTimeFieldData
+	- _LOWriter_FormConTimeFieldGeneral
+	- _LOWriter_FormConTimeFieldValue
 	- _LOWriter_FormDelete
 	- _LOWriter_FormGetObjByIndex
 	- _LOWriter_FormParent
@@ -835,6 +835,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_FontDescEdit
 	- _LOWriter_ParStyleFont
 - Modified _LOWriter_ShapesGetNames to return Shape Type instead of Implementation name.
+- Renamed __LOWriter_ControlSetGetFontDesc --> __LOWriter_FormConSetGetFontDesc to match other Form control function names.
+- Renamed all internal and user _LOWriter_FormControl* functions to _LOWriter_FormCon* for brevity.
 
 ### Fixed
 
