@@ -2232,7 +2232,7 @@ Func _LOCalc_DocViewWindowSettings(ByRef $oDoc, $bHeaders = Null, $bVertScroll =
 	If Not IsObj($oCurCont) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOCalc_VarsAreNull($bHeaders, $bVertScroll, $bHoriScroll, $bSheetTabs, $bOutlineSymbols, $bCharts, $bDrawing, $bObjects) Then
-		__LOCalc_ArrayFill($abView, $oCurCont.HasColumnRowHeaders(), $oCurCont.HasVerticalScrollBar(), $oCurCont.HasSheetTabs(), $oCurCont.HasHorizontalScrollBar(), _
+		__LOCalc_ArrayFill($abView, $oCurCont.HasColumnRowHeaders(), $oCurCont.HasVerticalScrollBar(), $oCurCont.HasHorizontalScrollBar(), $oCurCont.HasSheetTabs(), _
 				$oCurCont.IsOutlineSymbolsSet(), ($oCurCont.ShowCharts() = $__LOC_ViewObjMode_SHOW) ? (True) : (False), _
 				($oCurCont.ShowDrawing() = $__LOC_ViewObjMode_SHOW) ? (True) : (False), ($oCurCont.ShowObjects() = $__LOC_ViewObjMode_SHOW) ? (True) : (False))
 
