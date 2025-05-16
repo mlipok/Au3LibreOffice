@@ -25,11 +25,11 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to set Cell Text. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set the Cell's Font to "Arial", Font size to 18, Posture (Italic) to $LOC_POSTURE_ITALIC, and weight (Bold) to $LOC_WEIGHT_BOLD
-	_LOCalc_CellFont($oDoc, $oCell, "Arial", 18, $LOC_POSTURE_ITALIC, $LOC_WEIGHT_BOLD)
+	_LOCalc_CellFont($oCell, "Arial", 18, $LOC_POSTURE_ITALIC, $LOC_WEIGHT_BOLD)
 	If @error Then _ERROR($oDoc, "Failed to set the Cell's settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
-	$avSettings = _LOCalc_CellFont($oDoc, $oCell)
+	$avSettings = _LOCalc_CellFont($oCell)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Cell's settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Cell's current Font settings are as follows: " & @CRLF & _

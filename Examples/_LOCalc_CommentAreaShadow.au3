@@ -28,7 +28,7 @@ Func Example()
 	_LOCalc_CommentVisible($oComment, True)
 	If @error Then _ERROR($oDoc, "Failed to set comment visibility. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Modify the Comment Shadow settings to: Preset Gradient name = $LOC_GRAD_NAME_NEON_LIGHT
+	; Modify the Comment Shadow settings.
 	_LOCalc_CommentAreaShadow($oComment, True, $LOC_COLOR_GOLD, 300, 55, 47, $LOC_COMMENT_SHADOW_BOTTOM_CENTER)
 	If @error Then _ERROR($oDoc, "Failed to set Comment settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 

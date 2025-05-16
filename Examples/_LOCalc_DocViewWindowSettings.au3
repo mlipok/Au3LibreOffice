@@ -18,8 +18,8 @@ Func Example()
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Document Window view settings are: " & @CRLF & _
 			"Are Column/Row headers shown? True/False: " & $avOrigSettings[0] & @CRLF & _
-			"Is the Horizontal Scroll bar visible? True/False: " & $avOrigSettings[1] & @CRLF & _
-			"Is the vertical scroll bar visible? True/False: " & $avOrigSettings[2] & @CRLF & _
+			"Is the Vertical Scroll bar visible? True/False: " & $avOrigSettings[1] & @CRLF & _
+			"Is the Horizontal scroll bar visible? True/False: " & $avOrigSettings[2] & @CRLF & _
 			"Is the Sheet Tabs bar displayed? True/False: " & $avOrigSettings[3] & @CRLF & _
 			"Are Outline symbols displayed? True/False: " & $avOrigSettings[4] & @CRLF & _
 			"Are Charts displayed? True/False: " & $avOrigSettings[5] & @CRLF & _
@@ -29,7 +29,7 @@ Func Example()
 	If $IDYES = MsgBox($MB_YESNO + $MB_ICONQUESTION + $MB_DEFBUTTON1, "", "Would you like a demonstration of modifying these settings?" & @CRLF & _
 			"Warning, if the script fails to complete these settings may remain changed from your current setting values. Proceed with caution.") Then
 
-		; Set Document Window settings, Set Display Headers = False, Display horizontal Scroll bar = False, display vertical scroll bar = False,
+		; Set Document Window settings, Set Display Headers = False, Display vertical Scroll bar = False, display horizontal scroll bar = False,
 		; Display Sheet Tabs = False, Display Outline Symbols = True, Display Charts = False, display Drawings = False, Display Graphics/Objects = True
 		_LOCalc_DocViewWindowSettings($oDoc, False, False, False, False, True, False, True, True)
 		If @error Then _ERROR($oDoc, "Failed to set Document Window settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
@@ -40,8 +40,8 @@ Func Example()
 
 		MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Document Window view settings are: " & @CRLF & _
 				"Are Column/Row headers shown? True/False: " & $avSettings[0] & @CRLF & _
-				"Is the Horizontal Scroll bar visible? True/False: " & $avSettings[1] & @CRLF & _
-				"Is the vertical scroll bar visible? True/False: " & $avSettings[2] & @CRLF & _
+				"Is the Vertical Scroll bar visible? True/False: " & $avSettings[1] & @CRLF & _
+				"Is the Horizontal scroll bar visible? True/False: " & $avSettings[2] & @CRLF & _
 				"Is the Sheet Tabs bar displayed? True/False: " & $avSettings[3] & @CRLF & _
 				"Are Outline symbols displayed? True/False: " & $avSettings[4] & @CRLF & _
 				"Are Charts displayed? True/False: " & $avSettings[5] & @CRLF & _
