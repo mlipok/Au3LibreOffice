@@ -1,5 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
+;~ #Tidy_Parameters=/sf /reel
 #include-once
 
 ; Main LibreOffice Includes
@@ -87,6 +88,7 @@ Func _LOCalc_CellStyleBackColor(ByRef $oCellStyle, $iBackColor = Null, $bBackTra
 	If Not $oCellStyle.supportsService("com.sun.star.style.CellStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOCalc_CellBackColor($oCellStyle, $iBackColor, $bBackTransparent)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellStyleBackColor
 
@@ -154,6 +156,7 @@ Func _LOCalc_CellStyleBorderColor(ByRef $oCellStyle, $iTop = Null, $iBottom = Nu
 	If ($iBLTRDiag <> Null) And Not __LOCalc_IntIsBetween($iBLTRDiag, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 	$vReturn = __LOCalc_CellStyleBorder($oCellStyle, False, False, True, $iTop, $iBottom, $iLeft, $iRight, $iTLBRDiag, $iBLTRDiag)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellStyleBorderColor
 
@@ -206,6 +209,7 @@ Func _LOCalc_CellStyleBorderPadding(ByRef $oCellStyle, $iAll = Null, $iTop = Nul
 	If Not $oCellStyle.supportsService("com.sun.star.style.CellStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOCalc_CellBorderPadding($oCellStyle, $iAll, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellStyleBorderPadding
 
@@ -273,6 +277,7 @@ Func _LOCalc_CellStyleBorderStyle(ByRef $oCellStyle, $iTop = Null, $iBottom = Nu
 	If ($iBLTRDiag <> Null) And Not __LOCalc_IntIsBetween($iBLTRDiag, $LOC_BORDERSTYLE_SOLID, $LOC_BORDERSTYLE_DASH_DOT_DOT, "", $LOC_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 	$vReturn = __LOCalc_CellStyleBorder($oCellStyle, False, True, False, $iTop, $iBottom, $iLeft, $iRight, $iTLBRDiag, $iBLTRDiag)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellStyleBorderStyle
 
@@ -333,6 +338,7 @@ Func _LOCalc_CellStyleBorderWidth(ByRef $oCellStyle, $iTop = Null, $iBottom = Nu
 	If ($iBLTRDiag <> Null) And Not __LOCalc_IntIsBetween($iBLTRDiag, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 	$vReturn = __LOCalc_CellStyleBorder($oCellStyle, True, False, False, $iTop, $iBottom, $iLeft, $iRight, $iTLBRDiag, $iBLTRDiag)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellStyleBorderWidth
 
@@ -448,6 +454,7 @@ Func _LOCalc_CellStyleDelete(ByRef $oDoc, ByRef $oCellStyle, $bForceDelete = Fal
 	; If Parent style is blank set it to "Default", Or if not but User has called a specific style set it to that.
 
 	$oCellStyles.removeByName($sCellStyle)
+
 	Return ($oCellStyles.hasByName($sCellStyle)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOCalc_CellStyleDelete
 
@@ -494,6 +501,7 @@ Func _LOCalc_CellStyleEffect(ByRef $oCellStyle, $iRelief = Null, $bOutline = Nul
 	If Not $oCellStyle.supportsService("com.sun.star.style.CellStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOCalc_CellEffect($oCellStyle, $iRelief, $bOutline, $bShadow)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellStyleEffect
 
@@ -531,9 +539,8 @@ EndFunc   ;==>_LOCalc_CellStyleExists
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_CellStyleFont
 ; Description ...: Set and Retrieve the Font Settings for a Cell Style.
-; Syntax ........: _LOCalc_CellStyleFont(ByRef $oDoc, ByRef $oCellStyle[, $sFontName = Null[, $nFontSize = Null[, $iPosture = Null[, $iWeight = Null]]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
-;                  $oCellStyle          - [in/out] an object. A Cell Style object returned by a previous _LOCalc_CellStyleCreate, or _LOCalc_CellStyleGetObj function.
+; Syntax ........: _LOCalc_CellStyleFont(ByRef $oCellStyle[, $sFontName = Null[, $nFontSize = Null[, $iPosture = Null[, $iWeight = Null]]]])
+; Parameters ....: $oCellStyle          - [in/out] an object. A Cell Style object returned by a previous _LOCalc_CellStyleCreate, or _LOCalc_CellStyleGetObj function.
 ;                  $sFontName           - [optional] a string value. Default is Null. The Font Name to use.
 ;                  $nFontSize           - [optional] a general number value. Default is Null. The new Font size.
 ;                  $iPosture            - [optional] an integer value (0-5). Default is Null. The Font Italic setting. See Constants, $LOC_POSTURE_* as defined in LibreOfficeCalc_Constants.au3. Also see remarks.
@@ -541,15 +548,14 @@ EndFunc   ;==>_LOCalc_CellStyleExists
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oCellStyle not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $oCellStyle is not a Cell Style object.
-;                  @Error 1 @Extended 4 Return 0 = Font called in $sFontName not available.
-;                  @Error 1 @Extended 5 Return 0 = Variable passed to internal function not an Object.
-;                  @Error 1 @Extended 6 Return 0 = $sFontName not a String.
-;                  @Error 1 @Extended 7 Return 0 = $nFontSize not a number.
-;                  @Error 1 @Extended 8 Return 0 = $iPosture not an Integer, less than 0, or greater than 5. See Constants, $LOC_POSTURE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 9 Return 0 = $iWeight not an Integer, less than 50 but not equal to 0, or greater than 200. See Constants, $LOC_WEIGHT_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 1 Return 0 = $oCellStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oCellStyle is not a Cell Style object.
+;                  @Error 1 @Extended 3 Return 0 = Font called in $sFontName not available.
+;                  @Error 1 @Extended 4 Return 0 = Variable passed to internal function not an Object.
+;                  @Error 1 @Extended 5 Return 0 = $sFontName not a String.
+;                  @Error 1 @Extended 6 Return 0 = $nFontSize not a number.
+;                  @Error 1 @Extended 7 Return 0 = $iPosture not an Integer, less than 0, or greater than 5. See Constants, $LOC_POSTURE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 8 Return 0 = $iWeight not an Integer, less than 50 but not equal to 0, or greater than 200. See Constants, $LOC_WEIGHT_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $sFontName
@@ -569,19 +575,19 @@ EndFunc   ;==>_LOCalc_CellStyleExists
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_CellStyleFont(ByRef $oDoc, ByRef $oCellStyle, $sFontName = Null, $nFontSize = Null, $iPosture = Null, $iWeight = Null)
+Func _LOCalc_CellStyleFont(ByRef $oCellStyle, $sFontName = Null, $nFontSize = Null, $iPosture = Null, $iWeight = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $vReturn
 
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oCellStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oCellStyle.supportsService("com.sun.star.style.CellStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oCellStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oCellStyle.supportsService("com.sun.star.style.CellStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If ($sFontName <> Null) And Not _LOCalc_FontExists($oDoc, $sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($sFontName <> Null) And Not _LOCalc_FontExists($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$vReturn = __LOCalc_CellFont($oCellStyle, $sFontName, $nFontSize, $iPosture, $iWeight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellStyleFont
 
@@ -622,6 +628,7 @@ Func _LOCalc_CellStyleFontColor(ByRef $oCellStyle, $iFontColor = Null)
 	If Not $oCellStyle.supportsService("com.sun.star.style.CellStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOCalc_CellFontColor($oCellStyle, $iFontColor)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellStyleFontColor
 
@@ -694,7 +701,7 @@ EndFunc   ;==>_LOCalc_CellStyleGetObj
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOCalc_CellStyleNumberFormat(ByRef $oDoc, ByRef $oCellStyle, $iFormatKey = Null)
-Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $vReturn
@@ -704,8 +711,9 @@ Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHan
 	If Not $oCellStyle.supportsService("com.sun.star.style.CellStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$vReturn = __LOCalc_CellNumberFormat($oDoc, $oCellStyle, $iFormatKey)
+
 	Return SetError(@error, @extended, $vReturn)
-EndFunc
+EndFunc   ;==>_LOCalc_CellStyleNumberFormat
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_CellStyleOrganizer
@@ -758,9 +766,11 @@ Func _LOCalc_CellStyleOrganizer(ByRef $oDoc, ByRef $oCellStyle, $sNewCellStyleNa
 	If __LOCalc_VarsAreNull($sNewCellStyleName, $sParentStyle, $bHidden) Then
 		If __LOCalc_VersionCheck(4.0) Then
 			__LOCalc_ArrayFill($avOrganizer, $oCellStyle.Name(), $oCellStyle.ParentStyle(), $oCellStyle.Hidden())
+
 		Else
 			__LOCalc_ArrayFill($avOrganizer, $oCellStyle.Name(), $oCellStyle.ParentStyle())
 		EndIf
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avOrganizer)
 	EndIf
 
@@ -835,6 +845,7 @@ Func _LOCalc_CellStyleOverline(ByRef $oCellStyle, $bWordOnly = Null, $iOverLineS
 	If Not $oCellStyle.supportsService("com.sun.star.style.CellStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOCalc_CellOverLine($oCellStyle, $bWordOnly, $iOverLineStyle, $bOLHasColor, $iOLColor)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellStyleOverline
 
@@ -887,6 +898,7 @@ Func _LOCalc_CellStyleProtection(ByRef $oCellStyle, $bHideAll = Null, $bProtecte
 	If Not $oCellStyle.supportsService("com.sun.star.style.CellStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOCalc_CellProtection($oCellStyle, $bHideAll, $bProtected, $bHideFormula, $bHideWhenPrint)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellStyleProtection
 
@@ -927,6 +939,7 @@ Func _LOCalc_CellStyleSet(ByRef $oDoc, ByRef $oRange, $sCellStyle)
 	If Not _LOCalc_CellStyleExists($oDoc, $sCellStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$oRange.CellStyle = $sCellStyle
+
 	Return ($oRange.CellStyle() = $sCellStyle) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
 EndFunc   ;==>_LOCalc_CellStyleSet
 
@@ -980,6 +993,7 @@ Func _LOCalc_CellStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly =
 			$asStyles[$i] = $oStyles.getByIndex($i).DisplayName()
 			Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
+
 		Return SetError($__LO_STATUS_SUCCESS, $i, $asStyles)
 	EndIf
 
@@ -1048,6 +1062,7 @@ Func _LOCalc_CellStyleShadow(ByRef $oCellStyle, $iWidth = Null, $iColor = Null, 
 	If Not $oCellStyle.supportsService("com.sun.star.style.CellStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOCalc_CellShadow($oCellStyle, $iWidth, $iColor, $bTransparent, $iLocation)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellStyleShadow
 
@@ -1094,6 +1109,7 @@ Func _LOCalc_CellStyleStrikeOut(ByRef $oCellStyle, $bWordOnly = Null, $bStrikeOu
 	If Not $oCellStyle.supportsService("com.sun.star.style.CellStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOCalc_CellStrikeOut($oCellStyle, $bWordOnly, $bStrikeOut, $iStrikeLineStyle)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellStyleStrikeOut
 
@@ -1140,6 +1156,7 @@ Func _LOCalc_CellStyleTextAlign(ByRef $oCellStyle, $iHoriAlign = Null, $iVertAli
 	If Not $oCellStyle.supportsService("com.sun.star.style.CellStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOCalc_CellTextAlign($oCellStyle, $iHoriAlign, $iVertAlign, $iIndent)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellStyleTextAlign
 
@@ -1189,6 +1206,7 @@ Func _LOCalc_CellStyleTextOrient(ByRef $oCellStyle, $iRotate = Null, $iReference
 	If Not $oCellStyle.supportsService("com.sun.star.style.CellStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOCalc_CellTextOrient($oCellStyle, $iRotate, $iReference, $bVerticalStack, $bAsianLayout)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellStyleTextOrient
 
@@ -1238,6 +1256,7 @@ Func _LOCalc_CellStyleTextProperties(ByRef $oCellStyle, $bAutoWrapText = Null, $
 	If Not $oCellStyle.supportsService("com.sun.star.style.CellStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOCalc_CellTextProperties($oCellStyle, $bAutoWrapText, $bHyphen, $bShrinkToFit, $iTextDirection)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellStyleTextProperties
 
@@ -1287,5 +1306,6 @@ Func _LOCalc_CellStyleUnderline(ByRef $oCellStyle, $bWordOnly = Null, $iUnderLin
 	If Not $oCellStyle.supportsService("com.sun.star.style.CellStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOCalc_CellUnderLine($oCellStyle, $bWordOnly, $iUnderLineStyle, $bULHasColor, $iULColor)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellStyleUnderline

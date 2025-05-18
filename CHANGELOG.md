@@ -299,6 +299,7 @@ Renamed _LOBase_TableIndexesCount-->_LOBase_TableIndexesGetCount
 	- _LOCalc_RangeDelete
 	- _LOCalc_RangeDetail
 	- _LOCalc_RangeFill
+	- _LOCalc_RangeFillRandom
 	- _LOCalc_RangeFillSeries
 	- _LOCalc_RangeFilter
 	- _LOCalc_RangeFilterAdvanced
@@ -447,6 +448,7 @@ Renamed _LOBase_TableIndexesCount-->_LOBase_TableIndexesGetCount
 	- _LOCalc_DocConnect
 	- _LOCalc_DocCreate
 	- _LOCalc_DocExport
+	- _LOCalc_DocFormulaBarHeight
 	- _LOCalc_DocGetName
 	- _LOCalc_DocGetPath
 	- _LOCalc_DocHasPath
@@ -730,6 +732,7 @@ Renamed _LOBase_TableIndexesCount-->_LOBase_TableIndexesGetCount
 - LibreOfficeCalc_Cell.au3 was missing an Include file.
 - Several Cell or Cell range functions that should support Column/Rows would not work with them.
 - LibreOfficeCalc_Sheet.au3 was missing an Include file.
+- Fix _LOCalc_DocViewWindowSettings, return values in wrong order. Thanks to user JALucena. <https://www.autoitscript.com/forum/topic/210514-libreoffice-udf-help-and-support/page/2/#findComment-1543326>
 
 ### Changed
 
@@ -759,6 +762,12 @@ Renamed _LOBase_TableIndexesCount-->_LOBase_TableIndexesGetCount
 - Modified _LOCalc_DocPrintersAltGetNames @Extended value when retrieving the default printer name, @Extended is now 1, instead of 2.
 - _LOCalc_DocRedoGetAllActionTitles now returns the number of results in @Extended value.
 - _LOCalc_DocUndoGetAllActionTitles now returns the number of results in @Extended value.
+- Removed $oDoc parameter from _LOCalc_FontExists. This will affect the parameters and error return values of the following functions:
+	- __LOCalc_CellFont
+	- _LOCalc_CellFont
+	- _LOCalc_CellStyleFont
+	- _LOCalc_FontExists
+	- _LOCalc_TextCursorFont
 
 ### Removed
 

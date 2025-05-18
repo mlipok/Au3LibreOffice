@@ -1,6 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
-;~ #Tidy_Parameters=/sf
+;~ #Tidy_Parameters=/sf /reel
 #include-once
 
 ; Main LibreOffice Includes
@@ -45,6 +45,7 @@
 ; _LOCalc_RangeDelete
 ; _LOCalc_RangeDetail
 ; _LOCalc_RangeFill
+; _LOCalc_RangeFillRandom
 ; _LOCalc_RangeFillSeries
 ; _LOCalc_RangeFilter
 ; _LOCalc_RangeFilterAdvanced
@@ -522,7 +523,6 @@ Func _LOCalc_RangeColumnVisible(ByRef $oColumn, $bVisible = Null)
 
 	If ($bVisible = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oColumn.IsVisible())
 
-
 	If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oColumn.IsVisible = $bVisible
 	$iError = ($oColumn.IsVisible() = $bVisible) ? ($iError) : (BitOR($iError, 1))
@@ -682,12 +682,13 @@ Func _LOCalc_RangeCopyMove(ByRef $oSheet, ByRef $oRangeSrc, ByRef $oRangeDest, $
 
 	If $bMove Then
 		$oSheet.MoveRange($tCellDestAddr, $tCellSrcAddr)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, 1)
 
 	Else
 		$oSheet.CopyRange($tCellDestAddr, $tCellSrcAddr)
-		Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 
+		Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 	EndIf
 EndFunc   ;==>_LOCalc_RangeCopyMove
 
@@ -780,6 +781,7 @@ Func _LOCalc_RangeData(ByRef $oRange, $aavData = Null, $bStrictSize = False)
 	If ($aavData = Null) Then
 		$aavData = $oRange.getDataArray()
 		If Not IsArray($aavData) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aavData)
 	EndIf
 
@@ -803,7 +805,6 @@ Func _LOCalc_RangeData(ByRef $oRange, $aavData = Null, $bStrictSize = False)
 			$oRange = $oRange.Spreadsheet.getCellRangeByPosition($oRange.RangeAddress.StartColumn(), $oRange.RangeAddress.StartRow(), $oRange.RangeAddress.EndColumn(), ($oRange.RangeAddress.StartRow() + UBound($aavData) - 1))
 			If Not IsObj($oRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 		EndIf
-
 	EndIf
 
 	$iStart = $oRange.RangeAddress.StartColumn()
@@ -830,9 +831,7 @@ Func _LOCalc_RangeData(ByRef $oRange, $aavData = Null, $bStrictSize = False)
 			If (($oRange.RangeAddress.StartColumn() + UBound($aavData[0])) > $oRange.Spreadsheet.getColumns.getCount()) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 8, 0)
 			$oRange = $oRange.Spreadsheet.getCellRangeByPosition($oRange.RangeAddress.StartColumn(), $oRange.RangeAddress.StartRow(), ($oRange.RangeAddress.StartColumn() + UBound($aavData[0]) - 1), $oRange.RangeAddress.EndRow())
 			If Not IsObj($oRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 9, 0)
-
 		EndIf
-
 	EndIf
 
 	$oRange.setDataArray($aavData)
@@ -1162,6 +1161,7 @@ Func _LOCalc_RangeDatabaseModify(ByRef $oDoc, ByRef $oDatabaseRange, $oRange = N
 
 		__LOCalc_ArrayFill($avDatabaseRange, $oRange, $oDatabaseRange.Name(), $oDatabaseRange.ContainsHeader(), $oDatabaseRange.TotalsRow(), $oDatabaseRange.MoveCells(), _
 				$oDatabaseRange.KeepFormats(), $oDatabaseRange.StripData(), $oDatabaseRange.AutoFilter())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDatabaseRange)
 	EndIf
 
@@ -1305,7 +1305,6 @@ Func _LOCalc_RangeDetail(ByRef $oRange, $bShow = True)
 
 	Else
 		$oRange.Spreadsheet.hideDetail($tRangeAddress)
-
 	EndIf
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
@@ -1345,6 +1344,68 @@ Func _LOCalc_RangeFill(ByRef $oRange, $iDirection, $iCount = 1)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOCalc_RangeFill
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeFillRandom
+; Description ...: Fill a range with random numbers.
+; Syntax ........: _LOCalc_RangeFillRandom(ByRef $oRange[, $nMin = 0.0000[, $nMax = 1.0000[, $iDecPlc = 15[, $nSeed = Null[, $bFillByRows = True]]]]])
+; Parameters ....: $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $nMin                - [optional] a general number value (-2^31-2^31). Default is 0.0000. The minimum number value. Max is -2^31-2^31.
+;                  $nMax                - [optional] a general number value (-2^31-2^31). Default is 1.0000. The maximum number value. Max is -2^31-2^31.
+;                  $iDecPlc             - [optional] an integer value (0-255). Default is 15. The decimal place to round the value to. Set to 0 to fill with integer only.
+;                  $nSeed               - [optional] a general number value. Default is Null. A seed to use for generating the Random number. Null means no seed is used.
+;                  $bFillByRows         - [optional] a boolean value. Default is True. If True, the range is filled top to bottom, left to right. If False, the range is filled left to right, top to bottom.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $nMin not a number, less than -2^31 or greater then 2^31.
+;                  @Error 1 @Extended 3 Return 0 = $nMax not a number, less than -2^31 or greater then 2^31.
+;                  @Error 1 @Extended 4 Return 0 = $iDecPlc not an integer, less than 0, or greater than 255.
+;                  @Error 1 @Extended 5 Return 0 = $nSeed not a number, less than -2^31 or greater then 2^31.
+;                  @Error 1 @Extended 6 Return 0 = $bFillByRows not a boolean.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Range successfully filled with random values.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: This function is a homemade version of Calc's Fill Random, as there is no built in method for calling Libre Office's built-in one. The results of this function may not be similar to the results of Libre Office's random number generator.
+;                  Any values in the range will be overwritten.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeFillRandom(ByRef $oRange, $nMin = 0.0000, $nMax = 1.0000, $iDecPlc = 15, $nSeed = Null, $bFillByRows = True)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOCalc_NumIsBetween($nMin, -2 ^ 31, 2 ^ 31) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOCalc_NumIsBetween($nMax, -2 ^ 31, 2 ^ 31) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LOCalc_NumIsBetween($iDecPlc, 0, 255) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($nSeed <> Null) And Not __LOCalc_NumIsBetween($nSeed, -2 ^ 31, 2 ^ 31) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsBool($bFillByRows) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
+	If ($nSeed <> Null) Then SRandom($nSeed)
+
+	If $bFillByRows Then ; Fill all rows first per column.
+		For $iC = $oRange.RangeAddress.StartColumn() To $oRange.RangeAddress.EndColumn()
+			For $iR = $oRange.RangeAddress.StartRow() To $oRange.RangeAddress.EndRow()
+				$oRange.Spreadsheet.getCellByPosition($iC, $iR).Value = Round(Random($nMin, $nMax), $iDecPlc)
+				Sleep((IsInt($iR / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
+			Next
+		Next
+
+	Else ; Fill all columns first per row.
+		For $iR = $oRange.RangeAddress.StartRow() To $oRange.RangeAddress.EndRow()
+			For $iC = $oRange.RangeAddress.StartColumn() To $oRange.RangeAddress.EndColumn()
+				$oRange.Spreadsheet.getCellByPosition($iC, $iR).Value = Round(Random($nMin, $nMax), $iDecPlc)
+				Sleep((IsInt($iR / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
+			Next
+		Next
+	EndIf
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_RangeFillRandom
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangeFillSeries
@@ -1678,6 +1739,7 @@ Func _LOCalc_RangeFormula(ByRef $oRange, $aasFormulas = Null, $bStrictSize = Fal
 	If ($aasFormulas = Null) Then
 		$aasFormulas = $oRange.getFormulaArray()
 		If Not IsArray($aasFormulas) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aasFormulas)
 	EndIf
 
@@ -1700,7 +1762,6 @@ Func _LOCalc_RangeFormula(ByRef $oRange, $aasFormulas = Null, $bStrictSize = Fal
 			$oRange = $oRange.Spreadsheet.getCellRangeByPosition($oRange.RangeAddress.StartColumn(), $oRange.RangeAddress.StartRow(), $oRange.RangeAddress.EndColumn(), ($oRange.RangeAddress.StartRow() + UBound($aasFormulas) - 1))
 			If Not IsObj($oRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 		EndIf
-
 	EndIf
 
 	$iStart = $oRange.RangeAddress.StartColumn()
@@ -1727,9 +1788,7 @@ Func _LOCalc_RangeFormula(ByRef $oRange, $aasFormulas = Null, $bStrictSize = Fal
 			If (($oRange.RangeAddress.StartColumn() + UBound($aasFormulas[0])) > $oRange.Spreadsheet.getColumns.getCount()) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 8, 0)
 			$oRange = $oRange.Spreadsheet.getCellRangeByPosition($oRange.RangeAddress.StartColumn(), $oRange.RangeAddress.StartRow(), ($oRange.RangeAddress.StartColumn() + UBound($aasFormulas[0]) - 1), $oRange.RangeAddress.EndRow())
 			If Not IsObj($oRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 9, 0)
-
 		EndIf
-
 	EndIf
 
 	$oRange.setFormulaArray($aasFormulas)
@@ -1907,13 +1966,14 @@ Func _LOCalc_RangeGetCellByPosition(ByRef $oRange, $iColumn, $iRow, $iToColumn =
 	If ($iToColumn = Null) And ($iToRow = Null) Then
 		$oCell = $oRange.getCellByPosition($iColumn, $iRow)
 		If Not IsObj($oCell) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 0, $oCell)
 
 	Else
 		$oCellRange = $oRange.getCellRangeByPosition($iColumn, $iRow, $iToColumn, $iToRow)
 		If Not IsObj($oCellRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-		Return SetError($__LO_STATUS_SUCCESS, 1, $oCellRange)
 
+		Return SetError($__LO_STATUS_SUCCESS, 1, $oCellRange)
 	EndIf
 EndFunc   ;==>_LOCalc_RangeGetCellByPosition
 
@@ -1993,7 +2053,6 @@ Func _LOCalc_RangeGroup(ByRef $oRange, $iOrientation = $LOC_GROUP_ORIENT_ROWS, $
 
 	Else
 		$oRange.Spreadsheet.Ungroup($tRangeAddress, $iOrientation)
-
 	EndIf
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
@@ -2174,7 +2233,6 @@ Func _LOCalc_RangeNamedAdd(ByRef $oObj, $vRange, $sName, $iOptions = $LOC_NAMED_
 	If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If IsObj($vRange) Then
-
 		If IsObj($oRefCell) Then
 			$tCellAddr.Sheet = $oRefCell.RangeAddress.Sheet()
 			$tCellAddr.Column = $oRefCell.RangeAddress.StartColumn()
@@ -2185,7 +2243,6 @@ Func _LOCalc_RangeNamedAdd(ByRef $oObj, $vRange, $sName, $iOptions = $LOC_NAMED_
 			$tCellAddr.Sheet = $vRange.RangeAddress.Sheet()
 			$tCellAddr.Column = $vRange.RangeAddress.StartColumn()
 			$tCellAddr.Row = $vRange.RangeAddress.StartRow()
-
 		EndIf
 
 		$sRange = $vRange.AbsoluteName()
@@ -2198,7 +2255,6 @@ Func _LOCalc_RangeNamedAdd(ByRef $oObj, $vRange, $sName, $iOptions = $LOC_NAMED_
 		$tCellAddr.Row = $oRefCell.RangeAddress.StartRow()
 
 		$sRange = $vRange
-
 	EndIf
 
 	$oNamedRanges.addNewByName($sName, $sRange, $tCellAddr, $iOptions)
@@ -2263,7 +2319,6 @@ Func _LOCalc_RangeNamedChangeScope(ByRef $oDoc, ByRef $oNamedRange, ByRef $oNewS
 
 	Else
 		If $oNewScope.NamedRanges.hasByName($sNewName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
 	EndIf
 
 	$sNamedRange = $oNamedRange.Name()
@@ -2339,7 +2394,6 @@ Func _LOCalc_RangeNamedDelete(ByRef $oObj, $vNamedRange)
 
 	Else
 		$sNamedRange = $vNamedRange
-
 	EndIf
 
 	If Not $oNamedRanges.hasByName($sNamedRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
@@ -2546,6 +2600,7 @@ Func _LOCalc_RangeNamedModify(ByRef $oDoc, ByRef $oNamedRange, $vRange = Null, $
 		If Not IsObj($oRefCell) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 		__LOCalc_ArrayFill($avNamedRange, $oNamedRange.Content(), $oNamedRange.Name(), $oNamedRange.Type(), $oRefCell)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avNamedRange)
 	EndIf
 
@@ -2568,9 +2623,7 @@ Func _LOCalc_RangeNamedModify(ByRef $oDoc, ByRef $oNamedRange, $vRange = Null, $
 
 			$oNamedRange.Content = $vRange
 			$iError = ($oNamedRange.Content() = $vRange) ? ($iError) : (BitOR($iError, 1))
-
 		EndIf
-
 	EndIf
 
 	If ($sName <> Null) Then
@@ -2659,6 +2712,7 @@ Func _LOCalc_RangeNumbers(ByRef $oRange, $aanNumbers = Null, $bStrictSize = Fals
 	If ($aanNumbers = Null) Then
 		$aanNumbers = $oRange.getData()
 		If Not IsArray($aanNumbers) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aanNumbers)
 	EndIf
 
@@ -2681,7 +2735,6 @@ Func _LOCalc_RangeNumbers(ByRef $oRange, $aanNumbers = Null, $bStrictSize = Fals
 			$oRange = $oRange.Spreadsheet.getCellRangeByPosition($oRange.RangeAddress.StartColumn(), $oRange.RangeAddress.StartRow(), $oRange.RangeAddress.EndColumn(), ($oRange.RangeAddress.StartRow() + UBound($aanNumbers) - 1))
 			If Not IsObj($oRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 		EndIf
-
 	EndIf
 
 	$iStart = $oRange.RangeAddress.StartColumn()
@@ -2708,9 +2761,7 @@ Func _LOCalc_RangeNumbers(ByRef $oRange, $aanNumbers = Null, $bStrictSize = Fals
 			If (($oRange.RangeAddress.StartColumn() + UBound($aanNumbers[0])) > $oRange.Spreadsheet.getColumns.getCount()) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 8, 0)
 			$oRange = $oRange.Spreadsheet.getCellRangeByPosition($oRange.RangeAddress.StartColumn(), $oRange.RangeAddress.StartRow(), ($oRange.RangeAddress.StartColumn() + UBound($aanNumbers[0]) - 1), $oRange.RangeAddress.EndRow())
 			If Not IsObj($oRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 9, 0)
-
 		EndIf
-
 	EndIf
 
 	$oRange.setData($aanNumbers)
@@ -3273,7 +3324,6 @@ Func _LOCalc_RangePivotFieldSettings(ByRef $oPivotField, $iFieldType = Null, $iF
 		Else
 			__LOCalc_ArrayFill($avPivotField, $oPivotField.Orientation(), $oPivotField.Function(), $oPivotField.ShowEmpty(), $LOC_PIVOT_TBL_FIELD_DISP_NONE, "", _
 					$LOC_PIVOT_TBL_FIELD_BASE_ITEM_NAMED, "")
-
 		EndIf
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avPivotField)
@@ -3301,14 +3351,13 @@ Func _LOCalc_RangePivotFieldSettings(ByRef $oPivotField, $iFieldType = Null, $iF
 	EndIf
 
 	If ($oPivotField.Orientation() = $LOC_PIVOT_TBL_FIELD_TYPE_DATA) Then
-
 		If IsObj($oPivotField.Reference()) Then
 			$tReference = $oPivotField.Reference()
 			If Not IsObj($tReference) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 		Else
 			$tReference = __LOCalc_CreateStruct("com.sun.star.sheet.DataPilotFieldReference")
 			If Not IsObj($tReference) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-
 		EndIf
 
 		If ($iDisplayType <> Null) Then
@@ -3573,6 +3622,7 @@ Func _LOCalc_RangePivotFilter(ByRef $oPivotTable, $atFilterField = Null, $bCaseS
 	If __LOCalc_VarsAreNull($atFilterField, $bCaseSensitive, $bSkipDupl, $bUseRegExp) Then
 		__LOCalc_ArrayFill($avFilter, $oPivotTable.FilterDescriptor.getFilterFields2(), $oPivotTable.FilterDescriptor.IsCaseSensitive(), _
 				$oPivotTable.FilterDescriptor.SkipDuplicates(), $oPivotTable.FilterDescriptor.UseRegularExpressions())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avFilter)
 	EndIf
 
@@ -3820,9 +3870,7 @@ Func _LOCalc_RangePivotInsert(ByRef $oSourceRange, ByRef $oDestRange, $sName = "
 
 		Else
 			$oPivotDesc.DataPilotFields.getByName($sField).Function = $iFunc
-
 		EndIf
-
 	EndIf
 
 	$oPivotDesc.DrillDownOnDoubleClick = False ; These are set to True when creating the Descriptor, but are normally false on a new Pivot Table.
@@ -3975,6 +4023,7 @@ Func _LOCalc_RangePivotSettings(ByRef $oPivotTable, $bIgnoreEmpty = Null, $bIden
 	If __LOCalc_VarsAreNull($bIgnoreEmpty, $bIdentifyCat, $bTotalCol, $bTotalRow, $bAddFilter, $bEnableDrill) Then
 		__LOCalc_ArrayFill($abPivotSettings, $oPivotTable.IgnoreEmptyRows(), $oPivotTable.RepeatIfEmpty(), $oPivotTable.ColumnGrand(), $oPivotTable.RowGrand(), _
 				$oPivotTable.ShowFilterButton(), $oPivotTable.DrillDownOnDoubleClick())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $abPivotSettings)
 	EndIf
 
@@ -4150,6 +4199,7 @@ Func _LOCalc_RangePivotSource(ByRef $oDoc, ByRef $oPivotTable, $oSourceRange = N
 	$oPivotTable.SourceRange = $oSourceRange.RangeAddress()
 
 	$iError = (__LOCalc_RangeAddressIsSame($oPivotTable.SourceRange(), $oSourceRange.RangeAddress())) ? ($iError) : (BitOR($iError, 1))
+
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOCalc_RangePivotSource
 
@@ -5046,7 +5096,6 @@ Func _LOCalc_RangeRowVisible(ByRef $oRow, $bVisible = Null)
 
 	If ($bVisible = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oRow.IsVisible())
 
-
 	If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oRow.IsVisible = $bVisible
 	$iError = ($oRow.IsVisible() = $bVisible) ? ($iError) : (BitOR($iError, 1))
@@ -5133,6 +5182,7 @@ Func _LOCalc_RangeSort(ByRef $oDoc, ByRef $oRange, ByRef $tSortField, $bSortColu
 
 	If $bSortColumns Then
 		If Not __LOCalc_IntIsBetween($tSortField.Field(), 0, $oRange.Columns.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	Else
 		If Not __LOCalc_IntIsBetween($tSortField.Field(), 0, $oRange.Rows.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	EndIf
@@ -5144,13 +5194,13 @@ Func _LOCalc_RangeSort(ByRef $oDoc, ByRef $oRange, ByRef $tSortField, $bSortColu
 
 		If $bSortColumns Then
 			If Not __LOCalc_IntIsBetween($tSortField2.Field(), 0, $oRange.Columns.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
 		Else
 			If Not __LOCalc_IntIsBetween($tSortField2.Field(), 0, $oRange.Rows.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 		EndIf
 
 		ReDim $atSortField[2]
 		$atSortField[1] = $tSortField2
-
 	EndIf
 
 	If ($tSortField3 <> Null) Then
@@ -5158,13 +5208,13 @@ Func _LOCalc_RangeSort(ByRef $oDoc, ByRef $oRange, ByRef $tSortField, $bSortColu
 
 		If $bSortColumns Then
 			If Not __LOCalc_IntIsBetween($tSortField3.Field(), 0, $oRange.Columns.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+
 		Else
 			If Not __LOCalc_IntIsBetween($tSortField3.Field(), 0, $oRange.Rows.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
 		EndIf
 
 		ReDim $atSortField[UBound($atSortField) + 1]
 		$atSortField[UBound($atSortField) - 1] = $tSortField3
-
 	EndIf
 
 	If ($bCopyOutput = True) Then
@@ -5179,13 +5229,10 @@ Func _LOCalc_RangeSort(ByRef $oDoc, ByRef $oRange, ByRef $tSortField, $bSortColu
 		$tCellAddr.Sheet = $tCellInputAddr.Sheet()
 		$tCellAddr.Column = $tCellInputAddr.StartColumn()
 		$tCellAddr.Row = $tCellInputAddr.StartRow()
-
 	EndIf
 
 	For $i = 0 To UBound($avSortDesc) - 1
-
 		Switch $avSortDesc[$i].Name()
-
 			Case "IsSortColumns"
 				$avSortDesc[$i].Value = $bSortColumns
 
@@ -5203,9 +5250,7 @@ Func _LOCalc_RangeSort(ByRef $oDoc, ByRef $oRange, ByRef $tSortField, $bSortColu
 
 			Case "OutputPosition"
 				If ($bCopyOutput = True) Then $avSortDesc[$i].Value = $tCellAddr
-
 		EndSwitch
-
 	Next
 
 ;~ $oRange.Sort($avSortDesc); This doesn't sort properly, thus a work around method is required.
@@ -5334,6 +5379,7 @@ Func _LOCalc_RangeSortAlt(ByRef $oDoc, ByRef $oRange, ByRef $tSortField, $bSortC
 
 	If $bSortColumns Then
 		If Not __LOCalc_IntIsBetween($tSortField.Field(), 0, $oRange.Columns.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	Else
 		If Not __LOCalc_IntIsBetween($tSortField.Field(), 0, $oRange.Rows.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	EndIf
@@ -5373,6 +5419,7 @@ Func _LOCalc_RangeSortAlt(ByRef $oDoc, ByRef $oRange, ByRef $tSortField, $bSortC
 
 		If $bSortColumns Then
 			If Not __LOCalc_IntIsBetween($tSortField2.Field(), 0, $oRange.Columns.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
 		Else
 			If Not __LOCalc_IntIsBetween($tSortField2.Field(), 0, $oRange.Rows.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 		EndIf
@@ -5386,7 +5433,6 @@ Func _LOCalc_RangeSortAlt(ByRef $oDoc, ByRef $oRange, ByRef $tSortField, $bSortC
 		$avParam[$iCount] = __LOCalc_SetPropertyValue("Ascending2", $tSortField2.IsAscending())
 		If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 12, 0)
 		$iCount += 1
-
 	EndIf
 
 	If ($tSortField3 <> Null) Then
@@ -5394,6 +5440,7 @@ Func _LOCalc_RangeSortAlt(ByRef $oDoc, ByRef $oRange, ByRef $tSortField, $bSortC
 
 		If $bSortColumns Then
 			If Not __LOCalc_IntIsBetween($tSortField3.Field(), 0, $oRange.Columns.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+
 		Else
 			If Not __LOCalc_IntIsBetween($tSortField3.Field(), 0, $oRange.Rows.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
 		EndIf
@@ -5407,7 +5454,6 @@ Func _LOCalc_RangeSortAlt(ByRef $oDoc, ByRef $oRange, ByRef $tSortField, $bSortC
 		$avParam[$iCount] = __LOCalc_SetPropertyValue("Ascending3", $tSortField3.IsAscending())
 		If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 14, 0)
 		$iCount += 1
-
 	EndIf
 
 	$oDoc.CurrentController.Select($oRange)
@@ -5496,6 +5542,7 @@ Func _LOCalc_RangeValidation(ByRef $oRange, $iType = Null, $iCondition = Null, $
 
 		__LOCalc_ArrayFill($avValid, $oValidation.Type(), $oValidation.getOperator(), $oValidation.getFormula1(), $oValidation.getFormula2(), $oCell, _
 				$oValidation.IgnoreBlankCells(), $oValidation.ShowList())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avValid)
 	EndIf
 
@@ -5611,9 +5658,9 @@ Func _LOCalc_RangeValidationSettings(ByRef $oRange, $bInputMsg = Null, $sInputTi
 	If Not IsObj($oValidation) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOCalc_VarsAreNull($bInputMsg, $sInputTitle, $sInputMsg, $bErrorMsg, $iErrorStyle, $sErrorTitle, $sErrorMsg) Then
-
 		__LOCalc_ArrayFill($avValid, $oValidation.ShowInputMessage(), $oValidation.InputTitle(), $oValidation.InputMessage(), $oValidation.ShowErrorMessage(), _
 				$oValidation.ErrorAlertStyle(), $oValidation.ErrorTitle(), $oValidation.ErrorMessage())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avValid)
 	EndIf
 

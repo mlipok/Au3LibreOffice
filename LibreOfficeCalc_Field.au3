@@ -1,6 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
-;~ #Tidy_Parameters=/sf
+;~ #Tidy_Parameters=/sf /reel
 #include-once
 
 ; Main LibreOffice Includes
@@ -365,6 +365,7 @@ Func _LOCalc_FieldHyperlinkModify(ByRef $mHyperlinkField, $sURL = Null, $sText =
 
 	If __LOCalc_VarsAreNull($sURL, $sText, $sTargetFrame) Then
 		__LOCalc_ArrayFill($asField, $mHyperlinkField["FieldObj"].URL(), $mHyperlinkField["FieldObj"].Representation(), $mHyperlinkField["FieldObj"].TargetFrame())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $asField)
 	EndIf
 
@@ -573,7 +574,6 @@ Func _LOCalc_FieldsGetList(ByRef $oTextCursor, $iType = $LOC_FIELD_TYPE_ALL, $bF
 
 				If ($iTotalFound >= $iTotalFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 				For $i = 0 To UBound($avFieldTypes) - 1
-
 					If $oTextField.supportsService($avFieldTypes[$i][1]) Then
 						$oField = $oFields.getByIndex($iTotalFound)
 						If Not IsObj($oField) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
@@ -602,11 +602,11 @@ Func _LOCalc_FieldsGetList(ByRef $oTextCursor, $iType = $LOC_FIELD_TYPE_ALL, $bF
 				$iTotalFound += 1
 			EndIf
 		WEnd
-
 	WEnd
 
 	If $bFieldTypeNum Then
 		ReDim $avTextFields[$iCount][2]
+
 	Else
 		ReDim $avTextFields[$iCount]
 	EndIf

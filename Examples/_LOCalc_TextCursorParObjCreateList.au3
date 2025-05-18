@@ -41,7 +41,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to move Text Cursor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set the font weight to Bold.
-	_LOCalc_TextCursorFont($oDoc, $oTextCursor, Null, Null, Null, $LOC_WEIGHT_BOLD)
+	_LOCalc_TextCursorFont($oTextCursor, Null, Null, Null, $LOC_WEIGHT_BOLD)
 	If @error Then _ERROR($oDoc, "Failed to set text formatting. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve an array of Paragraph objects
@@ -52,7 +52,7 @@ Func Example()
 			"I will now set the first Paragraph Object's font settings to use 16 point Arial font type.")
 
 	; Set the first paragraph Object's font to Arial, and font size to 16.
-	_LOCalc_TextCursorFont($oDoc, $aoPar[0], "Arial", 16)
+	_LOCalc_TextCursorFont($aoPar[0], "Arial", 16)
 	If @error Then _ERROR($oDoc, "Failed to set text formatting. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")

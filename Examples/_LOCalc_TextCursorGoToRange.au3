@@ -33,7 +33,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to move Text Cursor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set the font weight to Bold.
-	_LOCalc_TextCursorFont($oDoc, $oTextCursor, Null, Null, Null, $LOC_WEIGHT_BOLD)
+	_LOCalc_TextCursorFont($oTextCursor, Null, Null, Null, $LOC_WEIGHT_BOLD)
 	If @error Then _ERROR($oDoc, "Failed to set text formatting. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Go to the Start.
@@ -45,7 +45,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to move Text Cursor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set the font Posture to Italic to Bold.
-	_LOCalc_TextCursorFont($oDoc, $oTextCursor, Null, Null, $LOC_POSTURE_ITALIC)
+	_LOCalc_TextCursorFont($oTextCursor, Null, Null, $LOC_POSTURE_ITALIC)
 	If @error Then _ERROR($oDoc, "Failed to set text formatting. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve an array of Paragraph objects
@@ -65,7 +65,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to move cursor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set the selected word to use the font Stencil.
-	_LOCalc_TextCursorFont($oDoc, $oTextCursor, "Stencil")
+	_LOCalc_TextCursorFont($oTextCursor, "Stencil")
 	If @error Then _ERROR($oDoc, "Failed to set text formatting. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
