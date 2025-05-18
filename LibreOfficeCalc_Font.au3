@@ -1,6 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
-;~ #Tidy_Parameters=/sf
+;~ #Tidy_Parameters=/sf /reel
 #include-once
 
 ; Main LibreOffice Includes
@@ -28,14 +28,17 @@
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_FontExists
 ; Description ...: Check whether a Document has a specific font available by name.
-; Syntax ........: _LOCalc_FontExists(ByRef $oDoc, $sFontName)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
-;                  $sFontName           - a string value. The Font name to search for.
+; Syntax ........: _LOCalc_FontExists($sFontName)
+; Parameters ....: $sFontName           - a string value. The Font name to search for.
 ; Return values .: Success: Boolean.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $sFontName not a String.
+;                  @Error 1 @Extended 1 Return 0 = $sFontName not a String.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create a "com.sun.star.ServiceManager" Object.
+;                  @Error 2 @Extended 2 Return 0 = Failed to create a "com.sun.star.frame.Desktop" Object.
+;                  @Error 2 @Extended 3 Return 0 = Failed to create a Property Struct.
+;                  @Error 2 @Extended 4 Return 0 = Failed to create a new Document.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Font list.
 ;                  --Success--
@@ -47,20 +50,42 @@
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_FontExists(ByRef $oDoc, $sFontName)
+Func _LOCalc_FontExists($sFontName)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $atFonts
+	Local Const $iURLFrameCreate = 8 ; Frame will be created if not found
+	Local $oServiceManager, $oDesktop, $oDoc
+	Local $atProperties[1]
 
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsString($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
+	If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+	$atProperties[0] = __LOCalc_SetPropertyValue("Hidden", True)
+	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+
+	$oDoc = $oDesktop.loadComponentFromURL("private:factory/scalc", "_blank", $iURLFrameCreate, $atProperties)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+
 	$atFonts = $oDoc.getCurrentController().getFrame().getContainerWindow().getFontDescriptors()
 	If Not IsArray($atFonts) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	For $i = 0 To UBound($atFonts) - 1
-		If $atFonts[$i].Name = $sFontName Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+		If $atFonts[$i].Name = $sFontName Then
+			$oDoc.Close(True)
+
+			Return SetError($__LO_STATUS_SUCCESS, 0, True)
+		EndIf
 		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
 	Next
+
+	$oDoc.Close(True)
+
 	Return SetError($__LO_STATUS_SUCCESS, 0, False)
 EndFunc   ;==>_LOCalc_FontExists
 

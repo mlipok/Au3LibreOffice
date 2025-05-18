@@ -1,5 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
+;~ #Tidy_Parameters=/sf /reel
 #include-once
 
 ; Main LibreOffice Includes
@@ -93,7 +94,9 @@ Func _LOCalc_ComError_UserFunction($vUserFunction = Default, $vParam1 = Null, $v
 
 	If $vUserFunction = Default Then
 		; just return stored static User Function variable
-		Return $vUserFunction_Static
+
+		Return SetError($__LO_STATUS_SUCCESS, 0, $vUserFunction_Static)
+
 	ElseIf IsFunc($vUserFunction) Then
 		; If User called Parameters, then add to array.
 		If @NumParams > 1 Then
@@ -103,16 +106,22 @@ Func _LOCalc_ComError_UserFunction($vUserFunction = Default, $vParam1 = Null, $v
 				; set static variable
 			Next
 			$vUserFunction_Static = $avUserFuncWParams
+
 		Else
 			$vUserFunction_Static = $vUserFunction
 		EndIf
+
 		Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+
 	ElseIf $vUserFunction = Null Then
 		; Clear User Function.
 		$vUserFunction_Static = Default
+
 		Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+
 	Else
 		; return error as an incorrect parameter was passed to this function
+
 		Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	EndIf
 EndFunc   ;==>_LOCalc_ComError_UserFunction
@@ -157,6 +166,7 @@ Func _LOCalc_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $iCM
 			$nBlue = BitAND($iHex, 0xff)
 
 			$dHex = Hex($nRed, 2) & Hex($nGreen, 2) & Hex($nBlue, 2)
+
 			Return SetError($__LO_STATUS_SUCCESS, 1, $dHex)
 
 		Case IsInt($iRGB) ; Long to RGB
@@ -168,6 +178,7 @@ Func _LOCalc_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $iCM
 			$aiReturn[0] = $nRed
 			$aiReturn[1] = $nGreen
 			$aiReturn[2] = $nBlue
+
 			Return SetError($__LO_STATUS_SUCCESS, 2, $aiReturn)
 
 		Case IsInt($iHSB) ; Long to HSB
@@ -189,16 +200,22 @@ Func _LOCalc_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $iCM
 			Select
 				Case $nRed = $nGreen = $nBlue ; Red, Green, and Blue are equal.
 					$nHue = 0
+
 				Case ($nRed >= $nGreen) And ($nGreen >= $nBlue) ; Red Highest, Blue Lowest
 					$nHue = (60 * (($nGreen - $nBlue) / ($nRed - $nBlue)))
+
 				Case ($nRed >= $nBlue) And ($nBlue >= $nGreen) ; Red Highest, Green Lowest
 					$nHue = (60 * (6 - (($nBlue - $nGreen) / ($nRed - $nGreen))))
+
 				Case ($nGreen >= $nRed) And ($nRed >= $nBlue) ; Green Highest, Blue Lowest
 					$nHue = (60 * (2 - (($nRed - $nBlue) / ($nGreen - $nBlue))))
+
 				Case ($nGreen >= $nBlue) And ($nBlue >= $nRed) ; Green Highest, Red Lowest
 					$nHue = (60 * (2 + (($nBlue - $nRed) / ($nGreen - $nRed))))
+
 				Case ($nBlue >= $nGreen) And ($nGreen >= $nRed) ; Blue Highest, Red Lowest
 					$nHue = (60 * (4 - (($nGreen - $nRed) / ($nBlue - $nRed))))
+
 				Case ($nBlue >= $nRed) And ($nRed >= $nGreen) ; Blue Highest, Green Lowest
 					$nHue = (60 * (4 + (($nRed - $nGreen) / ($nBlue - $nGreen))))
 			EndSelect
@@ -246,12 +263,13 @@ Func _LOCalc_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $iCM
 			$aiReturn[1] = $nMagenta
 			$aiReturn[2] = $nYellow
 			$aiReturn[3] = $nBlack
+
 			Return SetError($__LO_STATUS_SUCCESS, 4, $aiReturn)
 
 		Case Else
+
 			Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; no parameters set to an integer
 	EndSelect
-
 EndFunc   ;==>_LOCalc_ConvertColorFromLong
 
 ; #FUNCTION# ====================================================================================================================
@@ -299,7 +317,7 @@ Func _LOCalc_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $vV
 
 	If (@NumParams = 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	Switch @NumParams
-		Case 1 ;Hex
+		Case 1 ; Hex
 			If Not IsString($vVal1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; not a string
 			$vVal1 = StringStripWS($vVal1, $STR_STRIPALL)
 			$dHex = $vVal1
@@ -313,13 +331,15 @@ Func _LOCalc_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $vV
 				$iBlue = BitAND("0x" & $dHex, 0xFF)
 
 				$iLong = BitShift($iRed, -16) + BitShift($iGreen, -8) + $iBlue
+
 				Return SetError($__LO_STATUS_SUCCESS, 1, $iLong) ; Long from Hex
 
 			Else
+
 				Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0) ; Wrong length of string.
 			EndIf
 
-		Case 3 ;RGB and HSB; HSB is all strings, RGB all Integers.
+		Case 3 ; RGB and HSB; HSB is all strings, RGB all Integers.
 			If (IsInt($vVal1) And IsInt($vVal2) And IsInt($vVal3)) Then ; RGB
 				$iRed = $vVal1
 				$iGreen = $vVal2
@@ -327,6 +347,7 @@ Func _LOCalc_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $vV
 
 				; RGB to Long
 				$iLong = BitShift($iRed, -16) + BitShift($iGreen, -8) + $iBlue
+
 				Return SetError($__LO_STATUS_SUCCESS, 2, $iLong) ; Long from RGB
 
 			ElseIf IsString($vVal1) And IsString($vVal2) And IsString($vVal3) Then ; Hue Saturation and Brightness (HSB)
@@ -354,24 +375,29 @@ Func _LOCalc_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $vV
 						If $nHuePre < 0 Then
 							$iGreen = $nMinRGB
 							$iBlue = ($iGreen - $nHuePre * $nChroma)
+
 						Else
 							$iBlue = $nMinRGB
 							$iGreen = ($iBlue + $nHuePre * $nChroma)
 						EndIf
+
 					Case 1.1 To 3.0
 						$iGreen = $nMaxRGB
 						If (($nHuePre - 2) < 0) Then
 							$iBlue = $nMinRGB
 							$iRed = ($iBlue - ($nHuePre - 2) * $nChroma)
+
 						Else
 							$iRed = $nMinRGB
 							$iBlue = ($iRed + ($nHuePre - 2) * $nChroma)
 						EndIf
+
 					Case 3.1 To 5
 						$iBlue = $nMaxRGB
 						If (($nHuePre - 4) < 0) Then
 							$iRed = $nMinRGB
 							$iGreen = ($iRed - ($nHuePre - 4) * $nChroma)
+
 						Else
 							$iGreen = $nMinRGB
 							$iRed = ($iGreen + ($nHuePre - 4) * $nChroma)
@@ -383,11 +409,15 @@ Func _LOCalc_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $vV
 				$iBlue = Round(($iBlue * 255))
 
 				$iLong = BitShift($iRed, -16) + BitShift($iGreen, -8) + $iBlue
+
 				Return SetError($__LO_STATUS_SUCCESS, 3, $iLong) ; Return Long from HSB
+
 			Else
+
 				Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0) ; Wrong parameters
 			EndIf
-		Case 4 ;CMYK
+
+		Case 4 ; CMYK
 			If Not (IsInt($vVal1) And IsInt($vVal2) And IsInt($vVal3) And IsInt($vVal4)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0) ; CMYK not integers.
 
 			; CMYK to RGB
@@ -401,8 +431,11 @@ Func _LOCalc_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $vV
 			$iBlue = Round((255 * (1 - $nBlack) * (1 - $nYellow)))
 
 			$iLong = BitShift($iRed, -16) + BitShift($iGreen, -8) + $iBlue
+
 			Return SetError($__LO_STATUS_SUCCESS, 4, $iLong) ; Long from CMYK
+
 		Case Else
+
 			Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0) ; wrong number of Parameters
 	EndSwitch
 EndFunc   ;==>_LOCalc_ConvertColorToLong
@@ -449,6 +482,7 @@ Func _LOCalc_ConvertFromMicrometer($nInchOut = Null, $nCentimeterOut = Null, $nM
 		If Not IsNumber($nInchOut) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 		$nReturnValue = __LOCalc_UnitConvert($nInchOut, $__LOCONST_CONVERT_UM_INCH)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $nReturnValue)
 	EndIf
 
@@ -456,6 +490,7 @@ Func _LOCalc_ConvertFromMicrometer($nInchOut = Null, $nCentimeterOut = Null, $nM
 		If Not IsNumber($nCentimeterOut) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$nReturnValue = __LOCalc_UnitConvert($nCentimeterOut, $__LOCONST_CONVERT_UM_CM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 2, $nReturnValue)
 	EndIf
 
@@ -463,6 +498,7 @@ Func _LOCalc_ConvertFromMicrometer($nInchOut = Null, $nCentimeterOut = Null, $nM
 		If Not IsNumber($nMillimeterOut) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$nReturnValue = __LOCalc_UnitConvert($nMillimeterOut, $__LOCONST_CONVERT_UM_MM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 3, $nReturnValue)
 	EndIf
 
@@ -470,6 +506,7 @@ Func _LOCalc_ConvertFromMicrometer($nInchOut = Null, $nCentimeterOut = Null, $nM
 		If Not IsNumber($nPointsOut) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$nReturnValue = __LOCalc_UnitConvert($nPointsOut, $__LOCONST_CONVERT_UM_PT)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 4, $nReturnValue)
 	EndIf
 
@@ -518,6 +555,7 @@ Func _LOCalc_ConvertToMicrometer($nInchIn = Null, $nCentimeterIn = Null, $nMilli
 		If Not IsNumber($nInchIn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 		$nReturnValue = __LOCalc_UnitConvert($nInchIn, $__LOCONST_CONVERT_INCH_UM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $nReturnValue)
 	EndIf
 
@@ -525,6 +563,7 @@ Func _LOCalc_ConvertToMicrometer($nInchIn = Null, $nCentimeterIn = Null, $nMilli
 		If Not IsNumber($nCentimeterIn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$nReturnValue = __LOCalc_UnitConvert($nCentimeterIn, $__LOCONST_CONVERT_CM_UM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 2, $nReturnValue)
 	EndIf
 
@@ -532,6 +571,7 @@ Func _LOCalc_ConvertToMicrometer($nInchIn = Null, $nCentimeterIn = Null, $nMilli
 		If Not IsNumber($nMillimeterIn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$nReturnValue = __LOCalc_UnitConvert($nMillimeterIn, $__LOCONST_CONVERT_MM_UM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 3, $nReturnValue)
 	EndIf
 
@@ -539,11 +579,11 @@ Func _LOCalc_ConvertToMicrometer($nInchIn = Null, $nCentimeterIn = Null, $nMilli
 		If Not IsNumber($nPointsIn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$nReturnValue = __LOCalc_UnitConvert($nPointsIn, $__LOCONST_CONVERT_PT_UM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 4, $nReturnValue)
 	EndIf
 
 	Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; NO Unit set.
-
 EndFunc   ;==>_LOCalc_ConvertToMicrometer
 
 ; #FUNCTION# ====================================================================================================================
@@ -624,7 +664,6 @@ Func _LOCalc_FilterDescriptorCreate(ByRef $oRange, $atFilterField, $bCaseSensiti
 		$tCellAddr.Sheet = $tCellInputAddr.Sheet()
 		$tCellAddr.Column = $tCellInputAddr.StartColumn()
 		$tCellAddr.Row = $tCellInputAddr.StartRow()
-
 	EndIf
 
 	; Orientation is only set to Rows. I tried setting it to columns, but it doesn't work. Seemingly Filtering Columns isn't implemented yet, which is confirmed by a
@@ -710,6 +749,7 @@ Func _LOCalc_FilterDescriptorModify(ByRef $oRange, ByRef $oFilterDesc, $atFilter
 
 		__LOCalc_ArrayFill($avFilter, $oFilterDesc.getFilterFields2(), $oFilterDesc.IsCaseSensitive(), $oFilterDesc.SkipDuplicates(), $oFilterDesc.UseRegularExpressions(), _
 				$oFilterDesc.ContainsHeader(), $oFilterDesc.CopyOutputData(), $oCell, $oFilterDesc.SaveOutputPosition())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avFilter)
 	EndIf
 
@@ -873,6 +913,7 @@ Func _LOCalc_FilterFieldModify(ByRef $tFilterField, $iColumn = Null, $bIsNumeric
 
 	If __LOCalc_VarsAreNull($iColumn, $bIsNumeric, $nValue, $sString, $iCondition, $iOperator) Then
 		__LOCalc_ArrayFill($avFilter, $tFilterField.Field(), $tFilterField.IsNumeric(), $tFilterField.NumericValue(), $tFilterField.StringValue(), $tFilterField.Operator(), $tFilterField.Connection())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avFilter)
 	EndIf
 
@@ -1197,7 +1238,6 @@ Func _LOCalc_FormatKeyList(ByRef $oDoc, $bIsUser = False, $bUserOnly = False, $i
 	ReDim $avFormats[UBound($aiFormatKeys)][$iColumns]
 
 	For $i = 0 To UBound($aiFormatKeys) - 1
-
 		If ($bUserOnly = True) Then
 			If ($oFormats.getbykey($aiFormatKeys[$i]).UserDefined() = True) Then
 				$avFormats[$iCount][0] = $aiFormatKeys[$i]
@@ -1205,6 +1245,7 @@ Func _LOCalc_FormatKeyList(ByRef $oDoc, $bIsUser = False, $bUserOnly = False, $i
 				If ($bIsUser = True) Then $avFormats[$iCount][2] = $oFormats.getbykey($aiFormatKeys[$i]).UserDefined()
 				$iCount += 1
 			EndIf
+
 		Else
 			$avFormats[$i][0] = $aiFormatKeys[$i]
 			$avFormats[$i][1] = $oFormats.getbykey($aiFormatKeys[$i]).FormatString()
@@ -1256,18 +1297,18 @@ Func _LOCalc_PathConvert($sFilePath, $iReturnMode = $LOC_PATHCONV_AUTO_RETURN)
 	$iPartialFilePath = StringInStr($sFilePath, "/") ; Search For a Partial Libre path containing forward slash
 
 	If ($iReturnMode = $LOC_PATHCONV_AUTO_RETURN) Then
-
 		If ($iPathSearch > 0) Or ($iPartialPCPath > 0) Then ;  if file path contains partial or full PC path, set to convert to Libre URL.
 			$iReturnMode = $LOC_PATHCONV_OFFICE_RETURN
+
 		ElseIf ($iFileSearch > 0) Or ($iPartialFilePath > 0) Then ;  if file path contains partial or full Libre URL, set to convert to PC Path.
 			$iReturnMode = $LOC_PATHCONV_PCPATH_RETURN
+
 		Else ; If file path contains neither above. convert to Libre URL
 			$iReturnMode = $LOC_PATHCONV_OFFICE_RETURN
 		EndIf
 	EndIf
 
 	Switch $iReturnMode
-
 		Case $LOC_PATHCONV_OFFICE_RETURN
 			If $iFileSearch > 0 Then Return SetError($__LO_STATUS_SUCCESS, 2, $sFilePath)
 			If ($iPathSearch > 0) Then $sFilePath = "file:///" & $sFilePath
@@ -1276,6 +1317,7 @@ Func _LOCalc_PathConvert($sFilePath, $iReturnMode = $LOC_PATHCONV_AUTO_RETURN)
 				$sFilePath = StringReplace($sFilePath, $asURLReplace[$i][0], $asURLReplace[$i][1])
 				Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV)) ? (10) : (0))
 			Next
+
 			Return SetError($__LO_STATUS_SUCCESS, 2, $sFilePath)
 
 		Case $LOC_PATHCONV_PCPATH_RETURN
@@ -1286,10 +1328,9 @@ Func _LOCalc_PathConvert($sFilePath, $iReturnMode = $LOC_PATHCONV_AUTO_RETURN)
 				$sFilePath = StringReplace($sFilePath, $asURLReplace[$i][1], $asURLReplace[$i][0])
 				Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV)) ? (10) : (0))
 			Next
+
 			Return SetError($__LO_STATUS_SUCCESS, 1, $sFilePath)
-
 	EndSwitch
-
 EndFunc   ;==>_LOCalc_PathConvert
 
 ; #FUNCTION# ====================================================================================================================
@@ -1416,6 +1457,7 @@ Func _LOCalc_SearchDescriptorModify(ByRef $oSrchDescript, $bBackwards = Null, $b
 		__LOCalc_ArrayFill($avSrchDescript, $oSrchDescript.SearchBackwards(), $oSrchDescript.SearchByRow(), $oSrchDescript.SearchCaseSensitive(), _
 				$oSrchDescript.SearchType(), $oSrchDescript.SearchWords(), $oSrchDescript.SearchRegularExpression(), $oSrchDescript.SearchWildcard(), _
 				$oSrchDescript.SearchStyles())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avSrchDescript)
 	EndIf
 
@@ -1511,6 +1553,7 @@ Func _LOCalc_SearchDescriptorSimilarityModify(ByRef $oSrchDescript, $bSimilarity
 	If __LOCalc_VarsAreNull($bSimilarity, $bCombine, $iRemove, $iAdd, $iExchange) Then
 		__LOCalc_ArrayFill($avSrchDescript, $oSrchDescript.SearchSimilarity(), $oSrchDescript.SearchSimilarityRelax(), _
 				$oSrchDescript.SearchSimilarityRemove(), $oSrchDescript.SearchSimilarityAdd(), $oSrchDescript.SearchSimilarityExchange())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avSrchDescript)
 	EndIf
 
@@ -1635,6 +1678,7 @@ Func _LOCalc_SortFieldModify(ByRef $tSortField, $iIndex = Null, $iDataType = Nul
 
 	If __LOCalc_VarsAreNull($iIndex, $iDataType, $bAscending, $bCaseSensitive) Then
 		__LOCalc_ArrayFill($avSort, $tSortField.Field(), $tSortField.FieldType(), $tSortField.IsAscending(), $tSortField.IsCaseSensitive())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avSort)
 	EndIf
 

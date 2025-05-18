@@ -1,6 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
-;~ #Tidy_Parameters=/sf
+;~ #Tidy_Parameters=/sf /reel
 #include-once
 
 ; Main LibreOffice Includes
@@ -133,11 +133,8 @@ Func _LOCalc_SheetAdd(ByRef $oDoc, $sName = Null, $iPosition = Null)
 			While $oSheets.hasByName($sName)
 				$iCount += 1
 				$sName = "Sheet" & $iCount
-
 			WEnd
-
 		EndIf
-
 	EndIf
 
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -209,11 +206,8 @@ Func _LOCalc_SheetCopy(ByRef $oDoc, ByRef $oSheet, $sNewName = Null, $iPosition 
 			While $oSheets.hasByName($sNewName)
 				$iCount += 1
 				$sNewName = $sName & "_" & $iCount
-
 			WEnd
-
 		EndIf
-
 	EndIf
 
 	If Not IsString($sNewName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
@@ -223,8 +217,6 @@ Func _LOCalc_SheetCopy(ByRef $oDoc, ByRef $oSheet, $sNewName = Null, $iPosition 
 	If ($iPosition = Null) Then $iPosition = $oSheets.Count()
 
 	If Not __LOCalc_IntIsBetween($iPosition, 0, $oSheets.Count()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
-
 
 	$oSheets.copyByName($sName, $sNewName, $iPosition)
 
@@ -817,14 +809,11 @@ Func _LOCalc_SheetLink(ByRef $oSourceDoc, ByRef $oDestDoc, $sSheetName, $iLinkMo
 			While $oDestDoc.Sheets.hasByName($sName)
 				$iCount += 1
 				$sName = $sSheetName & "_" & $iCount
-
 			WEnd
-
 		EndIf
 
 	Else
 		$sName = $sSheetName
-
 	EndIf
 
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -898,6 +887,7 @@ Func _LOCalc_SheetLinkModify(ByRef $oSheet, $oNewDoc = Null, $sSheetName = Null,
 
 	If __LOCalc_VarsAreNull($oNewDoc, $sSheetName, $iLinkMode) Then
 		__LOCalc_ArrayFill($avSheet, _LOCalc_PathConvert($oSheet.LinkUrl(), $LOC_PATHCONV_PCPATH_RETURN), $oSheet.LinkSheetName(), $oSheet.LinkMode())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avSheet)
 	EndIf
 
@@ -927,7 +917,6 @@ Func _LOCalc_SheetLinkModify(ByRef $oSheet, $oNewDoc = Null, $sSheetName = Null,
 
 		$oSheet.LinkSheetName = $sSheetName
 		$iError = ($oSheet.LinkSheetName() = $sSheetName) ? ($iError) : (BitOR($iError, 2))
-
 	EndIf
 
 	If ($iLinkMode <> Null) Then
@@ -942,6 +931,7 @@ Func _LOCalc_SheetLinkModify(ByRef $oSheet, $oNewDoc = Null, $sSheetName = Null,
 			$iError = ($oSheet.LinkUrl() = "") ? ($iError) : (BitOR($iError, 1))
 			$iError = ($oSheet.LinkSheetName() = "") ? ($iError) : (BitOR($iError, 2))
 			$iError = ($oSheet.LinkMode() = $iLinkMode) ? ($iError) : (BitOR($iError, 4))
+
 		Else
 
 			If ($oSheet.LinkUrl() = "") Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
@@ -1114,6 +1104,7 @@ Func _LOCalc_SheetPrintColumnsRepeat(ByRef $oSheet, $oRange = Null, $bRepeatColu
 			If Not IsObj($oCell) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 			__LOCalc_ArrayFill($avPrintColumn, $oCell, $oSheet.PrintTitleColumns())
+
 		Else
 			$oCellRange = $oSheet.getCellRangeByPosition($tRangeAddr.StartColumn(), $tRangeAddr.StartRow(), $tRangeAddr.EndColumn(), $tRangeAddr.EndRow())
 			If Not IsObj($oCellRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
@@ -1199,6 +1190,7 @@ Func _LOCalc_SheetPrintRangeModify(ByRef $oSheet, $aoRange = Null)
 			$aoRange[$i] = $oSheet.getCellRangeByPosition($aoRange[$i].StartColumn(), $aoRange[$i].StartRow(), $aoRange[$i].EndColumn(), $aoRange[$i].EndRow())
 			If Not IsObj($aoRange[$i]) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		Next
+
 		Return SetError($__LO_STATUS_SUCCESS, UBound($aoRange), $aoRange)
 	EndIf
 
@@ -1270,6 +1262,7 @@ Func _LOCalc_SheetPrintRowsRepeat(ByRef $oSheet, $oRange = Null, $bRepeatRows = 
 			If Not IsObj($oCell) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 			__LOCalc_ArrayFill($avPrintRow, $oCell, $oSheet.PrintTitleRows())
+
 		Else
 			$oCellRange = $oSheet.getCellRangeByPosition($tRangeAddr.StartColumn(), $tRangeAddr.StartRow(), $tRangeAddr.EndColumn(), $tRangeAddr.EndRow())
 			If Not IsObj($oCellRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
@@ -1482,7 +1475,6 @@ Func _LOCalc_SheetsGetNames(ByRef $oDoc, $bLinkedOnly = False)
 		ReDim $asNames[$iLinkedSheetCount]
 
 		For $i = 0 To $iLinkedSheetCount - 1
-
 			$oLinkedSheet = $oSheetLinks.getByIndex($i)
 			If Not IsObj($oLinkedSheet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
@@ -1496,7 +1488,6 @@ Func _LOCalc_SheetsGetNames(ByRef $oDoc, $bLinkedOnly = False)
 				EndIf
 				Sleep((IsInt($k / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
 			Next
-
 		Next
 
 	Else

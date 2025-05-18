@@ -56,13 +56,13 @@ Func Example()
 	$atFilterFields[0] = _LOCalc_FilterFieldCreate(3, True, 15000, "", $LOC_FILTER_CONDITION_GREATER)
 	If @error Then _ERROR($oDoc, "Failed to create a Filter Field. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "press ok to filter the Pivot Table for only values greater than 15,000 in the 2012 column.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to filter the Pivot Table for only values greater than 15,000 in the 2012 column.")
 
 	; Filter the Pivot Table's column 3, "2012", Skip Case sensitive, Set Skip duplicates to True, and Regular Expressions to False.
 	_LOCalc_RangePivotFilter($oPivot, $atFilterFields, Null, True, False)
 	If @error Then _ERROR($oDoc, "Failed to apply a Filter to the Pivot Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "press ok to clear the filter that is applied to the Pivot Table.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to clear the filter that is applied to the Pivot Table.")
 
 	; Clear the Pivot Table Filter
 	_LOCalc_RangePivotFilterClear($oPivot)
@@ -120,7 +120,7 @@ Func _PrepareRange($oDoc, $oSheet)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Bold the Titles.
-	_LOCalc_CellFont($oDoc, $oCellRange, Null, Null, Null, $LOC_WEIGHT_BOLD)
+	_LOCalc_CellFont($oCellRange, Null, Null, Null, $LOC_WEIGHT_BOLD)
 	If @error Then _ERROR($oDoc, "Failed to set Cell Range weight. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 EndFunc
 
