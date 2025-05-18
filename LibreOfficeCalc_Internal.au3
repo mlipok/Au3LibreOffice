@@ -1,6 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
-;~ #Tidy_Parameters=/sf
+;~ #Tidy_Parameters=/sf /reel
 #include-once
 
 ; Main LibreOffice Includes
@@ -107,6 +107,7 @@ Func __LOCalc_AddTo1DArray(ByRef $aArray, $vData, $bCountInFirst = False)
 	ReDim $aArray[UBound($aArray) + 1]
 	$aArray[UBound($aArray) - 1] = $vData
 	If $bCountInFirst Then $aArray[0] += 1
+
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>__LOCalc_AddTo1DArray
 
@@ -223,6 +224,7 @@ Func __LOCalc_CellBackColor(ByRef $oObj, $iBackColor, $bBackTransparent)
 
 	If __LOCalc_VarsAreNull($iBackColor, $bBackTransparent) Then
 		__LOCalc_ArrayFill($avColor, $oObj.CellBackColor(), $oObj.IsCellBackgroundTransparent())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avColor)
 	EndIf
 
@@ -300,20 +302,22 @@ Func __LOCalc_CellBorder(ByRef $oRange, $bWid, $bSty, $bCol, $iTop, $iBottom, $i
 	If (($bWid + $bSty + $bCol) <> 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOCalc_VarsAreNull($iTop, $iBottom, $iLeft, $iRight, $iVert, $iHori, $iTLBRDiag, $iBLTRDiag) Then
-
 		If $bWid Then
 			__LOCalc_ArrayFill($avBorder, $oRange.TableBorder2.TopLine.LineWidth(), $oRange.TableBorder2.BottomLine.LineWidth(), _
 					$oRange.TableBorder2.LeftLine.LineWidth(), $oRange.TableBorder2.RightLine.LineWidth(), $oRange.TableBorder2.VerticalLine.LineWidth(), _
 					$oRange.TableBorder2.HorizontalLine.LineWidth(), $oRange.DiagonalTLBR2.LineWidth(), $oRange.DiagonalBLTR2.LineWidth())
+
 		ElseIf $bSty Then
 			__LOCalc_ArrayFill($avBorder, $oRange.TableBorder2.TopLine.LineStyle(), $oRange.TableBorder2.BottomLine.LineStyle(), _
 					$oRange.TableBorder2.LeftLine.LineStyle(), $oRange.TableBorder2.RightLine.LineStyle(), $oRange.TableBorder2.VerticalLine.LineStyle(), _
 					$oRange.TableBorder2.HorizontalLine.LineStyle(), $oRange.DiagonalTLBR2.LineStyle(), $oRange.DiagonalBLTR2.LineStyle())
+
 		ElseIf $bCol Then
 			__LOCalc_ArrayFill($avBorder, $oRange.TableBorder2.TopLine.Color(), $oRange.TableBorder2.BottomLine.Color(), _
 					$oRange.TableBorder2.LeftLine.Color(), $oRange.TableBorder2.RightLine.Color(), $oRange.TableBorder2.VerticalLine.Color(), _
 					$oRange.TableBorder2.HorizontalLine.Color(), $oRange.DiagonalTLBR2.Color(), $oRange.DiagonalBLTR2.Color())
 		EndIf
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avBorder)
 	EndIf
 
@@ -398,7 +402,6 @@ Func __LOCalc_CellBorder(ByRef $oRange, $bWid, $bSty, $bCol, $iTop, $iBottom, $i
 		$tBL2.Color = ($bCol) ? ($iBLTRDiag) : ($oRange.DiagonalBLTR2.Color()) ; copy Color over to new size structure
 		$oRange.DiagonalBLTR2 = $tBL2
 	EndIf
-
 EndFunc   ;==>__LOCalc_CellBorder
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -450,6 +453,7 @@ Func __LOCalc_CellBorderPadding(ByRef $oObj, $iAll, $iTop, $iBottom, $iLeft, $iR
 	If __LOCalc_VarsAreNull($iAll, $iTop, $iBottom, $iLeft, $iRight) Then ; Return Top Margin value for $iAll
 		__LOCalc_ArrayFill($aiBPadding, (($oObj.ParaTopMargin() = $oObj.ParaBottomMargin()) And ($oObj.ParaLeftMargin() = $oObj.ParaRightMargin()) And ($oObj.ParaBottomMargin() = $oObj.ParaLeftMargin())) ? ($oObj.ParaBottomMargin()) : (Null), _
 				$oObj.ParaTopMargin(), $oObj.ParaBottomMargin(), $oObj.ParaLeftMargin(), $oObj.ParaRightMargin())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiBPadding)
 	EndIf
 
@@ -534,6 +538,7 @@ Func __LOCalc_CellEffect(ByRef $oObj, $iRelief, $bOutline, $bShadow)
 
 	If __LOCalc_VarsAreNull($iRelief, $bOutline, $bShadow) Then
 		__LOCalc_ArrayFill($avEffect, $oObj.CharRelief(), $oObj.CharContoured(), $oObj.CharShadowed())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avEffect)
 	EndIf
 
@@ -570,11 +575,11 @@ EndFunc   ;==>__LOCalc_CellEffect
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 5 Return 0 = Variable passed to internal function not an Object.
-;                  @Error 1 @Extended 6 Return 0 = $sFontName not a String.
-;                  @Error 1 @Extended 7 Return 0 = $nFontSize not a number.
-;                  @Error 1 @Extended 8 Return 0 = $iPosture not an Integer, less than 0, or greater than 5. See Constants, $LOC_POSTURE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 9 Return 0 = $iWeight not an Integer, less than 50 but not equal to 0, or greater than 200. See Constants, $LOC_WEIGHT_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = Variable passed to internal function not an Object.
+;                  @Error 1 @Extended 5 Return 0 = $sFontName not a String.
+;                  @Error 1 @Extended 6 Return 0 = $nFontSize not a number.
+;                  @Error 1 @Extended 7 Return 0 = $iPosture not an Integer, less than 0, or greater than 5. See Constants, $LOC_POSTURE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 8 Return 0 = $iWeight not an Integer, less than 50 but not equal to 0, or greater than 200. See Constants, $LOC_WEIGHT_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $sFontName
@@ -601,33 +606,34 @@ Func __LOCalc_CellFont(ByRef $oObj, $sFontName, $nFontSize, $iPosture, $iWeight)
 	Local $iError = 0
 	Local $avFont[4]
 
-	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	If __LOCalc_VarsAreNull($sFontName, $nFontSize, $iPosture, $iWeight) Then
 		__LOCalc_ArrayFill($avFont, $oObj.CharFontName(), $oObj.CharHeight(), $oObj.CharPosture(), $oObj.CharWeight())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avFont)
 	EndIf
 
 	If ($sFontName <> Null) Then
-		If Not IsString($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not IsString($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oObj.CharFontName = $sFontName
 		$iError = ($oObj.CharFontName() = $sFontName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($nFontSize <> Null) Then
-		If Not IsNumber($nFontSize) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not IsNumber($nFontSize) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oObj.CharHeight = $nFontSize
 		$iError = ($oObj.CharHeight() = $nFontSize) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iPosture <> Null) Then
-		If Not __LOCalc_IntIsBetween($iPosture, $LOC_POSTURE_NONE, $LOC_POSTURE_ITALIC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LOCalc_IntIsBetween($iPosture, $LOC_POSTURE_NONE, $LOC_POSTURE_ITALIC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oObj.CharPosture = $iPosture
 		$iError = ($oObj.CharPosture() = $iPosture) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iWeight <> Null) Then
-		If Not __LOCalc_IntIsBetween($iWeight, $LOC_WEIGHT_THIN, $LOC_WEIGHT_BLACK, "", $LOC_WEIGHT_DONT_KNOW) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LOCalc_IntIsBetween($iWeight, $LOC_WEIGHT_THIN, $LOC_WEIGHT_BLACK, "", $LOC_WEIGHT_DONT_KNOW) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oObj.CharWeight = $iWeight
 		$iError = ($oObj.CharWeight() = $iWeight) ? ($iError) : (BitOR($iError, 8))
 	EndIf
@@ -669,6 +675,7 @@ Func __LOCalc_CellFontColor(ByRef $oObj, $iFontColor)
 	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	If __LOCalc_VarsAreNull($iFontColor) Then
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $oObj.CharColor())
 	EndIf
 
@@ -773,6 +780,7 @@ Func __LOCalc_CellOverLine(ByRef $oObj, $bWordOnly, $iOverLineStyle, $bOLHasColo
 
 	If __LOCalc_VarsAreNull($bWordOnly, $iOverLineStyle, $bOLHasColor, $iOLColor) Then
 		__LOCalc_ArrayFill($avOverLine, $oObj.CharWordMode(), $oObj.CharOverline(), $oObj.CharOverlineHasColor(), $oObj.CharOverlineColor())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avOverLine)
 	EndIf
 
@@ -855,6 +863,7 @@ Func __LOCalc_CellProtection(ByRef $oObj, $bHideAll, $bProtected, $bHideFormula,
 
 	If __LOCalc_VarsAreNull($bHideAll, $bProtected, $bHideFormula, $bHideWhenPrint) Then
 		__LOCalc_ArrayFill($abProtection, $tCellProtection.IsHidden(), $tCellProtection.IsLocked(), $tCellProtection.IsFormulaHidden(), $tCellProtection.IsPrintHidden())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $abProtection)
 	EndIf
 
@@ -939,6 +948,7 @@ Func __LOCalc_CellShadow(ByRef $oObj, $iWidth, $iColor, $bTransparent, $iLocatio
 
 	If __LOCalc_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
 		__LOCalc_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avShadow)
 	EndIf
 
@@ -1014,6 +1024,7 @@ Func __LOCalc_CellStrikeOut(ByRef $oObj, $bWordOnly, $bStrikeOut, $iStrikeLineSt
 
 	If __LOCalc_VarsAreNull($bWordOnly, $bStrikeOut, $iStrikeLineStyle) Then
 		__LOCalc_ArrayFill($avStrikeOut, $oObj.CharWordMode(), $oObj.CharCrossedOut(), $oObj.CharStrikeout())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avStrikeOut)
 	EndIf
 
@@ -1095,13 +1106,16 @@ Func __LOCalc_CellStyleBorder(ByRef $oCellStyle, $bWid, $bSty, $bCol, $iTop, $iB
 		If $bWid Then
 			__LOCalc_ArrayFill($avBorder, $oCellStyle.TopBorder2.LineWidth(), $oCellStyle.BottomBorder2.LineWidth(), $oCellStyle.LeftBorder2.LineWidth(), $oCellStyle.RightBorder2.LineWidth(), _
 					$oCellStyle.DiagonalTLBR2.LineWidth(), $oCellStyle.DiagonalBLTR2.LineWidth())
+
 		ElseIf $bSty Then
 			__LOCalc_ArrayFill($avBorder, $oCellStyle.TopBorder2.LineStyle(), $oCellStyle.BottomBorder2.LineStyle(), $oCellStyle.LeftBorder2.LineStyle(), $oCellStyle.RightBorder2.LineStyle(), _
 					$oCellStyle.DiagonalTLBR2.LineStyle(), $oCellStyle.DiagonalBLTR2.LineStyle())
+
 		ElseIf $bCol Then
 			__LOCalc_ArrayFill($avBorder, $oCellStyle.TopBorder2.Color(), $oCellStyle.BottomBorder2.Color(), $oCellStyle.LeftBorder2.Color(), $oCellStyle.RightBorder2.Color(), _
 					$oCellStyle.DiagonalTLBR2.Color(), $oCellStyle.DiagonalBLTR2.Color())
 		EndIf
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avBorder)
 	EndIf
 
@@ -1208,6 +1222,7 @@ Func __LOCalc_CellTextAlign(ByRef $oObj, $iHoriAlign, $iVertAlign, $iIndent)
 
 	If __LOCalc_VarsAreNull($iHoriAlign, $iVertAlign, $iIndent) Then
 		__LOCalc_ArrayFill($aiAlign, $oObj.HoriJustify(), $oObj.VertJustify(), $oObj.ParaIndent())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiAlign)
 	EndIf
 
@@ -1219,6 +1234,7 @@ Func __LOCalc_CellTextAlign(ByRef $oObj, $iHoriAlign, $iVertAlign, $iIndent)
 			$oObj.HoriJustifyMethod = $iAlignDistribute
 			$oObj.HoriJustify = $LOC_CELL_ALIGN_HORI_FILLED
 			$iError = (($oObj.HoriJustify() = $LOC_CELL_ALIGN_HORI_FILLED) And ($oObj.HoriJustifyMethod() = $iAlignDistribute)) ? ($iError) : (BitOR($iError, 1))
+
 		Else
 			$oObj.HoriJustifyMethod = $iAlignNoDistribute
 			$oObj.HoriJustify = $iHoriAlign
@@ -1234,12 +1250,12 @@ Func __LOCalc_CellTextAlign(ByRef $oObj, $iHoriAlign, $iVertAlign, $iIndent)
 			$oObj.VertJustifyMethod = $iAlignDistribute
 			$oObj.VertJustify = $LOC_CELL_ALIGN_VERT_JUSTIFIED
 			$iError = (($oObj.VertJustify() = $LOC_CELL_ALIGN_VERT_JUSTIFIED) And ($oObj.VertJustifyMethod() = $iAlignDistribute)) ? ($iError) : (BitOR($iError, 2))
+
 		Else
 			$oObj.VertJustifyMethod = $iAlignNoDistribute
 			$oObj.VertJustify = $iVertAlign
 			$iError = ($oObj.VertJustify() = $iVertAlign) ? ($iError) : (BitOR($iError, 2))
 		EndIf
-
 	EndIf
 
 	If ($iIndent <> Null) Then
@@ -1299,6 +1315,7 @@ Func __LOCalc_CellTextOrient(ByRef $oObj, $iRotate, $iReference, $bVerticalStack
 		__LOCalc_ArrayFill($avOrient, ($oObj.RotateAngle() / 100), $oObj.RotateReference(), (($oObj.Orientation() = $iIsStacked) ? (True) : (False)), $oObj.AsianVerticalMode())
 		; Rotate Angle is in 100ths of degrees.
 		; When Vertical Stack is True, Orientation is set to 3, when false, it is set to 0.
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avOrient)
 	EndIf
 
@@ -1321,6 +1338,7 @@ Func __LOCalc_CellTextOrient(ByRef $oObj, $iRotate, $iReference, $bVerticalStack
 			$oObj.RotateAngle = 0
 			$oObj.Orientation = $iIsStacked
 			$iError = ($oObj.Orientation() = $iIsStacked) ? ($iError) : (BitOR($iError, 4))
+
 		Else
 			$oObj.Orientation = $iIsNotStacked
 			$iError = ($oObj.Orientation() = $iIsNotStacked) ? ($iError) : (BitOR($iError, 4))
@@ -1381,6 +1399,7 @@ Func __LOCalc_CellTextProperties(ByRef $oObj, $bAutoWrapText, $bHyphen, $bShrink
 
 	If __LOCalc_VarsAreNull($bAutoWrapText, $bHyphen, $bShrinkToFit, $iTextDirection) Then
 		__LOCalc_ArrayFill($avTextProp, $oObj.IsTextWrapped(), $oObj.ParaIsHyphenation(), $oObj.ShrinkToFit(), $oObj.WritingMode())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avTextProp)
 	EndIf
 
@@ -1456,6 +1475,7 @@ Func __LOCalc_CellUnderLine(ByRef $oObj, $bWordOnly, $iUnderLineStyle, $bULHasCo
 
 	If __LOCalc_VarsAreNull($bWordOnly, $iUnderLineStyle, $bULHasColor, $iULColor) Then
 		__LOCalc_ArrayFill($avUnderLine, $oObj.CharWordMode(), $oObj.CharUnderline(), $oObj.CharUnderlineHasColor(), $oObj.CharUnderlineColor())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avUnderLine)
 	EndIf
 
@@ -1537,6 +1557,7 @@ Func __LOCalc_CharPosition(ByRef $oObj, $bAutoSuper, $iSuperScript, $bAutoSub, $
 	If __LOCalc_VarsAreNull($bAutoSuper, $iSuperScript, $bAutoSub, $iSubScript, $iRelativeSize) Then
 		__LOCalc_ArrayFill($avPosition, ($oObj.CharEscapement() = 14000) ? (True) : (False), ($oObj.CharEscapement() > 0) ? ($oObj.CharEscapement()) : (0), _
 				($oObj.CharEscapement() = -14000) ? (True) : (False), ($oObj.CharEscapement() < 0) ? ($oObj.CharEscapement()) : (0), $oObj.CharEscapementHeight())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avPosition)
 	EndIf
 
@@ -1553,7 +1574,6 @@ Func __LOCalc_CharPosition(ByRef $oObj, $bAutoSuper, $iSuperScript, $bAutoSub, $
 		; If $bAutoSub = True set it to -14000 (automatic Subscript) else if $iSubScript is set, let that overwrite
 		;	the current setting, else if superscript is true or set to an integer, it will overwrite the setting.
 		$iSubScript = ($bAutoSub) ? (-14000) : ((IsInt($iSubScript)) ? ($iSubScript) : ((IsInt($iSuperScript)) ? ($iSubScript) : (1)))
-
 	EndIf
 
 	If ($iSuperScript <> Null) Then
@@ -1622,6 +1642,7 @@ Func __LOCalc_CharSpacing(ByRef $oObj, $bAutoKerning, $nKerning)
 	If __LOCalc_VarsAreNull($bAutoKerning, $nKerning) Then
 		$nKerning = __LOCalc_UnitConvert($oObj.CharKerning(), $__LOCONST_CONVERT_UM_PT)
 		__LOCalc_ArrayFill($avKerning, $oObj.CharAutoKerning(), (($nKerning > 928.8) ? (1000) : ($nKerning)))
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avKerning)
 	EndIf
 
@@ -1720,14 +1741,12 @@ Func __LOCalc_CommentAreaShadowModify($oAnnotationShape, $iLocation = Null, $iDi
 
 		Else
 			$iDistance = 0
-
 		EndIf
 
 		If $bModifyLocation And ($iDistance = 0) Then $iDistance = 100 ; Set a non 0 value so location can be set.
 
 		; If negative, make it positive for easier processing.
 		$iDistance = ($iDistance < 0) ? ($iDistance * -1) : ($iDistance)
-
 	EndIf
 
 	If $bReturn Then Return SetError($__LO_STATUS_SUCCESS, $iLocation, $iDistance)
@@ -1736,48 +1755,56 @@ Func __LOCalc_CommentAreaShadowModify($oAnnotationShape, $iLocation = Null, $iDi
 		Case $LOC_COMMENT_SHADOW_TOP_LEFT
 			$oAnnotationShape.ShadowXDistance = ($iDistance * -1)
 			$oAnnotationShape.ShadowYDistance = ($iDistance * -1)
+
 			Return (($oAnnotationShape.ShadowXDistance() = ($iDistance * -1)) And ($oAnnotationShape.ShadowYDistance() = ($iDistance * -1))) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
 
 		Case $LOC_COMMENT_SHADOW_TOP_CENTER
 			$oAnnotationShape.ShadowXDistance = 0
 			$oAnnotationShape.ShadowYDistance = ($iDistance * -1)
+
 			Return (($oAnnotationShape.ShadowXDistance() = 0) And ($oAnnotationShape.ShadowYDistance() = ($iDistance * -1))) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
 
 		Case $LOC_COMMENT_SHADOW_TOP_RIGHT
 			$oAnnotationShape.ShadowXDistance = $iDistance
 			$oAnnotationShape.ShadowYDistance = ($iDistance * -1)
+
 			Return (($oAnnotationShape.ShadowXDistance() = $iDistance) And ($oAnnotationShape.ShadowYDistance() = ($iDistance * -1))) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
 
 		Case $LOC_COMMENT_SHADOW_MIDDLE_LEFT
 			$oAnnotationShape.ShadowXDistance = ($iDistance * -1)
 			$oAnnotationShape.ShadowYDistance = 0
+
 			Return (($oAnnotationShape.ShadowXDistance() = ($iDistance * -1)) And ($oAnnotationShape.ShadowYDistance() = 0)) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
 
 		Case $LOC_COMMENT_SHADOW_MIDDLE_CENTER
 			$oAnnotationShape.ShadowXDistance = ($bModifyLocation) ? (0) : ($iDistance)
 			$oAnnotationShape.ShadowYDistance = ($bModifyLocation) ? (0) : ($iDistance)
+
 			Return (($oAnnotationShape.ShadowXDistance() = (($bModifyLocation) ? (0) : ($iDistance))) And ($oAnnotationShape.ShadowYDistance() = (($bModifyLocation) ? (0) : ($iDistance)))) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
 
 		Case $LOC_COMMENT_SHADOW_MIDDLE_RIGHT
 			$oAnnotationShape.ShadowXDistance = $iDistance
 			$oAnnotationShape.ShadowYDistance = 0
+
 			Return (($oAnnotationShape.ShadowXDistance() = $iDistance) And ($oAnnotationShape.ShadowYDistance() = 0)) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
 
 		Case $LOC_COMMENT_SHADOW_BOTTOM_LEFT
 			$oAnnotationShape.ShadowXDistance = ($iDistance * -1)
 			$oAnnotationShape.ShadowYDistance = $iDistance
+
 			Return (($oAnnotationShape.ShadowXDistance() = ($iDistance * -1)) And ($oAnnotationShape.ShadowYDistance() = $iDistance)) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
 
 		Case $LOC_COMMENT_SHADOW_BOTTOM_CENTER
 			$oAnnotationShape.ShadowXDistance = 0
 			$oAnnotationShape.ShadowYDistance = $iDistance
+
 			Return (($oAnnotationShape.ShadowXDistance() = 0) And ($oAnnotationShape.ShadowYDistance() = $iDistance)) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
 
 		Case $LOC_COMMENT_SHADOW_BOTTOM_RIGHT
 			$oAnnotationShape.ShadowXDistance = $iDistance
 			$oAnnotationShape.ShadowYDistance = $iDistance
-			Return (($oAnnotationShape.ShadowXDistance() = $iDistance) And ($oAnnotationShape.ShadowYDistance() = $iDistance)) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
 
+			Return (($oAnnotationShape.ShadowXDistance() = $iDistance) And ($oAnnotationShape.ShadowYDistance() = $iDistance)) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
 	EndSwitch
 EndFunc   ;==>__LOCalc_CommentAreaShadowModify
 
@@ -1849,9 +1876,7 @@ Func __LOCalc_CommentArrowStyleName($iArrowStyle = Null, $sArrowStyle = Null)
 	ElseIf ($sArrowStyle <> Null) Then
 		If Not IsString($sArrowStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-
 		For $i = 0 To UBound($asArrowStyles) - 1
-
 			If ($asArrowStyles[$i] = $sArrowStyle) Then Return SetError($__LO_STATUS_SUCCESS, 1, $i) ; Return the array element where the matching Arrow Style was found.
 
 			Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV)) ? (10) : (0))
@@ -1860,8 +1885,8 @@ Func __LOCalc_CommentArrowStyleName($iArrowStyle = Null, $sArrowStyle = Null)
 		Return SetError($__LO_STATUS_SUCCESS, 2, $sArrowStyle) ; If no matches, just return the name, as it could be a custom value.
 
 	Else
-		Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; No values called.
 
+		Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; No values called.
 	EndIf
 EndFunc   ;==>__LOCalc_CommentArrowStyleName
 
@@ -1913,6 +1938,7 @@ Func __LOCalc_CommentGetObjByCell(ByRef $oCell, $bReturnIndex = False)
 
 		If __LOCalc_CellAddressIsSame($tAddress, $oAnnotation.Position()) Then
 			If $bReturnIndex Then Return SetError($__LO_STATUS_SUCCESS, 1, $i)
+
 			Return SetError($__LO_STATUS_SUCCESS, $i, $oAnnotation)
 		EndIf
 
@@ -1990,9 +2016,7 @@ Func __LOCalc_CommentLineStyleName($iLineStyle = Null, $sLineStyle = Null)
 	ElseIf ($sLineStyle <> Null) Then
 		If Not IsString($sLineStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-
 		For $i = 0 To UBound($asLineStyles) - 1
-
 			If ($asLineStyles[$i] = $sLineStyle) Then Return SetError($__LO_STATUS_SUCCESS, 1, $i) ; Return the array element where the matching Line Style was found.
 
 			Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV)) ? (10) : (0))
@@ -2001,8 +2025,8 @@ Func __LOCalc_CommentLineStyleName($iLineStyle = Null, $sLineStyle = Null)
 		Return SetError($__LO_STATUS_SUCCESS, 2, $sLineStyle) ; If no matches, just return the name, as it could be a custom value.
 
 	Else
-		Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; No values called.
 
+		Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; No values called.
 	EndIf
 EndFunc   ;==>__LOCalc_CommentLineStyleName
 
@@ -2045,13 +2069,13 @@ EndFunc   ;==>__LOCalc_CreateStruct
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOCalc_FieldGetObj
 ; Description ...: Retrieve the Field's Object after insertion.
-; Syntax ........: __LOCalc_FieldGetObj(ByRef $oTextcursor[, $iType = $LOC_FIELD_TYPE_ALL])
-; Parameters ....: $oTextcursor         - [in/out] an object. A Text Cursor Object returned by a previous _LOCalc_PageStyleFooterCreateTextCursor, _LOCalc_PageStyleHeaderCreateTextCursor, or _LOCalc_CellCreateTextCursor function.
+; Syntax ........: __LOCalc_FieldGetObj(ByRef $oTextCursor[, $iType = $LOC_FIELD_TYPE_ALL])
+; Parameters ....: $oTextCursor         - [in/out] an object. A Text Cursor Object returned by a previous _LOCalc_PageStyleFooterCreateTextCursor, _LOCalc_PageStyleHeaderCreateTextCursor, or _LOCalc_CellCreateTextCursor function.
 ;                  $iType               - [optional] an integer value. Default is $LOC_FIELD_TYPE_ALL. The Type of field to search for.
 ; Return values .: Success: Map
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oTextcursor not an Object.
+;                  @Error 1 @Extended 1 Return 0 = $oTextCursor not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iType not an Integer, less than 1, or greater than 255. (The total of all Constants added together.) See Constants, $LOC_FIELD_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create enumeration of paragraphs in Cell.
@@ -2073,7 +2097,7 @@ EndFunc   ;==>__LOCalc_CreateStruct
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOCalc_FieldGetObj(ByRef $oTextcursor, $iType = $LOC_FIELD_TYPE_ALL)
+Func __LOCalc_FieldGetObj(ByRef $oTextCursor, $iType = $LOC_FIELD_TYPE_ALL)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -2088,7 +2112,7 @@ Func __LOCalc_FieldGetObj(ByRef $oTextcursor, $iType = $LOC_FIELD_TYPE_ALL)
 	; When a Text Cursor has been used to insert Strings previous to inserting or looking for a Field, the fields sometimes are not able to be identified.
 	; The workaround I figured out was to create the Text Cursor again before enumerating the fields. I only create the text cursor again if the Text Cursor is in a Cell, not a header.
 	If ($oTextCursor.Text.SupportsService("com.sun.star.sheet.SheetCell")) Then
-		$oInternalCursor = $oTextCursor.Text.Spreadsheet.getCellByPosition($oTextCursor.Text.RangeAddress.StartColumn(), $oTextCursor.Text.RangeAddress.StartRow()).Text.createTextCursorByRange($oTextcursor)
+		$oInternalCursor = $oTextCursor.Text.Spreadsheet.getCellByPosition($oTextCursor.Text.RangeAddress.StartColumn(), $oTextCursor.Text.RangeAddress.StartRow()).Text.createTextCursorByRange($oTextCursor)
 	EndIf
 
 	$avFieldTypes = __LOCalc_FieldTypeServices($iType)
@@ -2118,14 +2142,13 @@ Func __LOCalc_FieldGetObj(ByRef $oTextcursor, $iType = $LOC_FIELD_TYPE_ALL)
 
 				If ($iTotalFound >= $iTotalFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 				For $i = 0 To UBound($avFieldTypes) - 1
-
 					If $oTextField.supportsService($avFieldTypes[$i][1]) And ($oInternalCursor.compareRegionEnds($oInternalCursor, $oTextField.Anchor.End()) = 0) Then
-
 						$oField = $oFields.getByIndex($iTotalFound)
 						If Not IsObj($oField) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
 
 						$mFieldObj.EnumFieldObj = $oTextField
 						$mFieldObj.FieldObj = $oField
+
 						Return SetError($__LO_STATUS_SUCCESS, 0, $mFieldObj)
 					EndIf
 					Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
@@ -2134,7 +2157,6 @@ Func __LOCalc_FieldGetObj(ByRef $oTextcursor, $iType = $LOC_FIELD_TYPE_ALL)
 				$iTotalFound += 1
 			EndIf
 		WEnd
-
 	WEnd
 
 	Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0)
@@ -2265,17 +2287,22 @@ Func __LOCalc_FilterNameGet(ByRef $sDocSavePath, $bExportFilters = False)
 		$iSlashLocation = StringInStr($sDocSavePath, "/", $STR_NOCASESENSE, -1)
 		$iDotLocation = StringInStr($sDocSavePath, ".", $STR_NOCASESENSE, -1, $iLength, $iLength - $iSlashLocation)
 		$sFileExtension = StringRight($sDocSavePath, ($iLength - $iDotLocation) + 1)
+
 	ElseIf StringInStr($sDocSavePath, "\") Then ;  Else if PC Path Then
 		$iSlashLocation = StringInStr($sDocSavePath, "\", $STR_NOCASESENSE, -1)
 		$iDotLocation = StringInStr($sDocSavePath, ".", $STR_NOCASESENSE, -1, $iLength, $iLength - $iSlashLocation)
 		$sFileExtension = StringRight($sDocSavePath, $iLength - $iDotLocation + 1)
+
 	Else
+
 		Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	EndIf
 
 	If $sFileExtension = $sDocSavePath Then ;  If no file extension identified, append .ods extension and return.
 		$sDocSavePath = $sDocSavePath & ".ods"
+
 		Return SetError($__LO_STATUS_SUCCESS, 3, "calc8")
+
 	Else
 		$sFileExtension = StringLower(StringStripWS($sFileExtension, $STR_STRIPALL))
 	EndIf
@@ -2321,14 +2348,23 @@ Func __LOCalc_Internal_CursorGetType(ByRef $oCursor)
 
 	Switch $oCursor.getImplementationName()
 		Case "SvxUnoTextCursor"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOC_CURTYPE_TEXT_CURSOR)
+
 		Case "ScCellCursorObj"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOC_CURTYPE_SHEET_CURSOR)
+
 		Case "SvxUnoTextContent"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOC_CURTYPE_PARAGRAPH)
+
 		Case "SvxUnoTextRange"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOC_CURTYPE_TEXT_PORTION)
+
 		Case Else
+
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; unknown Cursor type.
 	EndSwitch
 EndFunc   ;==>__LOCalc_Internal_CursorGetType
@@ -2357,6 +2393,7 @@ Func __LOCalc_InternalComErrorHandler(ByRef $oComError)
 		For $i = 1 To UBound($avUserFunction) - 1
 			$avUserParams[$i + 1] = $avUserFunction[$i]
 		Next
+
 	Else
 		$vUserFunction = $avUserFunction
 	EndIf
@@ -2373,6 +2410,7 @@ Func __LOCalc_InternalComErrorHandler(ByRef $oComError)
 						"LastDLLError: " & $oComError.lastdllerror & @CRLF & _
 						"At line: " & $oComError.scriptline & @CRLF & _
 						"!--COM-Error-End--" & @CRLF)
+
 			Case MsgBox
 				MsgBox(0, "COM Error", "Number: 0x" & Hex($oComError.number, 8) & @CRLF & _
 						"WinDescription: " & $oComError.windescription & @CRLF & _
@@ -2382,6 +2420,7 @@ Func __LOCalc_InternalComErrorHandler(ByRef $oComError)
 						"HelpContext: " & $oComError.helpcontext & @CRLF & _
 						"LastDLLError: " & $oComError.lastdllerror & @CRLF & _
 						"At line: " & $oComError.scriptline)
+
 			Case Else
 				Call($vUserFunction, $avUserParams)
 		EndSwitch
@@ -2398,7 +2437,9 @@ EndFunc   ;==>__LOCalc_InternalComErrorHandler
 ;                  $vNot                - [optional] a variant value. Default is "". Can be a single number, or a String of numbers separated by ":". Defines numbers inside the min/max range that are not allowed.
 ;                  $vIncl               - [optional] a variant value. Default is "". Can be a single number, or a String of numbers separated by ":". Defines numbers Outside the min/max range that are allowed.
 ; Return values .: Success: Boolean
-;                  Failure: False
+;                  Failure: False and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return Boolean = $iTest not an Integer.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Boolean = If the input is between Min and Max or is an allowed number, and not one of the disallowed numbers, True is returned. Else False.
 ; Author ........: donnyh13
@@ -2409,43 +2450,42 @@ EndFunc   ;==>__LOCalc_InternalComErrorHandler
 ; Example .......: No
 ; ===============================================================================================================================
 Func __LOCalc_IntIsBetween($iTest, $iMin, $iMax = 0, $vNot = "", $vIncl = "")
-	If Not IsInt($iTest) Then Return False
+	If Not IsInt($iTest) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, False)
 
 	Switch @NumParams
-
 		Case 2
-			Return ($iTest < $iMin) ? (False) : (True)
+
+			Return SetError($__LO_STATUS_SUCCESS, 0, ($iTest < $iMin) ? (False) : (True))
 
 		Case 3
-			Return (($iTest < $iMin) Or ($iTest > $iMax)) ? (False) : (True)
+
+			Return SetError($__LO_STATUS_SUCCESS, 0, (($iTest < $iMin) Or ($iTest > $iMax)) ? (False) : (True))
 
 		Case 4, 5
 
 			If IsString($vNot) Then
-				If StringInStr(":" & $vNot & ":", ":" & $iTest & ":") Then Return False
+				If StringInStr(":" & $vNot & ":", ":" & $iTest & ":") Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
 
 			ElseIf IsInt($vNot) Then
-				If ($iTest = $vNot) Then Return False
-
+				If ($iTest = $vNot) Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
 			EndIf
 
-			If (($iTest >= $iMin) And ($iTest <= $iMax)) Then Return True
+			If (($iTest >= $iMin) And ($iTest <= $iMax)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 
 			If @NumParams = 5 Then ContinueCase
 
-			Return False
+			Return SetError($__LO_STATUS_SUCCESS, 0, False)
 
 		Case Else
 			If IsString($vIncl) Then
-				If StringInStr(":" & $vIncl & ":", ":" & $iTest & ":") Then Return True
+				If StringInStr(":" & $vIncl & ":", ":" & $iTest & ":") Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 
 			ElseIf IsInt($vIncl) Then
 
-				If ($iTest = $vIncl) Then Return True
+				If ($iTest = $vIncl) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 			EndIf
 
-			Return False
-
+			Return SetError($__LO_STATUS_SUCCESS, 0, False)
 	EndSwitch
 EndFunc   ;==>__LOCalc_IntIsBetween
 
@@ -2489,14 +2529,12 @@ Func __LOCalc_NamedRangeGetScopeObj(ByRef $oDoc, $sName, $iTokenIndex, $sContent
 	If ($oDoc.NamedRanges.Count() >= $iTokenIndex) Then
 		$oObj = $oDoc.NamedRanges.getByIndex($iTokenIndex - 1)
 		If ($oObj.Name() == $sName) And ($oObj.Content = $sContent) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc)
-
 	EndIf
 
 	For $i = 0 To $oDoc.Sheets.Count() - 1
 		If ($oDoc.Sheets.getByIndex($i).NamedRanges.Count() >= $iTokenIndex) Then
 			$oObj = $oDoc.Sheets.getByIndex($i).NamedRanges.getByIndex($iTokenIndex - 1)
 			If ($oObj.Name() == $sName) And ($oObj.Content = $sContent) Then Return SetError($__LO_STATUS_SUCCESS, 2, $oDoc.Sheets.getByIndex($i))
-
 		EndIf
 
 		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
@@ -2538,6 +2576,7 @@ Func __LOCalc_NumIsBetween($nTest, $nMin, $nMax, $snNot = "", $snIncl = Default)
 			For $i = 1 To $anNot[0]
 				If ($anNot[$i] = $nTest) Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
 			Next
+
 		Else
 			If ($nTest = $snNot) Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
 		EndIf
@@ -2551,6 +2590,7 @@ Func __LOCalc_NumIsBetween($nTest, $nMin, $nMax, $snNot = "", $snIncl = Default)
 			$bMatch = ($anIncl[$j] = $nTest) ? (True) : (False)
 			If $bMatch Then ExitLoop
 		Next
+
 	ElseIf IsNumber($snIncl) Then
 		$bMatch = ($nTest = $snIncl) ? (True) : (False)
 	EndIf
@@ -2610,11 +2650,14 @@ Func __LOCalc_PageStyleBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTop, $iB
 	If __LOCalc_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then
 		If $bWid Then
 			__LOCalc_ArrayFill($avBorder, $oPageStyle.TopBorder.LineWidth(), $oPageStyle.BottomBorder.LineWidth(), $oPageStyle.LeftBorder.LineWidth(), $oPageStyle.RightBorder.LineWidth())
+
 		ElseIf $bSty Then
 			__LOCalc_ArrayFill($avBorder, $oPageStyle.TopBorder.LineStyle(), $oPageStyle.BottomBorder.LineStyle(), $oPageStyle.LeftBorder.LineStyle(), $oPageStyle.RightBorder.LineStyle())
+
 		ElseIf $bCol Then
 			__LOCalc_ArrayFill($avBorder, $oPageStyle.TopBorder.Color(), $oPageStyle.BottomBorder.Color(), $oPageStyle.LeftBorder.Color(), $oPageStyle.RightBorder.Color())
 		EndIf
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avBorder)
 	EndIf
 
@@ -2712,11 +2755,14 @@ Func __LOCalc_PageStyleFooterBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTo
 	If __LOCalc_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then
 		If $bWid Then
 			__LOCalc_ArrayFill($avBorder, $oPageStyle.FooterTopBorder.LineWidth(), $oPageStyle.FooterBottomBorder.LineWidth(), $oPageStyle.FooterLeftBorder.LineWidth(), $oPageStyle.FooterRightBorder.LineWidth())
+
 		ElseIf $bSty Then
 			__LOCalc_ArrayFill($avBorder, $oPageStyle.FooterTopBorder.LineStyle(), $oPageStyle.FooterBottomBorder.LineStyle(), $oPageStyle.FooterLeftBorder.LineStyle(), $oPageStyle.FooterRightBorder.LineStyle())
+
 		ElseIf $bCol Then
 			__LOCalc_ArrayFill($avBorder, $oPageStyle.FooterTopBorder.Color(), $oPageStyle.FooterBottomBorder.Color(), $oPageStyle.FooterLeftBorder.Color(), $oPageStyle.FooterRightBorder.Color())
 		EndIf
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avBorder)
 	EndIf
 
@@ -2814,11 +2860,14 @@ Func __LOCalc_PageStyleHeaderBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTo
 	If __LOCalc_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then
 		If $bWid Then
 			__LOCalc_ArrayFill($avBorder, $oPageStyle.HeaderTopBorder.LineWidth(), $oPageStyle.HeaderBottomBorder.LineWidth(), $oPageStyle.HeaderLeftBorder.LineWidth(), $oPageStyle.HeaderRightBorder.LineWidth())
+
 		ElseIf $bSty Then
 			__LOCalc_ArrayFill($avBorder, $oPageStyle.HeaderTopBorder.LineStyle(), $oPageStyle.HeaderBottomBorder.LineStyle(), $oPageStyle.HeaderLeftBorder.LineStyle(), $oPageStyle.HeaderRightBorder.LineStyle())
+
 		ElseIf $bCol Then
 			__LOCalc_ArrayFill($avBorder, $oPageStyle.HeaderTopBorder.Color(), $oPageStyle.HeaderBottomBorder.Color(), $oPageStyle.HeaderLeftBorder.Color(), $oPageStyle.HeaderRightBorder.Color())
 		EndIf
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avBorder)
 	EndIf
 
@@ -3016,6 +3065,7 @@ Func __LOCalc_SheetCursorMove(ByRef $oCursor, $iMove, $iColumns, $iRows, $iCount
 	Switch $iMove
 		Case $LOC_SHEETCUR_COLLAPSE_TO_SIZE, $LOC_SHEETCUR_GOTO_OFFSET
 			Execute("$oCursor." & $asMoves[$iMove] & "(" & $iColumns & "," & $iRows & ")")
+
 			Return SetError($__LO_STATUS_SUCCESS, 1, 1)
 
 		Case $LOC_SHEETCUR_GOTO_NEXT, $LOC_SHEETCUR_GOTO_PREV
@@ -3025,20 +3075,24 @@ Func __LOCalc_SheetCursorMove(ByRef $oCursor, $iMove, $iColumns, $iRows, $iCount
 
 				Sleep((IsInt($iCounted / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
 			Until ($iCounted >= $iCount)
+
 			Return SetError($__LO_STATUS_SUCCESS, $iCounted, 1)
 
 		Case $LOC_SHEETCUR_GOTO_USED_AREA_START, $LOC_SHEETCUR_GOTO_USED_AREA_END
 			Execute("$oCursor." & $asMoves[$iMove] & "(" & $bSelect & ")")
+
 			Return SetError($__LO_STATUS_SUCCESS, 1, 1)
 
 		Case $LOC_SHEETCUR_COLLAPSE_TO_CURRENT_ARRAY, $LOC_SHEETCUR_COLLAPSE_TO_CURRENT_REGION, $LOC_SHEETCUR_COLLAPSE_TO_MERGED_AREA, _
 				$LOC_SHEETCUR_EXPAND_TO_ENTIRE_COLUMN, $LOC_SHEETCUR_EXPAND_TO_ENTIRE_ROW, $LOC_SHEETCUR_GOTO_START, $LOC_SHEETCUR_GOTO_END
 			Execute("$oCursor." & $asMoves[$iMove] & "()")
+
 			Return SetError($__LO_STATUS_SUCCESS, 1, 1)
+
 		Case Else
+
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	EndSwitch
-
 EndFunc   ;==>__LOCalc_SheetCursorMove
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -3103,18 +3157,23 @@ Func __LOCalc_TextCursorMove(ByRef $oCursor, $iMove, $iCount, $bSelect = False)
 		Case $LOC_TEXTCUR_GO_LEFT, $LOC_TEXTCUR_GO_RIGHT
 			$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "(" & $iCount & "," & $bSelect & ")")
 			$iCounted = ($bMoved) ? ($iCount) : (0)
+
 			Return SetError($__LO_STATUS_SUCCESS, $iCounted, $bMoved)
 
 		Case $LOC_TEXTCUR_GOTO_START, $LOC_TEXTCUR_GOTO_END
 			$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "(" & $bSelect & ")")
 			$iCounted = ($bMoved) ? (1) : (0)
+
 			Return SetError($__LO_STATUS_SUCCESS, $iCounted, $bMoved)
 
 		Case $LOC_TEXTCUR_COLLAPSE_TO_START, $LOC_TEXTCUR_COLLAPSE_TO_END
 			$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "()")
 			$iCounted = ($bMoved) ? (1) : (0)
+
 			Return SetError($__LO_STATUS_SUCCESS, $iCounted, $bMoved)
+
 		Case Else
+
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	EndSwitch
 EndFunc   ;==>__LOCalc_TextCursorMove
@@ -3145,15 +3204,19 @@ Func __LOCalc_TransparencyGradientConvert($iPercentToLong = Null, $iLongToPercen
 	If ($iPercentToLong <> Null) Then
 		$iReturn = ((255 * ($iPercentToLong / 100)) + .50) ; Change percentage to decimal and times by White color (255 RGB) Add . 50 to round up if applicable.
 		$iReturn = _LOCalc_ConvertColorToLong(Int($iReturn), Int($iReturn), Int($iReturn))
+
 		Return SetError($__LO_STATUS_SUCCESS, 0, $iReturn)
+
 	ElseIf ($iLongToPercent <> Null) Then
 		$iReturn = _LOCalc_ConvertColorFromLong(Null, $iLongToPercent)
 		$iReturn = Int((($iReturn[0] / 255) * 100) + .50) ; All return color values will be the same, so use only one. Add . 50 to round up if applicable.
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $iReturn)
+
 	Else
+
 		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, Null)
 	EndIf
-
 EndFunc   ;==>__LOCalc_TransparencyGradientConvert
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -3264,68 +3327,79 @@ Func __LOCalc_UnitConvert($nValue, $iReturnType)
 	If Not IsInt($iReturnType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	Switch $iReturnType
-
-		Case $__LOCONST_CONVERT_TWIPS_CM ;TWIPS TO CM
+		Case $__LOCONST_CONVERT_TWIPS_CM ; TWIPS TO CM
 			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
 			$iInch = ($nValue / 20 / 72)
 			; 1 Inch = 2.54 CM
 			$iCM = Round(Round($iInch * 2.54, 3), 2)
+
 			Return SetError($__LO_STATUS_SUCCESS, 1, Number($iCM))
 
-		Case $__LOCONST_CONVERT_TWIPS_INCH ;TWIPS to Inch
+		Case $__LOCONST_CONVERT_TWIPS_INCH ; TWIPS to Inch
 			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
 			$iInch = ($nValue / 20 / 72)
 			$iInch = Round(Round($iInch, 3), 2)
+
 			Return SetError($__LO_STATUS_SUCCESS, 2, Number($iInch))
 
-		Case $__LOCONST_CONVERT_MM_UM ;Millimeter to Micrometer
+		Case $__LOCONST_CONVERT_MM_UM ; Millimeter to Micrometer
 			$iUM = ($nValue * 100)
 			$iUM = Round(Round($iUM, 1))
+
 			Return SetError($__LO_STATUS_SUCCESS, 3, Number($iUM))
 
-		Case $__LOCONST_CONVERT_UM_MM ;Micrometer to Millimeter
+		Case $__LOCONST_CONVERT_UM_MM ; Micrometer to Millimeter
 			$iMM = ($nValue / 100)
 			$iMM = Round(Round($iMM, 3), 2)
+
 			Return SetError($__LO_STATUS_SUCCESS, 4, Number($iMM))
 
-		Case $__LOCONST_CONVERT_CM_UM ;Centimeter to Micrometer
+		Case $__LOCONST_CONVERT_CM_UM ; Centimeter to Micrometer
 			$iUM = ($nValue * 1000)
 			$iUM = Round(Round($iUM, 1))
+
 			Return SetError($__LO_STATUS_SUCCESS, 5, Int($iUM))
 
-		Case $__LOCONST_CONVERT_UM_CM ;Micrometer to Centimeter
+		Case $__LOCONST_CONVERT_UM_CM ; Micrometer to Centimeter
 			$iCM = ($nValue / 1000)
 			$iCM = Round(Round($iCM, 3), 2)
+
 			Return SetError($__LO_STATUS_SUCCESS, 6, Number($iCM))
 
-		Case $__LOCONST_CONVERT_INCH_UM ;Inch to Micrometer
+		Case $__LOCONST_CONVERT_INCH_UM ; Inch to Micrometer
 			; 1 Inch - 2.54 Cm; Micrometer = 1/1000 CM
 			$iUM = ($nValue * 2.54) * 1000 ; + .0055
 			$iUM = Round(Round($iUM, 1))
+
 			Return SetError($__LO_STATUS_SUCCESS, 7, Int($iUM))
 
-		Case $__LOCONST_CONVERT_UM_INCH ;Micrometer to Inch
+		Case $__LOCONST_CONVERT_UM_INCH ; Micrometer to Inch
 			; 1 Inch - 2.54 Cm; Micrometer = 1/1000 CM
 			$iInch = ($nValue / 1000) / 2.54 ; + .0055
 			$iInch = Round(Round($iInch, 3), 2)
+
 			Return SetError($__LO_STATUS_SUCCESS, 8, $iInch)
 
-		Case $__LOCONST_CONVERT_TWIPS_UM ;TWIPS to Micrometer
+		Case $__LOCONST_CONVERT_TWIPS_UM ; TWIPS to Micrometer
 			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
 			$iInch = (($nValue / 20) / 72)
 			$iInch = Round(Round($iInch, 3), 2)
 			; 1 Inch - 25.4 MM; Micrometer = 1/100 MM
 			$iUM = Round($iInch * 25.4 * 100)
+
 			Return SetError($__LO_STATUS_SUCCESS, 9, Int($iUM))
 
 		Case $__LOCONST_CONVERT_PT_UM
 			; 1 pt = 35 uM
+
 			Return ($nValue = 0) ? (SetError($__LO_STATUS_SUCCESS, 10, 0)) : (SetError($__LO_STATUS_SUCCESS, 10, Round(($nValue * 35.2778))))
 
 		Case $__LOCONST_CONVERT_UM_PT
+
 			Return ($nValue = 0) ? (SetError($__LO_STATUS_SUCCESS, 11, 0)) : (SetError($__LO_STATUS_SUCCESS, 11, Round(($nValue / 35.2778), 2)))
 
 		Case Else
+
 			Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	EndSwitch
 EndFunc   ;==>__LOCalc_UnitConvert
@@ -3360,11 +3434,14 @@ EndFunc   ;==>__LOCalc_UnitConvert
 Func __LOCalc_VarsAreNull($vVar1, $vVar2 = Null, $vVar3 = Null, $vVar4 = Null, $vVar5 = Null, $vVar6 = Null, $vVar7 = Null, $vVar8 = Null, $vVar9 = Null, $vVar10 = Null, $vVar11 = Null, $vVar12 = Null)
 	Local $bAllNull1, $bAllNull2, $bAllNull3
 	$bAllNull1 = (($vVar1 = Null) And ($vVar2 = Null) And ($vVar3 = Null) And ($vVar4 = Null)) ? (True) : (False)
-	If (@NumParams <= 4) Then Return ($bAllNull1) ? (True) : (False)
+	If (@NumParams <= 4) Then Return SetError($__LO_STATUS_SUCCESS, 0, ($bAllNull1) ? (True) : (False))
+
 	$bAllNull2 = (($vVar5 = Null) And ($vVar6 = Null) And ($vVar7 = Null) And ($vVar8 = Null)) ? (True) : (False)
-	If (@NumParams <= 8) Then Return ($bAllNull1 And $bAllNull2) ? (True) : (False)
+	If (@NumParams <= 8) Then Return SetError($__LO_STATUS_SUCCESS, 0, ($bAllNull1 And $bAllNull2) ? (True) : (False))
+
 	$bAllNull3 = (($vVar9 = Null) And ($vVar10 = Null) And ($vVar11 = Null) And ($vVar12 = Null)) ? (True) : (False)
-	Return ($bAllNull1 And $bAllNull2 And $bAllNull3) ? (True) : (False)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, ($bAllNull1 And $bAllNull2 And $bAllNull3) ? (True) : (False))
 EndFunc   ;==>__LOCalc_VarsAreNull
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
