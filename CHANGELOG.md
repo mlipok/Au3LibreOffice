@@ -666,18 +666,18 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - __LOWriter_NumRuleCreateMap for modifying Numbering Rules more efficiently.
 - LibreOffice SDK/API Constant names to constants.
 - Form/Form Control Constants
-	- $LOW_FORM_CONTROL_BORDER_*
-	- $LOW_FORM_CONTROL_CHKBX_STATE_*
-	- $LOW_FORM_CONTROL_DATE_FRMT_*
-	- $LOW_FORM_CONTROL_IMG_ALIGN_*
-	- $LOW_FORM_CONTROL_IMG_BTN_SCALE_*
-	- $LOW_FORM_CONTROL_MOUSE_SCROLL_*
-	- $LOW_FORM_CONTROL_PUSH_CMD_*
-	- $LOW_FORM_CONTROL_SCROLL_*
-	- $LOW_FORM_CONTROL_SOURCE_TYPE_*
-	- $LOW_FORM_CONTROL_TIME_FRMT_*
-	- $LOW_FORM_CONTROL_TXT_TYPE_*
-	- $LOW_FORM_CONTROL_TYPE_*
+	- $LOW_FORM_CON_BORDER_*
+	- $LOW_FORM_CON_CHKBX_STATE_*
+	- $LOW_FORM_CON_DATE_FRMT_*
+	- $LOW_FORM_CON_IMG_ALIGN_*
+	- $LOW_FORM_CON_IMG_BTN_SCALE_*
+	- $LOW_FORM_CON_MOUSE_SCROLL_*
+	- $LOW_FORM_CON_PUSH_CMD_*
+	- $LOW_FORM_CON_SCROLL_*
+	- $LOW_FORM_CON_SOURCE_TYPE_*
+	- $LOW_FORM_CON_TIME_FRMT_*
+	- $LOW_FORM_CON_TXT_TYPE_*
+	- $LOW_FORM_CON_TYPE_*
 	- $LOW_FORM_CONTENT_TYPE_*
 	- $LOW_FORM_CYCLE_MODE_*
 	- $LOW_FORM_NAV_BAR_MODE_*
@@ -846,6 +846,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Modified _LOWriter_ShapesGetNames to return Shape Type instead of Implementation name.
 - Renamed __LOWriter_ControlSetGetFontDesc --> __LOWriter_FormConSetGetFontDesc to match other Form control function names.
 - Renamed all internal and user _LOWriter_FormControl* functions to _LOWriter_FormCon* for brevity.
+- Renamed all $LOW_FORM_CONTROL_* constants to $LOW_FORM_CON_* for brevity.
 
 ### Fixed
 

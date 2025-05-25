@@ -15,15 +15,15 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to Create a form in the Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a Form Control
-	_LOWriter_FormConInsert($oForm, $LOW_FORM_CONTROL_TYPE_LIST_BOX, 500, 300, 6000, 2000, "AutoIt_Form_Control")
+	_LOWriter_FormConInsert($oForm, $LOW_FORM_CON_TYPE_LIST_BOX, 500, 300, 6000, 2000, "AutoIt_Form_Control")
 	If @error Then _ERROR($oDoc, "Failed to insert a form control. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create another Form Control
-	_LOWriter_FormConInsert($oForm, $LOW_FORM_CONTROL_TYPE_CHECK_BOX, 500, 3000, 3000, 800, "AutoIt_Form_Control1")
+	_LOWriter_FormConInsert($oForm, $LOW_FORM_CON_TYPE_CHECK_BOX, 500, 3000, 3000, 800, "AutoIt_Form_Control1")
 	If @error Then _ERROR($oDoc, "Failed to insert a form control. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create another Form Control
-	_LOWriter_FormConInsert($oForm, $LOW_FORM_CONTROL_TYPE_PUSH_BUTTON, 500, 3800, 3000, 1500, "AutoIt_Form_Control2")
+	_LOWriter_FormConInsert($oForm, $LOW_FORM_CON_TYPE_PUSH_BUTTON, 500, 3800, 3000, 1500, "AutoIt_Form_Control2")
 	If @error Then _ERROR($oDoc, "Failed to insert a form control. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")

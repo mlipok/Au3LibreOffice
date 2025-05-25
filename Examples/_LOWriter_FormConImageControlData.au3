@@ -16,7 +16,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to Create a form in the Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a Form Control
-	$oControl = _LOWriter_FormConInsert($oForm, $LOW_FORM_CONTROL_TYPE_IMAGE_CONTROL, 500, 300, 6000, 2000, "AutoIt_Form_Control")
+	$oControl = _LOWriter_FormConInsert($oForm, $LOW_FORM_CON_TYPE_IMAGE_CONTROL, 500, 300, 6000, 2000, "AutoIt_Form_Control")
 	If @error Then _ERROR($oDoc, "Failed to insert a form control. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Modify the Control's Data properties.

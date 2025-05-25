@@ -17,7 +17,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to Create a form in the Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a Label Form Control
-	$oLabel = _LOWriter_FormConInsert($oForm, $LOW_FORM_CONTROL_TYPE_LABEL, 3500, 2300, 10000, 2000, "AutoIt_Form_Label_Control")
+	$oLabel = _LOWriter_FormConInsert($oForm, $LOW_FORM_CON_TYPE_LABEL, 3500, 2300, 10000, 2000, "AutoIt_Form_Label_Control")
 	If @error Then _ERROR($oDoc, "Failed to insert a form control. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a Font Descriptor.

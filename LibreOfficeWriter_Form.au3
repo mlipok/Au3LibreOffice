@@ -202,7 +202,7 @@ Func _LOWriter_FormConCheckBoxData(ByRef $oCheckBox, $sDataField = Null, $bInput
 
 	If Not IsObj($oCheckBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oCheckBox) <> $LOW_FORM_CONTROL_TYPE_CHECK_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oCheckBox) <> $LOW_FORM_CON_TYPE_CHECK_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
@@ -240,15 +240,15 @@ EndFunc   ;==>_LOWriter_FormConCheckBoxData
 ;                  $bPrintable          - [optional] a boolean value. Default is Null. If True, the control will be displayed when printed.
 ;                  $bTabStop            - [optional] a boolean value. Default is Null. If True, the control can be selected with the Tab key.
 ;                  $iTabOrder           - [optional] an integer value (0-2147483647). Default is Null. The order the control is focused by the Tab key.
-;                  $iDefaultState       - [optional] an integer value (0-2). Default is Null. The Default state of the Checkbox, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_DEFINED is only available if $bTriState is True. See Constants $LOW_FORM_CONTROL_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iDefaultState       - [optional] an integer value (0-2). Default is Null. The Default state of the Checkbox, $LOW_FORM_CON_CHKBX_STATE_NOT_DEFINED is only available if $bTriState is True. See Constants $LOW_FORM_CON_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
-;                  $iStyle              - [optional] an integer value (1-2). Default is Null. The display style of the checkbox. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iStyle              - [optional] an integer value (1-2). Default is Null. The display style of the checkbox. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bWordBreak          - [optional] a boolean value. Default is Null. If True, line breaks are allowed to be used.
 ;                  $sGraphics           - [optional] a string value. Default is Null. The path to an Image file.
-;                  $iGraphicAlign       - [optional] an integer value (0-12). Default is Null. The Alignment of the Image. See Constants $LOW_FORM_CONTROL_IMG_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iGraphicAlign       - [optional] an integer value (0-12). Default is Null. The Alignment of the Image. See Constants $LOW_FORM_CON_IMG_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bTriState           - [optional] a boolean value. Default is Null. If True, the checkbox will have a third checked state.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
 ;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
@@ -268,15 +268,15 @@ EndFunc   ;==>_LOWriter_FormConCheckBoxData
 ;                  @Error 1 @Extended 10 Return 0 = $bPrintable not a Boolean.
 ;                  @Error 1 @Extended 11 Return 0 = $bTabStop not a Boolean.
 ;                  @Error 1 @Extended 12 Return 0 = $iTabOrder not an Integer, less than 0 or greater than 2147483647.
-;                  @Error 1 @Extended 13 Return 0 = $iDefaultState not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 13 Return 0 = $iDefaultState not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 14 Return 0 = $mFont not a Map.
-;                  @Error 1 @Extended 15 Return 0 = $iStyle not an Integer, less than 1 or greater than 2. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 15 Return 0 = $iStyle not an Integer, less than 1 or greater than 2. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 16 Return 0 = $iAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 17 Return 0 = $iVertAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 18 Return 0 = $iBackColor not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 19 Return 0 = $bWordBreak not a Boolean.
 ;                  @Error 1 @Extended 20 Return 0 = $sGraphics not a String.
-;                  @Error 1 @Extended 21 Return 0 = $iGraphicAlign not an Integer, less than 0 or greater than 12. See Constants $LOW_FORM_CONTROL_IMG_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 21 Return 0 = $iGraphicAlign not an Integer, less than 0 or greater than 12. See Constants $LOW_FORM_CON_IMG_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 22 Return 0 = $bTriState not a Boolean.
 ;                  @Error 1 @Extended 23 Return 0 = $sAddInfo not a String.
 ;                  @Error 1 @Extended 24 Return 0 = $sHelpText not a String.
@@ -330,11 +330,11 @@ Func _LOWriter_FormConCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLabel =
 
 	If Not IsObj($oCheckBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ( __LOWriter_FormConIdentify($oCheckBox) <> $LOW_FORM_CONTROL_TYPE_CHECK_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If ( __LOWriter_FormConIdentify($oCheckBox) <> $LOW_FORM_CON_TYPE_CHECK_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $sLabel, $oLabelField, $iTxtDir, $bEnabled, $bVisible, $bPrintable, $bTabStop, $iTabOrder, $iDefaultState, $mFont, $iStyle, $iAlign, $iVertAlign, $iBackColor, $bWordBreak, $sGraphics, $iGraphicAlign, $bTriState, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oCheckBox.Control.Name(), $oCheckBox.Control.Label(), __LOWriter_FormConGetObj($oCheckBox.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oCheckBox.Control.WritingMode(), _
+		__LOWriter_ArrayFill($avControl, $oCheckBox.Control.Name(), $oCheckBox.Control.Label(), __LOWriter_FormConGetObj($oCheckBox.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oCheckBox.Control.WritingMode(), _
 				$oCheckBox.Control.Enabled(), $oCheckBox.Control.EnableVisible(), $oCheckBox.Control.Printable(), $oCheckBox.Control.Tabstop(), $oCheckBox.Control.TabIndex(), _
 				$oCheckBox.Control.DefaultState(), __LOWriter_FormConSetGetFontDesc($oCheckBox), $oCheckBox.Control.VisualEffect(), $oCheckBox.Control.Align(), $oCheckBox.Control.VerticalAlign(), _
 				$oCheckBox.Control.BackgroundColor(), $oCheckBox.Control.MultiLine(), $oCheckBox.Control.Graphic(), $oCheckBox.Control.ImagePosition(), $oCheckBox.Control.TriState(), _
@@ -366,7 +366,7 @@ Func _LOWriter_FormConCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLabel =
 
 	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CON_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oCheckBox.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oCheckBox.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -429,7 +429,7 @@ Func _LOWriter_FormConCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLabel =
 		$iError = BitOR($iError, 512) ; Can't Default DefaultState.
 
 	ElseIf ($iDefaultState <> Null) Then
-		If Not __LOWriter_IntIsBetween($iDefaultState, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_DEFINED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+		If Not __LOWriter_IntIsBetween($iDefaultState, $LOW_FORM_CON_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CON_CHKBX_STATE_NOT_DEFINED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 		$oCheckBox.Control.DefaultState = $iDefaultState
 		$iError = ($oCheckBox.Control.DefaultState() = $iDefaultState) ? ($iError) : (BitOR($iError, 512))
 	EndIf
@@ -447,7 +447,7 @@ Func _LOWriter_FormConCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLabel =
 		$oCheckBox.Control.setPropertyToDefault("VisualEffect")
 
 	ElseIf ($iStyle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iStyle, $LOW_FORM_CONTROL_BORDER_3D, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
+		If Not __LOWriter_IntIsBetween($iStyle, $LOW_FORM_CON_BORDER_3D, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 		$oCheckBox.Control.VisualEffect = $iStyle
 		$iError = ($oCheckBox.Control.VisualEffect() = $iStyle) ? ($iError) : (BitOR($iError, 2048))
 	EndIf
@@ -503,7 +503,7 @@ Func _LOWriter_FormConCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLabel =
 		$oCheckBox.Control.setPropertyToDefault("ImagePosition")
 
 	ElseIf ($iGraphicAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iGraphicAlign, $LOW_FORM_CONTROL_IMG_ALIGN_LEFT_TOP, $LOW_FORM_CONTROL_IMG_ALIGN_CENTERED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
+		If Not __LOWriter_IntIsBetween($iGraphicAlign, $LOW_FORM_CON_IMG_ALIGN_LEFT_TOP, $LOW_FORM_CON_IMG_ALIGN_CENTERED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 		$oCheckBox.Control.ImagePosition = $iGraphicAlign
 		$iError = ($oCheckBox.Control.ImagePosition() = $iGraphicAlign) ? ($iError) : (BitOR($iError, 131072))
 	EndIf
@@ -552,13 +552,13 @@ EndFunc   ;==>_LOWriter_FormConCheckBoxGeneral
 ; Description ...: Set or Retrieve the current Checkbox state.
 ; Syntax ........: _LOWriter_FormConCheckBoxState(ByRef $oCheckBox[, $iState = Null])
 ; Parameters ....: $oCheckBox           - [in/out] an object. A Checkbox Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
-;                  $iState              - [optional] an integer value (0-2). Default is Null. The current checked state of the Checkbox, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_DEFINED is only available if $bTriState is True. See Constants $LOW_FORM_CONTROL_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iState              - [optional] an integer value (0-2). Default is Null. The current checked state of the Checkbox, $LOW_FORM_CON_CHKBX_STATE_NOT_DEFINED is only available if $bTriState is True. See Constants $LOW_FORM_CON_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Integer
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCheckBox not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = Object called in $oCheckBox not a Check Box Control.
-;                  @Error 1 @Extended 3 Return 0 = $iState not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $iState not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve current control State.
@@ -567,7 +567,7 @@ EndFunc   ;==>_LOWriter_FormConCheckBoxGeneral
 ;                  |                               1 = Error setting $iState
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current Check Box State as an integer, matching one of the constants $LOW_FORM_CONTROL_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current Check Box State as an integer, matching one of the constants $LOW_FORM_CON_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current check box state.
@@ -584,7 +584,7 @@ Func _LOWriter_FormConCheckBoxState(ByRef $oCheckBox, $iState = Null)
 
 	If Not IsObj($oCheckBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oCheckBox) <> $LOW_FORM_CONTROL_TYPE_CHECK_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oCheckBox) <> $LOW_FORM_CON_TYPE_CHECK_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iState) Then
@@ -598,7 +598,7 @@ Func _LOWriter_FormConCheckBoxState(ByRef $oCheckBox, $iState = Null)
 		$oCheckBox.Control.setPropertyToDefault("State")
 
 	Else
-		If Not __LOWriter_IntIsBetween($iState, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_DEFINED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		If Not __LOWriter_IntIsBetween($iState, $LOW_FORM_CON_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CON_CHKBX_STATE_NOT_DEFINED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oCheckBox.Control.State = $iState
 		$iError = ($oCheckBox.Control.State() = $iState) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -614,7 +614,7 @@ EndFunc   ;==>_LOWriter_FormConCheckBoxState
 ;                  $sDataField          - [optional] a string value. Default is Null. The Datafield name to retrieve content from, either a Table name, SQL query, or other.
 ;                  $bEmptyIsNull        - [optional] a boolean value. Default is Null. If True, an empty string will be treated as a Null value.
 ;                  $bInputRequired      - [optional] a boolean value. Default is Null. If True, the control requires input.
-;                  $iType               - [optional] an integer value (1-5). Default is Null. The type of content to fill the control with. See Constants $LOW_FORM_CONTROL_SOURCE_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iType               - [optional] an integer value (1-5). Default is Null. The type of content to fill the control with. See Constants $LOW_FORM_CON_SOURCE_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $sListContent        - [optional] a string value. Default is Null. Default is Null. The SQL statement, Table Name, etc., depending on the value of $iType.
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -624,7 +624,7 @@ EndFunc   ;==>_LOWriter_FormConCheckBoxState
 ;                  @Error 1 @Extended 3 Return 0 = $sDataField not a String.
 ;                  @Error 1 @Extended 4 Return 0 = $bEmptyIsNull not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $bInputRequired not a Boolean.
-;                  @Error 1 @Extended 6 Return 0 = $iType not an Integer, less than 1 or greater than 5. See Constants $LOW_FORM_CONTROL_SOURCE_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $iType not an Integer, less than 1 or greater than 5. See Constants $LOW_FORM_CON_SOURCE_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 7 Return 0 = $sListContent not a String.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
@@ -656,7 +656,7 @@ Func _LOWriter_FormConComboBoxData(ByRef $oComboBox, $sDataField = Null, $bEmpty
 
 	If Not IsObj($oComboBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oComboBox) <> $LOW_FORM_CONTROL_TYPE_COMBO_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oComboBox) <> $LOW_FORM_CON_TYPE_COMBO_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $iType, $sListContent) Then
@@ -685,7 +685,7 @@ Func _LOWriter_FormConComboBoxData(ByRef $oComboBox, $sDataField = Null, $bEmpty
 	EndIf
 
 	If ($iType <> Null) Then
-		If Not __LOWriter_IntIsBetween($iType, $LOW_FORM_CONTROL_SOURCE_TYPE_TABLE, $LOW_FORM_CONTROL_SOURCE_TYPE_TABLE_FIELDS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LOWriter_IntIsBetween($iType, $LOW_FORM_CON_SOURCE_TYPE_TABLE, $LOW_FORM_CON_SOURCE_TYPE_TABLE_FIELDS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oComboBox.Control.ListSourceType = $iType
 		$iError = ($oComboBox.Control.ListSourceType() = $iType) ? ($iError) : (BitOR($iError, 8))
 	EndIf
@@ -712,7 +712,7 @@ EndFunc   ;==>_LOWriter_FormConComboBoxData
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the control is visible.
 ;                  $bReadOnly           - [optional] a boolean value. Default is Null. If True, the control is Read-Only.
 ;                  $bPrintable          - [optional] a boolean value. Default is Null. If True, the control will be displayed when printed.
-;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CONTROL_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bTabStop            - [optional] a boolean value. Default is Null. If True, the control can be selected with the Tab key.
 ;                  $iTabOrder           - [optional] an integer value (0-2147483647). Default is Null. The order the control is focused by the Tab key.
 ;                  $asList              - [optional] an array of strings. Default is Null. An array of entries. See remarks.
@@ -720,7 +720,7 @@ EndFunc   ;==>_LOWriter_FormConComboBoxData
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bDropdown           - [optional] a boolean value. Default is Null. If True, the Combo Box will behave like a dropdown.
 ;                  $iLines              - [optional] an integer value. Default is Null. If $bDropdown is True, $iLines specifies how many lines are shown in the dropdown list.
@@ -743,7 +743,7 @@ EndFunc   ;==>_LOWriter_FormConComboBoxData
 ;                  @Error 1 @Extended 9 Return 0 = $bVisible not a Boolean.
 ;                  @Error 1 @Extended 10 Return 0 = $bReadOnly not a Boolean.
 ;                  @Error 1 @Extended 11 Return 0 = $bPrintable not a Boolean.
-;                  @Error 1 @Extended 12 Return 0 = $iMouseScroll not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 12 Return 0 = $iMouseScroll not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 13 Return 0 = $bTabStop not a Boolean.
 ;                  @Error 1 @Extended 14 Return 0 = $iTabOrder not an Integer, less than 0 or greater than 2147483647.
 ;                  @Error 1 @Extended 15 Return 0 = $asList not an Array.
@@ -752,7 +752,7 @@ EndFunc   ;==>_LOWriter_FormConComboBoxData
 ;                  @Error 1 @Extended 18 Return 0 = $mFont not a Map.
 ;                  @Error 1 @Extended 19 Return 0 = $iAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 20 Return 0 = $iBackColor not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 21 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 21 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 22 Return 0 = $iBorderColor not an Integer, less than 0 or greater than 16777215. $bDropdown not a Boolean.
 ;                  @Error 1 @Extended 23 Return 0 = $bDropdown not a Boolean.
 ;                  @Error 1 @Extended 24 Return 0 = $iLines not an Integer, less than -2147483648 or greater than 2147483647.
@@ -812,11 +812,11 @@ Func _LOWriter_FormConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLabelFi
 
 	If Not IsObj($oComboBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oComboBox) <> $LOW_FORM_CONTROL_TYPE_COMBO_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oComboBox) <> $LOW_FORM_CON_TYPE_COMBO_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $iMaxLen, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $asList, $sDefaultTxt, $mFont, $iAlign, $iBackColor, $iBorder, $iBorderColor, $bDropdown, $iLines, $bAutoFill, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oComboBox.Control.Name(), __LOWriter_FormConGetObj($oComboBox.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oComboBox.Control.WritingMode(), $oComboBox.Control.MaxTextLen(), _
+		__LOWriter_ArrayFill($avControl, $oComboBox.Control.Name(), __LOWriter_FormConGetObj($oComboBox.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oComboBox.Control.WritingMode(), $oComboBox.Control.MaxTextLen(), _
 				$oComboBox.Control.Enabled(), $oComboBox.Control.EnableVisible(), $oComboBox.Control.ReadOnly(), $oComboBox.Control.Printable(), $oComboBox.Control.MouseWheelBehavior(), _
 				$oComboBox.Control.Tabstop(), $oComboBox.Control.TabIndex(), $oComboBox.Control.StringItemList(), $oComboBox.Control.DefaultText(), __LOWriter_FormConSetGetFontDesc($oComboBox), _
 				$oComboBox.Control.Align(), $oComboBox.Control.BackgroundColor(), $oComboBox.Control.Border(), $oComboBox.Control.BorderColor(), $oComboBox.Control.Dropdown(), _
@@ -841,7 +841,7 @@ Func _LOWriter_FormConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLabelFi
 
 	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CON_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oComboBox.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oComboBox.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -904,7 +904,7 @@ Func _LOWriter_FormConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLabelFi
 		$oComboBox.Control.setPropertyToDefault("MouseWheelBehavior")
 
 	ElseIf ($iMouseScroll <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CONTROL_MOUSE_SCROLL_DISABLED, $LOW_FORM_CONTROL_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$oComboBox.Control.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oComboBox.Control.MouseWheelBehavior = $iMouseScroll) ? ($iError) : (BitOR($iError, 256))
 	EndIf
@@ -980,7 +980,7 @@ Func _LOWriter_FormConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLabelFi
 		$oComboBox.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
+		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 		$oComboBox.Control.Border = $iBorder
 		$iError = ($oComboBox.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 65536))
 	EndIf
@@ -1098,7 +1098,7 @@ Func _LOWriter_FormConComboBoxValue(ByRef $oComboBox, $sValue = Null)
 
 	If Not IsObj($oComboBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oComboBox) <> $LOW_FORM_CONTROL_TYPE_COMBO_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oComboBox) <> $LOW_FORM_CON_TYPE_COMBO_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sValue) Then
@@ -1161,7 +1161,7 @@ Func _LOWriter_FormConCurrencyFieldData(ByRef $oCurrencyField, $sDataField = Nul
 
 	If Not IsObj($oCurrencyField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oCurrencyField) <> $LOW_FORM_CONTROL_TYPE_CURRENCY_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oCurrencyField) <> $LOW_FORM_CON_TYPE_CURRENCY_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
@@ -1198,7 +1198,7 @@ EndFunc   ;==>_LOWriter_FormConCurrencyFieldData
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the control is visible.
 ;                  $bReadOnly           - [optional] a boolean value. Default is Null. If True, the control is Read-Only.
 ;                  $bPrintable          - [optional] a boolean value. Default is Null. If True, the control will be displayed when printed.
-;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CONTROL_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bTabStop            - [optional] a boolean value. Default is Null. If True, the control can be selected with the Tab key.
 ;                  $iTabOrder           - [optional] an integer value (0-2147483647). Default is Null. The order the control is focused by the Tab key.
 ;                  $nMin                - [optional] a general number value. Default is Null. The minimum value the control can be set to.
@@ -1216,7 +1216,7 @@ EndFunc   ;==>_LOWriter_FormConCurrencyFieldData
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
@@ -1236,7 +1236,7 @@ EndFunc   ;==>_LOWriter_FormConCurrencyFieldData
 ;                  @Error 1 @Extended 9 Return 0 = $bVisible not a Boolean.
 ;                  @Error 1 @Extended 10 Return 0 = $bReadOnly not a Boolean.
 ;                  @Error 1 @Extended 11 Return 0 = $bPrintable not a Boolean.
-;                  @Error 1 @Extended 12 Return 0 = $iMouseScroll not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 12 Return 0 = $iMouseScroll not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 13 Return 0 = $bTabStop not a Boolean.
 ;                  @Error 1 @Extended 14 Return 0 = $iTabOrder not an Integer, less than 0 or greater than 2147483647.
 ;                  @Error 1 @Extended 15 Return 0 = $nMin not a Number.
@@ -1254,7 +1254,7 @@ EndFunc   ;==>_LOWriter_FormConCurrencyFieldData
 ;                  @Error 1 @Extended 27 Return 0 = $iAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 28 Return 0 = $iVertAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 29 Return 0 = $iBackColor not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 30 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 30 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 31 Return 0 = $iBorderColor not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 32 Return 0 = $bHideSel not a Boolean.
 ;                  @Error 1 @Extended 33 Return 0 = $sAddInfo not a String.
@@ -1319,11 +1319,11 @@ Func _LOWriter_FormConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = Null,
 
 	If Not IsObj($oCurrencyField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oCurrencyField) <> $LOW_FORM_CONTROL_TYPE_CURRENCY_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oCurrencyField) <> $LOW_FORM_CON_TYPE_CURRENCY_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $bStrict, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $nMin, $nMax, $iIncr, $nDefault, $iDecimal, $bThousandsSep, $sCurrSymbol, $bPrefix, $bSpin, $bRepeat, $iDelay, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oCurrencyField.Control.Name(), __LOWriter_FormConGetObj($oCurrencyField.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oCurrencyField.Control.WritingMode(), _
+		__LOWriter_ArrayFill($avControl, $oCurrencyField.Control.Name(), __LOWriter_FormConGetObj($oCurrencyField.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oCurrencyField.Control.WritingMode(), _
 				$oCurrencyField.Control.StrictFormat(), $oCurrencyField.Control.Enabled(), $oCurrencyField.Control.EnableVisible(), $oCurrencyField.Control.ReadOnly(), _
 				$oCurrencyField.Control.Printable(), $oCurrencyField.Control.MouseWheelBehavior(), $oCurrencyField.Control.Tabstop(), $oCurrencyField.Control.TabIndex(), _
 				$oCurrencyField.Control.ValueMin(), $oCurrencyField.Control.ValueMax(), $oCurrencyField.Control.ValueStep(), $oCurrencyField.Control.DefaultValue(), _
@@ -1351,7 +1351,7 @@ Func _LOWriter_FormConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = Null,
 
 	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CON_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oCurrencyField.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oCurrencyField.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -1414,7 +1414,7 @@ Func _LOWriter_FormConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = Null,
 		$oCurrencyField.Control.setPropertyToDefault("MouseWheelBehavior")
 
 	ElseIf ($iMouseScroll <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CONTROL_MOUSE_SCROLL_DISABLED, $LOW_FORM_CONTROL_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$oCurrencyField.Control.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oCurrencyField.Control.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 256))
 	EndIf
@@ -1437,7 +1437,7 @@ Func _LOWriter_FormConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = Null,
 		$iError = ($oCurrencyField.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 1024))
 	EndIf
 
-	If ($nMax = Default) Then
+	If ($nMin = Default) Then
 		$oCurrencyField.Control.setPropertyToDefault("ValueMin")
 
 	ElseIf ($nMin <> Null) Then
@@ -1576,7 +1576,7 @@ Func _LOWriter_FormConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = Null,
 		$oCurrencyField.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 30, 0)
+		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 30, 0)
 		$oCurrencyField.Control.Border = $iBorder
 		$iError = ($oCurrencyField.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 67108864))
 	EndIf
@@ -1666,7 +1666,7 @@ Func _LOWriter_FormConCurrencyFieldValue(ByRef $oCurrencyField, $nValue = Null)
 
 	If Not IsObj($oCurrencyField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oCurrencyField) <> $LOW_FORM_CONTROL_TYPE_CURRENCY_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oCurrencyField) <> $LOW_FORM_CON_TYPE_CURRENCY_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($nValue) Then
@@ -1729,7 +1729,7 @@ Func _LOWriter_FormConDateFieldData(ByRef $oDateField, $sDataField = Null, $bInp
 
 	If Not IsObj($oDateField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oDateField) <> $LOW_FORM_CONTROL_TYPE_DATE_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oDateField) <> $LOW_FORM_CON_TYPE_DATE_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
@@ -1766,12 +1766,12 @@ EndFunc   ;==>_LOWriter_FormConDateFieldData
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the control is visible.
 ;                  $bReadOnly           - [optional] a boolean value. Default is Null. If True, the control is Read-Only.
 ;                  $bPrintable          - [optional] a boolean value. Default is Null. If True, the control will be displayed when printed.
-;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CONTROL_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bTabStop            - [optional] a boolean value. Default is Null. If True, the control can be selected with the Tab key.
 ;                  $iTabOrder           - [optional] an integer value (0-2147483647). Default is Null. The order the control is focused by the Tab key.
 ;                  $tDateMin            - [optional] a dll struct value. Default is Null. The minimum date allowed to be entered, created previously by _LOWriter_DateStructCreate.
 ;                  $tDateMax            - [optional] a dll struct value. Default is Null. The maximum date allowed to be entered, created previously by _LOWriter_DateStructCreate.
-;                  $iFormat             - [optional] an integer value (0-11). Default is Null. The Date Format to display the content in. See Constants $LOW_FORM_CONTROL_DATE_FRMT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iFormat             - [optional] an integer value (0-11). Default is Null. The Date Format to display the content in. See Constants $LOW_FORM_CON_DATE_FRMT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $tDateDefault        - [optional] a dll struct value. Default is Null. The Default date to display, created previously by _LOWriter_DateStructCreate.
 ;                  $bSpin               - [optional] a boolean value. Default is Null. If True, the field will act as a spin button.
 ;                  $bRepeat             - [optional] a boolean value. Default is Null. If True, the button action will repeat if the button is clicked and held down.
@@ -1780,7 +1780,7 @@ EndFunc   ;==>_LOWriter_FormConDateFieldData
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bDropdown           - [optional] a boolean value. Default is Null. If True, the field will behave as a dropdown control.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
@@ -1801,12 +1801,12 @@ EndFunc   ;==>_LOWriter_FormConDateFieldData
 ;                  @Error 1 @Extended 9 Return 0 = $bVisible not a Boolean.
 ;                  @Error 1 @Extended 10 Return 0 = $bReadOnly not a Boolean.
 ;                  @Error 1 @Extended 11 Return 0 = $bPrintable not a Boolean.
-;                  @Error 1 @Extended 12 Return 0 = $iMouseScroll not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 12 Return 0 = $iMouseScroll not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 13 Return 0 = $bTabStop not a Boolean.
 ;                  @Error 1 @Extended 14 Return 0 = $iTabOrder not an Integer, less than 0 or greater than 2147483647.
 ;                  @Error 1 @Extended 15 Return 0 = $tDateMin not an Object.
 ;                  @Error 1 @Extended 16 Return 0 = $tDateMax not an Object.
-;                  @Error 1 @Extended 17 Return 0 = $iFormat not an Integer, less then 0 or greater than 11. See Constants $LOW_FORM_CONTROL_DATE_FRMT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 17 Return 0 = $iFormat not an Integer, less then 0 or greater than 11. See Constants $LOW_FORM_CON_DATE_FRMT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 18 Return 0 = $tDateDefault not an Object.
 ;                  @Error 1 @Extended 19 Return 0 = $bSpin not a Boolean.
 ;                  @Error 1 @Extended 20 Return 0 = $bRepeat not a Boolean.
@@ -1815,7 +1815,7 @@ EndFunc   ;==>_LOWriter_FormConDateFieldData
 ;                  @Error 1 @Extended 23 Return 0 = $iAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 24 Return 0 = $iVertAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 25 Return 0 = $iBackColor not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 26 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 26 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 27 Return 0 = $iBorderColor not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 28 Return 0 = $bDropdown not a Boolean.
 ;                  @Error 1 @Extended 29 Return 0 = $bHideSel not a Boolean.
@@ -1883,7 +1883,7 @@ Func _LOWriter_FormConDateFieldGeneral(ByRef $oDateField, $sName = Null, $oLabel
 
 	If Not IsObj($oDateField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oDateField) <> $LOW_FORM_CONTROL_TYPE_DATE_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oDateField) <> $LOW_FORM_CON_TYPE_DATE_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $bStrict, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $tDateMin, $tDateMax, $iFormat, $tDateDefault, $bSpin, $bRepeat, $iDelay, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bDropdown, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
@@ -1920,7 +1920,7 @@ Func _LOWriter_FormConDateFieldGeneral(ByRef $oDateField, $sName = Null, $oLabel
 			$tCurDefault = $tDate
 		EndIf
 
-		__LOWriter_ArrayFill($avControl, $oDateField.Control.Name(), __LOWriter_FormConGetObj($oDateField.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oDateField.Control.WritingMode(), $oDateField.Control.StrictFormat(), _
+		__LOWriter_ArrayFill($avControl, $oDateField.Control.Name(), __LOWriter_FormConGetObj($oDateField.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oDateField.Control.WritingMode(), $oDateField.Control.StrictFormat(), _
 				$oDateField.Control.Enabled(), $oDateField.Control.EnableVisible(), $oDateField.Control.ReadOnly(), $oDateField.Control.Printable(), $oDateField.Control.MouseWheelBehavior(), _
 				$oDateField.Control.Tabstop(), $oDateField.Control.TabIndex(), $tCurMin, $tCurMax, $oDateField.Control.DateFormat(), $tCurDefault, $oDateField.Control.Spin(), _
 				$oDateField.Control.Repeat(), $oDateField.Control.RepeatDelay(), __LOWriter_FormConSetGetFontDesc($oDateField), $oDateField.Control.Align(), $oDateField.Control.VerticalAlign(), _
@@ -1945,7 +1945,7 @@ Func _LOWriter_FormConDateFieldGeneral(ByRef $oDateField, $sName = Null, $oLabel
 
 	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CON_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oDateField.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oDateField.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -2008,7 +2008,7 @@ Func _LOWriter_FormConDateFieldGeneral(ByRef $oDateField, $sName = Null, $oLabel
 		$oDateField.Control.setPropertyToDefault("MouseWheelBehavior")
 
 	ElseIf ($iMouseScroll <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CONTROL_MOUSE_SCROLL_DISABLED, $LOW_FORM_CONTROL_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$oDateField.Control.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oDateField.Control.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 256))
 	EndIf
@@ -2069,7 +2069,7 @@ Func _LOWriter_FormConDateFieldGeneral(ByRef $oDateField, $sName = Null, $oLabel
 		$oDateField.Control.setPropertyToDefault("DateFormat")
 
 	ElseIf ($iFormat <> Null) Then
-		If Not __LOWriter_IntIsBetween($iFormat, $LOW_FORM_CONTROL_DATE_FRMT_SYSTEM_SHORT, $LOW_FORM_CONTROL_DATE_FRMT_SHORT_YYYY_MM_DD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+		If Not __LOWriter_IntIsBetween($iFormat, $LOW_FORM_CON_DATE_FRMT_SYSTEM_SHORT, $LOW_FORM_CON_DATE_FRMT_SHORT_YYYY_MM_DD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 		$oDateField.Control.DateFormat = $iFormat
 		$iError = ($oDateField.Control.DateFormat() = $iFormat) ? ($iError) : (BitOR($iError, 8192))
 	EndIf
@@ -2158,7 +2158,7 @@ Func _LOWriter_FormConDateFieldGeneral(ByRef $oDateField, $sName = Null, $oLabel
 		$oDateField.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
+		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
 		$oDateField.Control.Border = $iBorder
 		$iError = ($oDateField.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 4194304))
 	EndIf
@@ -2260,7 +2260,7 @@ Func _LOWriter_FormConDateFieldValue(ByRef $oDateField, $tDateValue = Null)
 
 	If Not IsObj($oDateField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oDateField) <> $LOW_FORM_CONTROL_TYPE_DATE_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oDateField) <> $LOW_FORM_CON_TYPE_DATE_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($tDateValue) Then
@@ -2357,7 +2357,7 @@ EndFunc   ;==>_LOWriter_FormConDelete
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
@@ -2381,7 +2381,7 @@ EndFunc   ;==>_LOWriter_FormConDelete
 ;                  @Error 1 @Extended 13 Return 0 = $iAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 14 Return 0 = $iVertAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 15 Return 0 = $iBackColor not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 16 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 16 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 17 Return 0 = $iBorderColor not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 18 Return 0 = $bHideSel not a Boolean.
 ;                  @Error 1 @Extended 19 Return 0 = $sAddInfo not a String.
@@ -2432,7 +2432,7 @@ Func _LOWriter_FormConFileSelFieldGeneral(ByRef $oFileSel, $sName = Null, $iTxtD
 
 	If Not IsObj($oFileSel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oFileSel) <> $LOW_FORM_CONTROL_TYPE_FILE_SELECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oFileSel) <> $LOW_FORM_CON_TYPE_FILE_SELECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $iTxtDir, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $bTabStop, $iTabOrder, $sDefaultTxt, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
@@ -2566,7 +2566,7 @@ Func _LOWriter_FormConFileSelFieldGeneral(ByRef $oFileSel, $sName = Null, $iTxtD
 		$oFileSel.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
+		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 		$oFileSel.Control.Border = $iBorder
 		$iError = ($oFileSel.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 8192))
 	EndIf
@@ -2657,7 +2657,7 @@ Func _LOWriter_FormConFileSelFieldValue(ByRef $oFileSel, $sValue = Null)
 
 	If Not IsObj($oFileSel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oFileSel) <> $LOW_FORM_CONTROL_TYPE_FILE_SELECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oFileSel) <> $LOW_FORM_CON_TYPE_FILE_SELECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sValue) Then
@@ -2727,7 +2727,7 @@ Func _LOWriter_FormConFormattedFieldData(ByRef $oFormatField, $sDataField = Null
 
 	If Not IsObj($oFormatField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oFormatField) <> $LOW_FORM_CONTROL_TYPE_FORMATTED_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oFormatField) <> $LOW_FORM_CON_TYPE_FORMATTED_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $bFilter) Then
@@ -2777,7 +2777,7 @@ EndFunc   ;==>_LOWriter_FormConFormattedFieldData
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the control is visible.
 ;                  $bReadOnly           - [optional] a boolean value. Default is Null. If True, the control is Read-Only.
 ;                  $bPrintable          - [optional] a boolean value. Default is Null. If True, the control will be displayed when printed.
-;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CONTROL_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bTabStop            - [optional] a boolean value. Default is Null. If True, the control can be selected with the Tab key.
 ;                  $iTabOrder           - [optional] an integer value (0-2147483647). Default is Null. The order the control is focused by the Tab key.
 ;                  $nMin                - [optional] a general number value. Default is Null. The minimum value allowed in the field.
@@ -2791,7 +2791,7 @@ EndFunc   ;==>_LOWriter_FormConFormattedFieldData
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
@@ -2811,7 +2811,7 @@ EndFunc   ;==>_LOWriter_FormConFormattedFieldData
 ;                  @Error 1 @Extended 9 Return 0 = $bVisible not a Boolean.
 ;                  @Error 1 @Extended 10 Return 0 = $bReadOnly not a Boolean.
 ;                  @Error 1 @Extended 11 Return 0 = $bPrintable not a Boolean.
-;                  @Error 1 @Extended 12 Return 0 = $iMouseScroll not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 12 Return 0 = $iMouseScroll not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 13 Return 0 = $bTabStop not a Boolean.
 ;                  @Error 1 @Extended 14 Return 0 = $iTabOrder not an Integer, less than 0 or greater than 2147483647.
 ;                  @Error 1 @Extended 15 Return 0 = $nMin not a Number.
@@ -2826,7 +2826,7 @@ EndFunc   ;==>_LOWriter_FormConFormattedFieldData
 ;                  @Error 1 @Extended 24 Return 0 = $iAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 25 Return 0 = $iVertAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 26 Return 0 = $iBackColor not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 27 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 27 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 28 Return 0 = $iBorderColor not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 29 Return 0 = $bHideSel not a Boolean.
 ;                  @Error 1 @Extended 30 Return 0 = $sAddInfo not a String.
@@ -2887,11 +2887,11 @@ Func _LOWriter_FormConFormattedFieldGeneral(ByRef $oFormatField, $sName = Null, 
 
 	If Not IsObj($oFormatField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oFormatField) <> $LOW_FORM_CONTROL_TYPE_FORMATTED_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oFormatField) <> $LOW_FORM_CON_TYPE_FORMATTED_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $iMaxLen, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $nMin, $nMax, $nDefault, $iFormat, $bSpin, $bRepeat, $iDelay, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oFormatField.Control.Name(), __LOWriter_FormConGetObj($oFormatField.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oFormatField.Control.WritingMode(), $oFormatField.Control.MaxTextLen(), _
+		__LOWriter_ArrayFill($avControl, $oFormatField.Control.Name(), __LOWriter_FormConGetObj($oFormatField.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oFormatField.Control.WritingMode(), $oFormatField.Control.MaxTextLen(), _
 				$oFormatField.Control.Enabled(), $oFormatField.Control.EnableVisible(), $oFormatField.Control.ReadOnly(), $oFormatField.Control.Printable(), _
 				$oFormatField.Control.MouseWheelBehavior(), $oFormatField.Control.Tabstop(), $oFormatField.Control.TabIndex(), $oFormatField.Control.EffectiveMin(), _
 				$oFormatField.Control.EffectiveMax(), $oFormatField.Control.EffectiveDefault(), $oFormatField.Control.FormatKey(), $oFormatField.Control.Spin(), _
@@ -2916,7 +2916,7 @@ Func _LOWriter_FormConFormattedFieldGeneral(ByRef $oFormatField, $sName = Null, 
 
 	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CON_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oFormatField.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oFormatField.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -2979,7 +2979,7 @@ Func _LOWriter_FormConFormattedFieldGeneral(ByRef $oFormatField, $sName = Null, 
 		$oFormatField.Control.setPropertyToDefault("MouseWheelBehavior")
 
 	ElseIf ($iMouseScroll <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CONTROL_MOUSE_SCROLL_DISABLED, $LOW_FORM_CONTROL_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$oFormatField.Control.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oFormatField.Control.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 256))
 	EndIf
@@ -3002,7 +3002,7 @@ Func _LOWriter_FormConFormattedFieldGeneral(ByRef $oFormatField, $sName = Null, 
 		$iError = ($oFormatField.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 1024))
 	EndIf
 
-	If ($nMax = Default) Then
+	If ($nMin = Default) Then
 		$oFormatField.Control.setPropertyToDefault("EffectiveMin")
 
 	ElseIf ($nMin <> Null) Then
@@ -3112,7 +3112,7 @@ Func _LOWriter_FormConFormattedFieldGeneral(ByRef $oFormatField, $sName = Null, 
 		$oFormatField.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
+		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
 		$oFormatField.Control.Border = $iBorder
 		$iError = ($oFormatField.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 4194304))
 	EndIf
@@ -3202,7 +3202,7 @@ Func _LOWriter_FormConFormattedFieldValue(ByRef $oFormatField, $nValue = Null)
 
 	If Not IsObj($oFormatField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oFormatField) <> $LOW_FORM_CONTROL_TYPE_FORMATTED_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oFormatField) <> $LOW_FORM_CON_TYPE_FORMATTED_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($nValue) Then
@@ -3340,7 +3340,7 @@ Func _LOWriter_FormConGroupBoxGeneral(ByRef $oGroupBox, $sName = Null, $sLabel =
 
 	If Not IsObj($oGroupBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oGroupBox) <> $LOW_FORM_CONTROL_TYPE_GROUP_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oGroupBox) <> $LOW_FORM_CON_TYPE_GROUP_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $bEnabled, $bVisible, $bPrintable, $mFont, $sAddInfo, $sHelpText, $sHelpURL) Then
@@ -3457,13 +3457,13 @@ EndFunc   ;==>_LOWriter_FormConGroupBoxGeneral
 ;                  $bTabStop            - [optional] a boolean value. Default is Null. If True, the control can be selected with the Tab key.
 ;                  $iTabOrder           - [optional] an integer value (0-2147483647). Default is Null. The order the control is focused by the Tab key.
 ;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iAction             - [optional] an integer value (0-12). Default is Null. The action that occurs when the button is pushed. See Constants $LOW_FORM_CONTROL_PUSH_CMD_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iAction             - [optional] an integer value (0-12). Default is Null. The action that occurs when the button is pushed. See Constants $LOW_FORM_CON_PUSH_CMD_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $sURL                - [optional] a string value. Default is Null. The URL or Document path to open.
 ;                  $sFrame              - [optional] a string value. Default is Null. The frame to open the URL in. See Constants, $LOW_FRAME_TARGET_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $sGraphics           - [optional] a string value. Default is Null. The path to an Image file.
-;                  $iScale              - [optional] an integer value (0-2). Default is Null. How to scale the image to fit the button. See Constants $LOW_FORM_CONTROL_IMG_BTN_SCALE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iScale              - [optional] an integer value (0-2). Default is Null. How to scale the image to fit the button. See Constants $LOW_FORM_CON_IMG_BTN_SCALE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
 ;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
 ;                  $sHelpURL            - [optional] a string value. Default is Null. The Help URL.
@@ -3480,14 +3480,14 @@ EndFunc   ;==>_LOWriter_FormConGroupBoxGeneral
 ;                  @Error 1 @Extended 8 Return 0 = $bTabStop not a Boolean.
 ;                  @Error 1 @Extended 9 Return 0 = $iTabOrder not an Integer, less than 0 or greater than 2147483647.
 ;                  @Error 1 @Extended 10 Return 0 = $iBackColor not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 11 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 11 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 12 Return 0 = $iBorderColor not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 13 Return 0 = $iAction not an Integer, less than 0 or greater than 12. See Constants $LOW_FORM_CONTROL_PUSH_CMD_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 13 Return 0 = $iAction not an Integer, less than 0 or greater than 12. See Constants $LOW_FORM_CON_PUSH_CMD_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 14 Return 0 = $sURL not a String.
 ;                  @Error 1 @Extended 15 Return 0 = $sFrame not a String.
 ;                  @Error 1 @Extended 16 Return 0 = $sFrame not called with correct constant. See Constants, $LOW_FRAME_TARGET_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 17 Return 0 = $sGraphics not a String.
-;                  @Error 1 @Extended 18 Return 0 = $iScale not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_IMG_BTN_SCALE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 18 Return 0 = $iScale not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_IMG_BTN_SCALE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 19 Return 0 = $sAddInfo not a String.
 ;                  @Error 1 @Extended 20 Return 0 = $sHelpText not a String.
 ;                  @Error 1 @Extended 21 Return 0 = $sHelpURL not a String.
@@ -3537,64 +3537,64 @@ Func _LOWriter_FormConImageButtonGeneral(ByRef $oImageButton, $sName = Null, $iT
 
 	If Not IsObj($oImageButton) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oImageButton) <> $LOW_FORM_CONTROL_TYPE_IMAGE_BUTTON) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oImageButton) <> $LOW_FORM_CON_TYPE_IMAGE_BUTTON) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_NONE] = ""
-	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_SUBMIT_FORM] = ""
-	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_RESET_FORM] = ""
-	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_OPEN] = ""
-	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_FIRST_REC] = ".uno:FormController/moveToFirst"
-	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_LAST_REC] = ".uno:FormController/moveToLast"
-	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_NEXT_REC] = ".uno:FormController/moveToNext"
-	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_PREV_REC] = ".uno:FormController/moveToPrev"
-	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_SAVE_REC] = ".uno:FormController/saveRecord"
-	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_UNDO] = ".uno:FormController/undoRecord"
-	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_NEW_REC] = ".uno:FormController/moveToNew"
-	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_DELETE_REC] = ".uno:FormController/deleteRecord"
-	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_REFRESH_FORM] = ".uno:FormController/refreshForm"
+	$asActions[$LOW_FORM_CON_PUSH_CMD_NONE] = ""
+	$asActions[$LOW_FORM_CON_PUSH_CMD_SUBMIT_FORM] = ""
+	$asActions[$LOW_FORM_CON_PUSH_CMD_RESET_FORM] = ""
+	$asActions[$LOW_FORM_CON_PUSH_CMD_OPEN] = ""
+	$asActions[$LOW_FORM_CON_PUSH_CMD_FIRST_REC] = ".uno:FormController/moveToFirst"
+	$asActions[$LOW_FORM_CON_PUSH_CMD_LAST_REC] = ".uno:FormController/moveToLast"
+	$asActions[$LOW_FORM_CON_PUSH_CMD_NEXT_REC] = ".uno:FormController/moveToNext"
+	$asActions[$LOW_FORM_CON_PUSH_CMD_PREV_REC] = ".uno:FormController/moveToPrev"
+	$asActions[$LOW_FORM_CON_PUSH_CMD_SAVE_REC] = ".uno:FormController/saveRecord"
+	$asActions[$LOW_FORM_CON_PUSH_CMD_UNDO] = ".uno:FormController/undoRecord"
+	$asActions[$LOW_FORM_CON_PUSH_CMD_NEW_REC] = ".uno:FormController/moveToNew"
+	$asActions[$LOW_FORM_CON_PUSH_CMD_DELETE_REC] = ".uno:FormController/deleteRecord"
+	$asActions[$LOW_FORM_CON_PUSH_CMD_REFRESH_FORM] = ".uno:FormController/refreshForm"
 
 	Switch $oImageButton.Control.ButtonType()
 		Case $__LOW_PUSH_BTN_CMND_PUSH
-			$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_NONE
+			$iBtnAction = $LOW_FORM_CON_PUSH_CMD_NONE
 
 		Case $__LOW_PUSH_BTN_CMND_SUBMIT
-			$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_SUBMIT_FORM
+			$iBtnAction = $LOW_FORM_CON_PUSH_CMD_SUBMIT_FORM
 
 		Case $__LOW_PUSH_BTN_CMND_RESET
-			$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_RESET_FORM
+			$iBtnAction = $LOW_FORM_CON_PUSH_CMD_RESET_FORM
 
 		Case $__LOW_PUSH_BTN_CMND_URL
-			$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_OPEN
+			$iBtnAction = $LOW_FORM_CON_PUSH_CMD_OPEN
 
 			If StringInStr($oImageButton.Control.TargetURL(), ".uno:FormController/") Then
 				Switch $oImageButton.Control.TargetURL()
 					Case ".uno:FormController/moveToFirst"
-						$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_FIRST_REC
+						$iBtnAction = $LOW_FORM_CON_PUSH_CMD_FIRST_REC
 
 					Case ".uno:FormController/moveToLast"
-						$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_LAST_REC
+						$iBtnAction = $LOW_FORM_CON_PUSH_CMD_LAST_REC
 
 					Case ".uno:FormController/moveToNext"
-						$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_NEXT_REC
+						$iBtnAction = $LOW_FORM_CON_PUSH_CMD_NEXT_REC
 
 					Case ".uno:FormController/moveToPrev"
-						$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_PREV_REC
+						$iBtnAction = $LOW_FORM_CON_PUSH_CMD_PREV_REC
 
 					Case ".uno:FormController/saveRecord"
-						$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_SAVE_REC
+						$iBtnAction = $LOW_FORM_CON_PUSH_CMD_SAVE_REC
 
 					Case ".uno:FormController/undoRecord"
-						$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_UNDO
+						$iBtnAction = $LOW_FORM_CON_PUSH_CMD_UNDO
 
 					Case ".uno:FormController/moveToNew"
-						$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_NEW_REC
+						$iBtnAction = $LOW_FORM_CON_PUSH_CMD_NEW_REC
 
 					Case ".uno:FormController/deleteRecord"
-						$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_DELETE_REC
+						$iBtnAction = $LOW_FORM_CON_PUSH_CMD_DELETE_REC
 
 					Case ".uno:FormController/refreshForm"
-						$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_REFRESH_FORM
+						$iBtnAction = $LOW_FORM_CON_PUSH_CMD_REFRESH_FORM
 				EndSwitch
 			EndIf
 	EndSwitch
@@ -3685,7 +3685,7 @@ Func _LOWriter_FormConImageButtonGeneral(ByRef $oImageButton, $sName = Null, $iT
 		$oImageButton.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$oImageButton.Control.Border = $iBorder
 		$iError = ($oImageButton.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 256))
 	EndIf
@@ -3703,44 +3703,44 @@ Func _LOWriter_FormConImageButtonGeneral(ByRef $oImageButton, $sName = Null, $iT
 		$oImageButton.Control.setPropertyToDefault("ButtonType")
 
 		Switch $iBtnAction
-			Case $LOW_FORM_CONTROL_PUSH_CMD_NONE, $LOW_FORM_CONTROL_PUSH_CMD_SUBMIT_FORM, $LOW_FORM_CONTROL_PUSH_CMD_RESET_FORM
+			Case $LOW_FORM_CON_PUSH_CMD_NONE, $LOW_FORM_CON_PUSH_CMD_SUBMIT_FORM, $LOW_FORM_CON_PUSH_CMD_RESET_FORM
 				$oImageButton.Control.setPropertyToDefault("TargetURL")
 
-			Case $LOW_FORM_CONTROL_PUSH_CMD_OPEN
+			Case $LOW_FORM_CON_PUSH_CMD_OPEN
 
-			Case $LOW_FORM_CONTROL_PUSH_CMD_FIRST_REC, $LOW_FORM_CONTROL_PUSH_CMD_LAST_REC, $LOW_FORM_CONTROL_PUSH_CMD_NEXT_REC, $LOW_FORM_CONTROL_PUSH_CMD_PREV_REC, _
-					$LOW_FORM_CONTROL_PUSH_CMD_SAVE_REC, $LOW_FORM_CONTROL_PUSH_CMD_UNDO, $LOW_FORM_CONTROL_PUSH_CMD_NEW_REC, $LOW_FORM_CONTROL_PUSH_CMD_DELETE_REC, _
-					$LOW_FORM_CONTROL_PUSH_CMD_REFRESH_FORM
+			Case $LOW_FORM_CON_PUSH_CMD_FIRST_REC, $LOW_FORM_CON_PUSH_CMD_LAST_REC, $LOW_FORM_CON_PUSH_CMD_NEXT_REC, $LOW_FORM_CON_PUSH_CMD_PREV_REC, _
+					$LOW_FORM_CON_PUSH_CMD_SAVE_REC, $LOW_FORM_CON_PUSH_CMD_UNDO, $LOW_FORM_CON_PUSH_CMD_NEW_REC, $LOW_FORM_CON_PUSH_CMD_DELETE_REC, _
+					$LOW_FORM_CON_PUSH_CMD_REFRESH_FORM
 				$oImageButton.Control.setPropertyToDefault("TargetURL")
 		EndSwitch
 
 	ElseIf ($iAction <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAction, $LOW_FORM_CONTROL_PUSH_CMD_NONE, $LOW_FORM_CONTROL_PUSH_CMD_REFRESH_FORM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+		If Not __LOWriter_IntIsBetween($iAction, $LOW_FORM_CON_PUSH_CMD_NONE, $LOW_FORM_CON_PUSH_CMD_REFRESH_FORM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 
 		Switch $iAction
-			Case $LOW_FORM_CONTROL_PUSH_CMD_NONE
+			Case $LOW_FORM_CON_PUSH_CMD_NONE
 				$oImageButton.Control.ButtonType = $__LOW_PUSH_BTN_CMND_PUSH
 				$sURL = $asActions[$iAction]
 				$iError = (($oImageButton.Control.ButtonType() = $__LOW_PUSH_BTN_CMND_PUSH)) ? ($iError) : (BitOR($iError, 1024))
 
-			Case $LOW_FORM_CONTROL_PUSH_CMD_SUBMIT_FORM
+			Case $LOW_FORM_CON_PUSH_CMD_SUBMIT_FORM
 				$oImageButton.Control.ButtonType = $__LOW_PUSH_BTN_CMND_SUBMIT
 				$sURL = $asActions[$iAction]
 				$iError = (($oImageButton.Control.ButtonType() = $__LOW_PUSH_BTN_CMND_SUBMIT)) ? ($iError) : (BitOR($iError, 1024))
 
-			Case $LOW_FORM_CONTROL_PUSH_CMD_RESET_FORM
+			Case $LOW_FORM_CON_PUSH_CMD_RESET_FORM
 				$oImageButton.Control.ButtonType = $__LOW_PUSH_BTN_CMND_RESET
 				$sURL = $asActions[$iAction]
 				$iError = (($oImageButton.Control.ButtonType() = $__LOW_PUSH_BTN_CMND_RESET)) ? ($iError) : (BitOR($iError, 1024))
 
-			Case $LOW_FORM_CONTROL_PUSH_CMD_OPEN
+			Case $LOW_FORM_CON_PUSH_CMD_OPEN
 				$oImageButton.Control.ButtonType = $__LOW_PUSH_BTN_CMND_URL
-				If ($iBtnAction <> $LOW_FORM_CONTROL_PUSH_CMD_OPEN) And ($sURL = Null) Then $sURL = $asActions[$iAction]
+				If ($iBtnAction <> $LOW_FORM_CON_PUSH_CMD_OPEN) And ($sURL = Null) Then $sURL = $asActions[$iAction]
 				$iError = (($oImageButton.Control.ButtonType() = $__LOW_PUSH_BTN_CMND_URL)) ? ($iError) : (BitOR($iError, 1024))
 
-			Case $LOW_FORM_CONTROL_PUSH_CMD_FIRST_REC, $LOW_FORM_CONTROL_PUSH_CMD_LAST_REC, $LOW_FORM_CONTROL_PUSH_CMD_NEXT_REC, $LOW_FORM_CONTROL_PUSH_CMD_PREV_REC, _
-					$LOW_FORM_CONTROL_PUSH_CMD_SAVE_REC, $LOW_FORM_CONTROL_PUSH_CMD_UNDO, $LOW_FORM_CONTROL_PUSH_CMD_NEW_REC, $LOW_FORM_CONTROL_PUSH_CMD_DELETE_REC, _
-					$LOW_FORM_CONTROL_PUSH_CMD_REFRESH_FORM
+			Case $LOW_FORM_CON_PUSH_CMD_FIRST_REC, $LOW_FORM_CON_PUSH_CMD_LAST_REC, $LOW_FORM_CON_PUSH_CMD_NEXT_REC, $LOW_FORM_CON_PUSH_CMD_PREV_REC, _
+					$LOW_FORM_CON_PUSH_CMD_SAVE_REC, $LOW_FORM_CON_PUSH_CMD_UNDO, $LOW_FORM_CON_PUSH_CMD_NEW_REC, $LOW_FORM_CON_PUSH_CMD_DELETE_REC, _
+					$LOW_FORM_CON_PUSH_CMD_REFRESH_FORM
 				$oImageButton.Control.ButtonType = $__LOW_PUSH_BTN_CMND_URL
 				$sURL = $asActions[$iAction]
 				$iError = (($oImageButton.Control.ButtonType() = $__LOW_PUSH_BTN_CMND_URL)) ? ($iError) : (BitOR($iError, 1024))
@@ -3783,7 +3783,7 @@ Func _LOWriter_FormConImageButtonGeneral(ByRef $oImageButton, $sName = Null, $iT
 		$oImageButton.Control.setPropertyToDefault("ScaleMode")
 
 	ElseIf ($iScale <> Null) Then
-		If Not __LOWriter_IntIsBetween($iScale, $LOW_FORM_CONTROL_IMG_BTN_SCALE_NONE, $LOW_FORM_CONTROL_IMG_BTN_SCALE_FIT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
+		If Not __LOWriter_IntIsBetween($iScale, $LOW_FORM_CON_IMG_BTN_SCALE_NONE, $LOW_FORM_CON_IMG_BTN_SCALE_FIT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 		$oImageButton.Control.ScaleMode = $iScale
 		$iError = ($oImageButton.Control.ScaleMode() = $iScale) ? ($iError) : (BitOR($iError, 16384))
 	EndIf
@@ -3859,7 +3859,7 @@ Func _LOWriter_FormConImageControlData(ByRef $oImageControl, $sDataField = Null,
 
 	If Not IsObj($oImageControl) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oImageControl) <> $LOW_FORM_CONTROL_TYPE_IMAGE_CONTROL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oImageControl) <> $LOW_FORM_CON_TYPE_IMAGE_CONTROL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
@@ -3898,10 +3898,10 @@ EndFunc   ;==>_LOWriter_FormConImageControlData
 ;                  $bTabStop            - [optional] a boolean value. Default is Null. If True, the control can be selected with the Tab key.
 ;                  $iTabOrder           - [optional] an integer value (0-2147483647). Default is Null. The order the control is focused by the Tab key.
 ;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $sGraphics           - [optional] a string value. Default is Null. The path to an Image file.
-;                  $iScale              - [optional] an integer value (0-2). Default is Null. How to scale the image to fit the button. See Constants $LOW_FORM_CONTROL_IMG_BTN_SCALE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iScale              - [optional] an integer value (0-2). Default is Null. How to scale the image to fit the button. See Constants $LOW_FORM_CON_IMG_BTN_SCALE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
 ;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
 ;                  $sHelpURL            - [optional] a string value. Default is Null. The Help URL.
@@ -3921,10 +3921,10 @@ EndFunc   ;==>_LOWriter_FormConImageControlData
 ;                  @Error 1 @Extended 11 Return 0 = $bTabStop not a Boolean.
 ;                  @Error 1 @Extended 12 Return 0 = $iTabOrder not an Integer, less than 0 or greater than 2147483647.
 ;                  @Error 1 @Extended 13 Return 0 = $iBackColor not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 14 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 14 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 15 Return 0 = $iBorderColor not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 16 Return 0 = $sGraphics not a String.
-;                  @Error 1 @Extended 17 Return 0 = $iScale not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_IMG_BTN_SCALE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 17 Return 0 = $iScale not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_IMG_BTN_SCALE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 18 Return 0 = $sAddInfo not a String.
 ;                  @Error 1 @Extended 19 Return 0 = $sHelpText not a String.
 ;                  @Error 1 @Extended 20 Return 0 = $sHelpURL not a String.
@@ -3971,11 +3971,11 @@ Func _LOWriter_FormConImageControlGeneral(ByRef $oImageControl, $sName = Null, $
 
 	If Not IsObj($oImageControl) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oImageControl) <> $LOW_FORM_CONTROL_TYPE_IMAGE_CONTROL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oImageControl) <> $LOW_FORM_CON_TYPE_IMAGE_CONTROL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $bTabStop, $iTabOrder, $iBackColor, $iBorder, $iBorderColor, $sGraphics, $iScale, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oImageControl.Control.Name(), __LOWriter_FormConGetObj($oImageControl.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oImageControl.Control.WritingMode(), $oImageControl.Control.Enabled(), _
+		__LOWriter_ArrayFill($avControl, $oImageControl.Control.Name(), __LOWriter_FormConGetObj($oImageControl.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oImageControl.Control.WritingMode(), $oImageControl.Control.Enabled(), _
 				$oImageControl.Control.EnableVisible(), $oImageControl.Control.ReadOnly(), $oImageControl.Control.Printable(), $oImageControl.Control.Tabstop(), _
 				$oImageControl.Control.TabIndex(), $oImageControl.Control.BackgroundColor(), $oImageControl.Control.Border(), $oImageControl.Control.BorderColor(), _
 				$oImageControl.Control.Graphic(), $oImageControl.Control.ScaleMode(), $oImageControl.Control.Tag(), $oImageControl.Control.HelpText(), $oImageControl.Control.HelpURL())
@@ -3998,7 +3998,7 @@ Func _LOWriter_FormConImageControlGeneral(ByRef $oImageControl, $sName = Null, $
 
 	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CON_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oImageControl.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oImageControl.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -4079,7 +4079,7 @@ Func _LOWriter_FormConImageControlGeneral(ByRef $oImageControl, $sName = Null, $
 		$oImageControl.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 		$oImageControl.Control.Border = $iBorder
 		$iError = ($oImageControl.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 1024))
 	EndIf
@@ -4107,7 +4107,7 @@ Func _LOWriter_FormConImageControlGeneral(ByRef $oImageControl, $sName = Null, $
 		$oImageControl.Control.setPropertyToDefault("ScaleMode")
 
 	ElseIf ($iScale <> Null) Then
-		If Not __LOWriter_IntIsBetween($iScale, $LOW_FORM_CONTROL_IMG_BTN_SCALE_NONE, $LOW_FORM_CONTROL_IMG_BTN_SCALE_FIT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+		If Not __LOWriter_IntIsBetween($iScale, $LOW_FORM_CON_IMG_BTN_SCALE_NONE, $LOW_FORM_CON_IMG_BTN_SCALE_FIT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 		$oImageControl.Control.ScaleMode = $iScale
 		$iError = ($oImageControl.Control.ScaleMode() = $iScale) ? ($iError) : (BitOR($iError, 8192))
 	EndIf
@@ -4147,7 +4147,7 @@ EndFunc   ;==>_LOWriter_FormConImageControlGeneral
 ; Description ...: Insert a control into a form and document.
 ; Syntax ........: _LOWriter_FormConInsert(ByRef $oParentForm, $iControl, $iX, $iY, $iWidth, $iHeight[, $sName = ""])
 ; Parameters ....: $oParentForm         - [in/out] an object. A Form object returned by a previous _LOWriter_FormAdd, _LOWriter_FormGetObjByIndex or _LOWriter_FormsGetList function.
-;                  $iControl            - an integer value (1-524288). The control type to insert. See Constants $LOW_FORM_CONTROL_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iControl            - an integer value (1-524288). The control type to insert. See Constants $LOW_FORM_CON_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iX                  - an integer value. The X Coordinate, in Micrometers.
 ;                  $iY                  - an integer value. The Y Coordinate, in Micrometers.
 ;                  $iWidth              - an integer value. The Width of the control, in Micrometers.
@@ -4158,7 +4158,7 @@ EndFunc   ;==>_LOWriter_FormConImageControlGeneral
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oParentForm not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = Object called in $oParentForm not a Form Object.
-;                  @Error 1 @Extended 3 Return 0 = $iControl not an Integer, less than 1 or greater than 524288. See Constants $LOW_FORM_CONTROL_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $iControl not an Integer, less than 1 or greater than 524288. See Constants $LOW_FORM_CON_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 4 Return 0 = $iX not an Integer.
 ;                  @Error 1 @Extended 5 Return 0 = $iY not an Integer.
 ;                  @Error 1 @Extended 6 Return 0 = $iWidth not an Integer.
@@ -4195,7 +4195,7 @@ Func _LOWriter_FormConInsert(ByRef $oParentForm, $iControl, $iX, $iY, $iWidth, $
 
 	If Not IsObj($oParentForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oParentForm.supportsService("com.sun.star.form.component.Form") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOWriter_IntIsBetween($iControl, $LOW_FORM_CONTROL_TYPE_CHECK_BOX, $LOW_FORM_CONTROL_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LOWriter_IntIsBetween($iControl, $LOW_FORM_CON_TYPE_CHECK_BOX, $LOW_FORM_CON_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsInt($iX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not IsInt($iY) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	If Not IsInt($iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
@@ -4240,19 +4240,19 @@ Func _LOWriter_FormConInsert(ByRef $oParentForm, $iControl, $iX, $iY, $iWidth, $
 	$oControl.Name = $sName
 
 	Switch $iControl
-		Case $LOW_FORM_CONTROL_TYPE_CHECK_BOX
+		Case $LOW_FORM_CON_TYPE_CHECK_BOX
 			$oControl.Label = "Check Box"
 
-		Case $LOW_FORM_CONTROL_TYPE_GROUP_BOX, $LOW_FORM_CONTROL_TYPE_GROUPED_CONTROL ; For a grouped control, I first need to create a Group Box, and name it appropriately, then the grouped shape.
+		Case $LOW_FORM_CON_TYPE_GROUP_BOX, $LOW_FORM_CON_TYPE_GROUPED_CONTROL ; For a grouped control, I first need to create a Group Box, and name it appropriately, then the grouped shape.
 			$oControl.Label = "Group Box"
 
-		Case $LOW_FORM_CONTROL_TYPE_LABEL
+		Case $LOW_FORM_CON_TYPE_LABEL
 			$oControl.Label = "Label Field"
 
-		Case $LOW_FORM_CONTROL_TYPE_OPTION_BUTTON
+		Case $LOW_FORM_CON_TYPE_OPTION_BUTTON
 			$oControl.Label = "Option Button"
 
-		Case $LOW_FORM_CONTROL_TYPE_PUSH_BUTTON
+		Case $LOW_FORM_CON_TYPE_PUSH_BUTTON
 			$oControl.Label = "Push Button"
 	EndSwitch
 
@@ -4267,7 +4267,7 @@ Func _LOWriter_FormConInsert(ByRef $oParentForm, $iControl, $iX, $iY, $iWidth, $
 	$oShape.Control = $oControl
 	$oShape.Name = $sShapeName
 
-	If ($iControl = $LOW_FORM_CONTROL_TYPE_GROUPED_CONTROL) Then
+	If ($iControl = $LOW_FORM_CON_TYPE_GROUPED_CONTROL) Then
 		$oGroupShape = $oDoc.createInstance("com.sun.star.drawing.GroupShape")
 		If Not IsObj($oGroupShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
@@ -4330,7 +4330,7 @@ EndFunc   ;==>_LOWriter_FormConInsert
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bWordBreak          - [optional] a boolean value. Default is Null. If True, line breaks are allowed to be used.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
@@ -4351,7 +4351,7 @@ EndFunc   ;==>_LOWriter_FormConInsert
 ;                  @Error 1 @Extended 10 Return 0 = $iAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 11 Return 0 = $iVertAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 12 Return 0 = $iBackColor not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 13 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 13 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 14 Return 0 = $iBorderColor not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 15 Return 0 = $bWordBreak not a Boolean.
 ;                  @Error 1 @Extended 16 Return 0 = $sAddInfo not a String.
@@ -4399,7 +4399,7 @@ Func _LOWriter_FormConLabelGeneral(ByRef $oLabel, $sName = Null, $sLabel = Null,
 
 	If Not IsObj($oLabel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oLabel) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oLabel) <> $LOW_FORM_CON_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $bEnabled, $bVisible, $bPrintable, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bWordBreak, $sAddInfo, $sHelpText, $sHelpURL) Then
@@ -4505,7 +4505,7 @@ Func _LOWriter_FormConLabelGeneral(ByRef $oLabel, $sName = Null, $sLabel = Null,
 		$oLabel.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 		$oLabel.Control.Border = $iBorder
 		$iError = ($oLabel.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 1024))
 	EndIf
@@ -4565,7 +4565,7 @@ EndFunc   ;==>_LOWriter_FormConLabelGeneral
 ; Parameters ....: $oListBox            - [in/out] an object. A List Box Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sDataField          - [optional] a string value. Default is Null. The Datafield name to retrieve content from, either a Table name, SQL query, or other.
 ;                  $bInputRequired      - [optional] a boolean value. Default is Null. If True, the control requires input.
-;                  $iType               - [optional] an integer value (0-5). Default is Null. The type of content to fill the control with. See Constants $LOW_FORM_CONTROL_SOURCE_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iType               - [optional] an integer value (0-5). Default is Null. The type of content to fill the control with. See Constants $LOW_FORM_CON_SOURCE_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $asListContent       - [optional] an array of strings. Default is Null. A single dimension array. See remarks
 ;                  $iBoundField         - [optional] an integer value (-1-2147483647). Default is Null. The bound data field of a linked table to display.
 ; Return values .: Success: 1 or Array
@@ -4575,7 +4575,7 @@ EndFunc   ;==>_LOWriter_FormConLabelGeneral
 ;                  @Error 1 @Extended 2 Return 0 = Object called in $oListBox not a List Box Control.
 ;                  @Error 1 @Extended 3 Return 0 = $sDataField not a String.
 ;                  @Error 1 @Extended 4 Return 0 = $bInputRequired not a Boolean.
-;                  @Error 1 @Extended 5 Return 0 = $iType not an Integer, less than 0 or greater than 5. See Constants $LOW_FORM_CONTROL_SOURCE_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iType not an Integer, less than 0 or greater than 5. See Constants $LOW_FORM_CON_SOURCE_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 6 Return 0 = $asListContent not an Array.
 ;                  @Error 1 @Extended 7 Return 0 = $iType not set to Valuelist and array called in $asListContent has more than 1 element.
 ;                  @Error 1 @Extended 8 Return 0 = $iBoundField not an Integer, less than -1 or greater than 2147483647.
@@ -4612,7 +4612,7 @@ Func _LOWriter_FormConListBoxData(ByRef $oListBox, $sDataField = Null, $bInputRe
 
 	If Not IsObj($oListBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oListBox) <> $LOW_FORM_CONTROL_TYPE_LIST_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oListBox) <> $LOW_FORM_CON_TYPE_LIST_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sDataField, $bInputRequired, $iType, $asListContent, $iBoundField) Then
@@ -4635,14 +4635,14 @@ Func _LOWriter_FormConListBoxData(ByRef $oListBox, $sDataField = Null, $bInputRe
 	EndIf
 
 	If ($iType <> Null) Then
-		If Not __LOWriter_IntIsBetween($iType, $LOW_FORM_CONTROL_SOURCE_TYPE_VALUE_LIST, $LOW_FORM_CONTROL_SOURCE_TYPE_TABLE_FIELDS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LOWriter_IntIsBetween($iType, $LOW_FORM_CON_SOURCE_TYPE_VALUE_LIST, $LOW_FORM_CON_SOURCE_TYPE_TABLE_FIELDS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oListBox.Control.ListSourceType = $iType
 		$iError = ($oListBox.Control.ListSourceType() = $iType) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($asListContent <> Null) Then
 		If Not IsArray($asListContent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-		If ($oListBox.Control.ListSourceType() <> $LOW_FORM_CONTROL_SOURCE_TYPE_VALUE_LIST) And (UBound($asListContent) > 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If ($oListBox.Control.ListSourceType() <> $LOW_FORM_CON_SOURCE_TYPE_VALUE_LIST) And (UBound($asListContent) > 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oListBox.Control.ListSource = $asListContent
 		$iError = (UBound($oListBox.Control.ListSource()) = UBound($asListContent)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
@@ -4668,14 +4668,14 @@ EndFunc   ;==>_LOWriter_FormConListBoxData
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the control is visible.
 ;                  $bReadOnly           - [optional] a boolean value. Default is Null. If True, the control is Read-Only.
 ;                  $bPrintable          - [optional] a boolean value. Default is Null. If True, the control will be displayed when printed.
-;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CONTROL_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bTabStop            - [optional] a boolean value. Default is Null. If True, the control can be selected with the Tab key.
 ;                  $iTabOrder           - [optional] an integer value (0-2147483647). Default is Null. The order the control is focused by the Tab key.
 ;                  $asList              - [optional] an array of strings. Default is Null. An array of List entries. See remarks.
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bDropdown           - [optional] a boolean value. Default is Null. If True, the List Box will behave like a dropdown.
 ;                  $iLines              - [optional] an integer value (-2147483648-2147483647). Default is Null. If $bDropdown is True, $iLines specifies how many lines are shown in the dropdown list.
@@ -4697,7 +4697,7 @@ EndFunc   ;==>_LOWriter_FormConListBoxData
 ;                  @Error 1 @Extended 8 Return 0 = $bVisible not a Boolean.
 ;                  @Error 1 @Extended 9 Return 0 = $bReadOnly not a Boolean.
 ;                  @Error 1 @Extended 10 Return 0 = $bPrintable not a Boolean.
-;                  @Error 1 @Extended 11 Return 0 = $iMouseScroll not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 11 Return 0 = $iMouseScroll not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 12 Return 0 = $bTabStop not a Boolean.
 ;                  @Error 1 @Extended 13 Return 0 = $iTabOrder not an Integer, less than 0 or greater than 2147483647.
 ;                  @Error 1 @Extended 14 Return 0 = $asList not an Array.
@@ -4705,7 +4705,7 @@ EndFunc   ;==>_LOWriter_FormConListBoxData
 ;                  @Error 1 @Extended 16 Return 0 = $mFont not a Map.
 ;                  @Error 1 @Extended 17 Return 0 = $iAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 18 Return 0 = $iBackColor not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 19 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 19 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 20 Return 0 = $iBorderColor not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 21 Return 0 = $bDropdown not a Boolean.
 ;                  @Error 1 @Extended 22 Return 0 = $iLines not an Integer, less than -2147483648 or greater than 2147483647.
@@ -4767,11 +4767,11 @@ Func _LOWriter_FormConListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabelFiel
 
 	If Not IsObj($oListBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oListBox) <> $LOW_FORM_CONTROL_TYPE_LIST_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oListBox) <> $LOW_FORM_CON_TYPE_LIST_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $asList, $mFont, $iAlign, $iBackColor, $iBorder, $iBorderColor, $bDropdown, $iLines, $bMultiSel, $aiDefaultSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oListBox.Control.Name(), __LOWriter_FormConGetObj($oListBox.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oListBox.Control.WritingMode(), $oListBox.Control.Enabled(), _
+		__LOWriter_ArrayFill($avControl, $oListBox.Control.Name(), __LOWriter_FormConGetObj($oListBox.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oListBox.Control.WritingMode(), $oListBox.Control.Enabled(), _
 				$oListBox.Control.EnableVisible(), $oListBox.Control.ReadOnly(), $oListBox.Control.Printable(), $oListBox.Control.MouseWheelBehavior(), $oListBox.Control.Tabstop(), _
 				$oListBox.Control.TabIndex(), $oListBox.Control.StringItemList(), __LOWriter_FormConSetGetFontDesc($oListBox), $oListBox.Control.Align(), $oListBox.Control.BackgroundColor(), _
 				$oListBox.Control.Border(), $oListBox.Control.BorderColor(), $oListBox.Control.Dropdown(), $oListBox.Control.LineCount(), $oListBox.Control.MultiSelection(), _
@@ -4795,7 +4795,7 @@ Func _LOWriter_FormConListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabelFiel
 
 	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CON_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oListBox.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oListBox.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -4849,7 +4849,7 @@ Func _LOWriter_FormConListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabelFiel
 		$oListBox.Control.setPropertyToDefault("MouseWheelBehavior")
 
 	ElseIf ($iMouseScroll <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CONTROL_MOUSE_SCROLL_DISABLED, $LOW_FORM_CONTROL_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$oListBox.Control.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oListBox.Control.MouseWheelBehavior = $iMouseScroll) ? ($iError) : (BitOR($iError, 128))
 	EndIf
@@ -4916,7 +4916,7 @@ Func _LOWriter_FormConListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabelFiel
 		$oListBox.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
+		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 		$oListBox.Control.Border = $iBorder
 		$iError = ($oListBox.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 16384))
 	EndIf
@@ -5031,7 +5031,7 @@ Func _LOWriter_FormConListBoxGetCount(ByRef $oListBox)
 
 	If Not IsObj($oListBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oListBox) <> $LOW_FORM_CONTROL_TYPE_LIST_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oListBox) <> $LOW_FORM_CON_TYPE_LIST_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$iCount = $oListBox.Control.ItemCount()
@@ -5083,7 +5083,7 @@ Func _LOWriter_FormConListBoxSelection(ByRef $oListBox, $aiSelection = Null, $bR
 
 	If Not IsObj($oListBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oListBox) <> $LOW_FORM_CONTROL_TYPE_LIST_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oListBox) <> $LOW_FORM_CON_TYPE_LIST_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If Not IsBool($bReturnValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
@@ -5135,7 +5135,7 @@ EndFunc   ;==>_LOWriter_FormConListBoxSelection
 ;                  $iDelay              - [optional] an integer value (0-2147483647). Default is Null. The delay between button repeats, set in milliseconds.
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bSmallIcon          - [optional] a boolean value. Default is Null. If True, small Icon sizing is used.
 ;                  $bShowPos            - [optional] a boolean value. Default is Null. If True, positioning items are shown.
 ;                  $bShowNav            - [optional] a boolean value. Default is Null. If True, navigation items are shown.
@@ -5158,7 +5158,7 @@ EndFunc   ;==>_LOWriter_FormConListBoxSelection
 ;                  @Error 1 @Extended 9 Return 0 = $iDelay not an Integer, less than 0 or greater than 2147483647.
 ;                  @Error 1 @Extended 10 Return 0 = $mFont not a Map.
 ;                  @Error 1 @Extended 11 Return 0 = $iBackColor not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 12 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 12 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 13 Return 0 = $bSmallIcon not a Boolean.
 ;                  @Error 1 @Extended 14 Return 0 = $bShowPos not a Boolean.
 ;                  @Error 1 @Extended 15 Return 0 = $bShowNav not a Boolean.
@@ -5212,7 +5212,7 @@ Func _LOWriter_FormConNavBarGeneral(ByRef $oNavBar, $sName = Null, $iTxtDir = Nu
 
 	If Not IsObj($oNavBar) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oNavBar) <> $LOW_FORM_CONTROL_TYPE_NAV_BAR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oNavBar) <> $LOW_FORM_CON_TYPE_NAV_BAR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $iTxtDir, $bEnabled, $bVisible, $bTabStop, $iTabOrder, $iDelay, $mFont, $iBackColor, $iBorder, $bSmallIcon, $bShowPos, $bShowNav, $bShowActing, $bShowFiltering, $sAddInfo, $sHelpText, $sHelpURL) Then
@@ -5311,7 +5311,7 @@ Func _LOWriter_FormConNavBarGeneral(ByRef $oNavBar, $sName = Null, $iTxtDir = Nu
 		$oNavBar.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$oNavBar.Control.Border = $iBorder
 		$iError = ($oNavBar.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 512))
 	EndIf
@@ -5432,7 +5432,7 @@ Func _LOWriter_FormConNumericFieldData(ByRef $oNumericField, $sDataField = Null,
 
 	If Not IsObj($oNumericField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oNumericField) <> $LOW_FORM_CONTROL_TYPE_NUMERIC_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oNumericField) <> $LOW_FORM_CON_TYPE_NUMERIC_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
@@ -5469,7 +5469,7 @@ EndFunc   ;==>_LOWriter_FormConNumericFieldData
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the control is visible.
 ;                  $bReadOnly           - [optional] a boolean value. Default is Null. If True, the control is Read-Only.
 ;                  $bPrintable          - [optional] a boolean value. Default is Null. If True, the control will be displayed when printed.
-;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CONTROL_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bTabStop            - [optional] a boolean value. Default is Null. If True, the control can be selected with the Tab key.
 ;                  $iTabOrder           - [optional] an integer value (0-2147483647). Default is Null. The order the control is focused by the Tab key.
 ;                  $nMin                - [optional] a general number value. Default is Null. The minimum value the control can be set to.
@@ -5485,7 +5485,7 @@ EndFunc   ;==>_LOWriter_FormConNumericFieldData
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
@@ -5505,7 +5505,7 @@ EndFunc   ;==>_LOWriter_FormConNumericFieldData
 ;                  @Error 1 @Extended 9 Return 0 = $bVisible not a Boolean.
 ;                  @Error 1 @Extended 10 Return 0 = $bReadOnly not a Boolean.
 ;                  @Error 1 @Extended 11 Return 0 = $bPrintable not a Boolean.
-;                  @Error 1 @Extended 12 Return 0 = $iMouseScroll not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 12 Return 0 = $iMouseScroll not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 13 Return 0 = $bTabStop not a Boolean.
 ;                  @Error 1 @Extended 14 Return 0 = $iTabOrder not an Integer, less than 0 or greater than 2147483647.
 ;                  @Error 1 @Extended 15 Return 0 = $nMin not a Number.
@@ -5521,7 +5521,7 @@ EndFunc   ;==>_LOWriter_FormConNumericFieldData
 ;                  @Error 1 @Extended 25 Return 0 = $iAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 26 Return 0 = $iVertAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 27 Return 0 = $iBackColor not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 28 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 28 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 29 Return 0 = $iBorderColor not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 30 Return 0 = $bHideSel not a Boolean.
 ;                  @Error 1 @Extended 31 Return 0 = $sAddInfo not a String.
@@ -5589,11 +5589,11 @@ Func _LOWriter_FormConNumericFieldGeneral(ByRef $oNumericField, $sName = Null, $
 
 	If Not IsObj($oNumericField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oNumericField) <> $LOW_FORM_CONTROL_TYPE_NUMERIC_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oNumericField) <> $LOW_FORM_CON_TYPE_NUMERIC_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $bStrict, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $nMin, $nMax, $iIncr, $nDefault, $iDecimal, $bThousandsSep, $bSpin, $bRepeat, $iDelay, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oNumericField.Control.Name(), __LOWriter_FormConGetObj($oNumericField.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oNumericField.Control.WritingMode(), $oNumericField.Control.StrictFormat(), _
+		__LOWriter_ArrayFill($avControl, $oNumericField.Control.Name(), __LOWriter_FormConGetObj($oNumericField.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oNumericField.Control.WritingMode(), $oNumericField.Control.StrictFormat(), _
 				$oNumericField.Control.Enabled(), $oNumericField.Control.EnableVisible(), $oNumericField.Control.ReadOnly(), $oNumericField.Control.Printable(), _
 				$oNumericField.Control.MouseWheelBehavior(), $oNumericField.Control.Tabstop(), $oNumericField.Control.TabIndex(), $oNumericField.Control.ValueMin(), _
 				$oNumericField.Control.ValueMax(), $oNumericField.Control.ValueStep(), $oNumericField.Control.DefaultValue(), $oNumericField.Control.DecimalAccuracy(), _
@@ -5620,7 +5620,7 @@ Func _LOWriter_FormConNumericFieldGeneral(ByRef $oNumericField, $sName = Null, $
 
 	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CON_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oNumericField.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oNumericField.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -5683,7 +5683,7 @@ Func _LOWriter_FormConNumericFieldGeneral(ByRef $oNumericField, $sName = Null, $
 		$oNumericField.Control.setPropertyToDefault("MouseWheelBehavior")
 
 	ElseIf ($iMouseScroll <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CONTROL_MOUSE_SCROLL_DISABLED, $LOW_FORM_CONTROL_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$oNumericField.Control.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oNumericField.Control.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 256))
 	EndIf
@@ -5706,7 +5706,7 @@ Func _LOWriter_FormConNumericFieldGeneral(ByRef $oNumericField, $sName = Null, $
 		$iError = ($oNumericField.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 1024))
 	EndIf
 
-	If ($nMax = Default) Then
+	If ($nMin = Default) Then
 		$oNumericField.Control.setPropertyToDefault("ValueMin")
 
 	ElseIf ($nMin <> Null) Then
@@ -5827,7 +5827,7 @@ Func _LOWriter_FormConNumericFieldGeneral(ByRef $oNumericField, $sName = Null, $
 		$oNumericField.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 28, 0)
+		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 28, 0)
 		$oNumericField.Control.Border = $iBorder
 		$iError = ($oNumericField.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 16777216))
 	EndIf
@@ -5917,7 +5917,7 @@ Func _LOWriter_FormConNumericFieldValue(ByRef $oNumericField, $nValue = Null)
 
 	If Not IsObj($oNumericField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oNumericField) <> $LOW_FORM_CONTROL_TYPE_NUMERIC_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oNumericField) <> $LOW_FORM_CON_TYPE_NUMERIC_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($nValue) Then
@@ -5981,7 +5981,7 @@ Func _LOWriter_FormConOptionButtonData(ByRef $oOptionButton, $sDataField = Null,
 
 	If Not IsObj($oOptionButton) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oOptionButton) <> $LOW_FORM_CONTROL_TYPE_OPTION_BUTTON) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oOptionButton) <> $LOW_FORM_CON_TYPE_OPTION_BUTTON) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
@@ -6020,15 +6020,15 @@ EndFunc   ;==>_LOWriter_FormConOptionButtonData
 ;                  $bPrintable          - [optional] a boolean value. Default is Null. If True, the control will be displayed when printed.
 ;                  $bTabStop            - [optional] a boolean value. Default is Null. If True, the control can be selected with the Tab key.
 ;                  $iTabOrder           - [optional] an integer value (0-2147483647). Default is Null. The order the control is focused by the Tab key.
-;                  $iDefaultState       - [optional] an integer value (0-1). Default is Null. The Default state of the Option button. See Constants $LOW_FORM_CONTROL_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iDefaultState       - [optional] an integer value (0-1). Default is Null. The Default state of the Option button. See Constants $LOW_FORM_CON_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
-;                  $iStyle              - [optional] an integer value (1-2). Default is Null. The display style of the Option button. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iStyle              - [optional] an integer value (1-2). Default is Null. The display style of the Option button. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bWordBreak          - [optional] a boolean value. Default is Null. If True, line breaks are allowed to be used.
 ;                  $sGraphics           - [optional] a string value. Default is Null. The path to an Image file.
-;                  $iGraphicAlign       - [optional] an integer value (0-12). Default is Null. The Alignment of the Image. See Constants $LOW_FORM_CONTROL_IMG_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iGraphicAlign       - [optional] an integer value (0-12). Default is Null. The Alignment of the Image. See Constants $LOW_FORM_CON_IMG_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
 ;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
 ;                  $sHelpURL            - [optional] a string value. Default is Null. The Help URL.
@@ -6048,15 +6048,15 @@ EndFunc   ;==>_LOWriter_FormConOptionButtonData
 ;                  @Error 1 @Extended 11 Return 0 = $bPrintable not a Boolean.
 ;                  @Error 1 @Extended 12 Return 0 = $bTabStop not a Boolean.
 ;                  @Error 1 @Extended 13 Return 0 = $iTabOrder not an Integer, less than 0 or greater than 2147483647.
-;                  @Error 1 @Extended 14 Return 0 = $iDefaultState not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 14 Return 0 = $iDefaultState not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 15 Return 0 = $mFont not a Map.
-;                  @Error 1 @Extended 16 Return 0 = $iStyle not an Integer, less than 1 or greater than 2. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 16 Return 0 = $iStyle not an Integer, less than 1 or greater than 2. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 17 Return 0 = $iAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 18 Return 0 = $iVertAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 19 Return 0 = $iBackColor not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 20 Return 0 = $bWordBreak not a Boolean.
 ;                  @Error 1 @Extended 21 Return 0 = $sGraphics not a String.
-;                  @Error 1 @Extended 22 Return 0 = $iGraphicAlign not an Integer, less than 0 or greater than 12. See Constants $LOW_FORM_CONTROL_IMG_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 22 Return 0 = $iGraphicAlign not an Integer, less than 0 or greater than 12. See Constants $LOW_FORM_CON_IMG_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 23 Return 0 = $sAddInfo not a String.
 ;                  @Error 1 @Extended 24 Return 0 = $sHelpText not a String.
 ;                  @Error 1 @Extended 25 Return 0 = $sHelpURL not a String.
@@ -6108,11 +6108,11 @@ Func _LOWriter_FormConOptionButtonGeneral(ByRef $oOptionButton, $sName = Null, $
 
 	If Not IsObj($oOptionButton) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oOptionButton) <> $LOW_FORM_CONTROL_TYPE_OPTION_BUTTON) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oOptionButton) <> $LOW_FORM_CON_TYPE_OPTION_BUTTON) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $sLabel, $oLabelField, $iTxtDir, $sGroupName, $bEnabled, $bVisible, $bPrintable, $bTabStop, $iTabOrder, $iDefaultState, $mFont, $iStyle, $iAlign, $iVertAlign, $iBackColor, $bWordBreak, $sGraphics, $iGraphicAlign, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oOptionButton.Control.Name(), $oOptionButton.Control.Label(), __LOWriter_FormConGetObj($oOptionButton.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_GROUP_BOX), $oOptionButton.Control.WritingMode(), _
+		__LOWriter_ArrayFill($avControl, $oOptionButton.Control.Name(), $oOptionButton.Control.Label(), __LOWriter_FormConGetObj($oOptionButton.Control.LabelControl(), $LOW_FORM_CON_TYPE_GROUP_BOX), $oOptionButton.Control.WritingMode(), _
 				$oOptionButton.Control.GroupName(), $oOptionButton.Control.Enabled(), $oOptionButton.Control.EnableVisible(), $oOptionButton.Control.Printable(), _
 				$oOptionButton.Control.Tabstop(), $oOptionButton.Control.TabIndex(), $oOptionButton.Control.DefaultState(), __LOWriter_FormConSetGetFontDesc($oOptionButton), _
 				$oOptionButton.Control.VisualEffect(), $oOptionButton.Control.Align(), $oOptionButton.Control.VerticalAlign(), $oOptionButton.Control.BackgroundColor(), _
@@ -6146,7 +6146,7 @@ Func _LOWriter_FormConOptionButtonGeneral(ByRef $oOptionButton, $sName = Null, $
 
 	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_GROUP_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CON_TYPE_GROUP_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oOptionButton.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oOptionButton.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -6218,7 +6218,7 @@ Func _LOWriter_FormConOptionButtonGeneral(ByRef $oOptionButton, $sName = Null, $
 		$iError = BitOR($iError, 1024) ; Can't Default DefaultState.
 
 	ElseIf ($iDefaultState <> Null) Then
-		If Not __LOWriter_IntIsBetween($iDefaultState, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CONTROL_CHKBX_STATE_SELECTED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		If Not __LOWriter_IntIsBetween($iDefaultState, $LOW_FORM_CON_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CON_CHKBX_STATE_SELECTED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 		$oOptionButton.Control.DefaultState = $iDefaultState
 		$iError = ($oOptionButton.Control.DefaultState() = $iDefaultState) ? ($iError) : (BitOR($iError, 1024))
 	EndIf
@@ -6236,7 +6236,7 @@ Func _LOWriter_FormConOptionButtonGeneral(ByRef $oOptionButton, $sName = Null, $
 		$oOptionButton.Control.setPropertyToDefault("VisualEffect")
 
 	ElseIf ($iStyle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iStyle, $LOW_FORM_CONTROL_BORDER_3D, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
+		If Not __LOWriter_IntIsBetween($iStyle, $LOW_FORM_CON_BORDER_3D, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 		$oOptionButton.Control.VisualEffect = $iStyle
 		$iError = ($oOptionButton.Control.VisualEffect() = $iStyle) ? ($iError) : (BitOR($iError, 4096))
 	EndIf
@@ -6291,7 +6291,7 @@ Func _LOWriter_FormConOptionButtonGeneral(ByRef $oOptionButton, $sName = Null, $
 		$oOptionButton.Control.setPropertyToDefault("ImagePosition")
 
 	ElseIf ($iGraphicAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iGraphicAlign, $LOW_FORM_CONTROL_IMG_ALIGN_LEFT_TOP, $LOW_FORM_CONTROL_IMG_ALIGN_CENTERED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
+		If Not __LOWriter_IntIsBetween($iGraphicAlign, $LOW_FORM_CON_IMG_ALIGN_LEFT_TOP, $LOW_FORM_CON_IMG_ALIGN_CENTERED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
 		$oOptionButton.Control.ImagePosition = $iGraphicAlign
 		$iError = ($oOptionButton.Control.ImagePosition() = $iGraphicAlign) ? ($iError) : (BitOR($iError, 262144))
 	EndIf
@@ -6331,13 +6331,13 @@ EndFunc   ;==>_LOWriter_FormConOptionButtonGeneral
 ; Description ...: Set or Retrieve the current Option button state.
 ; Syntax ........: _LOWriter_FormConOptionButtonState(ByRef $oOptionButton[, $iState = Null])
 ; Parameters ....: $oOptionButton       - [in/out] an object. A Option Button Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
-;                  $iState              - [optional] an integer value (0-1). Default is Null. The current state of the Option Button. See Constants $LOW_FORM_CONTROL_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iState              - [optional] an integer value (0-1). Default is Null. The current state of the Option Button. See Constants $LOW_FORM_CON_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Integer
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oOptionButton not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = Object called in $oOptionButton not a Option Button Control.
-;                  @Error 1 @Extended 3 Return 0 = $iState not an Integer, less than 0 or greater than 1. See Constants $LOW_FORM_CONTROL_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $iState not an Integer, less than 0 or greater than 1. See Constants $LOW_FORM_CON_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve current control State.
@@ -6346,7 +6346,7 @@ EndFunc   ;==>_LOWriter_FormConOptionButtonGeneral
 ;                  |                               1 = Error setting $iState
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current Option Button State as an integer, matching one of the constants $LOW_FORM_CONTROL_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current Option Button State as an integer, matching one of the constants $LOW_FORM_CON_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current Option Button state.
@@ -6363,7 +6363,7 @@ Func _LOWriter_FormConOptionButtonState(ByRef $oOptionButton, $iState = Null)
 
 	If Not IsObj($oOptionButton) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oOptionButton) <> $LOW_FORM_CONTROL_TYPE_OPTION_BUTTON) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oOptionButton) <> $LOW_FORM_CON_TYPE_OPTION_BUTTON) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iState) Then
@@ -6377,7 +6377,7 @@ Func _LOWriter_FormConOptionButtonState(ByRef $oOptionButton, $iState = Null)
 		$oOptionButton.Control.setPropertyToDefault("State")
 
 	Else
-		If Not __LOWriter_IntIsBetween($iState, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CONTROL_CHKBX_STATE_SELECTED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		If Not __LOWriter_IntIsBetween($iState, $LOW_FORM_CON_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CON_CHKBX_STATE_SELECTED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oOptionButton.Control.State = $iState
 		$iError = ($oOptionButton.Control.State() = $iState) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -6432,7 +6432,7 @@ Func _LOWriter_FormConPatternFieldData(ByRef $oPatternField, $sDataField = Null,
 
 	If Not IsObj($oPatternField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oPatternField) <> $LOW_FORM_CONTROL_TYPE_PATTERN_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oPatternField) <> $LOW_FORM_CON_TYPE_PATTERN_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $bFilter) Then
@@ -6485,7 +6485,7 @@ EndFunc   ;==>_LOWriter_FormConPatternFieldData
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the control is visible.
 ;                  $bReadOnly           - [optional] a boolean value. Default is Null. If True, the control is Read-Only.
 ;                  $bPrintable          - [optional] a boolean value. Default is Null. If True, the control will be displayed when printed.
-;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CONTROL_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bTabStop            - [optional] a boolean value. Default is Null. If True, the control can be selected with the Tab key.
 ;                  $iTabOrder           - [optional] an integer value (0-2147483647). Default is Null. The order the control is focused by the Tab key.
 ;                  $sDefaultTxt         - [optional] a string value. Default is Null. The default text to display in the field.
@@ -6493,7 +6493,7 @@ EndFunc   ;==>_LOWriter_FormConPatternFieldData
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
@@ -6516,7 +6516,7 @@ EndFunc   ;==>_LOWriter_FormConPatternFieldData
 ;                  @Error 1 @Extended 12 Return 0 = $bVisible not a Boolean.
 ;                  @Error 1 @Extended 13 Return 0 = $bReadOnly not a Boolean.
 ;                  @Error 1 @Extended 14 Return 0 = $bPrintable not a Boolean.
-;                  @Error 1 @Extended 15 Return 0 = $iMouseScroll not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 15 Return 0 = $iMouseScroll not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 16 Return 0 = $bTabStop not a Boolean.
 ;                  @Error 1 @Extended 17 Return 0 = $iTabOrder not an Integer, less than 0 or greater than 2147483647.
 ;                  @Error 1 @Extended 18 Return 0 = $sDefaultTxt not a String.
@@ -6524,7 +6524,7 @@ EndFunc   ;==>_LOWriter_FormConPatternFieldData
 ;                  @Error 1 @Extended 20 Return 0 = $iAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 21 Return 0 = $iVertAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 22 Return 0 = $iBackColor not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 23 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 23 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 24 Return 0 = $iBorderColor not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 25 Return 0 = $bHideSel not a Boolean.
 ;                  @Error 1 @Extended 26 Return 0 = $sAddInfo not a String.
@@ -6581,11 +6581,11 @@ Func _LOWriter_FormConPatternFieldGeneral(ByRef $oPatternField, $sName = Null, $
 
 	If Not IsObj($oPatternField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oPatternField) <> $LOW_FORM_CONTROL_TYPE_PATTERN_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oPatternField) <> $LOW_FORM_CON_TYPE_PATTERN_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $iMaxLen, $sEditMask, $sLiteralMask, $bStrict, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $sDefaultTxt, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oPatternField.Control.Name(), __LOWriter_FormConGetObj($oPatternField.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oPatternField.Control.WritingMode(), _
+		__LOWriter_ArrayFill($avControl, $oPatternField.Control.Name(), __LOWriter_FormConGetObj($oPatternField.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oPatternField.Control.WritingMode(), _
 				$oPatternField.Control.MaxTextLen(), $oPatternField.Control.EditMask(), $oPatternField.Control.LiteralMask(), $oPatternField.Control.StrictFormat(), _
 				$oPatternField.Control.Enabled(), $oPatternField.Control.EnableVisible(), $oPatternField.Control.ReadOnly(), $oPatternField.Control.Printable(), _
 				$oPatternField.Control.MouseWheelBehavior(), $oPatternField.Control.Tabstop(), $oPatternField.Control.TabIndex(), $oPatternField.Control.DefaultText(), _
@@ -6611,7 +6611,7 @@ Func _LOWriter_FormConPatternFieldGeneral(ByRef $oPatternField, $sName = Null, $
 
 	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CON_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oPatternField.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oPatternField.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -6701,7 +6701,7 @@ Func _LOWriter_FormConPatternFieldGeneral(ByRef $oPatternField, $sName = Null, $
 		$oPatternField.Control.setPropertyToDefault("MouseWheelBehavior")
 
 	ElseIf ($iMouseScroll <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CONTROL_MOUSE_SCROLL_DISABLED, $LOW_FORM_CONTROL_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
+		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 		$oPatternField.Control.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oPatternField.Control.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 2048))
 	EndIf
@@ -6773,7 +6773,7 @@ Func _LOWriter_FormConPatternFieldGeneral(ByRef $oPatternField, $sName = Null, $
 		$oPatternField.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
+		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
 		$oPatternField.Control.Border = $iBorder
 		$iError = ($oPatternField.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 524288))
 	EndIf
@@ -6864,7 +6864,7 @@ Func _LOWriter_FormConPatternFieldValue(ByRef $oPatternField, $sValue = Null)
 
 	If Not IsObj($oPatternField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oPatternField) <> $LOW_FORM_CONTROL_TYPE_PATTERN_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oPatternField) <> $LOW_FORM_CON_TYPE_PATTERN_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sValue) Then
@@ -6990,18 +6990,18 @@ EndFunc   ;==>_LOWriter_FormConPosition
 ;                  $iDelay              - [optional] an integer value (0-2147483647). Default is Null. The delay between button repeats, set in milliseconds.
 ;                  $bTakeFocus          - [optional] a boolean value. Default is Null. If True, the button takes focus on clicking it.
 ;                  $bToggle             - [optional] a boolean value. Default is Null. If True, the button behaves like a toggle.
-;                  $iDefaultState       - [optional] an integer value (0-1). Default is Null. The Default state of the Option button. See Constants $LOW_FORM_CONTROL_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iDefaultState       - [optional] an integer value (0-1). Default is Null. The Default state of the Option button. See Constants $LOW_FORM_CON_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bWordBreak          - [optional] a boolean value. Default is Null. If True, line breaks are allowed to be used.
-;                  $iAction             - [optional] an integer value (0-12). Default is Null. The action that occurs when the button is pushed. See Constants $LOW_FORM_CONTROL_PUSH_CMD_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iAction             - [optional] an integer value (0-12). Default is Null. The action that occurs when the button is pushed. See Constants $LOW_FORM_CON_PUSH_CMD_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $sURL                - [optional] a string value. Default is Null. The URL or Document path to open.
 ;                  $sFrame              - [optional] a string value. Default is Null. The frame to open the URL in. See Constants, $LOW_FRAME_TARGET_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bDefault            - [optional] a boolean value. Default is Null. If True, this will be set as the Default button.
 ;                  $sGraphics           - [optional] a string value. Default is Null. The path to an Image file.
-;                  $iGraphicAlign       - [optional] an integer value (0-12). Default is Null. The Alignment of the Image. See Constants $LOW_FORM_CONTROL_IMG_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iGraphicAlign       - [optional] an integer value (0-12). Default is Null. The Alignment of the Image. See Constants $LOW_FORM_CON_IMG_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
 ;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
@@ -7023,19 +7023,19 @@ EndFunc   ;==>_LOWriter_FormConPosition
 ;                  @Error 1 @Extended 12 Return 0 = $iDelay not an Integer, less than 0 or greater than 2147483647.
 ;                  @Error 1 @Extended 13 Return 0 = $bTakeFocus not a Boolean.
 ;                  @Error 1 @Extended 14 Return 0 = $bToggle not a Boolean.
-;                  @Error 1 @Extended 15 Return 0 = $iDefaultState not an Integer, less than 0 or greater than 1. See Constants $LOW_FORM_CONTROL_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 15 Return 0 = $iDefaultState not an Integer, less than 0 or greater than 1. See Constants $LOW_FORM_CON_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 16 Return 0 = $mFont not a Map.
 ;                  @Error 1 @Extended 17 Return 0 = $iAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 18 Return 0 = $iVertAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 19 Return 0 = $iBackColor not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 20 Return 0 = $bWordBreak not a Boolean.
-;                  @Error 1 @Extended 21 Return 0 = $iAction not an Integer, less than 0 or greater than 12. See Constants $LOW_FORM_CONTROL_PUSH_CMD_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 21 Return 0 = $iAction not an Integer, less than 0 or greater than 12. See Constants $LOW_FORM_CON_PUSH_CMD_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 22 Return 0 = $sURL not a String.
 ;                  @Error 1 @Extended 23 Return 0 = $sFrame not a String.
 ;                  @Error 1 @Extended 24 Return 0 = $sFrame not called with correct constant. See Constants, $LOW_FRAME_TARGET_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 25 Return 0 = $bDefault not a Boolean.
 ;                  @Error 1 @Extended 26 Return 0 = $sGraphics not a String.
-;                  @Error 1 @Extended 27 Return 0 = $iGraphicAlign not an Integer, less than 0 or greater than 12. See Constants $LOW_FORM_CONTROL_IMG_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 27 Return 0 = $iGraphicAlign not an Integer, less than 0 or greater than 12. See Constants $LOW_FORM_CON_IMG_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 28 Return 0 = $sAddInfo not a String.
 ;                  @Error 1 @Extended 29 Return 0 = $sHelpText not a String.
 ;                  @Error 1 @Extended 30 Return 0 = $sHelpURL not a String.
@@ -7094,64 +7094,64 @@ Func _LOWriter_FormConPushButtonGeneral(ByRef $oPushButton, $sName = Null, $sLab
 
 	If Not IsObj($oPushButton) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oPushButton) <> $LOW_FORM_CONTROL_TYPE_PUSH_BUTTON) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oPushButton) <> $LOW_FORM_CON_TYPE_PUSH_BUTTON) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_NONE] = ""
-	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_SUBMIT_FORM] = ""
-	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_RESET_FORM] = ""
-	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_OPEN] = ""
-	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_FIRST_REC] = ".uno:FormController/moveToFirst"
-	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_LAST_REC] = ".uno:FormController/moveToLast"
-	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_NEXT_REC] = ".uno:FormController/moveToNext"
-	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_PREV_REC] = ".uno:FormController/moveToPrev"
-	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_SAVE_REC] = ".uno:FormController/saveRecord"
-	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_UNDO] = ".uno:FormController/undoRecord"
-	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_NEW_REC] = ".uno:FormController/moveToNew"
-	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_DELETE_REC] = ".uno:FormController/deleteRecord"
-	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_REFRESH_FORM] = ".uno:FormController/refreshForm"
+	$asActions[$LOW_FORM_CON_PUSH_CMD_NONE] = ""
+	$asActions[$LOW_FORM_CON_PUSH_CMD_SUBMIT_FORM] = ""
+	$asActions[$LOW_FORM_CON_PUSH_CMD_RESET_FORM] = ""
+	$asActions[$LOW_FORM_CON_PUSH_CMD_OPEN] = ""
+	$asActions[$LOW_FORM_CON_PUSH_CMD_FIRST_REC] = ".uno:FormController/moveToFirst"
+	$asActions[$LOW_FORM_CON_PUSH_CMD_LAST_REC] = ".uno:FormController/moveToLast"
+	$asActions[$LOW_FORM_CON_PUSH_CMD_NEXT_REC] = ".uno:FormController/moveToNext"
+	$asActions[$LOW_FORM_CON_PUSH_CMD_PREV_REC] = ".uno:FormController/moveToPrev"
+	$asActions[$LOW_FORM_CON_PUSH_CMD_SAVE_REC] = ".uno:FormController/saveRecord"
+	$asActions[$LOW_FORM_CON_PUSH_CMD_UNDO] = ".uno:FormController/undoRecord"
+	$asActions[$LOW_FORM_CON_PUSH_CMD_NEW_REC] = ".uno:FormController/moveToNew"
+	$asActions[$LOW_FORM_CON_PUSH_CMD_DELETE_REC] = ".uno:FormController/deleteRecord"
+	$asActions[$LOW_FORM_CON_PUSH_CMD_REFRESH_FORM] = ".uno:FormController/refreshForm"
 
 	Switch $oPushButton.Control.ButtonType()
 		Case $__LOW_PUSH_BTN_CMND_PUSH
-			$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_NONE
+			$iBtnAction = $LOW_FORM_CON_PUSH_CMD_NONE
 
 		Case $__LOW_PUSH_BTN_CMND_SUBMIT
-			$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_SUBMIT_FORM
+			$iBtnAction = $LOW_FORM_CON_PUSH_CMD_SUBMIT_FORM
 
 		Case $__LOW_PUSH_BTN_CMND_RESET
-			$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_RESET_FORM
+			$iBtnAction = $LOW_FORM_CON_PUSH_CMD_RESET_FORM
 
 		Case $__LOW_PUSH_BTN_CMND_URL
-			$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_OPEN
+			$iBtnAction = $LOW_FORM_CON_PUSH_CMD_OPEN
 
 			If StringInStr($oPushButton.Control.TargetURL(), ".uno:FormController/") Then
 				Switch $oPushButton.Control.TargetURL()
 					Case ".uno:FormController/moveToFirst"
-						$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_FIRST_REC
+						$iBtnAction = $LOW_FORM_CON_PUSH_CMD_FIRST_REC
 
 					Case ".uno:FormController/moveToLast"
-						$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_LAST_REC
+						$iBtnAction = $LOW_FORM_CON_PUSH_CMD_LAST_REC
 
 					Case ".uno:FormController/moveToNext"
-						$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_NEXT_REC
+						$iBtnAction = $LOW_FORM_CON_PUSH_CMD_NEXT_REC
 
 					Case ".uno:FormController/moveToPrev"
-						$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_PREV_REC
+						$iBtnAction = $LOW_FORM_CON_PUSH_CMD_PREV_REC
 
 					Case ".uno:FormController/saveRecord"
-						$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_SAVE_REC
+						$iBtnAction = $LOW_FORM_CON_PUSH_CMD_SAVE_REC
 
 					Case ".uno:FormController/undoRecord"
-						$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_UNDO
+						$iBtnAction = $LOW_FORM_CON_PUSH_CMD_UNDO
 
 					Case ".uno:FormController/moveToNew"
-						$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_NEW_REC
+						$iBtnAction = $LOW_FORM_CON_PUSH_CMD_NEW_REC
 
 					Case ".uno:FormController/deleteRecord"
-						$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_DELETE_REC
+						$iBtnAction = $LOW_FORM_CON_PUSH_CMD_DELETE_REC
 
 					Case ".uno:FormController/refreshForm"
-						$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_REFRESH_FORM
+						$iBtnAction = $LOW_FORM_CON_PUSH_CMD_REFRESH_FORM
 				EndSwitch
 			EndIf
 	EndSwitch
@@ -7281,7 +7281,7 @@ Func _LOWriter_FormConPushButtonGeneral(ByRef $oPushButton, $sName = Null, $sLab
 		$iError = BitOR($iError, 4096) ; Can't Default DefaultState.
 
 	ElseIf ($iDefaultState <> Null) Then
-		If Not __LOWriter_IntIsBetween($iDefaultState, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CONTROL_CHKBX_STATE_SELECTED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
+		If Not __LOWriter_IntIsBetween($iDefaultState, $LOW_FORM_CON_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CON_CHKBX_STATE_SELECTED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 		$oPushButton.Control.DefaultState = $iDefaultState
 		$iError = ($oPushButton.Control.DefaultState() = $iDefaultState) ? ($iError) : (BitOR($iError, 4096))
 	EndIf
@@ -7335,44 +7335,44 @@ Func _LOWriter_FormConPushButtonGeneral(ByRef $oPushButton, $sName = Null, $sLab
 		$oPushButton.Control.setPropertyToDefault("ButtonType")
 
 		Switch $iBtnAction
-			Case $LOW_FORM_CONTROL_PUSH_CMD_NONE, $LOW_FORM_CONTROL_PUSH_CMD_SUBMIT_FORM, $LOW_FORM_CONTROL_PUSH_CMD_RESET_FORM
+			Case $LOW_FORM_CON_PUSH_CMD_NONE, $LOW_FORM_CON_PUSH_CMD_SUBMIT_FORM, $LOW_FORM_CON_PUSH_CMD_RESET_FORM
 				$oPushButton.Control.setPropertyToDefault("TargetURL")
 
-			Case $LOW_FORM_CONTROL_PUSH_CMD_OPEN
+			Case $LOW_FORM_CON_PUSH_CMD_OPEN
 
-			Case $LOW_FORM_CONTROL_PUSH_CMD_FIRST_REC, $LOW_FORM_CONTROL_PUSH_CMD_LAST_REC, $LOW_FORM_CONTROL_PUSH_CMD_NEXT_REC, $LOW_FORM_CONTROL_PUSH_CMD_PREV_REC, _
-					$LOW_FORM_CONTROL_PUSH_CMD_SAVE_REC, $LOW_FORM_CONTROL_PUSH_CMD_UNDO, $LOW_FORM_CONTROL_PUSH_CMD_NEW_REC, $LOW_FORM_CONTROL_PUSH_CMD_DELETE_REC, _
-					$LOW_FORM_CONTROL_PUSH_CMD_REFRESH_FORM
+			Case $LOW_FORM_CON_PUSH_CMD_FIRST_REC, $LOW_FORM_CON_PUSH_CMD_LAST_REC, $LOW_FORM_CON_PUSH_CMD_NEXT_REC, $LOW_FORM_CON_PUSH_CMD_PREV_REC, _
+					$LOW_FORM_CON_PUSH_CMD_SAVE_REC, $LOW_FORM_CON_PUSH_CMD_UNDO, $LOW_FORM_CON_PUSH_CMD_NEW_REC, $LOW_FORM_CON_PUSH_CMD_DELETE_REC, _
+					$LOW_FORM_CON_PUSH_CMD_REFRESH_FORM
 				$oPushButton.Control.setPropertyToDefault("TargetURL")
 		EndSwitch
 
 	ElseIf ($iAction <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAction, $LOW_FORM_CONTROL_PUSH_CMD_NONE, $LOW_FORM_CONTROL_PUSH_CMD_REFRESH_FORM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
+		If Not __LOWriter_IntIsBetween($iAction, $LOW_FORM_CON_PUSH_CMD_NONE, $LOW_FORM_CON_PUSH_CMD_REFRESH_FORM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 
 		Switch $iAction
-			Case $LOW_FORM_CONTROL_PUSH_CMD_NONE
+			Case $LOW_FORM_CON_PUSH_CMD_NONE
 				$oPushButton.Control.ButtonType = $__LOW_PUSH_BTN_CMND_PUSH
 				$sURL = $asActions[$iAction]
 				$iError = (($oPushButton.Control.ButtonType() = $__LOW_PUSH_BTN_CMND_PUSH)) ? ($iError) : (BitOR($iError, 262144))
 
-			Case $LOW_FORM_CONTROL_PUSH_CMD_SUBMIT_FORM
+			Case $LOW_FORM_CON_PUSH_CMD_SUBMIT_FORM
 				$oPushButton.Control.ButtonType = $__LOW_PUSH_BTN_CMND_SUBMIT
 				$sURL = $asActions[$iAction]
 				$iError = (($oPushButton.Control.ButtonType() = $__LOW_PUSH_BTN_CMND_SUBMIT)) ? ($iError) : (BitOR($iError, 262144))
 
-			Case $LOW_FORM_CONTROL_PUSH_CMD_RESET_FORM
+			Case $LOW_FORM_CON_PUSH_CMD_RESET_FORM
 				$oPushButton.Control.ButtonType = $__LOW_PUSH_BTN_CMND_RESET
 				$sURL = $asActions[$iAction]
 				$iError = (($oPushButton.Control.ButtonType() = $__LOW_PUSH_BTN_CMND_RESET)) ? ($iError) : (BitOR($iError, 262144))
 
-			Case $LOW_FORM_CONTROL_PUSH_CMD_OPEN
+			Case $LOW_FORM_CON_PUSH_CMD_OPEN
 				$oPushButton.Control.ButtonType = $__LOW_PUSH_BTN_CMND_URL
-				If ($iBtnAction <> $LOW_FORM_CONTROL_PUSH_CMD_OPEN) And ($sURL = Null) Then $sURL = $asActions[$iAction]
+				If ($iBtnAction <> $LOW_FORM_CON_PUSH_CMD_OPEN) And ($sURL = Null) Then $sURL = $asActions[$iAction]
 				$iError = (($oPushButton.Control.ButtonType() = $__LOW_PUSH_BTN_CMND_URL)) ? ($iError) : (BitOR($iError, 262144))
 
-			Case $LOW_FORM_CONTROL_PUSH_CMD_FIRST_REC, $LOW_FORM_CONTROL_PUSH_CMD_LAST_REC, $LOW_FORM_CONTROL_PUSH_CMD_NEXT_REC, $LOW_FORM_CONTROL_PUSH_CMD_PREV_REC, _
-					$LOW_FORM_CONTROL_PUSH_CMD_SAVE_REC, $LOW_FORM_CONTROL_PUSH_CMD_UNDO, $LOW_FORM_CONTROL_PUSH_CMD_NEW_REC, $LOW_FORM_CONTROL_PUSH_CMD_DELETE_REC, _
-					$LOW_FORM_CONTROL_PUSH_CMD_REFRESH_FORM
+			Case $LOW_FORM_CON_PUSH_CMD_FIRST_REC, $LOW_FORM_CON_PUSH_CMD_LAST_REC, $LOW_FORM_CON_PUSH_CMD_NEXT_REC, $LOW_FORM_CON_PUSH_CMD_PREV_REC, _
+					$LOW_FORM_CON_PUSH_CMD_SAVE_REC, $LOW_FORM_CON_PUSH_CMD_UNDO, $LOW_FORM_CON_PUSH_CMD_NEW_REC, $LOW_FORM_CON_PUSH_CMD_DELETE_REC, _
+					$LOW_FORM_CON_PUSH_CMD_REFRESH_FORM
 				$oPushButton.Control.ButtonType = $__LOW_PUSH_BTN_CMND_URL
 				$sURL = $asActions[$iAction]
 				$iError = (($oPushButton.Control.ButtonType() = $__LOW_PUSH_BTN_CMND_URL)) ? ($iError) : (BitOR($iError, 262144))
@@ -7424,7 +7424,7 @@ Func _LOWriter_FormConPushButtonGeneral(ByRef $oPushButton, $sName = Null, $sLab
 		$oPushButton.Control.setPropertyToDefault("ImagePosition")
 
 	ElseIf ($iGraphicAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iGraphicAlign, $LOW_FORM_CONTROL_IMG_ALIGN_LEFT_TOP, $LOW_FORM_CONTROL_IMG_ALIGN_CENTERED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
+		If Not __LOWriter_IntIsBetween($iGraphicAlign, $LOW_FORM_CON_IMG_ALIGN_LEFT_TOP, $LOW_FORM_CON_IMG_ALIGN_CENTERED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
 		$oPushButton.Control.ImagePosition = $iGraphicAlign
 		$iError = ($oPushButton.Control.ImagePosition() = $iGraphicAlign) ? ($iError) : (BitOR($iError, 8388608))
 	EndIf
@@ -7464,13 +7464,13 @@ EndFunc   ;==>_LOWriter_FormConPushButtonGeneral
 ; Description ...: Set or Retrieve the current Push Button state.
 ; Syntax ........: _LOWriter_FormConPushButtonState(ByRef $oPushButton[, $iState = Null])
 ; Parameters ....: $oPushButton         - [in/out] an object. A Push Button Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
-;                  $iState              - [optional] an integer value (0-1). Default is Null. The state of the Push Button. See Constants $LOW_FORM_CONTROL_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iState              - [optional] an integer value (0-1). Default is Null. The state of the Push Button. See Constants $LOW_FORM_CON_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Integer
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oPushButton not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = Object called in $oPushButton not a Push Button Control.
-;                  @Error 1 @Extended 3 Return 0 = $iState not an Integer, less than 0 or greater than 1. See Constants $LOW_FORM_CONTROL_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $iState not an Integer, less than 0 or greater than 1. See Constants $LOW_FORM_CON_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve current control State.
@@ -7479,7 +7479,7 @@ EndFunc   ;==>_LOWriter_FormConPushButtonGeneral
 ;                  |                               1 = Error setting $iState
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current Push Button State as an integer, matching one of the constants $LOW_FORM_CONTROL_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current Push Button State as an integer, matching one of the constants $LOW_FORM_CON_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current Push Button state.
@@ -7498,7 +7498,7 @@ Func _LOWriter_FormConPushButtonState(ByRef $oPushButton, $iState = Null)
 
 	If Not IsObj($oPushButton) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oPushButton) <> $LOW_FORM_CONTROL_TYPE_PUSH_BUTTON) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oPushButton) <> $LOW_FORM_CON_TYPE_PUSH_BUTTON) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iState) Then
@@ -7512,7 +7512,7 @@ Func _LOWriter_FormConPushButtonState(ByRef $oPushButton, $iState = Null)
 		$oPushButton.Control.setPropertyToDefault("State")
 
 	Else
-		If Not __LOWriter_IntIsBetween($iState, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_DEFINED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		If Not __LOWriter_IntIsBetween($iState, $LOW_FORM_CON_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CON_CHKBX_STATE_NOT_DEFINED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oPushButton.Control.State = $iState
 		$iError = ($oPushButton.Control.State() = $iState) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -7523,14 +7523,14 @@ EndFunc   ;==>_LOWriter_FormConPushButtonState
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FormConsGetList
 ; Description ...: Retrieve an array of Control Objects contained in a Document or a Form.
-; Syntax ........: _LOWriter_FormConsGetList(ByRef $oObj[, $iType = $LOW_FORM_CONTROL_TYPE_ALL])
+; Syntax ........: _LOWriter_FormConsGetList(ByRef $oObj[, $iType = $LOW_FORM_CON_TYPE_ALL])
 ; Parameters ....: $oObj                - [in/out] an object. Either a Document Object or a Form object, or a Grouped Control. See Remarks. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function, or a Form Object returned from a previous _LOWriter_FormsGetList, or _LOWriter_FormAdd function. Also a Grouped Control or Group Box returned from a _LOWriter_FormConsGetList function.
-;                  $iType               - [optional] an integer value (1-1048575). Default is $LOW_FORM_CONTROL_TYPE_ALL. The type of control(s) to return in the array. Can be BitOr's together. See Constants $LOW_FORM_CONTROL_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iType               - [optional] an integer value (1-1048575). Default is $LOW_FORM_CON_TYPE_ALL. The type of control(s) to return in the array. Can be BitOr's together. See Constants $LOW_FORM_CON_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oObj not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iType not an Integer, less than 1, or greater than 1048575. See Constants $LOW_FORM_CONTROL_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 2 Return 0 = $iType not an Integer, less than 1, or greater than 1048575. See Constants $LOW_FORM_CON_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 3 Return 0 = Called Object in $oObj, not a Document Object, not a Form Object, and not a Grouped Control.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to identify parent document of Form.
@@ -7539,7 +7539,7 @@ EndFunc   ;==>_LOWriter_FormConPushButtonState
 ;                  @Error 3 @Extended 4 Return 0 = Failed to identify Control type.
 ;                  @Error 3 @Extended 5 Return 0 = Failed to retrieve Control Object.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return Array = Success. Returning a 2D array of Control Objects in the first column, and the type of Control in the second column, corresponding to the Constants $LOW_FORM_CONTROL_* as defined in LibreOfficeWriter_Constants.au3
+;                  @Error 0 @Extended ? Return Array = Success. Returning a 2D array of Control Objects in the first column, and the type of Control in the second column, corresponding to the Constants $LOW_FORM_CON_* as defined in LibreOfficeWriter_Constants.au3
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If a Document object is called in $oObj, all the controls are returned (except controls in a Grouped Control). If a Form Object is called in $oObj, only the controls contained in the Form are returned. And if a Grouped control is called, only controls in the group are returned.
@@ -7549,7 +7549,7 @@ EndFunc   ;==>_LOWriter_FormConPushButtonState
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormConsGetList(ByRef $oObj, $iType = $LOW_FORM_CONTROL_TYPE_ALL)
+Func _LOWriter_FormConsGetList(ByRef $oObj, $iType = $LOW_FORM_CON_TYPE_ALL)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -7558,7 +7558,7 @@ Func _LOWriter_FormConsGetList(ByRef $oObj, $iType = $LOW_FORM_CONTROL_TYPE_ALL)
 	Local $iCount = 0, $iControlType
 
 	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_IntIsBetween($iType, $LOW_FORM_CONTROL_TYPE_CHECK_BOX, $LOW_FORM_CONTROL_TYPE_ALL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_IntIsBetween($iType, $LOW_FORM_CON_TYPE_CHECK_BOX, $LOW_FORM_CON_TYPE_ALL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If $oObj.supportsService("com.sun.star.form.component.Form") Then ; Get only controls in the form.
 
@@ -7591,7 +7591,7 @@ Func _LOWriter_FormConsGetList(ByRef $oObj, $iType = $LOW_FORM_CONTROL_TYPE_ALL)
 				$iControlType = __LOWriter_FormConIdentify($oShape)
 				If BitAND($iType, $iControlType) Then
 					$aoControls[$iCount][0] = $oShape
-					$aoControls[$iCount][1] = $LOW_FORM_CONTROL_TYPE_GROUPED_CONTROL
+					$aoControls[$iCount][1] = $LOW_FORM_CON_TYPE_GROUPED_CONTROL
 
 					$iCount += 1
 				EndIf
@@ -7746,7 +7746,7 @@ EndFunc   ;==>_LOWriter_FormConSize
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $nRowHeight          - [optional] a general number value (-21474836.48-21474836.48). Default is Null. The Row height, set in Micrometers.
 ;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bNavBar             - [optional] a boolean value. Default is Null. If True, the Navigation Bar is displayed on the lower border of the Table control.
 ;                  $bRecordMarker       - [optional] a boolean value. Default is Null. If True, a record marker is displayed.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
@@ -7767,7 +7767,7 @@ EndFunc   ;==>_LOWriter_FormConSize
 ;                  @Error 1 @Extended 10 Return 0 = $mFont not a Map.
 ;                  @Error 1 @Extended 11 Return 0 = $nRowHeight not a Number, less than -21474836.48 or greater than 21474836.48.
 ;                  @Error 1 @Extended 12 Return 0 = $iBackColor not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 13 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 13 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 14 Return 0 = $bNavBar not a Boolean.
 ;                  @Error 1 @Extended 15 Return 0 = $bRecordMarker not a Boolean.
 ;                  @Error 1 @Extended 16 Return 0 = $sAddInfo not a String.
@@ -7816,7 +7816,7 @@ Func _LOWriter_FormConTableConGeneral(ByRef $oTableCon, $sName = Null, $iTxtDir 
 
 	If Not IsObj($oTableCon) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oTableCon) <> $LOW_FORM_CONTROL_TYPE_TABLE_CONTROL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oTableCon) <> $LOW_FORM_CON_TYPE_TABLE_CONTROL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $iTxtDir, $bEnabled, $bVisible, $bPrintable, $bTabStop, $iTabOrder, $mFont, $nRowHeight, $iBackColor, $iBorder, $bNavBar, $bRecordMarker, $sAddInfo, $sHelpText, $sHelpURL) Then
@@ -7923,7 +7923,7 @@ Func _LOWriter_FormConTableConGeneral(ByRef $oTableCon, $sName = Null, $iTxtDir 
 		$oTableCon.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 		$oTableCon.Control.Border = $iBorder
 		$iError = ($oTableCon.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 1024))
 	EndIf
@@ -8007,7 +8007,7 @@ Func _LOWriter_FormConTextBoxCreateTextCursor(ByRef $oTextBox)
 
 	If Not IsObj($oTextBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oTextBox) <> $LOW_FORM_CONTROL_TYPE_TEXT_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oTextBox) <> $LOW_FORM_CON_TYPE_TEXT_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oCursor = $oTextBox.Control.createTextCursor()
@@ -8063,7 +8063,7 @@ Func _LOWriter_FormConTextBoxData(ByRef $oTextBox, $sDataField = Null, $bEmptyIs
 
 	If Not IsObj($oTextBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oTextBox) <> $LOW_FORM_CONTROL_TYPE_TEXT_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oTextBox) <> $LOW_FORM_CON_TYPE_TEXT_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $bFilter) Then
@@ -8120,11 +8120,11 @@ EndFunc   ;==>_LOWriter_FormConTextBoxData
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iTextType           - [optional] an integer value (0-2). Default is Null. The text type. See Constants $LOW_FORM_CONTROL_TXT_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iTextType           - [optional] an integer value (0-2). Default is Null. The text type. See Constants $LOW_FORM_CON_TXT_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bEndWithLF          - [optional] a boolean value. Default is Null. If True, the line ends will be a Line-Feed type, else a Carriage-Return plus a Line-Feed.
-;                  $iScrollbars         - [optional] an integer value (0-3). Default is Null. The Scrollbars to use, if any. See Constants $LOW_FORM_CONTROL_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iScrollbars         - [optional] an integer value (0-3). Default is Null. The Scrollbars to use, if any. See Constants $LOW_FORM_CON_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iPassChar           - [optional] an integer value. Default is Null. The ASCII value of the Password character to display.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
@@ -8151,11 +8151,11 @@ EndFunc   ;==>_LOWriter_FormConTextBoxData
 ;                  @Error 1 @Extended 16 Return 0 = $iAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 17 Return 0 = $iVertAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 18 Return 0 = $iBackColor not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 19 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 19 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 20 Return 0 = $iBorderColor not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 21 Return 0 = $iTextType not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 21 Return 0 = $iTextType not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 22 Return 0 = $bEndWithLF not a Boolean.
-;                  @Error 1 @Extended 23 Return 0 = $iScrollbars not an Integer, less than 0 or greater than 3. See Constants $LOW_FORM_CONTROL_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 23 Return 0 = $iScrollbars not an Integer, less than 0 or greater than 3. See Constants $LOW_FORM_CON_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 24 Return 0 = $iPassChar not an Integer.
 ;                  @Error 1 @Extended 25 Return 0 = $bHideSel not a Boolean.
 ;                  @Error 1 @Extended 26 Return 0 = $sAddInfo not a String.
@@ -8214,19 +8214,19 @@ Func _LOWriter_FormConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabelFiel
 
 	If Not IsObj($oTextBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oTextBox) <> $LOW_FORM_CONTROL_TYPE_TEXT_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oTextBox) <> $LOW_FORM_CON_TYPE_TEXT_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $iMaxLen, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $bTabStop, $iTabOrder, $sDefaultTxt, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $iTextType, $bEndWithLF, $iScrollbars, $iPassChar, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oTextBox.Control.Name(), __LOWriter_FormConGetObj($oTextBox.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oTextBox.Control.WritingMode(), $oTextBox.Control.MaxTextLen(), _
+		__LOWriter_ArrayFill($avControl, $oTextBox.Control.Name(), __LOWriter_FormConGetObj($oTextBox.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oTextBox.Control.WritingMode(), $oTextBox.Control.MaxTextLen(), _
 				$oTextBox.Control.Enabled(), $oTextBox.Control.EnableVisible(), $oTextBox.Control.ReadOnly(), $oTextBox.Control.Printable(), $oTextBox.Control.Tabstop(), _
 				$oTextBox.Control.TabIndex(), $oTextBox.Control.DefaultText(), __LOWriter_FormConSetGetFontDesc($oTextBox), $oTextBox.Control.Align(), $oTextBox.Control.VerticalAlign(), _
 				$oTextBox.Control.BackgroundColor(), $oTextBox.Control.Border(), $oTextBox.Control.BorderColor(), _
-				((($oTextBox.Control.MultiLine() = False) And ($oTextBox.Control.RichText() = False)) ? ($LOW_FORM_CONTROL_TXT_TYPE_SINGLE_LINE) : (($oTextBox.Control.MultiLine() = True) And ($oTextBox.Control.RichText() = False)) ? ($LOW_FORM_CONTROL_TXT_TYPE_MULTI_LINE) : ($LOW_FORM_CONTROL_TXT_TYPE_MULTI_LINE_FORMATTED)), _ ; TextType setting.
+				((($oTextBox.Control.MultiLine() = False) And ($oTextBox.Control.RichText() = False)) ? ($LOW_FORM_CON_TXT_TYPE_SINGLE_LINE) : (($oTextBox.Control.MultiLine() = True) And ($oTextBox.Control.RichText() = False)) ? ($LOW_FORM_CON_TXT_TYPE_MULTI_LINE) : ($LOW_FORM_CON_TXT_TYPE_MULTI_LINE_FORMATTED)), _ ; TextType setting.
 				(($oTextBox.Control.LineEndFormat() = $__LOW_FORM_CONTROL_LINE_END_LF) ? (True) : (False)), _ ; Line Ending format
-				((($oTextBox.Control.HScroll() = False) And ($oTextBox.Control.VScroll() = False)) ? ($LOW_FORM_CONTROL_SCROLL_NONE) : _ ; Scrollbar mode.
-				(($oTextBox.Control.HScroll() = True) And ($oTextBox.Control.VScroll() = False)) ? ($LOW_FORM_CONTROL_SCROLL_HORI) : _ ; Scrollbar mode.
-				((($oTextBox.Control.HScroll() = False) And ($oTextBox.Control.VScroll() = True)) ? ($LOW_FORM_CONTROL_SCROLL_VERT) : ($LOW_FORM_CONTROL_SCROLL_BOTH))), _ ; Scrollbar mode.
+				((($oTextBox.Control.HScroll() = False) And ($oTextBox.Control.VScroll() = False)) ? ($LOW_FORM_CON_SCROLL_NONE) : _ ; Scrollbar mode.
+				(($oTextBox.Control.HScroll() = True) And ($oTextBox.Control.VScroll() = False)) ? ($LOW_FORM_CON_SCROLL_HORI) : _ ; Scrollbar mode.
+				((($oTextBox.Control.HScroll() = False) And ($oTextBox.Control.VScroll() = True)) ? ($LOW_FORM_CON_SCROLL_VERT) : ($LOW_FORM_CON_SCROLL_BOTH))), _ ; Scrollbar mode.
 				$oTextBox.Control.EchoChar(), $oTextBox.Control.HideInactiveSelection(), $oTextBox.Control.Tag(), $oTextBox.Control.HelpText(), $oTextBox.Control.HelpURL())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
@@ -8247,7 +8247,7 @@ Func _LOWriter_FormConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabelFiel
 
 	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CON_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oTextBox.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oTextBox.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -8373,7 +8373,7 @@ Func _LOWriter_FormConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabelFiel
 		$oTextBox.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
+		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 		$oTextBox.Control.Border = $iBorder
 		$iError = ($oTextBox.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 32768))
 	EndIf
@@ -8392,22 +8392,22 @@ Func _LOWriter_FormConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabelFiel
 		$oTextBox.Control.setPropertyToDefault("RichText")
 
 	ElseIf ($iTextType <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTextType, $LOW_FORM_CONTROL_TXT_TYPE_SINGLE_LINE, $LOW_FORM_CONTROL_TXT_TYPE_MULTI_LINE_FORMATTED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
+		If Not __LOWriter_IntIsBetween($iTextType, $LOW_FORM_CON_TXT_TYPE_SINGLE_LINE, $LOW_FORM_CON_TXT_TYPE_MULTI_LINE_FORMATTED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 
 		Switch $iTextType
-			Case $LOW_FORM_CONTROL_TXT_TYPE_SINGLE_LINE
+			Case $LOW_FORM_CON_TXT_TYPE_SINGLE_LINE
 				$oTextBox.Control.MultiLine = False
 				$oTextBox.Control.RichText = False
 
 				$iError = (($oTextBox.Control.MultiLine = False) And ($oTextBox.Control.RichText = False)) ? ($iError) : (BitOR($iError, 131072))
 
-			Case $LOW_FORM_CONTROL_TXT_TYPE_MULTI_LINE
+			Case $LOW_FORM_CON_TXT_TYPE_MULTI_LINE
 				$oTextBox.Control.MultiLine = True
 				$oTextBox.Control.RichText = False
 
 				$iError = (($oTextBox.Control.MultiLine = True) And ($oTextBox.Control.RichText = False)) ? ($iError) : (BitOR($iError, 131072))
 
-			Case $LOW_FORM_CONTROL_TXT_TYPE_MULTI_LINE_FORMATTED
+			Case $LOW_FORM_CON_TXT_TYPE_MULTI_LINE_FORMATTED
 				$oTextBox.Control.MultiLine = True
 				$oTextBox.Control.RichText = True
 
@@ -8436,25 +8436,25 @@ Func _LOWriter_FormConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabelFiel
 		$oTextBox.Control.setPropertyToDefault("VScroll")
 
 	ElseIf ($iScrollbars <> Null) Then
-		If Not __LOWriter_IntIsBetween($iScrollbars, $LOW_FORM_CONTROL_SCROLL_NONE, $LOW_FORM_CONTROL_SCROLL_BOTH) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
+		If Not __LOWriter_IntIsBetween($iScrollbars, $LOW_FORM_CON_SCROLL_NONE, $LOW_FORM_CON_SCROLL_BOTH) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
 
 		Switch $iScrollbars
-			Case $LOW_FORM_CONTROL_SCROLL_NONE
+			Case $LOW_FORM_CON_SCROLL_NONE
 				$oTextBox.Control.HScroll = False
 				$oTextBox.Control.VScroll = False
 				$iError = (($oTextBox.Control.HScroll = False) And ($oTextBox.Control.VScroll = False)) ? ($iError) : (BitOR($iError, 524288))
 
-			Case $LOW_FORM_CONTROL_SCROLL_HORI
+			Case $LOW_FORM_CON_SCROLL_HORI
 				$oTextBox.Control.HScroll = True
 				$oTextBox.Control.VScroll = False
 				$iError = (($oTextBox.Control.HScroll = True) And ($oTextBox.Control.VScroll = False)) ? ($iError) : (BitOR($iError, 524288))
 
-			Case $LOW_FORM_CONTROL_SCROLL_VERT
+			Case $LOW_FORM_CON_SCROLL_VERT
 				$oTextBox.Control.HScroll = False
 				$oTextBox.Control.VScroll = True
 				$iError = (($oTextBox.Control.HScroll = False) And ($oTextBox.Control.VScroll = True)) ? ($iError) : (BitOR($iError, 524288))
 
-			Case $LOW_FORM_CONTROL_SCROLL_BOTH
+			Case $LOW_FORM_CON_SCROLL_BOTH
 				$oTextBox.Control.HScroll = True
 				$oTextBox.Control.VScroll = True
 				$iError = (($oTextBox.Control.HScroll = True) And ($oTextBox.Control.VScroll = True)) ? ($iError) : (BitOR($iError, 524288))
@@ -8550,7 +8550,7 @@ Func _LOWriter_FormConTimeFieldData(ByRef $oTimeField, $sDataField = Null, $bInp
 
 	If Not IsObj($oTimeField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oTimeField) <> $LOW_FORM_CONTROL_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oTimeField) <> $LOW_FORM_CON_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
@@ -8587,12 +8587,12 @@ EndFunc   ;==>_LOWriter_FormConTimeFieldData
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the control is visible.
 ;                  $bReadOnly           - [optional] a boolean value. Default is Null. If True, the control is Read-Only.
 ;                  $bPrintable          - [optional] a boolean value. Default is Null. If True, the control will be displayed when printed.
-;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CONTROL_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bTabStop            - [optional] a boolean value. Default is Null. If True, the control can be selected with the Tab key.
 ;                  $iTabOrder           - [optional] an integer value (0-2147483647). Default is Null. The order the control is focused by the Tab key.
 ;                  $tTimeMin            - [optional] a dll struct value. Default is Null. The minimum time	 allowed to be entered, created previously by _LOWriter_DateStructCreate.
 ;                  $tTimeMax            - [optional] a dll struct value. Default is Null. The maximum time	 allowed to be entered, created previously by _LOWriter_DateStructCreate.
-;                  $iFormat             - [optional] an integer value (0-5). Default is Null. The Time Format to display the content in. See Constants $LOW_FORM_CONTROL_TIME_FRMT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iFormat             - [optional] an integer value (0-5). Default is Null. The Time Format to display the content in. See Constants $LOW_FORM_CON_TIME_FRMT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $tTimeDefault        - [optional] a dll struct value. Default is Null. The Default time to display, created previously by _LOWriter_DateStructCreate.
 ;                  $bSpin               - [optional] a boolean value. Default is Null. If True, the field will act as a spin button.
 ;                  $bRepeat             - [optional] a boolean value. Default is Null. If True, the button action will repeat if the button is clicked and held down.
@@ -8601,7 +8601,7 @@ EndFunc   ;==>_LOWriter_FormConTimeFieldData
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
@@ -8621,12 +8621,12 @@ EndFunc   ;==>_LOWriter_FormConTimeFieldData
 ;                  @Error 1 @Extended 9 Return 0 = $bVisible not a Boolean.
 ;                  @Error 1 @Extended 10 Return 0 = $bReadOnly not a Boolean.
 ;                  @Error 1 @Extended 11 Return 0 = $bPrintable not a Boolean.
-;                  @Error 1 @Extended 12 Return 0 = $iMouseScroll not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 12 Return 0 = $iMouseScroll not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 13 Return 0 = $bTabStop not a Boolean.
 ;                  @Error 1 @Extended 14 Return 0 = $iTabOrder not an Integer, less than 0 or greater than 2147483647.
 ;                  @Error 1 @Extended 15 Return 0 = $tTimeMin not an Object.
 ;                  @Error 1 @Extended 16 Return 0 = $tTimeMax not an Object.
-;                  @Error 1 @Extended 17 Return 0 = $iFormat not an Integer, less than 0 or greater than 5. See Constants $LOW_FORM_CONTROL_TIME_FRMT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 17 Return 0 = $iFormat not an Integer, less than 0 or greater than 5. See Constants $LOW_FORM_CON_TIME_FRMT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 18 Return 0 = $tTimeDefault not an Object.
 ;                  @Error 1 @Extended 19 Return 0 = $bSpin not a Boolean.
 ;                  @Error 1 @Extended 20 Return 0 = $bRepeat not a Boolean.
@@ -8635,7 +8635,7 @@ EndFunc   ;==>_LOWriter_FormConTimeFieldData
 ;                  @Error 1 @Extended 23 Return 0 = $iAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 24 Return 0 = $iVertAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 25 Return 0 = $iBackColor not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 26 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CONTROL_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 26 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 27 Return 0 = $iBorderColor not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 28 Return 0 = $bHideSel not a Boolean.
 ;                  @Error 1 @Extended 29 Return 0 = $sAddInfo not a String.
@@ -8701,7 +8701,7 @@ Func _LOWriter_FormConTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oLabel
 
 	If Not IsObj($oTimeField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oTimeField) <> $LOW_FORM_CONTROL_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oTimeField) <> $LOW_FORM_CON_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $bStrict, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $tTimeMin, $tTimeMax, $iFormat, $tTimeDefault, $bSpin, $bRepeat, $iDelay, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
@@ -8744,7 +8744,7 @@ Func _LOWriter_FormConTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oLabel
 			$tCurDefault = $tTime
 		EndIf
 
-		__LOWriter_ArrayFill($avControl, $oTimeField.Control.Name(), __LOWriter_FormConGetObj($oTimeField.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oTimeField.Control.WritingMode(), $oTimeField.Control.StrictFormat(), _
+		__LOWriter_ArrayFill($avControl, $oTimeField.Control.Name(), __LOWriter_FormConGetObj($oTimeField.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oTimeField.Control.WritingMode(), $oTimeField.Control.StrictFormat(), _
 				$oTimeField.Control.Enabled(), $oTimeField.Control.EnableVisible(), $oTimeField.Control.ReadOnly(), $oTimeField.Control.Printable(), $oTimeField.Control.MouseWheelBehavior(), _
 				$oTimeField.Control.Tabstop(), $oTimeField.Control.TabIndex(), $tCurMin, $tCurMax, $oTimeField.Control.TimeFormat(), $tCurDefault, $oTimeField.Control.Spin(), _
 				$oTimeField.Control.Repeat(), $oTimeField.Control.RepeatDelay(), __LOWriter_FormConSetGetFontDesc($oTimeField), $oTimeField.Control.Align(), $oTimeField.Control.VerticalAlign(), _
@@ -8769,7 +8769,7 @@ Func _LOWriter_FormConTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oLabel
 
 	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If (__LOWriter_FormConIdentify($oLabelField) <> $LOW_FORM_CON_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oTimeField.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oTimeField.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -8832,7 +8832,7 @@ Func _LOWriter_FormConTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oLabel
 		$oTimeField.Control.setPropertyToDefault("MouseWheelBehavior")
 
 	ElseIf ($iMouseScroll <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CONTROL_MOUSE_SCROLL_DISABLED, $LOW_FORM_CONTROL_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$oTimeField.Control.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oTimeField.Control.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 256))
 	EndIf
@@ -8897,7 +8897,7 @@ Func _LOWriter_FormConTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oLabel
 		$oTimeField.Control.setPropertyToDefault("TimeFormat")
 
 	ElseIf ($iFormat <> Null) Then
-		If Not __LOWriter_IntIsBetween($iFormat, $LOW_FORM_CONTROL_TIME_FRMT_24_SHORT, $LOW_FORM_CONTROL_TIME_FRMT_DURATION_LONG) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+		If Not __LOWriter_IntIsBetween($iFormat, $LOW_FORM_CON_TIME_FRMT_24_SHORT, $LOW_FORM_CON_TIME_FRMT_DURATION_LONG) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 		$oTimeField.Control.TimeFormat = $iFormat
 		$iError = ($oTimeField.Control.TimeFormat() = $iFormat) ? ($iError) : (BitOR($iError, 8192))
 	EndIf
@@ -8988,7 +8988,7 @@ Func _LOWriter_FormConTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oLabel
 		$oTimeField.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
+		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
 		$oTimeField.Control.Border = $iBorder
 		$iError = ($oTimeField.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 4194304))
 	EndIf
@@ -9081,7 +9081,7 @@ Func _LOWriter_FormConTimeFieldValue(ByRef $oTimeField, $tTimeValue = Null)
 
 	If Not IsObj($oTimeField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If (__LOWriter_FormConIdentify($oTimeField) <> $LOW_FORM_CONTROL_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_FormConIdentify($oTimeField) <> $LOW_FORM_CON_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($tTimeValue) Then

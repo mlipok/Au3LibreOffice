@@ -18,11 +18,11 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to Create a form in the Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a Form Control
-	$oControl = _LOWriter_FormConInsert($oForm, $LOW_FORM_CONTROL_TYPE_DATE_FIELD, 500, 300, 6000, 2000, "AutoIt_Form_Control")
+	$oControl = _LOWriter_FormConInsert($oForm, $LOW_FORM_CON_TYPE_DATE_FIELD, 500, 300, 6000, 2000, "AutoIt_Form_Control")
 	If @error Then _ERROR($oDoc, "Failed to insert a form control. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a Label Form Control
-	$oLabel = _LOWriter_FormConInsert($oForm, $LOW_FORM_CONTROL_TYPE_LABEL, 3500, 2300, 3000, 1000, "AutoIt_Form_Label_Control")
+	$oLabel = _LOWriter_FormConInsert($oForm, $LOW_FORM_CON_TYPE_LABEL, 3500, 2300, 3000, 1000, "AutoIt_Form_Label_Control")
 	If @error Then _ERROR($oDoc, "Failed to insert a form control. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a Font Descriptor.
@@ -42,7 +42,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to create a Date Structure. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Modify the Control's General properties.
-	_LOWriter_FormConDateFieldGeneral($oControl, "Renamed_AutoIt_Control", $oLabel, Null, True, True, True, False, True, $LOW_FORM_CONTROL_MOUSE_SCROLL_FOCUS, True, 1, $tDateMin, $tDateMax, $LOW_FORM_CONTROL_DATE_FRMT_SHORT_YYYYMMDD, $tDateDefault, True, True, 50, $mFont, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_VERT_MIDDLE, $LOW_COLOR_GREEN, $LOW_FORM_CONTROL_BORDER_FLAT, $LOW_COLOR_GOLD, True, False, "Some Additional Information", "This is Help Text", "www.HelpURL.fake")
+	_LOWriter_FormConDateFieldGeneral($oControl, "Renamed_AutoIt_Control", $oLabel, Null, True, True, True, False, True, $LOW_FORM_CON_MOUSE_SCROLL_FOCUS, True, 1, $tDateMin, $tDateMax, $LOW_FORM_CON_DATE_FRMT_SHORT_YYYYMMDD, $tDateDefault, True, True, 50, $mFont, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_VERT_MIDDLE, $LOW_COLOR_GREEN, $LOW_FORM_CON_BORDER_FLAT, $LOW_COLOR_GOLD, True, False, "Some Additional Information", "This is Help Text", "www.HelpURL.fake")
 	If @error Then _ERROR($oDoc, "Failed to modify the Control's properties. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings for the control. Return will be an Array in order of function parameters.

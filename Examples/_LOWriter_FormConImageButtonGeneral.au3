@@ -16,11 +16,11 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to Create a form in the Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a Form Control
-	$oControl = _LOWriter_FormConInsert($oForm, $LOW_FORM_CONTROL_TYPE_IMAGE_BUTTON, 500, 300, 6000, 2000, "AutoIt_Form_Control")
+	$oControl = _LOWriter_FormConInsert($oForm, $LOW_FORM_CON_TYPE_IMAGE_BUTTON, 500, 300, 6000, 2000, "AutoIt_Form_Control")
 	If @error Then _ERROR($oDoc, "Failed to insert a form control. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Modify the Control's General properties.
-	_LOWriter_FormConImageButtonGeneral($oControl, "Renamed_AutoIt_Control", Null, True, True, False, True, 1, $LOW_COLOR_BLUE, $LOW_FORM_CONTROL_BORDER_FLAT, $LOW_COLOR_GREEN, $LOW_FORM_CONTROL_PUSH_CMD_OPEN, "https://www.autoitscript.com/site/autoit/", $LOW_FRAME_TARGET_TOP, @ScriptDir & "\Extras\Plain.png", $LOW_FORM_CONTROL_IMG_BTN_SCALE_FIT, "Some Additional Information", "This is Help Text", "www.HelpURL.fake")
+	_LOWriter_FormConImageButtonGeneral($oControl, "Renamed_AutoIt_Control", Null, True, True, False, True, 1, $LOW_COLOR_BLUE, $LOW_FORM_CON_BORDER_FLAT, $LOW_COLOR_GREEN, $LOW_FORM_CON_PUSH_CMD_OPEN, "https://www.autoitscript.com/site/autoit/", $LOW_FRAME_TARGET_TOP, @ScriptDir & "\Extras\Plain.png", $LOW_FORM_CON_IMG_BTN_SCALE_FIT, "Some Additional Information", "This is Help Text", "www.HelpURL.fake")
 	If @error Then _ERROR($oDoc, "Failed to modify the Control's properties. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings for the control. Return will be an Array in order of function parameters.

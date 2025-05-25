@@ -17,11 +17,11 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to Create a form in the Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a Form Control
-	$oControl = _LOWriter_FormConInsert($oForm, $LOW_FORM_CONTROL_TYPE_CURRENCY_FIELD, 500, 300, 6000, 2000, "AutoIt_Form_Control")
+	$oControl = _LOWriter_FormConInsert($oForm, $LOW_FORM_CON_TYPE_CURRENCY_FIELD, 500, 300, 6000, 2000, "AutoIt_Form_Control")
 	If @error Then _ERROR($oDoc, "Failed to insert a form control. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a Label Form Control
-	$oLabel = _LOWriter_FormConInsert($oForm, $LOW_FORM_CONTROL_TYPE_LABEL, 3500, 2300, 3000, 1000, "AutoIt_Form_Label_Control")
+	$oLabel = _LOWriter_FormConInsert($oForm, $LOW_FORM_CON_TYPE_LABEL, 3500, 2300, 3000, 1000, "AutoIt_Form_Label_Control")
 	If @error Then _ERROR($oDoc, "Failed to insert a form control. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a Font Descriptor.
@@ -29,9 +29,9 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to create a Font Descriptor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Modify the Control's General properties.
-	_LOWriter_FormConCurrencyFieldGeneral($oControl, "Renamed_AutoIt_Control", $oLabel, Null, True, True, True, True, True, $LOW_FORM_CONTROL_MOUSE_SCROLL_FOCUS, True, 1, _
+	_LOWriter_FormConCurrencyFieldGeneral($oControl, "Renamed_AutoIt_Control", $oLabel, Null, True, True, True, True, True, $LOW_FORM_CON_MOUSE_SCROLL_FOCUS, True, 1, _
 			12.50, 100.75, 1, 13.50, 2, False, "$", True, True, False, Null, $mFont, $LOW_ALIGN_HORI_RIGHT, $LOW_ALIGN_VERT_TOP, $LOW_COLOR_GREEN, _
-			$LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_COLOR_GOLD, True, "Some Additional Information", "This is Help Text", "www.HelpURL.fake")
+			$LOW_FORM_CON_BORDER_WITHOUT, $LOW_COLOR_GOLD, True, "Some Additional Information", "This is Help Text", "www.HelpURL.fake")
 	If @error Then _ERROR($oDoc, "Failed to modify the Control's properties. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings for the control. Return will be an Array in order of function parameters.

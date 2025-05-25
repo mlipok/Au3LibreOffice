@@ -17,15 +17,15 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to Create a form in the Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a Form Control
-	_LOWriter_FormConInsert($oForm, $LOW_FORM_CONTROL_TYPE_TEXT_BOX, 500, 300, 2000, 3000, "AutoIt_Form_Control")
+	_LOWriter_FormConInsert($oForm, $LOW_FORM_CON_TYPE_TEXT_BOX, 500, 300, 2000, 3000, "AutoIt_Form_Control")
 	If @error Then _ERROR($oDoc, "Failed to insert a form control. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a Form Control
-	_LOWriter_FormConInsert($oForm, $LOW_FORM_CONTROL_TYPE_PUSH_BUTTON, 2500, 1300, 2000, 1000, "AutoIt_Form_Control1")
+	_LOWriter_FormConInsert($oForm, $LOW_FORM_CON_TYPE_PUSH_BUTTON, 2500, 1300, 2000, 1000, "AutoIt_Form_Control1")
 	If @error Then _ERROR($oDoc, "Failed to insert a form control. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a Form Control
-	_LOWriter_FormConInsert($oForm, $LOW_FORM_CONTROL_TYPE_FILE_SELECTION, 1500, 4300, 4000, 2000, "AutoIt_Form_Control2")
+	_LOWriter_FormConInsert($oForm, $LOW_FORM_CON_TYPE_FILE_SELECTION, 1500, 4300, 4000, 2000, "AutoIt_Form_Control2")
 	If @error Then _ERROR($oDoc, "Failed to insert a form control. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve an array of controls.
@@ -43,7 +43,7 @@ Func Example()
 	Next
 
 	; Retrieve an array of controls, but only Text Boxes and Push buttons.
-	$avControls = _LOWriter_FormConsGetList($oForm, BitOR($LOW_FORM_CONTROL_TYPE_PUSH_BUTTON, $LOW_FORM_CONTROL_TYPE_TEXT_BOX))
+	$avControls = _LOWriter_FormConsGetList($oForm, BitOR($LOW_FORM_CON_TYPE_PUSH_BUTTON, $LOW_FORM_CON_TYPE_TEXT_BOX))
 	If @error Then _ERROR($oDoc, "Failed to retrieve an array of controls. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	$iCount = @extended

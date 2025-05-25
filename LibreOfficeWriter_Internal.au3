@@ -42,7 +42,6 @@
 ; __LOWriter_CharStyleNameToggle
 ; __LOWriter_CharUnderLine
 ; __LOWriter_ColorRemoveAlpha
-; __LOWriter_FormConSetGetFontDesc
 ; __LOWriter_CreatePoint
 ; __LOWriter_CreateStruct
 ; __LOWriter_CursorGetText
@@ -58,6 +57,7 @@
 ; __LOWriter_FooterBorder
 ; __LOWriter_FormConGetObj
 ; __LOWriter_FormConIdentify
+; __LOWriter_FormConSetGetFontDesc
 ; __LOWriter_GetPrinterSetting
 ; __LOWriter_GetShapeName
 ; __LOWriter_GradientNameInsert
@@ -1468,98 +1468,6 @@ Func __LOWriter_ColorRemoveAlpha($iColor)
 EndFunc   ;==>__LOWriter_ColorRemoveAlpha
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
-; Name ..........: __LOWriter_FormConSetGetFontDesc
-; Description ...: Set or Retrieve a Control's Font values.
-; Syntax ........: __LOWriter_FormConSetGetFontDesc(ByRef $oControl[, $mFontDesc = Null])
-; Parameters ....: $oControl            - [in/out] an object. A Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
-;                  $mFontDesc           - [optional] a map. Default is Null. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
-; Return values .: Success: 1 or Map
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oControl not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $mFontDesc not a Map.
-;                  --Property Setting Errors--
-;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                               1 = Error setting Font Name.
-;                  |                               2 = Error setting Font Weight.
-;                  |                               4 = Error setting Font Posture.
-;                  |                               8 = Error setting Font Size.
-;                  |                               16 = Error setting Font Color.
-;                  |                               32 = Error setting Font Underline Style.
-;                  |                               64 = Error setting Font Underline Color.
-;                  |                               128 = Error setting Font Strikeout Style.
-;                  |                               256 = Error setting Individual Word mode.
-;                  |                               512 = Error setting Font Relief.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Map = Success. All optional parameters were set to Null, returning current settings as a Map.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func __LOWriter_FormConSetGetFontDesc(ByRef $oControl, $mFontDesc = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $iError = 0
-	Local $mControlFontDesc[]
-
-	If Not IsObj($oControl) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-
-	If __LOWriter_VarsAreNull($mFontDesc) Then
-		$mControlFontDesc.CharFontName = $oControl.CharFontName()
-		$mControlFontDesc.CharWeight = $oControl.CharWeight()
-		$mControlFontDesc.CharPosture = $oControl.CharPosture()
-		$mControlFontDesc.CharHeight = $oControl.CharHeight()
-		$mControlFontDesc.CharColor = $oControl.CharColor()
-		$mControlFontDesc.CharUnderline = $oControl.CharUnderline()
-		$mControlFontDesc.CharUnderlineColor = $oControl.CharUnderlineColor()
-		$mControlFontDesc.CharStrikeout = $oControl.CharStrikeout()
-		$mControlFontDesc.CharWordMode = $oControl.CharWordMode()
-		$mControlFontDesc.CharRelief = $oControl.CharRelief()
-
-		Return SetError($__LO_STATUS_SUCCESS, 1, $mControlFontDesc)
-	EndIf
-
-	If Not IsMap($mFontDesc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-	$oControl.CharFontName() = $mFontDesc.CharFontName
-	$iError = ($oControl.CharFontName() = $mFontDesc.CharFontName) ? ($iError) : (BitOR($iError, 1))
-
-	$oControl.CharWeight() = $mFontDesc.CharWeight
-	$iError = (__LOWriter_IntIsBetween($oControl.CharWeight(), $mFontDesc.CharWeight - 50, $mFontDesc.CharWeight + 50)) ? ($iError) : (BitOR($iError, 2))
-
-	$oControl.CharPosture() = $mFontDesc.CharPosture
-	$iError = ($oControl.CharPosture() = $mFontDesc.CharPosture) ? ($iError) : (BitOR($iError, 4))
-
-	$oControl.CharHeight() = $mFontDesc.CharHeight
-	$iError = ($oControl.CharHeight() = $mFontDesc.CharHeight) ? ($iError) : (BitOR($iError, 8))
-
-	$oControl.CharColor() = $mFontDesc.CharColor
-	$iError = ($oControl.CharColor() = $mFontDesc.CharColor) ? ($iError) : (BitOR($iError, 16))
-
-	$oControl.CharUnderline() = $mFontDesc.CharUnderline
-	$iError = ($oControl.CharUnderline() = $mFontDesc.CharUnderline) ? ($iError) : (BitOR($iError, 32))
-
-	$oControl.CharUnderlineColor() = $mFontDesc.CharUnderlineColor
-	$iError = ($oControl.CharUnderlineColor() = $mFontDesc.CharUnderlineColor) ? ($iError) : (BitOR($iError, 64))
-
-	$oControl.CharStrikeout() = $mFontDesc.CharStrikeout
-	$iError = ($oControl.CharStrikeout() = $mFontDesc.CharStrikeout) ? ($iError) : (BitOR($iError, 128))
-
-	$oControl.CharWordMode() = $mFontDesc.CharWordMode
-	$iError = ($oControl.CharWordMode() = $mFontDesc.CharWordMode) ? ($iError) : (BitOR($iError, 256))
-
-	$oControl.CharRelief() = $mFontDesc.CharRelief
-	$iError = ($oControl.CharRelief() = $mFontDesc.CharRelief) ? ($iError) : (BitOR($iError, 512))
-
-	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>__LOWriter_FormConSetGetFontDesc
-
-; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_CreatePoint
 ; Description ...: Creates a Position structure.
 ; Syntax ........: __LOWriter_CreatePoint($iX, $iY)
@@ -2377,12 +2285,12 @@ EndFunc   ;==>__LOWriter_FooterBorder
 ; Description ...: Returns the Shape Object for a Control.
 ; Syntax ........: __LOWriter_FormConGetObj($oControl, $iControlType)
 ; Parameters ....: $oControl            - an object. A Control Object rather than the Shape Object.
-;                  $iControlType        - an integer value. The Shape type being called and looked for. See Constants $LOW_FORM_CONTROL_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iControlType        - an integer value. The Shape type being called and looked for. See Constants $LOW_FORM_CON_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oControl not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iControlType not an Integer, less than 0 or greater than 18. See Constants $LOW_FORM_CONTROL_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 2 Return 0 = $iControlType not an Integer, less than 0 or greater than 18. See Constants $LOW_FORM_CON_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Parent of Control.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to identify parent Document.
@@ -2409,7 +2317,7 @@ Func __LOWriter_FormConGetObj($oControl, $iControlType)
 	Local $iCount = 0
 
 	If Not IsObj($oControl) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_IntIsBetween($iControlType, $LOW_FORM_CONTROL_TYPE_CHECK_BOX, $LOW_FORM_CONTROL_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_IntIsBetween($iControlType, $LOW_FORM_CON_TYPE_CHECK_BOX, $LOW_FORM_CON_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oParent = $oControl.Parent()
 	If Not IsObj($oParent) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -2440,7 +2348,7 @@ Func __LOWriter_FormConGetObj($oControl, $iControlType)
 
 			ElseIf $oShape.supportsService("com.sun.star.drawing.GroupShape") And ($oShape.getByIndex(0).Control.Parent() = $oParent) Then ; If shape is a group control, and the first control contained in it is contained in the form.
 				$aoControls[$iCount][0] = $oShape
-				$aoControls[$iCount][1] = $LOW_FORM_CONTROL_TYPE_GROUP_BOX
+				$aoControls[$iCount][1] = $LOW_FORM_CON_TYPE_GROUP_BOX
 
 				$iCount += 1
 			EndIf
@@ -2467,11 +2375,11 @@ EndFunc   ;==>__LOWriter_FormConGetObj
 ; Description ...: Identify the type of Control being called, or return the Service name of a control type.
 ; Syntax ........: __LOWriter_FormConIdentify($oShape[, $iControlType = Null])
 ; Parameters ....: $oShape              - an object. A Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
-;                  $iControlType        - [optional] an integer value (1-524288). Default is Null. The Control Type Constant. See Constants $LOW_FORM_CONTROL_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iControlType        - [optional] an integer value (1-524288). Default is Null. The Control Type Constant. See Constants $LOW_FORM_CON_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: Integer or String
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object, and $iControlType not an Integer, less than 0 or greater than 524288. See Constants $LOW_FORM_CONTROL_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object, and $iControlType not an Integer, less than 0 or greater than 524288. See Constants $LOW_FORM_CON_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control, or return requested Service name.
 ;                  --Success--
@@ -2488,21 +2396,21 @@ Func __LOWriter_FormConIdentify($oShape, $iControlType = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $avControls[20][2] = [["com.sun.star.form.component.CheckBox", $LOW_FORM_CONTROL_TYPE_CHECK_BOX], ["com.sun.star.form.component.ComboBox", $LOW_FORM_CONTROL_TYPE_COMBO_BOX], _
-			["com.sun.star.form.component.CurrencyField", $LOW_FORM_CONTROL_TYPE_CURRENCY_FIELD], ["com.sun.star.form.component.DateField", $LOW_FORM_CONTROL_TYPE_DATE_FIELD], _
-			["com.sun.star.form.component.FileControl", $LOW_FORM_CONTROL_TYPE_FILE_SELECTION], ["com.sun.star.form.component.FormattedField", $LOW_FORM_CONTROL_TYPE_FORMATTED_FIELD], _
-			["com.sun.star.form.component.GroupBox", $LOW_FORM_CONTROL_TYPE_GROUP_BOX], ["com.sun.star.form.component.GroupBox", $LOW_FORM_CONTROL_TYPE_GROUPED_CONTROL], _ ; This will never match as the previous group box will be tested first. This is added here for completeness of the constants and for creating a grouped control. com.sun.star.drawing.GroupShape
-			["com.sun.star.form.component.ImageButton", $LOW_FORM_CONTROL_TYPE_IMAGE_BUTTON], ["com.sun.star.form.component.DatabaseImageControl", $LOW_FORM_CONTROL_TYPE_IMAGE_CONTROL], _ ; This seems to be used instead of this--> "com.sun.star.form.control.ImageControl"
-			["com.sun.star.form.component.FixedText", $LOW_FORM_CONTROL_TYPE_LABEL], ["com.sun.star.form.component.ListBox", $LOW_FORM_CONTROL_TYPE_LIST_BOX], _
-			["com.sun.star.form.component.NavigationToolBar", $LOW_FORM_CONTROL_TYPE_NAV_BAR], ["com.sun.star.form.component.NumericField", $LOW_FORM_CONTROL_TYPE_NUMERIC_FIELD], _
-			["com.sun.star.form.component.RadioButton", $LOW_FORM_CONTROL_TYPE_OPTION_BUTTON], ["com.sun.star.form.component.PatternField", $LOW_FORM_CONTROL_TYPE_PATTERN_FIELD], _
-			["com.sun.star.form.component.CommandButton", $LOW_FORM_CONTROL_TYPE_PUSH_BUTTON], ["com.sun.star.form.component.GridControl", $LOW_FORM_CONTROL_TYPE_TABLE_CONTROL], _
-			["com.sun.star.form.component.TextField", $LOW_FORM_CONTROL_TYPE_TEXT_BOX], ["com.sun.star.form.component.TimeField", $LOW_FORM_CONTROL_TYPE_TIME_FIELD]]
+	Local $avControls[20][2] = [["com.sun.star.form.component.CheckBox", $LOW_FORM_CON_TYPE_CHECK_BOX], ["com.sun.star.form.component.ComboBox", $LOW_FORM_CON_TYPE_COMBO_BOX], _
+			["com.sun.star.form.component.CurrencyField", $LOW_FORM_CON_TYPE_CURRENCY_FIELD], ["com.sun.star.form.component.DateField", $LOW_FORM_CON_TYPE_DATE_FIELD], _
+			["com.sun.star.form.component.FileControl", $LOW_FORM_CON_TYPE_FILE_SELECTION], ["com.sun.star.form.component.FormattedField", $LOW_FORM_CON_TYPE_FORMATTED_FIELD], _
+			["com.sun.star.form.component.GroupBox", $LOW_FORM_CON_TYPE_GROUP_BOX], ["com.sun.star.form.component.GroupBox", $LOW_FORM_CON_TYPE_GROUPED_CONTROL], _ ; This will never match as the previous group box will be tested first. This is added here for completeness of the constants and for creating a grouped control. com.sun.star.drawing.GroupShape
+			["com.sun.star.form.component.ImageButton", $LOW_FORM_CON_TYPE_IMAGE_BUTTON], ["com.sun.star.form.component.DatabaseImageControl", $LOW_FORM_CON_TYPE_IMAGE_CONTROL], _ ; This seems to be used instead of this--> "com.sun.star.form.control.ImageControl"
+			["com.sun.star.form.component.FixedText", $LOW_FORM_CON_TYPE_LABEL], ["com.sun.star.form.component.ListBox", $LOW_FORM_CON_TYPE_LIST_BOX], _
+			["com.sun.star.form.component.NavigationToolBar", $LOW_FORM_CON_TYPE_NAV_BAR], ["com.sun.star.form.component.NumericField", $LOW_FORM_CON_TYPE_NUMERIC_FIELD], _
+			["com.sun.star.form.component.RadioButton", $LOW_FORM_CON_TYPE_OPTION_BUTTON], ["com.sun.star.form.component.PatternField", $LOW_FORM_CON_TYPE_PATTERN_FIELD], _
+			["com.sun.star.form.component.CommandButton", $LOW_FORM_CON_TYPE_PUSH_BUTTON], ["com.sun.star.form.component.GridControl", $LOW_FORM_CON_TYPE_TABLE_CONTROL], _
+			["com.sun.star.form.component.TextField", $LOW_FORM_CON_TYPE_TEXT_BOX], ["com.sun.star.form.component.TimeField", $LOW_FORM_CON_TYPE_TIME_FIELD]]
 
-	If Not IsObj($oShape) And Not __LOWriter_IntIsBetween($iControlType, $LOW_FORM_CONTROL_TYPE_CHECK_BOX, $LOW_FORM_CONTROL_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oShape) And Not __LOWriter_IntIsBetween($iControlType, $LOW_FORM_CON_TYPE_CHECK_BOX, $LOW_FORM_CON_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If IsObj($oShape) Then
-		If $oShape.supportsService("com.sun.star.drawing.GroupShape") Then Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_FORM_CONTROL_TYPE_GROUPED_CONTROL) ; If a Group shape, it is a Grouped control.
+		If $oShape.supportsService("com.sun.star.drawing.GroupShape") Then Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_FORM_CON_TYPE_GROUPED_CONTROL) ; If a Group shape, it is a Grouped control.
 
 		For $i = 0 To UBound($avControls) - 1
 			If $oShape.Control.supportsService($avControls[$i][0]) Then Return SetError($__LO_STATUS_SUCCESS, 0, $avControls[$i][1])
@@ -2516,6 +2424,98 @@ Func __LOWriter_FormConIdentify($oShape, $iControlType = Null)
 
 	Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 EndFunc   ;==>__LOWriter_FormConIdentify
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_FormConSetGetFontDesc
+; Description ...: Set or Retrieve a Control's Font values.
+; Syntax ........: __LOWriter_FormConSetGetFontDesc(ByRef $oControl[, $mFontDesc = Null])
+; Parameters ....: $oControl            - [in/out] an object. A Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
+;                  $mFontDesc           - [optional] a map. Default is Null. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
+; Return values .: Success: 1 or Map
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oControl not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $mFontDesc not a Map.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting Font Name.
+;                  |                               2 = Error setting Font Weight.
+;                  |                               4 = Error setting Font Posture.
+;                  |                               8 = Error setting Font Size.
+;                  |                               16 = Error setting Font Color.
+;                  |                               32 = Error setting Font Underline Style.
+;                  |                               64 = Error setting Font Underline Color.
+;                  |                               128 = Error setting Font Strikeout Style.
+;                  |                               256 = Error setting Individual Word mode.
+;                  |                               512 = Error setting Font Relief.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Map = Success. All optional parameters were set to Null, returning current settings as a Map.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_FormConSetGetFontDesc(ByRef $oControl, $mFontDesc = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $mControlFontDesc[]
+
+	If Not IsObj($oControl) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($mFontDesc) Then
+		$mControlFontDesc.CharFontName = $oControl.CharFontName()
+		$mControlFontDesc.CharWeight = $oControl.CharWeight()
+		$mControlFontDesc.CharPosture = $oControl.CharPosture()
+		$mControlFontDesc.CharHeight = $oControl.CharHeight()
+		$mControlFontDesc.CharColor = $oControl.CharColor()
+		$mControlFontDesc.CharUnderline = $oControl.CharUnderline()
+		$mControlFontDesc.CharUnderlineColor = $oControl.CharUnderlineColor()
+		$mControlFontDesc.CharStrikeout = $oControl.CharStrikeout()
+		$mControlFontDesc.CharWordMode = $oControl.CharWordMode()
+		$mControlFontDesc.CharRelief = $oControl.CharRelief()
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $mControlFontDesc)
+	EndIf
+
+	If Not IsMap($mFontDesc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oControl.CharFontName() = $mFontDesc.CharFontName
+	$iError = ($oControl.CharFontName() = $mFontDesc.CharFontName) ? ($iError) : (BitOR($iError, 1))
+
+	$oControl.CharWeight() = $mFontDesc.CharWeight
+	$iError = (__LOWriter_IntIsBetween($oControl.CharWeight(), $mFontDesc.CharWeight - 50, $mFontDesc.CharWeight + 50)) ? ($iError) : (BitOR($iError, 2))
+
+	$oControl.CharPosture() = $mFontDesc.CharPosture
+	$iError = ($oControl.CharPosture() = $mFontDesc.CharPosture) ? ($iError) : (BitOR($iError, 4))
+
+	$oControl.CharHeight() = $mFontDesc.CharHeight
+	$iError = ($oControl.CharHeight() = $mFontDesc.CharHeight) ? ($iError) : (BitOR($iError, 8))
+
+	$oControl.CharColor() = $mFontDesc.CharColor
+	$iError = ($oControl.CharColor() = $mFontDesc.CharColor) ? ($iError) : (BitOR($iError, 16))
+
+	$oControl.CharUnderline() = $mFontDesc.CharUnderline
+	$iError = ($oControl.CharUnderline() = $mFontDesc.CharUnderline) ? ($iError) : (BitOR($iError, 32))
+
+	$oControl.CharUnderlineColor() = $mFontDesc.CharUnderlineColor
+	$iError = ($oControl.CharUnderlineColor() = $mFontDesc.CharUnderlineColor) ? ($iError) : (BitOR($iError, 64))
+
+	$oControl.CharStrikeout() = $mFontDesc.CharStrikeout
+	$iError = ($oControl.CharStrikeout() = $mFontDesc.CharStrikeout) ? ($iError) : (BitOR($iError, 128))
+
+	$oControl.CharWordMode() = $mFontDesc.CharWordMode
+	$iError = ($oControl.CharWordMode() = $mFontDesc.CharWordMode) ? ($iError) : (BitOR($iError, 256))
+
+	$oControl.CharRelief() = $mFontDesc.CharRelief
+	$iError = ($oControl.CharRelief() = $mFontDesc.CharRelief) ? ($iError) : (BitOR($iError, 512))
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>__LOWriter_FormConSetGetFontDesc
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_GetPrinterSetting

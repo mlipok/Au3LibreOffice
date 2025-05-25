@@ -16,7 +16,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to Create a form in the Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a Form Control
-	$oControl = _LOWriter_FormConInsert($oForm, $LOW_FORM_CONTROL_TYPE_TEXT_BOX, 500, 300, 6000, 2000, "AutoIt_Form_Control")
+	$oControl = _LOWriter_FormConInsert($oForm, $LOW_FORM_CON_TYPE_TEXT_BOX, 500, 300, 6000, 2000, "AutoIt_Form_Control")
 	If @error Then _ERROR($oDoc, "Failed to insert a form control. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a Font Descriptor.
@@ -24,7 +24,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to create a Font Descriptor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Modify the Control's General properties.
-	_LOWriter_FormConTextBoxGeneral($oControl, "Renamed_AutoIt_Control", Null, Null, 175, True, True, False, True, True, 1, "Please Enter Some Text", $mFont, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_VERT_MIDDLE, $LOW_COLOR_TEAL, $LOW_FORM_CONTROL_BORDER_FLAT, $LOW_COLOR_GOLD, $LOW_FORM_CONTROL_TXT_TYPE_MULTI_LINE_FORMATTED, False, $LOW_FORM_CONTROL_SCROLL_BOTH, Null, True)
+	_LOWriter_FormConTextBoxGeneral($oControl, "Renamed_AutoIt_Control", Null, Null, 175, True, True, False, True, True, 1, "Please Enter Some Text", $mFont, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_VERT_MIDDLE, $LOW_COLOR_TEAL, $LOW_FORM_CON_BORDER_FLAT, $LOW_COLOR_GOLD, $LOW_FORM_CON_TXT_TYPE_MULTI_LINE_FORMATTED, False, $LOW_FORM_CON_SCROLL_BOTH, Null, True)
 	If @error Then _ERROR($oDoc, "Failed to modify the Control's properties. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to insert some text in the Text Box.")
