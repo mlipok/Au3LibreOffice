@@ -42,7 +42,9 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to create a Date Structure. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Modify the Control's General properties.
-	_LOWriter_FormConDateFieldGeneral($oControl, "Renamed_AutoIt_Control", $oLabel, Null, True, True, True, False, True, $LOW_FORM_CON_MOUSE_SCROLL_FOCUS, True, 1, $tDateMin, $tDateMax, $LOW_FORM_CON_DATE_FRMT_SHORT_YYYYMMDD, $tDateDefault, True, True, 50, $mFont, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_VERT_MIDDLE, $LOW_COLOR_GREEN, $LOW_FORM_CON_BORDER_FLAT, $LOW_COLOR_GOLD, True, False, "Some Additional Information", "This is Help Text", "www.HelpURL.fake")
+	_LOWriter_FormConDateFieldGeneral($oControl, "Renamed_AutoIt_Control", $oLabel, Null, True, True, True, False, True, $LOW_FORM_CON_MOUSE_SCROLL_FOCUS, True, 1, _
+			$tDateMin, $tDateMax, $LOW_FORM_CON_DATE_FRMT_SHORT_YYYYMMDD, $tDateDefault, True, True, 50, $mFont, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_VERT_MIDDLE, _
+			$LOW_COLOR_GREEN, $LOW_FORM_CON_BORDER_FLAT, $LOW_COLOR_GOLD, True, False, "Some Additional Information", "This is Help Text", "www.HelpURL.fake")
 	If @error Then _ERROR($oDoc, "Failed to modify the Control's properties. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings for the control. Return will be an Array in order of function parameters.

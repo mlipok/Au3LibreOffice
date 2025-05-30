@@ -34,7 +34,9 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve a Format key. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Modify the Control's General properties.
-	_LOWriter_FormConFormattedFieldGeneral($oControl, "Renamed_AutoIt_Control", $oLabel, Null, 20, True, True, False, True, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, True, 1, 29.50, 70.25, 35.50, $iFormat, True, True, 100, $mFont, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_VERT_BOTTOM, $LOW_COLOR_GRAY, $LOW_FORM_CON_BORDER_FLAT, $LOW_COLOR_GREEN, False, "Some Additional Information", "This is Help Text", "www.HelpURL.fake")
+	_LOWriter_FormConFormattedFieldGeneral($oControl, "Renamed_AutoIt_Control", $oLabel, Null, 20, True, True, False, True, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, True, _
+			1, 29.50, 70.25, 35.50, $iFormat, True, True, 100, $mFont, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_VERT_BOTTOM, $LOW_COLOR_GRAY, $LOW_FORM_CON_BORDER_FLAT, _
+			$LOW_COLOR_GREEN, False, "Some Additional Information", "This is Help Text", "www.HelpURL.fake")
 	If @error Then _ERROR($oDoc, "Failed to modify the Control's properties. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings for the control. Return will be an Array in order of function parameters.

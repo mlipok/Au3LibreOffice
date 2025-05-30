@@ -736,7 +736,30 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_FormConPushButtonState
 	- _LOWriter_FormConsGetList
 	- _LOWriter_FormConSize
+	- _LOWriter_FormConTableConCheckBoxData
+	- _LOWriter_FormConTableConCheckBoxGeneral
+	- _LOWriter_FormConTableConColumnAdd
+	- _LOWriter_FormConTableConColumnDelete
+	- _LOWriter_FormConTableConColumnsGetList
+	- _LOWriter_FormConTableConComboBoxData
+	- _LOWriter_FormConTableConComboBoxGeneral
+	- _LOWriter_FormConTableConCurrencyFieldData
+	- _LOWriter_FormConTableConCurrencyFieldGeneral
+	- _LOWriter_FormConTableConDateFieldData
+	- _LOWriter_FormConTableConDateFieldGeneral
+	- _LOWriter_FormConTableConFormattedFieldData
+	- _LOWriter_FormConTableConFormattedFieldGeneral
 	- _LOWriter_FormConTableConGeneral
+	- _LOWriter_FormConTableConListBoxData
+	- _LOWriter_FormConTableConListBoxGeneral
+	- _LOWriter_FormConTableConNumericFieldData
+	- _LOWriter_FormConTableConNumericFieldGeneral
+	- _LOWriter_FormConTableConPatternFieldData
+	- _LOWriter_FormConTableConPatternFieldGeneral
+	- _LOWriter_FormConTableConTextBoxData
+	- _LOWriter_FormConTableConTextBoxGeneral
+	- _LOWriter_FormConTableConTimeFieldData
+	- _LOWriter_FormConTableConTimeFieldGeneral
 	- _LOWriter_FormConTextBoxCreateTextCursor
 	- _LOWriter_FormConTextBoxData
 	- _LOWriter_FormConTextBoxGeneral

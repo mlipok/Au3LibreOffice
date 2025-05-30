@@ -68,7 +68,30 @@
 ; _LOWriter_FormConPushButtonState
 ; _LOWriter_FormConsGetList
 ; _LOWriter_FormConSize
+; _LOWriter_FormConTableConCheckBoxData
+; _LOWriter_FormConTableConCheckBoxGeneral
+; _LOWriter_FormConTableConColumnAdd
+; _LOWriter_FormConTableConColumnDelete
+; _LOWriter_FormConTableConColumnsGetList
+; _LOWriter_FormConTableConComboBoxData
+; _LOWriter_FormConTableConComboBoxGeneral
+; _LOWriter_FormConTableConCurrencyFieldData
+; _LOWriter_FormConTableConCurrencyFieldGeneral
+; _LOWriter_FormConTableConDateFieldData
+; _LOWriter_FormConTableConDateFieldGeneral
+; _LOWriter_FormConTableConFormattedFieldData
+; _LOWriter_FormConTableConFormattedFieldGeneral
 ; _LOWriter_FormConTableConGeneral
+; _LOWriter_FormConTableConListBoxData
+; _LOWriter_FormConTableConListBoxGeneral
+; _LOWriter_FormConTableConNumericFieldData
+; _LOWriter_FormConTableConNumericFieldGeneral
+; _LOWriter_FormConTableConPatternFieldData
+; _LOWriter_FormConTableConPatternFieldGeneral
+; _LOWriter_FormConTableConTextBoxData
+; _LOWriter_FormConTableConTextBoxGeneral
+; _LOWriter_FormConTableConTimeFieldData
+; _LOWriter_FormConTableConTimeFieldGeneral
 ; _LOWriter_FormConTextBoxCreateTextCursor
 ; _LOWriter_FormConTextBoxData
 ; _LOWriter_FormConTextBoxGeneral
@@ -7732,6 +7755,2066 @@ Func _LOWriter_FormConSize(ByRef $oControl, $iWidth = Null, $iHeight = Null, $bP
 EndFunc   ;==>_LOWriter_FormConSize
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FormConTableConCheckBoxData
+; Description ...: Set or Retrieve Table Control Check Box Data Properties.
+; Syntax ........: _LOWriter_FormConTableConCheckBoxData(ByRef $oCheckBox[, $sDataField = Null[, $bInputRequired = Null]])
+; Parameters ....: $oCheckBox           - [in/out] an object. A Table Control Check Box Control object returned by a previous _LOWriter_FormConTableConColumnAdd or _LOWriter_FormConTableConColumnsGetList function.
+;                  $sDataField          - [optional] a string value. Default is Null. The Datafield name to retrieve content from, either a Table name, SQL query, or other.
+;                  $bInputRequired      - [optional] a boolean value. Default is Null. If True, the control requires input.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oCheckBox not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oCheckBox not a Check Box Control.
+;                  @Error 1 @Extended 3 Return 0 = $sDataField not a String.
+;                  @Error 1 @Extended 4 Return 0 = $bInputRequired not a Boolean.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sDataField
+;                  |                               2 = Error setting $bInputRequired
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  $sDataField is not checked to make sure it exists in the referenced Database, it is the user's responsibility to do this.
+;                  Reference Values are not included here as they are applicable to Calc only, as far as I can ascertain.
+; Related .......: _LOWriter_FormConCheckBoxGeneral
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FormConTableConCheckBoxData(ByRef $oCheckBox, $sDataField = Null, $bInputRequired = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avControl[2]
+
+	If Not IsObj($oCheckBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOWriter_FormConIdentify($oCheckBox) <> $LOW_FORM_CON_TYPE_CHECK_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
+		__LOWriter_ArrayFill($avControl, $oCheckBox.DataField(), $oCheckBox.InputRequired())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
+	EndIf
+
+	If ($sDataField <> Null) Then
+		If Not IsString($sDataField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oCheckBox.DataField = $sDataField
+		$iError = ($oCheckBox.DataField() = $sDataField) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($bInputRequired <> Null) Then
+		If Not IsBool($bInputRequired) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oCheckBox.InputRequired = $bInputRequired
+		$iError = ($oCheckBox.InputRequired() = $bInputRequired) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FormConTableConCheckBoxData
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FormConTableConCheckBoxGeneral
+; Description ...: Set or Retrieve general Table Control Checkbox control properties.
+; Syntax ........: _LOWriter_FormConTableConCheckBoxGeneral(ByRef $oCheckBox[, $sName = Null[, $sLabel = Null[, $iTxtDir = Null[, $bEnabled = Null[, $iDefaultState = Null[, $iWidth = Null[, $iStyle = Null[, $iAlign = Null[, $bWordBreak = Null[, $bTriState = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]])
+; Parameters ....: $oCheckBox           - [in/out] an object. A Table Control Checkbox Control object returned by a previous _LOWriter_FormConTableConColumnAdd or _LOWriter_FormConTableConColumnsGetList function.
+;                  $sName               - [optional] a string value. Default is Null. The control name.
+;                  $sLabel              - [optional] a string value. Default is Null. The control's label to display.
+;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
+;                  $iDefaultState       - [optional] an integer value (0-2). Default is Null. The Default state of the Checkbox, $LOW_FORM_CON_CHKBX_STATE_NOT_DEFINED is only available if $bTriState is True. See Constants $LOW_FORM_CON_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Micrometers.
+;                  $iStyle              - [optional] an integer value (1-2). Default is Null. The display style of the checkbox. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $bWordBreak          - [optional] a boolean value. Default is Null. If True, line breaks are allowed to be used.
+;                  $bTriState           - [optional] a boolean value. Default is Null. If True, the checkbox will have a third checked state.
+;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
+;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
+;                  $sHelpURL            - [optional] a string value. Default is Null. The Help URL.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oCheckBox not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oCheckBox not a Check Box Control.
+;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 4 Return 0 = $sLabel not a String.
+;                  @Error 1 @Extended 5 Return 0 = $iTxtDir not an Integer, less than 0 or greater than 5. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $bEnabled not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $iDefaultState not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 8 Return 0 = $iWidth not an Integer, less than 100 or greater than 200,000.
+;                  @Error 1 @Extended 9 Return 0 = $iStyle not an Integer, less than 1 or greater than 2. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 10 Return 0 = $iAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 11 Return 0 = $bWordBreak not a Boolean.
+;                  @Error 1 @Extended 12 Return 0 = $bTriState not a Boolean.
+;                  @Error 1 @Extended 13 Return 0 = $sAddInfo not a String.
+;                  @Error 1 @Extended 14 Return 0 = $sHelpText not a String.
+;                  @Error 1 @Extended 15 Return 0 = $sHelpURL not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sName
+;                  |                               2 = Error setting $sLabel
+;                  |                               4 = Error setting $iTxtDir
+;                  |                               8 = Error setting $bEnabled
+;                  |                               16 = Error setting $iDefaultState
+;                  |                               32 = Error setting $iWidth
+;                  |                               64 = Error setting $iStyle
+;                  |                               128 = Error setting $iAlign
+;                  |                               256 = Error setting $bWordBreak
+;                  |                               512 = Error setting $bTriState
+;                  |                               1024 = Error setting $sAddInfo
+;                  |                               2048 = Error setting $sHelpText
+;                  |                               4096 = Error setting $sHelpURL
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 13 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iDefaultState, $sAddInfo.
+; Related .......: _LOWriter_FormConCheckBoxData, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FormConTableConCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLabel = Null, $iTxtDir = Null, $bEnabled = Null, $iDefaultState = Null, $iWidth = Null, $iStyle = Null, $iAlign = Null, $bWordBreak = Null, $bTriState = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avControl[13]
+
+	If Not IsObj($oCheckBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If ( __LOWriter_FormConIdentify($oCheckBox) <> $LOW_FORM_CON_TYPE_CHECK_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $bEnabled, $iDefaultState, $iWidth, $iStyle, $iAlign, $bWordBreak, $bTriState, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LOWriter_ArrayFill($avControl, $oCheckBox.Name(), $oCheckBox.Label(), $oCheckBox.WritingMode(), $oCheckBox.Enabled(), _
+				$oCheckBox.DefaultState(), ($oCheckBox.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				$oCheckBox.VisualEffect(), $oCheckBox.Align(), $oCheckBox.MultiLine(), $oCheckBox.TriState(), _
+				$oCheckBox.Tag(), $oCheckBox.HelpText(), $oCheckBox.HelpURL())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
+	EndIf
+
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1) ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
+		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oCheckBox.Name = $sName
+		$iError = ($oCheckBox.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($sLabel = Default) Then
+		$oCheckBox.setPropertyToDefault("Label")
+
+	ElseIf ($sLabel <> Null) Then
+		If Not IsString($sLabel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oCheckBox.Label = $sLabel
+		$iError = ($oCheckBox.Label() = $sLabel) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($iTxtDir = Default) Then
+		$oCheckBox.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
+		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oCheckBox.WritingMode = $iTxtDir
+		$iError = ($oCheckBox.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($bEnabled = Default) Then
+		$oCheckBox.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
+		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oCheckBox.Enabled = $bEnabled
+		$iError = ($oCheckBox.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	If ($iDefaultState = Default) Then
+		$iError = BitOR($iError, 16) ; Can't Default DefaultState.
+
+	ElseIf ($iDefaultState <> Null) Then
+		If Not __LOWriter_IntIsBetween($iDefaultState, $LOW_FORM_CON_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CON_CHKBX_STATE_NOT_DEFINED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oCheckBox.DefaultState = $iDefaultState
+		$iError = ($oCheckBox.DefaultState() = $iDefaultState) ? ($iError) : (BitOR($iError, 16))
+	EndIf
+
+	If ($iWidth = Default) Then
+		$oCheckBox.setPropertyToDefault("Width")
+
+	ElseIf ($iWidth <> Null) Then
+		If Not __LOWriter_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		$oCheckBox.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
+		$iError = ($oCheckBox.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 32))
+	EndIf
+
+	If ($iStyle = Default) Then
+		$oCheckBox.setPropertyToDefault("VisualEffect")
+
+	ElseIf ($iStyle <> Null) Then
+		If Not __LOWriter_IntIsBetween($iStyle, $LOW_FORM_CON_BORDER_3D, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		$oCheckBox.VisualEffect = $iStyle
+		$iError = ($oCheckBox.VisualEffect() = $iStyle) ? ($iError) : (BitOR($iError, 64))
+	EndIf
+
+	If ($iAlign = Default) Then
+		$oCheckBox.setPropertyToDefault("Align")
+
+	ElseIf ($iAlign <> Null) Then
+		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		$oCheckBox.Align = $iAlign
+		$iError = ($oCheckBox.Align() = $iAlign) ? ($iError) : (BitOR($iError, 128))
+	EndIf
+
+	If ($bWordBreak = Default) Then
+		$oCheckBox.setPropertyToDefault("MultiLine")
+
+	ElseIf ($bWordBreak <> Null) Then
+		If Not IsBool($bWordBreak) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		$oCheckBox.MultiLine = $bWordBreak
+		$iError = ($oCheckBox.MultiLine() = $bWordBreak) ? ($iError) : (BitOR($iError, 256))
+	EndIf
+
+	If ($bTriState = Default) Then
+		$oCheckBox.setPropertyToDefault("TriState")
+
+	ElseIf ($bTriState <> Null) Then
+		If Not IsBool($bTriState) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		$oCheckBox.TriState = $bTriState
+		$iError = ($oCheckBox.TriState = $bTriState) ? ($iError) : (BitOR($iError, 512))
+	EndIf
+
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 1024) ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
+		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+		$oCheckBox.Tag = $sAddInfo
+		$iError = ($oCheckBox.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 1024))
+	EndIf
+
+	If ($sHelpText = Default) Then
+		$oCheckBox.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
+		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		$oCheckBox.HelpText = $sHelpText
+		$iError = ($oCheckBox.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 2048))
+	EndIf
+
+	If ($sHelpURL = Default) Then
+		$oCheckBox.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
+		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
+		$oCheckBox.HelpURL = $sHelpURL
+		$iError = ($oCheckBox.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 4096))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FormConTableConCheckBoxGeneral
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FormConTableConColumnAdd
+; Description ...: Add a column to a Table Control.
+; Syntax ........: _LOWriter_FormConTableConColumnAdd(ByRef $oTableCon, $iControl[, $iPos = Null])
+; Parameters ....: $oTableCon           - [in/out] an object. A Table Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+;                  $iControl            - an integer value. The control type to insert. See Constants $LOW_FORM_CON_TYPE_* as defined in LibreOfficeWriter_Constants.au3. See remarks.
+;                  $iPos                - [optional] an integer value. Default is Null. The position in the Column list to insert the new Column. 0 = insert at the beginning. Null = insert at the end.
+; Return values .: Success: Object
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oTableCon not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oTableCon not a Table Control Object.
+;                  @Error 1 @Extended 3 Return 0 = Control type called in $iControl not an Integer, or not one of the accepted controls.
+;                  @Error 1 @Extended 4 Return 0 = $iPos not an Integer, less than 0 or greater than count of Columns + 1.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Control type name.
+;                  @Error 3 @Extended 3 Return 0 = Failed to split Control type name.
+;                  @Error 3 @Extended 4 Return 0 = Failed to create Column object.
+;                  @Error 3 @Extended 5 Return 0 = Failed to insert new Column.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully created the Column, returning its Object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Only the following Control types are allowed to be created as a column tab: $LOW_FORM_CON_TYPE_FORMATTED_FIELD, $LOW_FORM_CON_TYPE_LIST_BOX, $LOW_FORM_CON_TYPE_NUMERIC_FIELD, $LOW_FORM_CON_TYPE_PATTERN_FIELD, $LOW_FORM_CON_TYPE_TEXT_BOX, $LOW_FORM_CON_TYPE_TIME_FIELD
+; Related .......: _LOWriter_FormConTableConColumnsGetList, _LOWriter_FormConTableConColumnDelete
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FormConTableConColumnAdd(ByRef $oTableCon, $iControl, $iPos = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oColumn
+	Local $iCount = 1
+	Local $sControl, $sName, $sAccepted = $LOW_FORM_CON_TYPE_FORMATTED_FIELD & ":" & $LOW_FORM_CON_TYPE_LIST_BOX & ":" & $LOW_FORM_CON_TYPE_NUMERIC_FIELD & ":" & $LOW_FORM_CON_TYPE_PATTERN_FIELD & ":" & $LOW_FORM_CON_TYPE_TEXT_BOX & ":" & $LOW_FORM_CON_TYPE_TIME_FIELD
+
+	If Not IsObj($oTableCon) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOWriter_FormConIdentify($oTableCon) <> $LOW_FORM_CON_TYPE_TABLE_CONTROL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If Not __LOWriter_IntIsBetween($iControl, $LOW_FORM_CON_TYPE_CHECK_BOX, $LOW_FORM_CON_TYPE_DATE_FIELD, "", $sAccepted) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$iPos = ($iPos = Null) ? ($oTableCon.Control.Count()) : ($iPos)
+
+	If ($iPos <> Null) And Not __LOWriter_IntIsBetween($iPos, 0, $oTableCon.Control.Count()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+	$sControl = __LOWriter_FormConIdentify(Null, $iControl)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	$sControl = StringTrimLeft($sControl, StringInStr($sControl, ".", 0, -1))
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+	$oColumn = $oTableCon.Control.createColumn($sControl)
+	If Not IsObj($oColumn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
+	Switch $iControl
+
+		Case $LOW_FORM_CON_TYPE_CHECK_BOX
+			$sName = "Check Box "
+
+		Case $LOW_FORM_CON_TYPE_COMBO_BOX
+			$sName = "Combo Box "
+
+		Case $LOW_FORM_CON_TYPE_CURRENCY_FIELD
+			$sName = "Currency Field "
+
+		Case $LOW_FORM_CON_TYPE_DATE_FIELD
+			$sName = "Date Field "
+
+		Case $LOW_FORM_CON_TYPE_FORMATTED_FIELD
+			$sName = "Formatted Field "
+
+		Case $LOW_FORM_CON_TYPE_LIST_BOX
+			$sName = "List Box "
+
+		Case $LOW_FORM_CON_TYPE_NUMERIC_FIELD
+			$sName = "Numeric Field "
+
+		Case $LOW_FORM_CON_TYPE_PATTERN_FIELD
+			$sName = "Pattern Field "
+
+		Case $LOW_FORM_CON_TYPE_TEXT_BOX
+			$sName = "Text Box "
+
+		Case $LOW_FORM_CON_TYPE_TIME_FIELD
+			$sName = "Time Field "
+
+		Case Else
+			$sName = "Unknown Control "
+
+	EndSwitch
+
+	While $oTableCon.Control.hasByName($sName & $iCount)
+		$iCount += 1
+		Sleep((IsInt(($iCount / $__LOWCONST_SLEEP_DIV))) ? (10) : (0))
+	WEnd
+
+	$oColumn.Name = $sName & $iCount
+	$oColumn.Label = $sName & $iCount
+
+	$oTableCon.Control.insertByIndex($iPos, $oColumn)
+
+	$oColumn = $oTableCon.Control.getByIndex($iPos)
+	If Not IsObj($oColumn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oColumn)
+EndFunc   ;==>_LOWriter_FormConTableConColumnAdd
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FormConTableConColumnDelete
+; Description ...: Delete a Table Control Column.
+; Syntax ........: _LOWriter_FormConTableConColumnDelete(ByRef $oColumn)
+; Parameters ....: $oColumn             - [in/out] an object. A Column object returned by a previous _LOWriter_FormConTableConColumnAdd or _LOWriter_FormConTableConColumnsGetList function.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oColumn not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Column's parent.
+;                  @Error 3 @Extended 2 Return 0 = Failed to delete the Column.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Column was successfully deleted.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOWriter_FormConTableConColumnAdd, _LOWriter_FormConTableConColumnsGetList
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FormConTableConColumnDelete(ByRef $oColumn)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oParent
+
+	If Not IsObj($oColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oParent = $oColumn.Parent()
+	If Not IsObj($oParent) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	For $i = 0 To $oParent.Count() - 1
+		If ($oParent.getByIndex($i) = $oColumn) Then
+			$oParent.removeByIndex($i) ; The name can be the same as another control, so I have to remove by Index.
+			Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+		EndIf
+
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
+	Next
+
+	Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+EndFunc   ;==>_LOWriter_FormConTableConColumnDelete
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FormConTableConColumnsGetList
+; Description ...: Retrieve a list of Columns contained in a Table Control.
+; Syntax ........: _LOWriter_FormConTableConColumnsGetList(ByRef $oTableCon)
+; Parameters ....: $oTableCon           - [in/out] an object. A Table Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Return values .: Success: Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oTableCon not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oTableCon not a Table Control Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve count of Columns.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Column object.
+;                  @Error 3 @Extended 4 Return 0 = Failed to identify Column type.
+;                  --Success--
+;                  @Error 0 @Extended ? Return Array = Success. Returning a two column array containing Column objects. See remarks. @Extended is set to the number of results.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The returned array will contain two columns. The first column ($aArray[0][0], contains the Column object, and the second column ($aArray[0][1], contains the Column type, corresponding to one of the constants $LOW_FORM_CON_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+; Related .......: _LOWriter_FormConTableConColumnAdd, _LOWriter_FormConTableConColumnDelete
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FormConTableConColumnsGetList(ByRef $oTableCon)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oColumn
+	Local $iCount
+	Local $avColumns[0][2]
+
+	If Not IsObj($oTableCon) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOWriter_FormConIdentify($oTableCon) <> $LOW_FORM_CON_TYPE_TABLE_CONTROL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$iCount = $oTableCon.Control.Count()
+	If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	ReDim $avColumns[$iCount][2]
+
+	For $i = 0 To $iCount - 1
+		$oColumn = $oTableCon.Control.getByIndex($i)
+		If Not IsObj($oColumn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+		$avColumns[$i][0] = $oColumn
+		$avColumns[$i][1] = __LOWriter_FormConIdentify($oColumn)
+		If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
+	Next
+
+	Return SetError($__LO_STATUS_SUCCESS, $iCount, $avColumns)
+EndFunc   ;==>_LOWriter_FormConTableConColumnsGetList
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FormConTableConComboBoxData
+; Description ...: Set or Retrieve Table Control Combo Box Data Properties.
+; Syntax ........: _LOWriter_FormConTableConComboBoxData(ByRef $oComboBox[, $sDataField = Null[, $bEmptyIsNull = Null[, $bInputRequired = Null[, $iType = Null[, $asListContent = Null]]]]])
+; Parameters ....: $oComboBox           - [in/out] an object. A Table Control Combo Box Control object returned by a previous _LOWriter_FormConTableConColumnAdd or _LOWriter_FormConTableConColumnsGetList function.
+;                  $sDataField          - [optional] a string value. Default is Null. The Datafield name to retrieve content from, either a Table name, SQL query, or other.
+;                  $bEmptyIsNull        - [optional] a boolean value. Default is Null. If True, an empty string will be treated as a Null value.
+;                  $bInputRequired      - [optional] a boolean value. Default is Null. If True, the control requires input.
+;                  $iType               - [optional] an integer value (1-5). Default is Null. The type of content to fill the control with. See Constants $LOW_FORM_CON_SOURCE_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $sListContent        - [optional] a string value. Default is Null. Default is Null. The SQL statement, Table Name, etc., depending on the value of $iType.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oComboBox not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oComboBox not a Combo Box Control.
+;                  @Error 1 @Extended 3 Return 0 = $sDataField not a String.
+;                  @Error 1 @Extended 4 Return 0 = $bEmptyIsNull not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $bInputRequired not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $iType not an Integer, less than 1 or greater than 5. See Constants $LOW_FORM_CON_SOURCE_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 7 Return 0 = $sListContent not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sDataField
+;                  |                               2 = Error setting $bEmptyIsNull
+;                  |                               4 = Error setting $bInputRequired
+;                  |                               8 = Error setting $iType
+;                  |                               16 = Error setting $sListContent
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  $sDataField is not checked to make sure it exists in the referenced Database, it is the user's responsibility to do this.
+; Related .......: _LOWriter_FormConComboBoxGeneral
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FormConTableConComboBoxData(ByRef $oComboBox, $sDataField = Null, $bEmptyIsNull = Null, $bInputRequired = Null, $iType = Null, $sListContent = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avControl[5]
+
+	If Not IsObj($oComboBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOWriter_FormConIdentify($oComboBox) <> $LOW_FORM_CON_TYPE_COMBO_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $iType, $sListContent) Then
+		__LOWriter_ArrayFill($avControl, $oComboBox.DataField(), $oComboBox.ConvertEmptyToNull(), $oComboBox.InputRequired(), _
+				$oComboBox.ListSourceType(), $oComboBox.ListSource())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
+	EndIf
+
+	If ($sDataField <> Null) Then
+		If Not IsString($sDataField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oComboBox.DataField = $sDataField
+		$iError = ($oComboBox.DataField() = $sDataField) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($bEmptyIsNull <> Null) Then
+		If Not IsBool($bEmptyIsNull) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oComboBox.ConvertEmptyToNull = $bEmptyIsNull
+		$iError = ($oComboBox.ConvertEmptyToNull() = $bEmptyIsNull) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($bInputRequired <> Null) Then
+		If Not IsBool($bInputRequired) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oComboBox.InputRequired = $bInputRequired
+		$iError = ($oComboBox.InputRequired() = $bInputRequired) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($iType <> Null) Then
+		If Not __LOWriter_IntIsBetween($iType, $LOW_FORM_CON_SOURCE_TYPE_TABLE, $LOW_FORM_CON_SOURCE_TYPE_TABLE_FIELDS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oComboBox.ListSourceType = $iType
+		$iError = ($oComboBox.ListSourceType() = $iType) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	If ($sListContent <> Null) Then
+		If Not IsString($sListContent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oComboBox.ListSource = $sListContent
+		$iError = ($oComboBox.ListSource() = $sListContent) ? ($iError) : (BitOR($iError, 16))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FormConTableConComboBoxData
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FormConTableConComboBoxGeneral
+; Description ...: Set or Retrieve general Table Control Combo Box Properties.
+; Syntax ........: _LOWriter_FormConTableConComboBoxGeneral(ByRef $oComboBox[, $sName = Null[, $sLabel = Null[, $iTxtDir = Null[, $iMaxLen = Null[, $bEnabled = Null[, $bReadOnly = Null[, $iMouseScroll = Null[, $iWidth = Null[, $asList = Null[, $sDefaultTxt = Null[, $iAlign = Null[, $iLines = Null[, $bHideSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]])
+; Parameters ....: $oComboBox           - [in/out] an object. A Table Control Combo Box Control object returned by a previous _LOWriter_FormConTableConColumnAdd or _LOWriter_FormConTableConColumnsGetList function.
+;                  $sName               - [optional] a string value. Default is Null. The control name.
+;                  $sLabel              - [optional] a string value. Default is Null. The control's label to display.
+;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iMaxLen             - [optional] an integer value (-1-2147483647). Default is Null. The maximum text length that the Combo box will accept.
+;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
+;                  $bReadOnly           - [optional] a boolean value. Default is Null. If True, the control is Read-Only.
+;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Micrometers.
+;                  $asList              - [optional] an array of strings. Default is Null. An array of entries. See remarks.
+;                  $sDefaultTxt         - [optional] a string value. Default is Null. The default text of the combo Box.
+;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iLines              - [optional] an integer value. Default is Null. How many lines are shown in the dropdown list.
+;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
+;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
+;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
+;                  $sHelpURL            - [optional] a string value. Default is Null. The Help URL.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oComboBox not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oComboBox not a Combo Box Control.
+;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 4 Return 0 = $sLabel not a String.
+;                  @Error 1 @Extended 5 Return 0 = $iTxtDir not an Integer, less than 0 or greater than 5. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $iMaxLen not an Integer, less than -1 or greater than 2147483647.
+;                  @Error 1 @Extended 7 Return 0 = $bEnabled not a Boolean.
+;                  @Error 1 @Extended 8 Return 0 = $bReadOnly not a Boolean.
+;                  @Error 1 @Extended 9 Return 0 = $iMouseScroll not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 10 Return 0 = $iWidth not an Integer, less than 100 or greater than 200,000.
+;                  @Error 1 @Extended 11 Return 0 = $asList not an Array.
+;                  @Error 1 @Extended 12 Return ? = Element contained in $asList not a String. Returning problem element position.
+;                  @Error 1 @Extended 13 Return 0 = $sDefaultTxt not a String.
+;                  @Error 1 @Extended 14 Return 0 = $iAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 15 Return 0 = $iLines not an Integer, less than -2147483648 or greater than 2147483647.
+;                  @Error 1 @Extended 16 Return 0 = $bHideSel not a Boolean.
+;                  @Error 1 @Extended 17 Return 0 = $sAddInfo not a String.
+;                  @Error 1 @Extended 18 Return 0 = $sHelpText not a String.
+;                  @Error 1 @Extended 19 Return 0 = $sHelpURL not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sName
+;                  |                               2 = Error setting $sLabel
+;                  |                               4 = Error setting $iTxtDir
+;                  |                               8 = Error setting $iMaxLen
+;                  |                               16 = Error setting $bEnabled
+;                  |                               32 = Error setting $bReadOnly
+;                  |                               64 = Error setting $iMouseScroll
+;                  |                               128 = Error setting $iWidth
+;                  |                               256 = Error setting $asList
+;                  |                               512 = Error setting $sDefaultTxt
+;                  |                               1024 = Error setting $iAlign
+;                  |                               2048 = Error setting $iLines
+;                  |                               4096 = Error setting $bHideSel
+;                  |                               8192 = Error setting $sAddInfo
+;                  |                               16384 = Error setting $sHelpText
+;                  |                               32768 = Error setting $sHelpURL
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 16 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $asList, $sDefaultTxt, $sAddInfo.
+; Related .......: _LOWriter_FormConComboBoxData, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FormConTableConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $sLabel = Null, $iTxtDir = Null, $iMaxLen = Null, $bEnabled = Null, $bReadOnly = Null, $iMouseScroll = Null, $iWidth = Null, $asList = Null, $sDefaultTxt = Null, $iAlign = Null, $iLines = Null, $bHideSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avControl[16]
+
+	If Not IsObj($oComboBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOWriter_FormConIdentify($oComboBox) <> $LOW_FORM_CON_TYPE_COMBO_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $iMaxLen, $bEnabled, $bReadOnly, $iMouseScroll, $iWidth, $asList, $sDefaultTxt, $iAlign, $iLines, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LOWriter_ArrayFill($avControl, $oComboBox.Name(), $oComboBox.Label(), $oComboBox.WritingMode(), $oComboBox.MaxTextLen(), _
+				$oComboBox.Enabled(), $oComboBox.ReadOnly(), $oComboBox.MouseWheelBehavior(), _
+				($oComboBox.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				$oComboBox.StringItemList(), $oComboBox.DefaultText(), _
+				$oComboBox.Align(), $oComboBox.LineCount(), $oComboBox.HideInactiveSelection(), _
+				$oComboBox.Tag(), $oComboBox.HelpText(), _
+				$oComboBox.HelpURL())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
+	EndIf
+
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1) ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
+
+		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oComboBox.Name = $sName
+		$iError = ($oComboBox.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($sLabel = Default) Then
+		$oComboBox.setPropertyToDefault("Label")
+
+	ElseIf ($sLabel <> Null) Then
+		If Not IsString($sLabel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oComboBox.Label = $sLabel
+		$iError = ($oComboBox.Label() = $sLabel) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($iTxtDir = Default) Then
+		$oComboBox.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
+		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oComboBox.WritingMode = $iTxtDir
+		$iError = ($oComboBox.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($iMaxLen = Default) Then
+		$oComboBox.setPropertyToDefault("MaxTextLen")
+
+	ElseIf ($iMaxLen <> Null) Then
+		If Not __LOWriter_IntIsBetween($iMaxLen, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oComboBox.MaxTextLen = $iMaxLen
+		$iError = ($oComboBox.MaxTextLen() = $iMaxLen) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	If ($bEnabled = Default) Then
+		$oComboBox.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
+		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oComboBox.Enabled = $bEnabled
+		$iError = ($oComboBox.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 16))
+	EndIf
+
+	If ($bReadOnly = Default) Then
+		$oComboBox.setPropertyToDefault("ReadOnly")
+
+	ElseIf ($bReadOnly <> Null) Then
+		If Not IsBool($bReadOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		$oComboBox.ReadOnly = $bReadOnly
+		$iError = ($oComboBox.ReadOnly() = $bReadOnly) ? ($iError) : (BitOR($iError, 32))
+	EndIf
+
+	If ($iMouseScroll = Default) Then
+		$oComboBox.setPropertyToDefault("MouseWheelBehavior")
+
+	ElseIf ($iMouseScroll <> Null) Then
+		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		$oComboBox.MouseWheelBehavior = $iMouseScroll
+		$iError = ($oComboBox.MouseWheelBehavior = $iMouseScroll) ? ($iError) : (BitOR($iError, 64))
+	EndIf
+
+	If ($iWidth = Default) Then
+		$oComboBox.setPropertyToDefault("Width")
+
+	ElseIf ($iWidth <> Null) Then
+		If Not __LOWriter_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		$oComboBox.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
+		$iError = ($oComboBox.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 128))
+	EndIf
+
+	If ($asList = Default) Then
+		$iError = BitOR($iError, 256) ; Can't Default StringItemList.
+
+	ElseIf ($asList <> Null) Then
+		If Not IsArray($asList) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		For $i = 0 To UBound($asList) - 1
+			If Not IsString($asList[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, $i)
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
+		Next
+		$oComboBox.StringItemList = $asList
+		$iError = (UBound($oComboBox.StringItemList()) = UBound($asList)) ? ($iError) : (BitOR($iError, 256))
+	EndIf
+
+	If ($sDefaultTxt = Default) Then
+		$iError = BitOR($iError, 512) ; Can't Default DefaultText.
+
+	ElseIf ($sDefaultTxt <> Null) Then
+		If Not IsString($sDefaultTxt) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+		$oComboBox.DefaultText = $sDefaultTxt
+		$iError = ($oComboBox.DefaultText() = $sDefaultTxt) ? ($iError) : (BitOR($iError, 512))
+	EndIf
+
+	If ($iAlign = Default) Then
+		$oComboBox.setPropertyToDefault("Align")
+
+	ElseIf ($iAlign <> Null) Then
+		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		$oComboBox.Align = $iAlign
+		$iError = ($oComboBox.Align() = $iAlign) ? ($iError) : (BitOR($iError, 1024))
+	EndIf
+
+	If ($iLines = Default) Then
+		$oComboBox.setPropertyToDefault("LineCount")
+
+	ElseIf ($iLines <> Null) Then
+		If Not __LOWriter_IntIsBetween($iLines, -2147483648, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
+		$oComboBox.LineCount = $iLines
+		$iError = ($oComboBox.LineCount = $iLines) ? ($iError) : (BitOR($iError, 2048))
+	EndIf
+
+	If ($bHideSel = Default) Then
+		$oComboBox.setPropertyToDefault("HideInactiveSelection")
+
+	ElseIf ($bHideSel <> Null) Then
+		If Not IsBool($bHideSel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
+		$oComboBox.HideInactiveSelection = $bHideSel
+		$iError = ($oComboBox.HideInactiveSelection() = $bHideSel) ? ($iError) : (BitOR($iError, 4096))
+	EndIf
+
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 8192) ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
+		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+		$oComboBox.Tag = $sAddInfo
+		$iError = ($oComboBox.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 8192))
+	EndIf
+
+	If ($sHelpText = Default) Then
+		$oComboBox.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
+		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
+		$oComboBox.HelpText = $sHelpText
+		$iError = ($oComboBox.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 16384))
+	EndIf
+
+	If ($sHelpURL = Default) Then
+		$oComboBox.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
+		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
+		$oComboBox.HelpURL = $sHelpURL
+		$iError = ($oComboBox.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 32768))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FormConTableConComboBoxGeneral
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FormConTableConCurrencyFieldData
+; Description ...: Set or Retrieve Table Control Currency Field Data Properties.
+; Syntax ........: _LOWriter_FormConTableConCurrencyFieldData(ByRef $oCurrencyField[, $sDataField = Null[, $bInputRequired = Null]])
+; Parameters ....: $oCurrencyField      - [in/out] an object. A Table Control Currency Field Control object returned by a previous _LOWriter_FormConTableConColumnAdd or _LOWriter_FormConTableConColumnsGetList function.
+;                  $sDataField          - [optional] a string value. Default is Null. The Datafield name to retrieve content from, either a Table name, SQL query, or other.
+;                  $bInputRequired      - [optional] a boolean value. Default is Null. If True, the control requires input.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oCurrencyField not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oCurrencyField not a Currency Field Control.
+;                  @Error 1 @Extended 3 Return 0 = $sDataField not a String.
+;                  @Error 1 @Extended 4 Return 0 = $bInputRequired not a Boolean.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sDataField
+;                  |                               2 = Error setting $bInputRequired
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  $sDataField is not checked to make sure it exists in the referenced Database, it is the user's responsibility to do this.
+; Related .......: _LOWriter_FormConCurrencyFieldGeneral
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FormConTableConCurrencyFieldData(ByRef $oCurrencyField, $sDataField = Null, $bInputRequired = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avControl[2]
+
+	If Not IsObj($oCurrencyField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOWriter_FormConIdentify($oCurrencyField) <> $LOW_FORM_CON_TYPE_CURRENCY_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
+		__LOWriter_ArrayFill($avControl, $oCurrencyField.DataField(), $oCurrencyField.InputRequired())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
+	EndIf
+
+	If ($sDataField <> Null) Then
+		If Not IsString($sDataField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oCurrencyField.DataField = $sDataField
+		$iError = ($oCurrencyField.DataField() = $sDataField) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($bInputRequired <> Null) Then
+		If Not IsBool($bInputRequired) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oCurrencyField.InputRequired = $bInputRequired
+		$iError = ($oCurrencyField.InputRequired() = $bInputRequired) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FormConTableConCurrencyFieldData
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FormConTableConCurrencyFieldGeneral
+; Description ...: Set or Retrieve general Table Control Currency Field properties.
+; Syntax ........: _LOWriter_FormConTableConCurrencyFieldGeneral(ByRef $oCurrencyField[, $sName = Null[, $sLabel = Null[, $iTxtDir = Null[, $bStrict = Null[, $bEnabled = Null[, $bReadOnly = Null[, $iMouseScroll = Null[, $nMin = Null[, $nMax = Null[, $iIncr = Null[, $nDefault = Null[, $iDecimal = Null[, $bThousandsSep = Null[, $sCurrSymbol = Null[, $bPrefix = Null[, $bSpin = Null[, $bRepeat = Null[, $iDelay = Null[, $iWidth = Null[, $iAlign = Null[, $bHideSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]]]]]])
+; Parameters ....: $oCurrencyField      - [in/out] an object. A Table Control Currency Field Control object returned by a previous _LOWriter_FormConTableConColumnAdd or _LOWriter_FormConTableConColumnsGetList function.
+;                  $sName               - [optional] a string value. Default is Null. The control name.
+;                  $sLabel              - [optional] a string value. Default is Null. The control's label to display.
+;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $bStrict             - [optional] a boolean value. Default is Null. If True, strict formatting is enabled.
+;                  $bEnabled            - [optional] a boolean value. Default is Null.If True, the control is enabled.
+;                  $bReadOnly           - [optional] a boolean value. Default is Null. If True, the control is Read-Only.
+;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $nMin                - [optional] a general number value. Default is Null. The minimum value the control can be set to.
+;                  $nMax                - [optional] a general number value. Default is Null. The maximum value the control can be set to.
+;                  $iIncr               - [optional] an integer value. Default is Null. The amount to Increase or Decrease the value by.
+;                  $nDefault            - [optional] a general number value. Default is Null. The default value the control will be set to.
+;                  $iDecimal            - [optional] an integer value (0-20). Default is Null. The amount of decimal accuracy.
+;                  $bThousandsSep       - [optional] a boolean value. Default is Null. If True, a thousands separator will be added.
+;                  $sCurrSymbol         - [optional] a string value. Default is Null. The symbol to use for currency.
+;                  $bPrefix             - [optional] a boolean value. Default is Null. If True, the currency symbol is prefixed to the value.
+;                  $bSpin               - [optional] a boolean value. Default is Null. If True, the field will act as a spin button.
+;                  $bRepeat             - [optional] a boolean value. Default is Null. If True, the button action will repeat if the button is clicked and held down.
+;                  $iDelay              - [optional] an integer value (0-2147483647). Default is Null. The delay between button repeats, set in milliseconds.
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Micrometers.
+;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
+;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
+;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
+;                  $sHelpURL            - [optional] a string value. Default is Null. The Help URL.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oCurrencyField not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oCurrencyField not a Currency Field Control.
+;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 4 Return 0 = $sLabel not a String.
+;                  @Error 1 @Extended 5 Return 0 = $iTxtDir not an Integer, less than 0 or greater than 5. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $bStrict not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $bEnabled not a Boolean.
+;                  @Error 1 @Extended 8 Return 0 = $bReadOnly not a Boolean.
+;                  @Error 1 @Extended 9 Return 0 = $iMouseScroll not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 10 Return 0 = $nMin not a Number.
+;                  @Error 1 @Extended 11 Return 0 = $nMax not a Number.
+;                  @Error 1 @Extended 12 Return 0 = $iIncr not an Integer.
+;                  @Error 1 @Extended 13 Return 0 = $nDefault not a Number.
+;                  @Error 1 @Extended 14 Return 0 = $iDecimal not an Integer, less than 0 or greater than 20.
+;                  @Error 1 @Extended 15 Return 0 = $bThousandsSep not a Boolean.
+;                  @Error 1 @Extended 16 Return 0 = $sCurrSymbol not a String.
+;                  @Error 1 @Extended 17 Return 0 = $bPrefix not a Boolean.
+;                  @Error 1 @Extended 18 Return 0 = $bSpin not a Boolean.
+;                  @Error 1 @Extended 19 Return 0 = $bRepeat not a Boolean.
+;                  @Error 1 @Extended 20 Return 0 = $iDelay not an Integer, less than 0 or greater than 2147483647.
+;                  @Error 1 @Extended 21 Return 0 = $iWidth not an Integer, less than 100 or greater than 200,000.
+;                  @Error 1 @Extended 22 Return 0 = $iAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 23 Return 0 = $bHideSel not a Boolean.
+;                  @Error 1 @Extended 24 Return 0 = $sAddInfo not a String.
+;                  @Error 1 @Extended 25 Return 0 = $sHelpText not a String.
+;                  @Error 1 @Extended 26 Return 0 = $sHelpURL not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sName
+;                  |                               2 = Error setting $sLabel
+;                  |                               4 = Error setting $iTxtDir
+;                  |                               8 = Error setting $bStrict
+;                  |                               16 = Error setting $bEnabled
+;                  |                               32 = Error setting $bReadOnly
+;                  |                               64 = Error setting $iMouseScroll
+;                  |                               128 = Error setting $nMin
+;                  |                               256 = Error setting $nMax
+;                  |                               512 = Error setting $iIncr
+;                  |                               1024 = Error setting $nDefault
+;                  |                               2048 = Error setting $iDecimal
+;                  |                               4096 = Error setting $bThousandsSep
+;                  |                               8192 = Error setting $sCurrSymbol
+;                  |                               16384 = Error setting $bPrefix
+;                  |                               32768 = Error setting $bSpin
+;                  |                               65536 = Error setting $bRepeat
+;                  |                               131072 = Error setting $iDelay
+;                  |                               262144 = Error setting $iWidth
+;                  |                               524288 = Error setting $iAlign
+;                  |                               1048576 = Error setting $bHideSel
+;                  |                               2097152 = Error setting $sAddInfo
+;                  |                               4194304 = Error setting $sHelpText
+;                  |                               8388608 = Error setting $sHelpURL
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 24 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $sAddInfo.
+; Related .......: _LOWriter_FormConCurrencyFieldData, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FormConTableConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = Null, $sLabel = Null, $iTxtDir = Null, $bStrict = Null, $bEnabled = Null, $bReadOnly = Null, $iMouseScroll = Null, $nMin = Null, $nMax = Null, $iIncr = Null, $nDefault = Null, $iDecimal = Null, $bThousandsSep = Null, $sCurrSymbol = Null, $bPrefix = Null, $bSpin = Null, $bRepeat = Null, $iDelay = Null, $iWidth = Null, $iAlign = Null, $bHideSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avControl[24]
+
+	If Not IsObj($oCurrencyField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOWriter_FormConIdentify($oCurrencyField) <> $LOW_FORM_CON_TYPE_CURRENCY_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $bStrict, $bEnabled, $bReadOnly, $iMouseScroll, $nMin, $nMax, $iIncr, $nDefault, $iDecimal, $bThousandsSep, $sCurrSymbol, $bPrefix, $bSpin, $bRepeat, $iDelay, $iWidth, $iAlign, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LOWriter_ArrayFill($avControl, $oCurrencyField.Name(), $oCurrencyField.Label(), $oCurrencyField.WritingMode(), _
+				$oCurrencyField.StrictFormat(), $oCurrencyField.Enabled(), $oCurrencyField.ReadOnly(), _
+				$oCurrencyField.MouseWheelBehavior(), _
+				$oCurrencyField.ValueMin(), $oCurrencyField.ValueMax(), $oCurrencyField.ValueStep(), $oCurrencyField.DefaultValue(), _
+				$oCurrencyField.DecimalAccuracy(), $oCurrencyField.ShowThousandsSeparator(), $oCurrencyField.CurrencySymbol(), _
+				$oCurrencyField.PrependCurrencySymbol(), $oCurrencyField.Spin(), $oCurrencyField.Repeat(), $oCurrencyField.RepeatDelay(), _
+				($oCurrencyField.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				$oCurrencyField.Align(), $oCurrencyField.HideInactiveSelection(), $oCurrencyField.Tag(), _
+				$oCurrencyField.HelpText(), $oCurrencyField.HelpURL())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
+	EndIf
+
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1) ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
+
+		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oCurrencyField.Name = $sName
+		$iError = ($oCurrencyField.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($sLabel = Default) Then
+		$oCurrencyField.setPropertyToDefault("Label")
+
+	ElseIf ($sLabel <> Null) Then
+		If Not IsString($sLabel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oCurrencyField.Label = $sLabel
+		$iError = ($oCurrencyField.Label() = $sLabel) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($iTxtDir = Default) Then
+		$oCurrencyField.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
+		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oCurrencyField.WritingMode = $iTxtDir
+		$iError = ($oCurrencyField.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($bStrict = Default) Then
+		$oCurrencyField.setPropertyToDefault("StrictFormat")
+
+	ElseIf ($bStrict <> Null) Then
+		If Not IsBool($bStrict) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oCurrencyField.StrictFormat = $bStrict
+		$iError = ($oCurrencyField.StrictFormat() = $bStrict) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	If ($bEnabled = Default) Then
+		$oCurrencyField.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
+		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oCurrencyField.Enabled = $bEnabled
+		$iError = ($oCurrencyField.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 16))
+	EndIf
+
+	If ($bReadOnly = Default) Then
+		$oCurrencyField.setPropertyToDefault("ReadOnly")
+
+	ElseIf ($bReadOnly <> Null) Then
+		If Not IsBool($bReadOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		$oCurrencyField.ReadOnly = $bReadOnly
+		$iError = ($oCurrencyField.ReadOnly() = $bReadOnly) ? ($iError) : (BitOR($iError, 32))
+	EndIf
+
+	If ($iMouseScroll = Default) Then
+		$oCurrencyField.setPropertyToDefault("MouseWheelBehavior")
+
+	ElseIf ($iMouseScroll <> Null) Then
+		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		$oCurrencyField.MouseWheelBehavior = $iMouseScroll
+		$iError = ($oCurrencyField.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 64))
+	EndIf
+
+	If ($nMax = Default) Then
+		$oCurrencyField.setPropertyToDefault("ValueMin")
+
+	ElseIf ($nMin <> Null) Then
+		If Not IsNumber($nMin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		$oCurrencyField.ValueMin = $nMin
+		$iError = ($oCurrencyField.ValueMin() = $nMin) ? ($iError) : (BitOR($iError, 128))
+	EndIf
+
+	If ($nMax = Default) Then
+		$oCurrencyField.setPropertyToDefault("ValueMax")
+
+	ElseIf ($nMax <> Null) Then
+		If Not IsNumber($nMax) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		$oCurrencyField.ValueMax = $nMax
+		$iError = ($oCurrencyField.ValueMax() = $nMax) ? ($iError) : (BitOR($iError, 256))
+	EndIf
+
+	If ($iIncr = Default) Then
+		$oCurrencyField.setPropertyToDefault("ValueStep")
+
+	ElseIf ($iIncr <> Null) Then
+		If Not IsInt($iIncr) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		$oCurrencyField.ValueStep = $iIncr
+		$iError = ($oCurrencyField.ValueStep() = $iIncr) ? ($iError) : (BitOR($iError, 512))
+	EndIf
+
+	If ($nDefault = Default) Then
+		$oCurrencyField.setPropertyToDefault("DefaultValue")
+
+	ElseIf ($nDefault <> Null) Then
+		If Not IsNumber($nDefault) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+		$oCurrencyField.DefaultValue = $nDefault
+		$iError = ($oCurrencyField.DefaultValue() = $nDefault) ? ($iError) : (BitOR($iError, 1024))
+	EndIf
+
+	If ($iDecimal = Default) Then
+		$oCurrencyField.setPropertyToDefault("DecimalAccuracy")
+
+	ElseIf ($iDecimal <> Null) Then
+		If Not __LOWriter_IntIsBetween($iDecimal, 0, 20) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		$oCurrencyField.DecimalAccuracy = $iDecimal
+		$iError = ($oCurrencyField.DecimalAccuracy() = $iDecimal) ? ($iError) : (BitOR($iError, 2048))
+	EndIf
+
+	If ($bThousandsSep = Default) Then
+		$oCurrencyField.setPropertyToDefault("ShowThousandsSeparator")
+
+	ElseIf ($bThousandsSep <> Null) Then
+		If Not IsBool($bThousandsSep) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
+		$oCurrencyField.ShowThousandsSeparator = $bThousandsSep
+		$iError = ($oCurrencyField.ShowThousandsSeparator() = $bThousandsSep) ? ($iError) : (BitOR($iError, 4096))
+	EndIf
+
+	If ($sCurrSymbol = Default) Then
+		$oCurrencyField.setPropertyToDefault("CurrencySymbol")
+
+	ElseIf ($sCurrSymbol <> Null) Then
+		If Not IsString($sCurrSymbol) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
+		$oCurrencyField.CurrencySymbol = $sCurrSymbol
+		$iError = ($oCurrencyField.CurrencySymbol() = $sCurrSymbol) ? ($iError) : (BitOR($iError, 8192))
+	EndIf
+
+	If ($bPrefix = Default) Then
+		$oCurrencyField.setPropertyToDefault("PrependCurrencySymbol")
+
+	ElseIf ($bPrefix <> Null) Then
+		If Not IsBool($bPrefix) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+		$oCurrencyField.PrependCurrencySymbol = $bPrefix
+		$iError = ($oCurrencyField.PrependCurrencySymbol() = $bPrefix) ? ($iError) : (BitOR($iError, 16384))
+	EndIf
+
+	If ($bSpin = Default) Then
+		$oCurrencyField.setPropertyToDefault("Spin")
+
+	ElseIf ($bSpin <> Null) Then
+		If Not IsBool($bSpin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
+		$oCurrencyField.Spin = $bSpin
+		$iError = ($oCurrencyField.Spin() = $bSpin) ? ($iError) : (BitOR($iError, 32768))
+	EndIf
+
+	If ($bRepeat = Default) Then
+		$oCurrencyField.setPropertyToDefault("Repeat")
+
+	ElseIf ($bRepeat <> Null) Then
+		If Not IsBool($bRepeat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
+		$oCurrencyField.Repeat = $bRepeat
+		$iError = ($oCurrencyField.Repeat() = $bRepeat) ? ($iError) : (BitOR($iError, 65536))
+	EndIf
+
+	If ($iDelay = Default) Then
+		$oCurrencyField.setPropertyToDefault("RepeatDelay")
+
+	ElseIf ($iDelay <> Null) Then
+		If Not __LOWriter_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
+		$oCurrencyField.RepeatDelay = $iDelay
+		$iError = ($oCurrencyField.RepeatDelay() = $iDelay) ? ($iError) : (BitOR($iError, 131072))
+	EndIf
+
+	If ($iWidth = Default) Then
+		$oCurrencyField.setPropertyToDefault("Width")
+
+	ElseIf ($iWidth <> Null) Then
+		If Not __LOWriter_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
+		$oCurrencyField.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
+		$iError = ($oCurrencyField.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 262144))
+	EndIf
+
+	If ($iAlign = Default) Then
+		$oCurrencyField.setPropertyToDefault("Align")
+
+	ElseIf ($iAlign <> Null) Then
+		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
+		$oCurrencyField.Align = $iAlign
+		$iError = ($oCurrencyField.Align() = $iAlign) ? ($iError) : (BitOR($iError, 524288))
+	EndIf
+
+	If ($bHideSel = Default) Then
+		$oCurrencyField.setPropertyToDefault("HideInactiveSelection")
+
+	ElseIf ($bHideSel <> Null) Then
+		If Not IsBool($bHideSel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
+		$oCurrencyField.HideInactiveSelection = $bHideSel
+		$iError = ($oCurrencyField.HideInactiveSelection() = $bHideSel) ? ($iError) : (BitOR($iError, 1048576))
+	EndIf
+
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 2097152) ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
+		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 24, 0)
+		$oCurrencyField.Tag = $sAddInfo
+		$iError = ($oCurrencyField.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 2097152))
+	EndIf
+
+	If ($sHelpText = Default) Then
+		$oCurrencyField.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
+		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 25, 0)
+		$oCurrencyField.HelpText = $sHelpText
+		$iError = ($oCurrencyField.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 4194304))
+	EndIf
+
+	If ($sHelpURL = Default) Then
+		$oCurrencyField.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
+		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
+		$oCurrencyField.HelpURL = $sHelpURL
+		$iError = ($oCurrencyField.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 8388608))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FormConTableConCurrencyFieldGeneral
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FormConTableConDateFieldData
+; Description ...: Set or Retrieve Table Control Date Field Data Properties.
+; Syntax ........: _LOWriter_FormConTableConDateFieldData(ByRef $oDateField[, $sDataField = Null[, $bInputRequired = Null]])
+; Parameters ....: $oDateField          - [in/out] an object. A Table Control Date Field Control object returned by a previous _LOWriter_FormConTableConColumnAdd or _LOWriter_FormConTableConColumnsGetList function.
+;                  $sDataField          - [optional] a string value. Default is Null. The Datafield name to retrieve content from, either a Table name, SQL query, or other.
+;                  $bInputRequired      - [optional] a boolean value. Default is Null. If True, the control requires input.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDateField not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oDateField not a Date Field Control.
+;                  @Error 1 @Extended 3 Return 0 = $sDataField not a String.
+;                  @Error 1 @Extended 4 Return 0 = $bInputRequired not a Boolean.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sDataField
+;                  |                               2 = Error setting $bInputRequired
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  $sDataField is not checked to make sure it exists in the referenced Database, it is the user's responsibility to do this.
+; Related .......: _LOWriter_FormConDateFieldGeneral
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FormConTableConDateFieldData(ByRef $oDateField, $sDataField = Null, $bInputRequired = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avControl[2]
+
+	If Not IsObj($oDateField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOWriter_FormConIdentify($oDateField) <> $LOW_FORM_CON_TYPE_DATE_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
+		__LOWriter_ArrayFill($avControl, $oDateField.DataField(), $oDateField.InputRequired())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
+	EndIf
+
+	If ($sDataField <> Null) Then
+		If Not IsString($sDataField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oDateField.DataField = $sDataField
+		$iError = ($oDateField.DataField() = $sDataField) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($bInputRequired <> Null) Then
+		If Not IsBool($bInputRequired) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oDateField.InputRequired = $bInputRequired
+		$iError = ($oDateField.InputRequired() = $bInputRequired) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FormConTableConDateFieldData
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FormConTableConDateFieldGeneral
+; Description ...: Set or Retrieve general Table Control Date Field properties.
+; Syntax ........: _LOWriter_FormConTableConDateFieldGeneral(ByRef $oDateField[, $sName = Null[, $sLabel = Null[, $iTxtDir = Null[, $bStrict = Null[, $bEnabled = Null[, $bReadOnly = Null[, $iMouseScroll = Null[, $tDateMin = Null[, $tDateMax = Null[, $iFormat = Null[, $tDateDefault = Null[, $bSpin = Null[, $bRepeat = Null[, $iDelay = Null[, $iWidth = Null[, $iAlign = Null[, $bDropdown = Null[, $bHideSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]]])
+; Parameters ....: $oDateField          - [in/out] an object. A Table Control Date Field Control object returned by a previous _LOWriter_FormConTableConColumnAdd or _LOWriter_FormConTableConColumnsGetList function.
+;                  $sName               - [optional] a string value. Default is Null. The control name.
+;                  $sLabel              - [optional] a string value. Default is Null. The control's label to display.
+;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $bStrict             - [optional] a boolean value. Default is Null. If True, strict formatting is enabled.
+;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
+;                  $bReadOnly           - [optional] a boolean value. Default is Null. If True, the control is Read-Only.
+;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $tDateMin            - [optional] a dll struct value. Default is Null. The minimum date allowed to be entered, created previously by _LOWriter_DateStructCreate.
+;                  $tDateMax            - [optional] a dll struct value. Default is Null. The maximum date allowed to be entered, created previously by _LOWriter_DateStructCreate.
+;                  $iFormat             - [optional] an integer value (0-11). Default is Null. The Date Format to display the content in. See Constants $LOW_FORM_CON_DATE_FRMT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $tDateDefault        - [optional] a dll struct value. Default is Null. The Default date to display, created previously by _LOWriter_DateStructCreate.
+;                  $bSpin               - [optional] a boolean value. Default is Null. If True, the field will act as a spin button.
+;                  $bRepeat             - [optional] a boolean value. Default is Null. If True, the button action will repeat if the button is clicked and held down.
+;                  $iDelay              - [optional] an integer value (0-2147483647). Default is Null. The delay between button repeats, set in milliseconds.
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Micrometers.
+;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $bDropdown           - [optional] a boolean value. Default is Null. If True, the field will behave as a dropdown control.
+;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
+;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
+;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
+;                  $sHelpURL            - [optional] a string value. Default is Null. The Help URL.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDateField not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oDateField not a Date Field Control.
+;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 4 Return 0 = $sLabel not a String.
+;                  @Error 1 @Extended 5 Return 0 = $iTxtDir not an Integer, less than 0 or greater than 5. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $bStrict not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $bEnabled not a Boolean.
+;                  @Error 1 @Extended 8 Return 0 = $bReadOnly not a Boolean.
+;                  @Error 1 @Extended 9 Return 0 = $iMouseScroll not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 10 Return 0 = $tDateMin not an Object.
+;                  @Error 1 @Extended 11 Return 0 = $tDateMax not an Object.
+;                  @Error 1 @Extended 12 Return 0 = $iFormat not an Integer, less then 0 or greater than 11. See Constants $LOW_FORM_CON_DATE_FRMT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 13 Return 0 = $tDateDefault not an Object.
+;                  @Error 1 @Extended 14 Return 0 = $bSpin not a Boolean.
+;                  @Error 1 @Extended 15 Return 0 = $bRepeat not a Boolean.
+;                  @Error 1 @Extended 16 Return 0 = $iDelay not an Integer, less than 0 or greater than 2147483647.
+;                  @Error 1 @Extended 17 Return 0 = $iWidth not an Integer, less than 100 or greater than 200,000.
+;                  @Error 1 @Extended 18 Return 0 = $iAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 19 Return 0 = $bDropdown not a Boolean.
+;                  @Error 1 @Extended 20 Return 0 = $bHideSel not a Boolean.
+;                  @Error 1 @Extended 21 Return 0 = $sAddInfo not a String.
+;                  @Error 1 @Extended 22 Return 0 = $sHelpText not a String.
+;                  @Error 1 @Extended 23 Return 0 = $sHelpURL not a String.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create a "com.sun.star.util.DateTime" Struct.
+;                  @Error 2 @Extended 2 Return 0 = Failed to create a "com.sun.star.util.Date" Struct.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve current Minimum Date.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve current Maximum Date.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sName
+;                  |                               2 = Error setting $sLabel
+;                  |                               4 = Error setting $iTxtDir
+;                  |                               8 = Error setting $bStrict
+;                  |                               16 = Error setting $bEnabled
+;                  |                               32 = Error setting $bReadOnly
+;                  |                               64 = Error setting $iMouseScroll
+;                  |                               128 = Error setting $tDateMin
+;                  |                               256 = Error setting $tDateMax
+;                  |                               512 = Error setting $iFormat
+;                  |                               1024 = Error setting $tDateDefault
+;                  |                               2048 = Error setting $bSpin
+;                  |                               4096 = Error setting $bRepeat
+;                  |                               8192 = Error setting $iDelay
+;                  |                               16384 = Error setting $iWidth
+;                  |                               32768 = Error setting $iAlign
+;                  |                               65536 = Error setting $bDropdown
+;                  |                               131072 = Error setting $bHideSel
+;                  |                               262144 = Error setting $sAddInfo
+;                  |                               524288 = Error setting $sHelpText
+;                  |                               1048576 = Error setting $sHelpURL
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 21 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $sAddInfo.
+; Related .......: _LOWriter_FormConDateFieldData, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FormConTableConDateFieldGeneral(ByRef $oDateField, $sName = Null, $sLabel = Null, $iTxtDir = Null, $bStrict = Null, $bEnabled = Null, $bReadOnly = Null, $iMouseScroll = Null, $tDateMin = Null, $tDateMax = Null, $iFormat = Null, $tDateDefault = Null, $bSpin = Null, $bRepeat = Null, $iDelay = Null, $iWidth = Null, $iAlign = Null, $bDropdown = Null, $bHideSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $tDate, $tCurMin, $tCurMax, $tCurDefault
+	Local $avControl[21]
+
+	If Not IsObj($oDateField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOWriter_FormConIdentify($oDateField) <> $LOW_FORM_CON_TYPE_DATE_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $bStrict, $bEnabled, $bReadOnly, $iMouseScroll, $tDateMin, $tDateMax, $iFormat, $tDateDefault, $bSpin, $bRepeat, $iDelay, $iWidth, $iAlign, $bDropdown, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
+		$tDate = $oDateField.DateMin()
+		If Not IsObj($tDate) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+		$tCurMin = __LOWriter_CreateStruct("com.sun.star.util.DateTime")
+		If Not IsObj($tCurMin) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+		$tCurMin.Year = $tDate.Year()
+		$tCurMin.Month = $tDate.Month()
+		$tCurMin.Day = $tDate.Day()
+
+		$tDate = $oDateField.DateMax()
+		If Not IsObj($tDate) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+		$tCurMax = __LOWriter_CreateStruct("com.sun.star.util.DateTime")
+		If Not IsObj($tCurMax) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+		$tCurMax.Year = $tDate.Year()
+		$tCurMax.Month = $tDate.Month()
+		$tCurMax.Day = $tDate.Day()
+
+		$tDate = $oDateField.DefaultDate() ; Default date is Null when not set.
+		If IsObj($tDate) Then
+			$tCurDefault = __LOWriter_CreateStruct("com.sun.star.util.DateTime")
+			If Not IsObj($tCurDefault) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+			$tCurDefault.Year = $tDate.Year()
+			$tCurDefault.Month = $tDate.Month()
+			$tCurDefault.Day = $tDate.Day()
+
+		Else
+			$tCurDefault = $tDate
+		EndIf
+
+		__LOWriter_ArrayFill($avControl, $oDateField.Name(), $oDateField.Label(), $oDateField.WritingMode(), $oDateField.StrictFormat(), _
+				$oDateField.Enabled(), $oDateField.ReadOnly(), $oDateField.MouseWheelBehavior(), _
+				$tCurMin, $tCurMax, $oDateField.DateFormat(), $tCurDefault, $oDateField.Spin(), _
+				$oDateField.Repeat(), $oDateField.RepeatDelay(), ($oDateField.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				$oDateField.Align(), _
+				$oDateField.Dropdown(), _
+				$oDateField.HideInactiveSelection(), $oDateField.Tag(), $oDateField.HelpText(), $oDateField.HelpURL())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
+	EndIf
+
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1) ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
+
+		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oDateField.Name = $sName
+		$iError = ($oDateField.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($sLabel = Default) Then
+		$oDateField.setPropertyToDefault("Label")
+
+	ElseIf ($sLabel <> Null) Then
+		If Not IsString($sLabel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oDateField.Label = $sLabel
+		$iError = ($oDateField.Label() = $sLabel) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($iTxtDir = Default) Then
+		$oDateField.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
+		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oDateField.WritingMode = $iTxtDir
+		$iError = ($oDateField.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($bStrict = Default) Then
+		$oDateField.setPropertyToDefault("StrictFormat")
+
+	ElseIf ($bStrict <> Null) Then
+		If Not IsBool($bStrict) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oDateField.StrictFormat = $bStrict
+		$iError = ($oDateField.StrictFormat() = $bStrict) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	If ($bEnabled = Default) Then
+		$oDateField.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
+		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oDateField.Enabled = $bEnabled
+		$iError = ($oDateField.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 16))
+	EndIf
+
+	If ($bReadOnly = Default) Then
+		$oDateField.setPropertyToDefault("ReadOnly")
+
+	ElseIf ($bReadOnly <> Null) Then
+		If Not IsBool($bReadOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		$oDateField.ReadOnly = $bReadOnly
+		$iError = ($oDateField.ReadOnly() = $bReadOnly) ? ($iError) : (BitOR($iError, 32))
+	EndIf
+
+	If ($iMouseScroll = Default) Then
+		$oDateField.setPropertyToDefault("MouseWheelBehavior")
+
+	ElseIf ($iMouseScroll <> Null) Then
+		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		$oDateField.MouseWheelBehavior = $iMouseScroll
+		$iError = ($oDateField.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 64))
+	EndIf
+
+	If ($tDateMin = Default) Then
+		$oDateField.setPropertyToDefault("DateMin")
+
+	ElseIf ($tDateMin <> Null) Then
+		If Not IsObj($tDateMin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
+		$tDate = __LOWriter_CreateStruct("com.sun.star.util.Date")
+		If Not IsObj($tDate) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+		$tDate.Year = $tDateMin.Year()
+		$tDate.Month = $tDateMin.Month()
+		$tDate.Day = $tDateMin.Day()
+
+		$oDateField.DateMin = $tDate
+		$iError = (__LOWriter_DateStructCompare($oDateField.DateMin(), $tDate, True)) ? ($iError) : (BitOR($iError, 128))
+	EndIf
+
+	If ($tDateMax = Default) Then
+		$oDateField.setPropertyToDefault("DateMax")
+
+	ElseIf ($tDateMax <> Null) Then
+		If Not IsObj($tDateMax) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+
+		$tDate = __LOWriter_CreateStruct("com.sun.star.util.Date")
+		If Not IsObj($tDate) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+		$tDate.Year = $tDateMax.Year()
+		$tDate.Month = $tDateMax.Month()
+		$tDate.Day = $tDateMax.Day()
+
+		$oDateField.DateMax = $tDate
+		$iError = (__LOWriter_DateStructCompare($oDateField.DateMax(), $tDate, True)) ? ($iError) : (BitOR($iError, 256))
+	EndIf
+
+	If ($iFormat = Default) Then
+		$oDateField.setPropertyToDefault("DateFormat")
+
+	ElseIf ($iFormat <> Null) Then
+		If Not __LOWriter_IntIsBetween($iFormat, $LOW_FORM_CON_DATE_FRMT_SYSTEM_SHORT, $LOW_FORM_CON_DATE_FRMT_SHORT_YYYY_MM_DD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		$oDateField.DateFormat = $iFormat
+		$iError = ($oDateField.DateFormat() = $iFormat) ? ($iError) : (BitOR($iError, 512))
+	EndIf
+
+	If ($tDateDefault = Default) Then
+		$oDateField.setPropertyToDefault("DefaultDate")
+
+	ElseIf ($tDateDefault <> Null) Then
+		If Not IsObj($tDateDefault) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+
+		$tDate = __LOWriter_CreateStruct("com.sun.star.util.Date")
+		If Not IsObj($tDate) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+		$tDate.Year = $tDateDefault.Year()
+		$tDate.Month = $tDateDefault.Month()
+		$tDate.Day = $tDateDefault.Day()
+
+		$oDateField.DefaultDate = $tDate
+		$iError = (__LOWriter_DateStructCompare($oDateField.DefaultDate(), $tDate, True)) ? ($iError) : (BitOR($iError, 1024))
+	EndIf
+
+	If ($bSpin = Default) Then
+		$oDateField.setPropertyToDefault("Spin")
+
+	ElseIf ($bSpin <> Null) Then
+		If Not IsBool($bSpin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		$oDateField.Spin = $bSpin
+		$iError = ($oDateField.Spin() = $bSpin) ? ($iError) : (BitOR($iError, 2048))
+	EndIf
+
+	If ($bRepeat = Default) Then
+		$oDateField.setPropertyToDefault("Repeat")
+
+	ElseIf ($bRepeat <> Null) Then
+		If Not IsBool($bRepeat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
+		$oDateField.Repeat = $bRepeat
+		$iError = ($oDateField.Repeat() = $bRepeat) ? ($iError) : (BitOR($iError, 4096))
+	EndIf
+
+	If ($iDelay = Default) Then
+		$oDateField.setPropertyToDefault("RepeatDelay")
+
+	ElseIf ($iDelay <> Null) Then
+		If Not __LOWriter_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
+		$oDateField.RepeatDelay = $iDelay
+		$iError = ($oDateField.RepeatDelay() = $iDelay) ? ($iError) : (BitOR($iError, 8192))
+	EndIf
+
+	If ($iWidth = Default) Then
+		$oDateField.setPropertyToDefault("Width")
+
+	ElseIf ($iWidth <> Null) Then
+		If Not __LOWriter_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+		$oDateField.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
+		$iError = ($oDateField.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 16384))
+	EndIf
+
+	If ($iAlign = Default) Then
+		$oDateField.setPropertyToDefault("Align")
+
+	ElseIf ($iAlign <> Null) Then
+		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
+		$oDateField.Align = $iAlign
+		$iError = ($oDateField.Align() = $iAlign) ? ($iError) : (BitOR($iError, 32768))
+	EndIf
+
+	If ($bDropdown = Default) Then
+		$oDateField.setPropertyToDefault("Dropdown")
+
+	ElseIf ($bDropdown <> Null) Then
+		If Not IsBool($bDropdown) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
+		$oDateField.Dropdown = $bDropdown
+		$iError = ($oDateField.Dropdown() = $bDropdown) ? ($iError) : (BitOR($iError, 65536))
+	EndIf
+
+	If ($bHideSel = Default) Then
+		$oDateField.setPropertyToDefault("HideInactiveSelection")
+
+	ElseIf ($bHideSel <> Null) Then
+		If Not IsBool($bHideSel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
+		$oDateField.HideInactiveSelection = $bHideSel
+		$iError = ($oDateField.HideInactiveSelection() = $bHideSel) ? ($iError) : (BitOR($iError, 131072))
+	EndIf
+
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 262144) ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
+		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
+		$oDateField.Tag = $sAddInfo
+		$iError = ($oDateField.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 262144))
+	EndIf
+
+	If ($sHelpText = Default) Then
+		$oDateField.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
+		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
+		$oDateField.HelpText = $sHelpText
+		$iError = ($oDateField.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 524288))
+	EndIf
+
+	If ($sHelpURL = Default) Then
+		$oDateField.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
+		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
+		$oDateField.HelpURL = $sHelpURL
+		$iError = ($oDateField.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 1048576))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FormConTableConDateFieldGeneral
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FormConTableConFormattedFieldData
+; Description ...: Set or Retrieve Table Control Formatted Field Data Properties.
+; Syntax ........: _LOWriter_FormConTableConFormattedFieldData(ByRef $oFormatField[, $sDataField = Null[, $bEmptyIsNull = Null[, $bInputRequired = Null[, $bFilter = Null]]]])
+; Parameters ....: $oFormatField        - [in/out] an object. A Table Control Formatted Field Control object returned by a previous _LOWriter_FormConTableConColumnAdd or _LOWriter_FormConTableConColumnsGetList function.
+;                  $sDataField          - [optional] a string value. Default is Null. The Datafield name to retrieve content from, either a Table name, SQL query, or other.
+;                  $bEmptyIsNull        - [optional] a boolean value. Default is Null. If True, an empty string will be treated as a Null value.
+;                  $bInputRequired      - [optional] a boolean value. Default is Null. If True, the control requires input.
+;                  $bFilter             - [optional] a boolean value. Default is Null. If True, filter proposal is active.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oFormatField not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oFormatField not a Formatted Field Control.
+;                  @Error 1 @Extended 3 Return 0 = $sDataField not a String.
+;                  @Error 1 @Extended 4 Return 0 = $bEmptyIsNull not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $bInputRequired not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $bFilter not a Boolean.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sDataField
+;                  |                               2 = Error setting $bEmptyIsNull
+;                  |                               4 = Error setting $bInputRequired
+;                  |                               8 = Error setting $bFilter
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  $sDataField is not checked to make sure it exists in the referenced Database, it is the user's responsibility to do this.
+; Related .......: _LOWriter_FormConFormattedFieldGeneral
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FormConTableConFormattedFieldData(ByRef $oFormatField, $sDataField = Null, $bEmptyIsNull = Null, $bInputRequired = Null, $bFilter = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avControl[4]
+
+	If Not IsObj($oFormatField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOWriter_FormConIdentify($oFormatField) <> $LOW_FORM_CON_TYPE_FORMATTED_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $bFilter) Then
+		__LOWriter_ArrayFill($avControl, $oFormatField.DataField(), $oFormatField.ConvertEmptyToNull(), $oFormatField.InputRequired(), _
+				$oFormatField.UseFilterValueProposal())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
+	EndIf
+
+	If ($sDataField <> Null) Then
+		If Not IsString($sDataField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oFormatField.DataField = $sDataField
+		$iError = ($oFormatField.DataField() = $sDataField) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($bEmptyIsNull <> Null) Then
+		If Not IsBool($bEmptyIsNull) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oFormatField.ConvertEmptyToNull = $bEmptyIsNull
+		$iError = ($oFormatField.ConvertEmptyToNull() = $bEmptyIsNull) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($bInputRequired <> Null) Then
+		If Not IsBool($bInputRequired) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oFormatField.InputRequired = $bInputRequired
+		$iError = ($oFormatField.InputRequired() = $bInputRequired) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($bFilter <> Null) Then
+		If Not IsBool($bFilter) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oFormatField.UseFilterValueProposal = $bFilter
+		$iError = ($oFormatField.UseFilterValueProposal() = $bFilter) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FormConTableConFormattedFieldData
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FormConTableConFormattedFieldGeneral
+; Description ...: Set or Retrieve general Table Control Formatted Field properties.
+; Syntax ........: _LOWriter_FormConTableConFormattedFieldGeneral(ByRef $oFormatField[, $sName = Null[, $sLabel = Null[, $iTxtDir = Null[, $iMaxLen = Null[, $bEnabled = Null[, $bReadOnly = Null[, $iMouseScroll = Null[, $nMin = Null[, $nMax = Null[, $nDefault = Null[, $iFormat = Null[, $bSpin = Null[, $bRepeat = Null[, $iDelay = Null[, $iWidth = Null[, $iAlign = Null[, $bHideSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]])
+; Parameters ....: $oFormatField        - [in/out] an object. A Table Control Formatted Field Control object returned by a previous _LOWriter_FormConTableConColumnAdd or _LOWriter_FormConTableConColumnsGetList function.
+;                  $sName               - [optional] a string value. Default is Null. The control name.
+;                  $sLabel              - [optional] a string value. Default is Null. The control's label to display.
+;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iMaxLen             - [optional] an integer value (-1-2147483647). Default is Null. The maximum text length that the Formatted field will accept.
+;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
+;                  $bReadOnly           - [optional] a boolean value. Default is Null. If True, the control is Read-Only.
+;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $nMin                - [optional] a general number value. Default is Null. The minimum value allowed in the field.
+;                  $nMax                - [optional] a general number value. Default is Null. The maximum value allowed in the field.
+;                  $nDefault            - [optional] a general number value. Default is Null. The default value of the field.
+;                  $iFormat             - [optional] an integer value. Default is Null. The Number Format Key to display the content in, retrieved from a previous _LOWriter_FormatKeyList call, or created by _LOWriter_FormatKeyCreate function.
+;                  $bSpin               - [optional] a boolean value. Default is Null. If True, the field will act as a spin button.
+;                  $bRepeat             - [optional] a boolean value. Default is Null. If True, the button action will repeat if the button is clicked and held down.
+;                  $iDelay              - [optional] an integer value (0-2147483647). Default is Null. The delay between button repeats, set in milliseconds.
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Micrometers.
+;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
+;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
+;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
+;                  $sHelpURL            - [optional] a string value. Default is Null. The Help URL.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oFormatField not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oFormatField not a Formatted Field Control.
+;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 4 Return 0 = $sLabel not a String.
+;                  @Error 1 @Extended 5 Return 0 = $iTxtDir not an Integer, less than 0 or greater than 5. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $iMaxLen not an Integer, less than -1 or greater than 2147483647.
+;                  @Error 1 @Extended 7 Return 0 = $bEnabled not a Boolean.
+;                  @Error 1 @Extended 8 Return 0 = $bReadOnly not a Boolean.
+;                  @Error 1 @Extended 9 Return 0 = $iMouseScroll not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 10 Return 0 = $nMin not a Number.
+;                  @Error 1 @Extended 11 Return 0 = $nMax not a Number.
+;                  @Error 1 @Extended 12 Return 0 = $nDefault not a Number.
+;                  @Error 1 @Extended 13 Return 0 = $iFormat not an Integer.
+;                  @Error 1 @Extended 14 Return 0 = Format key called in $iFormat not found in document.
+;                  @Error 1 @Extended 15 Return 0 = $bSpin not a Boolean.
+;                  @Error 1 @Extended 16 Return 0 = $bRepeat not a Boolean.
+;                  @Error 1 @Extended 17 Return 0 = $iDelay not an Integer, less than 0 or greater than 2147483647.
+;                  @Error 1 @Extended 18 Return 0 = $iWidth not an Integer, less than 100 or greater than 200,000.
+;                  @Error 1 @Extended 19 Return 0 = $iAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 20 Return 0 = $bHideSel not a Boolean.
+;                  @Error 1 @Extended 21 Return 0 = $sAddInfo not a String.
+;                  @Error 1 @Extended 22 Return 0 = $sHelpText not a String.
+;                  @Error 1 @Extended 23 Return 0 = $sHelpURL not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sName
+;                  |                               2 = Error setting $sLabel
+;                  |                               4 = Error setting $iTxtDir
+;                  |                               8 = Error setting $iMaxLen
+;                  |                               16 = Error setting $bEnabled
+;                  |                               32 = Error setting $bReadOnly
+;                  |                               64 = Error setting $iMouseScroll
+;                  |                               128 = Error setting $nMin
+;                  |                               256 = Error setting $nMax
+;                  |                               512 = Error setting $nDefault
+;                  |                               1024 = Error setting $iFormat
+;                  |                               2048 = Error setting $bSpin
+;                  |                               4096 = Error setting $bRepeat
+;                  |                               8192 = Error setting $iDelay
+;                  |                               16384 = Error setting $iWidth
+;                  |                               32768 = Error setting $iAlign
+;                  |                               65536 = Error setting $bHideSel
+;                  |                               131072 = Error setting $sAddInfo
+;                  |                               262144 = Error setting $sHelpText
+;                  |                               524288 = Error setting $sHelpURL
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 20 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $sAddInfo.
+; Related .......: _LOWriter_FormatKeyCreate, _LOWriter_FormatKeyList, _LOWriter_FormConFormattedFieldData, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FormConTableConFormattedFieldGeneral(ByRef $oFormatField, $sName = Null, $sLabel = Null, $iTxtDir = Null, $iMaxLen = Null, $bEnabled = Null, $bReadOnly = Null, $iMouseScroll = Null, $nMin = Null, $nMax = Null, $nDefault = Null, $iFormat = Null, $bSpin = Null, $bRepeat = Null, $iDelay = Null, $iWidth = Null, $iAlign = Null, $bHideSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $oDoc
+	Local $avControl[20]
+
+	If Not IsObj($oFormatField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOWriter_FormConIdentify($oFormatField) <> $LOW_FORM_CON_TYPE_FORMATTED_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $iMaxLen, $bEnabled, $bReadOnly, $iMouseScroll, $nMin, $nMax, $nDefault, $iFormat, $bSpin, $bRepeat, $iDelay, $iWidth, $iAlign, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LOWriter_ArrayFill($avControl, $oFormatField.Name(), $oFormatField.Label(), $oFormatField.WritingMode(), $oFormatField.MaxTextLen(), _
+				$oFormatField.Enabled(), $oFormatField.ReadOnly(), _
+				$oFormatField.MouseWheelBehavior(), $oFormatField.EffectiveMin(), _
+				$oFormatField.EffectiveMax(), $oFormatField.EffectiveDefault(), $oFormatField.FormatKey(), $oFormatField.Spin(), _
+				$oFormatField.Repeat(), $oFormatField.RepeatDelay(), ($oFormatField.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				$oFormatField.Align(), _
+				$oFormatField.HideInactiveSelection(), $oFormatField.Tag(), $oFormatField.HelpText(), $oFormatField.HelpURL())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
+	EndIf
+
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1) ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
+		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oFormatField.Name = $sName
+		$iError = ($oFormatField.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($sLabel = Default) Then
+		$oFormatField.setPropertyToDefault("Label")
+
+	ElseIf ($sLabel <> Null) Then
+		If Not IsString($sLabel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oFormatField.Label = $sLabel
+		$iError = ($oFormatField.Label() = $sLabel) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($iTxtDir = Default) Then
+		$oFormatField.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
+		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oFormatField.WritingMode = $iTxtDir
+		$iError = ($oFormatField.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($iMaxLen = Default) Then
+		$oFormatField.setPropertyToDefault("MaxTextLen")
+
+	ElseIf ($iMaxLen <> Null) Then
+		If Not __LOWriter_IntIsBetween($iMaxLen, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oFormatField.MaxTextLen = $iMaxLen
+		$iError = ($oFormatField.MaxTextLen = $iMaxLen) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	If ($bEnabled = Default) Then
+		$oFormatField.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
+		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oFormatField.Enabled = $bEnabled
+		$iError = ($oFormatField.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 16))
+	EndIf
+
+	If ($bReadOnly = Default) Then
+		$oFormatField.setPropertyToDefault("ReadOnly")
+
+	ElseIf ($bReadOnly <> Null) Then
+		If Not IsBool($bReadOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		$oFormatField.ReadOnly = $bReadOnly
+		$iError = ($oFormatField.ReadOnly() = $bReadOnly) ? ($iError) : (BitOR($iError, 32))
+	EndIf
+
+	If ($iMouseScroll = Default) Then
+		$oFormatField.setPropertyToDefault("MouseWheelBehavior")
+
+	ElseIf ($iMouseScroll <> Null) Then
+		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		$oFormatField.MouseWheelBehavior = $iMouseScroll
+		$iError = ($oFormatField.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 64))
+	EndIf
+
+	If ($nMin = Default) Then
+		$oFormatField.setPropertyToDefault("EffectiveMin")
+
+	ElseIf ($nMin <> Null) Then
+		If Not IsNumber($nMin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		$oFormatField.EffectiveMin = $nMin
+		$iError = ($oFormatField.EffectiveMin() = $nMin) ? ($iError) : (BitOR($iError, 128))
+	EndIf
+
+	If ($nMax = Default) Then
+		$oFormatField.setPropertyToDefault("EffectiveMax")
+
+	ElseIf ($nMax <> Null) Then
+		If Not IsNumber($nMax) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		$oFormatField.EffectiveMax = $nMax
+		$iError = ($oFormatField.EffectiveMax() = $nMax) ? ($iError) : (BitOR($iError, 256))
+	EndIf
+
+	If ($nDefault = Default) Then
+		$oFormatField.setPropertyToDefault("EffectiveDefault")
+
+	ElseIf ($nDefault <> Null) Then
+		If Not IsNumber($nDefault) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		$oFormatField.EffectiveDefault = $nDefault
+		$iError = ($oFormatField.EffectiveDefault() = $nDefault) ? ($iError) : (BitOR($iError, 512))
+	EndIf
+
+	If ($iFormat = Default) Then
+		$oFormatField.setPropertyToDefault("FormatKey")
+
+	ElseIf ($iFormat <> Null) Then
+		If Not IsInt($iFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+		$oDoc = $oFormatField.Parent() ; Identify the parent document.
+		If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		Do
+			$oDoc = $oDoc.getParent()
+			If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		Until $oDoc.supportsService("com.sun.star.text.TextDocument")
+		If Not _LOWriter_FormatKeyExists($oDoc, $iFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		$oFormatField.FormatKey = $iFormat
+		$iError = ($oFormatField.FormatKey() = $iFormat) ? ($iError) : (BitOR($iError, 1024))
+	EndIf
+
+	If ($bSpin = Default) Then
+		$oFormatField.setPropertyToDefault("Spin")
+
+	ElseIf ($bSpin <> Null) Then
+		If Not IsBool($bSpin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
+		$oFormatField.Spin = $bSpin
+		$iError = ($oFormatField.Spin() = $bSpin) ? ($iError) : (BitOR($iError, 2048))
+	EndIf
+
+	If ($bRepeat = Default) Then
+		$oFormatField.setPropertyToDefault("Repeat")
+
+	ElseIf ($bRepeat <> Null) Then
+		If Not IsBool($bRepeat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
+		$oFormatField.Repeat = $bRepeat
+		$iError = ($oFormatField.Repeat() = $bRepeat) ? ($iError) : (BitOR($iError, 4096))
+	EndIf
+
+	If ($iDelay = Default) Then
+		$oFormatField.setPropertyToDefault("RepeatDelay")
+
+	ElseIf ($iDelay <> Null) Then
+		If Not __LOWriter_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+		$oFormatField.RepeatDelay = $iDelay
+		$iError = ($oFormatField.RepeatDelay() = $iDelay) ? ($iError) : (BitOR($iError, 8192))
+	EndIf
+
+	If ($iWidth = Default) Then
+		$oFormatField.setPropertyToDefault("Width")
+
+	ElseIf ($iWidth <> Null) Then
+		If Not __LOWriter_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
+		$oFormatField.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
+		$iError = ($oFormatField.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 16384))
+	EndIf
+
+	If ($iAlign = Default) Then
+		$oFormatField.setPropertyToDefault("Align")
+
+	ElseIf ($iAlign <> Null) Then
+		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
+		$oFormatField.Align = $iAlign
+		$iError = ($oFormatField.Align() = $iAlign) ? ($iError) : (BitOR($iError, 32768))
+	EndIf
+
+	If ($bHideSel = Default) Then
+		$oFormatField.setPropertyToDefault("HideInactiveSelection")
+
+	ElseIf ($bHideSel <> Null) Then
+		If Not IsBool($bHideSel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
+		$oFormatField.HideInactiveSelection = $bHideSel
+		$iError = ($oFormatField.HideInactiveSelection() = $bHideSel) ? ($iError) : (BitOR($iError, 65536))
+	EndIf
+
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 131072) ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
+		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
+		$oFormatField.Tag = $sAddInfo
+		$iError = ($oFormatField.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 131072))
+	EndIf
+
+	If ($sHelpText = Default) Then
+		$oFormatField.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
+		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
+		$oFormatField.HelpText = $sHelpText
+		$iError = ($oFormatField.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 262144))
+	EndIf
+
+	If ($sHelpURL = Default) Then
+		$oFormatField.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
+		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
+		$oFormatField.HelpURL = $sHelpURL
+		$iError = ($oFormatField.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 524288))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FormConTableConFormattedFieldGeneral
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FormConTableConGeneral
 ; Description ...: Set or Retrieve general Table Control properties.
 ; Syntax ........: _LOWriter_FormConTableConGeneral(ByRef $oTableCon[, $sName = Null[, $iTxtDir = Null[, $bEnabled = Null[, $bVisible = Null[, $bPrintable = Null[, $bTabStop = Null[, $iTabOrder = Null[, $mFont = Null[, $nRowHeight = Null[, $iBackColor = Null[, $iBorder = Null[, $bNavBar = Null[, $bRecordMarker = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]])
@@ -7975,6 +10058,1833 @@ Func _LOWriter_FormConTableConGeneral(ByRef $oTableCon, $sName = Null, $iTxtDir 
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FormConTableConGeneral
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FormConTableConListBoxData
+; Description ...: Set or Retrieve Table Control List Box Data Properties.
+; Syntax ........: _LOWriter_FormConTableConListBoxData(ByRef $oListBox[, $sDataField = Null[, $bInputRequired = Null[, $iType = Null[, $asListContent = Null[, $iBoundField = Null]]]]])
+; Parameters ....: $oListBox            - [in/out] an object. A Table Control List Box Control object returned by a previous _LOWriter_FormConTableConColumnAdd or _LOWriter_FormConTableConColumnsGetList function.
+;                  $sDataField          - [optional] a string value. Default is Null. The Datafield name to retrieve content from, either a Table name, SQL query, or other.
+;                  $bInputRequired      - [optional] a boolean value. Default is Null. If True, the control requires input.
+;                  $iType               - [optional] an integer value (0-5). Default is Null. The type of content to fill the control with. See Constants $LOW_FORM_CON_SOURCE_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $asListContent       - [optional] an array of strings. Default is Null. A single dimension array. See remarks
+;                  $iBoundField         - [optional] an integer value (-1-2147483647). Default is Null. The bound data field of a linked table to display.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oListBox not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oListBox not a List Box Control.
+;                  @Error 1 @Extended 3 Return 0 = $sDataField not a String.
+;                  @Error 1 @Extended 4 Return 0 = $bInputRequired not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $iType not an Integer, less than 0 or greater than 5. See Constants $LOW_FORM_CON_SOURCE_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $asListContent not an Array.
+;                  @Error 1 @Extended 7 Return 0 = $iType not set to Valuelist and array called in $asListContent has more than 1 element.
+;                  @Error 1 @Extended 8 Return 0 = $iBoundField not an Integer, less than -1 or greater than 2147483647.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sDataField
+;                  |                               2 = Error setting $bInputRequired
+;                  |                               4 = Error setting $iType
+;                  |                               8 = Error setting $asListContent
+;                  |                               16 = Error setting $iBoundField
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  $sDataField is not checked to make sure it exists in the referenced Database, it is the user's responsibility to do this.
+;                  $asListContent is not error checked for the same content, but only that the set array size is the same.
+;                  $asListContent should be a single dimension array with a appropriate value in each element. e.g. If $iType is set to Table, the element will contain a Table name. Or if $iType is set to Value List, each element will contain a list item.
+;                  For types other than Value list for $iType, the array sound contain a single element.
+; Related .......: _LOWriter_FormConListBoxGeneral
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FormConTableConListBoxData(ByRef $oListBox, $sDataField = Null, $bInputRequired = Null, $iType = Null, $asListContent = Null, $iBoundField = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avControl[5]
+
+	If Not IsObj($oListBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOWriter_FormConIdentify($oListBox) <> $LOW_FORM_CON_TYPE_LIST_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($sDataField, $bInputRequired, $iType, $asListContent, $iBoundField) Then
+		__LOWriter_ArrayFill($avControl, $oListBox.DataField(), $oListBox.InputRequired(), $oListBox.ListSourceType(), _
+				$oListBox.ListSource(), $oListBox.BoundColumn())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
+	EndIf
+
+	If ($sDataField <> Null) Then
+		If Not IsString($sDataField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oListBox.DataField = $sDataField
+		$iError = ($oListBox.DataField() = $sDataField) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($bInputRequired <> Null) Then
+		If Not IsBool($bInputRequired) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oListBox.InputRequired = $bInputRequired
+		$iError = ($oListBox.InputRequired() = $bInputRequired) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($iType <> Null) Then
+		If Not __LOWriter_IntIsBetween($iType, $LOW_FORM_CON_SOURCE_TYPE_VALUE_LIST, $LOW_FORM_CON_SOURCE_TYPE_TABLE_FIELDS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oListBox.ListSourceType = $iType
+		$iError = ($oListBox.ListSourceType() = $iType) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($asListContent <> Null) Then
+		If Not IsArray($asListContent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If ($oListBox.ListSourceType() <> $LOW_FORM_CON_SOURCE_TYPE_VALUE_LIST) And (UBound($asListContent) > 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oListBox.ListSource = $asListContent
+		$iError = (UBound($oListBox.ListSource()) = UBound($asListContent)) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	If ($iBoundField <> Null) Then
+		If Not __LOWriter_IntIsBetween($iBoundField, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		$oListBox.BoundColumn = $iBoundField
+		$iError = ($oListBox.BoundColumn() = $iBoundField) ? ($iError) : (BitOR($iError, 16))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FormConTableConListBoxData
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FormConTableConListBoxGeneral
+; Description ...: Set or Retrieve general Table Control List box properties.
+; Syntax ........: _LOWriter_FormConTableConListBoxGeneral(ByRef $oListBox[, $sName = Null[, $sLabel = Null[, $iTxtDir = Null[, $bEnabled = Null[, $bReadOnly = Null[, $iMouseScroll = Null[, $iWidth = Null[, $asList = Null[, $iAlign = Null[, $iLines = Null[, $aiDefaultSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]])
+; Parameters ....: $oListBox            - [in/out] an object. A Table Control List Box Control object returned by a previous _LOWriter_FormConTableConColumnAdd or _LOWriter_FormConTableConColumnsGetList function.
+;                  $sName               - [optional] a string value. Default is Null. The control name.
+;                  $sLabel              - [optional] a string value. Default is Null. The control's label to display.
+;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
+;                  $bReadOnly           - [optional] a boolean value. Default is Null. If True, the control is Read-Only.
+;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Micrometers.
+;                  $asList              - [optional] an array of strings. Default is Null. An array of List entries. See remarks.
+;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iLines              - [optional] an integer value (-2147483648-2147483647). Default is Null. If $bDropdown is True, $iLines specifies how many lines are shown in the dropdown list.
+;                  $aiDefaultSel        - [optional] an array of integers. Default is Null. A single dimension array of selection values. See remarks.
+;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
+;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
+;                  $sHelpURL            - [optional] a string value. Default is Null. The Help URL.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oListBox not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oListBox not a List Box Control.
+;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 4 Return 0 = $sLabel not a String.
+;                  @Error 1 @Extended 5 Return 0 = $iTxtDir not an Integer, less than 0 or greater than 5. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $bEnabled not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $bReadOnly not a Boolean.
+;                  @Error 1 @Extended 8 Return 0 = $iMouseScroll not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 9 Return 0 = $iWidth not an Integer, less than 100 or greater than 200,000.
+;                  @Error 1 @Extended 10 Return 0 = $asList not an Array.
+;                  @Error 1 @Extended 11 Return ? = Element contained in $asList not a String. Returning problem element position.
+;                  @Error 1 @Extended 12 Return 0 = $iAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 13 Return 0 = $iLines not an Integer, less than -2147483648 or greater than 2147483647.
+;                  @Error 1 @Extended 14 Return 0 = $aiDefaultSel not an Array.
+;                  @Error 1 @Extended 15 Return ? = Element contained in $aiDefaultSel not an Integer. Returning problem element position.
+;                  @Error 1 @Extended 16 Return ? = Integer contained in Element of $aiDefaultSel greater than number of List items. Returning problem element position.
+;                  @Error 1 @Extended 17 Return 0 = $sAddInfo not a String.
+;                  @Error 1 @Extended 18 Return 0 = $sHelpText not a String.
+;                  @Error 1 @Extended 19 Return 0 = $sHelpURL not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sName
+;                  |                               2 = Error setting $sLabel
+;                  |                               4 = Error setting $iTxtDir
+;                  |                               8 = Error setting $bEnabled
+;                  |                               16 = Error setting $bReadOnly
+;                  |                               32 = Error setting $iMouseScroll
+;                  |                               64 = Error setting $iWidth
+;                  |                               128 = Error setting $asList
+;                  |                               256 = Error setting $iAlign
+;                  |                               512 = Error setting $iLines
+;                  |                               1024 = Error setting $aiDefaultSel
+;                  |                               2048 = Error setting $sAddInfo
+;                  |                               4096 = Error setting $sHelpText
+;                  |                               8192 = Error setting $sHelpURL
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 14 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The array called for $asList should be a single dimension array, with one List entry as a String, per array element.
+;                  The array called for $aiDefaultSel should be a single dimension array, with one integer value, corresponding to the position in the $asList array, per array element, to indicate which value(s) is/are default.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $asList, $sAddInfo.
+; Related .......: _LOWriter_FormConListBoxData, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FormConTableConListBoxGeneral(ByRef $oListBox, $sName = Null, $sLabel = Null, $iTxtDir = Null, $bEnabled = Null, $bReadOnly = Null, $iMouseScroll = Null, $iWidth = Null, $asList = Null, $iAlign = Null, $iLines = Null, $aiDefaultSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avControl[14]
+
+	If Not IsObj($oListBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOWriter_FormConIdentify($oListBox) <> $LOW_FORM_CON_TYPE_LIST_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $bEnabled, $bReadOnly, $iMouseScroll, $iWidth, $asList, $iAlign, $iLines, $aiDefaultSel, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LOWriter_ArrayFill($avControl, $oListBox.Name(), $oListBox.Label(), $oListBox.WritingMode(), $oListBox.Enabled(), _
+				$oListBox.ReadOnly(), $oListBox.MouseWheelBehavior(), ($oListBox.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				$oListBox.StringItemList(), $oListBox.Align(), $oListBox.LineCount(), _
+				$oListBox.DefaultSelection(), $oListBox.Tag(), $oListBox.HelpText(), $oListBox.HelpURL())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
+	EndIf
+
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1) ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
+
+		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oListBox.Name = $sName
+		$iError = ($oListBox.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($sLabel = Default) Then
+		$oListBox.setPropertyToDefault("Label")
+
+	ElseIf ($sLabel <> Null) Then
+		If Not IsString($sLabel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oListBox.Label = $sLabel
+		$iError = ($oListBox.Label() = $sLabel) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($iTxtDir = Default) Then
+		$oListBox.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
+		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oListBox.WritingMode = $iTxtDir
+		$iError = ($oListBox.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($bEnabled = Default) Then
+		$oListBox.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
+		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oListBox.Enabled = $bEnabled
+		$iError = ($oListBox.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	If ($bReadOnly = Default) Then
+		$oListBox.setPropertyToDefault("ReadOnly")
+
+	ElseIf ($bReadOnly <> Null) Then
+		If Not IsBool($bReadOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oListBox.ReadOnly = $bReadOnly
+		$iError = ($oListBox.ReadOnly() = $bReadOnly) ? ($iError) : (BitOR($iError, 16))
+	EndIf
+
+	If ($iMouseScroll = Default) Then
+		$oListBox.setPropertyToDefault("MouseWheelBehavior")
+
+	ElseIf ($iMouseScroll <> Null) Then
+		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		$oListBox.MouseWheelBehavior = $iMouseScroll
+		$iError = ($oListBox.MouseWheelBehavior = $iMouseScroll) ? ($iError) : (BitOR($iError, 32))
+	EndIf
+
+	If ($iWidth = Default) Then
+		$oListBox.setPropertyToDefault("Width")
+
+	ElseIf ($iWidth <> Null) Then
+		If Not __LOWriter_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		$oListBox.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
+		$iError = ($oListBox.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 64))
+	EndIf
+
+	If ($asList = Default) Then
+		$iError = BitOR($iError, 1024) ; Can't Default StringItemList.
+
+	ElseIf ($asList <> Null) Then
+		If Not IsArray($asList) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		For $i = 0 To UBound($asList) - 1
+			If Not IsString($asList[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, $i)
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
+		Next
+		$oListBox.StringItemList = $asList
+		$iError = (UBound($oListBox.StringItemList()) = UBound($asList)) ? ($iError) : (BitOR($iError, 128))
+	EndIf
+
+	If ($iAlign = Default) Then
+		$oListBox.setPropertyToDefault("Align")
+
+	ElseIf ($iAlign <> Null) Then
+		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		$oListBox.Align = $iAlign
+		$iError = ($oListBox.Align() = $iAlign) ? ($iError) : (BitOR($iError, 256))
+	EndIf
+
+	If ($iLines = Default) Then
+		$oListBox.setPropertyToDefault("LineCount")
+
+	ElseIf ($iLines <> Null) Then
+		If Not __LOWriter_IntIsBetween($iLines, -2147483648, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+		$oListBox.LineCount = $iLines
+		$iError = ($oListBox.LineCount = $iLines) ? ($iError) : (BitOR($iError, 512))
+	EndIf
+
+	If ($aiDefaultSel = Default) Then
+		$iError = BitOR($iError, 2048) ; Can't Default Name.
+
+	ElseIf ($aiDefaultSel <> Null) Then
+		If Not IsArray($aiDefaultSel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		For $i = 0 To UBound($aiDefaultSel) - 1
+			If Not IsInt($aiDefaultSel[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, $i)
+			If ($aiDefaultSel[$i] >= $oListBox.ItemCount()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, $i)
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
+		Next
+		$oListBox.DefaultSelection = $aiDefaultSel
+		$iError = (UBound($oListBox.DefaultSelection()) = UBound($aiDefaultSel)) ? ($iError) : (BitOR($iError, 1024))
+	EndIf
+
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 4096) ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
+		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+		$oListBox.Tag = $sAddInfo
+		$iError = ($oListBox.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 2048))
+	EndIf
+
+	If ($sHelpText = Default) Then
+		$oListBox.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
+		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
+		$oListBox.HelpText = $sHelpText
+		$iError = ($oListBox.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 4096))
+	EndIf
+
+	If ($sHelpURL = Default) Then
+		$oListBox.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
+		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
+		$oListBox.HelpURL = $sHelpURL
+		$iError = ($oListBox.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 8192))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FormConTableConListBoxGeneral
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FormConTableConNumericFieldData
+; Description ...: Set or Retrieve Table Control Numeric Field Data Properties.
+; Syntax ........: _LOWriter_FormConTableConNumericFieldData(ByRef $oNumericField[, $sDataField = Null[, $bInputRequired = Null]])
+; Parameters ....: $oNumericField       - [in/out] an object. A Table Control Numeric Field Control object returned by a previous _LOWriter_FormConTableConColumnAdd or _LOWriter_FormConTableConColumnsGetList function.
+;                  $sDataField          - [optional] a string value. Default is Null. The Datafield name to retrieve content from, either a Table name, SQL query, or other.
+;                  $bInputRequired      - [optional] a boolean value. Default is Null. If True, the control requires input.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oNumericField not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oNumericField not a Numeric Field Control.
+;                  @Error 1 @Extended 3 Return 0 = $sDataField not a String.
+;                  @Error 1 @Extended 4 Return 0 = $bInputRequired not a Boolean.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sDataField
+;                  |                               2 = Error setting $bInputRequired
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  $sDataField is not checked to make sure it exists in the referenced Database, it is the user's responsibility to do this.
+; Related .......: _LOWriter_FormConNumericFieldGeneral
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FormConTableConNumericFieldData(ByRef $oNumericField, $sDataField = Null, $bInputRequired = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avControl[2]
+
+	If Not IsObj($oNumericField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOWriter_FormConIdentify($oNumericField) <> $LOW_FORM_CON_TYPE_NUMERIC_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
+		__LOWriter_ArrayFill($avControl, $oNumericField.DataField(), $oNumericField.InputRequired())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
+	EndIf
+
+	If ($sDataField <> Null) Then
+		If Not IsString($sDataField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oNumericField.DataField = $sDataField
+		$iError = ($oNumericField.DataField() = $sDataField) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($bInputRequired <> Null) Then
+		If Not IsBool($bInputRequired) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oNumericField.InputRequired = $bInputRequired
+		$iError = ($oNumericField.InputRequired() = $bInputRequired) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FormConTableConNumericFieldData
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FormConTableConNumericFieldGeneral
+; Description ...: Set or Retrieve general Table Control Numeric Field properties.
+; Syntax ........: _LOWriter_FormConTableConNumericFieldGeneral(ByRef $oNumericField[, $sName = Null[, $sLabel = Null[, $iTxtDir = Null[, $bStrict = Null[, $bEnabled = Null[, $bReadOnly = Null[, $iMouseScroll = Null[, $nMin = Null[, $nMax = Null[, $iIncr = Null[, $nDefault = Null[, $iDecimal = Null[, $bThousandsSep = Null[, $bSpin = Null[, $bRepeat = Null[, $iDelay = Null[, $iWidth = Null[, $iAlign = Null[, $bHideSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]]]])
+; Parameters ....: $oNumericField       - [in/out] an object. A Table Control Numeric Field Control object returned by a previous _LOWriter_FormConTableConColumnAdd or _LOWriter_FormConTableConColumnsGetList function.
+;                  $sName               - [optional] a string value. Default is Null. The control name.
+;                  $sLabel              - [optional] a string value. Default is Null. The control's label to display.
+;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $bStrict             - [optional] a boolean value. Default is Null. If True, strict formatting is enabled.
+;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
+;                  $bReadOnly           - [optional] a boolean value. Default is Null. If True, the control is Read-Only.
+;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $nMin                - [optional] a general number value. Default is Null. The minimum value the control can be set to.
+;                  $nMax                - [optional] a general number value. Default is Null. The maximum value the control can be set to.
+;                  $iIncr               - [optional] an integer value. Default is Null. The amount to Increase or Decrease the value by.
+;                  $nDefault            - [optional] a general number value. Default is Null. The default value the control will be set to.
+;                  $iDecimal            - [optional] an integer value (0-20). Default is Null. The amount of decimal accuracy.
+;                  $bThousandsSep       - [optional] a boolean value. Default is Null. If True, a thousands separator will be added.
+;                  $bSpin               - [optional] a boolean value. Default is Null. If True, the field will act as a spin button.
+;                  $bRepeat             - [optional] a boolean value. Default is Null. If True, the button action will repeat if the button is clicked and held down.
+;                  $iDelay              - [optional] an integer value (0-2147483647). Default is Null. The delay between button repeats, set in milliseconds.
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Micrometers.
+;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
+;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
+;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
+;                  $sHelpURL            - [optional] a string value. Default is Null. The Help URL.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oNumericField not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oNumericField not a Numeric Field Control.
+;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 4 Return 0 = $sLabel not a String.
+;                  @Error 1 @Extended 5 Return 0 = $iTxtDir not an Integer, less than 0 or greater than 5. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $bStrict not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $bEnabled not a Boolean.
+;                  @Error 1 @Extended 8 Return 0 = $bReadOnly not a Boolean.
+;                  @Error 1 @Extended 9 Return 0 = $iMouseScroll not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 10 Return 0 = $nMin not a Number.
+;                  @Error 1 @Extended 11 Return 0 = $nMax not a Number.
+;                  @Error 1 @Extended 12 Return 0 = $iIncr not an Integer.
+;                  @Error 1 @Extended 13 Return 0 = $nDefault not a Number.
+;                  @Error 1 @Extended 14 Return 0 = $iDecimal not an Integer, less than 0 or greater than 20.
+;                  @Error 1 @Extended 15 Return 0 = $bThousandsSep not a Boolean.
+;                  @Error 1 @Extended 16 Return 0 = $bSpin not a Boolean.
+;                  @Error 1 @Extended 17 Return 0 = $bRepeat not a Boolean.
+;                  @Error 1 @Extended 18 Return 0 = $iDelay not an Integer, less than 0 or greater than 2147483647.
+;                  @Error 1 @Extended 19 Return 0 = $iWidth not an Integer, less than 100 or greater than 200,000.
+;                  @Error 1 @Extended 20 Return 0 = $iAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 21 Return 0 = $bHideSel not a Boolean.
+;                  @Error 1 @Extended 22 Return 0 = $sAddInfo not a String.
+;                  @Error 1 @Extended 23 Return 0 = $sHelpText not a String.
+;                  @Error 1 @Extended 24 Return 0 = $sHelpURL not a String.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create a "com.sun.star.util.DateTime" Struct.
+;                  @Error 2 @Extended 2 Return 0 = Failed to create a "com.sun.star.util.Time" Struct.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve current Minimum Time.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve current Maximum Time.
+;                  @Error 3 @Extended 4 Return 0 = Failed to identify parent document.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sName
+;                  |                               2 = Error setting $sLabel
+;                  |                               4 = Error setting $iTxtDir
+;                  |                               8 = Error setting $bStrict
+;                  |                               16 = Error setting $bEnabled
+;                  |                               32 = Error setting $bReadOnly
+;                  |                               64 = Error setting $iMouseScroll
+;                  |                               128 = Error setting $nMin
+;                  |                               256 = Error setting $nMax
+;                  |                               512 = Error setting $iIncr
+;                  |                               1024 = Error setting $nDefault
+;                  |                               2048 = Error setting $iDecimal
+;                  |                               4096 = Error setting $bThousandsSep
+;                  |                               8192 = Error setting $bSpin
+;                  |                               16384 = Error setting $bRepeat
+;                  |                               32768 = Error setting $iDelay
+;                  |                               65536 = Error setting $iWidth
+;                  |                               131072 = Error setting $iAlign
+;                  |                               262144 = Error setting $bHideSel
+;                  |                               524288 = Error setting $sAddInfo
+;                  |                               1048576 = Error setting $sHelpText
+;                  |                               2097152 = Error setting $sHelpURL
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 22 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $sAddInfo.
+; Related .......: _LOWriter_FormConNumericFieldData, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FormConTableConNumericFieldGeneral(ByRef $oNumericField, $sName = Null, $sLabel = Null, $iTxtDir = Null, $bStrict = Null, $bEnabled = Null, $bReadOnly = Null, $iMouseScroll = Null, $nMin = Null, $nMax = Null, $iIncr = Null, $nDefault = Null, $iDecimal = Null, $bThousandsSep = Null, $bSpin = Null, $bRepeat = Null, $iDelay = Null, $iWidth = Null, $iAlign = Null, $bHideSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avControl[22]
+
+	If Not IsObj($oNumericField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOWriter_FormConIdentify($oNumericField) <> $LOW_FORM_CON_TYPE_NUMERIC_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $bStrict, $bEnabled, $bReadOnly, $iMouseScroll, $nMin, $nMax, $iIncr, $nDefault, $iDecimal, $bThousandsSep, $bSpin, $bRepeat, $iDelay, $iWidth, $iAlign, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LOWriter_ArrayFill($avControl, $oNumericField.Name(), $oNumericField.Label(), $oNumericField.WritingMode(), $oNumericField.StrictFormat(), _
+				$oNumericField.Enabled(), $oNumericField.ReadOnly(), _
+				$oNumericField.MouseWheelBehavior(), $oNumericField.ValueMin(), _
+				$oNumericField.ValueMax(), $oNumericField.ValueStep(), $oNumericField.DefaultValue(), $oNumericField.DecimalAccuracy(), _
+				$oNumericField.ShowThousandsSeparator(), $oNumericField.Spin(), $oNumericField.Repeat(), $oNumericField.RepeatDelay(), _
+				($oNumericField.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				$oNumericField.Align(), $oNumericField.HideInactiveSelection(), $oNumericField.Tag(), _
+				$oNumericField.HelpText(), $oNumericField.HelpURL())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
+	EndIf
+
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1) ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
+
+		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oNumericField.Name = $sName
+		$iError = ($oNumericField.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($sLabel = Default) Then
+		$oNumericField.setPropertyToDefault("Label")
+
+	ElseIf ($sLabel <> Null) Then
+		If Not IsString($sLabel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oNumericField.Label = $sLabel
+		$iError = ($oNumericField.Label() = $sLabel) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($iTxtDir = Default) Then
+		$oNumericField.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
+		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oNumericField.WritingMode = $iTxtDir
+		$iError = ($oNumericField.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($bStrict = Default) Then
+		$oNumericField.setPropertyToDefault("StrictFormat")
+
+	ElseIf ($bStrict <> Null) Then
+		If Not IsBool($bStrict) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oNumericField.StrictFormat = $bStrict
+		$iError = ($oNumericField.StrictFormat() = $bStrict) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	If ($bEnabled = Default) Then
+		$oNumericField.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
+		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oNumericField.Enabled = $bEnabled
+		$iError = ($oNumericField.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 16))
+	EndIf
+
+	If ($bReadOnly = Default) Then
+		$oNumericField.setPropertyToDefault("ReadOnly")
+
+	ElseIf ($bReadOnly <> Null) Then
+		If Not IsBool($bReadOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		$oNumericField.ReadOnly = $bReadOnly
+		$iError = ($oNumericField.ReadOnly() = $bReadOnly) ? ($iError) : (BitOR($iError, 32))
+	EndIf
+
+	If ($iMouseScroll = Default) Then
+		$oNumericField.setPropertyToDefault("MouseWheelBehavior")
+
+	ElseIf ($iMouseScroll <> Null) Then
+		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		$oNumericField.MouseWheelBehavior = $iMouseScroll
+		$iError = ($oNumericField.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 64))
+	EndIf
+
+	If ($nMin = Default) Then
+		$oNumericField.setPropertyToDefault("ValueMin")
+
+	ElseIf ($nMin <> Null) Then
+		If Not IsNumber($nMin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		$oNumericField.ValueMin = $nMin
+		$iError = ($oNumericField.ValueMin() = $nMin) ? ($iError) : (BitOR($iError, 128))
+	EndIf
+
+	If ($nMax = Default) Then
+		$oNumericField.setPropertyToDefault("ValueMax")
+
+	ElseIf ($nMax <> Null) Then
+		If Not IsNumber($nMax) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		$oNumericField.ValueMax = $nMax
+		$iError = ($oNumericField.ValueMax() = $nMax) ? ($iError) : (BitOR($iError, 256))
+	EndIf
+
+	If ($iIncr = Default) Then
+		$oNumericField.setPropertyToDefault("ValueStep")
+
+	ElseIf ($iIncr <> Null) Then
+		If Not IsInt($iIncr) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		$oNumericField.ValueStep = $iIncr
+		$iError = ($oNumericField.ValueStep() = $iIncr) ? ($iError) : (BitOR($iError, 512))
+	EndIf
+
+	If ($nDefault = Default) Then
+		$oNumericField.setPropertyToDefault("DefaultValue")
+
+	ElseIf ($nDefault <> Null) Then
+		If Not IsNumber($nDefault) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+		$oNumericField.DefaultValue = $nDefault
+		$iError = ($oNumericField.DefaultValue() = $nDefault) ? ($iError) : (BitOR($iError, 1024))
+	EndIf
+
+	If ($iDecimal = Default) Then
+		$oNumericField.setPropertyToDefault("DecimalAccuracy")
+
+	ElseIf ($iDecimal <> Null) Then
+		If Not __LOWriter_IntIsBetween($iDecimal, 0, 20) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		$oNumericField.DecimalAccuracy = $iDecimal
+		$iError = ($oNumericField.DecimalAccuracy() = $iDecimal) ? ($iError) : (BitOR($iError, 2048))
+	EndIf
+
+	If ($bThousandsSep = Default) Then
+		$oNumericField.setPropertyToDefault("ShowThousandsSeparator")
+
+	ElseIf ($bThousandsSep <> Null) Then
+		If Not IsBool($bThousandsSep) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
+		$oNumericField.ShowThousandsSeparator = $bThousandsSep
+		$iError = ($oNumericField.ShowThousandsSeparator() = $bThousandsSep) ? ($iError) : (BitOR($iError, 4096))
+	EndIf
+
+	If ($bSpin = Default) Then
+		$oNumericField.setPropertyToDefault("Spin")
+
+	ElseIf ($bSpin <> Null) Then
+		If Not IsBool($bSpin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
+		$oNumericField.Spin = $bSpin
+		$iError = ($oNumericField.Spin() = $bSpin) ? ($iError) : (BitOR($iError, 8192))
+	EndIf
+
+	If ($bRepeat = Default) Then
+		$oNumericField.setPropertyToDefault("Repeat")
+
+	ElseIf ($bRepeat <> Null) Then
+		If Not IsBool($bRepeat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+		$oNumericField.Repeat = $bRepeat
+		$iError = ($oNumericField.Repeat() = $bRepeat) ? ($iError) : (BitOR($iError, 16384))
+	EndIf
+
+	If ($iDelay = Default) Then
+		$oNumericField.setPropertyToDefault("RepeatDelay")
+
+	ElseIf ($iDelay <> Null) Then
+		If Not __LOWriter_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
+		$oNumericField.RepeatDelay = $iDelay
+		$iError = ($oNumericField.RepeatDelay() = $iDelay) ? ($iError) : (BitOR($iError, 32768))
+	EndIf
+
+	If ($iWidth = Default) Then
+		$oNumericField.setPropertyToDefault("Width")
+
+	ElseIf ($iWidth <> Null) Then
+		If Not __LOWriter_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
+		$oNumericField.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
+		$iError = ($oNumericField.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 65536))
+	EndIf
+
+	If ($iAlign = Default) Then
+		$oNumericField.setPropertyToDefault("Align")
+
+	ElseIf ($iAlign <> Null) Then
+		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
+		$oNumericField.Align = $iAlign
+		$iError = ($oNumericField.Align() = $iAlign) ? ($iError) : (BitOR($iError, 131072))
+	EndIf
+
+	If ($bHideSel = Default) Then
+		$oNumericField.setPropertyToDefault("HideInactiveSelection")
+
+	ElseIf ($bHideSel <> Null) Then
+		If Not IsBool($bHideSel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
+		$oNumericField.HideInactiveSelection = $bHideSel
+		$iError = ($oNumericField.HideInactiveSelection() = $bHideSel) ? ($iError) : (BitOR($iError, 262144))
+	EndIf
+
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 524288) ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
+		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
+		$oNumericField.Tag = $sAddInfo
+		$iError = ($oNumericField.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 524288))
+	EndIf
+
+	If ($sHelpText = Default) Then
+		$oNumericField.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
+		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
+		$oNumericField.HelpText = $sHelpText
+		$iError = ($oNumericField.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 1048576))
+	EndIf
+
+	If ($sHelpURL = Default) Then
+		$oNumericField.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
+		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 24, 0)
+		$oNumericField.HelpURL = $sHelpURL
+		$iError = ($oNumericField.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 2097152))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FormConTableConNumericFieldGeneral
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FormConTableConPatternFieldData
+; Description ...: Set or Retrieve Table Control Pattern Field Data Properties.
+; Syntax ........: _LOWriter_FormConTableConPatternFieldData(ByRef $oPatternField[, $sDataField = Null[, $bEmptyIsNull = Null[, $bInputRequired = Null[, $bFilter = Null]]]])
+; Parameters ....: $oPatternField       - [in/out] an object. A Table Control Pattern Field Control object returned by a previous _LOWriter_FormConTableConColumnAdd or _LOWriter_FormConTableConColumnsGetList function.
+;                  $sDataField          - [optional] a string value. Default is Null. The Datafield name to retrieve content from, either a Table name, SQL query, or other.
+;                  $bEmptyIsNull        - [optional] a boolean value. Default is Null. If True, an empty string will be treated as a Null value.
+;                  $bInputRequired      - [optional] a boolean value. Default is Null. If True, the control requires input.
+;                  $bFilter             - [optional] a boolean value. Default is Null. If True, filter proposal is active.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPatternField not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oPatternField not a Pattern Field Control.
+;                  @Error 1 @Extended 3 Return 0 = $sDataField not a String.
+;                  @Error 1 @Extended 4 Return 0 = $bEmptyIsNull not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $bInputRequired not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $bFilter not a Boolean.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sDataField
+;                  |                               2 = Error setting $bEmptyIsNull
+;                  |                               4 = Error setting $bInputRequired
+;                  |                               8 = Error setting $bFilter
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  $sDataField is not checked to make sure it exists in the referenced Database, it is the user's responsibility to do this.
+; Related .......: _LOWriter_FormConPatternFieldGeneral
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FormConTableConPatternFieldData(ByRef $oPatternField, $sDataField = Null, $bEmptyIsNull = Null, $bInputRequired = Null, $bFilter = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avControl[4]
+
+	If Not IsObj($oPatternField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOWriter_FormConIdentify($oPatternField) <> $LOW_FORM_CON_TYPE_PATTERN_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $bFilter) Then
+		__LOWriter_ArrayFill($avControl, $oPatternField.DataField(), $oPatternField.ConvertEmptyToNull(), $oPatternField.InputRequired(), _
+				$oPatternField.UseFilterValueProposal())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
+	EndIf
+
+	If ($sDataField <> Null) Then
+		If Not IsString($sDataField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oPatternField.DataField = $sDataField
+		$iError = ($oPatternField.DataField() = $sDataField) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($bEmptyIsNull <> Null) Then
+		If Not IsBool($bEmptyIsNull) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oPatternField.ConvertEmptyToNull = $bEmptyIsNull
+		$iError = ($oPatternField.ConvertEmptyToNull() = $bEmptyIsNull) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($bInputRequired <> Null) Then
+		If Not IsBool($bInputRequired) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oPatternField.InputRequired = $bInputRequired
+		$iError = ($oPatternField.InputRequired() = $bInputRequired) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($bFilter <> Null) Then
+		If Not IsBool($bFilter) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oPatternField.UseFilterValueProposal = $bFilter
+		$iError = ($oPatternField.UseFilterValueProposal() = $bFilter) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FormConTableConPatternFieldData
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FormConTableConPatternFieldGeneral
+; Description ...: Set or Retrieve general Table Control Pattern Field properties.
+; Syntax ........: _LOWriter_FormConTableConPatternFieldGeneral(ByRef $oPatternField[, $sName = Null[, $sLabel = Null[, $iTxtDir = Null[, $iMaxLen = Null[, $sEditMask = Null[, $sLiteralMask = Null[, $bStrict = Null[, $bEnabled = Null[, $bReadOnly = Null[, $iMouseScroll = Null[, $iWidth = Null[, $sDefaultTxt = Null[, $iAlign = Null[, $bHideSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]])
+; Parameters ....: $oPatternField       - [in/out] an object. A Table Control Pattern Field Control object returned by a previous _LOWriter_FormConTableConColumnAdd or _LOWriter_FormConTableConColumnsGetList function.
+;                  $sName               - [optional] a string value. Default is Null. The control name.
+;                  $sLabel              - [optional] a string value. Default is Null. The control's label to display.
+;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iMaxLen             - [optional] an integer value (-1-2147483647). Default is Null. The maximum text length that the Pattern field will accept.
+;                  $sEditMask           - [optional] a string value. Default is Null. The edit mask of the field.
+;                  $sLiteralMask        - [optional] a string value. Default is Null. The literal mask of the field.
+;                  $bStrict             - [optional] a boolean value. Default is Null. If True, strict formatting is enabled.
+;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
+;                  $bReadOnly           - [optional] a boolean value. Default is Null. If True, the control is Read-Only.
+;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Micrometers.
+;                  $sDefaultTxt         - [optional] a string value. Default is Null. The default text to display in the field.
+;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
+;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
+;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
+;                  $sHelpURL            - [optional] a string value. Default is Null. The Help URL.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPatternField not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oPatternField not a Pattern Field Control.
+;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 4 Return 0 = $sLabel not a String.
+;                  @Error 1 @Extended 5 Return 0 = $iTxtDir not an Integer, less than 0 or greater than 5. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $iMaxLen not an Integer, less than -1 or greater than 2147483647.
+;                  @Error 1 @Extended 7 Return 0 = $sEditMask
+;                  @Error 1 @Extended 8 Return 0 = $sLiteralMask not a String.
+;                  @Error 1 @Extended 9 Return 0 = $bStrict not a Boolean.
+;                  @Error 1 @Extended 10 Return 0 = $bEnabled not a Boolean.
+;                  @Error 1 @Extended 11 Return 0 = $bReadOnly not a Boolean.
+;                  @Error 1 @Extended 12 Return 0 = $iMouseScroll not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 13 Return 0 = $iWidth not an Integer, less than 100 or greater than 200,000.
+;                  @Error 1 @Extended 14 Return 0 = $sDefaultTxt not a String.
+;                  @Error 1 @Extended 15 Return 0 = $iAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 16 Return 0 = $bHideSel not a Boolean.
+;                  @Error 1 @Extended 17 Return 0 = $sAddInfo not a String.
+;                  @Error 1 @Extended 18 Return 0 = $sHelpText not a String.
+;                  @Error 1 @Extended 19 Return 0 = $sHelpURL not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sName
+;                  |                               2 = Error setting $sLabel
+;                  |                               4 = Error setting $iTxtDir
+;                  |                               8 = Error setting $iMaxLen
+;                  |                               16 = Error setting $sEditMask
+;                  |                               32 = Error setting $sLiteralMask
+;                  |                               64 = Error setting $bStrict
+;                  |                               128 = Error setting $bEnabled
+;                  |                               256 = Error setting $bReadOnly
+;                  |                               512 = Error setting $iMouseScroll
+;                  |                               1024 = Error setting $iWidth
+;                  |                               2048 = Error setting $sDefaultTxt
+;                  |                               4096 = Error setting $iAlign
+;                  |                               8192 = Error setting $bHideSel
+;                  |                               16384 = Error setting $sAddInfo
+;                  |                               32768 = Error setting $sHelpText
+;                  |                               65536 = Error setting $sHelpURL
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 17 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $sDefaultTxt, $sAddInfo.
+; Related .......: _LOWriter_FormConPatternFieldData, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FormConTableConPatternFieldGeneral(ByRef $oPatternField, $sName = Null, $sLabel = Null, $iTxtDir = Null, $iMaxLen = Null, $sEditMask = Null, $sLiteralMask = Null, $bStrict = Null, $bEnabled = Null, $bReadOnly = Null, $iMouseScroll = Null, $iWidth = Null, $sDefaultTxt = Null, $iAlign = Null, $bHideSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avControl[17]
+
+	If Not IsObj($oPatternField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOWriter_FormConIdentify($oPatternField) <> $LOW_FORM_CON_TYPE_PATTERN_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $iMaxLen, $sEditMask, $sLiteralMask, $bStrict, $bEnabled, $bReadOnly, $iMouseScroll, $iWidth, $sDefaultTxt, $iAlign, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LOWriter_ArrayFill($avControl, $oPatternField.Name(), $oPatternField.Label(), $oPatternField.WritingMode(), _
+				$oPatternField.MaxTextLen(), $oPatternField.EditMask(), $oPatternField.LiteralMask(), $oPatternField.StrictFormat(), _
+				$oPatternField.Enabled(), $oPatternField.ReadOnly(), _
+				$oPatternField.MouseWheelBehavior(), ($oPatternField.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				$oPatternField.DefaultText(), _
+				$oPatternField.Align(), $oPatternField.HideInactiveSelection(), $oPatternField.Tag(), _
+				$oPatternField.HelpText(), $oPatternField.HelpURL())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
+	EndIf
+
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1) ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
+
+		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oPatternField.Name = $sName
+		$iError = ($oPatternField.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($sLabel = Default) Then
+		$oPatternField.setPropertyToDefault("Label")
+
+	ElseIf ($sLabel <> Null) Then
+		If Not IsString($sLabel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oPatternField.Label = $sLabel
+		$iError = ($oPatternField.Label() = $sLabel) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($iTxtDir = Default) Then
+		$oPatternField.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
+		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oPatternField.WritingMode = $iTxtDir
+		$iError = ($oPatternField.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($iMaxLen = Default) Then
+		$oPatternField.setPropertyToDefault("MaxTextLen")
+
+	ElseIf ($iMaxLen <> Null) Then
+		If Not __LOWriter_IntIsBetween($iMaxLen, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oPatternField.MaxTextLen = $iMaxLen
+		$iError = ($oPatternField.MaxTextLen = $iMaxLen) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	If ($sEditMask = Default) Then
+		$oPatternField.setPropertyToDefault("EditMask")
+
+	ElseIf ($sEditMask <> Null) Then
+		If Not IsString($sEditMask) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oPatternField.EditMask = $sEditMask
+		$iError = ($oPatternField.EditMask() = $sEditMask) ? ($iError) : (BitOR($iError, 16))
+	EndIf
+
+	If ($sLiteralMask = Default) Then
+		$oPatternField.setPropertyToDefault("LiteralMask")
+
+	ElseIf ($sLiteralMask <> Null) Then
+		If Not IsString($sLiteralMask) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		$oPatternField.LiteralMask = $sLiteralMask
+		$iError = ($oPatternField.LiteralMask() = $sLiteralMask) ? ($iError) : (BitOR($iError, 32))
+	EndIf
+
+	If ($bStrict = Default) Then
+		$oPatternField.setPropertyToDefault("StrictFormat")
+
+	ElseIf ($bStrict <> Null) Then
+		If Not IsBool($bStrict) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		$oPatternField.StrictFormat = $bStrict
+		$iError = ($oPatternField.StrictFormat() = $bStrict) ? ($iError) : (BitOR($iError, 64))
+	EndIf
+
+	If ($bEnabled = Default) Then
+		$oPatternField.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
+		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		$oPatternField.Enabled = $bEnabled
+		$iError = ($oPatternField.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 128))
+	EndIf
+
+	If ($bReadOnly = Default) Then
+		$oPatternField.setPropertyToDefault("ReadOnly")
+
+	ElseIf ($bReadOnly <> Null) Then
+		If Not IsBool($bReadOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		$oPatternField.ReadOnly = $bReadOnly
+		$iError = ($oPatternField.ReadOnly() = $bReadOnly) ? ($iError) : (BitOR($iError, 256))
+	EndIf
+
+	If ($iMouseScroll = Default) Then
+		$oPatternField.setPropertyToDefault("MouseWheelBehavior")
+
+	ElseIf ($iMouseScroll <> Null) Then
+		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		$oPatternField.MouseWheelBehavior = $iMouseScroll
+		$iError = ($oPatternField.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 512))
+	EndIf
+
+	If ($iWidth = Default) Then
+		$oPatternField.setPropertyToDefault("Width")
+
+	ElseIf ($iWidth <> Null) Then
+		If Not __LOWriter_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+		$oPatternField.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
+		$iError = ($oPatternField.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 1024))
+	EndIf
+
+	If ($sDefaultTxt = Default) Then
+		$iError = BitOR($iError, 16384) ; Can't Default DefaultText.
+
+	ElseIf ($sDefaultTxt <> Null) Then
+		If Not IsString($sDefaultTxt) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		$oPatternField.DefaultText = $sDefaultTxt
+		$iError = ($oPatternField.DefaultText() = $sDefaultTxt) ? ($iError) : (BitOR($iError, 2048))
+	EndIf
+
+	If ($iAlign = Default) Then
+		$oPatternField.setPropertyToDefault("Align")
+
+	ElseIf ($iAlign <> Null) Then
+		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
+		$oPatternField.Align = $iAlign
+		$iError = ($oPatternField.Align() = $iAlign) ? ($iError) : (BitOR($iError, 4096))
+	EndIf
+
+	If ($bHideSel = Default) Then
+		$oPatternField.setPropertyToDefault("HideInactiveSelection")
+
+	ElseIf ($bHideSel <> Null) Then
+		If Not IsBool($bHideSel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
+		$oPatternField.HideInactiveSelection = $bHideSel
+		$iError = ($oPatternField.HideInactiveSelection() = $bHideSel) ? ($iError) : (BitOR($iError, 8192))
+	EndIf
+
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 16384) ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
+		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+		$oPatternField.Tag = $sAddInfo
+		$iError = ($oPatternField.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 16384))
+	EndIf
+
+	If ($sHelpText = Default) Then
+		$oPatternField.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
+		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
+		$oPatternField.HelpText = $sHelpText
+		$iError = ($oPatternField.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 32768))
+	EndIf
+
+	If ($sHelpURL = Default) Then
+		$oPatternField.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
+		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
+		$oPatternField.HelpURL = $sHelpURL
+		$iError = ($oPatternField.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 65536))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FormConTableConPatternFieldGeneral
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FormConTableConTextBoxData
+; Description ...: Set or Retrieve Table Control Text Box Data Properties.
+; Syntax ........: _LOWriter_FormConTableConTextBoxData(ByRef $oTextBox[, $sDataField = Null[, $bEmptyIsNull = Null[, $bInputRequired = Null[, $bFilter = Null]]]])
+; Parameters ....: $oTextBox            - [in/out] an object. A Table Control Text Box Control object returned by a previous _LOWriter_FormConTableConColumnAdd or _LOWriter_FormConTableConColumnsGetList function.
+;                  $sDataField          - [optional] a string value. Default is Null. The Datafield name to retrieve content from, either a Table name, SQL query, or other.
+;                  $bEmptyIsNull        - [optional] a boolean value. Default is Null. If True, an empty string will be treated as a Null value.
+;                  $bInputRequired      - [optional] a boolean value. Default is Null. If True, the control requires input.
+;                  $bFilter             - [optional] a boolean value. Default is Null. If True, filter proposal is active.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oTextBox not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oTextBox not a Text Box Control.
+;                  @Error 1 @Extended 3 Return 0 = $sDataField not a String.
+;                  @Error 1 @Extended 4 Return 0 = $bEmptyIsNull not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $bInputRequired not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $bFilter not a Boolean.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sDataField
+;                  |                               2 = Error setting $bEmptyIsNull
+;                  |                               4 = Error setting $bInputRequired
+;                  |                               8 = Error setting $bFilter
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  $sDataField is not checked to make sure it exists in the referenced Database, it is the user's responsibility to do this.
+; Related .......: _LOWriter_FormConTextBoxGeneral
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FormConTableConTextBoxData(ByRef $oTextBox, $sDataField = Null, $bEmptyIsNull = Null, $bInputRequired = Null, $bFilter = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avControl[4]
+
+	If Not IsObj($oTextBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOWriter_FormConIdentify($oTextBox) <> $LOW_FORM_CON_TYPE_TEXT_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $bFilter) Then
+		__LOWriter_ArrayFill($avControl, $oTextBox.DataField(), $oTextBox.ConvertEmptyToNull(), $oTextBox.InputRequired(), _
+				$oTextBox.UseFilterValueProposal())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
+	EndIf
+
+	If ($sDataField <> Null) Then
+		If Not IsString($sDataField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oTextBox.DataField = $sDataField
+		$iError = ($oTextBox.DataField() = $sDataField) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($bEmptyIsNull <> Null) Then
+		If Not IsBool($bEmptyIsNull) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oTextBox.ConvertEmptyToNull = $bEmptyIsNull
+		$iError = ($oTextBox.ConvertEmptyToNull() = $bEmptyIsNull) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($bInputRequired <> Null) Then
+		If Not IsBool($bInputRequired) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oTextBox.InputRequired = $bInputRequired
+		$iError = ($oTextBox.InputRequired() = $bInputRequired) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($bFilter <> Null) Then
+		If Not IsBool($bFilter) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oTextBox.UseFilterValueProposal = $bFilter
+		$iError = ($oTextBox.UseFilterValueProposal() = $bFilter) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FormConTableConTextBoxData
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FormConTableConTextBoxGeneral
+; Description ...: Set or Retrieve general Table Control Textbox control properties.
+; Syntax ........: _LOWriter_FormConTableConTextBoxGeneral(ByRef $oTextBox[, $sName = Null[, $sLabel = Null[, $iTxtDir = Null[, $iMaxLen = Null[, $bEnabled = Null[, $bReadOnly = Null[, $iWidth = Null[, $sDefaultTxt = Null[, $iAlign = Null[, $bMultiLine = Null[, $bEndWithLF = Null[, $bHideSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]])
+; Parameters ....: $oTextBox            - [in/out] an object. A Table Control Textbox Control object returned by a previous _LOWriter_FormConTableConColumnAdd or _LOWriter_FormConTableConColumnsGetList function.
+;                  $sName               - [optional] a string value. Default is Null. The control Name.
+;                  $sLabel              - [optional] a string value. Default is Null. The control's label to display.
+;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iMaxLen             - [optional] an integer value (-1-2147483647). Default is Null. The max length of text that can be entered. 0 = unlimited.
+;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
+;                  $bReadOnly           - [optional] a boolean value. Default is Null. If True, the control is Read-Only.
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Micrometers.
+;                  $sDefaultTxt         - [optional] a string value. Default is Null. The default text to display in the control.
+;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $bMultiLine          - [optional] a boolean value. Default is Null. If True, the text may contain multiple lines.
+;                  $bEndWithLF          - [optional] a boolean value. Default is Null. If True, the line ends will be a Line-Feed type, else a Carriage-Return plus a Line-Feed.
+;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
+;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
+;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
+;                  $sHelpURL            - [optional] a string value. Default is Null. The Help URL.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oTextBox not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oTextBox not a Text Box Control.
+;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 4 Return 0 = $sLabel
+;                  @Error 1 @Extended 5 Return 0 = $iTxtDir not an Integer, less than 0 or greater than 5. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $iMaxLen not an Integer, less than -1 or greater than 2147483647.
+;                  @Error 1 @Extended 7 Return 0 = $bEnabled not a Boolean.
+;                  @Error 1 @Extended 8 Return 0 = $bReadOnly not a Boolean.
+;                  @Error 1 @Extended 9 Return 0 = $iWidth not an Integer, less than 100 or greater than 200,000.
+;                  @Error 1 @Extended 10 Return 0 = $sDefaultTxt not a String.
+;                  @Error 1 @Extended 11 Return 0 = $iAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 12 Return 0 = $bMultiLine not a Boolean.
+;                  @Error 1 @Extended 13 Return 0 = $bEndWithLF not a Boolean.
+;                  @Error 1 @Extended 14 Return 0 = $bHideSel not a Boolean.
+;                  @Error 1 @Extended 15 Return 0 = $sAddInfo not a String.
+;                  @Error 1 @Extended 16 Return 0 = $sHelpText not a String.
+;                  @Error 1 @Extended 17 Return 0 = $sHelpURL not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sName
+;                  |                               2 = Error setting $sLabel
+;                  |                               4 = Error setting $iTxtDir
+;                  |                               8 = Error setting $iMaxLen
+;                  |                               16 = Error setting $bEnabled
+;                  |                               32 = Error setting $bReadOnly
+;                  |                               64 = Error setting $iWidth
+;                  |                               128 = Error setting $sDefaultTxt
+;                  |                               256 = Error setting $iAlign
+;                  |                               512 = Error setting $bMultiLine
+;                  |                               1024 = Error setting $bEndWithLF
+;                  |                               2048 = Error setting $bHideSel
+;                  |                               4096 = Error setting $sAddInfo
+;                  |                               8192 = Error setting $sHelpText
+;                  |                               16384 = Error setting $sHelpURL
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 15 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $sDefaultTxt, $sAddInfo.
+; Related .......: _LOWriter_FormConTextBoxData, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FormConTableConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $sLabel = Null, $iTxtDir = Null, $iMaxLen = Null, $bEnabled = Null, $bReadOnly = Null, $iWidth = Null, $sDefaultTxt = Null, $iAlign = Null, $bMultiLine = Null, $bEndWithLF = Null, $bHideSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avControl[15]
+	Local Const $__LOW_FORM_CONTROL_LINE_END_CR = 0, $__LOW_FORM_CONTROL_LINE_END_LF = 1, $__LOW_FORM_CONTROL_LINE_END_CRLF = 2 ; "com.sun.star.awt.LineEndFormat"
+	#forceref $__LOW_FORM_CONTROL_LINE_END_CR
+
+	If Not IsObj($oTextBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOWriter_FormConIdentify($oTextBox) <> $LOW_FORM_CON_TYPE_TEXT_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $iMaxLen, $bEnabled, $bReadOnly, $iWidth, $sDefaultTxt, $iAlign, $bMultiLine, $bEndWithLF, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LOWriter_ArrayFill($avControl, $oTextBox.Name(), $oTextBox.Label(), $oTextBox.WritingMode(), $oTextBox.MaxTextLen(), _
+				$oTextBox.Enabled(), $oTextBox.ReadOnly(), _
+				($oTextBox.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				$oTextBox.DefaultText(), $oTextBox.Align(), $oTextBox.MultiLine(), _
+				(($oTextBox.LineEndFormat() = $__LOW_FORM_CONTROL_LINE_END_LF) ? (True) : (False)), _ ; Line Ending format
+				$oTextBox.HideInactiveSelection(), $oTextBox.Tag(), $oTextBox.HelpText(), $oTextBox.HelpURL())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
+	EndIf
+
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1) ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
+
+		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oTextBox.Name = $sName
+		$iError = ($oTextBox.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($sLabel = Default) Then
+		$oTextBox.setPropertyToDefault("Label")
+
+	ElseIf ($sLabel <> Null) Then
+		If Not IsString($sLabel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oTextBox.Label = $sLabel
+		$iError = ($oTextBox.Label() = $sLabel) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($iTxtDir = Default) Then
+		$oTextBox.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
+		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oTextBox.WritingMode = $iTxtDir
+		$iError = ($oTextBox.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($iMaxLen = Default) Then
+		$oTextBox.setPropertyToDefault("MaxTextLen")
+
+	ElseIf ($iMaxLen <> Null) Then
+		If Not __LOWriter_IntIsBetween($iMaxLen, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oTextBox.MaxTextLen = $iMaxLen
+		$iError = ($oTextBox.MaxTextLen() = $iMaxLen) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	If ($bEnabled = Default) Then
+		$oTextBox.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
+		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oTextBox.Enabled = $bEnabled
+		$iError = ($oTextBox.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 16))
+	EndIf
+
+	If ($bReadOnly = Default) Then
+		$oTextBox.setPropertyToDefault("ReadOnly")
+
+	ElseIf ($bReadOnly <> Null) Then
+		If Not IsBool($bReadOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		$oTextBox.ReadOnly = $bReadOnly
+		$iError = ($oTextBox.ReadOnly() = $bReadOnly) ? ($iError) : (BitOR($iError, 32))
+	EndIf
+
+	If ($iWidth = Default) Then
+		$oTextBox.setPropertyToDefault("Width")
+
+	ElseIf ($iWidth <> Null) Then
+		If Not __LOWriter_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		$oTextBox.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
+		$iError = ($oTextBox.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 64))
+	EndIf
+
+	If ($sDefaultTxt = Default) Then
+		$iError = BitOR($iError, 128) ; Can't Default DefaultText.
+
+	ElseIf ($sDefaultTxt <> Null) Then
+		If Not IsString($sDefaultTxt) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		$oTextBox.DefaultText = $sDefaultTxt
+		$iError = ($oTextBox.DefaultText() = $sDefaultTxt) ? ($iError) : (BitOR($iError, 128))
+	EndIf
+
+	If ($iAlign = Default) Then
+		$oTextBox.setPropertyToDefault("Align")
+
+	ElseIf ($iAlign <> Null) Then
+		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		$oTextBox.Align = $iAlign
+		$iError = ($oTextBox.Align() = $iAlign) ? ($iError) : (BitOR($iError, 256))
+	EndIf
+
+	If ($bMultiLine = Default) Then
+		$oTextBox.setPropertyToDefault("MultiLine")
+
+	ElseIf ($bMultiLine <> Null) Then
+		If Not IsBool($bMultiLine) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		$oTextBox.MultiLine = $bMultiLine
+		$iError = ($oTextBox.MultiLine = $bMultiLine) ? ($iError) : (BitOR($iError, 512))
+	EndIf
+
+	If ($bEndWithLF = Default) Then
+		$oTextBox.setPropertyToDefault("LineEndFormat")
+
+	ElseIf ($bEndWithLF <> Null) Then
+		If Not IsBool($bEndWithLF) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+
+		If $bEndWithLF Then
+			$oTextBox.LineEndFormat = $__LOW_FORM_CONTROL_LINE_END_LF
+			$iError = ($oTextBox.LineEndFormat = $__LOW_FORM_CONTROL_LINE_END_LF) ? ($iError) : (BitOR($iError, 1024))
+
+		Else
+			$oTextBox.LineEndFormat = $__LOW_FORM_CONTROL_LINE_END_CRLF
+			$iError = ($oTextBox.LineEndFormat = $__LOW_FORM_CONTROL_LINE_END_CRLF) ? ($iError) : (BitOR($iError, 1024))
+		EndIf
+	EndIf
+
+	If ($bHideSel = Default) Then
+		$oTextBox.setPropertyToDefault("HideInactiveSelection")
+
+	ElseIf ($bHideSel <> Null) Then
+		If Not IsBool($bHideSel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		$oTextBox.HideInactiveSelection = $bHideSel
+		$iError = ($oTextBox.HideInactiveSelection() = $bHideSel) ? ($iError) : (BitOR($iError, 2048))
+	EndIf
+
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 4096) ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
+		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
+		$oTextBox.Tag = $sAddInfo
+		$iError = ($oTextBox.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 4096))
+	EndIf
+
+	If ($sHelpText = Default) Then
+		$oTextBox.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
+		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
+		$oTextBox.HelpText = $sHelpText
+		$iError = ($oTextBox.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 8192))
+	EndIf
+
+	If ($sHelpURL = Default) Then
+		$oTextBox.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
+		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+		$oTextBox.HelpURL = $sHelpURL
+		$iError = ($oTextBox.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 16384))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FormConTableConTextBoxGeneral
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FormConTableConTimeFieldData
+; Description ...: Set or Retrieve Table Control Time Field Data Properties.
+; Syntax ........: _LOWriter_FormConTableConTimeFieldData(ByRef $oTimeField[, $sDataField = Null[, $bInputRequired = Null]])
+; Parameters ....: $oTimeField          - [in/out] an object. A Table Control Time Field Control object returned by a previous _LOWriter_FormConTableConColumnAdd or _LOWriter_FormConTableConColumnsGetList function.
+;                  $sDataField          - [optional] a string value. Default is Null. The Datafield name to retrieve content from, either a Table name, SQL query, or other.
+;                  $bInputRequired      - [optional] a boolean value. Default is Null. If True, the control requires input.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oTimeField not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oTimeField not a Time Field Control.
+;                  @Error 1 @Extended 3 Return 0 = $sDataField not a String.
+;                  @Error 1 @Extended 4 Return 0 = $bInputRequired not a Boolean.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sDataField
+;                  |                               2 = Error setting $bInputRequired
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  $sDataField is not checked to make sure it exists in the referenced Database, it is the user's responsibility to do this.
+; Related .......: _LOWriter_FormConTimeFieldGeneral
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FormConTableConTimeFieldData(ByRef $oTimeField, $sDataField = Null, $bInputRequired = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avControl[2]
+
+	If Not IsObj($oTimeField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOWriter_FormConIdentify($oTimeField) <> $LOW_FORM_CON_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
+		__LOWriter_ArrayFill($avControl, $oTimeField.DataField(), $oTimeField.InputRequired())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
+	EndIf
+
+	If ($sDataField <> Null) Then
+		If Not IsString($sDataField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oTimeField.DataField = $sDataField
+		$iError = ($oTimeField.DataField() = $sDataField) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($bInputRequired <> Null) Then
+		If Not IsBool($bInputRequired) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oTimeField.InputRequired = $bInputRequired
+		$iError = ($oTimeField.InputRequired() = $bInputRequired) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FormConTableConTimeFieldData
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FormConTableConTimeFieldGeneral
+; Description ...: Set or Retrieve general Table Control Time Field properties.
+; Syntax ........: _LOWriter_FormConTableConTimeFieldGeneral(ByRef $oTimeField[, $sName = Null[, $sLabel = Null[, $iTxtDir = Null[, $bStrict = Null[, $bEnabled = Null[, $bReadOnly = Null[, $iMouseScroll = Null[, $tTimeMin = Null[, $tTimeMax = Null[, $iFormat = Null[, $tTimeDefault = Null[, $bSpin = Null[, $bRepeat = Null[, $iDelay = Null[, $iWidth = Null[, $iAlign = Null[, $bHideSel = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]]]]])
+; Parameters ....: $oTimeField          - [in/out] an object. A Table Control Time Field Control object returned by a previous _LOWriter_FormConTableConColumnAdd or _LOWriter_FormConTableConColumnsGetList function.
+;                  $sName               - [optional] a string value. Default is Null. The control name.
+;                  $sLabel              - [optional] a string value. Default is Null.The control's label to display.
+;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $bStrict             - [optional] a boolean value. Default is Null. If True, strict formatting is enabled.
+;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
+;                  $bReadOnly           - [optional] a boolean value. Default is Null. If True, the control is Read-Only.
+;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $tTimeMin            - [optional] a dll struct value. Default is Null. The minimum time	 allowed to be entered, created previously by _LOWriter_DateStructCreate.
+;                  $tTimeMax            - [optional] a dll struct value. Default is Null. The maximum time	 allowed to be entered, created previously by _LOWriter_DateStructCreate.
+;                  $iFormat             - [optional] an integer value (0-5). Default is Null. The Time Format to display the content in. See Constants $LOW_FORM_CON_TIME_FRMT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $tTimeDefault        - [optional] a dll struct value. Default is Null. The Default time to display, created previously by _LOWriter_DateStructCreate.
+;                  $bSpin               - [optional] a boolean value. Default is Null. If True, the field will act as a spin button.
+;                  $bRepeat             - [optional] a boolean value. Default is Null. If True, the button action will repeat if the button is clicked and held down.
+;                  $iDelay              - [optional] an integer value (0-2147483647). Default is Null. The delay between button repeats, set in milliseconds.
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Micrometers.
+;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
+;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
+;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
+;                  $sHelpURL            - [optional] a string value. Default is Null. The Help URL.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oTimeField not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oTimeField not a Time Field Control.
+;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 4 Return 0 = $sLabel not a String.
+;                  @Error 1 @Extended 5 Return 0 = $iTxtDir not an Integer, less than 0 or greater than 5. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $bStrict not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $bEnabled not a Boolean.
+;                  @Error 1 @Extended 8 Return 0 = $bReadOnly not a Boolean.
+;                  @Error 1 @Extended 9 Return 0 = $iMouseScroll not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 10 Return 0 = $tTimeMin not an Object.
+;                  @Error 1 @Extended 11 Return 0 = $tTimeMax not an Object.
+;                  @Error 1 @Extended 12 Return 0 = $iFormat not an Integer, less than 0 or greater than 5. See Constants $LOW_FORM_CON_TIME_FRMT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 13 Return 0 = $tTimeDefault not an Object.
+;                  @Error 1 @Extended 14 Return 0 = $bSpin not a Boolean.
+;                  @Error 1 @Extended 15 Return 0 = $bRepeat not a Boolean.
+;                  @Error 1 @Extended 16 Return 0 = $iDelay not an Integer, less than 0 or greater than 2147483647.
+;                  @Error 1 @Extended 17 Return 0 = $iWidth not an Integer, less than 100 or greater than 200,000.
+;                  @Error 1 @Extended 18 Return 0 = $iAlign not an Integer, less than 0 or greater than 2. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 19 Return 0 = $bHideSel not a Boolean.
+;                  @Error 1 @Extended 20 Return 0 = $sAddInfo not a String.
+;                  @Error 1 @Extended 21 Return 0 = $sHelpText not a String.
+;                  @Error 1 @Extended 22 Return 0 = $sHelpURL not a String.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create a "com.sun.star.util.DateTime" Struct.
+;                  @Error 2 @Extended 2 Return 0 = Failed to create a "com.sun.star.util.Time" Struct.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve current Minimum Time.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve current Maximum Time.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sName
+;                  |                               2 = Error setting $sLabel
+;                  |                               4 = Error setting $iTxtDir
+;                  |                               8 = Error setting $bStrict
+;                  |                               16 = Error setting $bEnabled
+;                  |                               32 = Error setting $bReadOnly
+;                  |                               64 = Error setting $iMouseScroll
+;                  |                               128 = Error setting $tTimeMin
+;                  |                               256 = Error setting $tTimeMax
+;                  |                               512 = Error setting $iFormat
+;                  |                               1024 = Error setting $tTimeDefault
+;                  |                               2048 = Error setting $bSpin
+;                  |                               4096 = Error setting $bRepeat
+;                  |                               8192 = Error setting $iDelay
+;                  |                               16384 = Error setting $iWidth
+;                  |                               32768 = Error setting $iAlign
+;                  |                               65536 = Error setting $bHideSel
+;                  |                               131072 = Error setting $sAddInfo
+;                  |                               262144 = Error setting $sHelpText
+;                  |                               524288 = Error setting $sHelpURL
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 20 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $mFont, $sAddInfo.
+; Related .......: _LOWriter_FormatKeyCreate, _LOWriter_FormatKeyList, _LOWriter_FormConTimeFieldData, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FormConTableConTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $sLabel = Null, $iTxtDir = Null, $bStrict = Null, $bEnabled = Null, $bReadOnly = Null, $iMouseScroll = Null, $tTimeMin = Null, $tTimeMax = Null, $iFormat = Null, $tTimeDefault = Null, $bSpin = Null, $bRepeat = Null, $iDelay = Null, $iWidth = Null, $iAlign = Null, $bHideSel = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $tTime, $tCurMin, $tCurMax, $tCurDefault
+	Local $avControl[20]
+
+	If Not IsObj($oTimeField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOWriter_FormConIdentify($oTimeField) <> $LOW_FORM_CON_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $bStrict, $bEnabled, $bReadOnly, $iMouseScroll, $tTimeMin, $tTimeMax, $iFormat, $tTimeDefault, $bSpin, $bRepeat, $iDelay, $iWidth, $iAlign, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
+		$tTime = $oTimeField.TimeMin()
+		If Not IsObj($tTime) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+		$tCurMin = __LOWriter_CreateStruct("com.sun.star.util.DateTime")
+		If Not IsObj($tCurMin) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+		$tCurMin.Hours = $tTime.Hours()
+		$tCurMin.Minutes = $tTime.Minutes()
+		$tCurMin.Seconds = $tTime.Seconds()
+		$tCurMin.NanoSeconds = $tTime.NanoSeconds()
+		If __LOWriter_VersionCheck(4.1) Then $tCurMin.IsUTC = $tTime.IsUTC()
+
+		$tTime = $oTimeField.TimeMax()
+		If Not IsObj($tTime) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+		$tCurMax = __LOWriter_CreateStruct("com.sun.star.util.DateTime")
+		If Not IsObj($tCurMax) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+		$tCurMax.Hours = $tTime.Hours()
+		$tCurMax.Minutes = $tTime.Minutes()
+		$tCurMax.Seconds = $tTime.Seconds()
+		$tCurMax.NanoSeconds = $tTime.NanoSeconds()
+		If __LOWriter_VersionCheck(4.1) Then $tCurMax.IsUTC = $tTime.IsUTC()
+
+		$tTime = $oTimeField.DefaultTime() ; Default time is Null when not set.
+		If IsObj($tTime) Then
+			$tCurDefault = __LOWriter_CreateStruct("com.sun.star.util.DateTime")
+			If Not IsObj($tCurDefault) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+			$tCurDefault.Hours = $tTime.Hours()
+			$tCurDefault.Minutes = $tTime.Minutes()
+			$tCurDefault.Seconds = $tTime.Seconds()
+			$tCurDefault.NanoSeconds = $tTime.NanoSeconds()
+			If __LOWriter_VersionCheck(4.1) Then $tCurDefault.IsUTC = $tTime.IsUTC()
+
+		Else
+			$tCurDefault = $tTime
+		EndIf
+
+		__LOWriter_ArrayFill($avControl, $oTimeField.Name(), $oTimeField.Label(), $oTimeField.WritingMode(), $oTimeField.StrictFormat(), _
+				$oTimeField.Enabled(), $oTimeField.ReadOnly(), $oTimeField.MouseWheelBehavior(), _
+				$tCurMin, $tCurMax, $oTimeField.TimeFormat(), $tCurDefault, $oTimeField.Spin(), _
+				$oTimeField.Repeat(), $oTimeField.RepeatDelay(), ($oTimeField.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				$oTimeField.Align(), _
+				$oTimeField.HideInactiveSelection(), $oTimeField.Tag(), $oTimeField.HelpText(), $oTimeField.HelpURL())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
+	EndIf
+
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1) ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
+
+		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oTimeField.Name = $sName
+		$iError = ($oTimeField.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($sLabel = Default) Then
+		$oTimeField.setPropertyToDefault("Label")
+
+	ElseIf ($sLabel <> Null) Then
+		If Not IsString($sLabel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oTimeField.Label = $sLabel
+		$iError = ($oTimeField.Label() = $sLabel) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($iTxtDir = Default) Then
+		$oTimeField.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
+		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oTimeField.WritingMode = $iTxtDir
+		$iError = ($oTimeField.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($bStrict = Default) Then
+		$oTimeField.setPropertyToDefault("StrictFormat")
+
+	ElseIf ($bStrict <> Null) Then
+		If Not IsBool($bStrict) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oTimeField.StrictFormat = $bStrict
+		$iError = ($oTimeField.StrictFormat() = $bStrict) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	If ($bEnabled = Default) Then
+		$oTimeField.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
+		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oTimeField.Enabled = $bEnabled
+		$iError = ($oTimeField.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 16))
+	EndIf
+
+	If ($bReadOnly = Default) Then
+		$oTimeField.setPropertyToDefault("ReadOnly")
+
+	ElseIf ($bReadOnly <> Null) Then
+		If Not IsBool($bReadOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		$oTimeField.ReadOnly = $bReadOnly
+		$iError = ($oTimeField.ReadOnly() = $bReadOnly) ? ($iError) : (BitOR($iError, 32))
+	EndIf
+
+	If ($iMouseScroll = Default) Then
+		$oTimeField.setPropertyToDefault("MouseWheelBehavior")
+
+	ElseIf ($iMouseScroll <> Null) Then
+		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		$oTimeField.MouseWheelBehavior = $iMouseScroll
+		$iError = ($oTimeField.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 64))
+	EndIf
+
+	If ($tTimeMin = Default) Then
+		$oTimeField.setPropertyToDefault("TimeMin")
+
+	ElseIf ($tTimeMin <> Null) Then
+		If Not IsObj($tTimeMin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
+		$tTime = __LOWriter_CreateStruct("com.sun.star.util.Time")
+		If Not IsObj($tTime) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+		$tTime.Hours = $tTimeMin.Hours()
+		$tTime.Minutes = $tTimeMin.Minutes()
+		$tTime.Seconds = $tTimeMin.Seconds()
+		$tTime.NanoSeconds = $tTimeMin.NanoSeconds()
+		If __LOWriter_VersionCheck(4.1) Then $tTime.IsUTC = $tTimeMin.IsUTC()
+
+		$oTimeField.TimeMin = $tTime
+		$iError = (__LOWriter_DateStructCompare($oTimeField.TimeMin(), $tTime, False, True)) ? ($iError) : (BitOR($iError, 128))
+	EndIf
+
+	If ($tTimeMax = Default) Then
+		$oTimeField.setPropertyToDefault("TimeMax")
+
+	ElseIf ($tTimeMax <> Null) Then
+		If Not IsObj($tTimeMax) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+
+		$tTime = __LOWriter_CreateStruct("com.sun.star.util.Time")
+		If Not IsObj($tTime) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+		$tTime.Hours = $tTimeMax.Hours()
+		$tTime.Minutes = $tTimeMax.Minutes()
+		$tTime.Seconds = $tTimeMax.Seconds()
+		$tTime.NanoSeconds = $tTimeMax.NanoSeconds()
+		If __LOWriter_VersionCheck(4.1) Then $tTime.IsUTC = $tTimeMax.IsUTC()
+
+		$oTimeField.TimeMax = $tTime
+		$iError = (__LOWriter_DateStructCompare($oTimeField.TimeMax(), $tTime, False, True)) ? ($iError) : (BitOR($iError, 256))
+	EndIf
+
+	If ($iFormat = Default) Then
+		$oTimeField.setPropertyToDefault("TimeFormat")
+
+	ElseIf ($iFormat <> Null) Then
+		If Not __LOWriter_IntIsBetween($iFormat, $LOW_FORM_CON_TIME_FRMT_24_SHORT, $LOW_FORM_CON_TIME_FRMT_DURATION_LONG) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		$oTimeField.TimeFormat = $iFormat
+		$iError = ($oTimeField.TimeFormat() = $iFormat) ? ($iError) : (BitOR($iError, 512))
+	EndIf
+
+	If ($tTimeDefault = Default) Then
+		$oTimeField.setPropertyToDefault("DefaultTime")
+
+	ElseIf ($tTimeDefault <> Null) Then
+		If Not IsObj($tTimeDefault) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+
+		$tTime = __LOWriter_CreateStruct("com.sun.star.util.Time")
+		If Not IsObj($tTime) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+		$tTime.Hours = $tTimeDefault.Hours()
+		$tTime.Minutes = $tTimeDefault.Minutes()
+		$tTime.Seconds = $tTimeDefault.Seconds()
+		$tTime.NanoSeconds = $tTimeDefault.NanoSeconds()
+		If __LOWriter_VersionCheck(4.1) Then $tTime.IsUTC = $tTimeDefault.IsUTC()
+
+		$oTimeField.DefaultTime = $tTime
+		$iError = (__LOWriter_DateStructCompare($oTimeField.DefaultTime(), $tTime, False, True)) ? ($iError) : (BitOR($iError, 1024))
+	EndIf
+
+	If ($bSpin = Default) Then
+		$oTimeField.setPropertyToDefault("Spin")
+
+	ElseIf ($bSpin <> Null) Then
+		If Not IsBool($bSpin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		$oTimeField.Spin = $bSpin
+		$iError = ($oTimeField.Spin() = $bSpin) ? ($iError) : (BitOR($iError, 2048))
+	EndIf
+
+	If ($bRepeat = Default) Then
+		$oTimeField.setPropertyToDefault("Repeat")
+
+	ElseIf ($bRepeat <> Null) Then
+		If Not IsBool($bRepeat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
+		$oTimeField.Repeat = $bRepeat
+		$iError = ($oTimeField.Repeat() = $bRepeat) ? ($iError) : (BitOR($iError, 4096))
+	EndIf
+
+	If ($iDelay = Default) Then
+		$oTimeField.setPropertyToDefault("RepeatDelay")
+
+	ElseIf ($iDelay <> Null) Then
+		If Not __LOWriter_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
+		$oTimeField.RepeatDelay = $iDelay
+		$iError = ($oTimeField.RepeatDelay() = $iDelay) ? ($iError) : (BitOR($iError, 8192))
+	EndIf
+
+	If ($iWidth = Default) Then
+		$oTimeField.setPropertyToDefault("Width")
+
+	ElseIf ($iWidth <> Null) Then
+		If Not __LOWriter_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+		$oTimeField.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
+		$iError = ($oTimeField.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 16384))
+	EndIf
+
+	If ($iAlign = Default) Then
+		$oTimeField.setPropertyToDefault("Align")
+
+	ElseIf ($iAlign <> Null) Then
+		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
+		$oTimeField.Align = $iAlign
+		$iError = ($oTimeField.Align() = $iAlign) ? ($iError) : (BitOR($iError, 32768))
+	EndIf
+
+	If ($bHideSel = Default) Then
+		$oTimeField.setPropertyToDefault("HideInactiveSelection")
+
+	ElseIf ($bHideSel <> Null) Then
+		If Not IsBool($bHideSel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
+		$oTimeField.HideInactiveSelection = $bHideSel
+		$iError = ($oTimeField.HideInactiveSelection() = $bHideSel) ? ($iError) : (BitOR($iError, 65536))
+	EndIf
+
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 131072) ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
+		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
+		$oTimeField.Tag = $sAddInfo
+		$iError = ($oTimeField.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 131072))
+	EndIf
+
+	If ($sHelpText = Default) Then
+		$oTimeField.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
+		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
+		$oTimeField.HelpText = $sHelpText
+		$iError = ($oTimeField.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 262144))
+	EndIf
+
+	If ($sHelpURL = Default) Then
+		$oTimeField.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
+		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
+		$oTimeField.HelpURL = $sHelpURL
+		$iError = ($oTimeField.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 524288))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FormConTableConTimeFieldGeneral
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FormConTextBoxCreateTextCursor

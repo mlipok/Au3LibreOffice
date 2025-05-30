@@ -2373,13 +2373,13 @@ EndFunc   ;==>__LOWriter_FormConGetObj
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_FormConIdentify
 ; Description ...: Identify the type of Control being called, or return the Service name of a control type.
-; Syntax ........: __LOWriter_FormConIdentify($oShape[, $iControlType = Null])
-; Parameters ....: $oShape              - an object. A Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
+; Syntax ........: __LOWriter_FormConIdentify($oObj[, $iControlType = Null])
+; Parameters ....: $oObj                - an object. A Control object returned by a previous _LOWriter_FormConInsert, _LOWriter_FormConTableConColumnAdd or _LOWriter_FormConsGetList function.
 ;                  $iControlType        - [optional] an integer value (1-524288). Default is Null. The Control Type Constant. See Constants $LOW_FORM_CON_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: Integer or String
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object, and $iControlType not an Integer, less than 0 or greater than 524288. See Constants $LOW_FORM_CON_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 1 Return 0 = $oObj not an Object, and $iControlType not an Integer, less than 0 or greater than 524288. See Constants $LOW_FORM_CON_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control, or return requested Service name.
 ;                  --Success--
@@ -2392,7 +2392,7 @@ EndFunc   ;==>__LOWriter_FormConGetObj
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_FormConIdentify($oShape, $iControlType = Null)
+Func __LOWriter_FormConIdentify($oObj, $iControlType = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -2407,14 +2407,22 @@ Func __LOWriter_FormConIdentify($oShape, $iControlType = Null)
 			["com.sun.star.form.component.CommandButton", $LOW_FORM_CON_TYPE_PUSH_BUTTON], ["com.sun.star.form.component.GridControl", $LOW_FORM_CON_TYPE_TABLE_CONTROL], _
 			["com.sun.star.form.component.TextField", $LOW_FORM_CON_TYPE_TEXT_BOX], ["com.sun.star.form.component.TimeField", $LOW_FORM_CON_TYPE_TIME_FIELD]]
 
-	If Not IsObj($oShape) And Not __LOWriter_IntIsBetween($iControlType, $LOW_FORM_CON_TYPE_CHECK_BOX, $LOW_FORM_CON_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oObj) And Not __LOWriter_IntIsBetween($iControlType, $LOW_FORM_CON_TYPE_CHECK_BOX, $LOW_FORM_CON_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If IsObj($oShape) Then
-		If $oShape.supportsService("com.sun.star.drawing.GroupShape") Then Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_FORM_CON_TYPE_GROUPED_CONTROL) ; If a Group shape, it is a Grouped control.
+	If IsObj($oObj) Then
+		If $oObj.Parent.supportsService("com.sun.star.form.component.GridControl") Then ; TableControl column, these controls aren't housed in a shape.
+			For $i = 0 To UBound($avControls) - 1
+				If ($oObj.ColumnServiceName() = $avControls[$i][0]) Then Return SetError($__LO_STATUS_SUCCESS, 0, $avControls[$i][1])
+			Next
 
-		For $i = 0 To UBound($avControls) - 1
-			If $oShape.Control.supportsService($avControls[$i][0]) Then Return SetError($__LO_STATUS_SUCCESS, 0, $avControls[$i][1])
-		Next
+		ElseIf $oObj.supportsService("com.sun.star.drawing.GroupShape") Then ; If a Group shape, it is a Grouped control.
+			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_FORM_CON_TYPE_GROUPED_CONTROL)
+
+		Else     ; Normal control housed in a shape.
+			For $i = 0 To UBound($avControls) - 1
+				If $oObj.Control.supportsService($avControls[$i][0]) Then Return SetError($__LO_STATUS_SUCCESS, 0, $avControls[$i][1])
+			Next
+		EndIf
 
 	ElseIf IsInt($iControlType) Then
 		For $i = 0 To UBound($avControls) - 1
