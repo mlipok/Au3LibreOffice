@@ -8085,7 +8085,6 @@ Func _LOWriter_FormConTableConColumnAdd(ByRef $oTableCon, $iControl, $iPos = Nul
 	If Not IsObj($oColumn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 	Switch $iControl
-
 		Case $LOW_FORM_CON_TYPE_CHECK_BOX
 			$sName = "Check Box "
 
@@ -8118,7 +8117,6 @@ Func _LOWriter_FormConTableConColumnAdd(ByRef $oTableCon, $iControl, $iPos = Nul
 
 		Case Else
 			$sName = "Unknown Control "
-
 	EndSwitch
 
 	While $oTableCon.Control.hasByName($sName & $iCount)
@@ -8172,6 +8170,7 @@ Func _LOWriter_FormConTableConColumnDelete(ByRef $oColumn)
 	For $i = 0 To $oParent.Count() - 1
 		If ($oParent.getByIndex($i) = $oColumn) Then
 			$oParent.removeByIndex($i) ; The name can be the same as another control, so I have to remove by Index.
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 		EndIf
 

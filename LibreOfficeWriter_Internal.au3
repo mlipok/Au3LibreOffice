@@ -2416,6 +2416,7 @@ Func __LOWriter_FormConIdentify($oObj, $iControlType = Null)
 			Next
 
 		ElseIf $oObj.supportsService("com.sun.star.drawing.GroupShape") Then ; If a Group shape, it is a Grouped control.
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_FORM_CON_TYPE_GROUPED_CONTROL)
 
 		Else     ; Normal control housed in a shape.
