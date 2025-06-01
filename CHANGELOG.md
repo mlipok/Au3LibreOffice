@@ -912,6 +912,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - _LOWriter_DocPrintMiscSettings #2 example no longer worked after a change to how one of the functions worked.
 - __LOWriter_GetShapeName had an error where a COM Error would be triggered each time it was called.
 - Added missing example. _LOWriter_ImageExists
+- Backwards Parameters in VarsAreNull in the following functions:
+	- _LOWriter_FieldDateTimeModify
+	- _LOWriter_FieldFileNameModify
+- Add missing parameter to VarsAreNull in _LOWriter_DocFormSettings.
 
 ### Removed
 
