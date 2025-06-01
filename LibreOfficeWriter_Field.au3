@@ -1013,8 +1013,7 @@ Func _LOWriter_FieldDateTimeModify(ByRef $oDoc, ByRef $oDateTimeField, $bIsFixed
 
 		__LOWriter_ArrayFill($avDateTime, $oDateTimeField.IsFixed(), $oDateTimeField.DateTimeValue(), $oDateTimeField.IsDate(), _
 				($oDateTimeField.IsDate() = True) ? (Int(($oDateTimeField.Adjust() / 1440))) : ($oDateTimeField.Adjust()), $iNumberFormat)
-		; If IsDate = True, Then Calculate number of minutes in a day (1440) divided by number of days of off set. Otherwise
-		; return Number of minutes.
+		; If IsDate = True, Then Calculate number of minutes in a day (1440) divided by number of days of off set. Otherwise return Number of minutes.
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDateTime)
 	EndIf
@@ -2742,7 +2741,7 @@ Func _LOWriter_FieldFileNameModify(ByRef $oFileNameField, $bIsFixed = Null, $iFo
 
 	If Not IsObj($oFileNameField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($iFormat, $bIsFixed) Then
+	If __LOWriter_VarsAreNull($bIsFixed, $iFormat) Then
 		__LOWriter_ArrayFill($avFileName, $oFileNameField.IsFixed(), $oFileNameField.FileFormat())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avFileName)
