@@ -1799,7 +1799,7 @@ Func _LOWriter_DocFormSettings(ByRef $oDoc, $bFormDesignMode = Null, $bOpenInDes
 
 	If $oStandardLibrary.hasByName("AU3LibreOffice_UDF_Macros") Then $oStandardLibrary.removeByName("AU3LibreOffice_UDF_Macros")
 
-	If __LOWriter_VarsAreNull($bFormDesignMode, $bOpenInDesignMode, $bAutoControlFocus) Then
+	If __LOWriter_VarsAreNull($bFormDesignMode, $bOpenInDesignMode, $bAutoControlFocus, $bUseControlWizards) Then
 		$oStandardLibrary.insertByName("AU3LibreOffice_UDF_Macros", $sScript)
 		If Not $oStandardLibrary.hasByName("AU3LibreOffice_UDF_Macros") Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
