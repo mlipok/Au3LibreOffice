@@ -9816,7 +9816,7 @@ EndFunc   ;==>_LOWriter_FormConTableConFormattedFieldGeneral
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FormConTableConGeneral
 ; Description ...: Set or Retrieve general Table Control properties.
-; Syntax ........: _LOWriter_FormConTableConGeneral(ByRef $oTableCon[, $sName = Null[, $iTxtDir = Null[, $bEnabled = Null[, $bVisible = Null[, $bPrintable = Null[, $bTabStop = Null[, $iTabOrder = Null[, $mFont = Null[, $nRowHeight = Null[, $iBackColor = Null[, $iBorder = Null[, $bNavBar = Null[, $bRecordMarker = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]])
+; Syntax ........: _LOWriter_FormConTableConGeneral(ByRef $oTableCon[, $sName = Null[, $iTxtDir = Null[, $bEnabled = Null[, $bVisible = Null[, $bPrintable = Null[, $bTabStop = Null[, $iTabOrder = Null[, $mFont = Null[, $nRowHeight = Null[, $iBackColor = Null[, $iBorder = Null[, $iBorderColor = Null[, $bNavBar = Null[, $bRecordMarker = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]]]]]]]]])
 ; Parameters ....: $oTableCon           - [in/out] an object. A Table Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sName               - [optional] a string value. Default is Null. The control name.
 ;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
@@ -9829,6 +9829,7 @@ EndFunc   ;==>_LOWriter_FormConTableConFormattedFieldGeneral
 ;                  $nRowHeight          - [optional] a general number value (-21474836.48-21474836.48). Default is Null. The Row height, set in Micrometers.
 ;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bNavBar             - [optional] a boolean value. Default is Null. If True, the Navigation Bar is displayed on the lower border of the Table control.
 ;                  $bRecordMarker       - [optional] a boolean value. Default is Null. If True, a record marker is displayed.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
@@ -9850,11 +9851,12 @@ EndFunc   ;==>_LOWriter_FormConTableConFormattedFieldGeneral
 ;                  @Error 1 @Extended 11 Return 0 = $nRowHeight not a Number, less than -21474836.48 or greater than 21474836.48.
 ;                  @Error 1 @Extended 12 Return 0 = $iBackColor not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 13 Return 0 = $iBorder not an Integer, less than 0 or greater than 2. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 14 Return 0 = $bNavBar not a Boolean.
-;                  @Error 1 @Extended 15 Return 0 = $bRecordMarker not a Boolean.
-;                  @Error 1 @Extended 16 Return 0 = $sAddInfo not a String.
-;                  @Error 1 @Extended 17 Return 0 = $sHelpText not a String.
-;                  @Error 1 @Extended 18 Return 0 = $sHelpURL not a String.
+;                  @Error 1 @Extended 14 Return 0 = $iBorderColor not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 15 Return 0 = $bNavBar not a Boolean.
+;                  @Error 1 @Extended 16 Return 0 = $bRecordMarker not a Boolean.
+;                  @Error 1 @Extended 17 Return 0 = $sAddInfo not a String.
+;                  @Error 1 @Extended 18 Return 0 = $sHelpText not a String.
+;                  @Error 1 @Extended 19 Return 0 = $sHelpURL not a String.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
 ;                  --Property Setting Errors--
@@ -9870,41 +9872,41 @@ EndFunc   ;==>_LOWriter_FormConTableConFormattedFieldGeneral
 ;                  |                               256 = Error setting $nRowHeight
 ;                  |                               512 = Error setting $iBackColor
 ;                  |                               1024 = Error setting $iBorder
-;                  |                               2048 = Error setting $bNavBar
-;                  |                               4096 = Error setting $bRecordMarker
-;                  |                               8192 = Error setting $sAddInfo
-;                  |                               16384 = Error setting $sHelpText
-;                  |                               32768 = Error setting $sHelpURL
+;                  |                               2048 = Error setting $iBorderColor
+;                  |                               4096 = Error setting $bNavBar
+;                  |                               8192 = Error setting $bRecordMarker
+;                  |                               16384 = Error setting $sAddInfo
+;                  |                               32768 = Error setting $sHelpText
+;                  |                               65536 = Error setting $sHelpURL
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 16 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 17 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                  While the option is available, I am unable to set border color. Attempts result in a COM Error.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $mFont, $sAddInfo.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormConTableConGeneral(ByRef $oTableCon, $sName = Null, $iTxtDir = Null, $bEnabled = Null, $bVisible = Null, $bPrintable = Null, $bTabStop = Null, $iTabOrder = Null, $mFont = Null, $nRowHeight = Null, $iBackColor = Null, $iBorder = Null, $bNavBar = Null, $bRecordMarker = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+Func _LOWriter_FormConTableConGeneral(ByRef $oTableCon, $sName = Null, $iTxtDir = Null, $bEnabled = Null, $bVisible = Null, $bPrintable = Null, $bTabStop = Null, $iTabOrder = Null, $mFont = Null, $nRowHeight = Null, $iBackColor = Null, $iBorder = Null, $iBorderColor = Null, $bNavBar = Null, $bRecordMarker = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0
-	Local $avControl[16]
+	Local $avControl[17]
 
 	If Not IsObj($oTableCon) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If (__LOWriter_FormConIdentify($oTableCon) <> $LOW_FORM_CON_TYPE_TABLE_CONTROL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sName, $iTxtDir, $bEnabled, $bVisible, $bPrintable, $bTabStop, $iTabOrder, $mFont, $nRowHeight, $iBackColor, $iBorder, $bNavBar, $bRecordMarker, $sAddInfo, $sHelpText, $sHelpURL) Then
+	If __LOWriter_VarsAreNull($sName, $iTxtDir, $bEnabled, $bVisible, $bPrintable, $bTabStop, $iTabOrder, $mFont, $nRowHeight, $iBackColor, $iBorder, $iBorderColor, $bNavBar, $bRecordMarker, $sAddInfo, $sHelpText, $sHelpURL) Then
 		__LOWriter_ArrayFill($avControl, $oTableCon.Control.Name(), $oTableCon.Control.WritingMode(), $oTableCon.Control.Enabled(), $oTableCon.Control.EnableVisible(), _
 				$oTableCon.Control.Printable(), $oTableCon.Control.Tabstop(), $oTableCon.Control.TabIndex(), __LOWriter_FormConSetGetFontDesc($oTableCon), $oTableCon.Control.RowHeight(), _
-				$oTableCon.Control.BackgroundColor(), $oTableCon.Control.Border(), $oTableCon.Control.HasNavigationBar(), _
+				$oTableCon.Control.BackgroundColor(), $oTableCon.Control.Border(), $oTableCon.Control.BorderColor(), $oTableCon.Control.HasNavigationBar(), _
 				$oTableCon.Control.HasRecordMarker(), $oTableCon.Control.Tag(), $oTableCon.Control.HelpText(), $oTableCon.Control.HelpURL())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
@@ -10010,49 +10012,58 @@ Func _LOWriter_FormConTableConGeneral(ByRef $oTableCon, $sName = Null, $iTxtDir 
 		$iError = ($oTableCon.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 1024))
 	EndIf
 
+	If ($iBorderColor = Default) Then
+		$oTableCon.Control.setPropertyToDefault("BorderColor")
+
+	ElseIf ($iBorderColor <> Null) Then
+		If Not __LOWriter_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		$oTableCon.Control.setPropertyValue("BorderColor", $iBorderColor)
+		$iError = ($oTableCon.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 2048))
+	EndIf
+
 	If ($bNavBar = Default) Then
 		$oTableCon.Control.setPropertyToDefault("HasNavigationBar")
 
 	ElseIf ($bNavBar <> Null) Then
-		If Not IsBool($bNavBar) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		If Not IsBool($bNavBar) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 		$oTableCon.Control.HasNavigationBar = $bNavBar
-		$iError = ($oTableCon.Control.HasNavigationBar() = $bNavBar) ? ($iError) : (BitOR($iError, 2048))
+		$iError = ($oTableCon.Control.HasNavigationBar() = $bNavBar) ? ($iError) : (BitOR($iError, 4096))
 	EndIf
 
 	If ($bRecordMarker = Default) Then
 		$oTableCon.Control.setPropertyToDefault("HasRecordMarker")
 
 	ElseIf ($bRecordMarker <> Null) Then
-		If Not IsBool($bRecordMarker) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
+		If Not IsBool($bRecordMarker) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 		$oTableCon.Control.HasRecordMarker = $bRecordMarker
-		$iError = ($oTableCon.Control.HasRecordMarker() = $bRecordMarker) ? ($iError) : (BitOR($iError, 4096))
+		$iError = ($oTableCon.Control.HasRecordMarker() = $bRecordMarker) ? ($iError) : (BitOR($iError, 8192))
 	EndIf
 
 	If ($sAddInfo = Default) Then
 		$iError = BitOR($iError, 8192) ; Can't Default Tag.
 
 	ElseIf ($sAddInfo <> Null) Then
-		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
+		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 		$oTableCon.Control.Tag = $sAddInfo
-		$iError = ($oTableCon.Control.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 8192))
+		$iError = ($oTableCon.Control.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 16384))
 	EndIf
 
 	If ($sHelpText = Default) Then
 		$oTableCon.Control.setPropertyToDefault("HelpText")
 
 	ElseIf ($sHelpText <> Null) Then
-		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 		$oTableCon.Control.HelpText = $sHelpText
-		$iError = ($oTableCon.Control.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 16384))
+		$iError = ($oTableCon.Control.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 32768))
 	EndIf
 
 	If ($sHelpURL = Default) Then
 		$oTableCon.Control.setPropertyToDefault("HelpURL")
 
 	ElseIf ($sHelpURL <> Null) Then
-		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
+		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 		$oTableCon.Control.HelpURL = $sHelpURL
-		$iError = ($oTableCon.Control.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 32768))
+		$iError = ($oTableCon.Control.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 65536))
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))

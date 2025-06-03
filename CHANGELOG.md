@@ -867,9 +867,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_FontDescEdit
 	- _LOWriter_ParStyleFont
 - Modified _LOWriter_ShapesGetNames to return Shape Type instead of Implementation name.
-- Renamed __LOWriter_ControlSetGetFontDesc --> __LOWriter_FormConSetGetFontDesc to match other Form control function names.
-- Renamed all internal and user _LOWriter_FormControl* functions to _LOWriter_FormCon* for brevity.
+- Renamed "__LOWriter_ControlSetGetFontDesc" --> "__LOWriter_FormConSetGetFontDesc" to match other Form control function names.
+- Renamed all internal and user "_LOWriter_FormControl*" functions to "_LOWriter_FormCon*" for brevity.
 - Renamed all $LOW_FORM_CONTROL_* constants to $LOW_FORM_CON_* for brevity.
+- Add $iBorderColor to _LOWriter_FormTableConGeneral parameters. Update function and example as necessary.
 
 ### Fixed
 

@@ -25,7 +25,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to create a Font Descriptor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Modify the Control's General properties.
-	_LOWriter_FormConTableConGeneral($oControl, "Renamed_AutoIt_Control", Null, True, True, True, True, 1, $mFont, 1500, $LOW_COLOR_GOLD, $LOW_FORM_CON_BORDER_FLAT, True, True, "Some Additional Information", "This is Help Text", "www.HelpURL.fake")
+	_LOWriter_FormConTableConGeneral($oControl, "Renamed_AutoIt_Control", Null, True, True, True, True, 1, $mFont, 1500, $LOW_COLOR_GOLD, $LOW_FORM_CON_BORDER_FLAT, $LOW_COLOR_INDIGO, True, True, "Some Additional Information", "This is Help Text", "www.HelpURL.fake")
 	If @error Then _ERROR($oDoc, "Failed to modify the Control's properties. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings for the control. Return will be an Array in order of function parameters.
@@ -44,11 +44,12 @@ Func Example()
 			"The height of the row is (in Micrometers): " & $avControl[8] & @CRLF & _
 			"The Long Integer background color is: " & $avControl[9] & @CRLF & _
 			"The Border Style is (See UDF Constants): " & $avControl[10] & @CRLF & _
-			"Is a Navigation bar displayed? True/False: " & $avControl[11] & @CRLF & _
-			"Is a record marker displayed? True/False: " & $avControl[12] & @CRLF & _
-			"The Additional Information text is: " & $avControl[13] & @CRLF & _
-			"The Help text is: " & $avControl[14] & @CRLF & _
-			"The Help URL is: " & $avControl[15])
+			"The Border color is, in Long Integer format: " & $avControl[11] & @CRLF & _
+			"Is a Navigation bar displayed? True/False: " & $avControl[12] & @CRLF & _
+			"Is a record marker displayed? True/False: " & $avControl[13] & @CRLF & _
+			"The Additional Information text is: " & $avControl[14] & @CRLF & _
+			"The Help text is: " & $avControl[15] & @CRLF & _
+			"The Help URL is: " & $avControl[16])
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
