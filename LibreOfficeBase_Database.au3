@@ -58,7 +58,7 @@
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: By default, new connections have auto-commit active.
-;                  You can only modify the AutoCommit setting on private connections (which hasn't been implemented yet in this UDF), but you can, however, retrieve the current setting of AutoCommit for non-private or private connections.
+;                  You can only modify the AutoCommit setting on private connections, however you can retrieve the current setting of AutoCommit for non-private or private connections.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ; Related .......:
 ; Link ..........:
@@ -153,11 +153,12 @@ EndFunc   ;==>_LOBase_DatabaseConnectionClose
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_DatabaseConnectionGet
 ; Description ...: Create a connection to a Database.
-; Syntax ........: _LOBase_DatabaseConnectionGet(ByRef $oDBase[, $sUser = ""[, $sPass = ""[, $bPromptUser = False]]])
+; Syntax ........: _LOBase_DatabaseConnectionGet(ByRef $oDBase[, $sUser = ""[, $sPass = ""[, $bPromptUser = False[, $bPrivate = False]]]])
 ; Parameters ....: $oDBase              - [in/out] an object. A Database object returned by a previous _LOBase_DatabaseGetObjByDoc or _LOBase_DatabaseGetObjByURL function.
 ;                  $sUser               - [optional] a string value. Default is "". The Username for connecting to the Database. If none, leave as a blank string.
 ;                  $sPass               - [optional] a string value. Default is "". The Password for connecting to the Database. If none, leave as a blank string.
 ;                  $bPromptUser         - [optional] a boolean value. Default is False. If True, $sUser and $sPass are ignored, and the user is prompted for the required information.
+;                  $bPrivate            - [optional] a boolean value. Default is False. If True, a private connection is created, otherwise a public connection is created.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -165,6 +166,7 @@ EndFunc   ;==>_LOBase_DatabaseConnectionClose
 ;                  @Error 1 @Extended 2 Return 0 = $sUser not a String.
 ;                  @Error 1 @Extended 3 Return 0 = $sPass not a String.
 ;                  @Error 1 @Extended 4 Return 0 = $bPromptUser not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $bPrivate not a Boolean.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.ServiceManager" Object.
 ;                  @Error 2 @Extended 2 Return 0 = Failed to create "com.sun.star.task.InteractionHandler" Object.
@@ -179,7 +181,7 @@ EndFunc   ;==>_LOBase_DatabaseConnectionClose
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOBase_DatabaseConnectionGet(ByRef $oDBase, $sUser = "", $sPass = "", $bPromptUser = False)
+Func _LOBase_DatabaseConnectionGet(ByRef $oDBase, $sUser = "", $sPass = "", $bPromptUser = False, $bPrivate = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -189,18 +191,35 @@ Func _LOBase_DatabaseConnectionGet(ByRef $oDBase, $sUser = "", $sPass = "", $bPr
 	If Not IsString($sUser) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsString($sPass) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsBool($bPromptUser) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsBool($bPrivate) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
-	If $bPromptUser Then
-		$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
-		If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If $bPrivate Then
+		If $bPromptUser Then
+			$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+			If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-		$oHandler = $oServiceManager.createInstance("com.sun.star.task.InteractionHandler")
-		If Not IsObj($oHandler) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			$oHandler = $oServiceManager.createInstance("com.sun.star.task.InteractionHandler")
+			If Not IsObj($oHandler) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-		$oDBConnection = $oDBase.ConnectWithCompletion($oHandler)
+			$oDBConnection = $oDBase.getIsolatedConnectionWithCompletion($oHandler)
+
+		Else
+			$oDBConnection = $oDBase.getIsolatedConnection($sUser, $sPass)
+		EndIf
 
 	Else
-		$oDBConnection = $oDBase.getConnection($sUser, $sPass)
+		If $bPromptUser Then
+			$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+			If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+			$oHandler = $oServiceManager.createInstance("com.sun.star.task.InteractionHandler")
+			If Not IsObj($oHandler) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+			$oDBConnection = $oDBase.ConnectWithCompletion($oHandler)
+
+		Else
+			$oDBConnection = $oDBase.getConnection($sUser, $sPass)
+		EndIf
 	EndIf
 
 	If Not IsObj($oDBConnection) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
