@@ -372,8 +372,8 @@ Func _LOBase_FormCreate(ByRef $oDoc, ByRef $oConnection, $sForm, $bOpen = False,
 
 		If Not IsObj($oFormDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
-		$oFormDoc.CurrentController.ComponentWindow.Visible = $bVisible
-		If ($oFormDoc.CurrentController.ComponentWindow.isVisible() <> $bVisible) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, $oFormDoc)
+		$oFormDoc.CurrentController.Frame.ContainerWindow.Visible = $bVisible
+		If ($oFormDoc.CurrentController.Frame.ContainerWindow.isVisible() <> $bVisible) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, $oFormDoc)
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $oFormDoc)
 	EndIf
@@ -599,7 +599,7 @@ Func _LOBase_FormFolderCreate(ByRef $oDoc, $sFolder)
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	Next
 
-	$sFolder = $asSplit[$asSplit[0]] ; Last element of Array will be the Form name to Create
+	$sFolder = $asSplit[$asSplit[0]] ; Last element of Array will be the Folder name to Create
 
 	If $oSource.hasByName($sFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
@@ -678,7 +678,7 @@ EndFunc   ;==>_LOBase_FormFolderDelete
 ; Description ...: Check whether a Document contains a Form Folder by name.
 ; Syntax ........: _LOBase_FormFolderExists(ByRef $oDoc, $sName[, $bExhaustive = True])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOBase_DocOpen, _LOBase_DocConnect, or _LOBase_DocCreate function.
-;                  $sName               - a string value. The name of the Table to look for.
+;                  $sName               - a string value. The name of the Folder to look for.
 ;                  $bExhaustive         - [optional] a boolean value. Default is True. If True, the search looks inside sub-folders.
 ; Return values .: Success: Boolean
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -729,7 +729,7 @@ Func _LOBase_FormFolderExists(ByRef $oDoc, $sName, $bExhaustive = True)
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	Next
 
-	$sName = $asSplit[$asSplit[0]] ; Last element of Array will be the Form name to search
+	$sName = $asSplit[$asSplit[0]] ; Last element of Array will be the Folder name to search
 
 	$asNames = $oSource.getElementNames()
 	If Not IsArray($asNames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
@@ -835,7 +835,7 @@ Func _LOBase_FormFolderRename(ByRef $oDoc, $sFolder, $sNewName)
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	Next
 
-	$sFolder = $asSplit[$asSplit[0]] ; Last element of Array will be the Form name to Create
+	$sFolder = $asSplit[$asSplit[0]] ; Last element of Array will be the Folder name to Rename
 
 	If $oSource.hasByName($sNewName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
@@ -957,7 +957,7 @@ EndFunc   ;==>_LOBase_FormFoldersGetCount
 ; Syntax ........: _LOBase_FormFoldersGetNames(ByRef $oDoc[, $bExhaustive = True[, $sFolder = ""]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOBase_DocOpen, _LOBase_DocConnect, or _LOBase_DocCreate function.
 ;                  $bExhaustive         - [optional] a boolean value. Default is True. If True, the search looks inside sub-folders.
-;                  $sFolder             - [optional] a string value. Default is "". The Sub-Folder to return the array of form names from. See remarks.
+;                  $sFolder             - [optional] a string value. Default is "". The Sub-Folder to return the array of Folder names from. See remarks.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -979,7 +979,7 @@ EndFunc   ;==>_LOBase_FormFoldersGetCount
 ; Remarks .......: $sFolder can be left as a blank string "", which will either return only an array of main level Folder names (not located in sub-folders), or if $bExhaustive is set to True, it will return an array of all folders contained in the document.
 ;                  You can narrow the Folder name return down to a specific folder by calling the appropriate path for the folder, separated by forward slashes (/), e.g. to get an array of Folders contained in folder 3, which is located in Folder 2, which is located inside folder 1, you would call $sFolder with the following path: Folder1/Folder2/Folder3
 ;                  All Folders located in sub-folders will have the folder path prefixed to the Folder name, separated by forward slashes (/). e.g. Folder1/Folder2/Folder3.
-;                  Calling $bExhaustive with True when searching inside a Folder, will get all Form names from inside that folder, and all sub-folders.
+;                  Calling $bExhaustive with True when searching inside a Folder, will get all Folder names from inside that folder, and all sub-folders.
 ;                  The order of the Folder names inside the folders may not necessarily be in proper order, i.e. if there are two sub folders, and folders inside the first sub-folder, the two folders will be listed first, then the folders inside the first sub-folder.
 ; Related .......:
 ; Link ..........:
@@ -1110,7 +1110,7 @@ EndFunc   ;==>_LOBase_FormIsModified
 ;                  @Error 1 @Extended 5 Return 0 = $bVisible not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = Folder or Sub-Folder not found.
 ;                  @Error 1 @Extended 7 Return 0 = Name called in $sName not found in Folder.
-;                  @Error 1 @Extended 8 Return 0 = Name called in $sName not a Folder.
+;                  @Error 1 @Extended 8 Return 0 = Name called in $sName not a Form.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Connection called in $oConnection is closed.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Form Documents Object.
@@ -1174,8 +1174,8 @@ Func _LOBase_FormOpen(ByRef $oDoc, ByRef $oConnection, $sName, $bDesign = True, 
 
 	If Not IsObj($oFormDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
-	$oFormDoc.CurrentController.ComponentWindow.Visible = $bVisible
-	If ($oFormDoc.CurrentController.ComponentWindow.isVisible() <> $bVisible) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, $oFormDoc)
+	$oFormDoc.CurrentController.Frame.ContainerWindow.Visible = $bVisible
+	If ($oFormDoc.CurrentController.Frame.ContainerWindow.isVisible() <> $bVisible) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, $oFormDoc)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oFormDoc)
 EndFunc   ;==>_LOBase_FormOpen
@@ -1496,7 +1496,7 @@ EndFunc   ;==>_LOBase_FormsGetCount
 ;                  You can narrow the Form name return down to a specific folder by calling the appropriate path for the folder, separated by forward slashes (/), e.g. to get an array of forms contained in folder 3, which is located in Folder 2, which is located inside folder 1, you would call $sFolder with the following path: Folder1/Folder2/Folder3
 ;                  All forms located in folders will have the folder path prefixed to the Form name, separated by forward slashes (/). e.g. Folder1/Folder2/Folder3/FormXYZ.
 ;                  Calling $bExhaustive with True when searching inside a Folder, will get all Form names from inside that folder, and all sub-folders.
-;                  The order of the form names inside the folders may not necessarily be in proper order, i.e. if there are two sub folders, and folders inside the first sub-folder, the two folders will be listed first, then the forms inside the folders inside the first sub-folder.
+;                  The order of the form names inside the folders may not necessarily be in proper order, i.e. if there are two sub folders, and folders inside the first sub-folder, the Forms inside of the two folders will be listed first, then the forms inside the folders inside the first sub-folder.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
