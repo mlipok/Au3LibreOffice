@@ -290,7 +290,7 @@ Func _LOBase_FormCreate(ByRef $oDoc, ByRef $oConnection, $sForm, $bOpen = False,
 
 	Local $oServiceManager, $oDesktop, $oSource, $oFormDoc, $oDocDef
 	Local $asSplit[0]
-	Local Const $iURLFrameCreate = 8 ;frame will be created if not found
+	Local Const $iURLFrameCreate = 8 ; frame will be created if not found
 	Local $aArgs[1]
 	Local $iError = 0, $iCount = 0
 	Local $sPath = @TempDir & "AutoIt_Form_Temp_Doc_"
