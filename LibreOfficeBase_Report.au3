@@ -157,8 +157,8 @@ Func _LOBase_ReportClose(ByRef $oReportDoc, $bForceClose = False)
 		$bReturn = $oReport.Close()
 
 	Else ; Error, unknown document?
-		Return SetError($__LO_STATUS_PROCESSING_ERROR, 9, 0)
 
+		Return SetError($__LO_STATUS_PROCESSING_ERROR, 9, 0)
 	EndIf
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $bReturn)
@@ -1219,8 +1219,8 @@ Func _LOBase_ReportSave(ByRef $oReportDoc)
 		EndIf
 
 	Else ; Error, unknown document?
-		Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0)
 
+		Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0)
 	EndIf
 
 	If Not IsObj($oReport) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 8, 0)
