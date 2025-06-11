@@ -12,6 +12,7 @@
 #include "LibreOfficeBase_Doc.au3"
 #include "LibreOfficeBase_Form.au3"
 #include "LibreOfficeBase_Query.au3"
+#include "LibreOfficeBase_Report.au3"
 #include "LibreOfficeBase_SQLStatement.au3"
 #include "LibreOfficeBase_Table.au3"
 

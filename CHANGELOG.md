@@ -69,6 +69,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- LibreOfficeBase_Helper.au3
 	- LibreOfficeBase_Internal.au3
 	- LibreOfficeBase_Query.au3
+	- LibreOfficeBase_Report.au3
 	- LibreOfficeBase_SQLStatement.au3
 	- LibreOfficeBase_Table.au3
 
@@ -185,6 +186,24 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOBase_QueryGetObjByName
 	- _LOBase_QueryName
 	- _LOBase_QuerySQLCommand
+
+- Report functions
+	- _LOBase_ReportClose
+	- _LOBase_ReportConnect
+	- _LOBase_ReportDelete
+	- _LOBase_ReportExists
+	- _LOBase_ReportFolderCreate
+	- _LOBase_ReportFolderDelete
+	- _LOBase_ReportFolderExists
+	- _LOBase_ReportFolderRename
+	- _LOBase_ReportFoldersGetCount
+	- _LOBase_ReportFoldersGetNames
+	- _LOBase_ReportIsModified
+	- _LOBase_ReportOpen
+	- _LOBase_ReportRename
+	- _LOBase_ReportSave
+	- _LOBase_ReportsGetCount
+	- _LOBase_ReportsGetNames
 
 - SQL Statement functions
 	- _LOBase_SQLResultColumnMetaDataQuery
