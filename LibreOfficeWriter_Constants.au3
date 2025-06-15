@@ -503,7 +503,7 @@ Global Const _                                                  ; com.sun.star.u
 		$LOW_FORMAT_KEYS_PERCENT = 128, _                       ; Returns Percentage number formats.
 		$LOW_FORMAT_KEYS_TEXT = 256, _                          ; Returns Text number formats.
 		$LOW_FORMAT_KEYS_LOGICAL = 1024, _                      ; Returns Boolean number formats.
-		$LOW_FORMAT_KEYS_UNDEFINED = 2048, _                    ; Returns Is used as a return value if no format exists.
+		$LOW_FORMAT_KEYS_UNDEFINED = 2048, _                    ; Is used as a return value if no format exists.
 		$LOW_FORMAT_KEYS_EMPTY = 4096, _                        ; Returns Empty Number formats (?)
 		$LOW_FORMAT_KEYS_DURATION = 8196                        ; Returns Duration number formats.
 
