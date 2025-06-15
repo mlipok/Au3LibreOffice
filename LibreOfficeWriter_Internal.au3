@@ -2493,34 +2493,34 @@ Func __LOWriter_FormConSetGetFontDesc(ByRef $oControl, $mFontDesc = Null)
 
 	If Not IsMap($mFontDesc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	$oControl.CharFontName() = $mFontDesc.CharFontName
+	$oControl.CharFontName = $mFontDesc.CharFontName
 	$iError = ($oControl.CharFontName() = $mFontDesc.CharFontName) ? ($iError) : (BitOR($iError, 1))
 
-	$oControl.CharWeight() = $mFontDesc.CharWeight
+	$oControl.CharWeight = $mFontDesc.CharWeight
 	$iError = (__LOWriter_IntIsBetween($oControl.CharWeight(), $mFontDesc.CharWeight - 50, $mFontDesc.CharWeight + 50)) ? ($iError) : (BitOR($iError, 2))
 
-	$oControl.CharPosture() = $mFontDesc.CharPosture
+	$oControl.CharPosture = $mFontDesc.CharPosture
 	$iError = ($oControl.CharPosture() = $mFontDesc.CharPosture) ? ($iError) : (BitOR($iError, 4))
 
-	$oControl.CharHeight() = $mFontDesc.CharHeight
+	$oControl.CharHeight = $mFontDesc.CharHeight
 	$iError = ($oControl.CharHeight() = $mFontDesc.CharHeight) ? ($iError) : (BitOR($iError, 8))
 
-	$oControl.CharColor() = $mFontDesc.CharColor
+	$oControl.CharColor = $mFontDesc.CharColor
 	$iError = ($oControl.CharColor() = $mFontDesc.CharColor) ? ($iError) : (BitOR($iError, 16))
 
-	$oControl.CharUnderline() = $mFontDesc.CharUnderline
+	$oControl.CharUnderline = $mFontDesc.CharUnderline
 	$iError = ($oControl.CharUnderline() = $mFontDesc.CharUnderline) ? ($iError) : (BitOR($iError, 32))
 
-	$oControl.CharUnderlineColor() = $mFontDesc.CharUnderlineColor
+	$oControl.CharUnderlineColor = $mFontDesc.CharUnderlineColor
 	$iError = ($oControl.CharUnderlineColor() = $mFontDesc.CharUnderlineColor) ? ($iError) : (BitOR($iError, 64))
 
-	$oControl.CharStrikeout() = $mFontDesc.CharStrikeout
+	$oControl.CharStrikeout = $mFontDesc.CharStrikeout
 	$iError = ($oControl.CharStrikeout() = $mFontDesc.CharStrikeout) ? ($iError) : (BitOR($iError, 128))
 
-	$oControl.CharWordMode() = $mFontDesc.CharWordMode
+	$oControl.CharWordMode = $mFontDesc.CharWordMode
 	$iError = ($oControl.CharWordMode() = $mFontDesc.CharWordMode) ? ($iError) : (BitOR($iError, 256))
 
-	$oControl.CharRelief() = $mFontDesc.CharRelief
+	$oControl.CharRelief = $mFontDesc.CharRelief
 	$iError = ($oControl.CharRelief() = $mFontDesc.CharRelief) ? ($iError) : (BitOR($iError, 512))
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
