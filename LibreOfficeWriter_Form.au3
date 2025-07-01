@@ -3546,7 +3546,8 @@ EndFunc   ;==>_LOWriter_FormConGroupBoxGeneral
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 18 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: If $sGraphics is set to an invalid Graphic URL, graphic is set to Null. The Return for $sGraphics is an Image Object.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Setting $iBorder to $LOW_FORM_CON_BORDER_WITHOUT, will not trigger an error, but does not currently work. This is a known bug, https://bugs.documentfoundation.org/show_bug.cgi?id=131196
@@ -3983,7 +3984,8 @@ EndFunc   ;==>_LOWriter_FormConImageControlData
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 17 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: If $sGraphics is set to an invalid Graphic URL, graphic is set to Null. The Return for $sGraphics is an Image Object.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $sAddInfo.
@@ -4210,7 +4212,7 @@ EndFunc   ;==>_LOWriter_FormConImageControlGeneral
 ; Modified ......:
 ; Remarks .......: When inserting a Grouped Control, a Group box will be automatically created and inserted into it.
 ;                  I have not found a reliable and working way to add controls to a Group of Controls.
-; Related .......: _LOWriter_FormConsGetList, _LOWriter_FormConDelete
+; Related .......: _LOWriter_FormConsGetList, _LOWriter_FormConDelete, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -6125,7 +6127,8 @@ EndFunc   ;==>_LOWriter_FormConOptionButtonData
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 22 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: If $sGraphics is set to an invalid Graphic URL, graphic is set to Null. The Return for $sGraphics is an Image Object.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $iDefaultState, $mFont, $sAddInfo.
@@ -7110,7 +7113,8 @@ EndFunc   ;==>_LOWriter_FormConPosition
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 27 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: If $sGraphics is set to an invalid Graphic URL, graphic is set to Null. The Return for $sGraphics is an Image Object.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $iDefaultState, $mFont, $sAddInfo.
@@ -7560,7 +7564,7 @@ EndFunc   ;==>_LOWriter_FormConPushButtonState
 ; Description ...: Retrieve an array of Control Objects contained in a Document or a Form.
 ; Syntax ........: _LOWriter_FormConsGetList(ByRef $oObj[, $iType = $LOW_FORM_CON_TYPE_ALL])
 ; Parameters ....: $oObj                - [in/out] an object. Either a Document Object or a Form object, or a Grouped Control. See Remarks. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function, or a Form Object returned from a previous _LOWriter_FormsGetList, or _LOWriter_FormAdd function. Also a Grouped Control or Group Box returned from a _LOWriter_FormConsGetList function.
-;                  $iType               - [optional] an integer value (1-1048575). Default is $LOW_FORM_CON_TYPE_ALL. The type of control(s) to return in the array. Can be BitOr's together. See Constants $LOW_FORM_CON_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iType               - [optional] an integer value (1-1048575). Default is $LOW_FORM_CON_TYPE_ALL. The type of control(s) to return in the array. Can be BitOr'd together. See Constants $LOW_FORM_CON_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -7615,15 +7619,16 @@ Func _LOWriter_FormConsGetList(ByRef $oObj, $iType = $LOW_FORM_CON_TYPE_ALL)
 			If $oShape.supportsService("com.sun.star.drawing.ControlShape") And ($oShape.Control.Parent() = $oObj) Then ; If shape is a single control, and is contained in the form.
 
 				$iControlType = __LOWriter_FormConIdentify($oShape)
+				If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 				If BitAND($iType, $iControlType) Then
 					$aoControls[$iCount][0] = $oShape
 					$aoControls[$iCount][1] = $iControlType
-					If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 					$iCount += 1
 				EndIf
 
 			ElseIf $oShape.supportsService("com.sun.star.drawing.GroupShape") And ($oShape.getByIndex(0).Control.Parent() = $oObj) Then ; If shape is a group control, and the first control contained in it is contained in the form.
 				$iControlType = __LOWriter_FormConIdentify($oShape)
+				If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 				If BitAND($iType, $iControlType) Then
 					$aoControls[$iCount][0] = $oShape
 					$aoControls[$iCount][1] = $LOW_FORM_CON_TYPE_GROUPED_CONTROL
@@ -7647,10 +7652,10 @@ Func _LOWriter_FormConsGetList(ByRef $oObj, $iType = $LOW_FORM_CON_TYPE_ALL)
 
 			If $oShape.supportsService("com.sun.star.drawing.ControlShape") Or $oShape.supportsService("com.sun.star.drawing.GroupShape") Then
 				$iControlType = __LOWriter_FormConIdentify($oShape)
+				If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 				If BitAND($iType, $iControlType) Then
 					$aoControls[$iCount][0] = $oShape
 					$aoControls[$iCount][1] = $iControlType
-					If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 					$iCount += 1
 				EndIf
 			EndIf
@@ -7667,10 +7672,10 @@ Func _LOWriter_FormConsGetList(ByRef $oObj, $iType = $LOW_FORM_CON_TYPE_ALL)
 
 			If $oControl.supportsService("com.sun.star.drawing.ControlShape") Then
 				$iControlType = __LOWriter_FormConIdentify($oControl)
+				If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 				If BitAND($iType, $iControlType) Then
 					$aoControls[$iCount][0] = $oControl
 					$aoControls[$iCount][1] = $iControlType
-					If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 					$iCount += 1
 				EndIf
 			EndIf
