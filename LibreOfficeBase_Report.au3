@@ -3866,7 +3866,6 @@ Func _LOBase_ReportSectionGetObj(ByRef $oReportDoc, $iSection)
 
 		Case $LOB_REP_SECTION_TYPE_REPORT_HEADER
 			$oSection = $oReportDoc.ReportHeader()
-
 	EndSwitch
 
 	If Not IsObj($oSection) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
