@@ -2810,7 +2810,7 @@ EndFunc   ;==>_LOWriter_FormConFormattedFieldData
 ;                  $nMin                - [optional] a general number value. Default is Null. The minimum value allowed in the field.
 ;                  $nMax                - [optional] a general number value. Default is Null. The maximum value allowed in the field.
 ;                  $nDefault            - [optional] a general number value. Default is Null. The default value of the field.
-;                  $iFormat             - [optional] an integer value. Default is Null. The Number Format Key to display the content in, retrieved from a previous _LOWriter_FormatKeyList call, or created by _LOWriter_FormatKeyCreate function.
+;                  $iFormat             - [optional] an integer value. Default is Null. The Number Format Key to display the content in, retrieved from a previous _LOWriter_FormatKeysGetList call, or created by _LOWriter_FormatKeyCreate function.
 ;                  $bSpin               - [optional] a boolean value. Default is Null. If True, the field will act as a spin button.
 ;                  $bRepeat             - [optional] a boolean value. Default is Null. If True, the button action will repeat if the button is clicked and held down.
 ;                  $iDelay              - [optional] an integer value (0-2147483647). Default is Null. The delay between button repeats, set in milliseconds.
@@ -2901,7 +2901,7 @@ EndFunc   ;==>_LOWriter_FormConFormattedFieldData
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $mFont, $sAddInfo.
 ;                  Setting $iBorder to $LOW_FORM_CON_BORDER_WITHOUT, will not trigger an error, but does not currently work. This is a known bug, https://bugs.documentfoundation.org/show_bug.cgi?id=131196
-; Related .......: _LOWriter_FormatKeyCreate, _LOWriter_FormatKeyList, _LOWriter_FormConFormattedFieldValue, _LOWriter_FormConFormattedFieldData
+; Related .......: _LOWriter_FormatKeyCreate, _LOWriter_FormatKeysGetList, _LOWriter_FormConFormattedFieldValue, _LOWriter_FormConFormattedFieldData
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -9542,7 +9542,7 @@ EndFunc   ;==>_LOWriter_FormConTableConFormattedFieldData
 ;                  $nMin                - [optional] a general number value. Default is Null. The minimum value allowed in the field.
 ;                  $nMax                - [optional] a general number value. Default is Null. The maximum value allowed in the field.
 ;                  $nDefault            - [optional] a general number value. Default is Null. The default value of the field.
-;                  $iFormat             - [optional] an integer value. Default is Null. The Number Format Key to display the content in, retrieved from a previous _LOWriter_FormatKeyList call, or created by _LOWriter_FormatKeyCreate function.
+;                  $iFormat             - [optional] an integer value. Default is Null. The Number Format Key to display the content in, retrieved from a previous _LOWriter_FormatKeysGetList call, or created by _LOWriter_FormatKeyCreate function.
 ;                  $bSpin               - [optional] a boolean value. Default is Null. If True, the field will act as a spin button.
 ;                  $bRepeat             - [optional] a boolean value. Default is Null. If True, the button action will repeat if the button is clicked and held down.
 ;                  $iDelay              - [optional] an integer value (0-2147483647). Default is Null. The delay between button repeats, set in milliseconds.
@@ -9611,7 +9611,7 @@ EndFunc   ;==>_LOWriter_FormConTableConFormattedFieldData
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $sAddInfo.
-; Related .......: _LOWriter_FormatKeyCreate, _LOWriter_FormatKeyList, _LOWriter_FormConFormattedFieldData, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_FormatKeyCreate, _LOWriter_FormatKeysGetList, _LOWriter_FormConFormattedFieldData, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -11633,7 +11633,7 @@ EndFunc   ;==>_LOWriter_FormConTableConTimeFieldData
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $mFont, $sAddInfo.
-; Related .......: _LOWriter_FormatKeyCreate, _LOWriter_FormatKeyList, _LOWriter_FormConTimeFieldData, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_FormatKeyCreate, _LOWriter_FormatKeysGetList, _LOWriter_FormConTimeFieldData, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -12627,7 +12627,7 @@ EndFunc   ;==>_LOWriter_FormConTimeFieldData
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $mFont, $sAddInfo.
 ;                  Setting $iBorder to $LOW_FORM_CON_BORDER_WITHOUT, will not trigger an error, but does not currently work. This is a known bug, https://bugs.documentfoundation.org/show_bug.cgi?id=131196
-; Related .......: _LOWriter_FormatKeyCreate, _LOWriter_FormatKeyList, _LOWriter_FormConTimeFieldValue, _LOWriter_FormConTimeFieldData
+; Related .......: _LOWriter_FormatKeyCreate, _LOWriter_FormatKeysGetList, _LOWriter_FormConTimeFieldValue, _LOWriter_FormConTimeFieldData
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
