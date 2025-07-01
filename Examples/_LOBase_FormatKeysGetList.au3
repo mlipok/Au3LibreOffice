@@ -38,7 +38,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, $oReportDoc, "Failed to create a Format Key. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve an Array of Format Keys. With Boolean value of whether each is a User-Created key or not, search for all Format Key types.
-	$avKeys = _LOBase_FormatKeyList($oReportDoc, True, False, $LOB_FORMAT_KEYS_ALL)
+	$avKeys = _LOBase_FormatKeysGetList($oReportDoc, True, False, $LOB_FORMAT_KEYS_ALL)
 	If @error Then _ERROR($oDoc, $oReportDoc, "Failed to retrieve an array of Date/Time Format Keys. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	$iResults = @extended

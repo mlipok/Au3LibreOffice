@@ -38,7 +38,7 @@
 ; _LOBase_FormatKeyExists
 ; _LOBase_FormatKeyGetStandard
 ; _LOBase_FormatKeyGetString
-; _LOBase_FormatKeyList
+; _LOBase_FormatKeysGetList
 ; _LOBase_PathConvert
 ; _LOBase_VersionGet
 ; ===============================================================================================================================
@@ -1232,7 +1232,7 @@ EndFunc   ;==>_LOBase_FormatKeyCreate
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOBase_FormatKeyList, _LOBase_FormatKeyCreate
+; Related .......: _LOBase_FormatKeysGetList, _LOBase_FormatKeyCreate
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1380,7 +1380,7 @@ EndFunc   ;==>_LOBase_FormatKeyGetStandard
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOBase_FormatKeyList
+; Related .......: _LOBase_FormatKeysGetList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1401,9 +1401,9 @@ Func _LOBase_FormatKeyGetString(ByRef $oReportDoc, $iFormatKey)
 EndFunc   ;==>_LOBase_FormatKeyGetString
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOBase_FormatKeyList
+; Name ..........: _LOBase_FormatKeysGetList
 ; Description ...: Retrieve an Array of Date/Time Format Keys.
-; Syntax ........: _LOBase_FormatKeyList(ByRef $oReportDoc[, $bIsUser = False[, $bUserOnly = False[, $iFormatKeyType = $LOB_FORMAT_KEYS_ALL]]])
+; Syntax ........: _LOBase_FormatKeysGetList(ByRef $oReportDoc[, $bIsUser = False[, $bUserOnly = False[, $iFormatKeyType = $LOB_FORMAT_KEYS_ALL]]])
 ; Parameters ....: $oReportDoc          - [in/out] an object. A Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
 ;                  $bIsUser             - [optional] a boolean value. Default is False. If True, Adds a third column to the return Array with a boolean, whether each Key is user-created or not.
 ;                  $bUserOnly           - [optional] a boolean value. Default is False. If True, only user-created Format Keys are returned.
@@ -1432,7 +1432,7 @@ EndFunc   ;==>_LOBase_FormatKeyGetString
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOBase_FormatKeyList(ByRef $oReportDoc, $bIsUser = False, $bUserOnly = False, $iFormatKeyType = $LOB_FORMAT_KEYS_ALL)
+Func _LOBase_FormatKeysGetList(ByRef $oReportDoc, $bIsUser = False, $bUserOnly = False, $iFormatKeyType = $LOB_FORMAT_KEYS_ALL)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1479,7 +1479,7 @@ Func _LOBase_FormatKeyList(ByRef $oReportDoc, $bIsUser = False, $bUserOnly = Fal
 	If ($bUserOnly = True) Then ReDim $avFormats[$iCount][$iColumns]
 
 	Return SetError($__LO_STATUS_SUCCESS, UBound($avFormats), $avFormats)
-EndFunc   ;==>_LOBase_FormatKeyList
+EndFunc   ;==>_LOBase_FormatKeysGetList
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_PathConvert

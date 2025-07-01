@@ -312,8 +312,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 ### Changed
 
-Renamed _LOBase_TableIndexesCount-->_LOBase_TableIndexesGetCount
-Added Private connection option to _LOBase_DatabaseConnectionGet.
+- Renamed _LOBase_TableIndexesCount-->_LOBase_TableIndexesGetCount
+- Added Private connection option to _LOBase_DatabaseConnectionGet.
+- Renamed Functions to be consistent when retrieving arrays of names or objects:
+	- _LOBase_FormatKeyList-->_LOBase_FormatKeysGetList
 
 > [!NOTE]
 > **LibreOfficeCalc**

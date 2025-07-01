@@ -298,7 +298,7 @@ EndFunc   ;==>_LOBase_ReportConFormattedFieldData
 ;                  $mFont               - [optional] a map. Default is Null. A Font descriptor Map returned by a previous _LOBase_FontDescCreate or _LOBase_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOB_TXT_ALIGN_HORI_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOB_ALIGN_VERT_* as defined in LibreOfficeBase_Constants.au3.
-;                  $iFormat             - [optional] an integer value. Default is Null. The Number Format Key to display the content in, retrieved from a previous _LOBase_FormatKeyList call, or created by _LOBase_FormatKeyCreate function.
+;                  $iFormat             - [optional] an integer value. Default is Null. The Number Format Key to display the content in, retrieved from a previous _LOBase_FormatKeysGetList call, or created by _LOBase_FormatKeyCreate function.
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -337,7 +337,7 @@ EndFunc   ;==>_LOBase_ReportConFormattedFieldData
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  I could not find a property to set the TextDirection or Visible settings.
 ;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
-; Related .......: _LOBase_FormatKeyCreate, _LOBase_FormatKeyList, _LOBase_ReportConFormattedFieldData
+; Related .......: _LOBase_FormatKeyCreate, _LOBase_FormatKeysGetList, _LOBase_ReportConFormattedFieldData
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
