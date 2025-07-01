@@ -12,11 +12,11 @@ Func Example()
 	$oDoc = _LOWriter_DocCreate(True, False)
 	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Query the standard Format Key for the Format Key type of $LOC_FORMAT_KEYS_DURATION
+	; Query the standard Format Key for the Format Key type of $LOW_FORMAT_KEYS_DURATION
 	$iFormatKey = _LOWriter_FormatKeyGetStandard($oDoc, $LOW_FORMAT_KEYS_DURATION)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the standard format key. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Standard format key number for format key type $LOC_FORMAT_KEYS_DURATION is: " & $iFormatKey & " It looks like this: " & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Standard format key number for format key type $LOW_FORMAT_KEYS_DURATION is: " & $iFormatKey & " It looks like this: " & _
 			_LOWriter_FormatKeyGetString($oDoc, $iFormatKey))
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
