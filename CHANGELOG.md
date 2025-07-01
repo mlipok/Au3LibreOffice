@@ -316,6 +316,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Added Private connection option to _LOBase_DatabaseConnectionGet.
 - Renamed Functions to be consistent when retrieving arrays of names or objects:
 	- _LOBase_FormatKeyList-->_LOBase_FormatKeysGetList
+- Removed requirement of $oDoc in _LOBase_FontsGetNames
+- Added optional $oDoc parameter to _LOBase_FontExists for potential quicker execution.
 
 > [!NOTE]
 > **LibreOfficeCalc**
