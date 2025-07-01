@@ -736,7 +736,6 @@ Func _LOBase_SQLStatementExecuteQuery(ByRef $oStatement, $sSQL = Null, $bWritabl
 	#forceref $oCOM_ErrorHandler
 
 	Local $oResult, $oRowSet, $oServiceManager
-	Local Const $__LOB_COMMAND_TYPE_COMMAND = 2
 
 	If Not IsObj($oStatement) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not ($oStatement.supportsService("com.sun.star.sdbc.Statement") Or $oStatement.supportsService("com.sun.star.sdbc.PreparedStatement")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -752,7 +751,7 @@ Func _LOBase_SQLStatementExecuteQuery(ByRef $oStatement, $sSQL = Null, $bWritabl
 			If Not IsObj($oRowSet) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$oRowSet.activeConnection = $oStatement.Connection()
-			$oRowSet.CommandType = $__LOB_COMMAND_TYPE_COMMAND
+			$oRowSet.CommandType = $LOB_REP_CONTENT_TYPE_SQL
 			$oRowSet.Command = $sSQL
 			$oRowSet.Execute()
 			$oResult = $oRowSet

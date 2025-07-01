@@ -21,8 +21,22 @@
 
 ; #CURRENT# =====================================================================================================================
 ; _LOBase_ReportClose
+; _LOBase_ReportConDelete
+; _LOBase_ReportConFormattedFieldData
+; _LOBase_ReportConFormattedFieldGeneral
+; _LOBase_ReportConImageConData
+; _LOBase_ReportConImageConGeneral
+; _LOBase_ReportConInsert
+; _LOBase_ReportConLabelGeneral
+; _LOBase_ReportConLineGeneral
 ; _LOBase_ReportConnect
+; _LOBase_ReportConPosition
+; _LOBase_ReportConsGetList
+; _LOBase_ReportConSize
+; _LOBase_ReportCopy
+; _LOBase_ReportData
 ; _LOBase_ReportDelete
+; _LOBase_ReportDetail
 ; _LOBase_ReportExists
 ; _LOBase_ReportFolderCreate
 ; _LOBase_ReportFolderDelete
@@ -30,10 +44,24 @@
 ; _LOBase_ReportFolderRename
 ; _LOBase_ReportFoldersGetCount
 ; _LOBase_ReportFoldersGetNames
+; _LOBase_ReportFooter
+; _LOBase_ReportGeneral
+; _LOBase_ReportGroupAdd
+; _LOBase_ReportGroupDeleteByIndex
+; _LOBase_ReportGroupDeleteByObj
+; _LOBase_ReportGroupFooter
+; _LOBase_ReportGroupGetByIndex
+; _LOBase_ReportGroupHeader
+; _LOBase_ReportGroupsGetCount
+; _LOBase_ReportGroupSort
+; _LOBase_ReportHeader
 ; _LOBase_ReportIsModified
 ; _LOBase_ReportOpen
+; _LOBase_ReportPageFooter
+; _LOBase_ReportPageHeader
 ; _LOBase_ReportRename
 ; _LOBase_ReportSave
+; _LOBase_ReportSectionGetObj
 ; _LOBase_ReportsGetCount
 ; _LOBase_ReportsGetNames
 ; ===============================================================================================================================
@@ -42,7 +70,7 @@
 ; Name ..........: _LOBase_ReportClose
 ; Description ...: Close an opened Report Document.
 ; Syntax ........: _LOBase_ReportClose(ByRef $oReportDoc[, $bForceClose = False])
-; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportOpen, _LOBase_ReportConnect, or _LOBase_ReportCreate function.
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
 ;                  $bForceClose         - [optional] a boolean value. Default is False. If True, the Report document will be closed regardless if there are unsaved changes. See remarks.
 ; Return values .: Boolean
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -165,6 +193,740 @@ Func _LOBase_ReportClose(ByRef $oReportDoc, $bForceClose = False)
 EndFunc   ;==>_LOBase_ReportClose
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportConDelete
+; Description ...: Delete a Report Control.
+; Syntax ........: _LOBase_ReportConDelete(ByRef $oControl)
+; Parameters ....: $oControl            - [in/out] an object. A Control object returned by a previous _LOBase_ReportConInsert or _LOBase_ReportConsGetList function.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oControl not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Control's parent.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve parent document.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Control was successfully deleted.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOBase_ReportConInsert, _LOBase_ReportConsGetList
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportConDelete(ByRef $oControl)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oParent
+
+	If Not IsObj($oControl) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oParent = $oControl.Parent() ; Identify the parent document.
+	If Not IsObj($oParent) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not $oParent.supportsService("com.sun.star.report.Section") Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	$oParent.remove($oControl)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOBase_ReportConDelete
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportConFormattedFieldData
+; Description ...: Set or Retrieve Formatted Field Data Properties.
+; Syntax ........: _LOBase_ReportConFormattedFieldData(ByRef $oFormatField[, $sDataField = Null])
+; Parameters ....: $oFormatField        - [in/out] an object. A Formatted Field Control object returned by a previous _LOBase_ReportConInsert or _LOBase_ReportConsGetList function.
+;                  $sDataField          - [optional] a string value. Default is Null. The DataField value, see Remarks.
+; Return values .: Success: 1 or String
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oFormatField not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oFormatField not a Formatted Field Control.
+;                  @Error 1 @Extended 3 Return 0 = $sDataField not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sDataField
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were set to Null, returning current setting as a String.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  $sDataField is not checked to make sure it exists in the referenced Database, it is the user's responsibility to do this.
+;                  DataField is a String that determines the content to be shown. The entry format is either of the following:
+;                  - To display the value of a column, you would call $sDataField with field:[??] where "??" represents the column's name. e.g. field:[Unique_ID].
+;                  - To display the result of a function, you would call $sDataField with rpt:[??] where "??" represents the function name. e.g. rpt:[MaximumUnique_IDReport].
+;                  - According to the "XReportControlModel" documentation, the following expression is also acceptable: rpt:24+24-47.
+; Related .......: _LOBase_ReportConFormattedFieldGeneral
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportConFormattedFieldData(ByRef $oFormatField, $sDataField = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+
+	If Not IsObj($oFormatField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOBase_ReportConIdentify($oFormatField) <> $LOB_REP_CON_TYPE_FORMATTED_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOBase_VarsAreNull($sDataField) Then
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $oFormatField.DataField())
+	EndIf
+
+	If Not IsString($sDataField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	$oFormatField.DataField = $sDataField
+	$iError = ($oFormatField.DataField() = $sDataField) ? ($iError) : (BitOR($iError, 1))
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOBase_ReportConFormattedFieldData
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportConFormattedFieldGeneral
+; Description ...: Set or Retrieve general Formatted Field properties.
+; Syntax ........: _LOBase_ReportConFormattedFieldGeneral(ByRef $oFormatField[, $sName = Null[, $sCondPrint = Null[, $bPrintRep = Null[, $bPrintRepOnGroup = Null[, $iBackColor = Null[, $mFont = Null[, $iAlign = Null[, $iVertAlign = Null[, $iFormat = Null]]]]]]]]])
+; Parameters ....: $oFormatField        - [in/out] an object. A Formatted Field Control object returned by a previous _LOBase_ReportConInsert or _LOBase_ReportConsGetList function.
+;                  $sName               - [optional] a string value. Default is Null. The control name.
+;                  $sCondPrint          - [optional] a string value. Default is Null. The conditional print expression, prefixed by "rpt:".
+;                  $bPrintRep           - [optional] a boolean value. Default is Null. If True, repeated values will be printed.
+;                  $bPrintRepOnGroup    - [optional] a boolean value. Default is Null. If True, repeated values will be printed on group change.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOB_COLOR_* as defined in LibreOfficeBase_Constants.au3. Set to $LOB_COLOR_OFF to set Background color to default / Background Transparent = True.
+;                  $mFont               - [optional] a map. Default is Null. A Font descriptor Map returned by a previous _LOBase_FontDescCreate or _LOBase_FontDescEdit function.
+;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOB_TXT_ALIGN_HORI_* as defined in LibreOfficeBase_Constants.au3.
+;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOB_ALIGN_VERT_* as defined in LibreOfficeBase_Constants.au3.
+;                  $iFormat             - [optional] an integer value. Default is Null. The Number Format Key to display the content in, retrieved from a previous _LOBase_FormatKeyList call, or created by _LOBase_FormatKeyCreate function.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oFormatField not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oFormatField not a Formatted Field Control.
+;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 4 Return 0 = $sCondPrint not a String.
+;                  @Error 1 @Extended 5 Return 0 = $bPrintRep not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $bPrintRepOnGroup not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
+;                  @Error 1 @Extended 8 Return 0 = $mFont not a Map.
+;                  @Error 1 @Extended 9 Return 0 = $iAlign not an Integer, less than 0 or greater than 2. See Constants $LOB_TXT_ALIGN_HORI_* as defined in LibreOfficeBase_Constants.au3.
+;                  @Error 1 @Extended 10 Return 0 = $iVertAlign not an Integer, less than 0 or greater than 2. See Constants $LOB_ALIGN_VERT_* as defined in LibreOfficeBase_Constants.au3.
+;                  @Error 1 @Extended 11 Return 0 = $iFormat not an Integer.
+;                  @Error 1 @Extended 12 Return 0 = Format key called in $iFormat not found in document.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  @Error 3 @Extended 2 Return 0 = Failed to identify Parent Document.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sName
+;                  |                               2 = Error setting $sCondPrint
+;                  |                               4 = Error setting $bPrintRep
+;                  |                               8 = Error setting $bPrintRepOnGroup
+;                  |                               16 = Error setting $iBackColor
+;                  |                               32 = Error setting $mFont
+;                  |                               64 = Error setting $iAlign
+;                  |                               128 = Error setting $iVertAlign
+;                  |                               256 = Error setting $iFormat
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 10 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  I could not find a property to set the TextDirection or Visible settings.
+;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
+; Related .......: _LOBase_FormatKeyCreate, _LOBase_FormatKeyList, _LOBase_ReportConFormattedFieldData
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportConFormattedFieldGeneral(ByRef $oFormatField, $sName = Null, $sCondPrint = Null, $bPrintRep = Null, $bPrintRepOnGroup = Null, $iBackColor = Null, $mFont = Null, $iAlign = Null, $iVertAlign = Null, $iFormat = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $oDoc
+	Local $avControl[10]
+
+	If Not IsObj($oFormatField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOBase_ReportConIdentify($oFormatField) <> $LOB_REP_CON_TYPE_FORMATTED_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOBase_VarsAreNull($sName, $sCondPrint, $bPrintRep, $bPrintRepOnGroup, $iBackColor, $mFont, $iAlign, $iVertAlign, $iFormat) Then
+		__LOBase_ArrayFill($avControl, $oFormatField.Name(), $oFormatField.ConditionalPrintExpression(), $oFormatField.PrintRepeatedValues(), _
+				$oFormatField.PrintWhenGroupChange(), _
+				$oFormatField.ControlBackground(), __LOBase_ReportConSetGetFontDesc($oFormatField), $oFormatField.ParaAdjust(), _
+				$oFormatField.VerticalAlign(), $oFormatField.FormatKey())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
+	EndIf
+
+	If ($sName <> Null) Then
+		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oFormatField.Name = $sName
+		$iError = ($oFormatField.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($sCondPrint <> Null) Then
+		If Not IsString($sCondPrint) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oFormatField.ConditionalPrintExpression = $sCondPrint
+		$iError = ($oFormatField.ConditionalPrintExpression() = $sCondPrint) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($bPrintRep <> Null) Then
+		If Not IsBool($bPrintRep) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oFormatField.PrintRepeatedValues = $bPrintRep
+		$iError = ($oFormatField.PrintRepeatedValues() = $bPrintRep) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($bPrintRepOnGroup <> Null) Then
+		If Not IsBool($bPrintRepOnGroup) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oFormatField.PrintWhenGroupChange = $bPrintRepOnGroup
+		$iError = ($oFormatField.PrintWhenGroupChange = $bPrintRepOnGroup) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	If ($iBackColor <> Null) Then
+		If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oFormatField.ControlBackground = $iBackColor
+		$iError = ($oFormatField.ControlBackground() = $iBackColor) ? ($iError) : (BitOR($iError, 16))
+	EndIf
+
+	If ($mFont <> Null) Then
+		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		__LOBase_ReportConSetGetFontDesc($oFormatField, $mFont)
+		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 32))
+	EndIf
+
+	If ($iAlign <> Null) Then
+		If Not __LOBase_IntIsBetween($iAlign, $LOB_TXT_ALIGN_HORI_LEFT, $LOB_TXT_ALIGN_HORI_CENTER) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		$oFormatField.ParaAdjust = $iAlign
+		$iError = ($oFormatField.ParaAdjust() = $iAlign) ? ($iError) : (BitOR($iError, 64))
+	EndIf
+
+	If ($iVertAlign <> Null) Then
+		If Not __LOBase_IntIsBetween($iVertAlign, $LOB_ALIGN_VERT_TOP, $LOB_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		$oFormatField.VerticalAlign = $iVertAlign
+		$iError = ($oFormatField.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 128))
+	EndIf
+
+	If ($iFormat <> Null) Then
+		If Not IsInt($iFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		$oDoc = $oFormatField.Parent() ; Identify the parent document.
+		If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		Do
+			$oDoc = $oDoc.getParent()
+			If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		Until $oDoc.supportsService("com.sun.star.report.ReportDefinition")
+		If Not _LOBase_FormatKeyExists($oDoc, $iFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		$oFormatField.FormatKey = $iFormat
+		$iError = ($oFormatField.FormatKey() = $iFormat) ? ($iError) : (BitOR($iError, 256))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOBase_ReportConFormattedFieldGeneral
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportConImageConData
+; Description ...: Set or Retrieve Image Control Data Properties.
+; Syntax ........: _LOBase_ReportConImageConData(ByRef $oImageControl[, $sDataField = Null])
+; Parameters ....: $oImageControl       - [in/out] an object. A Image Control object returned by a previous _LOBase_ReportConInsert or _LOBase_ReportConsGetList function.
+;                  $sDataField          - [optional] a string value. Default is Null. The DataField value, see Remarks.
+; Return values .: Success: 1 or String
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oImageControl not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oImageControl not a Image Control.
+;                  @Error 1 @Extended 3 Return 0 = $sDataField not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sDataField
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were set to Null, returning current setting as a String.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  $sDataField is not checked to make sure it exists in the referenced Database, it is the user's responsibility to do this.
+;                  DataField is a String that determines the content to be shown. The entry format is either of the following:
+;                  - To display the value of a column, you would call $sDataField with field:[??] where "??" represents the column's name. e.g. field:[Unique_ID].
+;                  - To display the result of a function, you would call $sDataField with rpt:[??] where "??" represents the function name. e.g. rpt:[MaximumUnique_IDReport].
+;                  - According to the "XReportControlModel" documentation, the following expression is also acceptable: rpt:24+24-47.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportConImageConData(ByRef $oImageControl, $sDataField = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+
+	If Not IsObj($oImageControl) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOBase_ReportConIdentify($oImageControl) <> $LOB_REP_CON_TYPE_IMAGE_CONTROL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOBase_VarsAreNull($sDataField) Then
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $oImageControl.DataField())
+	EndIf
+
+	If Not IsString($sDataField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	$oImageControl.DataField = $sDataField
+	$iError = ($oImageControl.DataField() = $sDataField) ? ($iError) : (BitOR($iError, 1))
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOBase_ReportConImageConData
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportConImageConGeneral
+; Description ...: Set or retrieve general Image control properties.
+; Syntax ........: _LOBase_ReportConImageConGeneral(ByRef $oImageControl[, $sName = Null[, $bPreserveAsLink = Null[, $sCondPrint = Null[, $bPrintRep = Null[, $bPrintRepOnGroup = Null[, $iBackColor = Null[, $iVertAlign = Null[, $sGraphics = Null[, $iScale = Null]]]]]]]]])
+; Parameters ....: $oImageControl       - [in/out] an object. A Image Control object returned by a previous _LOBase_ReportConInsert or _LOBase_ReportConsGetList function.
+;                  $sName               - [optional] a string value. Default is Null. The control name.
+;                  $bPreserveAsLink     - [optional] a boolean value. Default is Null. If True, the image inserted will be linked instead of embedded.
+;                  $sCondPrint          - [optional] a string value. Default is Null. The conditional print expression, prefixed by "rpt:".
+;                  $bPrintRep           - [optional] a boolean value. Default is Null. If True, repeated values will be printed.
+;                  $bPrintRepOnGroup    - [optional] a boolean value. Default is Null. If True, repeated values will be printed on group change.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOB_COLOR_* as defined in LibreOfficeBase_Constants.au3. Set to $LOB_COLOR_OFF to set Background color to default / Background Transparent = True.
+;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOB_ALIGN_VERT_* as defined in LibreOfficeBase_Constants.au3.
+;                  $sGraphics           - [optional] a string value. Default is Null. The path to an Image file.
+;                  $iScale              - [optional] an integer value (0-2). Default is Null. How to scale the image to fit the button. See Constants $LOB_REP_CON_IMG_BTN_SCALE_* as defined in LibreOfficeBase_Constants.au3.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oImageControl not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oImageControl not an Image Control.
+;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 4 Return 0 = $bPreserveAsLink not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $sCondPrint not a String.
+;                  @Error 1 @Extended 6 Return 0 = $bPrintRep not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $bPrintRepOnGroup not a Boolean.
+;                  @Error 1 @Extended 8 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
+;                  @Error 1 @Extended 9 Return 0 = $iVertAlign not an Integer, less than 0 or greater than 2. See Constants $LOB_ALIGN_VERT_* as defined in LibreOfficeBase_Constants.au3.
+;                  @Error 1 @Extended 10 Return 0 = $sGraphics not a String.
+;                  @Error 1 @Extended 11 Return 0 = $iScale not an Integer, less than 0 or greater than 2. See Constants $LOB_FORM_CONTROL_IMG_BTN_SCALE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sName
+;                  |                               2 = Error setting $bPreserveAsLink
+;                  |                               4 = Error setting $sCondPrint
+;                  |                               8 = Error setting $bPrintRep
+;                  |                               16 = Error setting $bPrintRepOnGroup
+;                  |                               32 = Error setting $iBackColor
+;                  |                               64 = Error setting $iVertAlign
+;                  |                               128 = Error setting $sGraphics
+;                  |                               256 = Error setting $iScale
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 9 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  I could not find a property to set the TextDirection or Visible settings.
+;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportConImageConGeneral(ByRef $oImageControl, $sName = Null, $bPreserveAsLink = Null, $sCondPrint = Null, $bPrintRep = Null, $bPrintRepOnGroup = Null, $iBackColor = Null, $iVertAlign = Null, $sGraphics = Null, $iScale = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avControl[9]
+
+	If Not IsObj($oImageControl) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOBase_ReportConIdentify($oImageControl) <> $LOB_REP_CON_TYPE_IMAGE_CONTROL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOBase_VarsAreNull($sName, $bPreserveAsLink, $sCondPrint, $bPrintRep, $bPrintRepOnGroup, $iBackColor, $iVertAlign, $sGraphics, $iScale) Then
+		__LOBase_ArrayFill($avControl, $oImageControl.Name(), $oImageControl.PreserveIRI(), $oImageControl.ConditionalPrintExpression(), $oImageControl.PrintRepeatedValues(), _
+				$oImageControl.PrintWhenGroupChange(), $oImageControl.ControlBackground(), $oImageControl.VerticalAlign(), _
+				_LOBase_PathConvert($oImageControl.ImageURL(), $LOB_PATHCONV_PCPATH_RETURN), $oImageControl.ScaleMode())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
+	EndIf
+
+	If ($sName <> Null) Then
+		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oImageControl.Name = $sName
+		$iError = ($oImageControl.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($bPreserveAsLink <> Null) Then
+		If Not IsBool($bPreserveAsLink) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oImageControl.PreserveIRI = $bPreserveAsLink
+		$iError = ($oImageControl.PreserveIRI() = $bPreserveAsLink) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($sCondPrint <> Null) Then
+		If Not IsString($sCondPrint) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oImageControl.ConditionalPrintExpression = $sCondPrint
+		$iError = ($oImageControl.ConditionalPrintExpression() = $sCondPrint) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($bPrintRep <> Null) Then
+		If Not IsBool($bPrintRep) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oImageControl.PrintRepeatedValues = $bPrintRep
+		$iError = ($oImageControl.PrintRepeatedValues() = $bPrintRep) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	If ($bPrintRepOnGroup <> Null) Then
+		If Not IsBool($bPrintRepOnGroup) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oImageControl.PrintWhenGroupChange = $bPrintRepOnGroup
+		$iError = ($oImageControl.PrintWhenGroupChange = $bPrintRepOnGroup) ? ($iError) : (BitOR($iError, 16))
+	EndIf
+
+	If ($iBackColor <> Null) Then
+		If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		$oImageControl.ControlBackground = $iBackColor
+		$iError = ($oImageControl.ControlBackground() = $iBackColor) ? ($iError) : (BitOR($iError, 32))
+	EndIf
+
+	If ($iVertAlign <> Null) Then
+		If Not __LOBase_IntIsBetween($iVertAlign, $LOB_ALIGN_VERT_TOP, $LOB_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		$oImageControl.VerticalAlign = $iVertAlign
+		$iError = ($oImageControl.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 64))
+	EndIf
+
+	If ($sGraphics <> Null) Then
+		If Not IsString($sGraphics) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		$oImageControl.ImageURL = _LOBase_PathConvert($sGraphics, $LOB_PATHCONV_OFFICE_RETURN)
+		$iError = ($oImageControl.ImageURL() = _LOBase_PathConvert($sGraphics, $LOB_PATHCONV_OFFICE_RETURN)) ? ($iError) : (BitOR($iError, 128))
+	EndIf
+
+	If ($iScale <> Null) Then
+		If Not __LOBase_IntIsBetween($iScale, $LOB_REP_CON_IMG_BTN_SCALE_NONE, $LOB_REP_CON_IMG_BTN_SCALE_FIT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		$oImageControl.ScaleMode = $iScale
+		$iError = ($oImageControl.ScaleMode() = $iScale) ? ($iError) : (BitOR($iError, 256))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOBase_ReportConImageConGeneral
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportConInsert
+; Description ...: Insert a control into a report section.
+; Syntax ........: _LOBase_ReportConInsert(ByRef $oSection, $iControl, $iX, $iY, $iWidth, $iHeight[, $sName = ""])
+; Parameters ....: $oSection            - [in/out] an object. A section object returned by a previous _LOBase_ReportSectionGetObj function.
+;                  $iControl            - an integer value (1-32). The control type to insert. See Constants $LOB_REP_CON_TYPE_* as defined in LibreOfficeBase_Constants.au3.
+;                  $iX                  - an integer value.The X Coordinate, in Micrometers.
+;                  $iY                  - an integer value. The Y Coordinate, in Micrometers.
+;                  $iWidth              - an integer value. The Width of the control, in Micrometers.
+;                  $iHeight             - an integer value. The Height of the control, in Micrometers.
+;                  $sName               - [optional] a string value. Default is "". The name of the control, if set to "", a name is automatically given it.
+; Return values .: Success: Object
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oSection not a Section Object.
+;                  @Error 1 @Extended 3 Return 0 = $iControl not an Integer, less than 1 or greater than 32. See Constants $LOB_REP_CON_TYPE_* as defined in LibreOfficeBase_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iX not an Integer.
+;                  @Error 1 @Extended 5 Return 0 = $iY not an Integer.
+;                  @Error 1 @Extended 6 Return 0 = $iWidth not an Integer.
+;                  @Error 1 @Extended 7 Return 0 = $iHeight not an Integer.
+;                  @Error 1 @Extended 8 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 9 Return 0 = Can't insert a chart.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create the Control.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Section parent document Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Control Service name.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Control Size Structure.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Control Position Structure.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Control was inserted successfully, returning its object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: I presently do not know how to insert a Chart successfully.
+;                  A TextBox in the L.O. Report UI is really just a formatted field, as are Page numbers, Date/ Time fields, with varying values set in DataField.
+;                  A Date/Time field have either field:[TIMEVALUE(NOW())] [A Time field] or field:[TODAY()] [A Date field] set as the DataField value.
+;                  A Page number field has either field:["Page " & PageNumber() & " of " & PageCount()] [A Page of pages field]; or field:["Page " & PageNumber()] [A Page field].
+;                  See further note in FormattedFieldGeneral function.
+;                  A Horizontal or Vertical line is a Fixed line with either Horizontal or Vertical property set using LOBase_ReportConLineGeneral function.
+; Related .......: _LOBase_ReportConsGetList, _LOBase_ReportConDelete, _LOBase_ConvertToMicrometer, _LOBase_ConvertFromMicrometer
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportConInsert(ByRef $oSection, $iControl, $iX, $iY, $iWidth, $iHeight, $sName = "")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oControl, $oReportDoc
+	Local $sControl
+	Local $tPos, $tSize
+	Local $iCount = 0
+
+	If Not IsObj($oSection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oSection.supportsService("com.sun.star.report.Section") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOBase_IntIsBetween($iControl, $LOB_REP_CON_TYPE_CHART, $LOB_REP_CON_TYPE_TEXT_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsInt($iX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsInt($iY) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsInt($iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsInt($iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
+	If ($sName = "") Then
+		Do
+			$iCount += 1
+			For $i = 0 To $oSection.Count() - 1
+				If ($oSection.getByIndex($i).Name() = "AU3_RPT_CTRL_" & $iCount) Then ExitLoop
+				Sleep((IsInt(($i / $__LOBCONST_SLEEP_DIV))) ? (10) : (0))
+			Next
+		Until ($i >= $oSection.Count())
+	EndIf
+
+	$oReportDoc = $oSection.ReportDefinition()
+	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If ($iControl = $LOB_REP_CON_TYPE_TEXT_BOX) Then $iControl = $LOB_REP_CON_TYPE_FORMATTED_FIELD ; Can't insert a Text Box, so exchange for Formatted Field like L.O. Base does.
+	If ($iControl = $LOB_REP_CON_TYPE_CHART) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0) ; Can't insert a chart, Chart inserts as blank?? Skip charts??.
+
+	$sControl = __LOBase_ReportConIdentify(Null, $iControl)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	$oControl = $oReportDoc.createInstance($sControl)
+	If Not IsObj($oControl) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	$oControl.Name = $sName
+
+	$tSize = $oControl.Size()
+	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+	$tSize.Width = $iWidth
+	$tSize.Height = $iHeight
+
+	$oControl.Size = $tSize
+
+	$oSection.Add($oControl)
+;~
+	; Have to set Position after insertion.
+	$tPos = $oControl.Position()
+	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
+	$tPos.X = $iX
+	$tPos.Y = $iY
+
+	$oControl.Position = $tPos
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oControl)
+EndFunc   ;==>_LOBase_ReportConInsert
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportConLabelGeneral
+; Description ...: Set or Retrieve general Label control settings.
+; Syntax ........: _LOBase_ReportConLabelGeneral(ByRef $oLabel[, $sName = Null[, $sLabel = Null[, $sCondPrint = Null[, $bPrintRep = Null[, $bPrintRepOnGroup = Null[, $iBackColor = Null[, $mFont = Null[, $iAlign = Null[, $iVertAlign = Null]]]]]]]]])
+; Parameters ....: $oLabel              - [in/out] an object. A Label Control object returned by a previous _LOBase_ReportConInsert or _LOBase_ReportConsGetList function.
+;                  $sName               - [optional] a string value. Default is Null. The name of the Label control.
+;                  $sLabel              - [optional] a string value. Default is Null. The Label of the control.
+;                  $sCondPrint          - [optional] a string value. Default is Null. The conditional print expression, prefixed by "rpt:".
+;                  $bPrintRep           - [optional] a boolean value. Default is Null. If True, repeated values will be printed.
+;                  $bPrintRepOnGroup    - [optional] a boolean value. Default is Null. If True, repeated values will be printed on group change.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOB_COLOR_* as defined in LibreOfficeBase_Constants.au3. Set to $LOB_COLOR_OFF to set Background color to default / Background Transparent = True.
+;                  $mFont               - [optional] a map. Default is Null. A Font descriptor Map returned by a previous _LOBase_FontDescCreate or _LOBase_FontDescEdit function.
+;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOB_TXT_ALIGN_HORI_* as defined in LibreOfficeBase_Constants.au3.
+;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOB_ALIGN_VERT_* as defined in LibreOfficeBase_Constants.au3.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oLabel not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oLabel not a Label Control.
+;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 4 Return 0 = $sLabel not a String.
+;                  @Error 1 @Extended 5 Return 0 = $sCondPrint not a String.
+;                  @Error 1 @Extended 6 Return 0 = $bPrintRep not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $bPrintRepOnGroup not a Boolean.
+;                  @Error 1 @Extended 8 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
+;                  @Error 1 @Extended 9 Return 0 = $mFont not a Map.
+;                  @Error 1 @Extended 10 Return 0 = $iAlign not an Integer, less than 0 or greater than 2. See Constants $LOB_TXT_ALIGN_HORI_* as defined in LibreOfficeBase_Constants.au3.
+;                  @Error 1 @Extended 11 Return 0 = $iVertAlign not an Integer, less than 0 or greater than 2. See Constants $LOB_ALIGN_VERT_* as defined in LibreOfficeBase_Constants.au3.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sName
+;                  |                               2 = Error setting $sLabel
+;                  |                               4 = Error setting $sCondPrint
+;                  |                               8 = Error setting $bPrintRep
+;                  |                               16 = Error setting $bPrintRepOnGroup
+;                  |                               32 = Error setting $iBackColor
+;                  |                               64 = Error setting $mFont
+;                  |                               128 = Error setting $iAlign
+;                  |                               256 = Error setting $iVertAlign
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 9 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  I could not find a property to set the TextDirection or Visible settings.
+;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportConLabelGeneral(ByRef $oLabel, $sName = Null, $sLabel = Null, $sCondPrint = Null, $bPrintRep = Null, $bPrintRepOnGroup = Null, $iBackColor = Null, $mFont = Null, $iAlign = Null, $iVertAlign = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avControl[9]
+
+	If Not IsObj($oLabel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOBase_ReportConIdentify($oLabel) <> $LOB_REP_CON_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOBase_VarsAreNull($sName, $sLabel, $sCondPrint, $bPrintRep, $bPrintRepOnGroup, $iBackColor, $mFont, $iAlign, $iVertAlign) Then
+		__LOBase_ArrayFill($avControl, $oLabel.Name(), $oLabel.Label(), $oLabel.ConditionalPrintExpression(), $oLabel.PrintRepeatedValues(), _
+				$oLabel.PrintWhenGroupChange(), $oLabel.ControlBackground(), __LOBase_ReportConSetGetFontDesc($oLabel), $oLabel.ParaAdjust(), _
+				$oLabel.VerticalAlign())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
+	EndIf
+
+	If ($sName <> Null) Then
+		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oLabel.Name = $sName
+		$iError = ($oLabel.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($sLabel <> Null) Then
+		If Not IsString($sLabel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oLabel.Label = $sLabel
+		$iError = ($oLabel.Label() = $sLabel) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($sCondPrint <> Null) Then
+		If Not IsString($sCondPrint) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oLabel.ConditionalPrintExpression = $sCondPrint
+		$iError = ($oLabel.ConditionalPrintExpression() = $sCondPrint) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($bPrintRep <> Null) Then
+		If Not IsBool($bPrintRep) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oLabel.PrintRepeatedValues = $bPrintRep
+		$iError = ($oLabel.PrintRepeatedValues() = $bPrintRep) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	If ($bPrintRepOnGroup <> Null) Then
+		If Not IsBool($bPrintRepOnGroup) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oLabel.PrintWhenGroupChange = $bPrintRepOnGroup
+		$iError = ($oLabel.PrintWhenGroupChange = $bPrintRepOnGroup) ? ($iError) : (BitOR($iError, 16))
+	EndIf
+
+	If ($iBackColor <> Null) Then
+		If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		$oLabel.ControlBackground = $iBackColor
+		$iError = ($oLabel.ControlBackground() = $iBackColor) ? ($iError) : (BitOR($iError, 32))
+	EndIf
+
+	If ($mFont <> Null) Then
+		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		__LOBase_ReportConSetGetFontDesc($oLabel, $mFont)
+		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 64))
+	EndIf
+
+	If ($iAlign <> Null) Then
+		If Not __LOBase_IntIsBetween($iAlign, $LOB_TXT_ALIGN_HORI_LEFT, $LOB_TXT_ALIGN_HORI_CENTER) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		$oLabel.ParaAdjust = $iAlign
+		$iError = ($oLabel.ParaAdjust() = $iAlign) ? ($iError) : (BitOR($iError, 128))
+	EndIf
+
+	If ($iVertAlign <> Null) Then
+		If Not __LOBase_IntIsBetween($iVertAlign, $LOB_ALIGN_VERT_TOP, $LOB_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		$oLabel.VerticalAlign = $iVertAlign
+		$iError = ($oLabel.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 256))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOBase_ReportConLabelGeneral
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportConLineGeneral
+; Description ...: Set or Retrieve general Line control settings.
+; Syntax ........: _LOBase_ReportConLineGeneral(ByRef $oLine[, $sName = Null[, $iVertAlign = Null[, $iOrient = Null]]])
+; Parameters ....: $oLine               - [in/out] an object. A Line Control object returned by a previous _LOBase_ReportConInsert or _LOBase_ReportConsGetList function.
+;                  $sName               - [optional] a string value. Default is Null. The name of the control.
+;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOB_ALIGN_VERT_* as defined in LibreOfficeBase_Constants.au3.
+;                  $iOrient             - [optional] an integer value. Default is Null. The orientation of the line. See Constants $LOB_REP_CON_LINE_* as defined in LibreOfficeBase_Constants.au3.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oLabel not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oLabel not a Label Control.
+;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 4 Return 0 = $iVertAlign not an Integer, less than 0 or greater than 2. See Constants $LOB_ALIGN_VERT_* as defined in LibreOfficeBase_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iOrient not an Integer, less than 0 or greater than 1. See Constants $LOB_REP_CON_LINE_* as defined in LibreOfficeBase_Constants.au3.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sName
+;                  |                               2 = Error setting $iVertAlign
+;                  |                               4 = Error setting $iOrient
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  I could not find a property to set "Visible" setting.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportConLineGeneral(ByRef $oLine, $sName = Null, $iVertAlign = Null, $iOrient = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avControl[3]
+
+	If Not IsObj($oLine) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOBase_ReportConIdentify($oLine) <> $LOB_REP_CON_TYPE_LINE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOBase_VarsAreNull($sName, $iVertAlign, $iOrient) Then
+		__LOBase_ArrayFill($avControl, $oLine.Name(), $oLine.VerticalAlign(), $oLine.Orientation())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
+	EndIf
+
+	If ($sName <> Null) Then
+		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oLine.Name = $sName
+		$iError = ($oLine.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($iVertAlign <> Null) Then
+		If Not __LOBase_IntIsBetween($iVertAlign, $LOB_ALIGN_VERT_TOP, $LOB_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oLine.VerticalAlign = $iVertAlign
+		$iError = ($oLine.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($iOrient <> Null) Then
+		If Not __LOBase_IntIsBetween($iOrient, $LOB_REP_CON_LINE_HORI, $LOB_REP_CON_LINE_VERT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oLine.Orientation = $iOrient
+		$iError = ($oLine.Orientation() = $iOrient) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOBase_ReportConLineGeneral
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_ReportConnect
 ; Description ...: Retrieve an Object for the currently open Report or Reports.
 ; Syntax ........: _LOBase_ReportConnect([$bConnectCurrent = True])
@@ -253,6 +1015,401 @@ Func _LOBase_ReportConnect($bConnectCurrent = True)
 EndFunc   ;==>_LOBase_ReportConnect
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportConPosition
+; Description ...: Set or Retrieve the Control's position settings.
+; Syntax ........: _LOBase_ReportConPosition(ByRef $oControl[, $iX = Null[, $iY = Null]])
+; Parameters ....: $oControl            - [in/out] an object. A Control object returned by a previous _LOBase_ReportConInsert or _LOBase_ReportConsGetList function.
+;                  $iX                  - [optional] an integer value. Default is Null. The X position from the insertion point, in Micrometers.
+;                  $iY                  - [optional] an integer value. Default is Null. The Y position from the insertion point, in Micrometers.
+; Return values .: Success: 1 or Array.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oControl not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iX not an Integer.
+;                  @Error 1 @Extended 3 Return 0 = $iY not an Integer.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Control's Position Structure.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iX
+;                  |                               2 = Error setting $iY
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOBase_ConvertFromMicrometer, _LOBase_ConvertToMicrometer, _LOBase_ReportConSize
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportConPosition(ByRef $oControl, $iX = Null, $iY = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avPosition[2]
+	Local $tPos
+
+	If Not IsObj($oControl) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$tPos = $oControl.Position()
+	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOBase_VarsAreNull($iX, $iY) Then
+		__LOBase_ArrayFill($avPosition, $tPos.X(), $tPos.Y())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avPosition)
+	EndIf
+
+	If ($iX <> Null) Then
+		If Not IsInt($iX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+		$tPos.X = $iX
+	EndIf
+
+	If ($iY <> Null) Then
+		If Not IsInt($iY) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$tPos.Y = $iY
+	EndIf
+
+	$oControl.Position = $tPos
+
+	$iError = ($iX = Null) ? ($iError) : ((__LOBase_IntIsBetween($oControl.Position.X(), $iX - 1, $iX + 1)) ? ($iError) : (BitOR($iError, 1)))
+	$iError = ($iY = Null) ? ($iError) : ((__LOBase_IntIsBetween($oControl.Position.Y(), $iY - 1, $iY + 1)) ? ($iError) : (BitOR($iError, 2)))
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOBase_ReportConPosition
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportConsGetList
+; Description ...: Retrieve an array of Control Objects contained in a Report's Section.
+; Syntax ........: _LOBase_ReportConsGetList(ByRef $oSection[, $iType = $LOB_REP_CON_TYPE_ALL])
+; Parameters ....: $oSection            - [in/out] an object. A section object returned by a previous _LOBase_ReportSectionGetObj function.
+;                  $iType               - [optional] an integer value (1-63). Default is $LOB_REP_CON_TYPE_ALL. The type of control(s) to return in the array. Can be BitOr'd together. See Constants $LOB_REP_CON_TYPE_* as defined in LibreOfficeBase_Constants.au3.
+; Return values .: Success: Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Called Object not a Section Object.
+;                  @Error 1 @Extended 3 Return 0 = $iType not an Integer, less than 1, or greater than 63. See Constants $LOB_REP_CON_TYPE_* as defined in LibreOfficeBase_Constants.au3.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Control Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to identify Control type.
+;                  --Success--
+;                  @Error 0 @Extended ? Return Array = Success. Returning a 2D array of Control Objects in the first column, and the type of Control in the second column, corresponding to the Constants $LOB_REP_CON_TYPE_* as defined in LibreOfficeBase_Constants.au3
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOBase_ReportConInsert
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportConsGetList(ByRef $oSection, $iType = $LOB_REP_CON_TYPE_ALL)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $aoControls[0][2]
+	Local $oControl
+	Local $iCount = 0, $iControlType
+
+	If Not IsObj($oSection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oSection.supportsService("com.sun.star.report.Section") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOBase_IntIsBetween($iType, $LOB_REP_CON_TYPE_CHART, $LOB_REP_CON_TYPE_ALL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	ReDim $aoControls[$oSection.Count()][2]
+
+	For $i = 0 To $oSection.Count() - 1
+		$oControl = $oSection.getByIndex($i)
+		If Not IsObj($oControl) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+		$iControlType = __LOBase_ReportConIdentify($oControl)
+		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If BitAND($iType, $iControlType) Then
+			$aoControls[$iCount][0] = $oControl
+			$aoControls[$iCount][1] = $iControlType
+			$iCount += 1
+		EndIf
+
+		Sleep((IsInt(($i / $__LOBCONST_SLEEP_DIV))) ? (10) : (0))
+	Next
+
+	ReDim $aoControls[$iCount][2]
+
+	Return SetError($__LO_STATUS_SUCCESS, $iCount, $aoControls)
+EndFunc   ;==>_LOBase_ReportConsGetList
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportConSize
+; Description ...: Set or Retrieve Control Size or related settings.
+; Syntax ........: _LOBase_ReportConSize(ByRef $oControl[, $iWidth = Null[, $iHeight = Null[, $bAutoGrow = Null]]])
+; Parameters ....: $oControl            - [in/out] an object. A Control object returned by a previous _LOBase_ReportConInsert or _LOBase_ReportConsGetList function.
+;                  $iWidth              - [optional] an integer value. Default is Null. The width of the Shape, in Micrometers(uM). Min. 51.
+;                  $iHeight             - [optional] an integer value. Default is Null. The height of the Shape, in Micrometers(uM). Min. 51.
+;                  $bAutoGrow           - [optional] a boolean value. Default is Null. If True, the control's size will automatically adjust to fit content.
+; Return values .: Success: 1 or Array.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oControl not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iWidth not an Integer, or less than 51.
+;                  @Error 1 @Extended 3 Return 0 = $iHeight not an Integer, or less than 51.
+;                  @Error 1 @Extended 4 Return 0 = $bAutoGrow not a Boolean.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Control Size Structure.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                               1 = Error setting $iWidth
+;                  |                               2 = Error setting $iHeight
+;                  |                               4 = Error setting $bAutoGrow
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportConSize(ByRef $oControl, $iWidth = Null, $iHeight = Null, $bAutoGrow = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avSize[3]
+	Local $tSize
+
+	If Not IsObj($oControl) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$tSize = $oControl.Size()
+	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOBase_VarsAreNull($iWidth, $iHeight, $bAutoGrow) Then
+		__LOBase_ArrayFill($avSize, $tSize.Width(), $tSize.Height(), $oControl.AutoGrow())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avSize)
+	EndIf
+
+	If ($iWidth <> Null) Or ($iHeight <> Null) Then
+		If ($iWidth <> Null) Then ; Min 51
+			If Not __LOBase_IntIsBetween($iWidth, 51) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+			$tSize.Width = $iWidth
+		EndIf
+
+		If ($iHeight <> Null) Then
+			If Not __LOBase_IntIsBetween($iHeight, 51) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+			$tSize.Height = $iHeight
+		EndIf
+
+		$oControl.Size = $tSize
+
+		$iError = ($iWidth = Null) ? ($iError) : ((__LOBase_IntIsBetween($oControl.Size.Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
+		$iError = ($iHeight = Null) ? ($iError) : ((__LOBase_IntIsBetween($oControl.Size.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 2)))
+	EndIf
+
+	If ($bAutoGrow <> Null) Then
+		If Not IsBool($bAutoGrow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oControl.AutoGrow = $bAutoGrow
+		$iError = ($oControl.AutoGrow() = $bAutoGrow) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOBase_ReportConSize
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportCopy
+; Description ...: Create a copy of an existing Report.
+; Syntax ........: _LOBase_ReportCopy(ByRef $oDoc, ByRef $oConnection, $sInputReport, $sOutputReport)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOBase_DocOpen, _LOBase_DocConnect, or _LOBase_DocCreate function.
+;                  $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
+;                  $sInputReport        - a string value. The Name of the Report to Copy. Also the Sub-directory the Report is in. See Remarks.
+;                  $sOutputReport       - a string value. The Name of the Report to Create. Also the Sub-directory to place the Report in. See Remarks.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oConnection not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $sInputReport not a String.
+;                  @Error 1 @Extended 4 Return 0 = $sOutputReport not a String.
+;                  @Error 1 @Extended 5 Return 0 = Folder name called in $sInputReport not found.
+;                  @Error 1 @Extended 6 Return 0 = Requested report not found.
+;                  @Error 1 @Extended 7 Return 0 = Report name called in $sInputReport not a Report.
+;                  @Error 1 @Extended 8 Return 0 = Folder name called in $sOutputReport not found.
+;                  @Error 1 @Extended 9 Return 0 = Report already exists with called name in Destination.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.sdb.DocumentDefinition" Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Connection called in $oConnection is closed.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Report Documents Object.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Source Folder Object.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Report Object.
+;                  @Error 3 @Extended 5 Return 0 = Failed to retrieve Destination Folder Object.
+;                  @Error 3 @Extended 6 Return 0 = Failed to insert copied Report.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Copied report successfully inserted.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: To copy a Report located inside a folder, the Report name MUST be prefixed by the folder path, separated by forward slashes (/). e.g. to open ReportXYZ contained in folder 3, which is located in Folder 2, which is located inside folder 1, you would call $sInputReport with the following path: Folder1/Folder2/Folder3/ReportXYZ.
+;                  To create a Report inside a folder, the Report name MUST be prefixed by the folder path, separated by forward slashes (/). e.g. to create ReportXYZ contained in folder 3, which is located in Folder 2, which is located inside folder 1, you would call $sOutputReport with the following path: Folder1/Folder2/Folder3/ReportXYZ.
+;                  If only a name is called in $sOutputReport, the Report will be created in the main directory, i.e. not inside of any folders.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportCopy(ByRef $oDoc, ByRef $oConnection, $sInputReport, $sOutputReport)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oSource, $oDestination, $oRepDef, $oDocDef
+	Local $asSplit[0]
+	Local $aArgs[3]
+	Local $sSourceReport, $sDestReport
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsString($sInputReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsString($sOutputReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$oSource = $oDoc.ReportDocuments()
+	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	$asSplit = StringSplit($sInputReport, "/")
+
+	For $i = 1 To $asSplit[0] - 1
+		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oSource = $oSource.getByName($asSplit[$i])
+		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	Next
+
+	$sSourceReport = $asSplit[$asSplit[0]] ; Last element of Array will be the Input Report's name to Copy
+
+	If Not $oSource.hasByName($sSourceReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
+	$oRepDef = $oSource.getByName($sSourceReport)
+	If Not IsObj($oRepDef) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+	If Not $oRepDef.supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
+	$oDestination = $oDoc.ReportDocuments()
+	If Not IsObj($oDestination) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	$asSplit = StringSplit($sOutputReport, "/")
+
+	For $i = 1 To $asSplit[0] - 1
+		If Not $oDestination.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		$oDestination = $oDestination.getByName($asSplit[$i])
+		If Not IsObj($oDestination) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+	Next
+
+	$sDestReport = $asSplit[$asSplit[0]] ; Last element of Array will be the Output Report name to Create
+
+	If $oDestination.hasByName($sDestReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
+	$aArgs[0] = __LOBase_SetPropertyValue("Name", $sDestReport)
+	$aArgs[1] = __LOBase_SetPropertyValue("ActiveConnection", $oConnection)
+	$aArgs[2] = __LOBase_SetPropertyValue("EmbeddedObject", $oRepDef)
+
+	$oDocDef = $oDestination.createInstanceWithArguments("com.sun.star.sdb.DocumentDefinition", $aArgs)
+	If Not IsObj($oDocDef) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	$oDestination.insertbyName($sDestReport, $oDocDef)
+	If Not $oDestination.hasByName($sDestReport) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOBase_ReportCopy
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportData
+; Description ...: Set or Retrieve Data related properties for a Report Document.
+; Syntax ........: _LOBase_ReportData(ByRef $oReportDoc[, $iContentType = Null[, $sContent = Null[, $bAnalyzeSQL = Null[, $sFilter = Null[, $iReportOutput = Null]]]]])
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+;                  $iContentType        - [optional] an integer value (0-2). Default is Null. The Type of data source for the Report. See Constants, $LOB_REP_CONTENT_TYPE_* as defined in LibreOfficeBase_Constants.au3.
+;                  $sContent            - [optional] a string value. Default is Null. The Content to be used for the Report, either a Table or Query name, or an SQL statement.
+;                  $bAnalyzeSQL         - [optional] a boolean value. Default is Null. If True, SQL commands will be analyzed by LibreOffice.
+;                  $sFilter             - [optional] a string value. Default is Null. The SQL filter command.
+;                  $iReportOutput       - [optional] an integer value (1-2). Default is Null. The type of output document when the Report is executed. See Constants, $LOB_REP_OUTPUT_TYPE_* as defined in LibreOfficeBase_Constants.au3.
+; Return values .: Success: 1 or Array.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oReportDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oReportDoc not a Report Document.
+;                  @Error 1 @Extended 3 Return 0 = $iContentType not an Integer, less than 0 or greater than 2. See Constants, $LOB_REP_CONTENT_TYPE_* as defined in LibreOfficeBase_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $sContent not a String.
+;                  @Error 1 @Extended 5 Return 0 = $bAnalyzeSQL not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $sFilter not a String.
+;                  @Error 1 @Extended 7 Return 0 = $iReportOutput not an Integer, less than 1 or greater than 2. See Constants, $LOB_REP_OUTPUT_TYPE_* as defined in LibreOfficeBase_Constants.au3.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iContentType
+;                  |                               2 = Error setting $sContent
+;                  |                               4 = Error setting $bAnalyzeSQL
+;                  |                               8 = Error setting $sFilter
+;                  |                               16 = Error setting $iReportOutput
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Modifying these values may open the "Add a Field" dialogue.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportData(ByRef $oReportDoc, $iContentType = Null, $sContent = Null, $bAnalyzeSQL = Null, $sFilter = Null, $iReportOutput = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avReport[5]
+	Local Const $__LOB_REP_OUTPUT_TEXT_DOC = "application/vnd.oasis.opendocument.text", $__LOB_REP_OUTPUT_SPREADSHEET_DOC = "application/vnd.oasis.opendocument.spreadsheet"
+
+	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	If __LOBase_VarsAreNull($iContentType, $sContent, $bAnalyzeSQL, $sFilter, $iReportOutput) Then
+		__LOBase_ArrayFill($avReport, $oReportDoc.CommandType(), $oReportDoc.Command(), $oReportDoc.EscapeProcessing(), $oReportDoc.Filter(), _
+				($oReportDoc.MimeType() = $__LOB_REP_OUTPUT_TEXT_DOC) ? ($LOB_REP_OUTPUT_TYPE_TEXT) : (($oReportDoc.MimeType() = $__LOB_REP_OUTPUT_SPREADSHEET_DOC) ? ($LOB_REP_OUTPUT_TYPE_SPREADSHEET) : ($LOB_REP_OUTPUT_TYPE_UNKNOWN)))
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avReport)
+	EndIf
+
+	If ($iContentType <> Null) Then
+		If Not __LOBase_IntIsBetween($iContentType, $LOB_REP_CONTENT_TYPE_TABLE, $LOB_REP_CONTENT_TYPE_SQL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oReportDoc.CommandType = $iContentType
+		$iError = ($oReportDoc.CommandType() = $iContentType) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($sContent <> Null) Then
+		If Not IsString($sContent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oReportDoc.Command = $sContent
+		$iError = ($oReportDoc.Command() = $sContent) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($bAnalyzeSQL <> Null) Then
+		If Not IsBool($bAnalyzeSQL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oReportDoc.EscapeProcessing = $bAnalyzeSQL
+		$iError = ($oReportDoc.EscapeProcessing() = $bAnalyzeSQL) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($sFilter <> Null) Then
+		If Not IsString($sFilter) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oReportDoc.Filter = $sFilter
+		$iError = ($oReportDoc.Filter() = $sFilter) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	If ($iReportOutput <> Null) Then
+		If Not __LOBase_IntIsBetween($iReportOutput, $LOB_REP_OUTPUT_TYPE_TEXT, $LOB_REP_OUTPUT_TYPE_SPREADSHEET) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oReportDoc.MimeType = ($iReportOutput = $LOB_REP_OUTPUT_TYPE_TEXT) ? ($__LOB_REP_OUTPUT_TEXT_DOC) : ($__LOB_REP_OUTPUT_SPREADSHEET_DOC)
+		$iError = ($oReportDoc.MimeType() = ($iReportOutput = $LOB_REP_OUTPUT_TYPE_TEXT) ? ($__LOB_REP_OUTPUT_TEXT_DOC) : ($__LOB_REP_OUTPUT_SPREADSHEET_DOC)) ? ($iError) : (BitOR($iError, 16))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOBase_ReportData
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_ReportDelete
 ; Description ...: Delete a Report from a Document.
 ; Syntax ........: _LOBase_ReportDelete(ByRef $oDoc, $sName)
@@ -311,6 +1468,114 @@ Func _LOBase_ReportDelete(ByRef $oDoc, $sName)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOBase_ReportDelete
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportDetail
+; Description ...: Set or Retrieve Report Detail section properties.
+; Syntax ........: _LOBase_ReportDetail(ByRef $oReportDoc[, $sName = Null[, $iForceNewPage = Null[, $bKeepTogether = Null[, $bVisible = Null[, $iHeight = Null[, $sCondPrint = Null[, $iBackColor = Null]]]]]]])
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+;                  $sName               - [optional] a string value. Default is Null. The name of the Section.
+;                  $iForceNewPage       - [optional] an integer value (0-3). Default is Null. If and when to force a new page. See Constants, $LOB_REP_FORCE_PAGE_* as defined in LibreOfficeBase_Constants.au3.
+;                  $bKeepTogether       - [optional] a boolean value. Default is Null. If True, the section should be printed on one page.
+;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
+;                  $iHeight             - [optional] an integer value (1753-??). Default is Null. The height of the Section, in Micrometers. See remarks.
+;                  $sCondPrint          - [optional] a string value. Default is Null. The Conditional Print Statement.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOB_COLOR_* as defined in LibreOfficeBase_Constants.au3. Set to $LOB_COLOR_OFF to set Background color to default / Background Transparent = True.
+; Return values .: Success: 1 or Array.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oReportDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oReportDoc not a Report Document.
+;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 4 Return 0 = $iForceNewPage not an Integer, less than 0 or greater than 3. See Constants, $LOB_REP_FORCE_PAGE_* as defined in LibreOfficeBase_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $bKeepTogether not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $bVisible not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $iHeight not an Integer, or less than 1753.
+;                  @Error 1 @Extended 8 Return 0 = $sCondPrint not a String.
+;                  @Error 1 @Extended 9 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sName
+;                  |                               2 = Error setting $iForceNewPage
+;                  |                               4 = Error setting $bKeepTogether
+;                  |                               8 = Error setting $bVisible
+;                  |                               16 = Error setting $iHeight
+;                  |                               32 = Error setting $sCondPrint
+;                  |                               64 = Error setting $iBackColor
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The minimum height of a Section is 1753 uM (Micrometers), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
+;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportDetail(ByRef $oReportDoc, $sName = Null, $iForceNewPage = Null, $bKeepTogether = Null, $bVisible = Null, $iHeight = Null, $sCondPrint = Null, $iBackColor = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $avProps[7]
+	Local $iError = 0
+
+	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	If __LOBase_VarsAreNull($sName, $iForceNewPage, $bKeepTogether, $bVisible, $iHeight, $sCondPrint, $iBackColor) Then
+		__LOBase_ArrayFill($avProps, $oReportDoc.Detail.Name(), $oReportDoc.Detail.ForceNewPage(), $oReportDoc.Detail.KeepTogether(), $oReportDoc.Detail.Visible(), _
+				$oReportDoc.Detail.Height(), $oReportDoc.Detail.ConditionalPrintExpression(), $oReportDoc.Detail.BackColor())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avProps)
+	EndIf
+
+	If ($sName <> Null) Then
+		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oReportDoc.Detail.Name = $sName
+		$iError = ($oReportDoc.Detail.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($iForceNewPage <> Null) Then
+		If Not __LOBase_IntIsBetween($iForceNewPage, $LOB_REP_FORCE_PAGE_NONE, $LOB_REP_FORCE_PAGE_BEFORE_AFTER_SECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oReportDoc.Detail.ForceNewPage = $iForceNewPage
+		$iError = ($oReportDoc.Detail.ForceNewPage() = $iForceNewPage) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($bKeepTogether <> Null) Then
+		If Not IsBool($bKeepTogether) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oReportDoc.Detail.KeepTogether = $bKeepTogether
+		$iError = ($oReportDoc.Detail.KeepTogether() = $bKeepTogether) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($bVisible <> Null) Then
+		If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oReportDoc.Detail.Visible = $bVisible
+		$iError = ($oReportDoc.Detail.Visible() = $bVisible) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	If ($iHeight <> Null) Then
+		If Not __LOBase_IntIsBetween($iHeight, 1753) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oReportDoc.Detail.Height = $iHeight
+		$iError = (__LOBase_IntIsBetween($oReportDoc.Detail.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 16))
+	EndIf
+
+	If ($sCondPrint <> Null) Then
+		If Not IsString($sCondPrint) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		$oReportDoc.Detail.ConditionalPrintExpression = $sCondPrint
+		$iError = ($oReportDoc.Detail.ConditionalPrintExpression() = $sCondPrint) ? ($iError) : (BitOR($iError, 32))
+	EndIf
+
+	If ($iBackColor <> Null) Then
+		If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		$oReportDoc.Detail.BackColor = $iBackColor
+		$iError = ($oReportDoc.Detail.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 64))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOBase_ReportDetail
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_ReportExists
@@ -936,10 +2201,1073 @@ Func _LOBase_ReportFoldersGetNames(ByRef $oDoc, $bExhaustive = True, $sFolder = 
 EndFunc   ;==>_LOBase_ReportFoldersGetNames
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportFooter
+; Description ...: Set or Retrieve a Report's Report Footer properties.
+; Syntax ........: _LOBase_ReportFooter(ByRef $oReportDoc[, $bEnabled = Null[, $sName = Null[, $iForceNewPage = Null[, $bKeepTogether = Null[, $bVisible = Null[, $iHeight = Null[, $sCondPrint = Null[, $iBackColor = Null]]]]]]]])
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the Report Footer is enabled.
+;                  $sName               - [optional] a string value. Default is Null. The name of the Section.
+;                  $iForceNewPage       - [optional] an integer value (0-3). Default is Null. If and when to force a new page. See Constants, $LOB_REP_FORCE_PAGE_* as defined in LibreOfficeBase_Constants.au3.
+;                  $bKeepTogether       - [optional] a boolean value. Default is Null. If True, the section should be printed on one page.
+;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
+;                  $iHeight             - [optional] an integer value (1753-??). Default is Null. The height of the Section, in Micrometers. See remarks.
+;                  $sCondPrint          - [optional] a string value. Default is Null. The Conditional Print Statement.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOB_COLOR_* as defined in LibreOfficeBase_Constants.au3. Set to $LOB_COLOR_OFF to set Background color to default / Background Transparent = True.
+; Return values .: Success: 1 or Array.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oReportDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oReportDoc not a Report Document.
+;                  @Error 1 @Extended 3 Return 0 = $bEnabled not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 5 Return 0 = $iForceNewPage not an Integer, less than 0 or greater than 3. See Constants, $LOB_REP_FORCE_PAGE_* as defined in LibreOfficeBase_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $bKeepTogether not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $bVisible not a Boolean.
+;                  @Error 1 @Extended 8 Return 0 = $iHeight not an Integer, or less than 1753.
+;                  @Error 1 @Extended 9 Return 0 = $sCondPrint not a String.
+;                  @Error 1 @Extended 10 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $bEnabled
+;                  |                               2 = Error setting $sName
+;                  |                               4 = Error setting $iForceNewPage
+;                  |                               8 = Error setting $bKeepTogether
+;                  |                               16 = Error setting $bVisible
+;                  |                               32 = Error setting $iHeight
+;                  |                               64 = Error setting $sCondPrint
+;                  |                               128 = Error setting $iBackColor
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The Report Footer must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Footer is disabled, the return values will be Null, except for the Boolean value of $bEnabled.
+;                  The minimum height of a Section is 1753 uM (Micrometers), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
+;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportFooter(ByRef $oReportDoc, $bEnabled = Null, $sName = Null, $iForceNewPage = Null, $bKeepTogether = Null, $bVisible = Null, $iHeight = Null, $sCondPrint = Null, $iBackColor = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $avProps[8]
+	Local $iError = 0
+
+	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	If __LOBase_VarsAreNull($bEnabled, $sName, $iForceNewPage, $bKeepTogether, $bVisible, $iHeight, $sCondPrint, $iBackColor) Then
+		If $oReportDoc.ReportFooterOn() Then
+			__LOBase_ArrayFill($avProps, $oReportDoc.ReportFooterOn(), $oReportDoc.ReportFooter.Name(), $oReportDoc.ReportFooter.ForceNewPage(), _
+					$oReportDoc.ReportFooter.KeepTogether(), $oReportDoc.ReportFooter.Visible(), $oReportDoc.ReportFooter.Height(), _
+					$oReportDoc.ReportFooter.ConditionalPrintExpression(), $oReportDoc.ReportFooter.BackColor())
+
+		Else ; Page Footer is off.
+			__LOBase_ArrayFill($avProps, $oReportDoc.ReportFooterOn(), Null, Null, Null, Null, Null, Null, Null)
+		EndIf
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avProps)
+	EndIf
+
+	If ($bEnabled <> Null) Then
+		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oReportDoc.ReportFooterOn = $bEnabled
+		$iError = ($oReportDoc.ReportFooterOn() = $bEnabled) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($sName <> Null) Then
+		If $oReportDoc.ReportFooterOn() Then
+			If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+			$oReportDoc.ReportFooter.Name = $sName
+			$iError = ($oReportDoc.ReportFooter.Name() = $sName) ? ($iError) : (BitOR($iError, 2))
+
+		Else
+			$iError = BitOR($iError, 2) ; Can't set ReportFooter Values if Footer is off.
+		EndIf
+	EndIf
+
+	If ($iForceNewPage <> Null) Then
+		If $oReportDoc.ReportFooterOn() Then
+			If Not __LOBase_IntIsBetween($iForceNewPage, $LOB_REP_FORCE_PAGE_NONE, $LOB_REP_FORCE_PAGE_BEFORE_AFTER_SECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+			$oReportDoc.ReportFooter.ForceNewPage = $iForceNewPage
+			$iError = ($oReportDoc.ReportFooter.ForceNewPage() = $iForceNewPage) ? ($iError) : (BitOR($iError, 4))
+
+		Else
+			$iError = BitOR($iError, 4) ; Can't set ReportFooter Values if Footer is off.
+		EndIf
+	EndIf
+
+	If ($bKeepTogether <> Null) Then
+		If $oReportDoc.ReportFooterOn() Then
+			If Not IsBool($bKeepTogether) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+			$oReportDoc.ReportFooter.KeepTogether = $bKeepTogether
+			$iError = ($oReportDoc.ReportFooter.KeepTogether() = $bKeepTogether) ? ($iError) : (BitOR($iError, 8))
+
+		Else
+			$iError = BitOR($iError, 8) ; Can't set ReportFooter Values if Footer is off.
+		EndIf
+	EndIf
+
+	If ($bVisible <> Null) Then
+		If $oReportDoc.ReportFooterOn() Then
+			If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+			$oReportDoc.ReportFooter.Visible = $bVisible
+			$iError = ($oReportDoc.ReportFooter.Visible() = $bVisible) ? ($iError) : (BitOR($iError, 16))
+
+		Else
+			$iError = BitOR($iError, 16) ; Can't set ReportFooter Values if Footer is off.
+		EndIf
+	EndIf
+
+	If ($iHeight <> Null) Then
+		If $oReportDoc.ReportFooterOn() Then
+			If Not __LOBase_IntIsBetween($iHeight, 1753) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+			$oReportDoc.ReportFooter.Height = $iHeight
+			$iError = (__LOBase_IntIsBetween($oReportDoc.ReportFooter.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 32))
+
+		Else
+			$iError = BitOR($iError, 32) ; Can't set ReportFooter Values if Footer is off.
+		EndIf
+	EndIf
+
+	If ($sCondPrint <> Null) Then
+		If $oReportDoc.ReportFooterOn() Then
+			If Not IsString($sCondPrint) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+			$oReportDoc.ReportFooter.ConditionalPrintExpression = $sCondPrint
+			$iError = ($oReportDoc.ReportFooter.ConditionalPrintExpression() = $sCondPrint) ? ($iError) : (BitOR($iError, 64))
+
+		Else
+			$iError = BitOR($iError, 64) ; Can't set ReportFooter Values if Footer is off.
+		EndIf
+	EndIf
+
+	If ($iBackColor <> Null) Then
+		If $oReportDoc.ReportFooterOn() Then
+			If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+			$oReportDoc.ReportFooter.BackColor = $iBackColor
+			$iError = ($oReportDoc.ReportFooter.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 128))
+
+		Else
+			$iError = BitOR($iError, 128) ; Can't set ReportFooter Values if Footer is off.
+		EndIf
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOBase_ReportFooter
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportGeneral
+; Description ...: Set or Retrieve General Report Document properties.
+; Syntax ........: _LOBase_ReportGeneral(ByRef $oReportDoc[, $sName = Null[, $iPageHeader = Null[, $iPageFooter = Null[, $bAutoGrow = Null[, $bPrintRep = Null]]]]])
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+;                  $sName               - [optional] a string value. Default is Null. The name of the Report. This is separate from the save name of the Report contained in the Database.
+;                  $iPageHeader         - [optional] an integer value (0-3). Default is Null. Determines if a Page Header is printed on a page that also contains a Report Header. See Constants, $LOB_REP_PAGE_PRINT_OPT_* as defined in LibreOfficeBase_Constants.au3.
+;                  $iPageFooter         - [optional] an integer value (0-3). Default is Null. Determines if a Page Footer is printed on a page that also contains a Report Footer. See Constants, $LOB_REP_PAGE_PRINT_OPT_* as defined in LibreOfficeBase_Constants.au3.
+;                  $bAutoGrow           - [optional] a boolean value. Default is Null. If True, the Report will automatically grow to fit content.
+;                  $bPrintRep           - [optional] a boolean value. Default is Null. If True, repeated values will be printed.
+; Return values .: Success: 1 or Array.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oReportDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oReportDoc not a Report Document.
+;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 4 Return 0 = $iPageHeader not an Integer, less than 0 or greater than 3. See Constants, $LOB_REP_PAGE_PRINT_OPT_* as defined in LibreOfficeBase_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iPageFooter not an Integer, less than 0 or greater than 3. See Constants, $LOB_REP_PAGE_PRINT_OPT_* as defined in LibreOfficeBase_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $bAutoGrow not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $bPrintRep not a Boolean.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sName
+;                  |                               2 = Error setting $iPageHeader
+;                  |                               4 = Error setting $iPageFooter
+;                  |                               8 = Error setting $bAutoGrow
+;                  |                               16 = Error setting $bPrintRep
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportGeneral(ByRef $oReportDoc, $sName = Null, $iPageHeader = Null, $iPageFooter = Null, $bAutoGrow = Null, $bPrintRep = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avReport[5]
+
+	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	If __LOBase_VarsAreNull($sName, $iPageHeader, $iPageFooter, $bAutoGrow, $bPrintRep) Then
+		__LOBase_ArrayFill($avReport, $oReportDoc.Name(), $oReportDoc.PageHeaderOption(), $oReportDoc.PageFooterOption(), $oReportDoc.AutoGrow(), $oReportDoc.PrintRepeatedValues())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avReport)
+	EndIf
+
+	If ($sName <> Null) Then
+		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oReportDoc.Name = $sName
+		$iError = ($oReportDoc.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($iPageHeader <> Null) Then
+		If Not __LOBase_IntIsBetween($iPageHeader, $LOB_REP_PAGE_PRINT_OPT_ALL_PAGES, $LOB_REP_PAGE_PRINT_OPT_NOT_WITH_REP_HEADER_FOOTER) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oReportDoc.PageHeaderOption = $iPageHeader
+		$iError = ($oReportDoc.PageHeaderOption() = $iPageHeader) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($iPageFooter <> Null) Then
+		If Not __LOBase_IntIsBetween($iPageFooter, $LOB_REP_PAGE_PRINT_OPT_ALL_PAGES, $LOB_REP_PAGE_PRINT_OPT_NOT_WITH_REP_HEADER_FOOTER) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oReportDoc.PageFooterOption = $iPageFooter
+		$iError = ($oReportDoc.PageFooterOption() = $iPageFooter) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($bAutoGrow <> Null) Then
+		If Not IsBool($bAutoGrow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oReportDoc.AutoGrow = $bAutoGrow
+		$iError = ($oReportDoc.AutoGrow() = $bAutoGrow) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	If ($bPrintRep <> Null) Then
+		If Not IsBool($bPrintRep) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oReportDoc.PrintRepeatedValues = $bPrintRep
+		$iError = ($oReportDoc.PrintRepeatedValues() = $bPrintRep) ? ($iError) : (BitOR($iError, 16))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOBase_ReportGeneral
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportGroupAdd
+; Description ...: Add a Group to the Report.
+; Syntax ........: _LOBase_ReportGroupAdd(ByRef $oReportDoc[, $iPosition = Null])
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+;                  $iPosition           - [optional] an integer value. Default is Null. The position to insert the new Group. 0 Based, call Null to insert at the end.
+; Return values .: Success: Object
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oReportDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oReportDoc not a Report Document.
+;                  @Error 1 @Extended 3 Return 0 = $iPosition not an Integer, less than 0 or greater than number of Groups contained in the Report plus one.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create new Group object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed retrieve new Group Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Returning new Group Object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportGroupAdd(ByRef $oReportDoc, $iPosition = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oGroup, $oReportGroup
+
+	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	If ($iPosition = Null) Then $iPosition = $oReportDoc.Groups.Count()
+
+	If Not __LOBase_IntIsBetween($iPosition, 0, $oReportDoc.Groups.Count()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$oGroup = $oReportDoc.Groups.createGroup()
+	If Not IsObj($oGroup) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	$oReportDoc.Groups.insertByIndex($iPosition, $oGroup)
+
+	$oReportGroup = $oReportDoc.Groups.getByIndex($iPosition)
+	If Not IsObj($oReportGroup) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$oReportGroup.HeaderOn = True ; Turn Header on so it is visible to the user.
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oReportGroup)
+EndFunc   ;==>_LOBase_ReportGroupAdd
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportGroupDeleteByIndex
+; Description ...: Delete a Group by position.
+; Syntax ........: _LOBase_ReportGroupDeleteByIndex(ByRef $oReportDoc, $iGroup)
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+;                  $iGroup              - an integer value. The Index position of the Group to Delete. 0 based.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oReportDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oReportDoc not a Report Document.
+;                  @Error 1 @Extended 3 Return 0 = $iGroup not an Integer, less than 0 or greater than number of Groups contained in the Report.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed retrieve a count of Groups.
+;                  @Error 3 @Extended 2 Return 0 = Failed to delete Group.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Returning requested Group Object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportGroupDeleteByIndex(ByRef $oReportDoc, $iGroup)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iCount
+
+	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOBase_IntIsBetween($iGroup, 0, $oReportDoc.Groups.Count() - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$iCount = $oReportDoc.Groups.Count()
+	If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$oReportDoc.Groups.removeByIndex($iGroup)
+
+	If (($iCount - 1) <> $oReportDoc.Groups.Count()) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOBase_ReportGroupDeleteByIndex
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportGroupDeleteByObj
+; Description ...: Delete a Group by its Object.
+; Syntax ........: _LOBase_ReportGroupDeleteByObj(ByRef $oGroup)
+; Parameters ....: $oGroup              - [in/out] an object. A Group object returned by a previous _LOBase_ReportGroupAdd, or _LOBase_ReportGroupGetByIndex function.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oGroup not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oGroup not a Group Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed retrieve a Group Parent Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed retrieve a count of Groups.
+;                  @Error 3 @Extended 3 Return 0 = Failed to delete Group.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Returning requested Group Object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportGroupDeleteByObj(ByRef $oGroup)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iCount
+	Local $oParent
+
+	If Not IsObj($oGroup) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oGroup.supportsService("com.sun.star.report.Group") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oParent = $oGroup.Parent()
+	If Not IsObj($oParent) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$iCount = $oParent.Count()
+	If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	For $i = 0 To $iCount - 1
+		If ($oParent.getByIndex($i) = $oGroup) Then
+			$oParent.removeByIndex($i)
+			ExitLoop
+		EndIf
+
+		Sleep((IsInt($i / $__LOBCONST_SLEEP_DIV) ? (10) : (0)))
+	Next
+
+	If (($iCount - 1) <> $oParent.Count()) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOBase_ReportGroupDeleteByObj
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportGroupFooter
+; Description ...: Set or Retrieve Group Footer settings.
+; Syntax ........: _LOBase_ReportGroupFooter(ByRef $oGroup[, $bFooterOn = Null[, $sName = Null[, $iForceNewPage = Null[, $bKeepTogether = Null[, $bRepeatSec = Null[, $bVisible = Null[, $iHeight = Null[, $sCondPrint = Null[, $iBackColor = Null]]]]]]]]])
+; Parameters ....: $oGroup              - [in/out] an object. A Group object returned by a previous _LOBase_ReportGroupAdd, or _LOBase_ReportGroupGetByIndex function.
+;                  $bFooterOn           - [optional] a boolean value. Default is Null. If True, the Footer is enabled (on).
+;                  $sName               - [optional] a string value. Default is Null. The name of the Group Footer.
+;                  $iForceNewPage       - [optional] an integer value (0-3). Default is Null. If and when to force a new page. See Constants, $LOB_REP_FORCE_PAGE_* as defined in LibreOfficeBase_Constants.au3.
+;                  $bKeepTogether       - [optional] a boolean value. Default is Null. If True, the section should be printed on one page.
+;                  $bRepeatSec          - [optional] a boolean value. Default is Null. If True, the Group Footer section will be repeated on the next page if the section spans more than one page.
+;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
+;                  $iHeight             - [optional] an integer value (1753-??). Default is Null. The height of the Section, in Micrometers. See remarks.
+;                  $sCondPrint          - [optional] a string value. Default is Null. The Conditional Print Statement.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOB_COLOR_* as defined in LibreOfficeBase_Constants.au3. Set to $LOB_COLOR_OFF to set Background color to default / Background Transparent = True.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oGroup not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oGroup not a Group Object.
+;                  @Error 1 @Extended 3 Return 0 = $bFooterOn not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 5 Return 0 = $iForceNewPage not an Integer, less than 0 or greater than 3. See Constants, $LOB_REP_FORCE_PAGE_* as defined in LibreOfficeBase_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $bKeepTogether not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $bRepeatSec not a Boolean.
+;                  @Error 1 @Extended 8 Return 0 = $bVisible not a Boolean.
+;                  @Error 1 @Extended 9 Return 0 = $iHeight not an Integer or less than 1753 Micrometers.
+;                  @Error 1 @Extended 10 Return 0 = $sCondPrint not a String.
+;                  @Error 1 @Extended 11 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $bFooterOn
+;                  |                               2 = Error setting $sName
+;                  |                               4 = Error setting $iForceNewPage
+;                  |                               8 = Error setting $bKeepTogether
+;                  |                               16 = Error setting $bRepeatSec
+;                  |                               32 = Error setting $bVisible
+;                  |                               64 = Error setting $iHeight
+;                  |                               128 = Error setting $sCondPrint
+;                  |                               256 = Error setting $iBackColor
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 9 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The Group Footer must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Footer is disabled, the return values will be Null, except for the Boolean value of $bFooterOn.
+;                  The minimum height of a Section is 1753 uM (Micrometers), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
+;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportGroupFooter(ByRef $oGroup, $bFooterOn = Null, $sName = Null, $iForceNewPage = Null, $bKeepTogether = Null, $bRepeatSec = Null, $bVisible = Null, $iHeight = Null, $sCondPrint = Null, $iBackColor = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $avProps[9]
+	Local $iError = 0
+
+	If Not IsObj($oGroup) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oGroup.supportsService("com.sun.star.report.Group") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	If __LOBase_VarsAreNull($bFooterOn, $sName, $iForceNewPage, $bKeepTogether, $bRepeatSec, $bVisible, $iHeight, $sCondPrint, $iBackColor) Then
+		If $oGroup.FooterOn() Then
+			__LOBase_ArrayFill($avProps, $oGroup.FooterOn(), $oGroup.Footer.Name(), $oGroup.Footer.ForceNewPage(), $oGroup.Footer.KeepTogether(), _
+					$oGroup.Footer.RepeatSection(), $oGroup.Footer.Visible(), $oGroup.Footer.Height(), $oGroup.Footer.ConditionalPrintExpression(), _
+					$oGroup.Footer.BackColor())
+
+		Else ; Page Footer is off.
+			__LOBase_ArrayFill($avProps, $oGroup.FooterOn(), Null, Null, Null, Null, Null, Null, Null, Null)
+		EndIf
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avProps)
+	EndIf
+
+	If ($bFooterOn <> Null) Then
+		If Not IsBool($bFooterOn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oGroup.FooterOn = $bFooterOn
+		$iError = ($oGroup.FooterOn() = $bFooterOn) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($sName <> Null) Then
+		If $oGroup.FooterOn() Then
+			If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+			$oGroup.Footer.Name = $sName
+			$iError = ($oGroup.Footer.Name() = $sName) ? ($iError) : (BitOR($iError, 2))
+
+		Else
+			$iError = BitOR($iError, 2) ; Can't set Footer Values if Footer is off.
+		EndIf
+	EndIf
+
+	If ($iForceNewPage <> Null) Then
+		If $oGroup.FooterOn() Then
+			If Not __LOBase_IntIsBetween($iForceNewPage, $LOB_REP_FORCE_PAGE_NONE, $LOB_REP_FORCE_PAGE_BEFORE_AFTER_SECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+			$oGroup.Footer.ForceNewPage = $iForceNewPage
+			$iError = ($oGroup.Footer.ForceNewPage() = $iForceNewPage) ? ($iError) : (BitOR($iError, 4))
+
+		Else
+			$iError = BitOR($iError, 4) ; Can't set Footer Values if Footer is off.
+		EndIf
+	EndIf
+
+	If ($bKeepTogether <> Null) Then
+		If $oGroup.FooterOn() Then
+			If Not IsBool($bKeepTogether) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+			$oGroup.Footer.KeepTogether = $bKeepTogether
+			$iError = ($oGroup.Footer.KeepTogether() = $bKeepTogether) ? ($iError) : (BitOR($iError, 8))
+
+		Else
+			$iError = BitOR($iError, 8) ; Can't set Footer Values if Footer is off.
+		EndIf
+	EndIf
+
+	If ($bRepeatSec <> Null) Then
+		If $oGroup.FooterOn() Then
+			If Not IsBool($bRepeatSec) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+			$oGroup.Footer.RepeatSection = $bRepeatSec
+			$iError = ($oGroup.Footer.RepeatSection() = $bRepeatSec) ? ($iError) : (BitOR($iError, 16))
+
+		Else
+			$iError = BitOR($iError, 16) ; Can't set Footer Values if Footer is off.
+		EndIf
+	EndIf
+
+	If ($bVisible <> Null) Then
+		If $oGroup.FooterOn() Then
+			If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+			$oGroup.Footer.Visible = $bVisible
+			$iError = ($oGroup.Footer.Visible() = $bVisible) ? ($iError) : (BitOR($iError, 32))
+
+		Else
+			$iError = BitOR($iError, 32) ; Can't set Footer Values if Footer is off.
+		EndIf
+	EndIf
+
+	If ($iHeight <> Null) Then
+		If $oGroup.FooterOn() Then
+			If Not __LOBase_IntIsBetween($iHeight, 1753) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+			$oGroup.Footer.Height = $iHeight
+			$iError = ($oGroup.Footer.Height() = $iHeight) ? ($iError) : (BitOR($iError, 64))
+
+		Else
+			$iError = BitOR($iError, 64) ; Can't set Footer Values if Footer is off.
+		EndIf
+	EndIf
+
+	If ($sCondPrint <> Null) Then
+		If $oGroup.FooterOn() Then
+			If Not IsString($sCondPrint) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+			$oGroup.Footer.ConditionalPrintExpression = $sCondPrint
+			$iError = ($oGroup.Footer.ConditionalPrintExpression() = $sCondPrint) ? ($iError) : (BitOR($iError, 128))
+
+		Else
+			$iError = BitOR($iError, 128) ; Can't set Footer Values if Footer is off.
+		EndIf
+	EndIf
+
+	If ($iBackColor <> Null) Then
+		If $oGroup.FooterOn() Then
+			If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+			$oGroup.Footer.BackColor = $iBackColor
+			$iError = ($oGroup.Footer.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 256))
+
+		Else
+			$iError = BitOR($iError, 256) ; Can't set Footer Values if Footer is off.
+		EndIf
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOBase_ReportGroupFooter
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportGroupGetByIndex
+; Description ...: Retrieve a Group Object by position.
+; Syntax ........: _LOBase_ReportGroupGetByIndex(ByRef $oReportDoc, $iReport)
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+;                  $iReport             - an integer value. The index position for the Group to retrieve the Object for. 0 Based.
+; Return values .: Success: Object
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oReportDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oReportDoc not a Report Document.
+;                  @Error 1 @Extended 3 Return 0 = $iReport not an Integer, less than 0 or greater than number of Groups contained in the Report.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed retrieve Group Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Returning requested Group Object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportGroupGetByIndex(ByRef $oReportDoc, $iReport)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oGroup
+
+	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOBase_IntIsBetween($iReport, 0, $oReportDoc.Groups.Count() - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$oGroup = $oReportDoc.Groups.getByIndex($iReport)
+	If Not IsObj($oGroup) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oGroup)
+EndFunc   ;==>_LOBase_ReportGroupGetByIndex
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportGroupHeader
+; Description ...: Set or Retrieve Group Header settings.
+; Syntax ........: _LOBase_ReportGroupHeader(ByRef $oGroup[, $bHeaderOn = Null[, $sName = Null[, $iForceNewPage = Null[, $bKeepTogether = Null[, $bRepeatSec = Null[, $bVisible = Null[, $iHeight = Null[, $sCondPrint = Null[, $iBackColor = Null]]]]]]]]])
+; Parameters ....: $oGroup              - [in/out] an object. A Group object returned by a previous _LOBase_ReportGroupAdd, or _LOBase_ReportGroupGetByIndex function.
+;                  $bHeaderOn           - [optional] a boolean value. Default is Null. If True, the Header is enabled (on).
+;                  $sName               - [optional] a string value. Default is Null. The name of the Group Header.
+;                  $iForceNewPage       - [optional] an integer value (0-3). Default is Null. If and when to force a new page. See Constants, $LOB_REP_FORCE_PAGE_* as defined in LibreOfficeBase_Constants.au3.
+;                  $bKeepTogether       - [optional] a boolean value. Default is Null. If True, the section should be printed on one page.
+;                  $bRepeatSec          - [optional] a boolean value. Default is Null. If True, the Group Header section will be repeated on the next page if the section spans more than one page.
+;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
+;                  $iHeight             - [optional] an integer value (1753-??). Default is Null. The height of the Section, in Micrometers. See remarks.
+;                  $sCondPrint          - [optional] a string value. Default is Null. The Conditional Print Statement.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOB_COLOR_* as defined in LibreOfficeBase_Constants.au3. Set to $LOB_COLOR_OFF to set Background color to default / Background Transparent = True.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oGroup not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oGroup not a Group Object.
+;                  @Error 1 @Extended 3 Return 0 = $bHeaderOn not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 5 Return 0 = $iForceNewPage not an Integer, less than 0 or greater than 3. See Constants, $LOB_REP_FORCE_PAGE_* as defined in LibreOfficeBase_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $bKeepTogether not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $bRepeatSec not a Boolean.
+;                  @Error 1 @Extended 8 Return 0 = $bVisible not a Boolean.
+;                  @Error 1 @Extended 9 Return 0 = $iHeight not an Integer or less than 1753 Micrometers.
+;                  @Error 1 @Extended 10 Return 0 = $sCondPrint not a String.
+;                  @Error 1 @Extended 11 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $bHeaderOn
+;                  |                               2 = Error setting $sName
+;                  |                               4 = Error setting $iForceNewPage
+;                  |                               8 = Error setting $bKeepTogether
+;                  |                               16 = Error setting $bRepeatSec
+;                  |                               32 = Error setting $bVisible
+;                  |                               64 = Error setting $iHeight
+;                  |                               128 = Error setting $sCondPrint
+;                  |                               256 = Error setting $iBackColor
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 9 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The Group Header must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Header is disabled, the return values will be Null, except for the Boolean value of $bHeaderOn.
+;                  The minimum height of a Section is 1753 uM (Micrometers), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
+;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportGroupHeader(ByRef $oGroup, $bHeaderOn = Null, $sName = Null, $iForceNewPage = Null, $bKeepTogether = Null, $bRepeatSec = Null, $bVisible = Null, $iHeight = Null, $sCondPrint = Null, $iBackColor = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $avProps[9]
+	Local $iError = 0
+
+	If Not IsObj($oGroup) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oGroup.supportsService("com.sun.star.report.Group") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	If __LOBase_VarsAreNull($bHeaderOn, $sName, $iForceNewPage, $bKeepTogether, $bRepeatSec, $bVisible, $iHeight, $sCondPrint, $iBackColor) Then
+		If $oGroup.HeaderOn() Then
+			__LOBase_ArrayFill($avProps, $oGroup.HeaderOn(), $oGroup.Header.Name(), $oGroup.Header.ForceNewPage(), $oGroup.Header.KeepTogether(), _
+					$oGroup.Header.RepeatSection(), $oGroup.Header.Visible(), $oGroup.Header.Height(), $oGroup.Header.ConditionalPrintExpression(), _
+					$oGroup.Header.BackColor())
+
+		Else ; Page Header is off.
+			__LOBase_ArrayFill($avProps, $oGroup.HeaderOn(), Null, Null, Null, Null, Null, Null, Null, Null)
+		EndIf
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avProps)
+	EndIf
+
+	If ($bHeaderOn <> Null) Then
+		If Not IsBool($bHeaderOn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oGroup.HeaderOn = $bHeaderOn
+		$iError = ($oGroup.HeaderOn() = $bHeaderOn) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($sName <> Null) Then
+		If $oGroup.HeaderOn() Then
+			If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+			$oGroup.Header.Name = $sName
+			$iError = ($oGroup.Header.Name() = $sName) ? ($iError) : (BitOR($iError, 2))
+
+		Else
+			$iError = BitOR($iError, 2) ; Can't set Header Values if Header is off.
+		EndIf
+	EndIf
+
+	If ($iForceNewPage <> Null) Then
+		If $oGroup.HeaderOn() Then
+			If Not __LOBase_IntIsBetween($iForceNewPage, $LOB_REP_FORCE_PAGE_NONE, $LOB_REP_FORCE_PAGE_BEFORE_AFTER_SECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+			$oGroup.Header.ForceNewPage = $iForceNewPage
+			$iError = ($oGroup.Header.ForceNewPage() = $iForceNewPage) ? ($iError) : (BitOR($iError, 4))
+
+		Else
+			$iError = BitOR($iError, 4) ; Can't set Header Values if Header is off.
+		EndIf
+	EndIf
+
+	If ($bKeepTogether <> Null) Then
+		If $oGroup.HeaderOn() Then
+			If Not IsBool($bKeepTogether) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+			$oGroup.Header.KeepTogether = $bKeepTogether
+			$iError = ($oGroup.Header.KeepTogether() = $bKeepTogether) ? ($iError) : (BitOR($iError, 8))
+
+		Else
+			$iError = BitOR($iError, 8) ; Can't set Header Values if Header is off.
+		EndIf
+	EndIf
+
+	If ($bRepeatSec <> Null) Then
+		If $oGroup.HeaderOn() Then
+			If Not IsBool($bRepeatSec) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+			$oGroup.Header.RepeatSection = $bRepeatSec
+			$iError = ($oGroup.Header.RepeatSection() = $bRepeatSec) ? ($iError) : (BitOR($iError, 16))
+
+		Else
+			$iError = BitOR($iError, 16) ; Can't set Header Values if Header is off.
+		EndIf
+	EndIf
+
+	If ($bVisible <> Null) Then
+		If $oGroup.HeaderOn() Then
+			If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+			$oGroup.Header.Visible = $bVisible
+			$iError = ($oGroup.Header.Visible() = $bVisible) ? ($iError) : (BitOR($iError, 32))
+
+		Else
+			$iError = BitOR($iError, 32) ; Can't set Header Values if Header is off.
+		EndIf
+	EndIf
+
+	If ($iHeight <> Null) Then
+		If $oGroup.HeaderOn() Then
+			If Not __LOBase_IntIsBetween($iHeight, 1753) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+			$oGroup.Header.Height = $iHeight
+			$iError = ($oGroup.Header.Height() = $iHeight) ? ($iError) : (BitOR($iError, 64))
+
+		Else
+			$iError = BitOR($iError, 64) ; Can't set Header Values if Header is off.
+		EndIf
+	EndIf
+
+	If ($sCondPrint <> Null) Then
+		If $oGroup.HeaderOn() Then
+			If Not IsString($sCondPrint) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+			$oGroup.Header.ConditionalPrintExpression = $sCondPrint
+			$iError = ($oGroup.Header.ConditionalPrintExpression() = $sCondPrint) ? ($iError) : (BitOR($iError, 128))
+
+		Else
+			$iError = BitOR($iError, 128) ; Can't set Header Values if Header is off.
+		EndIf
+	EndIf
+
+	If ($iBackColor <> Null) Then
+		If $oGroup.HeaderOn() Then
+			If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+			$oGroup.Header.BackColor = $iBackColor
+			$iError = ($oGroup.Header.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 256))
+
+		Else
+			$iError = BitOR($iError, 256) ; Can't set Header Values if Header is off.
+		EndIf
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOBase_ReportGroupHeader
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportGroupsGetCount
+; Description ...: Retrieve a count of Report Groups.
+; Syntax ........: _LOBase_ReportGroupsGetCount(ByRef $oReportDoc)
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+; Return values .: Success: Integer
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oReportDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oReportDoc not a Report Document.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve count of Groups.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Integer = Success. Returning total number of Groups contained in the Report.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportGroupsGetCount(ByRef $oReportDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iCount = 0
+
+	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$iCount = $oReportDoc.Groups.Count()
+	If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $iCount)
+EndFunc   ;==>_LOBase_ReportGroupsGetCount
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportGroupSort
+; Description ...: Set or Retrieve a Group's Sorting settings.
+; Syntax ........: _LOBase_ReportGroupSort(ByRef $oGroup[, $sField = Null[, $bSortAsc = Null[, $iGroupOn = Null[, $iGroupInt = Null[, $iKeepTogether = Null]]]]])
+; Parameters ....: $oGroup              - [in/out] an object. A Group object returned by a previous _LOBase_ReportGroupAdd, or _LOBase_ReportGroupGetByIndex function.
+;                  $sField              - [optional] a string value. Default is Null. The Column name or Expression. See remarks.
+;                  $bSortAsc            - [optional] a boolean value. Default is Null. If True, the Group is sorted in Ascending order. Else in Descending order.
+;                  $iGroupOn            - [optional] an integer value (0-9). Default is Null. How to Group the Data. See Constants, $LOB_REP_GROUP_ON_* as defined in LibreOfficeBase_Constants.au3.
+;                  $iGroupInt           - [optional] an integer value (0-100). Default is Null. The Group Interval value.
+;                  $iKeepTogether       - [optional] an integer value (0-2). Default is Null. Whether or not, and how to keep Data together on one page. See Constants, $LOB_REP_KEEP_TOG_* as defined in LibreOfficeBase_Constants.au3.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oGroup not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oGroup not a Group Object.
+;                  @Error 1 @Extended 3 Return 0 = $sField not a String.
+;                  @Error 1 @Extended 4 Return 0 = $bSortAsc not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $iGroupOn not an Integer, less than 0 or greater than 9. See Constants, $LOB_REP_GROUP_ON_* as defined in LibreOfficeBase_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $iGroupInt not an Integer, less than 0 or greater than 100.
+;                  @Error 1 @Extended 7 Return 0 = $iKeepTogether not an Integer, less than 0 or greater than 2. See Constants, $LOB_REP_KEEP_TOG_* as defined in LibreOfficeBase_Constants.au3.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sField
+;                  |                               2 = Error setting $bSortAsc
+;                  |                               4 = Error setting $iGroupOn
+;                  |                               8 = Error setting $iGroupInt
+;                  |                               16 = Error setting $iKeepTogether
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  It is the User's responsibility for the accuracy of names etc called in $sField, i.e. Column name, etc.
+;                  It is the User's responsibility to use appropriate values for $iGroupOn based upon the type of field.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportGroupSort(ByRef $oGroup, $sField = Null, $bSortAsc = Null, $iGroupOn = Null, $iGroupInt = Null, $iKeepTogether = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $avProps[5]
+	Local $iError = 0
+
+	If Not IsObj($oGroup) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oGroup.supportsService("com.sun.star.report.Group") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	If __LOBase_VarsAreNull($sField, $bSortAsc, $iGroupOn, $iGroupInt, $iKeepTogether) Then
+		__LOBase_ArrayFill($avProps, $oGroup.Expression(), $oGroup.SortAscending(), $oGroup.GroupOn(), $oGroup.GroupInterval(), $oGroup.KeepTogether())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avProps)
+	EndIf
+
+	If ($sField <> Null) Then
+		If Not IsString($sField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oGroup.Expression = $sField
+		$iError = ($oGroup.Expression() = $sField) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($bSortAsc <> Null) Then
+		If Not IsBool($bSortAsc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oGroup.SortAscending = $bSortAsc
+		$iError = ($oGroup.SortAscending() = $bSortAsc) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($iGroupOn <> Null) Then
+		If Not __LOBase_IntIsBetween($iGroupOn, $LOB_REP_GROUP_ON_DEFAULT, $LOB_REP_GROUP_ON_INTERVAL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oGroup.GroupOn = $iGroupOn
+		$iError = ($oGroup.GroupOn() = $iGroupOn) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($iGroupInt <> Null) Then
+		If Not __LOBase_IntIsBetween($iGroupInt, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oGroup.GroupInterval = $iGroupInt
+		$iError = ($oGroup.GroupInterval() = $iGroupInt) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	If ($iKeepTogether <> Null) Then
+		If Not __LOBase_IntIsBetween($iKeepTogether, $LOB_REP_KEEP_TOG_NO, $LOB_REP_KEEP_TOG_WITH_FIRST_DETAIL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oGroup.KeepTogether = $iKeepTogether
+		$iError = ($oGroup.KeepTogether() = $iKeepTogether) ? ($iError) : (BitOR($iError, 16))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOBase_ReportGroupSort
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportHeader
+; Description ...: Set or Retrieve a Report's Report Header properties.
+; Syntax ........: _LOBase_ReportHeader(ByRef $oReportDoc[, $bEnabled = Null[, $sName = Null[, $iForceNewPage = Null[, $bKeepTogether = Null[, $bVisible = Null[, $iHeight = Null[, $sCondPrint = Null[, $iBackColor = Null]]]]]]]])
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the Report Header is enabled.
+;                  $sName               - [optional] a string value. Default is Null. The name of the Section.
+;                  $iForceNewPage       - [optional] an integer value (0-3). Default is Null. If and when to force a new page. See Constants, $LOB_REP_FORCE_PAGE_* as defined in LibreOfficeBase_Constants.au3.
+;                  $bKeepTogether       - [optional] a boolean value. Default is Null. If True, the section should be printed on one page.
+;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
+;                  $iHeight             - [optional] an integer value (1753-??). Default is Null. The height of the Section, in Micrometers. See remarks.
+;                  $sCondPrint          - [optional] a string value. Default is Null. The Conditional Print Statement.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOB_COLOR_* as defined in LibreOfficeBase_Constants.au3. Set to $LOB_COLOR_OFF to set Background color to default / Background Transparent = True.
+; Return values .: Success: 1 or Array.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oReportDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oReportDoc not a Report Document.
+;                  @Error 1 @Extended 3 Return 0 = $bEnabled not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 5 Return 0 = $iForceNewPage not an Integer, less than 0 or greater than 3. See Constants, $LOB_REP_FORCE_PAGE_* as defined in LibreOfficeBase_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $bKeepTogether not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $bVisible not a Boolean.
+;                  @Error 1 @Extended 8 Return 0 = $iHeight not an Integer, or less than 1753.
+;                  @Error 1 @Extended 9 Return 0 = $sCondPrint not a String.
+;                  @Error 1 @Extended 10 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $bEnabled
+;                  |                               2 = Error setting $sName
+;                  |                               4 = Error setting $iForceNewPage
+;                  |                               8 = Error setting $bKeepTogether
+;                  |                               16 = Error setting $bVisible
+;                  |                               32 = Error setting $iHeight
+;                  |                               64 = Error setting $sCondPrint
+;                  |                               128 = Error setting $iBackColor
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The Report Header must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Header is disabled, the return values will be Null, except for the Boolean value of $bEnabled.
+;                  The minimum height of a Section is 1753 uM (Micrometers), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
+;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportHeader(ByRef $oReportDoc, $bEnabled = Null, $sName = Null, $iForceNewPage = Null, $bKeepTogether = Null, $bVisible = Null, $iHeight = Null, $sCondPrint = Null, $iBackColor = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $avProps[8]
+	Local $iError = 0
+
+	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	If __LOBase_VarsAreNull($bEnabled, $sName, $iForceNewPage, $bKeepTogether, $bVisible, $iHeight, $sCondPrint, $iBackColor) Then
+		If $oReportDoc.ReportHeaderOn() Then
+			__LOBase_ArrayFill($avProps, $oReportDoc.ReportHeaderOn(), $oReportDoc.ReportHeader.Name(), $oReportDoc.ReportHeader.ForceNewPage(), _
+					$oReportDoc.ReportHeader.KeepTogether(), $oReportDoc.ReportHeader.Visible(), $oReportDoc.ReportHeader.Height(), _
+					$oReportDoc.ReportHeader.ConditionalPrintExpression(), $oReportDoc.ReportHeader.BackColor())
+
+		Else ; Page Header is off.
+			__LOBase_ArrayFill($avProps, $oReportDoc.ReportHeaderOn(), Null, Null, Null, Null, Null, Null, Null)
+		EndIf
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avProps)
+	EndIf
+
+	If ($bEnabled <> Null) Then
+		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oReportDoc.ReportHeaderOn = $bEnabled
+		$iError = ($oReportDoc.ReportHeaderOn() = $bEnabled) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($sName <> Null) Then
+		If $oReportDoc.ReportHeaderOn() Then
+			If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+			$oReportDoc.ReportHeader.Name = $sName
+			$iError = ($oReportDoc.ReportHeader.Name() = $sName) ? ($iError) : (BitOR($iError, 2))
+
+		Else
+			$iError = BitOR($iError, 2) ; Can't set ReportHeader Values if Header is off.
+		EndIf
+	EndIf
+
+	If ($iForceNewPage <> Null) Then
+		If $oReportDoc.ReportHeaderOn() Then
+			If Not __LOBase_IntIsBetween($iForceNewPage, $LOB_REP_FORCE_PAGE_NONE, $LOB_REP_FORCE_PAGE_BEFORE_AFTER_SECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+			$oReportDoc.ReportHeader.ForceNewPage = $iForceNewPage
+			$iError = ($oReportDoc.ReportHeader.ForceNewPage() = $iForceNewPage) ? ($iError) : (BitOR($iError, 4))
+
+		Else
+			$iError = BitOR($iError, 4) ; Can't set ReportHeader Values if Header is off.
+		EndIf
+	EndIf
+
+	If ($bKeepTogether <> Null) Then
+		If $oReportDoc.ReportHeaderOn() Then
+			If Not IsBool($bKeepTogether) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+			$oReportDoc.ReportHeader.KeepTogether = $bKeepTogether
+			$iError = ($oReportDoc.ReportHeader.KeepTogether() = $bKeepTogether) ? ($iError) : (BitOR($iError, 8))
+
+		Else
+			$iError = BitOR($iError, 8) ; Can't set ReportHeader Values if Header is off.
+		EndIf
+	EndIf
+
+	If ($bVisible <> Null) Then
+		If $oReportDoc.ReportHeaderOn() Then
+			If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+			$oReportDoc.ReportHeader.Visible = $bVisible
+			$iError = ($oReportDoc.ReportHeader.Visible() = $bVisible) ? ($iError) : (BitOR($iError, 16))
+
+		Else
+			$iError = BitOR($iError, 16) ; Can't set ReportHeader Values if Header is off.
+		EndIf
+	EndIf
+
+	If ($iHeight <> Null) Then
+		If $oReportDoc.ReportHeaderOn() Then
+			If Not __LOBase_IntIsBetween($iHeight, 1753) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+			$oReportDoc.ReportHeader.Height = $iHeight
+			$iError = (__LOBase_IntIsBetween($oReportDoc.ReportHeader.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 32))
+
+		Else
+			$iError = BitOR($iError, 32) ; Can't set ReportHeader Values if Header is off.
+		EndIf
+	EndIf
+
+	If ($sCondPrint <> Null) Then
+		If $oReportDoc.ReportHeaderOn() Then
+			If Not IsString($sCondPrint) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+			$oReportDoc.ReportHeader.ConditionalPrintExpression = $sCondPrint
+			$iError = ($oReportDoc.ReportHeader.ConditionalPrintExpression() = $sCondPrint) ? ($iError) : (BitOR($iError, 64))
+
+		Else
+			$iError = BitOR($iError, 64) ; Can't set ReportHeader Values if Header is off.
+		EndIf
+	EndIf
+
+	If ($iBackColor <> Null) Then
+		If $oReportDoc.ReportHeaderOn() Then
+			If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+			$oReportDoc.ReportHeader.BackColor = $iBackColor
+			$iError = ($oReportDoc.ReportHeader.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 128))
+
+		Else
+			$iError = BitOR($iError, 128) ; Can't set ReportHeader Values if Header is off.
+		EndIf
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOBase_ReportHeader
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_ReportIsModified
 ; Description ...: Test whether the Report has been modified since being created or since the last save.
 ; Syntax ........: _LOBase_ReportIsModified(ByRef $oReportDoc)
-; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportOpen, _LOBase_ReportConnect, or _LOBase_ReportCreate function.
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
 ; Return values .: Success: Boolean
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1052,6 +3380,266 @@ Func _LOBase_ReportOpen(ByRef $oDoc, ByRef $oConnection, $sName, $bDesign = True
 EndFunc   ;==>_LOBase_ReportOpen
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportPageFooter
+; Description ...: Set or Retrieve a Report's Page Footer properties.
+; Syntax ........: _LOBase_ReportPageFooter(ByRef $oReportDoc[, $bEnabled = Null[, $sName = Null[, $bVisible = Null[, $iHeight = Null[, $sCondPrint = Null[, $iBackColor = Null]]]]]])
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the Page Footer is enabled.
+;                  $sName               - [optional] a string value. Default is Null. The name of the Section.
+;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
+;                  $iHeight             - [optional] an integer value. Default is Null. (1753-??). Default is Null. The height of the Section, in Micrometers. See remarks.
+;                  $sCondPrint          - [optional] a string value. Default is Null. The Conditional Print Statement.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOB_COLOR_* as defined in LibreOfficeBase_Constants.au3. Set to $LOB_COLOR_OFF to set Background color to default / Background Transparent = True.
+; Return values .: Success: 1 or Array.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oReportDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oReportDoc not a Report Document.
+;                  @Error 1 @Extended 3 Return 0 = $bEnabled not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 5 Return 0 = $bVisible not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $iHeight not an Integer, or less than 1753.
+;                  @Error 1 @Extended 7 Return 0 = $sCondPrint not a String.
+;                  @Error 1 @Extended 8 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $bEnabled
+;                  |                               2 = Error setting $sName
+;                  |                               4 = Error setting $bVisible
+;                  |                               8 = Error setting $iHeight
+;                  |                               16 = Error setting $sCondPrint
+;                  |                               32 = Error setting $iBackColor
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The Page Header must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Footer is disabled, the return values will be Null, except for the Boolean value of $bEnabled.
+;                  The minimum height of a Section is 1753 uM (Micrometers), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
+;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportPageFooter(ByRef $oReportDoc, $bEnabled = Null, $sName = Null, $bVisible = Null, $iHeight = Null, $sCondPrint = Null, $iBackColor = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $avProps[6]
+	Local $iError = 0
+
+	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	If __LOBase_VarsAreNull($bEnabled, $sName, $bVisible, $iHeight, $sCondPrint, $iBackColor) Then
+		If $oReportDoc.PageFooterOn() Then
+			__LOBase_ArrayFill($avProps, $oReportDoc.PageFooterOn(), $oReportDoc.PageFooter.Name(), $oReportDoc.PageFooter.Visible(), $oReportDoc.PageFooter.Height(), _
+					$oReportDoc.PageFooter.ConditionalPrintExpression(), $oReportDoc.PageFooter.BackColor())
+
+		Else ; Page Footer is off.
+			__LOBase_ArrayFill($avProps, $oReportDoc.PageFooterOn(), Null, Null, Null, Null, Null)
+		EndIf
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avProps)
+	EndIf
+
+	If ($bEnabled <> Null) Then
+		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oReportDoc.PageFooterOn = $bEnabled
+		$iError = ($oReportDoc.PageFooterOn() = $bEnabled) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($sName <> Null) Then
+		If $oReportDoc.PageFooterOn() Then
+			If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+			$oReportDoc.PageFooter.Name = $sName
+			$iError = ($oReportDoc.PageFooter.Name() = $sName) ? ($iError) : (BitOR($iError, 2))
+
+		Else
+			$iError = BitOR($iError, 2) ; Can't set PageFooter Values if Footer is off.
+		EndIf
+	EndIf
+
+	If ($bVisible <> Null) Then
+		If $oReportDoc.PageFooterOn() Then
+			If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+			$oReportDoc.PageFooter.Visible = $bVisible
+			$iError = ($oReportDoc.PageFooter.Visible() = $bVisible) ? ($iError) : (BitOR($iError, 4))
+
+		Else
+			$iError = BitOR($iError, 4) ; Can't set PageFooter Values if Footer is off.
+		EndIf
+	EndIf
+
+	If ($iHeight <> Null) Then
+		If $oReportDoc.PageFooterOn() Then
+			If Not __LOBase_IntIsBetween($iHeight, 1753) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+			$oReportDoc.PageFooter.Height = $iHeight
+			$iError = (__LOBase_IntIsBetween($oReportDoc.PageFooter.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 8))
+
+		Else
+			$iError = BitOR($iError, 8) ; Can't set PageFooter Values if Footer is off.
+		EndIf
+	EndIf
+
+	If ($sCondPrint <> Null) Then
+		If $oReportDoc.PageFooterOn() Then
+			If Not IsString($sCondPrint) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+			$oReportDoc.PageFooter.ConditionalPrintExpression = $sCondPrint
+			$iError = ($oReportDoc.PageFooter.ConditionalPrintExpression() = $sCondPrint) ? ($iError) : (BitOR($iError, 16))
+
+		Else
+			$iError = BitOR($iError, 16) ; Can't set PageFooter Values if Footer is off.
+		EndIf
+	EndIf
+
+	If ($iBackColor <> Null) Then
+		If $oReportDoc.PageFooterOn() Then
+			If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+			$oReportDoc.PageFooter.BackColor = $iBackColor
+			$iError = ($oReportDoc.PageFooter.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 32))
+
+		Else
+			$iError = BitOR($iError, 32) ; Can't set PageFooter Values if Footer is off.
+		EndIf
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOBase_ReportPageFooter
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportPageHeader
+; Description ...: Set or Retrieve a Report's Page Header properties.
+; Syntax ........: _LOBase_ReportPageHeader(ByRef $oReportDoc[, $bEnabled = Null[, $sName = Null[, $bVisible = Null[, $iHeight = Null[, $sCondPrint = Null[, $iBackColor = Null]]]]]])
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the Page Header is enabled.
+;                  $sName               - [optional] a string value. Default is Null. The name of the Section.
+;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
+;                  $iHeight             - [optional] an integer value. Default is Null. (1753-??). Default is Null. The height of the Section, in Micrometers. See remarks.
+;                  $sCondPrint          - [optional] a string value. Default is Null. The Conditional Print Statement.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOB_COLOR_* as defined in LibreOfficeBase_Constants.au3. Set to $LOB_COLOR_OFF to set Background color to default / Background Transparent = True.
+; Return values .: Success: 1 or Array.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oReportDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oReportDoc not a Report Document.
+;                  @Error 1 @Extended 3 Return 0 = $bEnabled not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 5 Return 0 = $bVisible not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $iHeight not an Integer, or less than 1753.
+;                  @Error 1 @Extended 7 Return 0 = $sCondPrint not a String.
+;                  @Error 1 @Extended 8 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $bEnabled
+;                  |                               2 = Error setting $sName
+;                  |                               4 = Error setting $bVisible
+;                  |                               8 = Error setting $iHeight
+;                  |                               16 = Error setting $sCondPrint
+;                  |                               32 = Error setting $iBackColor
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The Page Header must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Header is disabled, the return values will be Null, except for the Boolean value of $bEnabled.
+;                  The minimum height of a Section is 1753 uM (Micrometers), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
+;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportPageHeader(ByRef $oReportDoc, $bEnabled = Null, $sName = Null, $bVisible = Null, $iHeight = Null, $sCondPrint = Null, $iBackColor = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $avProps[6]
+	Local $iError = 0
+
+	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	If __LOBase_VarsAreNull($bEnabled, $sName, $bVisible, $iHeight, $sCondPrint, $iBackColor) Then
+		If $oReportDoc.PageHeaderOn() Then
+			__LOBase_ArrayFill($avProps, $oReportDoc.PageHeaderOn(), $oReportDoc.PageHeader.Name(), $oReportDoc.PageHeader.Visible(), $oReportDoc.PageHeader.Height(), _
+					$oReportDoc.PageHeader.ConditionalPrintExpression(), $oReportDoc.PageHeader.BackColor())
+
+		Else ; Page Header is off.
+			__LOBase_ArrayFill($avProps, $oReportDoc.PageHeaderOn(), Null, Null, Null, Null, Null)
+		EndIf
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avProps)
+	EndIf
+
+	If ($bEnabled <> Null) Then
+		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oReportDoc.PageHeaderOn = $bEnabled
+		$iError = ($oReportDoc.PageHeaderOn() = $bEnabled) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($sName <> Null) Then
+		If $oReportDoc.PageHeaderOn() Then
+			If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+			$oReportDoc.PageHeader.Name = $sName
+			$iError = ($oReportDoc.PageHeader.Name() = $sName) ? ($iError) : (BitOR($iError, 2))
+
+		Else
+			$iError = BitOR($iError, 2) ; Can't set PageHeader Values if Header is off.
+		EndIf
+	EndIf
+
+	If ($bVisible <> Null) Then
+		If $oReportDoc.PageHeaderOn() Then
+			If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+			$oReportDoc.PageHeader.Visible = $bVisible
+			$iError = ($oReportDoc.PageHeader.Visible() = $bVisible) ? ($iError) : (BitOR($iError, 4))
+
+		Else
+			$iError = BitOR($iError, 4) ; Can't set PageHeader Values if Header is off.
+		EndIf
+	EndIf
+
+	If ($iHeight <> Null) Then
+		If $oReportDoc.PageHeaderOn() Then
+			If Not __LOBase_IntIsBetween($iHeight, 1753) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+			$oReportDoc.PageHeader.Height = $iHeight
+			$iError = (__LOBase_IntIsBetween($oReportDoc.PageHeader.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 8))
+
+		Else
+			$iError = BitOR($iError, 8) ; Can't set PageHeader Values if Header is off.
+		EndIf
+	EndIf
+
+	If ($sCondPrint <> Null) Then
+		If $oReportDoc.PageHeaderOn() Then
+			If Not IsString($sCondPrint) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+			$oReportDoc.PageHeader.ConditionalPrintExpression = $sCondPrint
+			$iError = ($oReportDoc.PageHeader.ConditionalPrintExpression() = $sCondPrint) ? ($iError) : (BitOR($iError, 16))
+
+		Else
+			$iError = BitOR($iError, 16) ; Can't set PageHeader Values if Header is off.
+		EndIf
+	EndIf
+
+	If ($iBackColor <> Null) Then
+		If $oReportDoc.PageHeaderOn() Then
+			If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+			$oReportDoc.PageHeader.BackColor = $iBackColor
+			$iError = ($oReportDoc.PageHeader.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 32))
+
+		Else
+			$iError = BitOR($iError, 32) ; Can't set PageHeader Values if Header is off.
+		EndIf
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOBase_ReportPageHeader
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_ReportRename
 ; Description ...: Rename a Report.
 ; Syntax ........: _LOBase_ReportRename(ByRef $oDoc, $sReport, $sNewName)
@@ -1119,7 +3707,7 @@ EndFunc   ;==>_LOBase_ReportRename
 ; Name ..........: _LOBase_ReportSave
 ; Description ...: Save any changes made to a Document.
 ; Syntax ........: _LOBase_ReportSave(ByRef $oReportDoc)
-; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportOpen, _LOBase_ReportConnect, or _LOBase_ReportCreate function.
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1229,6 +3817,62 @@ Func _LOBase_ReportSave(ByRef $oReportDoc)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOBase_ReportSave
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportSectionGetObj
+; Description ...: Retrieve a Section Object for one of the sections in a Report.
+; Syntax ........: _LOBase_ReportSectionGetObj(ByRef $oReportDoc, $iSection)
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+;                  $iSection            - an integer value (0-4). The section type to retrieve the Object for. See Constants, $LOB_REP_SECTION_TYPE_* as defined in LibreOfficeBase_Constants.au3.
+; Return values .: Success: Object
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oReportDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oReportDoc not a Report Document.
+;                  @Error 1 @Extended 3 Return 0 = $iSection not an Integer, less than 0 or greater than 4. See Constants, $LOB_REP_SECTION_TYPE_* as defined in LibreOfficeBase_Constants.au3.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Section Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Returning requested Section Object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportSectionGetObj(ByRef $oReportDoc, $iSection)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oSection
+
+	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOBase_IntIsBetween($iSection, $LOB_REP_SECTION_TYPE_DETAIL, $LOB_REP_SECTION_TYPE_REPORT_HEADER) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	Switch $iSection
+		Case $LOB_REP_SECTION_TYPE_DETAIL
+			$oSection = $oReportDoc.Detail()
+
+		Case $LOB_REP_SECTION_TYPE_PAGE_FOOTER
+			$oSection = $oReportDoc.PageFooter()
+
+		Case $LOB_REP_SECTION_TYPE_PAGE_HEADER
+			$oSection = $oReportDoc.PageHeader()
+
+		Case $LOB_REP_SECTION_TYPE_REPORT_FOOTER
+			$oSection = $oReportDoc.ReportFooter()
+
+		Case $LOB_REP_SECTION_TYPE_REPORT_HEADER
+			$oSection = $oReportDoc.ReportHeader()
+
+	EndSwitch
+
+	If Not IsObj($oSection) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oSection)
+EndFunc   ;==>_LOBase_ReportSectionGetObj
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_ReportsGetCount

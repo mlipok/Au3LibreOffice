@@ -28,7 +28,10 @@
 ; __LOBase_DatabaseMetaGetQuery
 ; __LOBase_InternalComErrorHandler
 ; __LOBase_IntIsBetween
+; __LOBase_ReportConIdentify
+; __LOBase_ReportConSetGetFontDesc
 ; __LOBase_SetPropertyValue
+; __LOBase_UnitConvert
 ; __LOBase_VarsAreNull
 ; __LOBase_VersionCheck
 ; ===============================================================================================================================
@@ -640,6 +643,164 @@ Func __LOBase_IntIsBetween($iTest, $iMin, $iMax = 0, $vNot = "", $vIncl = "")
 EndFunc   ;==>__LOBase_IntIsBetween
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOBase_ReportConIdentify
+; Description ...: Identify the type of Control being called, or return the Service name of a control type.
+; Syntax ........: __LOBase_ReportConIdentify($oControl[, $iControlType = Null])
+; Parameters ....: $oControl            - an object. A Control object returned by a previous _LOBase_ReportConInsert or _LOBase_ReportConsGetList function.
+;                  $iControlType        - [optional] an integer value (1-32). Default is Null. The Control Type Constant. See Constants $LOB_REP_CON_TYPE_* as defined in LibreOfficeBase_Constants.au3.
+; Return values .: Success: Integer or String
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oControl not an Object, and $iControlType not an Integer, less than 1 or greater than 32. See Constants $LOB_REP_CON_TYPE_* as defined in LibreOfficeBase_Constants.au3.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control, or return requested Service name.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Integer = Success. Returning Constant value for Control type.
+;                  @Error 0 @Extended 1 Return String = Success. Returning requested Control type's service name.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOBase_ReportConIdentify($oControl, $iControlType = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $avControls[6][2] = [["com.sun.star.chart2.ChartDocument", $LOB_REP_CON_TYPE_CHART], ["com.sun.star.report.FormattedField", $LOB_REP_CON_TYPE_FORMATTED_FIELD], _
+			["com.sun.star.report.ImageControl", $LOB_REP_CON_TYPE_IMAGE_CONTROL], ["com.sun.star.report.FixedText", $LOB_REP_CON_TYPE_LABEL], _
+			["com.sun.star.report.FixedLine", $LOB_REP_CON_TYPE_LINE], ["com.sun.star.report.TextField", $LOB_REP_CON_TYPE_TEXT_BOX]]
+
+	If Not IsObj($oControl) And Not __LOBase_IntIsBetween($iControlType, $LOB_REP_CON_TYPE_CHART, $LOB_REP_CON_TYPE_TEXT_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If IsObj($oControl) Then
+		For $i = 0 To UBound($avControls) - 1
+			If $oControl.supportsService($avControls[$i][0]) Then Return SetError($__LO_STATUS_SUCCESS, 0, $avControls[$i][1])
+		Next
+
+	ElseIf IsInt($iControlType) Then
+		For $i = 0 To UBound($avControls) - 1
+			If ($avControls[$i][1] = $iControlType) Then Return SetError($__LO_STATUS_SUCCESS, 1, $avControls[$i][0])
+		Next
+	EndIf
+
+	Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+EndFunc   ;==>__LOBase_ReportConIdentify
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOBase_ReportConSetGetFontDesc
+; Description ...: Set or Retrieve a Control's Font values.
+; Syntax ........: __LOBase_ReportConSetGetFontDesc(ByRef $oControl[, $mFontDesc = Null])
+; Parameters ....: $oControl            - [in/out] an object. A Control object returned by a previous _LOBase_ReportConInsert or _LOBase_ReportConsGetList function.
+;                  $mFontDesc           - [optional] a map. Default is Null. A Font descriptor Map returned by a previous _LOBase_FontDescCreate or _LOBase_FontDescEdit function.
+; Return values .: Success: 1 or Map
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oControl not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $mFontDesc not a Map.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting Font Name.
+;                  |                               2 = Error setting Font Weight.
+;                  |                               4 = Error setting Font Posture.
+;                  |                               8 = Error setting Font Size.
+;                  |                               16 = Error setting Font Color.
+;                  |                               32 = Error setting Font Underline Style.
+;                  |                               64 = Error setting Font Underline Color.
+;                  |                               128 = Error setting Font Strikeout Style.
+;                  |                               256 = Error setting Individual Word mode.
+;                  |                               512 = Error setting Font Relief.
+;                  |                               1024 = Error setting Font Case.
+;                  |                               2048 = Error setting Font Character Hidden.
+;                  |                               4096 = Error setting Font Character Contoured.
+;                  |                               8192 = Error setting Font Character Shadowed.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Map = Success. All optional parameters were set to Null, returning current settings as a Map.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOBase_ReportConSetGetFontDesc(ByRef $oControl, $mFontDesc = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $mControlFontDesc[]
+
+	If Not IsObj($oControl) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If __LOBase_VarsAreNull($mFontDesc) Then
+		$mControlFontDesc.CharFontName = $oControl.CharFontName()
+		$mControlFontDesc.CharWeight = $oControl.CharWeight()
+		$mControlFontDesc.CharPosture = $oControl.CharPosture()
+		$mControlFontDesc.CharHeight = $oControl.CharHeight()
+		$mControlFontDesc.CharColor = $oControl.CharColor()
+		$mControlFontDesc.CharUnderline = $oControl.CharUnderline()
+		$mControlFontDesc.CharUnderlineColor = $oControl.CharUnderlineColor()
+		$mControlFontDesc.CharStrikeout = $oControl.CharStrikeout()
+		$mControlFontDesc.CharWordMode = $oControl.CharWordMode()
+		$mControlFontDesc.CharRelief = $oControl.CharRelief()
+		$mControlFontDesc.CharCaseMap = $oControl.CharCaseMap()
+		$mControlFontDesc.CharHidden = $oControl.CharHidden()
+		$mControlFontDesc.CharContoured = $oControl.CharContoured()
+		$mControlFontDesc.CharShadowed = $oControl.CharShadowed()
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $mControlFontDesc)
+	EndIf
+
+	If Not IsMap($mFontDesc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oControl.CharFontName() = $mFontDesc.CharFontName
+	$iError = ($oControl.CharFontName() = $mFontDesc.CharFontName) ? ($iError) : (BitOR($iError, 1))
+
+	$oControl.CharWeight() = $mFontDesc.CharWeight
+	$iError = (__LOBase_IntIsBetween($oControl.CharWeight(), $mFontDesc.CharWeight - 50, $mFontDesc.CharWeight + 50)) ? ($iError) : (BitOR($iError, 2))
+
+	$oControl.CharPosture() = $mFontDesc.CharPosture
+	$iError = ($oControl.CharPosture() = $mFontDesc.CharPosture) ? ($iError) : (BitOR($iError, 4))
+
+	$oControl.CharHeight() = $mFontDesc.CharHeight
+	$iError = ($oControl.CharHeight() = $mFontDesc.CharHeight) ? ($iError) : (BitOR($iError, 8))
+
+	$oControl.CharColor() = $mFontDesc.CharColor
+	$iError = ($oControl.CharColor() = $mFontDesc.CharColor) ? ($iError) : (BitOR($iError, 16))
+
+	$oControl.CharUnderline() = $mFontDesc.CharUnderline
+	$iError = ($oControl.CharUnderline() = $mFontDesc.CharUnderline) ? ($iError) : (BitOR($iError, 32))
+
+	$oControl.CharUnderlineColor() = $mFontDesc.CharUnderlineColor
+	$iError = ($oControl.CharUnderlineColor() = $mFontDesc.CharUnderlineColor) ? ($iError) : (BitOR($iError, 64))
+
+	$oControl.CharStrikeout() = $mFontDesc.CharStrikeout
+	$iError = ($oControl.CharStrikeout() = $mFontDesc.CharStrikeout) ? ($iError) : (BitOR($iError, 128))
+
+	$oControl.CharWordMode() = $mFontDesc.CharWordMode
+	$iError = ($oControl.CharWordMode() = $mFontDesc.CharWordMode) ? ($iError) : (BitOR($iError, 256))
+
+	$oControl.CharRelief() = $mFontDesc.CharRelief
+	$iError = ($oControl.CharRelief() = $mFontDesc.CharRelief) ? ($iError) : (BitOR($iError, 512))
+
+	$oControl.CharCaseMap = $mFontDesc.CharCaseMap
+	$iError = ($oControl.CharCaseMap() = $mFontDesc.CharCaseMap) ? ($iError) : (BitOR($iError, 1024))
+
+	$oControl.CharHidden = $mFontDesc.CharHidden
+	$iError = ($oControl.CharHidden() = $mFontDesc.CharHidden) ? ($iError) : (BitOR($iError, 2048))
+
+	$oControl.CharContoured = $mFontDesc.CharContoured
+	$iError = ($oControl.CharContoured() = $mFontDesc.CharContoured) ? ($iError) : (BitOR($iError, 4096))
+
+	$oControl.CharShadowed = $mFontDesc.CharShadowed
+	$iError = ($oControl.CharShadowed() = $mFontDesc.CharShadowed) ? ($iError) : (BitOR($iError, 8192))
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>__LOBase_ReportConSetGetFontDesc
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOBase_SetPropertyValue
 ; Description ...: Creates a property value struct object.
 ; Syntax ........: __LOBase_SetPropertyValue($sName, $vValue)
@@ -676,6 +837,121 @@ Func __LOBase_SetPropertyValue($sName, $vValue)
 EndFunc   ;==>__LOBase_SetPropertyValue
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOBase_UnitConvert
+; Description ...: For converting measurement units.
+; Syntax ........: __LOBase_UnitConvert($nValue, $iReturnType)
+; Parameters ....: $nValue              - a general number value. The Number to be converted.
+;                  $iReturnType         - a Integer value. Determines conversion type. See Constants, $__LOCONST_CONVERT_* as defined in LibreOfficeWriter_Constants.au3.
+; Return values .: Success: Integer or Number.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $nValue is not a Number.
+;                  @Error 1 @Extended 2 Return 0 = $iReturnType is not a Integer.
+;                  @Error 1 @Extended 3 Return 0 = $iReturnType does not match constants, See Constants, $__LOCONST_CONVERT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  --Success--
+;                  @Error 0 @Extended 1 Return Number = Returns Number converted from TWIPS to Centimeters.
+;                  @Error 0 @Extended 2 Return Number = Returns Number converted from TWIPS to Inches.
+;                  @Error 0 @Extended 3 Return Integer = Returns Number converted from Millimeters to uM (Micrometers).
+;                  @Error 0 @Extended 4 Return Number = Returns Number converted from Micrometers to MM
+;                  @Error 0 @Extended 5 Return Integer = Returns Number converted from Centimeters To uM
+;                  @Error 0 @Extended 6 Return Number = Returns Number converted from um (Micrometers) To CM
+;                  @Error 0 @Extended 7 Return Integer = Returns Number converted from Inches to uM(Micrometers).
+;                  @Error 0 @Extended 8 Return Number = Returns Number converted from uM(Micrometers) to Inches.
+;                  @Error 0 @Extended 9 Return Integer = Returns Number converted from TWIPS to uM(Micrometers).
+;                  @Error 0 @Extended 10 Return Integer = Returns Number converted from Point to uM(Micrometers).
+;                  @Error 0 @Extended 11 Return Number = Returns Number converted from uM(Micrometers) to Point.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOBase_ConvertFromMicrometer, _LOBase_ConvertToMicrometer
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOBase_UnitConvert($nValue, $iReturnType)
+	Local $iUM, $iMM, $iCM, $iInch
+
+	If Not IsNumber($nValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsInt($iReturnType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	Switch $iReturnType
+		Case $__LOCONST_CONVERT_TWIPS_CM ; TWIPS TO CM
+			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
+			$iInch = ($nValue / 20 / 72)
+			; 1 Inch = 2.54 CM
+			$iCM = Round(Round($iInch * 2.54, 3), 2)
+
+			Return SetError($__LO_STATUS_SUCCESS, 1, Number($iCM))
+
+		Case $__LOCONST_CONVERT_TWIPS_INCH ; TWIPS to Inch
+			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
+			$iInch = ($nValue / 20 / 72)
+			$iInch = Round(Round($iInch, 3), 2)
+
+			Return SetError($__LO_STATUS_SUCCESS, 2, Number($iInch))
+
+		Case $__LOCONST_CONVERT_MM_UM ; Millimeter to Micrometer
+			$iUM = ($nValue * 100)
+			$iUM = Round(Round($iUM, 1))
+
+			Return SetError($__LO_STATUS_SUCCESS, 3, Number($iUM))
+
+		Case $__LOCONST_CONVERT_UM_MM ; Micrometer to Millimeter
+			$iMM = ($nValue / 100)
+			$iMM = Round(Round($iMM, 3), 2)
+
+			Return SetError($__LO_STATUS_SUCCESS, 4, Number($iMM))
+
+		Case $__LOCONST_CONVERT_CM_UM ; Centimeter to Micrometer
+			$iUM = ($nValue * 1000)
+			$iUM = Round(Round($iUM, 1))
+
+			Return SetError($__LO_STATUS_SUCCESS, 5, Int($iUM))
+
+		Case $__LOCONST_CONVERT_UM_CM ; Micrometer to Centimeter
+			$iCM = ($nValue / 1000)
+			$iCM = Round(Round($iCM, 3), 2)
+
+			Return SetError($__LO_STATUS_SUCCESS, 6, Number($iCM))
+
+		Case $__LOCONST_CONVERT_INCH_UM ; Inch to Micrometer
+			; 1 Inch - 2.54 Cm; Micrometer = 1/1000 CM
+			$iUM = ($nValue * 2.54) * 1000 ; + .0055
+			$iUM = Round(Round($iUM, 1))
+
+			Return SetError($__LO_STATUS_SUCCESS, 7, Int($iUM))
+
+		Case $__LOCONST_CONVERT_UM_INCH ; Micrometer to Inch
+			; 1 Inch - 2.54 Cm; Micrometer = 1/1000 CM
+			$iInch = ($nValue / 1000) / 2.54 ; + .0055
+			$iInch = Round(Round($iInch, 3), 2)
+
+			Return SetError($__LO_STATUS_SUCCESS, 8, $iInch)
+
+		Case $__LOCONST_CONVERT_TWIPS_UM ; TWIPS to MicroMeter
+			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
+			$iInch = (($nValue / 20) / 72)
+			$iInch = Round(Round($iInch, 3), 2)
+			; 1 Inch - 25.4 MM; Micrometer = 1/100 MM
+			$iUM = Round($iInch * 25.4 * 100)
+
+			Return SetError($__LO_STATUS_SUCCESS, 9, Int($iUM))
+
+		Case $__LOCONST_CONVERT_PT_UM
+			; 1 pt = 35 uM
+
+			Return ($nValue = 0) ? (SetError($__LO_STATUS_SUCCESS, 10, 0)) : (SetError($__LO_STATUS_SUCCESS, 10, Round(($nValue * 35.2778))))
+
+		Case $__LOCONST_CONVERT_UM_PT
+
+			Return ($nValue = 0) ? (SetError($__LO_STATUS_SUCCESS, 11, 0)) : (SetError($__LO_STATUS_SUCCESS, 11, Round(($nValue / 35.2778), 2)))
+
+		Case Else
+
+			Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	EndSwitch
+EndFunc   ;==>__LOBase_UnitConvert
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOBase_VarsAreNull
 ; Description ...: Tests whether all input parameters are equal to Null keyword.
 ; Syntax ........: __LOBase_VarsAreNull($vVar1[, $vVar2 = Null[, $vVar3 = Null[, $vVar4 = Null[, $vVar5 = Null[, $vVar6 = Null[, $vVar7 = Null[, $vVar8 = Null[, $vVar9 = Null[, $vVar10 = Null[, $vVar11 = Null[, $vVar12 = Null]]]]]]]]]]])
@@ -702,8 +978,8 @@ EndFunc   ;==>__LOBase_SetPropertyValue
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOBase_VarsAreNull($vVar1, $vVar2 = Null, $vVar3 = Null, $vVar4 = Null, $vVar5 = Null, $vVar6 = Null, $vVar7 = Null, $vVar8 = Null, $vVar9 = Null, $vVar10 = Null, $vVar11 = Null, $vVar12 = Null)
-	Local $bAllNull1, $bAllNull2, $bAllNull3
+Func __LOBase_VarsAreNull($vVar1, $vVar2 = Null, $vVar3 = Null, $vVar4 = Null, $vVar5 = Null, $vVar6 = Null, $vVar7 = Null, $vVar8 = Null, $vVar9 = Null, $vVar10 = Null, $vVar11 = Null, $vVar12 = Null, $vVar13 = Null, $vVar14 = Null, $vVar15 = Null, $vVar16 = Null)
+	Local $bAllNull1, $bAllNull2, $bAllNull3, $bAllNull4
 	$bAllNull1 = (($vVar1 = Null) And ($vVar2 = Null) And ($vVar3 = Null) And ($vVar4 = Null)) ? (True) : (False)
 	If (@NumParams <= 4) Then Return SetError($__LO_STATUS_SUCCESS, 0, ($bAllNull1) ? (True) : (False))
 
@@ -711,8 +987,11 @@ Func __LOBase_VarsAreNull($vVar1, $vVar2 = Null, $vVar3 = Null, $vVar4 = Null, $
 	If (@NumParams <= 8) Then Return SetError($__LO_STATUS_SUCCESS, 0, ($bAllNull1 And $bAllNull2) ? (True) : (False))
 
 	$bAllNull3 = (($vVar9 = Null) And ($vVar10 = Null) And ($vVar11 = Null) And ($vVar12 = Null)) ? (True) : (False)
+	If (@NumParams <= 12) Then Return SetError($__LO_STATUS_SUCCESS, 0, (($bAllNull1) And ($bAllNull2) And ($bAllNull3)) ? (True) : (False))
 
-	Return SetError($__LO_STATUS_SUCCESS, 0, ($bAllNull1 And $bAllNull2 And $bAllNull3) ? (True) : (False))
+	$bAllNull4 = (($vVar13 = Null) And ($vVar14 = Null) And ($vVar15 = Null) And ($vVar16 = Null)) ? (True) : (False)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, ($bAllNull1 And $bAllNull2 And $bAllNull3 And $bAllNull4) ? (True) : (False))
 EndFunc   ;==>__LOBase_VarsAreNull
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================

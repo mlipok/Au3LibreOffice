@@ -1,0 +1,63 @@
+#include <MsgBoxConstants.au3>
+
+#include "..\LibreOfficeBase.au3"
+
+Example()
+
+Func Example()
+	Local $oDoc, $oReportDoc, $oDBase, $oConnection
+	Local $avReport
+
+	; Open the Libre Office Base Example Document.
+	$oDoc = _LOBase_DocOpen(@ScriptDir & "\Extras\Example.odb")
+	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to Create a new Base Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Retrieve the Database Object.
+	$oDBase = _LOBase_DatabaseGetObjByDoc($oDoc)
+	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to Retrieve the Base Document Database Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Connect to the Database
+	$oConnection = _LOBase_DatabaseConnectionGet($oDBase)
+	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to create a connection to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Open the Report in Design Mode.
+	$oReportDoc = _LOBase_ReportOpen($oDoc, $oConnection, "rptReport1", True, True)
+	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to open a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Modify the Data settings for the Report.
+	_LOBase_ReportData($oReportDoc, $LOB_REP_CONTENT_TYPE_TABLE, "Table1", True, "SELECT * FROM ""Table1""", $LOB_REP_OUTPUT_TYPE_SPREADSHEET)
+	If @error Then _ERROR($oDoc, $oReportDoc, "Failed to modify Report's property values. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Retrieve the current settings for the Report. Return will be an Array in order of function parameters.
+	$avReport = _LOBase_ReportData($oReportDoc)
+	If @error Then _ERROR($oDoc, $oReportDoc, "Failed to retrieve Report's property values. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Report's current settings are: " & @CRLF & _
+			"The Report's Data source type is (See UDF Constants): " & $avReport[0] & @CRLF & _
+			"The Data source name is: " & $avReport[1] & @CRLF & _
+			"Is SQL statements analyzed? True/False: " & $avReport[2] & @CRLF & _
+			"The filter statement is: " & $avReport[3] & @CRLF & _
+			"The Report Output document type is (See UDF Constants): " & $avReport[4])
+
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to close the document.")
+
+	; Close the Report Document.
+	_LOBase_ReportClose($oReportDoc, True)
+	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to close the Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Close the connection.
+	_LOBase_DatabaseConnectionClose($oConnection)
+	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to close a connection to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Close the document.
+	_LOBase_DocClose($oDoc, False)
+	If @error Then _ERROR($oDoc, $oReportDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+EndFunc
+
+Func _ERROR($oDoc, $oReportDoc, $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
+	If IsObj($oReportDoc) Then _LOBase_ReportClose($oReportDoc, True)
+	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
+	Exit
+EndFunc

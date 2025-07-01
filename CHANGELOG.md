@@ -74,13 +74,29 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- LibreOfficeBase_Table.au3
 
 - Constants
+	- $LOB_ALIGN_VERT_*
+	- $LOB_CASEMAP_*
+	- $LOB_COLOR_*
 	- $LOB_DATA_SET_TYPE_*
 	- $LOB_DATA_TYPE_*
 	- $LOB_DBASE_BEST_ROW_SCOPE_*
 	- $LOB_DBASE_META_*
 	- $LOB_DBASE_RESULT_SET_CONCURRENCY_*
 	- $LOB_DBASE_TRANSACTION_ISOLATION_*
+	- $LOB_FORMAT_KEYS_*
 	- $LOB_PATHCONV_*
+	- $LOB_POSTURE_*
+	- $LOB_RELIEF_*
+	- $LOB_REP_CON_IMG_BTN_SCALE_*
+	- $LOB_REP_CON_LINE_*
+	- $LOB_REP_CON_TYPE_*
+	- $LOB_REP_CONTENT_TYPE_*
+	- $LOB_REP_FORCE_PAGE_*
+	- $LOB_REP_GROUP_ON_*
+	- $LOB_REP_KEEP_TOG_*
+	- $LOB_REP_OUTPUT_TYPE_*
+	- $LOB_REP_PAGE_PRINT_OPT_*
+	- $LOB_REP_SECTION_TYPE_*
 	- $LOB_RESULT_CURSOR_MOVE_*
 	- $LOB_RESULT_CURSOR_QUERY_*
 	- $LOB_RESULT_METADATA_COLUMN_*
@@ -90,6 +106,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOB_RESULT_ROW_READ_*
 	- $LOB_RESULT_ROW_UPDATE_*
 	- $LOB_RESULT_TYPE_*
+	- $LOB_STRIKEOUT_*
+	- $LOB_TXT_ALIGN_HORI_*
+	- $LOB_UNDERLINE_*
+	- $LOB_WEIGHT_*
 
 - Database functions
 	- _LOBase_DatabaseAutoCommit
@@ -152,8 +172,22 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 - Helper functions
 	- _LOBase_ComError_UserFunction
+	- _LOBase_ConvertFromMicrometer
+	- _LOBase_ConvertToMicrometer
+	- _LOBase_ConvertColorFromLong
+	- _LOBase_ConvertColorToLong
 	- _LOBase_DateStructCreate
 	- _LOBase_DateStructModify
+	- _LOBase_FontDescCreate
+	- _LOBase_FontDescEdit
+	- _LOBase_FontExists
+	- _LOBase_FontsGetNames
+	- _LOBase_FormatKeyCreate
+	- _LOBase_FormatKeyDelete
+	- _LOBase_FormatKeyExists
+	- _LOBase_FormatKeyGetStandard
+	- _LOBase_FormatKeyGetString
+	- _LOBase_FormatKeyList
 	- _LOBase_PathConvert
 	- _LOBase_VersionGet
 
@@ -166,7 +200,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- __LOBase_DatabaseMetaGetQuery
 	- __LOBase_InternalComErrorHandler
 	- __LOBase_IntIsBetween
+	- __LOBase_ReportConIdentify
+	- __LOBase_ReportConSetGetFontDesc
 	- __LOBase_SetPropertyValue
+	- __LOBase_UnitConvert
 	- __LOBase_VarsAreNull
 	- __LOBase_VersionCheck
 
@@ -189,8 +226,22 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 - Report functions
 	- _LOBase_ReportClose
+	- _LOBase_ReportConDelete
+	- _LOBase_ReportConFormattedFieldData
+	- _LOBase_ReportConFormattedFieldGeneral
+	- _LOBase_ReportConImageConData
+	- _LOBase_ReportConImageConGeneral
+	- _LOBase_ReportConInsert
+	- _LOBase_ReportConLabelGeneral
+	- _LOBase_ReportConLineGeneral
 	- _LOBase_ReportConnect
+	- _LOBase_ReportConPosition
+	- _LOBase_ReportConsGetList
+	- _LOBase_ReportConSize
+	- _LOBase_ReportCopy
+	- _LOBase_ReportData
 	- _LOBase_ReportDelete
+	- _LOBase_ReportDetail
 	- _LOBase_ReportExists
 	- _LOBase_ReportFolderCreate
 	- _LOBase_ReportFolderDelete
@@ -198,10 +249,24 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOBase_ReportFolderRename
 	- _LOBase_ReportFoldersGetCount
 	- _LOBase_ReportFoldersGetNames
+	- _LOBase_ReportFooter
+	- _LOBase_ReportGeneral
+	- _LOBase_ReportGroupAdd
+	- _LOBase_ReportGroupDeleteByIndex
+	- _LOBase_ReportGroupDeleteByObj
+	- _LOBase_ReportGroupFooter
+	- _LOBase_ReportGroupGetByIndex
+	- _LOBase_ReportGroupHeader
+	- _LOBase_ReportGroupsGetCount
+	- _LOBase_ReportGroupSort
+	- _LOBase_ReportHeader
 	- _LOBase_ReportIsModified
 	- _LOBase_ReportOpen
+	- _LOBase_ReportPageFooter
+	- _LOBase_ReportPageHeader
 	- _LOBase_ReportRename
 	- _LOBase_ReportSave
+	- _LOBase_ReportSectionGetObj
 	- _LOBase_ReportsGetCount
 	- _LOBase_ReportsGetNames
 

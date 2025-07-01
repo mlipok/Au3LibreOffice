@@ -1,0 +1,66 @@
+#include <MsgBoxConstants.au3>
+
+#include "..\LibreOfficeBase.au3"
+
+Example()
+
+Func Example()
+	Local $oDoc, $oReportDoc, $oDBase, $oConnection
+	Local $avReport
+
+	; Open the Libre Office Base Example Document.
+	$oDoc = _LOBase_DocOpen(@ScriptDir & "\Extras\Example.odb")
+	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to Create a new Base Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Retrieve the Database Object.
+	$oDBase = _LOBase_DatabaseGetObjByDoc($oDoc)
+	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to Retrieve the Base Document Database Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Connect to the Database
+	$oConnection = _LOBase_DatabaseConnectionGet($oDBase)
+	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to create a connection to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Open the Report in Design Mode.
+	$oReportDoc = _LOBase_ReportOpen($oDoc, $oConnection, "rptReport1", True, True)
+	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to open a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Modify the settings for the Section.
+	_LOBase_ReportFooter($oReportDoc, True, "AutoIt_Section", $LOB_REP_FORCE_PAGE_AFTER_SECTION, False, True, 4500, Null, $LOB_COLOR_TEAL)
+	If @error Then _ERROR($oDoc, $oReportDoc, "Failed to modify Section's property values. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Retrieve the current settings for the Section. Return will be an Array in order of function parameters.
+	$avReport = _LOBase_ReportFooter($oReportDoc)
+	If @error Then _ERROR($oDoc, $oReportDoc, "Failed to retrieve Section's property values. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Section's current settings are: " & @CRLF & _
+			"Is the Report Footer enabled? True/False: " & $avReport[0] & @CRLF & _
+			"The Section's name is: " & $avReport[1] & @CRLF & _
+			"Will a new page be created before/after this section? If so, when? (See UDF Constants): " & $avReport[2] & @CRLF & _
+			"Will the content be prevented from spreading across more than one page? True/False: " & $avReport[3] & @CRLF & _
+			"Is the section visible? True/False: " & $avReport[4] & @CRLF & _
+			"The Height of the section is, in Micrometers: " & $avReport[5] & @CRLF & _
+			"The Conditional Print statement is: " & $avReport[6] & @CRLF & _
+			"The Background color is, as a Long Integer: " & $avReport[7])
+
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to close the document.")
+
+	; Close the Report Document.
+	_LOBase_ReportClose($oReportDoc, True)
+	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to close the Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Close the connection.
+	_LOBase_DatabaseConnectionClose($oConnection)
+	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to close a connection to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Close the document.
+	_LOBase_DocClose($oDoc, False)
+	If @error Then _ERROR($oDoc, $oReportDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+EndFunc
+
+Func _ERROR($oDoc, $oReportDoc, $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
+	If IsObj($oReportDoc) Then _LOBase_ReportClose($oReportDoc, True)
+	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
+	Exit
+EndFunc

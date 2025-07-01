@@ -1,6 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
-;~ #Tidy_Parameters=/sf /reel
+#Tidy_Parameters=/sf /reel
 #include-once
 
 ; #INDEX# =======================================================================================================================
@@ -22,6 +22,42 @@
 Global Const $__LOBCONST_SLEEP_DIV = 0
 
 #Tidy_ILC_Pos=90
+
+; Vertical Alignment
+Global Const _                                                                           ; com.sun.star.style.VerticalAlignment
+		$LOB_ALIGN_VERT_TOP = 0, _                                                       ; Vertically Align the object to the Top.
+		$LOB_ALIGN_VERT_MIDDLE = 1, _                                                    ; Vertically Align the object to the Middle.
+		$LOB_ALIGN_VERT_BOTTOM = 2                                                       ; Vertically Align the object to the Bottom.
+
+; Case Constants
+Global Const _                                                                           ; com.sun.star.style.CaseMap
+		$LOB_CASEMAP_NONE = 0, _                                                         ; The case of the characters is unchanged.
+		$LOB_CASEMAP_UPPER = 1, _                                                        ; All characters are put in upper case.
+		$LOB_CASEMAP_LOWER = 2, _                                                        ; All characters are put in lower case.
+		$LOB_CASEMAP_TITLE = 3, _                                                        ; The first character of each word is put in upper case.
+		$LOB_CASEMAP_SM_CAPS = 4                                                         ; All characters are put in upper case, but with a smaller font height.
+
+; Color in Long Color Format
+Global Const _
+		$LOB_COLOR_OFF = -1, _                                                           ; Turn Color off, or to automatic mode.
+		$LOB_COLOR_BLACK = 0, _                                                          ; Black color.
+		$LOB_COLOR_GREEN = 43315, _                                                      ; Green color.
+		$LOB_COLOR_TEAL = 1410150, _                                                     ; Teal color.
+		$LOB_COLOR_BLUE = 2777241, _                                                     ; Blue color.
+		$LOB_COLOR_DKGRAY = 3355443, _                                                   ; Dark Gray color.
+		$LOB_COLOR_INDIGO = 5582989, _                                                   ; Indigo color.
+		$LOB_COLOR_PURPLE = 8388736, _                                                   ; Purple color.
+		$LOB_COLOR_GRAY = 8421504, _                                                     ; Gray color.
+		$LOB_COLOR_LIME = 8508442, _                                                     ; Lime color.
+		$LOB_COLOR_BROWN = 9127187, _                                                    ; Brown color.
+		$LOB_COLOR_LGRAY = 11711154, _                                                   ; Light Gray color.
+		$LOB_COLOR_MAGENTA = 12517441, _                                                 ; Magenta color.
+		$LOB_COLOR_RED = 16711680, _                                                     ; Red color.
+		$LOB_COLOR_BRICK = 16728064, _                                                   ; Brick color.
+		$LOB_COLOR_ORANGE = 16744448, _                                                  ; Orange color.
+		$LOB_COLOR_GOLD = 16760576, _                                                    ; Gold color.
+		$LOB_COLOR_YELLOW = 16776960, _                                                  ; Yellow color.
+		$LOB_COLOR_WHITE = 16777215                                                      ; White color.
 
 ; Prepared Statement Input Type Commands.
 Global Enum _
@@ -254,11 +290,118 @@ Global Const _                                                                  
 		$LOB_DBASE_TRANSACTION_ISOLATION_REPEATABLE_READ = 4, _                          ; Dirty reads and non-repeatable reads are prevented; phantom reads can occur. This level prohibits a transaction from reading a row with uncommitted changes in it, and it also prohibits the situation where one transaction reads a row, a second transaction alters the row, and the first transaction rereads the row, getting different values the second time (a "non-repeatable read").
 		$LOB_DBASE_TRANSACTION_ISOLATION_SERIALIZED = 8                                  ; Dirty reads, non-repeatable reads and phantom reads are prevented. This level includes the prohibitions in REPEATABLE_READ and further prohibits the situation where one transaction reads all rows that satisfy a WHERE condition, a second transaction inserts a row that satisfies that WHERE condition, and the first transaction rereads for the same condition, retrieving the additional "phantom" row in the second read.
 
+; Format Key Type
+Global Const _                                                                           ; com.sun.star.util.NumberFormat
+		$LOB_FORMAT_KEYS_ALL = 0, _                                                      ; Returns All number formats.
+		$LOB_FORMAT_KEYS_DEFINED = 1, _                                                  ; Returns Only user-defined number formats.
+		$LOB_FORMAT_KEYS_DATE = 2, _                                                     ; Returns Date formats.
+		$LOB_FORMAT_KEYS_TIME = 4, _                                                     ; Returns Time formats.
+		$LOB_FORMAT_KEYS_DATE_TIME = 6, _                                                ; Returns Number formats which contain date and time.
+		$LOB_FORMAT_KEYS_CURRENCY = 8, _                                                 ; Returns Currency formats.
+		$LOB_FORMAT_KEYS_NUMBER = 16, _                                                  ; Returns Decimal number formats.
+		$LOB_FORMAT_KEYS_SCIENTIFIC = 32, _                                              ; Returns Scientific number formats.
+		$LOB_FORMAT_KEYS_FRACTION = 64, _                                                ; Returns Number formats for fractions.
+		$LOB_FORMAT_KEYS_PERCENT = 128, _                                                ; Returns Percentage number formats.
+		$LOB_FORMAT_KEYS_TEXT = 256, _                                                   ; Returns Text number formats.
+		$LOB_FORMAT_KEYS_LOGICAL = 1024, _                                               ; Returns Boolean number formats.
+		$LOB_FORMAT_KEYS_UNDEFINED = 2048, _                                             ; Returns Is used as a return value if no format exists.
+		$LOB_FORMAT_KEYS_EMPTY = 4096, _                                                 ; Returns Empty Number formats (?)
+		$LOB_FORMAT_KEYS_DURATION = 8196                                                 ; Returns Duration number formats.
+
 ; Path Convert Constants.
 Global Const _
 		$LOB_PATHCONV_AUTO_RETURN = 0, _                                                 ; Automatically returns the opposite of the input path, determined by StringInStr search for either "File:///"(L.O.Office URL) or "[A-Z]:\" (Windows File Path).
 		$LOB_PATHCONV_OFFICE_RETURN = 1, _                                               ; Returns L.O. Office URL, even if the input is already in that format.
 		$LOB_PATHCONV_PCPATH_RETURN = 2                                                  ; Returns Windows File Path, even if the input is already in that format.
+
+; Posture/Italic
+Global Const _                                                                           ; com.sun.star.awt.FontSlant
+		$LOB_POSTURE_NONE = 0, _                                                         ; Specifies a font without slant.
+		$LOB_POSTURE_OBLIQUE = 1, _                                                      ; Specifies an oblique font (slant not designed into the font).
+		$LOB_POSTURE_ITALIC = 2, _                                                       ; Specifies an italic font (slant designed into the font).
+		$LOB_POSTURE_DONTKNOW = 3, _                                                     ; Specifies a font with an unknown slant. For Read Only.
+		$LOB_POSTURE_REV_OBLIQUE = 4, _                                                  ; Specifies a reverse oblique font (slant not designed into the font).
+		$LOB_POSTURE_REV_ITALIC = 5                                                      ; Specifies a reverse italic font (slant designed into the font).
+
+; Relief
+Global Const _                                                                           ; com.sun.star.text.FontRelief
+		$LOB_RELIEF_NONE = 0, _                                                          ; No relief is applied.
+		$LOB_RELIEF_EMBOSSED = 1, _                                                      ; The font relief is embossed.
+		$LOB_RELIEF_ENGRAVED = 2                                                         ; The font relief is engraved.
+
+; Report Control Image Scale.
+Global Const _                                                                           ; "com.sun.star.awt.ImageScaleMode"
+		$LOB_REP_CON_IMG_BTN_SCALE_NONE = 0, _                                           ; No scaling should happen at all.
+		$LOB_REP_CON_IMG_BTN_SCALE_KEEP_ASPECT = 1, _                                    ; The image should be scaled up or down to the size of the surrounding area by keeping its aspect ratio.
+		$LOB_REP_CON_IMG_BTN_SCALE_FIT = 2                                               ; The image should be scaled up or down to the size of the surrounding area, he image will finally cover all of the surrounding area, but its dimensions might be distorted.
+
+; Report Line Orientation.
+Global Const _                                                                           ; com.sun.star.report.XFixedLine.Orientation
+		$LOB_REP_CON_LINE_HORI = 0, _                                                    ; The line is Horizontally aligned.
+		$LOB_REP_CON_LINE_VERT = 1                                                       ; The line is Vertically aligned.
+
+; Report Control Type.
+Global Enum Step *2 _
+		$LOB_REP_CON_TYPE_CHART = 1, _                                                   ; A Chart
+		$LOB_REP_CON_TYPE_FORMATTED_FIELD, _                                             ; FORMATTED_FIELD
+		$LOB_REP_CON_TYPE_IMAGE_CONTROL, _                                               ; IMAGE_CONTROL
+		$LOB_REP_CON_TYPE_LABEL, _                                                       ; FIXED_TEXT
+		$LOB_REP_CON_TYPE_LINE, _                                                        ; A Vertical or Horizontal line.
+		$LOB_REP_CON_TYPE_TEXT_BOX, _                                                    ; A Text Box.
+		$LOB_REP_CON_TYPE_ALL = 63                                                       ; All of the above Control Types. (This value is the BitOR value of all above)
+
+; Report Content Type.
+Global Const _                                                                           ; com.sun.star.sdb.CommandType
+		$LOB_REP_CONTENT_TYPE_TABLE = 0, _                                               ; The Content Type is a Table.
+		$LOB_REP_CONTENT_TYPE_QUERY = 1, _                                               ; The Content Type is a Query.
+		$LOB_REP_CONTENT_TYPE_SQL = 2                                                    ; The Content Type is a SQL Command.
+
+; Force New Page Constants.
+Global Const _                                                                           ; com.sun.star.report.ForceNewPage
+		$LOB_REP_FORCE_PAGE_NONE = 0, _                                                  ; The current section is printed on the current page.
+		$LOB_REP_FORCE_PAGE_BEFORE_SECTION = 1, _                                        ; The current section is printed at the top of a new page.
+		$LOB_REP_FORCE_PAGE_AFTER_SECTION = 2, _                                         ; The next section following the current section is printed at the top of a new page.
+		$LOB_REP_FORCE_PAGE_BEFORE_AFTER_SECTION = 3                                     ; The current section is printed at the top of a new page as well as the next section.
+
+; Report Data Grouping Constants
+Global Const _                                                                           ; com.sun.star.report.GroupOn
+		$LOB_REP_GROUP_ON_DEFAULT = 0, _                                                 ; The same value in the column value or expression.
+		$LOB_REP_GROUP_ON_PREFIX = 1, _                                                  ; The same first nth of characters in the column value or expression.
+		$LOB_REP_GROUP_ON_YEAR = 2, _                                                    ; Dates in the same calendar year.
+		$LOB_REP_GROUP_ON_QUARTAL = 3, _                                                 ; Dates in the same calendar quarter.
+		$LOB_REP_GROUP_ON_MONTH = 4, _                                                   ; Dates in the same month.
+		$LOB_REP_GROUP_ON_WEEK = 5, _                                                    ; Dates in the same week.
+		$LOB_REP_GROUP_ON_DAY = 6, _                                                     ; Dates on the same day.
+		$LOB_REP_GROUP_ON_HOUR = 7, _                                                    ; Times in the same hour.
+		$LOB_REP_GROUP_ON_MINUTE = 8, _                                                  ; Times in the same minute.
+		$LOB_REP_GROUP_ON_INTERVAL = 9                                                   ; Values within an interval you specify.
+
+; Report Keep Together Constants.
+Global Const _                                                                           ; com.sun.star.report.KeepTogether
+		$LOB_REP_KEEP_TOG_NO = 0, _                                                      ; Prints the group without keeping the header, detail, and footer together on the same page.
+		$LOB_REP_KEEP_TOG_WHOLE_GROUP = 1, _                                             ; Prints the group header, detail, and footer together on the same page.
+		$LOB_REP_KEEP_TOG_WITH_FIRST_DETAIL = 2                                          ; Prints the group header on a page when the first detail record can fit on the same page.
+
+; Report Output Document Type.
+Global Enum _
+		$LOB_REP_OUTPUT_TYPE_UNKNOWN, _                                                  ; The Output Document when the Report is executed is a unknown type.
+		$LOB_REP_OUTPUT_TYPE_TEXT, _                                                     ; The Output Document when the Report is executed will be a Text Document.
+		$LOB_REP_OUTPUT_TYPE_SPREADSHEET                                                 ; The Output Document when the Report is executed will be a Spreadsheet Document.
+
+; Report Header/Footer Print Options.
+Global Const _                                                                           ; com.sun.star.report.ReportPrintOption
+		$LOB_REP_PAGE_PRINT_OPT_ALL_PAGES = 0, _                                         ; The page header/footer is printed on all pages.
+		$LOB_REP_PAGE_PRINT_OPT_NOT_WITH_REP_HEADER = 1, _                               ; The page header/footer is not printed on the same page as the report header.
+		$LOB_REP_PAGE_PRINT_OPT_NOT_WITH_REP_FOOTER = 2, _                               ; The page header/footer is not printed on the same page as the report footer.
+		$LOB_REP_PAGE_PRINT_OPT_NOT_WITH_REP_HEADER_FOOTER = 3                           ; The page header/footer is not printed on the same page as the report header or footer.
+
+; Report Section types.
+Global Enum _
+		$LOB_REP_SECTION_TYPE_DETAIL, _                                                  ; 0 A Report's Detail section.
+		$LOB_REP_SECTION_TYPE_PAGE_FOOTER, _                                             ; 1 A Report's Page Footer section.
+		$LOB_REP_SECTION_TYPE_PAGE_HEADER, _                                             ; 2 A Report's Page Header section.
+		$LOB_REP_SECTION_TYPE_REPORT_FOOTER, _                                           ; 3 A Report's Report Footer section.
+		$LOB_REP_SECTION_TYPE_REPORT_HEADER                                              ; 4 A Report's Report Header section.
 
 ; Result Set Cursor Movement Commands.
 Global Enum _
@@ -359,3 +502,56 @@ Global Const _                                                                  
 		$LOB_RESULT_TYPE_FORWARD_ONLY = 1003, _                                          ; The Result Set cursor may move only forward.
 		$LOB_RESULT_TYPE_SCROLL_INSENSITIVE = 1004, _                                    ; The Result Set is scrollable but generally not sensitive to changes made by others.
 		$LOB_RESULT_TYPE_SCROLL_SENSITIVE = 1005                                         ; The Result Set is scrollable and generally sensitive to changes made by others.
+
+; Strikeout
+Global Const _                                                                           ; com.sun.star.awt.FontStrikeout
+		$LOB_STRIKEOUT_NONE = 0, _                                                       ; No strike out.
+		$LOB_STRIKEOUT_SINGLE = 1, _                                                     ; Strike out the characters with a single line.
+		$LOB_STRIKEOUT_DOUBLE = 2, _                                                     ; Strike out the characters with a double line.
+		$LOB_STRIKEOUT_DONT_KNOW = 3, _                                                  ; The strikeout mode is not specified. For Read Only.
+		$LOB_STRIKEOUT_BOLD = 4, _                                                       ; Strike out the characters with a bold line.
+		$LOB_STRIKEOUT_SLASH = 5, _                                                      ; Strike out the characters with slashes.
+		$LOB_STRIKEOUT_X = 6                                                             ; Strike out the characters with X's.
+
+; Text Horizontal Alignment
+Global Const _                                                                           ; com.sun.star.style.ParagraphAdjust
+		$LOB_TXT_ALIGN_HORI_LEFT = 0, _                                                  ; Text is adjusted to the left border.
+		$LOB_TXT_ALIGN_HORI_RIGHT = 1, _                                                 ; Text is adjusted to the right border.
+		$LOB_TXT_ALIGN_HORI_BLOCK = 2, _                                                 ; Text is adjusted to both borders / stretched, except for last line.
+		$LOB_TXT_ALIGN_HORI_CENTER = 3, _                                                ; Text is adjusted to the center.
+		$LOB_TXT_ALIGN_HORI_STRETCH = 4                                                  ; Text is adjusted to both borders / stretched, including last line.
+
+; Underline/Overline
+Global Const _                                                                           ; com.sun.star.awt.FontUnderline
+		$LOB_UNDERLINE_NONE = 0, _                                                       ; No Underline or Overline style.
+		$LOB_UNDERLINE_SINGLE = 1, _                                                     ; Single line Underline/Overline style.
+		$LOB_UNDERLINE_DOUBLE = 2, _                                                     ; Double line Underline/Overline style.
+		$LOB_UNDERLINE_DOTTED = 3, _                                                     ; Dotted line Underline/Overline style.
+		$LOB_UNDERLINE_DONT_KNOW = 4, _                                                  ; Unknown Underline/Overline style, for read only.
+		$LOB_UNDERLINE_DASH = 5, _                                                       ; Dashed line Underline/Overline style.
+		$LOB_UNDERLINE_LONG_DASH = 6, _                                                  ; Long Dashed line Underline/Overline style.
+		$LOB_UNDERLINE_DASH_DOT = 7, _                                                   ; Dash Dot line Underline/Overline style.
+		$LOB_UNDERLINE_DASH_DOT_DOT = 8, _                                               ; Dash Dot Dot line Underline/Overline style.
+		$LOB_UNDERLINE_SML_WAVE = 9, _                                                   ; Small Wave line Underline/Overline style.
+		$LOB_UNDERLINE_WAVE = 10, _                                                      ; Wave line Underline/Overline style.
+		$LOB_UNDERLINE_DBL_WAVE = 11, _                                                  ; Double Wave line Underline/Overline style.
+		$LOB_UNDERLINE_BOLD = 12, _                                                      ; Bold line Underline/Overline style.
+		$LOB_UNDERLINE_BOLD_DOTTED = 13, _                                               ; Bold Dotted line Underline/Overline style.
+		$LOB_UNDERLINE_BOLD_DASH = 14, _                                                 ; Bold Dashed line Underline/Overline style.
+		$LOB_UNDERLINE_BOLD_LONG_DASH = 15, _                                            ; Bold Long Dash line Underline/Overline style.
+		$LOB_UNDERLINE_BOLD_DASH_DOT = 16, _                                             ; Bold Dash Dot line Underline/Overline style.
+		$LOB_UNDERLINE_BOLD_DASH_DOT_DOT = 17, _                                         ; Bold Dash Dot Dot line Underline/Overline style.
+		$LOB_UNDERLINE_BOLD_WAVE = 18                                                    ; Bold Wave line Underline/Overline style.
+
+; Weight/Bold
+Global Const _                                                                           ; com.sun.star.awt.FontWeight
+		$LOB_WEIGHT_DONT_KNOW = 0, _                                                     ; The font weight is not specified/unknown. For Read Only.
+		$LOB_WEIGHT_THIN = 50, _                                                         ; A 50% (Thin) font weight.
+		$LOB_WEIGHT_ULTRA_LIGHT = 60, _                                                  ; A 60% (Ultra Light) font weight.
+		$LOB_WEIGHT_LIGHT = 75, _                                                        ; A 75% (Light) font weight.
+		$LOB_WEIGHT_SEMI_LIGHT = 90, _                                                   ; A 90% (Semi-Light) font weight.
+		$LOB_WEIGHT_NORMAL = 100, _                                                      ; A 100% (Normal) font weight.
+		$LOB_WEIGHT_SEMI_BOLD = 110, _                                                   ; A 110% (Semi-Bold) font weight.
+		$LOB_WEIGHT_BOLD = 150, _                                                        ; A 150% (Bold) font weight.
+		$LOB_WEIGHT_ULTRA_BOLD = 175, _                                                  ; A 175% (Ultra-Bold) font weight.
+		$LOB_WEIGHT_BLACK = 200                                                          ; A 200% (Black) font weight.
