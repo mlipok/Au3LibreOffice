@@ -2379,7 +2379,7 @@ EndFunc   ;==>__LOWriter_FormConGetObj
 ; Return values .: Success: Integer or String
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oObj not an Object, and $iControlType not an Integer, less than 0 or greater than 524288. See Constants $LOW_FORM_CON_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 1 Return 0 = $oObj not an Object, and $iControlType not an Integer, less than 1 or greater than 524288. See Constants $LOW_FORM_CON_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control, or return requested Service name.
 ;                  --Success--
@@ -2427,7 +2427,7 @@ Func __LOWriter_FormConIdentify($oObj, $iControlType = Null)
 
 	ElseIf IsInt($iControlType) Then
 		For $i = 0 To UBound($avControls) - 1
-			If ($avControls[$i][1] = $iControlType) Then Return SetError($__LO_STATUS_SUCCESS, 0, $avControls[$i][0])
+			If ($avControls[$i][1] = $iControlType) Then Return SetError($__LO_STATUS_SUCCESS, 1, $avControls[$i][0])
 		Next
 	EndIf
 
