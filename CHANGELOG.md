@@ -586,7 +586,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Modified _LOCalc_DocPrintersAltGetNames @Extended value when retrieving the default printer name, @Extended is now 1, instead of 2.
 - _LOCalc_DocRedoGetAllActionTitles now returns the number of results in @Extended value.
 - _LOCalc_DocUndoGetAllActionTitles now returns the number of results in @Extended value.
-- Removed $oDoc parameter from _LOCalc_FontExists. This will affect the parameters and error return values of the following functions:
+- Made $oDoc parameter for _LOCalc_FontExists optional. This will affect the parameters and error return values of the following functions:
 	- __LOCalc_CellFont
 	- _LOCalc_CellFont
 	- _LOCalc_CellStyleFont
@@ -594,6 +594,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_TextCursorFont
 - Renamed more Functions to be consistent when retrieving arrays of names or objects:
 	- _LOCalc_FormatKeyList-->_LOCalc_FormatKeysGetList
+- Made $oDoc Parameter optional for _LOCalc_FontsGetNames.
 
 ### Removed
 
