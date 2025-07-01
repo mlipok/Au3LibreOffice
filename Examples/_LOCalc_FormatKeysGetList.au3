@@ -18,7 +18,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to create a Format Key. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve an Array of Format Keys. With Boolean value of whether each is a User-Created key or not, search for all Format Key types.
-	$avKeys = _LOCalc_FormatKeyList($oDoc, True, False, $LOC_FORMAT_KEYS_ALL)
+	$avKeys = _LOCalc_FormatKeysGetList($oDoc, True, False, $LOC_FORMAT_KEYS_ALL)
 	If @error Then _ERROR($oDoc, "Failed to retrieve an array of Keys. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 	$iResults = @extended
 

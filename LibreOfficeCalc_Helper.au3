@@ -36,7 +36,7 @@
 ; _LOCalc_FormatKeyExists
 ; _LOCalc_FormatKeyGetStandard
 ; _LOCalc_FormatKeyGetString
-; _LOCalc_FormatKeyList
+; _LOCalc_FormatKeysGetList
 ; _LOCalc_PathConvert
 ; _LOCalc_SearchDescriptorCreate
 ; _LOCalc_SearchDescriptorModify
@@ -1019,7 +1019,7 @@ EndFunc   ;==>_LOCalc_FormatKeyCreate
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOCalc_FormatKeyList, _LOCalc_FormatKeyCreate
+; Related .......: _LOCalc_FormatKeysGetList, _LOCalc_FormatKeyCreate
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1161,7 +1161,7 @@ EndFunc   ;==>_LOCalc_FormatKeyGetStandard
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOCalc_FormatKeyList
+; Related .......: _LOCalc_FormatKeysGetList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1181,9 +1181,9 @@ Func _LOCalc_FormatKeyGetString(ByRef $oDoc, $iFormatKey)
 EndFunc   ;==>_LOCalc_FormatKeyGetString
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_FormatKeyList
+; Name ..........: _LOCalc_FormatKeysGetList
 ; Description ...: Retrieve an Array of Date/Time Format Keys.
-; Syntax ........: _LOCalc_FormatKeyList(ByRef $oDoc[, $bIsUser = False[, $bUserOnly = False[, $iFormatKeyType = $LOC_FORMAT_KEYS_ALL]]])
+; Syntax ........: _LOCalc_FormatKeysGetList(ByRef $oDoc[, $bIsUser = False[, $bUserOnly = False[, $iFormatKeyType = $LOC_FORMAT_KEYS_ALL]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $bIsUser             - [optional] a boolean value. Default is False. If True, Adds a third column to the return Array with a boolean, whether each Key is user-created or not.
 ;                  $bUserOnly           - [optional] a boolean value. Default is False. If True, only user-created Format Keys are returned.
@@ -1211,7 +1211,7 @@ EndFunc   ;==>_LOCalc_FormatKeyGetString
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_FormatKeyList(ByRef $oDoc, $bIsUser = False, $bUserOnly = False, $iFormatKeyType = $LOC_FORMAT_KEYS_ALL)
+Func _LOCalc_FormatKeysGetList(ByRef $oDoc, $bIsUser = False, $bUserOnly = False, $iFormatKeyType = $LOC_FORMAT_KEYS_ALL)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1257,7 +1257,7 @@ Func _LOCalc_FormatKeyList(ByRef $oDoc, $bIsUser = False, $bUserOnly = False, $i
 	If ($bUserOnly = True) Then ReDim $avFormats[$iCount][$iColumns]
 
 	Return SetError($__LO_STATUS_SUCCESS, UBound($avFormats), $avFormats)
-EndFunc   ;==>_LOCalc_FormatKeyList
+EndFunc   ;==>_LOCalc_FormatKeysGetList
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_PathConvert

@@ -656,7 +656,7 @@ EndFunc   ;==>_LOCalc_CellGetType
 ; Syntax ........: _LOCalc_CellNumberFormat(ByRef $oDoc, ByRef $oCell[, $iFormatKey = Null])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $oCell               - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
-;                  $iFormatKey          - [optional] an integer value. Default is Null. A Format Key from a previous _LOCalc_FormatKeyCreate or _LOCalc_FormatKeyList function.
+;                  $iFormatKey          - [optional] an integer value. Default is Null. A Format Key from a previous _LOCalc_FormatKeyCreate or _LOCalc_FormatKeysGetList function.
 ; Return values .: Success: 1 or Integer.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -676,7 +676,7 @@ EndFunc   ;==>_LOCalc_CellGetType
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOCalc_CellStyleNumberFormat, _LOCalc_FormatKeyCreate, _LOCalc_FormatKeyList
+; Related .......: _LOCalc_CellStyleNumberFormat, _LOCalc_FormatKeyCreate, _LOCalc_FormatKeysGetList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================

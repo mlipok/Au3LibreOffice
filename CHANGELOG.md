@@ -592,6 +592,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_CellStyleFont
 	- _LOCalc_FontExists
 	- _LOCalc_TextCursorFont
+- Renamed more Functions to be consistent when retrieving arrays of names or objects:
+	- _LOCalc_FormatKeyList-->_LOCalc_FormatKeysGetList
 
 ### Removed
 

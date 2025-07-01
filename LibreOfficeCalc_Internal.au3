@@ -694,7 +694,7 @@ EndFunc   ;==>__LOCalc_CellFontColor
 ; Syntax ........: __LOCalc_CellNumberFormat(ByRef $oDoc, ByRef $oObj, $iFormatKey)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $oObj                - [in/out] an object. A Cell, Cell Range or Cell Style Object returned from an applicable function.
-;                  $iFormatKey          - an integer value. A Format Key from a previous _LOCalc_FormatKeyCreate or _LOCalc_FormatKeyList function.
+;                  $iFormatKey          - an integer value. A Format Key from a previous _LOCalc_FormatKeyCreate or _LOCalc_FormatKeysGetList function.
 ; Return values .: Success: 1 or Integer.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
