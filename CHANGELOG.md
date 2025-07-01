@@ -871,6 +871,13 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Renamed all internal and user "_LOWriter_FormControl*" functions to "_LOWriter_FormCon*" for brevity.
 - Renamed all $LOW_FORM_CONTROL_* constants to $LOW_FORM_CON_* for brevity.
 - Add $iBorderColor to _LOWriter_FormTableConGeneral parameters. Update function and example as necessary.
+- Renamed more Functions to be consistent when retrieving arrays of names or objects:
+	- _LOWriter_DateFormatKeyList-->_LOWriter_DateFormatKeysGetList
+	- _LOWriter_DirFrmtParTabStopList-->_LOWriter_DirFrmtParTabStopsGetList
+	- _LOWriter_FieldRefMarkList-->_LOWriter_FieldRefMarksGetNames
+	- _LOWriter_FormatKeyList-->_LOWriter_FormatKeysGetList
+	- _LOWriter_ParStyleTabStopList-->_LOWriter_ParStyleTabStopsGetList
+	- __LOWriter_ParTabStopList-->__LOWriter_ParTabStopsGetList
 
 ### Fixed
 

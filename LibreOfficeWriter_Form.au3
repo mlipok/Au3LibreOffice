@@ -8048,7 +8048,7 @@ EndFunc   ;==>_LOWriter_FormConTableConCheckBoxGeneral
 ; Name ..........: _LOWriter_FormConTableConColumnAdd
 ; Description ...: Add a column to a Table Control.
 ; Syntax ........: _LOWriter_FormConTableConColumnAdd(ByRef $oTableCon, $iControl[, $iPos = Null])
-; Parameters ....: $oTableCon           - [in/out] an object. A Table Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Parameters ....: $oTableCon           - [in/out] an object. A Table Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $iControl            - an integer value. The control type to insert. See Constants $LOW_FORM_CON_TYPE_* as defined in LibreOfficeWriter_Constants.au3. See remarks.
 ;                  $iPos                - [optional] an integer value. Default is Null. The position in the Column list to insert the new Column. 0 = insert at the beginning. Null = insert at the end.
 ; Return values .: Success: Object
@@ -8201,7 +8201,7 @@ EndFunc   ;==>_LOWriter_FormConTableConColumnDelete
 ; Name ..........: _LOWriter_FormConTableConColumnsGetList
 ; Description ...: Retrieve a list of Columns contained in a Table Control.
 ; Syntax ........: _LOWriter_FormConTableConColumnsGetList(ByRef $oTableCon)
-; Parameters ....: $oTableCon           - [in/out] an object. A Table Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Parameters ....: $oTableCon           - [in/out] an object. A Table Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--

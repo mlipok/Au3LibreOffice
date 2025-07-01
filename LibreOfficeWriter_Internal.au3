@@ -93,8 +93,8 @@
 ; __LOWriter_ParStyleNameToggle
 ; __LOWriter_ParTabStopCreate
 ; __LOWriter_ParTabStopDelete
-; __LOWriter_ParTabStopList
 ; __LOWriter_ParTabStopMod
+; __LOWriter_ParTabStopsGetList
 ; __LOWriter_ParTxtFlowOpt
 ; __LOWriter_RegExpConvert
 ; __LOWriter_SetPropertyValue
@@ -5432,7 +5432,7 @@ Func __LOWriter_ParTabStopCreate(ByRef $oObj, $iPosition, $iAlignment, $iFillCha
 	Else
 		__LOWriter_AddTo1DArray($atTabStops, $tTabStruct)
 
-		$aiTabList = __LOWriter_ParTabStopList($oObj) ; Get an array of existing tabstops to compare with
+		$aiTabList = __LOWriter_ParTabStopsGetList($oObj) ; Get an array of existing tabstops to compare with
 		If Not IsArray($aiTabList) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		__LOWriter_AddTo1DArray($aiTabList, 0) ; Add a dummy to make Array sizes equal.
 
@@ -5528,47 +5528,6 @@ Func __LOWriter_ParTabStopDelete(ByRef $oObj, ByRef $oDoc, $iTabStop)
 
 	Return ($bDeleted) ? (SetError($__LO_STATUS_SUCCESS, 0, $bDeleted)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0))
 EndFunc   ;==>__LOWriter_ParTabStopDelete
-
-; #INTERNAL_USE_ONLY# ===========================================================================================================
-; Name ..........: __LOWriter_ParTabStopList
-; Description ...: Retrieve an array of TabStops available in a Paragraph.
-; Syntax ........: __LOWriter_ParTabStopList(ByRef $oObj)
-; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
-; Return values .: Success: Array.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
-;                  --Success--
-;                  @Error 0 @Extended ? Return Array = Success. An Array of TabStops. @Extended set to number of results.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func __LOWriter_ParTabStopList(ByRef $oObj)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $atTabStops[0]
-	Local $aiTabList[0]
-
-	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	$atTabStops = $oObj.ParaTabStops()
-	If Not IsArray($atTabStops) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	ReDim $aiTabList[UBound($atTabStops)]
-
-	For $i = 0 To UBound($atTabStops) - 1
-		$aiTabList[$i] = $atTabStops[$i].Position()
-		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
-	Next
-
-	Return SetError($__LO_STATUS_SUCCESS, $i, $aiTabList)
-EndFunc   ;==>__LOWriter_ParTabStopList
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_ParTabStopMod
@@ -5673,7 +5632,7 @@ Func __LOWriter_ParTabStopMod(ByRef $oObj, $iTabStop, $iPosition, $iFillChar, $i
 	$atTabStops[$i] = $tTabStruct
 
 	If $bNewPosition Then
-		$aiTabList = __LOWriter_ParTabStopList($oObj)
+		$aiTabList = __LOWriter_ParTabStopsGetList($oObj)
 		If Not IsArray($aiTabList) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 	EndIf
 
@@ -5694,6 +5653,47 @@ Func __LOWriter_ParTabStopMod(ByRef $oObj, $iTabStop, $iPosition, $iFillChar, $i
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_ParTabStopMod
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_ParTabStopsGetList
+; Description ...: Retrieve an array of TabStops available in a Paragraph.
+; Syntax ........: __LOWriter_ParTabStopsGetList(ByRef $oObj)
+; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
+; Return values .: Success: Array.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
+;                  --Success--
+;                  @Error 0 @Extended ? Return Array = Success. An Array of TabStops. @Extended set to number of results.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_ParTabStopsGetList(ByRef $oObj)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $atTabStops[0]
+	Local $aiTabList[0]
+
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	$atTabStops = $oObj.ParaTabStops()
+	If Not IsArray($atTabStops) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	ReDim $aiTabList[UBound($atTabStops)]
+
+	For $i = 0 To UBound($atTabStops) - 1
+		$aiTabList[$i] = $atTabStops[$i].Position()
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
+	Next
+
+	Return SetError($__LO_STATUS_SUCCESS, $i, $aiTabList)
+EndFunc   ;==>__LOWriter_ParTabStopsGetList
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_ParTxtFlowOpt

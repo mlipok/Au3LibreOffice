@@ -33,7 +33,7 @@
 ; _LOWriter_DateFormatKeyDelete
 ; _LOWriter_DateFormatKeyExists
 ; _LOWriter_DateFormatKeyGetString
-; _LOWriter_DateFormatKeyList
+; _LOWriter_DateFormatKeysGetList
 ; _LOWriter_DateStructCreate
 ; _LOWriter_DateStructModify
 ; _LOWriter_FindFormatModifyAlignment
@@ -54,7 +54,7 @@
 ; _LOWriter_FormatKeyExists
 ; _LOWriter_FormatKeyGetStandard
 ; _LOWriter_FormatKeyGetString
-; _LOWriter_FormatKeyList
+; _LOWriter_FormatKeysGetList
 ; _LOWriter_PathConvert
 ; _LOWriter_SearchDescriptorCreate
 ; _LOWriter_SearchDescriptorModify
@@ -749,7 +749,7 @@ EndFunc   ;==>_LOWriter_DateFormatKeyExists
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_DateFormatKeyList
+; Related .......: _LOWriter_DateFormatKeysGetList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -769,9 +769,9 @@ Func _LOWriter_DateFormatKeyGetString(ByRef $oDoc, $iFormatKey)
 EndFunc   ;==>_LOWriter_DateFormatKeyGetString
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_DateFormatKeyList
+; Name ..........: _LOWriter_DateFormatKeysGetList
 ; Description ...: Retrieve an Array of Date/Time Format Keys.
-; Syntax ........: _LOWriter_DateFormatKeyList(ByRef $oDoc[, $bIsUser = False[, $bUserOnly = False[, $bDateOnly = False[, $bTimeOnly = False]]]])
+; Syntax ........: _LOWriter_DateFormatKeysGetList(ByRef $oDoc[, $bIsUser = False[, $bUserOnly = False[, $bDateOnly = False[, $bTimeOnly = False]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $bIsUser             - [optional] a boolean value. Default is False. If True, Adds a third column to the return Array with a boolean, whether each Key is user-created or not.
 ;                  $bUserOnly           - [optional] a boolean value. Default is False. If True, only user-created Date/Time Format Keys are returned.
@@ -802,7 +802,7 @@ EndFunc   ;==>_LOWriter_DateFormatKeyGetString
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_DateFormatKeyList(ByRef $oDoc, $bIsUser = False, $bUserOnly = False, $bDateOnly = False, $bTimeOnly = False)
+Func _LOWriter_DateFormatKeysGetList(ByRef $oDoc, $bIsUser = False, $bUserOnly = False, $bDateOnly = False, $bTimeOnly = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -853,7 +853,7 @@ Func _LOWriter_DateFormatKeyList(ByRef $oDoc, $bIsUser = False, $bUserOnly = Fal
 	If ($bUserOnly = True) Then ReDim $avDTFormats[$iCount][$iColumns]
 
 	Return SetError($__LO_STATUS_SUCCESS, UBound($avDTFormats), $avDTFormats)
-EndFunc   ;==>_LOWriter_DateFormatKeyList
+EndFunc   ;==>_LOWriter_DateFormatKeysGetList
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DateStructCreate
@@ -2303,7 +2303,7 @@ EndFunc   ;==>_LOWriter_FormatKeyCreate
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FormatKeyList, _LOWriter_FormatKeyCreate
+; Related .......: _LOWriter_FormatKeysGetList, _LOWriter_FormatKeyCreate
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2445,7 +2445,7 @@ EndFunc   ;==>_LOWriter_FormatKeyGetStandard
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FormatKeyList
+; Related .......: _LOWriter_FormatKeysGetList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2465,9 +2465,9 @@ Func _LOWriter_FormatKeyGetString(ByRef $oDoc, $iFormatKey)
 EndFunc   ;==>_LOWriter_FormatKeyGetString
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormatKeyList
+; Name ..........: _LOWriter_FormatKeysGetList
 ; Description ...: Retrieve an Array of Date/Time Format Keys.
-; Syntax ........: _LOWriter_FormatKeyList(ByRef $oDoc[, $bIsUser = False[, $bUserOnly = False[, $iFormatKeyType = $LOW_FORMAT_KEYS_ALL]]])
+; Syntax ........: _LOWriter_FormatKeysGetList(ByRef $oDoc[, $bIsUser = False[, $bUserOnly = False[, $iFormatKeyType = $LOW_FORMAT_KEYS_ALL]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $bIsUser             - [optional] a boolean value. Default is False. If True, Adds a third column to the return Array with a boolean, whether each Key is user-created or not.
 ;                  $bUserOnly           - [optional] a boolean value. Default is False. If True, only user-created Format Keys are returned.
@@ -2495,7 +2495,7 @@ EndFunc   ;==>_LOWriter_FormatKeyGetString
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FormatKeyList(ByRef $oDoc, $bIsUser = False, $bUserOnly = False, $iFormatKeyType = $LOW_FORMAT_KEYS_ALL)
+Func _LOWriter_FormatKeysGetList(ByRef $oDoc, $bIsUser = False, $bUserOnly = False, $iFormatKeyType = $LOW_FORMAT_KEYS_ALL)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -2541,7 +2541,7 @@ Func _LOWriter_FormatKeyList(ByRef $oDoc, $bIsUser = False, $bUserOnly = False, 
 	If ($bUserOnly = True) Then ReDim $avFormats[$iCount][$iColumns]
 
 	Return SetError($__LO_STATUS_SUCCESS, UBound($avFormats), $avFormats)
-EndFunc   ;==>_LOWriter_FormatKeyList
+EndFunc   ;==>_LOWriter_FormatKeysGetList
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_PathConvert

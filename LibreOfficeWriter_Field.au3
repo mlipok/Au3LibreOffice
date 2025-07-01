@@ -87,8 +87,8 @@
 ; _LOWriter_FieldRefInsert
 ; _LOWriter_FieldRefMarkDelete
 ; _LOWriter_FieldRefMarkGetAnchor
-; _LOWriter_FieldRefMarkList
 ; _LOWriter_FieldRefMarkSet
+; _LOWriter_FieldRefMarksGetNames
 ; _LOWriter_FieldRefModify
 ; _LOWriter_FieldsAdvGetList
 ; _LOWriter_FieldsDocInfoGetList
@@ -4063,7 +4063,7 @@ EndFunc   ;==>_LOWriter_FieldRefGetType
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldRefModify, _LOWriter_FieldRefMarkSet, _LOWriter_FieldRefMarkList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_FieldRefModify, _LOWriter_FieldRefMarkSet, _LOWriter_FieldRefMarksGetNames, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4123,7 +4123,7 @@ EndFunc   ;==>_LOWriter_FieldRefInsert
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldRefMarkSet, _LOWriter_FieldRefMarkList
+; Related .......: _LOWriter_FieldRefMarkSet, _LOWriter_FieldRefMarksGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4169,7 +4169,7 @@ EndFunc   ;==>_LOWriter_FieldRefMarkDelete
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldRefMarkList, _LOWriter_CursorMove
+; Related .......: _LOWriter_FieldRefMarksGetNames, _LOWriter_CursorMove
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4192,45 +4192,6 @@ Func _LOWriter_FieldRefMarkGetAnchor(ByRef $oDoc, $sName)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oRefMark.Anchor.Text.createTextCursorByRange($oRefMark.Anchor()))
 EndFunc   ;==>_LOWriter_FieldRefMarkGetAnchor
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FieldRefMarkList
-; Description ...: Retrieve an Array of Reference Mark names.
-; Syntax ........: _LOWriter_FieldRefMarkList(ByRef $oDoc)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-; Return values .: Success: Array
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Reference Marks Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Array of Reference Mark Names.
-;                  --Success--
-;                  @Error 0 @Extended ? Return Array = Success. Successfully searched for Reference Marks, returning Array of Reference Mark Names, with @Extended set to number of results.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......: _LOWriter_FieldRefMarkDelete
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_FieldRefMarkList(ByRef $oDoc)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $oRefMarks
-	Local $asRefMarks[0]
-
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-
-	$oRefMarks = $oDoc.getReferenceMarks()
-	If Not IsObj($oRefMarks) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	$asRefMarks = $oRefMarks.getElementNames()
-	If Not IsArray($asRefMarks) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-	Return SetError($__LO_STATUS_SUCCESS, UBound($asRefMarks), $asRefMarks)
-EndFunc   ;==>_LOWriter_FieldRefMarkList
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldRefMarkSet
@@ -4290,6 +4251,45 @@ Func _LOWriter_FieldRefMarkSet(ByRef $oDoc, ByRef $oCursor, $sName, $bOverwrite 
 EndFunc   ;==>_LOWriter_FieldRefMarkSet
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FieldRefMarksGetNames
+; Description ...: Retrieve an Array of Reference Mark names.
+; Syntax ........: _LOWriter_FieldRefMarksGetNames(ByRef $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Return values .: Success: Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Reference Marks Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Array of Reference Mark Names.
+;                  --Success--
+;                  @Error 0 @Extended ? Return Array = Success. Successfully searched for Reference Marks, returning Array of Reference Mark Names, with @Extended set to number of results.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOWriter_FieldRefMarkDelete
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FieldRefMarksGetNames(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oRefMarks
+	Local $asRefMarks[0]
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oRefMarks = $oDoc.getReferenceMarks()
+	If Not IsObj($oRefMarks) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$asRefMarks = $oRefMarks.getElementNames()
+	If Not IsArray($asRefMarks) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, UBound($asRefMarks), $asRefMarks)
+EndFunc   ;==>_LOWriter_FieldRefMarksGetNames
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldRefModify
 ; Description ...: Set or Retrieve a Reference Field's settings.
 ; Syntax ........: _LOWriter_FieldRefModify(ByRef $oDoc, ByRef $oRefField[, $sRefMarkName = Null[, $iRefUsing = Null]])
@@ -4318,7 +4318,7 @@ EndFunc   ;==>_LOWriter_FieldRefMarkSet
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_FieldRefInsert, _LOWriter_FieldsGetList, _LOWriter_FieldRefMarkSet, _LOWriter_FieldRefMarkList
+; Related .......: _LOWriter_FieldRefInsert, _LOWriter_FieldsGetList, _LOWriter_FieldRefMarkSet, _LOWriter_FieldRefMarksGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================

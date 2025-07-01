@@ -42,7 +42,7 @@ Func Example()
 	EndIf
 
 	; Retrieve an Array of Format Keys. User created ones only.
-	$avKeys = _LOWriter_FormatKeyList($oDoc, False, True)
+	$avKeys = _LOWriter_FormatKeysGetList($oDoc, False, True)
 	If @error Then _ERROR($oDoc, "Failed to retrieve an array of Date/Time Format Keys. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 	$iResults = @extended
 

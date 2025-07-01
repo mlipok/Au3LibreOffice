@@ -63,8 +63,8 @@
 ; _LOWriter_ParStyleStrikeOut
 ; _LOWriter_ParStyleTabStopCreate
 ; _LOWriter_ParStyleTabStopDelete
-; _LOWriter_ParStyleTabStopList
 ; _LOWriter_ParStyleTabStopMod
+; _LOWriter_ParStyleTabStopsGetList
 ; _LOWriter_ParStyleTxtFlowOpt
 ; _LOWriter_ParStyleUnderLine
 ; ===============================================================================================================================
@@ -2000,7 +2000,7 @@ EndFunc   ;==>_LOWriter_ParStyleTabStopCreate
 ; Modified ......:
 ; Remarks .......: $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page margin.
 ;                  This is the only reliable way to identify a Tabstop to be able to interact with it, as there can only be one of a certain length per document.
-; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ParStyleTabStopList, _LOWriter_ParStyleTabStopCreate
+; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ParStyleTabStopsGetList, _LOWriter_ParStyleTabStopCreate
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2020,42 +2020,6 @@ Func _LOWriter_ParStyleTabStopDelete(ByRef $oDoc, ByRef $oParStyle, $iTabStop)
 
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStyleTabStopDelete
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_ParStyleTabStopList
-; Description ...: Retrieve an array of TabStops available in a Paragraph Style.
-; Syntax ........: _LOWriter_ParStyleTabStopList(ByRef $oParStyle)
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
-; Return values .: Success: Array
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oParStyle not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oParStyle not a Paragraph Object.
-;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
-;                  --Success--
-;                  @Error 0 @Extended ? Return Array = Success. An Array of TabStops. @Extended set to number of results.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ParStyleTabStopMod, _LOWriter_ParStyleTabStopDelete
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_ParStyleTabStopList(ByRef $oParStyle)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $aiTabList
-
-	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-	$aiTabList = __LOWriter_ParTabStopList($oParStyle)
-
-	Return SetError(@error, @extended, $aiTabList)
-EndFunc   ;==>_LOWriter_ParStyleTabStopList
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ParStyleTabStopMod
@@ -2102,7 +2066,7 @@ EndFunc   ;==>_LOWriter_ParStyleTabStopList
 ;                  $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32. The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can also enter a custom ASC value. See ASC AutoIt Func. and "ASCII Character Codes" in the AutoIt help file.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ParStyleTabStopCreate, _LOWriter_ParStyleTabStopList, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ParStyleTabStopCreate, _LOWriter_ParStyleTabStopsGetList, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2121,6 +2085,42 @@ Func _LOWriter_ParStyleTabStopMod(ByRef $oParStyle, $iTabStop, $iPosition = Null
 
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStyleTabStopMod
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_ParStyleTabStopsGetList
+; Description ...: Retrieve an array of TabStops available in a Paragraph Style.
+; Syntax ........: _LOWriter_ParStyleTabStopsGetList(ByRef $oParStyle)
+; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Return values .: Success: Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oParStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oParStyle not a Paragraph Object.
+;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
+;                  --Success--
+;                  @Error 0 @Extended ? Return Array = Success. An Array of TabStops. @Extended set to number of results.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ParStyleTabStopMod, _LOWriter_ParStyleTabStopDelete
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_ParStyleTabStopsGetList(ByRef $oParStyle)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $aiTabList
+
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$aiTabList = __LOWriter_ParTabStopsGetList($oParStyle)
+
+	Return SetError(@error, @extended, $aiTabList)
+EndFunc   ;==>_LOWriter_ParStyleTabStopsGetList
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ParStyleTxtFlowOpt
