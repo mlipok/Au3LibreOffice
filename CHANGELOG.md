@@ -857,7 +857,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Modified _LOWriter_DocPrintersAltGetNames @Extended value when retrieving the default printer name, @Extended is now 1, instead of 2.
 - _LOWriter_DocRedoGetAllActionTitles now returns the number of results in @Extended value.
 - _LOWriter_DocUndoGetAllActionTitles now returns the number of results in @Extended value.
-- Removed $oDoc parameter from _LOWriter_FontExists. This will affect the parameters and error return values of the following functions:
+- Made $oDoc parameter for _LOWriter_FontExists optional. This will affect the parameters and error return values of the following functions:
 	- __LOWriter_CharFont
 	- _LOWriter_CharStyleFont
 	- _LOWriter_DirFrmtFont
@@ -878,6 +878,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_FormatKeyList-->_LOWriter_FormatKeysGetList
 	- _LOWriter_ParStyleTabStopList-->_LOWriter_ParStyleTabStopsGetList
 	- __LOWriter_ParTabStopList-->__LOWriter_ParTabStopsGetList
+- Made $oDoc Parameter optional for _LOWriter_FontsGetNames.
 
 ### Fixed
 
