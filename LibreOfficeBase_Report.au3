@@ -37,7 +37,9 @@
 ; _LOBase_ReportData
 ; _LOBase_ReportDelete
 ; _LOBase_ReportDetail
+; _LOBase_ReportDocVisible
 ; _LOBase_ReportExists
+; _LOBase_ReportFolderCopy
 ; _LOBase_ReportFolderCreate
 ; _LOBase_ReportFolderDelete
 ; _LOBase_ReportFolderExists
@@ -1249,7 +1251,7 @@ EndFunc   ;==>_LOBase_ReportConSize
 ;                  @Error 0 @Extended 0 Return 1 = Success. Copied report successfully inserted.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: To copy a Report located inside a folder, the Report name MUST be prefixed by the folder path, separated by forward slashes (/). e.g. to open ReportXYZ contained in folder 3, which is located in Folder 2, which is located inside folder 1, you would call $sInputReport with the following path: Folder1/Folder2/Folder3/ReportXYZ.
+; Remarks .......: To copy a Report located inside a folder, the Report name MUST be prefixed by the folder path, separated by forward slashes (/). e.g. to copy ReportXYZ contained in folder 3, which is located in Folder 2, which is located inside folder 1, you would call $sInputReport with the following path: Folder1/Folder2/Folder3/ReportXYZ.
 ;                  To create a Report inside a folder, the Report name MUST be prefixed by the folder path, separated by forward slashes (/). e.g. to create ReportXYZ contained in folder 3, which is located in Folder 2, which is located inside folder 1, you would call $sOutputReport with the following path: Folder1/Folder2/Folder3/ReportXYZ.
 ;                  If only a name is called in $sOutputReport, the Report will be created in the main directory, i.e. not inside of any folders.
 ; Related .......:
@@ -1578,6 +1580,46 @@ Func _LOBase_ReportDetail(ByRef $oReportDoc, $sName = Null, $iForceNewPage = Nul
 EndFunc   ;==>_LOBase_ReportDetail
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_FormDocVisible
+; Description ...: Set or retrieve the current visibility of a document.
+; Syntax ........: _LOBase_FormDocVisible(ByRef $oReportDoc[, $bVisible = Null])
+; Parameters ....: $oReportDoc          - [in/out] an object.  A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the document is visible.
+; Return values .: Success: 1 or Boolean.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oReportDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $bVisible not a Boolean.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended 1 Return 0 = Error setting $bVisible.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. $bVisible successfully set.
+;                  @Error 0 @Extended 1 Return Boolean = Success. Returning current visibility state of the Document, True if visible, false if invisible.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call $bVisible with Null to return the current visibility setting.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportDocVisible(ByRef $oReportDoc, $bVisible = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+
+	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If ($bVisible = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oReportDoc.CurrentController.Frame.ContainerWindow.isVisible())
+
+	If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oReportDoc.CurrentController.Frame.ContainerWindow.Visible = $bVisible
+	$iError = ($oReportDoc.CurrentController.Frame.ContainerWindow.isVisible() = $bVisible) ? (0) : (1)
+
+	Return ($iError = 0) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
+EndFunc   ;==>_LOBase_ReportDocVisible
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_ReportExists
 ; Description ...: Check whether a Document contains a Report by name.
 ; Syntax ........: _LOBase_ReportExists(ByRef $oDoc, $sName[, $bExhaustive = True])
@@ -1687,6 +1729,103 @@ Func _LOBase_ReportExists(ByRef $oDoc, $sName, $bExhaustive = True)
 
 	Return SetError($__LO_STATUS_SUCCESS, $iReports, $bReturn)
 EndFunc   ;==>_LOBase_ReportExists
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportFolderCopy
+; Description ...: Create a copy of an existing Folder.
+; Syntax ........: _LOBase_ReportFolderCopy(ByRef $oDoc, $sInputFolder, $sOutputFolder)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOBase_DocOpen, _LOBase_DocConnect, or _LOBase_DocCreate function.
+;                  $sInputFolder        - a string value. The Name of the Folder to Copy. Also the Sub-directory the Folder is in. See Remarks.
+;                  $sOutputFolder       - a string value. The Name of the Folder to Create. Also the Sub-directory to place the Folder in. See Remarks.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sInputFolder not a String.
+;                  @Error 1 @Extended 3 Return 0 = $sOutputFolder not a String.
+;                  @Error 1 @Extended 4 Return 0 = Folder name called in $sInputFolder not found.
+;                  @Error 1 @Extended 5 Return 0 = Requested Folder not found.
+;                  @Error 1 @Extended 6 Return 0 = Folder name called in $sInputFolder not a Folder.
+;                  @Error 1 @Extended 7 Return 0 = Folder name called in $sOutputFolder not found.
+;                  @Error 1 @Extended 8 Return 0 = Folder already exists with called name in Destination.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.sdb.Reports" Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Report Documents Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Source Folder Object.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Folder Object.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Destination Folder Object.
+;                  @Error 3 @Extended 5 Return 0 = Failed to insert copied Folder.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Copied Folder successfully inserted.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: To create a Folder contained in a folder, you MUST prefix the Folder name called in $sInputFolder by the folder path it is located in, separated by forward slashes (/). e.g. to copy FolderXYZ located in folder3, which is located in Folder 2, which is located inside folder 1, you would call $sInputFolder with the following path: Folder1/Folder2/Folder3/FolderXYZ
+;                  To copy a Folder contained in a folder, you MUST prefix the Folder name called in $sOutputFolder by the folder path you want it to be located in, separated by forward slashes (/). e.g. to create FolderXYZ located in folder3, which is located in Folder 2, which is located inside folder 1, you would call $sOutputFolder with the following path: Folder1/Folder2/Folder3/FolderXYZ
+;                  Copying a Folder will copy all contents also.
+;                  If only a name is called in $sOutputFolder, the Folder will be created in the main directory, i.e. not inside of any folders.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportFolderCopy(ByRef $oDoc, $sInputFolder, $sOutputFolder)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oSource, $oDestination, $oSourceReportFolder, $oFolder
+	Local $asSplit[0]
+	Local $aArgs[2]
+	Local $sSourceFolder, $sDestFolder
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sInputFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsString($sOutputFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$oSource = $oDoc.ReportDocuments()
+	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$asSplit = StringSplit($sInputFolder, "/")
+
+	For $i = 1 To $asSplit[0] - 1
+		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oSource = $oSource.getByName($asSplit[$i])
+		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	Next
+
+	$sSourceFolder = $asSplit[$asSplit[0]] ; Last element of Array will be the Input Report Folder's name to Copy
+
+	If Not $oSource.hasByName($sSourceFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
+	$oSourceReportFolder = $oSource.getByName($sSourceFolder)
+	If Not IsObj($oSourceReportFolder) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If Not $oSourceReportFolder.supportsService("com.sun.star.sdb.Reports") Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
+	$oDestination = $oDoc.ReportDocuments()
+	If Not IsObj($oDestination) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$asSplit = StringSplit($sOutputFolder, "/")
+
+	For $i = 1 To $asSplit[0] - 1
+		If Not $oDestination.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oDestination = $oDestination.getByName($asSplit[$i])
+		If Not IsObj($oDestination) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+	Next
+
+	$sDestFolder = $asSplit[$asSplit[0]] ; Last element of Array will be the Output Report Folder name to Create
+
+	If $oDestination.hasByName($sDestFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
+	$aArgs[0] = __LOBase_SetPropertyValue("Name", $sDestFolder)
+	$aArgs[1] = __LOBase_SetPropertyValue("EmbeddedObject", $oSourceReportFolder)
+
+	$oFolder = $oDestination.createInstanceWithArguments("com.sun.star.sdb.Reports", $aArgs)
+	If Not IsObj($oFolder) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	$oDestination.insertbyName($sDestFolder, $oFolder)
+	If Not $oDestination.hasByName($sDestFolder) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOBase_ReportFolderCopy
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_ReportFolderCreate

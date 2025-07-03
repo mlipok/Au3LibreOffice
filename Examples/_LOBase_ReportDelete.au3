@@ -25,7 +25,7 @@ Func Example()
 	If _LOBase_ReportExists($oDoc, "rptAutoIt_Report", False) Then _LOBase_ReportDelete($oDoc, "rptAutoIt_Report")
 	If @error Then Return _ERROR($oDoc, "Failed to Check for pre-existing Report, or failed to delete it. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Check if the Report name exists already (This will be if a pevious example failed.) And delete it if so.
+	; Check if the second Report name exists already (This will be if a pevious example failed.) And delete it if so.
 	If _LOBase_ReportExists($oDoc, "Folder1/rptAutoIt_Report3", False) Then _LOBase_ReportDelete($oDoc, "Folder1/rptAutoIt_Report3")
 	If @error Then Return _ERROR($oDoc, "Failed to Check for pre-existing Report, or failed to delete it. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 

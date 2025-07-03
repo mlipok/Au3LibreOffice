@@ -22,9 +22,12 @@
 ; #CURRENT# =====================================================================================================================
 ; _LOBase_FormClose
 ; _LOBase_FormConnect
+; _LOBase_FormCopy
 ; _LOBase_FormCreate
 ; _LOBase_FormDelete
+; _LOBase_FormDocVisible
 ; _LOBase_FormExists
+; _LOBase_FormFolderCopy
 ; _LOBase_FormFolderCreate
 ; _LOBase_FormFolderDelete
 ; _LOBase_FormFolderExists
@@ -240,6 +243,109 @@ Func _LOBase_FormConnect($bConnectCurrent = True)
 EndFunc   ;==>_LOBase_FormConnect
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_FormCopy
+; Description ...: Create a copy of an existing Form.
+; Syntax ........: _LOBase_FormCopy(ByRef $oDoc, ByRef $oConnection, $sInputForm, $sOutputForm)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOBase_DocOpen, _LOBase_DocConnect, or _LOBase_DocCreate function.
+;                  $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
+;                  $sInputForm          - a string value. The Name of the Form to Copy. Also the Sub-directory the Form is in. See Remarks.
+;                  $sOutputForm       - a string value. The Name of the Form to Create. Also the Sub-directory to place the Form in. See Remarks.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oConnection not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $sInputForm not a String.
+;                  @Error 1 @Extended 4 Return 0 = $sOutputForm not a String.
+;                  @Error 1 @Extended 5 Return 0 = Folder name called in $sInputForm not found.
+;                  @Error 1 @Extended 6 Return 0 = Requested Form not found.
+;                  @Error 1 @Extended 7 Return 0 = Form name called in $sInputForm not a Form.
+;                  @Error 1 @Extended 8 Return 0 = Folder name called in $sOutputForm not found.
+;                  @Error 1 @Extended 9 Return 0 = Form already exists with called name in Destination.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.sdb.DocumentDefinition" Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Connection called in $oConnection is closed.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Form Documents Object.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Source Folder Object.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Form Object.
+;                  @Error 3 @Extended 5 Return 0 = Failed to retrieve Destination Folder Object.
+;                  @Error 3 @Extended 6 Return 0 = Failed to insert copied Form.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Copied Form successfully inserted.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: To copy a Form located inside a folder, the Form name MUST be prefixed by the folder path, separated by forward slashes (/). e.g. to create FormXYZ contained in folder 3, which is located in Folder 2, which is located inside folder 1, you would call $sInputForm with the following path: Folder1/Folder2/Folder3/FormXYZ.
+;                  To create a Form inside a folder, the Form name MUST be prefixed by the folder path, separated by forward slashes (/). e.g. to create FormXYZ contained in folder 3, which is located in Folder 2, which is located inside folder 1, you would call $sOutputForm with the following path: Folder1/Folder2/Folder3/FormXYZ.
+;                  If only a name is called in $sOutputForm, the Form will be created in the main directory, i.e. not inside of any folders.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_FormCopy(ByRef $oDoc, ByRef $oConnection, $sInputForm, $sOutputForm)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oSource, $oDestination, $oFormDef, $oDocDef
+	Local $asSplit[0]
+	Local $aArgs[3]
+	Local $sSourceForm, $sDestForm
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsString($sInputForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsString($sOutputForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$oSource = $oDoc.FormDocuments()
+	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	$asSplit = StringSplit($sInputForm, "/")
+
+	For $i = 1 To $asSplit[0] - 1
+		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oSource = $oSource.getByName($asSplit[$i])
+		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	Next
+
+	$sSourceForm = $asSplit[$asSplit[0]] ; Last element of Array will be the Input Form's name to Copy
+
+	If Not $oSource.hasByName($sSourceForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
+	$oFormDef = $oSource.getByName($sSourceForm)
+	If Not IsObj($oFormDef) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+	If Not $oFormDef.supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
+	$oDestination = $oDoc.FormDocuments()
+	If Not IsObj($oDestination) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	$asSplit = StringSplit($sOutputForm, "/")
+
+	For $i = 1 To $asSplit[0] - 1
+		If Not $oDestination.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		$oDestination = $oDestination.getByName($asSplit[$i])
+		If Not IsObj($oDestination) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+	Next
+
+	$sDestForm = $asSplit[$asSplit[0]] ; Last element of Array will be the Output Form name to Create
+
+	If $oDestination.hasByName($sDestForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
+	$aArgs[0] = __LOBase_SetPropertyValue("Name", $sDestForm)
+	$aArgs[1] = __LOBase_SetPropertyValue("ActiveConnection", $oConnection)
+	$aArgs[2] = __LOBase_SetPropertyValue("EmbeddedObject", $oFormDef)
+
+	$oDocDef = $oDestination.createInstanceWithArguments("com.sun.star.sdb.DocumentDefinition", $aArgs)
+	If Not IsObj($oDocDef) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	$oDestination.insertbyName($sDestForm, $oDocDef)
+	If Not $oDestination.hasByName($sDestForm) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOBase_FormCopy
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_FormCreate
 ; Description ...: Create and Insert a new Form Document into a Base Document.
 ; Syntax ........: _LOBase_FormCreate(ByRef $oDoc, ByRef $oConnection, $sForm[, $bOpen = False[, $bDesign = True[, $bVisible = True]]])
@@ -442,6 +548,46 @@ Func _LOBase_FormDelete(ByRef $oDoc, $sName)
 EndFunc   ;==>_LOBase_FormDelete
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_FormDocVisible
+; Description ...: Set or retrieve the current visibility of a document.
+; Syntax ........: _LOBase_FormDocVisible(ByRef $oFormDoc[, $bVisible = Null])
+; Parameters ....: $oFormDoc            - [in/out] an object. A Form Document object returned by a previous _LOBase_FormOpen, _LOBase_FormConnect, or _LOBase_FormCreate function.
+;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the document is visible.
+; Return values .: Success: 1 or Boolean.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oFormDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $bVisible not a Boolean.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended 1 Return 0 = Error setting $bVisible.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. $bVisible successfully set.
+;                  @Error 0 @Extended 1 Return Boolean = Success. Returning current visibility state of the Document, True if visible, false if invisible.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call $bVisible with Null to return the current visibility setting.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_FormDocVisible(ByRef $oFormDoc, $bVisible = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+
+	If Not IsObj($oFormDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If ($bVisible = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oFormDoc.CurrentController.Frame.ContainerWindow.isVisible())
+
+	If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oFormDoc.CurrentController.Frame.ContainerWindow.Visible = $bVisible
+	$iError = ($oFormDoc.CurrentController.Frame.ContainerWindow.isVisible() = $bVisible) ? (0) : (1)
+
+	Return ($iError = 0) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
+EndFunc   ;==>_LOBase_FormDocVisible
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_FormExists
 ; Description ...: Check whether a Document contains a Form by name.
 ; Syntax ........: _LOBase_FormExists(ByRef $oDoc, $sName[, $bExhaustive = True])
@@ -551,6 +697,103 @@ Func _LOBase_FormExists(ByRef $oDoc, $sName, $bExhaustive = True)
 
 	Return SetError($__LO_STATUS_SUCCESS, $iForms, $bReturn)
 EndFunc   ;==>_LOBase_FormExists
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_FormFolderCopy
+; Description ...: Create a copy of an existing Folder.
+; Syntax ........: _LOBase_FormFolderCopy(ByRef $oDoc, $sInputFolder, $sOutputFolder)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOBase_DocOpen, _LOBase_DocConnect, or _LOBase_DocCreate function.
+;                  $sInputFolder        - a string value. The Name of the Folder to Copy. Also the Sub-directory the Folder is in. See Remarks.
+;                  $sOutputFolder       - a string value. The Name of the Folder to Create. Also the Sub-directory to place the Folder in. See Remarks.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sInputFolder not a String.
+;                  @Error 1 @Extended 3 Return 0 = $sOutputFolder not a String.
+;                  @Error 1 @Extended 4 Return 0 = Folder name called in $sInputFolder not found.
+;                  @Error 1 @Extended 5 Return 0 = Requested Folder not found.
+;                  @Error 1 @Extended 6 Return 0 = Folder name called in $sInputFolder not a Folder.
+;                  @Error 1 @Extended 7 Return 0 = Folder name called in $sOutputFolder not found.
+;                  @Error 1 @Extended 8 Return 0 = Folder already exists with called name in Destination.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.sdb.Forms" Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Form Documents Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Source Folder Object.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Folder Object.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Destination Folder Object.
+;                  @Error 3 @Extended 5 Return 0 = Failed to insert copied Folder.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Copied Folder successfully inserted.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: To create a Folder contained in a folder, you MUST prefix the Folder name called in $sInputFolder by the folder path it is located in, separated by forward slashes (/). e.g. to copy FolderXYZ located in folder3, which is located in Folder 2, which is located inside folder 1, you would call $sInputFolder with the following path: Folder1/Folder2/Folder3/FolderXYZ
+;                  To copy a Folder contained in a folder, you MUST prefix the Folder name called in $sOutputFolder by the folder path you want it to be located in, separated by forward slashes (/). e.g. to create FolderXYZ located in folder3, which is located in Folder 2, which is located inside folder 1, you would call $sOutputFolder with the following path: Folder1/Folder2/Folder3/FolderXYZ
+;                  Copying a Folder will copy all contents also.
+;                  If only a name is called in $sOutputFolder, the Folder will be created in the main directory, i.e. not inside of any folders.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_FormFolderCopy(ByRef $oDoc, $sInputFolder, $sOutputFolder)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oSource, $oDestination, $oSourceFormFolder, $oFolder
+	Local $asSplit[0]
+	Local $aArgs[2]
+	Local $sSourceFolder, $sDestFolder
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sInputFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsString($sOutputFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$oSource = $oDoc.FormDocuments()
+	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$asSplit = StringSplit($sInputFolder, "/")
+
+	For $i = 1 To $asSplit[0] - 1
+		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oSource = $oSource.getByName($asSplit[$i])
+		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	Next
+
+	$sSourceFolder = $asSplit[$asSplit[0]] ; Last element of Array will be the Input Form Folder's name to Copy
+
+	If Not $oSource.hasByName($sSourceFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
+	$oSourceFormFolder = $oSource.getByName($sSourceFolder)
+	If Not IsObj($oSourceFormFolder) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If Not $oSourceFormFolder.supportsService("com.sun.star.sdb.Forms") Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
+	$oDestination = $oDoc.FormDocuments()
+	If Not IsObj($oDestination) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$asSplit = StringSplit($sOutputFolder, "/")
+
+	For $i = 1 To $asSplit[0] - 1
+		If Not $oDestination.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oDestination = $oDestination.getByName($asSplit[$i])
+		If Not IsObj($oDestination) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+	Next
+
+	$sDestFolder = $asSplit[$asSplit[0]] ; Last element of Array will be the Output Form Folder name to Create
+
+	If $oDestination.hasByName($sDestFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
+	$aArgs[0] = __LOBase_SetPropertyValue("Name", $sDestFolder)
+	$aArgs[1] = __LOBase_SetPropertyValue("EmbeddedObject", $oSourceFormFolder)
+
+	$oFolder = $oDestination.createInstanceWithArguments("com.sun.star.sdb.Forms", $aArgs)
+	If Not IsObj($oFolder) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	$oDestination.insertbyName($sDestFolder, $oFolder)
+	If Not $oDestination.hasByName($sDestFolder) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOBase_FormFolderCopy
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_FormFolderCreate

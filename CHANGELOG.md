@@ -154,9 +154,12 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Form Functions
 	- _LOBase_FormClose
 	- _LOBase_FormConnect
+	- _LOBase_FormCopy
 	- _LOBase_FormCreate
 	- _LOBase_FormDelete
+	- _LOBase_FormDocVisible
 	- _LOBase_FormExists
+	- _LOBase_FormFolderCopy
 	- _LOBase_FormFolderCreate
 	- _LOBase_FormFolderDelete
 	- _LOBase_FormFolderExists
@@ -242,7 +245,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOBase_ReportData
 	- _LOBase_ReportDelete
 	- _LOBase_ReportDetail
+	- _LOBase_ReportDocVisible
 	- _LOBase_ReportExists
+	- _LOBase_ReportFolderCopy
 	- _LOBase_ReportFolderCreate
 	- _LOBase_ReportFolderDelete
 	- _LOBase_ReportFolderExists
