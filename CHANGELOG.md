@@ -595,6 +595,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Renamed more Functions to be consistent when retrieving arrays of names or objects:
 	- _LOCalc_FormatKeyList-->_LOCalc_FormatKeysGetList
 - Made $oDoc Parameter optional for _LOCalc_FontsGetNames.
+- Added count of number of results for _LOCalc_DocConnect, connect-all and partial name search when more than one result is present.
 
 ### Removed
 
