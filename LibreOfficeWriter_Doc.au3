@@ -493,11 +493,11 @@ EndFunc   ;==>_LOWriter_DocClose
 ;                  @Error 5 @Extended 3 Return 0 = No open Libre Office documents found.
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return Object = Success, The Object for the current, or last active document is returned.
-;                  @Error 0 @Extended 2 Return Array = Success, An Array of all open LibreOffice Writer Text documents is returned. See remarks.
+;                  @Error 0 @Extended ? Return Array = Success, An Array of all open LibreOffice Writer Text documents is returned. See remarks. @Extended is set to number of results.
 ;                  @Error 0 @Extended 3 Return Object = Success, The Object for the document with matching URL is returned.
 ;                  @Error 0 @Extended 4 Return Object = Success, The Object for the document with matching Title is returned.
 ;                  @Error 0 @Extended 5 Return Object = Success, A partial Title or Path search found only one match, returning the Object for the found document.
-;                  @Error 0 @Extended 6 Return Array = Success, An Array of all matching Libre Text documents from a partial Title or Path search. See remarks.
+;                  @Error 0 @Extended ? Return Array = Success, An Array of all matching Libre Text documents from a partial Title or Path search. See remarks. @Extended is set to number of results.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $sFile can be either the full Path (Name and extension included; e.g: C:\file\Test.odt Or file:///C:/file/Test.odt) of the document, or the full Title with extension, (e.g: Test.odt), or a partial file path (e.g: file1\file2\Test Or file1\file2 Or file1/file2/ etc.), or a partial name (e.g: test, would match Test1.odt, Test2.docx etc.).
@@ -554,7 +554,7 @@ Func _LOWriter_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False
 			Sleep(10)
 		WEnd
 
-		Return SetError($__LO_STATUS_SUCCESS, 2, $aoConnectAll)
+		Return SetError($__LO_STATUS_SUCCESS, $iCount, $aoConnectAll)
 	EndIf
 
 	$sFile = StringStripWS($sFile, $STR_STRIPLEADING)
@@ -612,7 +612,7 @@ Func _LOWriter_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False
 
 			Else
 
-				Return SetError($__LO_STATUS_SUCCESS, 6, $aoPartNameSearch) ; matches
+				Return SetError($__LO_STATUS_SUCCESS, $iCount, $aoPartNameSearch) ; matches
 			EndIf
 
 		Else
