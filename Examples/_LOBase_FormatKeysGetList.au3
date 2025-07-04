@@ -43,7 +43,6 @@ Func Example()
 
 	$iResults = @extended
 
-
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "There were " & @extended & " Format Keys found. I will now display the results in the Table. The Array will have three columns, " & @CRLF & _
 			"-the first column contains the Format Key number, " & @CRLF & _
 			"-the second column contains the Format Key String, " & @CRLF & _
@@ -128,7 +127,7 @@ Func _FillDatabase(ByRef $oDoc, ByRef $oReportDoc, ByRef $oConnection, ByRef $oT
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to retrieve Column Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set the column to Auto Value.
-	_LOBase_TableColProperties($oTable, $oColumn, Null, Null, Null, Null, True)
+	_LOBase_TableColProperties($oConnection, $oTable, $oColumn, Null, Null, Null, Null, True)
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to set Column properties. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Add a Column to the Table.

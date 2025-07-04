@@ -1202,14 +1202,15 @@ EndFunc   ;==>_LOBase_FontsGetNames
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_FormatKeyCreate
 ; Description ...: Create a Format Key.
-; Syntax ........: _LOBase_FormatKeyCreate(ByRef $oReportDoc, $sFormat)
-; Parameters ....: $oReportDoc          - [in/out] an object. A Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+; Syntax ........: _LOBase_FormatKeyCreate(ByRef $oObj, $sFormat)
+; Parameters ....: $oObj                - [in/out] an object. A Connection or Document object returned by a previous _LOBase_DatabaseConnectionGet, _LOBase_ReportConnect, or _LOBase_ReportOpen function.
 ;                  $sFormat             - a string value. The format key String to create.
 ; Return values .: Success: Integer
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oReportDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $sFormat not a String.
+;                  @Error 1 @Extended 1 Return 0 = $oObj not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oObj not a Connection Object and not a Report document opened in Design mode.
+;                  @Error 1 @Extended 3 Return 0 = $sFormat not a String.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to Create "com.sun.star.lang.Locale" Object.
 ;                  --Processing Errors--
@@ -1225,7 +1226,7 @@ EndFunc   ;==>_LOBase_FontsGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOBase_FormatKeyCreate(ByRef $oReportDoc, $sFormat)
+Func _LOBase_FormatKeyCreate(ByRef $oObj, $sFormat)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1233,14 +1234,25 @@ Func _LOBase_FormatKeyCreate(ByRef $oReportDoc, $sFormat)
 	Local $tLocale
 	Local $oFormats
 
-	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oObj.supportsService("com.sun.star.sdbc.Connection") And Not $oObj.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsString($sFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 	$tLocale = __LOBase_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-	$oFormats = $oReportDoc.getNumberFormats()
+
+	If $oObj.supportsService("com.sun.star.sdbc.Connection") Then
+		$oFormats = $oObj.Parent.NumberFormatsSupplier.getNumberFormats()
+
+	Else
+		$oFormats = $oObj.getNumberFormats()
+	EndIf
+
 	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	$iFormatKey = $oFormats.queryKey($sFormat, $tLocale, False)
 	If ($iFormatKey > -1) Then Return SetError($__LO_STATUS_SUCCESS, 1, $iFormatKey) ; Format already existed
+
 	$iFormatKey = $oFormats.addNew($sFormat, $tLocale)
 	If ($iFormatKey > -1) Then Return SetError($__LO_STATUS_SUCCESS, 0, $iFormatKey) ; Format created
 
@@ -1249,15 +1261,15 @@ EndFunc   ;==>_LOBase_FormatKeyCreate
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_FormatKeyDelete
-; Description ...: Delete a User-Created Format Key from a Document.
-; Syntax ........: _LOBase_FormatKeyDelete(ByRef $oReportDoc, $iFormatKey)
-; Parameters ....: $oReportDoc          - [in/out] an object. A Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+; Description ...: Delete a User-Created Format Key.
+; Syntax ........: _LOBase_FormatKeyDelete(ByRef $oObj, $iFormatKey)
+; Parameters ....: $oObj                - [in/out] an object. A Connection or Document object returned by a previous _LOBase_DatabaseConnectionGet, _LOBase_ReportConnect, or _LOBase_ReportOpen function.
 ;                  $iFormatKey          - an integer value. The User-Created format Key to delete.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oReportDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = Object called in $oReportDoc not a Report document opened in Design mode.
+;                  @Error 1 @Extended 1 Return 0 = $oObj not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oObj not a Connection Object and not a Report document opened in Design mode.
 ;                  @Error 1 @Extended 3 Return 0 = $iFormatKey not an Integer.
 ;                  @Error 1 @Extended 4 Return 0 = Format Key called in $iFormatKey not found in Document.
 ;                  @Error 1 @Extended 5 Return 0 = Format Key called in $iFormatKey not User-Created.
@@ -1273,38 +1285,44 @@ EndFunc   ;==>_LOBase_FormatKeyCreate
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOBase_FormatKeyDelete(ByRef $oReportDoc, $iFormatKey)
+Func _LOBase_FormatKeyDelete(ByRef $oObj, $iFormatKey)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $oFormats
 
-	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oObj.supportsService("com.sun.star.sdbc.Connection") And Not $oObj.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsInt($iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not _LOBase_FormatKeyExists($oReportDoc, $iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0) ; Key not found.
+	If Not _LOBase_FormatKeyExists($oObj, $iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0) ; Key not found.
 
-	$oFormats = $oReportDoc.getNumberFormats()
+	If $oObj.supportsService("com.sun.star.sdbc.Connection") Then
+		$oFormats = $oObj.Parent.NumberFormatsSupplier.getNumberFormats()
+
+	Else
+		$oFormats = $oObj.getNumberFormats()
+	EndIf
+
 	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	If ($oFormats.getbykey($iFormatKey).UserDefined() = False) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; Key not User Created.
 
 	$oFormats.removeByKey($iFormatKey)
 
-	Return (_LOBase_FormatKeyExists($oReportDoc, $iFormatKey) = False) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0))
+	Return (_LOBase_FormatKeyExists($oObj, $iFormatKey) = False) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0))
 EndFunc   ;==>_LOBase_FormatKeyDelete
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_FormatKeyExists
 ; Description ...: Check if a Document contains a certain Format Key.
-; Syntax ........: _LOBase_FormatKeyExists(ByRef $oReportDoc, $iFormatKey[, $iFormatType = $LOB_FORMAT_KEYS_ALL])
-; Parameters ....: $oReportDoc          - [in/out] an object. A Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+; Syntax ........: _LOBase_FormatKeyExists(ByRef $oObj, $iFormatKey[, $iFormatType = $LOB_FORMAT_KEYS_ALL])
+; Parameters ....: $oObj                - [in/out] an object. A Connection or Document object returned by a previous _LOBase_DatabaseConnectionGet, _LOBase_ReportConnect, or _LOBase_ReportOpen function.
 ;                  $iFormatKey          - an integer value. The Format Key to look for.
 ;                  $iFormatType         - [optional] an integer value (0-15881). Default is $LOB_FORMAT_KEYS_ALL. The Format Key type to search in. Values can be BitOr'd together. See Constants, $LOB_FORMAT_KEYS_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: Boolean
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oReportDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = Object called in $oReportDoc not a Report document opened in Design mode.
+;                  @Error 1 @Extended 1 Return 0 = $oObj not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oObj not a Connection Object and not a Report document opened in Design mode.
 ;                  @Error 1 @Extended 3 Return 0 = $iFormatKey not an Integer.
 ;                  @Error 1 @Extended 4 Return 0 = $iFormatType not an Integer.
 ;                  --Initialization Errors--
@@ -1321,7 +1339,7 @@ EndFunc   ;==>_LOBase_FormatKeyDelete
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOBase_FormatKeyExists(ByRef $oReportDoc, $iFormatKey, $iFormatType = $LOB_FORMAT_KEYS_ALL)
+Func _LOBase_FormatKeyExists(ByRef $oObj, $iFormatKey, $iFormatType = $LOB_FORMAT_KEYS_ALL)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1329,14 +1347,23 @@ Func _LOBase_FormatKeyExists(ByRef $oReportDoc, $iFormatKey, $iFormatType = $LOB
 	Local $aiFormatKeys[0]
 	Local $tLocale
 
-	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oObj.supportsService("com.sun.star.sdbc.Connection") And Not $oObj.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsInt($iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsInt($iFormatType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 	$tLocale = __LOBase_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-	$oFormats = $oReportDoc.getNumberFormats()
+
+	If $oObj.supportsService("com.sun.star.sdbc.Connection") Then
+		$oFormats = $oObj.Parent.NumberFormatsSupplier.getNumberFormats()
+
+	Else
+		$oFormats = $oObj.getNumberFormats()
+	EndIf
+
 	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	$aiFormatKeys = $oFormats.queryKeys($iFormatType, $tLocale, False)
 	If Not IsArray($aiFormatKeys) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -1351,14 +1378,14 @@ EndFunc   ;==>_LOBase_FormatKeyExists
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_FormatKeyGetStandard
 ; Description ...: Retrieve the Standard Format for a specific Format Key Type.
-; Syntax ........: _LOBase_FormatKeyGetStandard(ByRef $oReportDoc, $iFormatKeyType)
-; Parameters ....: $oReportDoc          - [in/out] an object. A Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+; Syntax ........: _LOBase_FormatKeyGetStandard(ByRef $oObj, $iFormatKeyType)
+; Parameters ....: $oObj                - [in/out] an object. A Connection or Document object returned by a previous _LOBase_DatabaseConnectionGet, _LOBase_ReportConnect, or _LOBase_ReportOpen function.
 ;                  $iFormatKeyType      - an integer value (1-8196). The Format Key type to retrieve the standard Format for. See Constants $LOB_FORMAT_KEYS_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: Integer
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oReportDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = Object called in $oReportDoc not a Report document opened in Design mode.
+;                  @Error 1 @Extended 1 Return 0 = $oObj not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oObj not a Connection Object and not a Report document opened in Design mode.
 ;                  @Error 1 @Extended 3 Return 0 = $iFormatKeyType not an Integer, less than 1 or greater than 8196. See Constants $LOB_FORMAT_KEYS_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create a "com.sun.star.lang.Locale" Struct.
@@ -1374,7 +1401,7 @@ EndFunc   ;==>_LOBase_FormatKeyExists
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOBase_FormatKeyGetStandard(ByRef $oReportDoc, $iFormatKeyType)
+Func _LOBase_FormatKeyGetStandard(ByRef $oObj, $iFormatKeyType)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1382,13 +1409,20 @@ Func _LOBase_FormatKeyGetStandard(ByRef $oReportDoc, $iFormatKeyType)
 	Local $tLocale
 	Local $iStandard
 
-	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oObj.supportsService("com.sun.star.sdbc.Connection") And Not $oObj.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not __LOBase_IntIsBetween($iFormatKeyType, $LOB_FORMAT_KEYS_DEFINED, $LOB_FORMAT_KEYS_DURATION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$tLocale = __LOBase_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-	$oFormats = $oReportDoc.getNumberFormats()
+
+	If $oObj.supportsService("com.sun.star.sdbc.Connection") Then
+		$oFormats = $oObj.Parent.NumberFormatsSupplier.getNumberFormats()
+
+	Else
+		$oFormats = $oObj.getNumberFormats()
+	EndIf
+
 	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$iStandard = $oFormats.getStandardFormat($iFormatKeyType, $tLocale)
@@ -1400,18 +1434,19 @@ EndFunc   ;==>_LOBase_FormatKeyGetStandard
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_FormatKeyGetString
 ; Description ...: Retrieve a Format Key String.
-; Syntax ........: _LOBase_FormatKeyGetString(ByRef $oReportDoc, $iFormatKey)
-; Parameters ....: $oReportDoc          - [in/out] an object. A Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+; Syntax ........: _LOBase_FormatKeyGetString(ByRef $oObj, $iFormatKey)
+; Parameters ....: $oObj                - [in/out] an object. A Connection or Document object returned by a previous _LOBase_DatabaseConnectionGet, _LOBase_ReportConnect, or _LOBase_ReportOpen function.
 ;                  $iFormatKey          - an integer value. The Format Key to retrieve the string for.
 ; Return values .: Success: String
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oReportDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = Object called in $oReportDoc not a Report document opened in Design mode.
+;                  @Error 1 @Extended 1 Return 0 = $oObj not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oObj not a Connection Object and not a Report document opened in Design mode.
 ;                  @Error 1 @Extended 3 Return 0 = $iFormatKey not an Integer.
 ;                  @Error 1 @Extended 4 Return 0 = $iFormatKey not found in Document.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve requested Format Key Object.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Number Formats Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve requested Format Key Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return String = Success. Returning Format Key's Format String.
 ; Author ........: donnyh13
@@ -1421,35 +1456,45 @@ EndFunc   ;==>_LOBase_FormatKeyGetStandard
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOBase_FormatKeyGetString(ByRef $oReportDoc, $iFormatKey)
+Func _LOBase_FormatKeyGetString(ByRef $oObj, $iFormatKey)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $oFormatKey
+	Local $oFormats, $oFormatKey
 
-	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oObj.supportsService("com.sun.star.sdbc.Connection") And Not $oObj.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsInt($iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not _LOBase_FormatKeyExists($oReportDoc, $iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	$oFormatKey = $oReportDoc.getNumberFormats().getByKey($iFormatKey)
-	If Not IsObj($oFormatKey) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Key not found.
+	If Not _LOBase_FormatKeyExists($oObj, $iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+	If $oObj.supportsService("com.sun.star.sdbc.Connection") Then
+		$oFormats = $oObj.Parent.NumberFormatsSupplier.getNumberFormats()
+
+	Else
+		$oFormats = $oObj.getNumberFormats()
+	EndIf
+
+	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$oFormatKey = $oFormats.getByKey($iFormatKey)
+	If Not IsObj($oFormatKey) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; Key not found.
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oFormatKey.FormatString())
 EndFunc   ;==>_LOBase_FormatKeyGetString
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_FormatKeysGetList
-; Description ...: Retrieve an Array of Date/Time Format Keys.
-; Syntax ........: _LOBase_FormatKeysGetList(ByRef $oReportDoc[, $bIsUser = False[, $bUserOnly = False[, $iFormatKeyType = $LOB_FORMAT_KEYS_ALL]]])
-; Parameters ....: $oReportDoc          - [in/out] an object. A Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+; Description ...: Retrieve an Array of Format Keys.
+; Syntax ........: _LOBase_FormatKeysGetList(ByRef $oObj[, $bIsUser = False[, $bUserOnly = False[, $iFormatKeyType = $LOB_FORMAT_KEYS_ALL]]])
+; Parameters ....: $oObj                - [in/out] an object. A Connection or Document object returned by a previous _LOBase_DatabaseConnectionGet, _LOBase_ReportConnect, or _LOBase_ReportOpen function.
 ;                  $bIsUser             - [optional] a boolean value. Default is False. If True, Adds a third column to the return Array with a boolean, whether each Key is user-created or not.
 ;                  $bUserOnly           - [optional] a boolean value. Default is False. If True, only user-created Format Keys are returned.
 ;                  $iFormatKeyType      - [optional] an integer value (0-15881). Default is $LOB_FORMAT_KEYS_ALL. The Format Key type to retrieve an array of. Values can be BitOr'd together. See Constants, $LOB_FORMAT_KEYS_* as defined in LibreOfficeWriter_Constants.au3..
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oReportDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = Object called in $oReportDoc not a Report document opened in Design mode.
+;                  @Error 1 @Extended 1 Return 0 = $oObj not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oObj not a Connection Object and not a Report document opened in Design mode.
 ;                  @Error 1 @Extended 3 Return 0 = $bIsUser not a Boolean.
 ;                  @Error 1 @Extended 4 Return 0 = $bUserOnly not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $iFormatKeyType not an Integer.
@@ -1469,7 +1514,7 @@ EndFunc   ;==>_LOBase_FormatKeyGetString
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOBase_FormatKeysGetList(ByRef $oReportDoc, $bIsUser = False, $bUserOnly = False, $iFormatKeyType = $LOB_FORMAT_KEYS_ALL)
+Func _LOBase_FormatKeysGetList(ByRef $oObj, $bIsUser = False, $bUserOnly = False, $iFormatKeyType = $LOB_FORMAT_KEYS_ALL)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1479,18 +1524,26 @@ Func _LOBase_FormatKeysGetList(ByRef $oReportDoc, $bIsUser = False, $bUserOnly =
 	Local $tLocale
 	Local $iColumns = 3, $iCount = 0
 
-	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oObj.supportsService("com.sun.star.sdbc.Connection") And Not $oObj.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bIsUser) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsBool($bUserOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	$iColumns = ($bIsUser = True) ? ($iColumns) : (2)
-
 	If Not IsInt($iFormatKeyType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
+	$iColumns = ($bIsUser = True) ? ($iColumns) : (2)
 
 	$tLocale = __LOBase_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-	$oFormats = $oReportDoc.getNumberFormats()
+
+	If $oObj.supportsService("com.sun.star.sdbc.Connection") Then
+		$oFormats = $oObj.Parent.NumberFormatsSupplier.getNumberFormats()
+
+	Else
+		$oFormats = $oObj.getNumberFormats()
+	EndIf
+
 	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	$aiFormatKeys = $oFormats.queryKeys($iFormatKeyType, $tLocale, False)
 	If Not IsArray($aiFormatKeys) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 

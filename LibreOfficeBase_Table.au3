@@ -94,7 +94,7 @@ Func _LOBase_TableAdd(ByRef $oConnection, $sName, $sColName, $iColType = $LOB_DA
 	Local Const $__LOB_KEY_TYPE_PRIMARY = 1
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If $oConnection.ImplementationName() <> "com.sun.star.sdbc.drivers.OConnectionWrapper" Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsString($sColName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not __LOBase_IntIsBetween($iColType, $LOB_DATA_TYPE_LONGNVARCHAR, $LOB_DATA_TYPE_TIMESTAMP_WITH_TIMEZONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
@@ -157,7 +157,7 @@ Func _LOBase_TableAdd(ByRef $oConnection, $sName, $sColName, $iColType = $LOB_DA
 		Case $LOB_DATA_TYPE_NUMERIC, $LOB_DATA_TYPE_DECIMAL
 			$oColumn.Precision = 646456993
 
-			;~ 		Case $LOB_DATA_TYPE_DATE, $LOB_DATA_TYPE_TIME, $LOB_DATA_TYPE_TIMESTAMP; No value needed.
+;~ 		Case $LOB_DATA_TYPE_DATE, $LOB_DATA_TYPE_TIME, $LOB_DATA_TYPE_TIMESTAMP; No value needed.
 	EndSwitch
 
 	$oColumns.appendByDescriptor($oColumn)
@@ -533,28 +533,38 @@ EndFunc   ;==>_LOBase_TableColGetObjByName
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_TableColProperties
 ; Description ...: Set or Retrieve Column properties.
-; Syntax ........: _LOBase_TableColProperties(ByRef $oTable, ByRef $oColumn[, $iLength = Null[, $sDefaultVal = Null[, $bRequired = Null[, $iDecimalPlace = Null[, $bAutoValue = Null]]]]])
-; Parameters ....: $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex, _LOBase_TableGetObjByName or _LOBase_TableAdd function.
+; Syntax ........: _LOBase_TableColProperties(ByRef $oConnection, ByRef $oTable, ByRef $oColumn[, $iLength = Null[, $sDefaultVal = Null[, $bRequired = Null[, $iDecimalPlace = Null[, $bAutoValue = Null[, $iFormat = Null[, $iAlign = Null]]]]]]])
+; Parameters ....: $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
+;                  $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex, _LOBase_TableGetObjByName or _LOBase_TableAdd function.
 ;                  $oColumn             - [in/out] an object. A Column object returned by a previous _LOBase_TableColGetObjByIndex or _LOBase_TableColGetObjByName function.
 ;                  $iLength             - [optional] an integer value. Default is Null. The maximum number of characters allowed to be entered.
 ;                  $sDefaultVal         - [optional] a string value. Default is Null. The Default value of the column. See remarks.
 ;                  $bRequired           - [optional] a boolean value. Default is Null. If True, the column cannot be empty.
 ;                  $iDecimalPlace       - [optional] an integer value (0-32767). Default is Null. The Decimal place for numerical values.
 ;                  $bAutoValue          - [optional] a boolean value. Default is Null. If True, The column's value is auto-generated.
+;                  $iFormat             - [optional] an integer value. Default is Null. The Number Format Key to display the content in, retrieved from a previous _LOBase_FormatKeysGetList call, or created by _LOBase_FormatKeyCreate function.
+;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The alignment of the column's text. See Constants, $LOB_COL_TXT_ALIGN_* as defined in LibreOfficeBase_Constants.au3.
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oColumn not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $iLength not an Integer.
-;                  @Error 1 @Extended 4 Return 0 = $sDefaultVal not a String.
-;                  @Error 1 @Extended 5 Return 0 = $bRequired not a Boolean.
-;                  @Error 1 @Extended 6 Return 0 = $iDecimalPlace not an Integer, less than 0 or greater than 32,767.
-;                  @Error 1 @Extended 7 Return 0 = $bAutoValue not a Boolean.
+;                  @Error 1 @Extended 1 Return 0 = $oConnection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oConnection not a Connection Object.
+;                  @Error 1 @Extended 3 Return 0 = $oTable not an Object.
+;                  @Error 1 @Extended 4 Return 0 = $oColumn not an Object.
+;                  @Error 1 @Extended 5 Return 0 = $iLength not an Integer.
+;                  @Error 1 @Extended 6 Return 0 = $sDefaultVal not a String.
+;                  @Error 1 @Extended 7 Return 0 = $bRequired not a Boolean.
+;                  @Error 1 @Extended 8 Return 0 = $iDecimalPlace not an Integer, less than 0 or greater than 32,767.
+;                  @Error 1 @Extended 9 Return 0 = $bAutoValue not a Boolean.
+;                  @Error 1 @Extended 10 Return 0 = $iFormat not an Integer.
+;                  @Error 1 @Extended 11 Return 0 = Format key called in $iFormat not found.
+;                  @Error 1 @Extended 12 Return 0 = $iAlign not an Integer, less than 0 or greater than 2. See Constants, $LOB_COL_TXT_ALIGN_* as defined in LibreOfficeBase_Constants.au3.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create a Column descriptor.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to transfer old column properties to new column Object.
+;                  @Error 3 @Extended 1 Return 0 = Connection called in $oConnection is closed.
+;                  @Error 3 @Extended 2 Return 0 = Failed to transfer old column properties to new column Object.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve new column object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $iLength
@@ -562,73 +572,79 @@ EndFunc   ;==>_LOBase_TableColGetObjByName
 ;                  |                               4 = Error setting $bRequired
 ;                  |                               8 = Error setting $iDecimalPlace
 ;                  |                               16 = Error setting $bAutoValue
+;                  |                               32 = Error setting $iFormat
+;                  |                               64 = Error setting $iAlign
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: For $sDefaultVal, enter any numerical values as strings.
-;                  Both Format Key and Align settings don't seem to be currently settable/retrievable programmatically, so they are left out.
 ;                  Not all column types support all of these settings. It is the user's responsibility to know which are valid or not.
+;                  There seems to be Constant value for Default, Justified and Filled settings for $iAlign.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOBase_TableColDefinition
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOBase_TableColProperties(ByRef $oTable, ByRef $oColumn, $iLength = Null, $sDefaultVal = Null, $bRequired = Null, $iDecimalPlace = Null, $bAutoValue = Null)
+Func _LOBase_TableColProperties(ByRef $oConnection, ByRef $oTable, ByRef $oColumn, $iLength = Null, $sDefaultVal = Null, $bRequired = Null, $iDecimalPlace = Null, $bAutoValue = Null, $iFormat = Null, $iAlign = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0
 	Local $bAlter = False
 	Local $oNewCol
-	Local $asSettings[5]
+	Local $asSettings[7]
 	Local Const $__LOB_IS_REQUIRED_YES = 0, $__LOB_IS_REQUIRED_NO = 1
 
-	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-	If __LOBase_VarsAreNull($iLength, $sDefaultVal, $bRequired, $iDecimalPlace, $bAutoValue) Then
+	If __LOBase_VarsAreNull($iLength, $sDefaultVal, $bRequired, $iDecimalPlace, $bAutoValue, $iFormat, $iAlign) Then
 		__LOBase_ArrayFill($asSettings, $oColumn.Precision(), $oColumn.ControlDefault(), _
 				($oColumn.IsNullable() = $__LOB_IS_REQUIRED_YES) ? (True) : (False), _
-				$oColumn.Scale(), $oColumn.IsAutoIncrement())
+				$oColumn.Scale(), $oColumn.IsAutoIncrement(), $oColumn.FormatKey(), $oColumn.Align())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $asSettings)
 	EndIf
+
+	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oNewCol = $oTable.Columns.createDataDescriptor()
 	If Not IsObj($oNewCol) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	__LOBase_ColTransferProps($oNewCol, $oColumn)
-	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If ($iLength <> Null) Then
-		If Not IsInt($iLength) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		If Not IsInt($iLength) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oNewCol.Precision = $iLength
 		$bAlter = True
 	EndIf
 
 	If ($sDefaultVal <> Null) Then
-		If Not IsString($sDefaultVal) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not IsString($sDefaultVal) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oColumn.ControlDefault = $sDefaultVal
 		$iError = ($oColumn.ControlDefault() = $sDefaultVal) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bRequired <> Null) Then
-		If Not IsBool($bRequired) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not IsBool($bRequired) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oNewCol.IsNullable = ($bRequired) ? ($__LOB_IS_REQUIRED_YES) : ($__LOB_IS_REQUIRED_NO)
 		$bAlter = True
 	EndIf
 
 	If ($iDecimalPlace <> Null) Then
-		If Not __LOBase_IntIsBetween($iDecimalPlace, 0, 32767) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LOBase_IntIsBetween($iDecimalPlace, 0, 32767) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oNewCol.Scale = $iDecimalPlace
 		$bAlter = True
 	EndIf
 
 	If ($bAutoValue <> Null) Then
-		If Not IsBool($bAutoValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not IsBool($bAutoValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$oNewCol.IsAutoIncrement = $bAutoValue
 		$bAlter = True
 	EndIf
@@ -637,9 +653,25 @@ Func _LOBase_TableColProperties(ByRef $oTable, ByRef $oColumn, $iLength = Null, 
 		$oTable.alterColumnByName($oColumn.Name(), $oNewCol)
 
 		$oNewCol = $oTable.Columns.getByName($oColumn.Name())
-		If Not IsObj($oNewCol) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If Not IsObj($oNewCol) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 		$oColumn = $oNewCol
 	EndIf
+
+	; Have to set these after altering Column, else they are erased.
+	If ($iFormat <> Null) Then
+		If Not IsInt($iFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		If Not _LOBase_FormatKeyExists($oConnection, $iFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		$oColumn.FormatKey = $iFormat
+		$iError = ($oColumn.FormatKey() = $iFormat) ? ($iError) : (BitOR($iError, 32))
+	EndIf
+
+	If ($iAlign <> Null) Then
+		If Not __LOBase_IntIsBetween($iAlign, $LOB_COL_TXT_ALIGN_LEFT, $LOB_COL_TXT_ALIGN_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		$oColumn.Align = $iAlign
+		$iError = ($oColumn.Align() = $iAlign) ? ($iError) : (BitOR($iError, 64))
+	EndIf
+
+	ConsoleWrite($oNewCol.Align() & @CRLF)
 
 	$iError = ($iLength = Null) ? ($iError) : (($oColumn.Precision() = $iLength) ? ($iError) : (BitOR($iError, 1)))
 	$iError = ($bRequired = Null) ? ($iError) : (($oColumn.IsNullable() = (($bRequired) ? ($__LOB_IS_REQUIRED_YES) : ($__LOB_IS_REQUIRED_NO))) ? ($iError) : (BitOR($iError, 4)))
@@ -761,7 +793,7 @@ Func _LOBase_TableDelete(ByRef $oConnection, ByRef $oTable)
 	Local $sName
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If $oConnection.ImplementationName() <> "com.sun.star.sdbc.drivers.OConnectionWrapper" Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -812,7 +844,7 @@ Func _LOBase_TableExists(ByRef $oConnection, $sName)
 	Local $bReturn
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If $oConnection.ImplementationName() <> "com.sun.star.sdbc.drivers.OConnectionWrapper" Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -858,7 +890,7 @@ Func _LOBase_TableGetObjByIndex(ByRef $oConnection, $iTable)
 	Local $oTable, $oTables
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If $oConnection.ImplementationName() <> "com.sun.star.sdbc.drivers.OConnectionWrapper" Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -906,7 +938,7 @@ Func _LOBase_TableGetObjByName(ByRef $oConnection, $sName)
 	Local $oTable, $oTables
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If $oConnection.ImplementationName() <> "com.sun.star.sdbc.drivers.OConnectionWrapper" Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -1432,7 +1464,7 @@ Func _LOBase_TablesGetCount(ByRef $oConnection)
 	Local $iCount
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If $oConnection.ImplementationName() <> "com.sun.star.sdbc.drivers.OConnectionWrapper" Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -1474,7 +1506,7 @@ Func _LOBase_TablesGetNames(ByRef $oConnection)
 	Local $asNames[0]
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If $oConnection.ImplementationName() <> "com.sun.star.sdbc.drivers.OConnectionWrapper" Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 

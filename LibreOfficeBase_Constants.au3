@@ -37,6 +37,12 @@ Global Const _                                                                  
 		$LOB_CASEMAP_TITLE = 3, _                                                        ; The first character of each word is put in upper case.
 		$LOB_CASEMAP_SM_CAPS = 4                                                         ; All characters are put in upper case, but with a smaller font height.
 
+; Table Column Text Alignment
+Global Const _                                                                           ; com.sun.star.sdb.Align
+		$LOB_COL_TXT_ALIGN_LEFT = 0, _                                                   ; The Column's Text is aligned to the Left.
+		$LOB_COL_TXT_ALIGN_CENTER = 1, _                                                 ; The Column's Text is aligned in the center.
+		$LOB_COL_TXT_ALIGN_RIGHT = 2                                                     ; The Column's Text is aligned to the Right.
+
 ; Color in Long Color Format
 Global Const _
 		$LOB_COLOR_OFF = -1, _                                                           ; Turn Color off, or to automatic mode.

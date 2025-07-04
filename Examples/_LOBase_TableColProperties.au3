@@ -14,6 +14,7 @@ Func Example()
 	Local $oDoc, $oDBase, $oConnection, $oTable, $oColumn
 	Local $sSavePath
 	Local $avSettings[0]
+	Local $iFormatKey
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOBase_DocCreate(True, False)
@@ -46,13 +47,17 @@ Func Example()
 	$oColumn = _LOBase_TableColAdd($oTable, "AutoIt Col", $LOB_DATA_TYPE_NUMERIC, "", "A New Number Column.")
 	If @error Then Return _ERROR($oDoc, "Failed to add a Column to the Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
+	; Create a New Number Format Key.
+	$iFormatKey = _LOBase_FormatKeyCreate($oConnection, "#,##0.000")
+	If @error Then _ERROR($oDoc, "Failed to create a Format Key. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
 	; Set the Column's properties: Max character length = 55, Default value = "18", Entry is required, Decimal place in the third place,
 	; don't auto insert values.
-	_LOBase_TableColProperties($oTable, $oColumn, 55, "18", True, 3, False)
+	_LOBase_TableColProperties($oConnection, $oTable, $oColumn, 55, "18", True, 3, False, $iFormatKey, $LOB_COL_TXT_ALIGN_CENTER)
 	If @error Then Return _ERROR($oDoc, "Failed to set the Column's settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
-	$avSettings = _LOBase_TableColProperties($oTable, $oColumn)
+	$avSettings = _LOBase_TableColProperties($oConnection, $oTable, $oColumn)
 	If @error Then Return _ERROR($oDoc, "Failed to retrieve the Column's current settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Column's current settings are as follows: " & @CRLF & _
@@ -60,7 +65,9 @@ Func Example()
 			"The Default value is: " & $avSettings[1] & @CRLF & _
 			"Is this column required to be filled in? True/False: " & $avSettings[2] & @CRLF & _
 			"The Decimal place is: " & $avSettings[3] & @CRLF & _
-			"Is a value automatically inserted? True/False: " & $avSettings[4])
+			"Is a value automatically inserted? True/False: " & $avSettings[4] & @CRLF & _
+			"The Format Key used is: " & $avSettings[5] & @CRLF & _
+			"The alignment of the Column's text is (See UDF Constants): " & $avSettings[6])
 
 	; Close the connection.
 	_LOBase_DatabaseConnectionClose($oConnection)
