@@ -65,7 +65,7 @@ Func _LOBase_QueriesGetCount(ByRef $oConnection)
 	Local $iCount
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If $oConnection.ImplementationName() <> "com.sun.star.sdbc.drivers.OConnectionWrapper" Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -104,7 +104,7 @@ Func _LOBase_QueriesGetNames(ByRef $oConnection)
 	Local $asNames[0]
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If $oConnection.ImplementationName() <> "com.sun.star.sdbc.drivers.OConnectionWrapper" Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -160,7 +160,7 @@ Func _LOBase_QueryAddByName(ByRef $oConnection, $sQueryName, $sSourceName, $sFie
 	Local $sQuote
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If $oConnection.ImplementationName() <> "com.sun.star.sdbc.drivers.OConnectionWrapper" Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsString($sQueryName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsString($sSourceName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not IsString($sFieldName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
@@ -250,7 +250,7 @@ Func _LOBase_QueryAddBySQL(ByRef $oConnection, $sQueryName, $sSQL_Command)
 	Local $oQuery, $oQueries, $oQueryDesc
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If $oConnection.ImplementationName() <> "com.sun.star.sdbc.drivers.OConnectionWrapper" Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsString($sQueryName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsString($sSQL_Command) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
@@ -314,7 +314,7 @@ Func _LOBase_QueryDelete(ByRef $oConnection, ByRef $oQuery)
 	Local $sName
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If $oConnection.ImplementationName() <> "com.sun.star.sdbc.drivers.OConnectionWrapper" Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsObj($oQuery) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -367,7 +367,7 @@ Func _LOBase_QueryExists(ByRef $oConnection, $sName)
 	Local $bReturn
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If $oConnection.ImplementationName() <> "com.sun.star.sdbc.drivers.OConnectionWrapper" Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -627,7 +627,7 @@ Func _LOBase_QueryGetObjByIndex(ByRef $oConnection, $iQuery)
 	Local $oQuery, $oQueries
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If $oConnection.ImplementationName() <> "com.sun.star.sdbc.drivers.OConnectionWrapper" Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -675,7 +675,7 @@ Func _LOBase_QueryGetObjByName(ByRef $oConnection, $sName)
 	Local $oQuery, $oQueries
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If $oConnection.ImplementationName() <> "com.sun.star.sdbc.drivers.OConnectionWrapper" Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)

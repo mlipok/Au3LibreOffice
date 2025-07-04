@@ -684,7 +684,7 @@ Func _LOBase_SQLStatementCreate(ByRef $oConnection, $sSQL = Null)
 	Local $oStatement
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If $oConnection.ImplementationName() <> "com.sun.star.sdbc.drivers.OConnectionWrapper" Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsString($sSQL) And ($sSQL <> Null) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)

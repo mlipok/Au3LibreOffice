@@ -69,7 +69,7 @@ Func _LOBase_DatabaseAutoCommit(ByRef $oConnection, $bAutoCommit = Null)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If $oConnection.ImplementationName() <> "com.sun.star.sdbc.drivers.OConnectionWrapper" Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If ($bAutoCommit = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oConnection.getAutoCommit())
 
@@ -105,7 +105,7 @@ Func _LOBase_DatabaseCommit(ByRef $oConnection)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If $oConnection.ImplementationName() <> "com.sun.star.sdbc.drivers.OConnectionWrapper" Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oConnection.commit()
 
@@ -139,7 +139,7 @@ Func _LOBase_DatabaseConnectionClose(ByRef $oConnection)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If $oConnection.ImplementationName() <> "com.sun.star.sdbc.drivers.OConnectionWrapper" Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -255,7 +255,7 @@ Func _LOBase_DatabaseGetDefaultQuote(ByRef $oConnection)
 	Local $sQuote
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If $oConnection.ImplementationName() <> "com.sun.star.sdbc.drivers.OConnectionWrapper" Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$sQuote = $oConnection.MetaData.getIdentifierQuoteString()
 	If Not IsString($sQuote) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -482,7 +482,7 @@ Func _LOBase_DatabaseMetaDataQuery(ByRef $oConnection, $iQuery, $vParam1 = Null,
 	Local $sCall
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If $oConnection.ImplementationName() <> "com.sun.star.sdbc.drivers.OConnectionWrapper" Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not __LOBase_IntIsBetween($iQuery, $LOB_DBASE_META_ALL_PROCEDURES_ARE_CALLABLE, $LOB_DBASE_META_USES_LOCAL_FILES) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$sCall = __LOBase_DatabaseMetaGetQuery($iQuery)
@@ -933,7 +933,7 @@ Func _LOBase_DatabaseRollback(ByRef $oConnection)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If $oConnection.ImplementationName() <> "com.sun.star.sdbc.drivers.OConnectionWrapper" Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oConnection.rollback()
 

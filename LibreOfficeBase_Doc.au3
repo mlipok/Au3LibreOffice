@@ -1013,7 +1013,7 @@ Func _LOBase_DocTableUIOpenByName(ByRef $oDoc, ByRef $oConnection, $sTable, $bEd
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If $oConnection.ImplementationName() <> "com.sun.star.sdbc.drivers.OConnectionWrapper" Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsString($sTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not IsBool($bEdit) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
@@ -1079,7 +1079,7 @@ Func _LOBase_DocTableUIOpenByObject(ByRef $oDoc, ByRef $oConnection, ByRef $oTab
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If $oConnection.ImplementationName() <> "com.sun.star.sdbc.drivers.OConnectionWrapper" Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not IsBool($bEdit) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
