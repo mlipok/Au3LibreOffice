@@ -426,12 +426,14 @@ Func _LOBase_FormCreate(ByRef $oDoc, ByRef $oConnection, $sForm, $bOpen = False,
 	If $oSource.hasByName($sForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 	$aArgs[0] = __LOBase_SetPropertyValue("Hidden", True)
+	If Not IsObj($aArgs[0]) Then $iError = BitOR($iError, 1)
+
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
 	If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-	If Not IsObj($aArgs[0]) Then $iError = BitOR($iError, 1)
 	$oFormDoc = $oDesktop.loadComponentFromURL("private:factory/swriter", "_blank", $iURLFrameCreate, $aArgs)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
@@ -445,7 +447,7 @@ Func _LOBase_FormCreate(ByRef $oDoc, ByRef $oConnection, $sForm, $bOpen = False,
 		Sleep((IsInt($iCount / $__LOBCONST_SLEEP_DIV)) ? (10) : (0))
 	WEnd
 
-	ReDim $aArgs[0]
+	$aArgs[0] = __LOBase_SetPropertyValue("FilterName", "writer8")
 
 	$sPath &= $iCount & ".odt"
 	$oFormDoc.StoreAsUrl(_LOBase_PathConvert($sPath, $LOB_PATHCONV_OFFICE_RETURN), $aArgs)
