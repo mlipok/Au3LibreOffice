@@ -186,7 +186,7 @@ EndFunc   ;==>_LOBase_FormClose
 ;                  @Error 3 @Extended 2 Return 0 = Current LibreOffice window is not a Form Document.
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return Object = Success. Connected to the currently active window, returning the Form Document Object.
-;                  @Error 0 @Extended 2 Return Array = Success. Returning a Two columned Array with all open Form Documents. See Remarks.
+;                  @Error 0 @Extended ? Return Array = Success. Returning a Two columned Array with all open Form Documents. See Remarks. @Extended is set to number of results.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Returned array when connecting to all open Form Documents returns an array with Two columns per result. ($aArray[0][2]). Each result is stored in a separate row;
@@ -238,7 +238,7 @@ Func _LOBase_FormConnect($bConnectCurrent = True)
 			Sleep(10)
 		WEnd
 
-		Return SetError($__LO_STATUS_SUCCESS, 2, $aoConnectAll)
+		Return SetError($__LO_STATUS_SUCCESS, $iCount, $aoConnectAll)
 	EndIf
 EndFunc   ;==>_LOBase_FormConnect
 
