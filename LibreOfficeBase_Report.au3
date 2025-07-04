@@ -94,7 +94,7 @@
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If there are unsaved changes in the document when close is called, and $bForceClose is True, they will be lost.
-; Related .......:
+; Related .......: _LOBase_ReportOpen, _LOBase_ReportConnect, _LOBase_ReportDelete
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -457,7 +457,7 @@ EndFunc   ;==>_LOBase_ReportConFormattedFieldGeneral
 ;                  - To display the value of a column, you would call $sDataField with field:[??] where "??" represents the column's name. e.g. field:[Unique_ID].
 ;                  - To display the result of a function, you would call $sDataField with rpt:[??] where "??" represents the function name. e.g. rpt:[MaximumUnique_IDReport].
 ;                  - According to the "XReportControlModel" documentation, the following expression is also acceptable: rpt:24+24-47.
-; Related .......:
+; Related .......: _LOBase_ReportConImageConGeneral
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -534,7 +534,7 @@ EndFunc   ;==>_LOBase_ReportConImageConData
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  I could not find a property to set the TextDirection or Visible settings.
 ;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
-; Related .......:
+; Related .......: _LOBase_ReportConImageConData, _LOBase_ConvertColorToLong, _LOBase_ConvertColorFromLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -619,7 +619,7 @@ EndFunc   ;==>_LOBase_ReportConImageConGeneral
 ; Name ..........: _LOBase_ReportConInsert
 ; Description ...: Insert a control into a report section.
 ; Syntax ........: _LOBase_ReportConInsert(ByRef $oSection, $iControl, $iX, $iY, $iWidth, $iHeight[, $sName = ""])
-; Parameters ....: $oSection            - [in/out] an object. A section object returned by a previous _LOBase_ReportSectionGetObj function.
+; Parameters ....: $oSection            - [in/out] an object. A section object returned by a previous _LOBase_ReportSectionGetObj, _LOBase_ReportGroupAdd, or _LOBase_ReportGroupGetByIndex function.
 ;                  $iControl            - an integer value (1-32). The control type to insert. See Constants $LOB_REP_CON_TYPE_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $iX                  - an integer value.The X Coordinate, in Micrometers.
 ;                  $iY                  - an integer value. The Y Coordinate, in Micrometers.
@@ -955,7 +955,7 @@ EndFunc   ;==>_LOBase_ReportConLineGeneral
 ;                  Row 1, Column 1 contains the Document's full title with extension and the Report Name, separated by a colon. e.g. $aArray[0][1] = "Testing.odb : Report1"
 ;                  Row 1, Column 2 contains a Boolean value whether the Report is in Design mode (True) or not.
 ;                  Row 2, Column 0 contain the Object for the next document. And so on. e.g. $aArray[1][0] = $oDoc2
-; Related .......:
+; Related .......: _LOBase_ReportOpen, _LOBase_ReportClose
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1086,7 +1086,7 @@ EndFunc   ;==>_LOBase_ReportConPosition
 ; Name ..........: _LOBase_ReportConsGetList
 ; Description ...: Retrieve an array of Control Objects contained in a Report's Section.
 ; Syntax ........: _LOBase_ReportConsGetList(ByRef $oSection[, $iType = $LOB_REP_CON_TYPE_ALL])
-; Parameters ....: $oSection            - [in/out] an object. A section object returned by a previous _LOBase_ReportSectionGetObj function.
+; Parameters ....: $oSection            - [in/out] an object. A section object returned by a previous _LOBase_ReportSectionGetObj, _LOBase_ReportGroupAdd, or _LOBase_ReportGroupGetByIndex function.
 ;                  $iType               - [optional] an integer value (1-63). Default is $LOB_REP_CON_TYPE_ALL. The type of control(s) to return in the array. Can be BitOr'd together. See Constants $LOB_REP_CON_TYPE_* as defined in LibreOfficeBase_Constants.au3.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1102,7 +1102,7 @@ EndFunc   ;==>_LOBase_ReportConPosition
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOBase_ReportConInsert
+; Related .......: _LOBase_ReportConDelete, _LOBase_ReportConInsert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1169,7 +1169,7 @@ EndFunc   ;==>_LOBase_ReportConsGetList
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......:
+; Related .......: _LOBase_ConvertFromMicrometer, _LOBase_ConvertToMicrometer, _LOBase_ReportConPosition
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1356,7 +1356,7 @@ EndFunc   ;==>_LOBase_ReportCopy
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Modifying these values may open the "Add a Field" dialogue.
-; Related .......:
+; Related .......: _LOBase_ReportGeneral
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1434,7 +1434,7 @@ EndFunc   ;==>_LOBase_ReportData
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To delete a report contained in a folder, you MUST prefix the Report name called in $sName by the folder path it is located in, separated by forward slashes (/). e.g. to delete ReportXYZ located in folder3, which is located in Folder 2, which is located inside folder 1, you would call $sName with the following path: Folder1/Folder2/Folder3/ReportXYZ
-; Related .......:
+; Related .......: _LOBase_ReportCopy, _LOBase_ReportsGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1513,7 +1513,7 @@ EndFunc   ;==>_LOBase_ReportDelete
 ;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......:
+; Related .......: _LOBase_ReportPageFooter, _LOBase_ReportPageHeader, _LOBase_ReportFooter, _LOBase_ReportHeader, _LOBase_ReportGroupFooter, _LOBase_ReportGroupHeader, _LOBase_ConvertColorFromLong, _LOBase_ConvertColorToLong, _LOBase_ConvertToMicrometer, _LOBase_ConvertFromMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1645,7 +1645,7 @@ EndFunc   ;==>_LOBase_ReportDocVisible
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To narrow the search for a Report down to a specific folder, you MUST prefix the Report name called in $sName by the folder path to look in, separated by forward slashes (/). e.g. to search for ReportXYZ located in folder3, which is located in Folder 2, which is located inside folder 1, you would call $sName with the following path: Folder1/Folder2/Folder3/ReportXYZ
-; Related .......:
+; Related .......: _LOBase_ReportsGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1764,7 +1764,7 @@ EndFunc   ;==>_LOBase_ReportExists
 ;                  To copy a Folder contained in a folder, you MUST prefix the Folder name called in $sOutputFolder by the folder path you want it to be located in, separated by forward slashes (/). e.g. to create FolderXYZ located in folder3, which is located in Folder 2, which is located inside folder 1, you would call $sOutputFolder with the following path: Folder1/Folder2/Folder3/FolderXYZ
 ;                  Copying a Folder will copy all contents also.
 ;                  If only a name is called in $sOutputFolder, the Folder will be created in the main directory, i.e. not inside of any folders.
-; Related .......:
+; Related .......: _LOBase_ReportFolderCreate, _LOBase_ReportFolderDelete
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1849,7 +1849,7 @@ EndFunc   ;==>_LOBase_ReportFolderCopy
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To create a Folder inside a folder, the Folder name MUST be prefixed by the folder path, separated by forward slashes (/). e.g. to create FolderXYZ contained in folder 3, which is located in Folder 2, which is located inside folder 1, you would call $sFolder with the following path: Folder1/Folder2/Folder3/FolderXYZ.
-; Related .......:
+; Related .......: _LOBase_ReportFolderCopy, _LOBase_ReportFolderDelete
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1911,7 +1911,7 @@ EndFunc   ;==>_LOBase_ReportFolderCreate
 ; Modified ......:
 ; Remarks .......: To delete a Folder contained in a folder, you MUST prefix the Folder name called in $sName by the folder path it is located in, separated by forward slashes (/). e.g. to delete FolderXYZ located in folder3, which is located in Folder 2, which is located inside folder 1, you would call $sName with the following path: Folder1/Folder2/Folder3/FolderXYZ
 ;                  Deleting a Folder will delete all contents also.
-; Related .......:
+; Related .......: _LOBase_ReportFolderCreate _LOBase_ReportFolderCopy
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1974,7 +1974,7 @@ EndFunc   ;==>_LOBase_ReportFolderDelete
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To narrow the search for a Folder down to a specific folder, you MUST prefix the Folder name called in $sName by the folder path to look in, separated by forward slashes (/). e.g. to search for FolderXYZ located in folder3, which is located in Folder 2, which is located inside folder 1, you would call $sName with the following path: Folder1/Folder2/Folder3/FolderXYZ
-; Related .......:
+; Related .......: _LOBase_ReportFoldersGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2150,7 +2150,7 @@ EndFunc   ;==>_LOBase_ReportFolderRename
 ; Modified ......:
 ; Remarks .......: $sFolder can be left as a blank string "", which will either return only the count of main level Folders (not located in folders), or if $bExhaustive is set to True, it will return a count of all Folders contained in the document.
 ;                  You can narrow the Folder count down to a specific folder by calling the appropriate path for the folder, separated by forward slashes (/), e.g. to get a count of Folders contained in folder 3, which is located in Folder 2, which is located inside folder 1, you would call $sFolder with the following path: Folder1/Folder2/Folder3
-; Related .......:
+; Related .......: _LOBase_ReportFoldersGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2256,7 +2256,7 @@ EndFunc   ;==>_LOBase_ReportFoldersGetCount
 ;                  All Folders located in sub-folders will have the folder path prefixed to the Folder name, separated by forward slashes (/). e.g. Folder1/Folder2/Folder3.
 ;                  Calling $bExhaustive with True when searching inside a Folder, will get all Folder names from inside that folder, and all sub-folders.
 ;                  The order of the Folder names inside the folders may not necessarily be in proper order, i.e. if there are two sub folders, and folders inside the first sub-folder, the two folders will be listed first, then the folders inside the first sub-folder.
-; Related .......:
+; Related .......: _LOBase_ReportFoldersGetCount
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2385,7 +2385,7 @@ EndFunc   ;==>_LOBase_ReportFoldersGetNames
 ;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......:
+; Related .......: _LOBase_ReportPageFooter, _LOBase_ReportPageHeader, _LOBase_ReportHeader, _LOBase_ReportDetail, _LOBase_ReportGroupFooter, _LOBase_ReportGroupHeader, _LOBase_ConvertColorFromLong, _LOBase_ConvertColorToLong, _LOBase_ConvertToMicrometer, _LOBase_ConvertFromMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2532,7 +2532,7 @@ EndFunc   ;==>_LOBase_ReportFooter
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......:
+; Related .......: _LOBase_ReportData
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2656,7 +2656,7 @@ EndFunc   ;==>_LOBase_ReportGroupAdd
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......:
+; Related .......: _LOBase_ReportGroupDeleteByObj, _LOBase_ReportGroupAdd
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2699,7 +2699,7 @@ EndFunc   ;==>_LOBase_ReportGroupDeleteByIndex
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......:
+; Related .......: _LOBase_ReportGroupDeleteByIndex, _LOBase_ReportGroupAdd
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2782,7 +2782,7 @@ EndFunc   ;==>_LOBase_ReportGroupDeleteByObj
 ;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......:
+; Related .......: _LOBase_ReportPageFooter, _LOBase_ReportPageHeader, _LOBase_ReportFooter, _LOBase_ReportHeader, _LOBase_ReportDetail, _LOBase_ReportGroupHeader, _LOBase_ConvertColorFromLong, _LOBase_ConvertColorToLong, _LOBase_ConvertToMicrometer, _LOBase_ConvertFromMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2994,7 +2994,7 @@ EndFunc   ;==>_LOBase_ReportGroupGetByIndex
 ;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......:
+; Related .......: _LOBase_ReportPageFooter, _LOBase_ReportPageHeader, _LOBase_ReportFooter, _LOBase_ReportHeader, _LOBase_ReportDetail, _LOBase_ReportGroupFooter, _LOBase_ConvertColorFromLong, _LOBase_ConvertColorToLong, _LOBase_ConvertToMicrometer, _LOBase_ConvertFromMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3289,7 +3289,7 @@ EndFunc   ;==>_LOBase_ReportGroupSort
 ;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......:
+; Related .......: _LOBase_ReportPageFooter, _LOBase_ReportPageHeader, _LOBase_ReportFooter, _LOBase_ReportDetail, _LOBase_ReportGroupFooter, _LOBase_ReportGroupHeader, _LOBase_ConvertColorFromLong, _LOBase_ConvertColorToLong, _LOBase_ConvertToMicrometer, _LOBase_ConvertFromMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3416,7 +3416,7 @@ EndFunc   ;==>_LOBase_ReportHeader
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......:
+; Related .......: _LOBase_ReportSave
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3463,7 +3463,7 @@ EndFunc   ;==>_LOBase_ReportIsModified
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To open a Report located inside a folder, the Report name MUST be prefixed by the folder path, separated by forward slashes (/). e.g. to open ReportXYZ contained in folder 3, which is located in Folder 2, which is located inside folder 1, you would call $sName with the following path: Folder1/Folder2/Folder3/ReportXYZ.
-; Related .......:
+; Related .......: _LOBase_ReportClose, _LOBase_ReportConnect, _LOBase_ReportsGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3558,7 +3558,7 @@ EndFunc   ;==>_LOBase_ReportOpen
 ;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......:
+; Related .......: _LOBase_ReportPageHeader, _LOBase_ReportFooter, _LOBase_ReportHeader, _LOBase_ReportDetail, _LOBase_ReportGroupFooter, _LOBase_ReportGroupHeader, _LOBase_ConvertColorFromLong, _LOBase_ConvertColorToLong, _LOBase_ConvertToMicrometer, _LOBase_ConvertFromMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3688,7 +3688,7 @@ EndFunc   ;==>_LOBase_ReportPageFooter
 ;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......:
+; Related .......: _LOBase_ReportPageFooter, _LOBase_ReportFooter, _LOBase_ReportHeader, _LOBase_ReportDetail, _LOBase_ReportGroupFooter, _LOBase_ReportGroupHeader, _LOBase_ConvertColorFromLong, _LOBase_ConvertColorToLong, _LOBase_ConvertToMicrometer, _LOBase_ConvertFromMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3865,7 +3865,7 @@ EndFunc   ;==>_LOBase_ReportRename
 ;                  @Error 0 @Extended 0 Return 1 = Success. Report was successfully saved.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:
+; Remarks .......: _LOBase_ReportIsModified
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -4039,7 +4039,7 @@ EndFunc   ;==>_LOBase_ReportSectionGetObj
 ; Modified ......:
 ; Remarks .......: $sFolder can be left as a blank string "", which will either return only the count of main level Reports (not located in folders), or if $bExhaustive is set to True, the return will be a count of all Reports contained in the document.
 ;                  You can narrow the Report count down to a specific folder by calling the appropriate path for the folder, separated by forward slashes (/), e.g. to get a count of Reports contained in folder 3, which is located in Folder 2, which is located inside folder 1, you would call $sFolder with the following path: Folder1/Folder2/Folder3
-; Related .......:
+; Related .......: _LOBase_ReportsGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4149,7 +4149,7 @@ EndFunc   ;==>_LOBase_ReportsGetCount
 ;                  All Reports located in folders will have the folder path prefixed to the Report name, separated by forward slashes (/). e.g. Folder1/Folder2/Folder3/ReportXYZ.
 ;                  Calling $bExhaustive with True when searching inside a Folder, will get all Report names from inside that folder, and all sub-folders.
 ;                  The order of the Report names inside the folders may not necessarily be in proper order, i.e. if there are two sub folders, and Folders inside the first sub-folder, the Reports inside the two folders will be listed first, then the Reports inside the folders inside the first sub-folder.
-; Related .......:
+; Related .......: _LOBase_ReportsGetCount
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
