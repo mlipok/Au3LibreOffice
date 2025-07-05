@@ -2,7 +2,6 @@
 
 #include "..\LibreOfficeCalc.au3"
 
-
 Example()
 
 Func Example()
