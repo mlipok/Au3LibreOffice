@@ -3,7 +3,6 @@
 
 #include "..\LibreOfficeBase.au3"
 
-
 Global $sPath
 
 Example()

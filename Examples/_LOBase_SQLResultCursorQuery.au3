@@ -42,24 +42,24 @@ Func Example()
 
 	Do
 		MsgBox($MB_OK + $MB_TOPMOST, Default, "The Current status of the Result Set Cursor is: " & @CRLF & _
-		"IS_BEFORE_FIRST? True/False : " & _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_IS_BEFORE_FIRST)& @CRLF & _
-		"IS_FIRST? True/False : " & _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_IS_FIRST)& @CRLF & _
-		"IS_LAST? True/False : " & _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_IS_LAST)& @CRLF & _
-		"IS_AFTER_LAST? True/False : " & _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_IS_AFTER_LAST)& @CRLF & _
-		"GET_ROW: " & _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_GET_ROW))
+				"IS_BEFORE_FIRST? True/False : " & _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_IS_BEFORE_FIRST) & @CRLF & _
+				"IS_FIRST? True/False : " & _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_IS_FIRST) & @CRLF & _
+				"IS_LAST? True/False : " & _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_IS_LAST) & @CRLF & _
+				"IS_AFTER_LAST? True/False : " & _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_IS_AFTER_LAST) & @CRLF & _
+				"GET_ROW: " & _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_GET_ROW))
 
-	; Move the Cursor to the first record.
-	_LOBase_SQLResultCursorMove($oResult, $LOB_RESULT_CURSOR_MOVE_NEXT)
-	If @error Then Return _ERROR($oDoc, "Failed to move Result Row Cursor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+		; Move the Cursor to the first record.
+		_LOBase_SQLResultCursorMove($oResult, $LOB_RESULT_CURSOR_MOVE_NEXT)
+		If @error Then Return _ERROR($oDoc, "Failed to move Result Row Cursor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-		Until _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_IS_AFTER_LAST)
+	Until _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_IS_AFTER_LAST)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Current status of the Result Set Cursor is: " & @CRLF & _
-		"IS_BEFORE_FIRST? True/False : " & _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_IS_BEFORE_FIRST)& @CRLF & _
-		"IS_FIRST? True/False : " & _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_IS_FIRST)& @CRLF & _
-		"IS_LAST? True/False : " & _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_IS_LAST)& @CRLF & _
-		"IS_AFTER_LAST? True/False : " & _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_IS_AFTER_LAST)& @CRLF & _
-		"GET_ROW: " & _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_GET_ROW))
+			"IS_BEFORE_FIRST? True/False : " & _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_IS_BEFORE_FIRST) & @CRLF & _
+			"IS_FIRST? True/False : " & _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_IS_FIRST) & @CRLF & _
+			"IS_LAST? True/False : " & _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_IS_LAST) & @CRLF & _
+			"IS_AFTER_LAST? True/False : " & _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_IS_AFTER_LAST) & @CRLF & _
+			"GET_ROW: " & _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_GET_ROW))
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to Close and Delete the Document.")
 
