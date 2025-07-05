@@ -710,7 +710,7 @@ Func _LOBase_ReportConInsert(ByRef $oSection, $iControl, $iX, $iY, $iWidth, $iHe
 	$oControl.Size = $tSize
 
 	$oSection.Add($oControl)
-;~
+
 	; Have to set Position after insertion.
 	$tPos = $oControl.Position()
 	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
