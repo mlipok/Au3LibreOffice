@@ -15,7 +15,7 @@
 ; Description ...: Provides basic functionality through AutoIt for Adding, Deleting, and modifying, etc. L.O. Base Reports.
 ; Author(s) .....: donnyh13, mLipok
 ; Dll ...........:
-; Notes .........: Presently I am unable to create a new Report.
+; Notes .........:
 ;
 ; ===============================================================================================================================
 
@@ -34,6 +34,7 @@
 ; _LOBase_ReportConsGetList
 ; _LOBase_ReportConSize
 ; _LOBase_ReportCopy
+; _LOBase_ReportCreate
 ; _LOBase_ReportData
 ; _LOBase_ReportDelete
 ; _LOBase_ReportDetail
@@ -72,7 +73,7 @@
 ; Name ..........: _LOBase_ReportClose
 ; Description ...: Close an opened Report Document.
 ; Syntax ........: _LOBase_ReportClose(ByRef $oReportDoc[, $bForceClose = False])
-; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, _LOBase_ReportOpen or _LOBase_ReportCreate function.
 ;                  $bForceClose         - [optional] a boolean value. Default is False. If True, the Report document will be closed regardless if there are unsaved changes. See remarks.
 ; Return values .: Boolean
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1322,10 +1323,142 @@ Func _LOBase_ReportCopy(ByRef $oDoc, ByRef $oConnection, $sInputReport, $sOutput
 EndFunc   ;==>_LOBase_ReportCopy
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportCreate
+; Description ...: Create and Insert a new Report Document into a Base Document.
+; Syntax ........: _LOBase_ReportCreate(ByRef $oDoc, ByRef $oConnection, $sReport[, $bOpen = False[, $bVisible = True]])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOBase_DocOpen, _LOBase_DocConnect, or _LOBase_DocCreate function.
+;                  $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
+;                  $sReport             - a string value. The Name of the Report to Create. Also the Sub-directory to place the Report in. See Remarks.
+;                  $bOpen               - [optional] a boolean value. Default is False. If True, the new Report will be opened in Design mode.
+;                  $bVisible            - [optional] a boolean value. Default is True. If True, the Report will be visible when opened.
+; Return values .: Success: 1 or Object
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oConnection not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $sReport not a String.
+;                  @Error 1 @Extended 4 Return 0 = $bOpen not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $bVisible not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = Folder or Sub-Folder not found.
+;                  @Error 1 @Extended 7 Return 0 = Name called in $sReport already exists in Folder.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create com.sun.star.ServiceManager Object.
+;                  @Error 2 @Extended 2 Return 0 = Failed to create com.sun.star.frame.Desktop Object.
+;                  @Error 2 @Extended 3 Return 0 = Failed to open a new Database Document instance.
+;                  @Error 2 @Extended 4 Return 0 = Failed to create com.sun.star.sdb.DocumentDefinition Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Connection called in $oConnection is closed.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Report Documents Object.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Destination Folder Object.
+;                  @Error 3 @Extended 4 Return 0 = Failed to insert new Report into Base Document.
+;                  @Error 3 @Extended 5 Return 0 = Failed to open new Report Document.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $bVisible
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. New Report was successfully inserted.
+;                  @Error 0 @Extended 1 Return Object = Success. Returning opened Report Document's Object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: To create a Report inside a folder, the Report name MUST be prefixed by the folder path, separated by forward slashes (/). e.g. to create ReportXYZ contained in folder 3, which is located in Folder 2, which is located inside folder 1, you would call $sReport with the following path: Folder1/Folder2/Folder3/ReportXYZ.
+;                  When created, the report will not have a Data source set, so it will not be able to be opened in viewing mode, only in Design mode.
+;                  When created, the report will have neither Page Header nor Page Footer enabled.
+; Related .......: _LOBase_ReportDelete, _LOBase_ReportCopy
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportCreate(ByRef $oDoc, ByRef $oConnection, $sReport, $bOpen = False, $bVisible = True)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oServiceManager, $oDesktop, $oSource, $oReportDoc, $oDocDef
+	Local $asSplit[0]
+	Local Const $iURLFrameCreate = 8 ; frame will be created if not found
+	Local $aArgs[1]
+	Local $iError = 0, $iCount = 0
+	Local $sPath = @TempDir & "AutoIt_Report_Temp_Doc_"
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsString($sReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bOpen) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
+	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$oSource = $oDoc.ReportDocuments()
+	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	$asSplit = StringSplit($sReport, "/")
+
+	For $i = 1 To $asSplit[0] - 1
+		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oSource = $oSource.getByName($asSplit[$i])
+		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	Next
+
+	$sReport = $asSplit[$asSplit[0]] ; Last element of Array will be the Report name to Create
+
+	If $oSource.hasByName($sReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
+	$aArgs[0] = __LOBase_SetPropertyValue("Hidden", True)
+	If Not IsObj($aArgs[0]) Then $iError = BitOR($iError, 1)
+
+	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
+	If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+	$oReportDoc = $oDesktop.loadComponentFromURL("private:factory/sdatabase", "_blank", $iURLFrameCreate, $aArgs)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+
+	While FileExists($sPath & $iCount & ".odb")
+		$iCount += 1
+		Sleep((IsInt($iCount / $__LOBCONST_SLEEP_DIV)) ? (10) : (0))
+	WEnd
+
+	$aArgs[0] = __LOBase_SetPropertyValue("FilterName", "StarOffice XML (Base) Report")
+
+	$sPath &= $iCount & ".odb"
+	$oReportDoc.StoreAsUrl(_LOBase_PathConvert($sPath, $LOB_PATHCONV_OFFICE_RETURN), $aArgs)
+	$oReportDoc.close(True)
+
+	ReDim $aArgs[3]
+
+	$aArgs[0] = __LOBase_SetPropertyValue("Name", $sReport)
+	$aArgs[1] = __LOBase_SetPropertyValue("Parent", $oDoc.ReportDocuments())
+	$aArgs[2] = __LOBase_SetPropertyValue("URL", _LOBase_PathConvert($sPath, $LOB_PATHCONV_OFFICE_RETURN))
+
+	$oDocDef = $oSource.createInstanceWithArguments("com.sun.star.sdb.DocumentDefinition", $aArgs)
+	If Not IsObj($oDocDef) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+
+	$oSource.insertbyName($sReport, $oDocDef)
+
+	FileDelete($sPath) ; Delete the file, as it is no longer needed.
+
+	If Not $oSource.hasByName($sReport) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
+	If $bOpen Then
+		If Not $oDoc.CurrentController.isConnected() Then $oDoc.CurrentController.connect()
+
+		$oReportDoc = $oSource.getByName($sReport).openDesign()
+		If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+
+		$oReportDoc.CurrentController.Frame.ContainerWindow.Visible = $bVisible
+		If ($oReportDoc.CurrentController.Frame.ContainerWindow.isVisible() <> $bVisible) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, $oReportDoc)
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $oReportDoc)
+	EndIf
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOBase_ReportCreate
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_ReportData
 ; Description ...: Set or Retrieve Data related properties for a Report Document.
 ; Syntax ........: _LOBase_ReportData(ByRef $oReportDoc[, $iContentType = Null[, $sContent = Null[, $bAnalyzeSQL = Null[, $sFilter = Null[, $iReportOutput = Null]]]]])
-; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, _LOBase_ReportOpen or _LOBase_ReportCreate function.
 ;                  $iContentType        - [optional] an integer value (0-2). Default is Null. The Type of data source for the Report. See Constants, $LOB_REP_CONTENT_TYPE_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $sContent            - [optional] a string value. Default is Null. The Content to be used for the Report, either a Table or Query name, or an SQL statement.
 ;                  $bAnalyzeSQL         - [optional] a boolean value. Default is Null. If True, SQL commands will be analyzed by LibreOffice.
@@ -1475,7 +1608,7 @@ EndFunc   ;==>_LOBase_ReportDelete
 ; Name ..........: _LOBase_ReportDetail
 ; Description ...: Set or Retrieve Report Detail section properties.
 ; Syntax ........: _LOBase_ReportDetail(ByRef $oReportDoc[, $sName = Null[, $iForceNewPage = Null[, $bKeepTogether = Null[, $bVisible = Null[, $iHeight = Null[, $sCondPrint = Null[, $iBackColor = Null]]]]]]])
-; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, _LOBase_ReportOpen or _LOBase_ReportCreate function.
 ;                  $sName               - [optional] a string value. Default is Null. The name of the Section.
 ;                  $iForceNewPage       - [optional] an integer value (0-3). Default is Null. If and when to force a new page. See Constants, $LOB_REP_FORCE_PAGE_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $bKeepTogether       - [optional] a boolean value. Default is Null. If True, the section should be printed on one page.
@@ -1583,7 +1716,7 @@ EndFunc   ;==>_LOBase_ReportDetail
 ; Name ..........: _LOBase_FormDocVisible
 ; Description ...: Set or retrieve the current visibility of a document.
 ; Syntax ........: _LOBase_FormDocVisible(ByRef $oReportDoc[, $bVisible = Null])
-; Parameters ....: $oReportDoc          - [in/out] an object.  A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+; Parameters ....: $oReportDoc          - [in/out] an object.  A Report Document object returned by a previous _LOBase_ReportConnect, _LOBase_ReportOpen or _LOBase_ReportCreate function.
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the document is visible.
 ; Return values .: Success: 1 or Boolean.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -2343,7 +2476,7 @@ EndFunc   ;==>_LOBase_ReportFoldersGetNames
 ; Name ..........: _LOBase_ReportFooter
 ; Description ...: Set or Retrieve a Report's Report Footer properties.
 ; Syntax ........: _LOBase_ReportFooter(ByRef $oReportDoc[, $bEnabled = Null[, $sName = Null[, $iForceNewPage = Null[, $bKeepTogether = Null[, $bVisible = Null[, $iHeight = Null[, $sCondPrint = Null[, $iBackColor = Null]]]]]]]])
-; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, _LOBase_ReportOpen or _LOBase_ReportCreate function.
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the Report Footer is enabled.
 ;                  $sName               - [optional] a string value. Default is Null. The name of the Section.
 ;                  $iForceNewPage       - [optional] an integer value (0-3). Default is Null. If and when to force a new page. See Constants, $LOB_REP_FORCE_PAGE_* as defined in LibreOfficeBase_Constants.au3.
@@ -2502,7 +2635,7 @@ EndFunc   ;==>_LOBase_ReportFooter
 ; Name ..........: _LOBase_ReportGeneral
 ; Description ...: Set or Retrieve General Report Document properties.
 ; Syntax ........: _LOBase_ReportGeneral(ByRef $oReportDoc[, $sName = Null[, $iPageHeader = Null[, $iPageFooter = Null[, $bAutoGrow = Null[, $bPrintRep = Null]]]]])
-; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, _LOBase_ReportOpen or _LOBase_ReportCreate function.
 ;                  $sName               - [optional] a string value. Default is Null. The name of the Report. This is separate from the save name of the Report contained in the Database.
 ;                  $iPageHeader         - [optional] an integer value (0-3). Default is Null. Determines if a Page Header is printed on a page that also contains a Report Header. See Constants, $LOB_REP_PAGE_PRINT_OPT_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $iPageFooter         - [optional] an integer value (0-3). Default is Null. Determines if a Page Footer is printed on a page that also contains a Report Footer. See Constants, $LOB_REP_PAGE_PRINT_OPT_* as defined in LibreOfficeBase_Constants.au3.
@@ -2589,7 +2722,7 @@ EndFunc   ;==>_LOBase_ReportGeneral
 ; Name ..........: _LOBase_ReportGroupAdd
 ; Description ...: Add a Group to the Report.
 ; Syntax ........: _LOBase_ReportGroupAdd(ByRef $oReportDoc[, $iPosition = Null])
-; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, _LOBase_ReportOpen or _LOBase_ReportCreate function.
 ;                  $iPosition           - [optional] an integer value. Default is Null. The position to insert the new Group. 0 Based, call Null to insert at the end.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -2640,7 +2773,7 @@ EndFunc   ;==>_LOBase_ReportGroupAdd
 ; Name ..........: _LOBase_ReportGroupDeleteByIndex
 ; Description ...: Delete a Group by position.
 ; Syntax ........: _LOBase_ReportGroupDeleteByIndex(ByRef $oReportDoc, $iGroup)
-; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, _LOBase_ReportOpen or _LOBase_ReportCreate function.
 ;                  $iGroup              - an integer value. The Index position of the Group to Delete. 0 based.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -2910,7 +3043,7 @@ EndFunc   ;==>_LOBase_ReportGroupFooter
 ; Name ..........: _LOBase_ReportGroupGetByIndex
 ; Description ...: Retrieve a Group Object by position.
 ; Syntax ........: _LOBase_ReportGroupGetByIndex(ByRef $oReportDoc, $iReport)
-; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, _LOBase_ReportOpen or _LOBase_ReportCreate function.
 ;                  $iReport             - an integer value. The index position for the Group to retrieve the Object for. 0 Based.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -3122,7 +3255,7 @@ EndFunc   ;==>_LOBase_ReportGroupHeader
 ; Name ..........: _LOBase_ReportGroupsGetCount
 ; Description ...: Retrieve a count of Report Groups.
 ; Syntax ........: _LOBase_ReportGroupsGetCount(ByRef $oReportDoc)
-; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, _LOBase_ReportOpen or _LOBase_ReportCreate function.
 ; Return values .: Success: Integer
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -3247,7 +3380,7 @@ EndFunc   ;==>_LOBase_ReportGroupSort
 ; Name ..........: _LOBase_ReportHeader
 ; Description ...: Set or Retrieve a Report's Report Header properties.
 ; Syntax ........: _LOBase_ReportHeader(ByRef $oReportDoc[, $bEnabled = Null[, $sName = Null[, $iForceNewPage = Null[, $bKeepTogether = Null[, $bVisible = Null[, $iHeight = Null[, $sCondPrint = Null[, $iBackColor = Null]]]]]]]])
-; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, _LOBase_ReportOpen or _LOBase_ReportCreate function.
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the Report Header is enabled.
 ;                  $sName               - [optional] a string value. Default is Null. The name of the Section.
 ;                  $iForceNewPage       - [optional] an integer value (0-3). Default is Null. If and when to force a new page. See Constants, $LOB_REP_FORCE_PAGE_* as defined in LibreOfficeBase_Constants.au3.
@@ -3406,7 +3539,7 @@ EndFunc   ;==>_LOBase_ReportHeader
 ; Name ..........: _LOBase_ReportIsModified
 ; Description ...: Test whether the Report has been modified since being created or since the last save.
 ; Syntax ........: _LOBase_ReportIsModified(ByRef $oReportDoc)
-; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, _LOBase_ReportOpen or _LOBase_ReportCreate function.
 ; Return values .: Success: Boolean
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -3522,7 +3655,7 @@ EndFunc   ;==>_LOBase_ReportOpen
 ; Name ..........: _LOBase_ReportPageFooter
 ; Description ...: Set or Retrieve a Report's Page Footer properties.
 ; Syntax ........: _LOBase_ReportPageFooter(ByRef $oReportDoc[, $bEnabled = Null[, $sName = Null[, $bVisible = Null[, $iHeight = Null[, $sCondPrint = Null[, $iBackColor = Null]]]]]])
-; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, _LOBase_ReportOpen or _LOBase_ReportCreate function.
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the Page Footer is enabled.
 ;                  $sName               - [optional] a string value. Default is Null. The name of the Section.
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
@@ -3652,7 +3785,7 @@ EndFunc   ;==>_LOBase_ReportPageFooter
 ; Name ..........: _LOBase_ReportPageHeader
 ; Description ...: Set or Retrieve a Report's Page Header properties.
 ; Syntax ........: _LOBase_ReportPageHeader(ByRef $oReportDoc[, $bEnabled = Null[, $sName = Null[, $bVisible = Null[, $iHeight = Null[, $sCondPrint = Null[, $iBackColor = Null]]]]]])
-; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, _LOBase_ReportOpen or _LOBase_ReportCreate function.
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the Page Header is enabled.
 ;                  $sName               - [optional] a string value. Default is Null. The name of the Section.
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
@@ -3846,7 +3979,7 @@ EndFunc   ;==>_LOBase_ReportRename
 ; Name ..........: _LOBase_ReportSave
 ; Description ...: Save any changes made to a Document.
 ; Syntax ........: _LOBase_ReportSave(ByRef $oReportDoc)
-; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, _LOBase_ReportOpen or _LOBase_ReportCreate function.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -3961,7 +4094,7 @@ EndFunc   ;==>_LOBase_ReportSave
 ; Name ..........: _LOBase_ReportSectionGetObj
 ; Description ...: Retrieve a Section Object for one of the sections in a Report.
 ; Syntax ........: _LOBase_ReportSectionGetObj(ByRef $oReportDoc, $iSection)
-; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, or _LOBase_ReportOpen function.
+; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, _LOBase_ReportOpen or _LOBase_ReportCreate function.
 ;                  $iSection            - an integer value (0-4). The section type to retrieve the Object for. See Constants, $LOB_REP_SECTION_TYPE_* as defined in LibreOfficeBase_Constants.au3.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.

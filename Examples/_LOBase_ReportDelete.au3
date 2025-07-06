@@ -1,17 +1,34 @@
+#include <File.au3>
 #include <MsgBoxConstants.au3>
 
 #include "..\LibreOfficeBase.au3"
 
+Global $sPath
+
 Example()
+
+; Delete the file.
+If IsString($sPath) Then FileDelete($sPath)
 
 Func Example()
 	Local $oDoc, $oDBase, $oConnection
 	Local $asReports[0]
-	Local $sReports = ""
+	Local $sReports = "", $sSavePath
 
-	; Open the Libre Office Base Example Document.
-	$oDoc = _LOBase_DocOpen(@ScriptDir & "\Extras\Example.odb")
+	; Create a New, visible, Blank Libre Office Document.
+	$oDoc = _LOBase_DocCreate(True, False)
 	If @error Then Return _ERROR($oDoc, "Failed to Create a new Base Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Create a unique file name
+	$sSavePath = _TempFile(@TempDir & "\", "DocTestFile_", ".odb")
+
+	; Set the Database type.
+	_LOBase_DocDatabaseType($oDoc)
+	If @error Then Return _ERROR($oDoc, "Failed to Set Base Document Database type. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Save The New Blank Doc To Temp Directory.
+	$sPath = _LOBase_DocSaveAs($oDoc, $sSavePath, True)
+	If @error Then Return _ERROR($oDoc, "Failed to save the Base Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the Database Object.
 	$oDBase = _LOBase_DatabaseGetObjByDoc($oDoc)
@@ -21,21 +38,21 @@ Func Example()
 	$oConnection = _LOBase_DatabaseConnectionGet($oDBase)
 	If @error Then Return _ERROR($oDoc, "Failed to create a connection to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Check if the Report name exists already (This will be if a pevious example failed.) And delete it if so.
-	If _LOBase_ReportExists($oDoc, "rptAutoIt_Report", False) Then _LOBase_ReportDelete($oDoc, "rptAutoIt_Report")
-	If @error Then Return _ERROR($oDoc, "Failed to Check for pre-existing Report, or failed to delete it. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Create a new Report and open it.
+	_LOBase_ReportCreate($oDoc, $oConnection, "rptAutoIt_Report", True)
+	If @error Then Return _ERROR($oDoc, "Failed to create a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Check if the second Report name exists already (This will be if a pevious example failed.) And delete it if so.
-	If _LOBase_ReportExists($oDoc, "Folder1/rptAutoIt_Report3", False) Then _LOBase_ReportDelete($oDoc, "Folder1/rptAutoIt_Report3")
-	If @error Then Return _ERROR($oDoc, "Failed to Check for pre-existing Report, or failed to delete it. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Create a Folder
+	_LOBase_ReportFolderCreate($oDoc, "AutoIt_Folder")
+	If @error Then Return _ERROR($oDoc, "Failed to create a Report folder. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Make a copy of the contained Report.
-	_LOBase_ReportCopy($oDoc, $oConnection, "rptReport1", "rptAutoIt_Report")
-	If @error Then Return _ERROR($oDoc, "Failed to copy a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Create a new Report in the Folder.
+	_LOBase_ReportCreate($oDoc, $oConnection, "AutoIt_Folder/rptAutoIt_Report2", False)
+	If @error Then Return _ERROR($oDoc, "Failed to create a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Make another copy of the contained Report in a folder.
-	_LOBase_ReportCopy($oDoc, $oConnection, "rptReport1", "Folder1/rptAutoIt_Report3")
-	If @error Then Return _ERROR($oDoc, "Failed to copy a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Create a third new Report in the Folder.
+	_LOBase_ReportCreate($oDoc, $oConnection, "AutoIt_Folder/rptAutoIt_Report3", False)
+	If @error Then Return _ERROR($oDoc, "Failed to create a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve an array of all the Reports contained in the Document.
 	$asReports = _LOBase_ReportsGetNames($oDoc, True)
@@ -46,10 +63,10 @@ Func Example()
 	Next
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Document contains the following Reports:" & @CRLF & $sReports & @CRLF & _
-			"Press ok to delete one Report contained in Folder1, and also one Report contained in the main level.")
+			"Press ok to delete one Report contained in AutoIt_Folder, and also one Report contained in the main level.")
 
 	; Delete one Report
-	_LOBase_ReportDelete($oDoc, "Folder1/rptAutoIt_Report3")
+	_LOBase_ReportDelete($oDoc, "AutoIt_Folder/rptAutoIt_Report3")
 	If @error Then Return _ERROR($oDoc, "Failed to delete a Report. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Delete another Report

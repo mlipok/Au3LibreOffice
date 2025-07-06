@@ -242,6 +242,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOBase_ReportConsGetList
 	- _LOBase_ReportConSize
 	- _LOBase_ReportCopy
+	- _LOBase_ReportCreate
 	- _LOBase_ReportData
 	- _LOBase_ReportDelete
 	- _LOBase_ReportDetail

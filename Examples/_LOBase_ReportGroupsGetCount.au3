@@ -1,16 +1,34 @@
+#include <File.au3>
 #include <MsgBoxConstants.au3>
 
 #include "..\LibreOfficeBase.au3"
 
+Global $sPath
+
 Example()
 
-Func Example()
-	Local $oDoc, $oDBase, $oConnection, $oReportDoc, $oGroup
-	Local $iCount
+; Delete the file.
+If IsString($sPath) Then FileDelete($sPath)
 
-	; Open the Libre Office Base Example Document.
-	$oDoc = _LOBase_DocOpen(@ScriptDir & "\Extras\Example.odb")
+Func Example()
+	Local $oDoc, $oDBase, $oConnection, $oReportDoc, $oGroup, $oTable
+	Local $iCount
+	Local $sSavePath
+
+	; Create a New, visible, Blank Libre Office Document.
+	$oDoc = _LOBase_DocCreate(True, False)
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to Create a new Base Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Create a unique file name
+	$sSavePath = _TempFile(@TempDir & "\", "DocTestFile_", ".odb")
+
+	; Set the Database type.
+	_LOBase_DocDatabaseType($oDoc)
+	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to Set Base Document Database type. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Save The New Blank Doc To Temp Directory.
+	$sPath = _LOBase_DocSaveAs($oDoc, $sSavePath, True)
+	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to save the Base Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the Database Object.
 	$oDBase = _LOBase_DatabaseGetObjByDoc($oDoc)
@@ -20,9 +38,21 @@ Func Example()
 	$oConnection = _LOBase_DatabaseConnectionGet($oDBase)
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to create a connection to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Open the Report in Design Mode.
-	$oReportDoc = _LOBase_ReportOpen($oDoc, $oConnection, "rptReport1", True, True)
-	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to open a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Add a Table to the Database.
+	$oTable = _LOBase_TableAdd($oConnection, "tblNew_Table", "ID")
+	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to add a table to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Add a Column to the Table.
+	_LOBase_TableColAdd($oTable, "Value_Col", $LOB_DATA_TYPE_INTEGER, "", "A New Integer Column.")
+	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to add a Column to the Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Add a Column to the Table.
+	_LOBase_TableColAdd($oTable, "Third_Col", $LOB_DATA_TYPE_VARCHAR, "", "A New String Column.")
+	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to add a Column to the Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Create a new Report and open it.
+	$oReportDoc = _LOBase_ReportCreate($oDoc, $oConnection, "rptAutoIt_Report", True)
+	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to create a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Get a count of Groups
 	$iCount = _LOBase_ReportGroupsGetCount($oReportDoc)

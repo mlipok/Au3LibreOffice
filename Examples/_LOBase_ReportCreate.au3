@@ -11,9 +11,10 @@ Example()
 If IsString($sPath) Then FileDelete($sPath)
 
 Func Example()
-	Local $oDoc, $oDBase, $oConnection
+	Local $oDoc, $oReportDoc, $oDBase, $oConnection
+	Local $sSavePath
 	Local $asReports[0]
-	Local $sReports = "", $sSavePath
+	Local $sReports = ""
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOBase_DocCreate(True, False)
@@ -38,44 +39,39 @@ Func Example()
 	$oConnection = _LOBase_DatabaseConnectionGet($oDBase)
 	If @error Then Return _ERROR($oDoc, "Failed to create a connection to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Create a new Report.
-	_LOBase_ReportCreate($oDoc, $oConnection, "rptAutoIt_Report")
+	; Create a new Report and open it.
+	$oReportDoc = _LOBase_ReportCreate($oDoc, $oConnection, "rptAutoIt_Report", True)
 	If @error Then Return _ERROR($oDoc, "Failed to create a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have created a Report and opened it. Press ok to close it.")
+
+	; Close the Report Document.
+	_LOBase_ReportClose($oReportDoc, True)
+	If @error Then Return _ERROR($oDoc, "Failed to close the Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now demonstrate creating a Report in a folder. Click on the ""Reports"" button to view the new folder and Reports.")
+
 	; Create a Folder
-	_LOBase_ReportFolderCreate($oDoc, "Folder1")
+	_LOBase_ReportFolderCreate($oDoc, "AutoIt_Folder")
 	If @error Then Return _ERROR($oDoc, "Failed to create a Report folder. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a new Report in the Folder.
-	_LOBase_ReportCreate($oDoc, $oConnection, "Folder1/rptAutoIt_Report2", False)
+	$oReportDoc = _LOBase_ReportCreate($oDoc, $oConnection, "AutoIt_Folder/rptAutoIt_Report2", False)
 	If @error Then Return _ERROR($oDoc, "Failed to create a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
-	; Retrieve an array of all the Reports contained in the Document.
-	$asReports = _LOBase_ReportsGetNames($oDoc, True)
-	If @error Then Return _ERROR($oDoc, "Failed to Retrieve an Array of Report names. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
-	For $i = 0 To @extended - 1
-		$sReports &= "- " & $asReports[$i] & @CRLF
-	Next
-
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Document contains the following Reports:" & @CRLF & $sReports & @CRLF & _
-			"Press ok to retrieve a list of Reports contained in Folder1.")
-
-	; Retrieve an array of Reports contained in Folder1.
-	$asReports = _LOBase_ReportsGetNames($oDoc, False, "Folder1")
-	If @error Then Return _ERROR($oDoc, "Failed to Retrieve an Array of Report names. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
-	$sReports = ""
-
-	For $i = 0 To @extended - 1
-		$sReports &= "- " & $asReports[$i] & @CRLF
-	Next
-
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "Folder1 contains the following Reports:" & @CRLF & $sReports)
 
 	; Close the connection.
 	_LOBase_DatabaseConnectionClose($oConnection)
 	If @error Then Return _ERROR($oDoc, "Failed to close a connection to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Retrieve an array of Report names.
+	$asReports = _LOBase_ReportsGetNames($oDoc, True)
+	If @error Then Return _ERROR($oDoc, "Failed to retrieve array of Report names. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	For $i = 0 To @extended - 1
+		$sReports &= "- " & $asReports[$i] & @CRLF
+	Next
+
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Document contains the following Reports:" & @CRLF & $sReports)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the Base document.")
 

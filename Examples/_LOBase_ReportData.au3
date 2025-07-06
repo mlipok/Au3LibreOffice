@@ -1,16 +1,34 @@
+#include <File.au3>
 #include <MsgBoxConstants.au3>
 
 #include "..\LibreOfficeBase.au3"
 
+Global $sPath
+
 Example()
+
+; Delete the file.
+If IsString($sPath) Then FileDelete($sPath)
 
 Func Example()
 	Local $oDoc, $oReportDoc, $oDBase, $oConnection
 	Local $avReport
+	Local $sSavePath
 
-	; Open the Libre Office Base Example Document.
-	$oDoc = _LOBase_DocOpen(@ScriptDir & "\Extras\Example.odb")
+	; Create a New, visible, Blank Libre Office Document.
+	$oDoc = _LOBase_DocCreate(True, False)
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to Create a new Base Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Create a unique file name
+	$sSavePath = _TempFile(@TempDir & "\", "DocTestFile_", ".odb")
+
+	; Set the Database type.
+	_LOBase_DocDatabaseType($oDoc)
+	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to Set Base Document Database type. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Save The New Blank Doc To Temp Directory.
+	$sPath = _LOBase_DocSaveAs($oDoc, $sSavePath, True)
+	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to save the Base Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the Database Object.
 	$oDBase = _LOBase_DatabaseGetObjByDoc($oDoc)
@@ -20,12 +38,16 @@ Func Example()
 	$oConnection = _LOBase_DatabaseConnectionGet($oDBase)
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to create a connection to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Open the Report in Design Mode.
-	$oReportDoc = _LOBase_ReportOpen($oDoc, $oConnection, "rptReport1", True, True)
-	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to open a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Add a Table to the Database.
+	_LOBase_TableAdd($oConnection, "tblNew_Table", "ID")
+	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to add a table to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Create a new Report and open it.
+	$oReportDoc = _LOBase_ReportCreate($oDoc, $oConnection, "rptAutoIt_Report", True)
+	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to create a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Modify the Data settings for the Report.
-	_LOBase_ReportData($oReportDoc, $LOB_REP_CONTENT_TYPE_TABLE, "Table1", True, "SELECT * FROM ""Table1""", $LOB_REP_OUTPUT_TYPE_SPREADSHEET)
+	_LOBase_ReportData($oReportDoc, $LOB_REP_CONTENT_TYPE_TABLE, "tblNew_Table", True, "SELECT * FROM ""tblNew_Table""", $LOB_REP_OUTPUT_TYPE_SPREADSHEET)
 	If @error Then _ERROR($oDoc, $oReportDoc, "Failed to modify Report's property values. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings for the Report. Return will be an Array in order of function parameters.
