@@ -43,8 +43,8 @@ Func Example()
 	$oReportDoc = _LOBase_ReportCreate($oDoc, $oConnection, "rptAutoIt_Report", True)
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to create a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-; Turn on the Page Header.
-_LOBase_ReportPageHeader($oReportDoc, True)
+	; Turn on the Page Header.
+	_LOBase_ReportPageHeader($oReportDoc, True)
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to modify Report Document Page Header. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the Page Header Section of the Report.

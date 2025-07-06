@@ -51,8 +51,8 @@ Func Example()
 	$oControl = _LOBase_ReportConInsert($oSection, $LOB_REP_CON_TYPE_LABEL, 10500, 500, 4500, 1500)
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to insert a Control. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-; Set some Label Control settings.
-_LOBase_ReportConLabelGeneral($oControl, "Label_Control", "This is an AutoIt_Label")
+	; Set some Label Control settings.
+	_LOBase_ReportConLabelGeneral($oControl, "Label_Control", "This is an AutoIt_Label")
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to modify Control properties. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a Font Descriptor.
