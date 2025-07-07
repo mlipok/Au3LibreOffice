@@ -527,6 +527,7 @@ Func _LOCalc_CellStyleExists(ByRef $oDoc, $sCellStyle)
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sCellStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	If $oDoc.StyleFamilies.getByName("CellStyles").hasByName($sCellStyle) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, False)

@@ -822,7 +822,6 @@ Func _LOCalc_RangeData(ByRef $oRange, $aavData = Null, $bStrictSize = False)
 		Next
 
 	Else ; Check if the internal arrays are sized correctly, resize range if not.
-
 		For $i = 0 To UBound($aavData) - 1
 			If Not IsArray($aavData[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
 			If (UBound($aavData[$i]) <> UBound($aavData[0])) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, $i) ; If all arrays aren't same size as first array, then error.
@@ -1781,7 +1780,6 @@ Func _LOCalc_RangeFormula(ByRef $oRange, $aasFormulas = Null, $bStrictSize = Fal
 		Next
 
 	Else ; Check if the internal arrays are sized correctly, resize range if not.
-
 		For $i = 0 To UBound($aasFormulas) - 1
 			If Not IsArray($aasFormulas[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
 			If (UBound($aasFormulas[$i]) <> UBound($aasFormulas[0])) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, $i) ; If all arrays aren't same size as first array, then error.
@@ -2244,7 +2242,6 @@ Func _LOCalc_RangeNamedAdd(ByRef $oObj, $vRange, $sName, $iOptions = $LOC_NAMED_
 			$tCellAddr.Row = $oRefCell.RangeAddress.StartRow()
 
 		Else
-
 			$tCellAddr.Sheet = $vRange.RangeAddress.Sheet()
 			$tCellAddr.Column = $vRange.RangeAddress.StartColumn()
 			$tCellAddr.Row = $vRange.RangeAddress.StartRow()
@@ -2254,7 +2251,6 @@ Func _LOCalc_RangeNamedAdd(ByRef $oObj, $vRange, $sName, $iOptions = $LOC_NAMED_
 		If Not IsString($sRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Else
-
 		$tCellAddr.Sheet = $oRefCell.RangeAddress.Sheet()
 		$tCellAddr.Column = $oRefCell.RangeAddress.StartColumn()
 		$tCellAddr.Row = $oRefCell.RangeAddress.StartRow()
@@ -2624,7 +2620,6 @@ Func _LOCalc_RangeNamedModify(ByRef $oDoc, ByRef $oNamedRange, $vRange = Null, $
 			$iError = ($oNamedRange.Content() = $vRange.AbsoluteName()) ? ($iError) : (BitOR($iError, 1))
 
 		Else ; $vRange is String
-
 			$oNamedRange.Content = $vRange
 			$iError = ($oNamedRange.Content() = $vRange) ? ($iError) : (BitOR($iError, 1))
 		EndIf
@@ -2758,7 +2753,6 @@ Func _LOCalc_RangeNumbers(ByRef $oRange, $aanNumbers = Null, $bStrictSize = Fals
 		Next
 
 	Else ; Check if the internal arrays are sized correctly, resize range if not.
-
 		For $i = 0 To UBound($aanNumbers) - 1
 			If Not IsArray($aanNumbers[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
 			If (UBound($aanNumbers[$i]) <> UBound($aanNumbers[0])) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, $i) ; If all arrays aren't same size as first array, then error.
@@ -5290,6 +5284,7 @@ Func _LOCalc_RangeSort(ByRef $oDoc, ByRef $oRange, ByRef $tSortField, $bSortColu
 
 	$oStandardLibrary = $oDoc.BasicLibraries.Standard()
 	If Not IsObj($oStandardLibrary) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 8, 0)
+
 	If $oStandardLibrary.hasByName("AU3LibreOffice_UDF_Macros") Then $oStandardLibrary.removeByName("AU3LibreOffice_UDF_Macros")
 
 	$oStandardLibrary.insertByName("AU3LibreOffice_UDF_Macros", $sMacro)

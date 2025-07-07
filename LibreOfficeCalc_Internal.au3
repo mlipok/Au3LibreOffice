@@ -2533,7 +2533,6 @@ Func __LOCalc_IntIsBetween($iTest, $iMin, $iMax = 0, $vNot = "", $vIncl = "")
 			Return SetError($__LO_STATUS_SUCCESS, 0, (($iTest < $iMin) Or ($iTest > $iMax)) ? (False) : (True))
 
 		Case 4, 5
-
 			If IsString($vNot) Then
 				If StringInStr(":" & $vNot & ":", ":" & $iTest & ":") Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
 
@@ -2552,7 +2551,6 @@ Func __LOCalc_IntIsBetween($iTest, $iMin, $iMax = 0, $vNot = "", $vIncl = "")
 				If StringInStr(":" & $vIncl & ":", ":" & $iTest & ":") Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 
 			ElseIf IsInt($vIncl) Then
-
 				If ($iTest = $vIncl) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 			EndIf
 
@@ -3154,7 +3152,6 @@ Func __LOCalc_SheetCursorMove(ByRef $oCursor, $iMove, $iColumns, $iRows, $iCount
 			Return SetError($__LO_STATUS_SUCCESS, 1, 1)
 
 		Case $LOC_SHEETCUR_GOTO_NEXT, $LOC_SHEETCUR_GOTO_PREV
-
 			Do
 				Execute("$oCursor." & $asMoves[$iMove] & "()")
 				$iCounted += 1

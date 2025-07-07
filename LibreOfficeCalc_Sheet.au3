@@ -933,7 +933,6 @@ Func _LOCalc_SheetLinkModify(ByRef $oSheet, $oNewDoc = Null, $sSheetName = Null,
 			$iError = ($oSheet.LinkMode() = $iLinkMode) ? ($iError) : (BitOR($iError, 4))
 
 		Else
-
 			If ($oSheet.LinkUrl() = "") Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 			$oSheet.LinkMode = $iLinkMode

@@ -237,7 +237,6 @@ Func _LOCalc_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $iCM
 			Return SetError($__LO_STATUS_SUCCESS, 3, $aiReturn)
 
 		Case IsInt($iCMYK) ; Long to CMYK
-
 			$nRed = (Mod(($iCMYK / 65536), 256))
 			$nGreen = (Mod(($iCMYK / 256), 256))
 			$nBlue = (Mod($iCMYK, 256))
@@ -355,7 +354,6 @@ Func _LOCalc_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $vV
 				Return SetError($__LO_STATUS_SUCCESS, 2, $iLong) ; Long from RGB
 
 			ElseIf IsString($vVal1) And IsString($vVal2) And IsString($vVal3) Then ; Hue Saturation and Brightness (HSB)
-
 				; HSB to RGB
 				$vVal1 = StringStripWS($vVal1, $STR_STRIPALL)
 				$vVal2 = StringStripWS($vVal2, $STR_STRIPALL)

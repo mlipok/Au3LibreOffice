@@ -1409,15 +1409,12 @@ Func _LOCalc_CommentLineProperties(ByRef $oComment, $vStyle = Null, $iColor = Nu
 	If __LOCalc_VarsAreNull($vStyle, $iColor, $iWidth, $iTransparency, $iCornerStyle, $iCapStyle) Then
 		Switch $oAnnotationShape.LineStyle()
 			Case $__LOC_COMMENT_LINE_STYLE_NONE
-
 				$vReturn = $LOC_COMMENT_LINE_STYLE_NONE
 
 			Case $__LOC_COMMENT_LINE_STYLE_SOLID
-
 				$vReturn = $LOC_COMMENT_LINE_STYLE_CONTINUOUS
 
 			Case $__LOC_COMMENT_LINE_STYLE_DASH
-
 				$vReturn = __LOCalc_CommentLineStyleName(Null, $oAnnotationShape.LineDashName())
 				If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		EndSwitch
@@ -1435,17 +1432,14 @@ Func _LOCalc_CommentLineProperties(ByRef $oComment, $vStyle = Null, $iColor = Nu
 
 			Switch $vStyle
 				Case $LOC_COMMENT_LINE_STYLE_NONE
-
 					$oAnnotationShape.LineStyle = $__LOC_COMMENT_LINE_STYLE_NONE
 					$iError = ($oAnnotationShape.LineStyle() = $__LOC_COMMENT_LINE_STYLE_NONE) ? ($iError) : (BitOR($iError, 1))
 
 				Case $LOC_COMMENT_LINE_STYLE_CONTINUOUS
-
 					$oAnnotationShape.LineStyle = $__LOC_COMMENT_LINE_STYLE_SOLID
 					$iError = ($oAnnotationShape.LineStyle() = $__LOC_COMMENT_LINE_STYLE_SOLID) ? ($iError) : (BitOR($iError, 1))
 
 				Case Else
-
 					$sStyle = __LOCalc_CommentLineStyleName($vStyle)
 					If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -1455,7 +1449,6 @@ Func _LOCalc_CommentLineProperties(ByRef $oComment, $vStyle = Null, $iColor = Nu
 			EndSwitch
 
 		Else
-
 			$sStyle = $vStyle
 			$oAnnotationShape.LineDashName = $sStyle
 			$iError = ($oAnnotationShape.LineDashName() = $sStyle) ? ($iError) : (BitOR($iError, 1))
