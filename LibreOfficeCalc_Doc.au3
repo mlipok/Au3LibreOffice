@@ -280,12 +280,14 @@ Func _LOCalc_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 	If Not IsString($sFile) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsBool($bConnectCurrent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bConnectAll) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
 	If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
-
 	If Not $oDesktop.getComponents.hasElements() Then Return SetError($__LO_STATUS_DOC_ERROR, 3, 0) ; no L.O open
+
 	$oEnumDoc = $oDesktop.getComponents.createEnumeration()
 	If Not IsObj($oEnumDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
@@ -419,9 +421,11 @@ Func _LOCalc_DocCreate($bForceNew = True, $bHidden = False)
 
 	If Not IsBool($bForceNew) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	$aArgs[0] = __LOCalc_SetPropertyValue("Hidden", $bHidden)
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
 	If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
@@ -429,6 +433,7 @@ Func _LOCalc_DocCreate($bForceNew = True, $bHidden = False)
 	If Not $bForceNew And $oDesktop.getComponents.hasElements() Then
 		$oEnumDoc = $oDesktop.getComponents.createEnumeration()
 		If Not IsObj($oEnumDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+
 		While $oEnumDoc.hasMoreElements()
 			$oDoc = $oEnumDoc.nextElement()
 			If $oDoc.supportsService($sServiceName) _
@@ -504,6 +509,7 @@ Func _LOCalc_DocExport(ByRef $oDoc, $sFilePath, $bSamePath = False, $sFilterName
 			$sOriginalPath = StringLeft($sOriginalPath, StringInStr($sOriginalPath, "/", 0, -1)) ; Cut the original name off.
 			If StringInStr($sFilePath, "\") Then $sFilePath = _LOCalc_PathConvert($sFilePath, $LOC_PATHCONV_OFFICE_RETURN) ; Convert to L.O. URL
 			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 			$sFilePath = $sOriginalPath & $sFilePath ; combine the path with the new name.
 
 		Else
@@ -523,6 +529,7 @@ Func _LOCalc_DocExport(ByRef $oDoc, $sFilePath, $bSamePath = False, $sFilterName
 
 	If ($bOverwrite <> Null) Then
 		If Not IsBool($bOverwrite) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		ReDim $aProperties[UBound($aProperties) + 1]
 		$aProperties[UBound($aProperties) - 1] = __LOCalc_SetPropertyValue("Overwrite", $bOverwrite)
 		If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 2, 0)
@@ -530,6 +537,7 @@ Func _LOCalc_DocExport(ByRef $oDoc, $sFilePath, $bSamePath = False, $sFilterName
 
 	If ($sPassword <> Null) Then
 		If Not IsString($sPassword) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		ReDim $aProperties[UBound($aProperties) + 1]
 		$aProperties[UBound($aProperties) - 1] = __LOCalc_SetPropertyValue("Password", $sPassword)
 		If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 3, 0)
@@ -904,17 +912,21 @@ Func _LOCalc_DocOpen($sFilePath, $bConnectIfOpen = True, $bHidden = Null, $bRead
 	Local $sFileURL
 
 	If Not IsString($sFilePath) Or Not FileExists($sFilePath) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 	$sFileURL = _LOCalc_PathConvert($sFilePath, $LOC_PATHCONV_OFFICE_RETURN)
 	If @error Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bConnectIfOpen) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
 	If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	If Not __LOCalc_VarsAreNull($bHidden, $bReadOnly, $sPassword, $bLoadAsTemplate, $sFilterName) Then
 		If ($bHidden <> Null) Then
 			If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			$vProperty = __LOCalc_SetPropertyValue("Hidden", $bHidden)
 			If @error Then $iError = BitOR($iError, 1)
 			If Not BitAND($iError, 1) Then __LOCalc_AddTo1DArray($aoProperties, $vProperty)
@@ -922,6 +934,7 @@ Func _LOCalc_DocOpen($sFilePath, $bConnectIfOpen = True, $bHidden = Null, $bRead
 
 		If ($bReadOnly <> Null) Then
 			If Not IsBool($bReadOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 			$vProperty = __LOCalc_SetPropertyValue("ReadOnly", $bReadOnly)
 			If @error Then $iError = BitOR($iError, 2)
 			If Not BitAND($iError, 2) Then __LOCalc_AddTo1DArray($aoProperties, $vProperty)
@@ -929,6 +942,7 @@ Func _LOCalc_DocOpen($sFilePath, $bConnectIfOpen = True, $bHidden = Null, $bRead
 
 		If ($sPassword <> Null) Then
 			If Not IsString($sPassword) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 			$vProperty = __LOCalc_SetPropertyValue("Password", $sPassword)
 			If @error Then $iError = BitOR($iError, 4)
 			If Not BitAND($iError, 4) Then __LOCalc_AddTo1DArray($aoProperties, $vProperty)
@@ -936,6 +950,7 @@ Func _LOCalc_DocOpen($sFilePath, $bConnectIfOpen = True, $bHidden = Null, $bRead
 
 		If ($bLoadAsTemplate <> Null) Then
 			If Not IsBool($bLoadAsTemplate) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 			$vProperty = __LOCalc_SetPropertyValue("AsTemplate", $bLoadAsTemplate)
 			If @error Then $iError = BitOR($iError, 8)
 			If Not BitAND($iError, 8) Then __LOCalc_AddTo1DArray($aoProperties, $vProperty)
@@ -943,6 +958,7 @@ Func _LOCalc_DocOpen($sFilePath, $bConnectIfOpen = True, $bHidden = Null, $bRead
 
 		If ($sFilterName <> Null) Then
 			If Not IsString($sFilterName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 			$vProperty = __LOCalc_SetPropertyValue("FilterName", $sFilterName)
 			If @error Then $iError = BitOR($iError, 16)
 			If Not BitAND($iError, 16) Then __LOCalc_AddTo1DArray($aoProperties, $vProperty)
@@ -1019,21 +1035,25 @@ Func _LOCalc_DocPosAndSize(ByRef $oDoc, $iX = Null, $iY = Null, $iWidth = Null, 
 
 	If ($iX <> Null) Then
 		If Not IsInt($iX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$tWindowSize.X = $iX
 	EndIf
 
 	If ($iY <> Null) Then
 		If Not IsInt($iY) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$tWindowSize.Y = $iY
 	EndIf
 
 	If ($iWidth <> Null) Then
 		If Not IsInt($iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$tWindowSize.Width = $iWidth
 	EndIf
 
 	If ($iHeight <> Null) Then
 		If Not IsInt($iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$tWindowSize.Height = $iHeight
 	EndIf
 
@@ -1105,8 +1125,8 @@ Func _LOCalc_DocPrint(ByRef $oDoc, $iCopies = 1, $bCollate = True, $vPages = "AL
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsInt($iCopies) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bCollate) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
 	If Not IsInt($vPages) And Not IsString($vPages) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 	$vPages = (IsString($vPages)) ? (StringStripWS($vPages, $STR_STRIPALL)) : ($vPages)
 	If IsString($vPages) And Not ($vPages = "ALL") Then
 		If StringRegExp($vPages, "[[:alpha:]]|[\.]") Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
@@ -1114,22 +1134,29 @@ Func _LOCalc_DocPrint(ByRef $oDoc, $iCopies = 1, $bCollate = True, $vPages = "AL
 	If Not IsBool($bWait) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 	If Not __LOCalc_IntIsBetween($iDuplexMode, $LOC_DUPLEX_OFF, $LOC_DUPLEX_SHORT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 	If Not IsString($sPrinter) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 	$sPrinter = StringStripWS(StringStripWS($sPrinter, $STR_STRIPTRAILING), $STR_STRIPLEADING)
 	If Not IsString($sFilePathName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 	$sFilePathName = StringStripWS(StringStripWS($sFilePathName, $STR_STRIPTRAILING), $STR_STRIPLEADING)
 	If $sPrinter <> "" Then
 		$asSetPrinterOpt[0] = __LOCalc_SetPropertyValue("Name", $sPrinter)
 		If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0)
+
 		$oDoc.setPrinter($asSetPrinterOpt)
 	EndIf
 	$avPrintOpt[0] = __LOCalc_SetPropertyValue("CopyCount", $iCopies)
 	If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 2, 0)
+
 	$avPrintOpt[1] = __LOCalc_SetPropertyValue("Collate", $bCollate)
 	If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 3, 0)
+
 	$avPrintOpt[2] = __LOCalc_SetPropertyValue("Wait", $bWait)
 	If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 4, 0)
+
 	$avPrintOpt[3] = __LOCalc_SetPropertyValue("DuplexMode", $iDuplexMode)
 	If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 5, 0)
+
 	If $vPages <> "ALL" Then
 		ReDim $avPrintOpt[UBound($avPrintOpt) + 1]
 		$avPrintOpt[UBound($avPrintOpt) - 1] = __LOCalc_SetPropertyValue("Pages", $vPages)
@@ -1139,6 +1166,7 @@ Func _LOCalc_DocPrint(ByRef $oDoc, $iCopies = 1, $bCollate = True, $vPages = "AL
 		$sFilePathName = $sFilePathName & ".prn"
 		$sFilePathName = _LOCalc_PathConvert($sFilePathName, $LOC_PATHCONV_OFFICE_RETURN)
 		If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 7, 0)
+
 		ReDim $avPrintOpt[UBound($avPrintOpt) + 1]
 		$avPrintOpt[UBound($avPrintOpt) - 1] = __LOCalc_SetPropertyValue("FileName", $sFilePathName)
 		If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 8, 0)
@@ -1189,9 +1217,11 @@ Func _LOCalc_DocPrintersAltGetNames($sPrinterName = "", $bReturnDefault = False)
 
 	If Not IsString($sPrinterName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsBool($bReturnDefault) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	If $sPrinterName <> "" Then $sFilter = StringReplace(" Where Name like '" & StringReplace($sPrinterName, "\", "\\") & "'", "*", "%")
 	$oWMIService = ObjGet("winmgmts:{impersonationLevel=impersonate}!\\.\root\cimv2")
 	If Not IsObj($oWMIService) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	$oPrinters = $oWMIService.ExecQuery("Select * from Win32_Printer" & $sFilter, "WQL", $wbemFlagReturnImmediately + $wbemFlagForwardOnly)
 	If Not IsObj($oPrinters) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
@@ -1207,6 +1237,7 @@ Func _LOCalc_DocPrintersAltGetNames($sPrinterName = "", $bReturnDefault = False)
 		EndSwitch
 	Next
 	If $bReturnDefault Then Return SetError($__LO_STATUS_PRINTER_RELATED_ERROR, 1, 0)
+
 	ReDim $asPrinterNames[$iCount]
 
 	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asPrinterNames)
@@ -1250,13 +1281,16 @@ Func _LOCalc_DocPrintersGetNames($bDefaultOnly = False)
 
 	If Not __LOCalc_VersionCheck(4.1) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 	If Not IsBool($bDefaultOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
 	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	$oPrintServer = $oServiceManager.createInstance("com.sun.star.awt.PrinterServer")
 	If Not IsObj($oPrintServer) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	If $bDefaultOnly Then
 		If Not __LOCalc_VersionCheck(6.3) Then Return SetError($__LO_STATUS_VER_ERROR, 2, 0)
+
 		$sDefault = $oPrintServer.getDefaultPrinterName()
 		If IsString($sDefault) Then Return SetError($__LO_STATUS_SUCCESS, 1, $sDefault)
 
@@ -1457,6 +1491,7 @@ Func _LOCalc_DocSave(ByRef $oDoc)
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oDoc.hasLocation Or $oDoc.isReadOnly Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	$oDoc.store()
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
@@ -1509,11 +1544,13 @@ Func _LOCalc_DocSaveAs(ByRef $oDoc, $sFilePath, $sFilterName = "", $bOverwrite =
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	If ($sFilterName = "") Or ($sFilterName = " ") Then $sFilterName = __LOCalc_FilterNameGet($sFilePath)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
 	$aProperties[0] = __LOCalc_SetPropertyValue("FilterName", $sFilterName)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	If ($bOverwrite <> Null) Then
 		If Not IsBool($bOverwrite) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		ReDim $aProperties[UBound($aProperties) + 1]
 		$aProperties[UBound($aProperties) - 1] = __LOCalc_SetPropertyValue("Overwrite", $bOverwrite)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
@@ -1521,6 +1558,7 @@ Func _LOCalc_DocSaveAs(ByRef $oDoc, $sFilePath, $sFilterName = "", $bOverwrite =
 
 	If $sPassword <> Null Then
 		If Not IsString($sPassword) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		ReDim $aProperties[UBound($aProperties) + 1]
 		$aProperties[UBound($aProperties) - 1] = __LOCalc_SetPropertyValue("Password", $sPassword)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
@@ -2114,54 +2152,63 @@ Func _LOCalc_DocViewDisplaySettings(ByRef $oDoc, $bFormulas = Null, $bZeroValues
 
 	If ($bFormulas <> Null) Then
 		If Not IsBool($bFormulas) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oCurCont.ShowFormulas = $bFormulas
 		$iError = ($oCurCont.ShowFormulas() = $bFormulas) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bZeroValues <> Null) Then
 		If Not IsBool($bZeroValues) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oCurCont.ShowZeroValues = $bZeroValues
 		$iError = ($oCurCont.ShowZeroValues() = $bZeroValues) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bComments <> Null) Then
 		If Not IsBool($bComments) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oCurCont.ShowNotes = $bComments
 		$iError = ($oCurCont.ShowNotes() = $bComments) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bPageBreaks <> Null) Then
 		If Not IsBool($bPageBreaks) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oCurCont.ShowPageBreaks = $bPageBreaks
 		$iError = ($oCurCont.ShowPageBreaks() = $bPageBreaks) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($bHelpLines <> Null) Then
 		If Not IsBool($bHelpLines) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oCurCont.ShowHelpLines = $bHelpLines
 		$iError = ($oCurCont.ShowHelpLines() = $bHelpLines) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($bValueHighlight <> Null) Then
 		If Not IsBool($bValueHighlight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oCurCont.IsValueHighlightingEnabled = $bValueHighlight
 		$iError = ($oCurCont.IsValueHighlightingEnabled() = $bValueHighlight) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($bAnchors <> Null) Then
 		If Not IsBool($bAnchors) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oCurCont.ShowAnchor = $bAnchors
 		$iError = ($oCurCont.ShowAnchor() = $bAnchors) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
 	If ($bGrid <> Null) Then
 		If Not IsBool($bGrid) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 		$oCurCont.ShowGrid = $bGrid
 		$iError = ($oCurCont.ShowGrid() = $bGrid) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
 	If ($iGridColor <> Null) Then
 		If Not __LOCalc_IntIsBetween($iGridColor, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
 		$oCurCont.GridColor = $iGridColor
 		$iError = ($oCurCont.GridColor() = $iGridColor) ? ($iError) : (BitOR($iError, 256))
 	EndIf
@@ -2241,48 +2288,56 @@ Func _LOCalc_DocViewWindowSettings(ByRef $oDoc, $bHeaders = Null, $bVertScroll =
 
 	If ($bHeaders <> Null) Then
 		If Not IsBool($bHeaders) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oCurCont.HasColumnRowHeaders = $bHeaders
 		$iError = ($oCurCont.HasColumnRowHeaders() = $bHeaders) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bVertScroll <> Null) Then
 		If Not IsBool($bVertScroll) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oCurCont.HasVerticalScrollBar = $bVertScroll
 		$iError = ($oCurCont.HasVerticalScrollBar() = $bVertScroll) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bHoriScroll <> Null) Then
 		If Not IsBool($bHoriScroll) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oCurCont.HasHorizontalScrollBar = $bHoriScroll
 		$iError = ($oCurCont.HasHorizontalScrollBar() = $bHoriScroll) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bSheetTabs <> Null) Then
 		If Not IsBool($bSheetTabs) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oCurCont.HasSheetTabs = $bSheetTabs
 		$iError = ($oCurCont.HasSheetTabs() = $bSheetTabs) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($bOutlineSymbols <> Null) Then
 		If Not IsBool($bOutlineSymbols) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oCurCont.IsOutlineSymbolsSet = $bOutlineSymbols
 		$iError = ($oCurCont.IsOutlineSymbolsSet() = $bOutlineSymbols) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($bCharts <> Null) Then
 		If Not IsBool($bCharts) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oCurCont.ShowCharts = ($bCharts) ? ($__LOC_ViewObjMode_SHOW) : ($__LOC_ViewObjMode_HIDE)
 		$iError = ((($oCurCont.ShowCharts() = $__LOC_ViewObjMode_SHOW) ? (True) : (False)) = $bCharts) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($bDrawing <> Null) Then
 		If Not IsBool($bDrawing) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oCurCont.ShowDrawing = ($bDrawing) ? ($__LOC_ViewObjMode_SHOW) : ($__LOC_ViewObjMode_HIDE)
 		$iError = ((($oCurCont.ShowDrawing() = $__LOC_ViewObjMode_SHOW) ? (True) : (False)) = $bDrawing) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
 	If ($bObjects <> Null) Then
 		If Not IsBool($bObjects) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 		$oCurCont.ShowObjects = ($bObjects) ? ($__LOC_ViewObjMode_SHOW) : ($__LOC_ViewObjMode_HIDE)
 		$iError = ((($oCurCont.ShowObjects() = $__LOC_ViewObjMode_SHOW) ? (True) : (False)) = $bObjects) ? ($iError) : (BitOR($iError, 128))
 	EndIf
@@ -2591,11 +2646,13 @@ Func _LOCalc_DocZoom(ByRef $oDoc, $iZoomType = Null, $iZoom = Null)
 
 	If ($iZoomType <> Null) Then
 		If Not __LOCalc_IntIsBetween($iZoomType, $LOC_ZOOMTYPE_OPTIMAL, $LOC_ZOOMTYPE_PAGE_WIDTH_EXACT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oDoc.CurrentController.ZoomType = $iZoomType
 	EndIf
 
 	If ($iZoom <> Null) Then
 		If Not __LOCalc_IntIsBetween($iZoom, 20, 600) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oDoc.CurrentController.ZoomValue = $iZoom
 		$iError = ($oDoc.CurrentController.ZoomValue() = $iZoom) ? ($iError) : (BitOR($iError, 1))
 	EndIf

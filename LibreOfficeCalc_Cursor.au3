@@ -499,6 +499,7 @@ Func _LOCalc_TextCursorGoToRange(ByRef $oCursor, ByRef $oRange, $bSelect = False
 
 	$iCursorType = __LOCalc_Internal_CursorGetType($oCursor)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	$iRangeType = __LOCalc_Internal_CursorGetType($oRange)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	If ($iCursorType <> $LOC_CURTYPE_TEXT_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
@@ -543,9 +544,9 @@ Func _LOCalc_TextCursorInsertString(ByRef $oCursor, $sString, $bOverwrite = Fals
 	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bOverwrite) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 	$iCursorType = __LOCalc_Internal_CursorGetType($oCursor)
 	If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
 	If ($iCursorType <> $LOC_CURTYPE_TEXT_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$oCursor.Text.insertString($oCursor, $sString, $bOverwrite)
@@ -823,6 +824,7 @@ Func _LOCalc_TextCursorParObjSectionsGet(ByRef $oParObj)
 
 	$oSecEnum = $oParObj.createEnumeration()
 	If Not IsObj($oSecEnum) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	While $oSecEnum.hasMoreElements()
 		$oParSection = $oSecEnum.nextElement()
 

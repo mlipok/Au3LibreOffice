@@ -88,6 +88,7 @@
 ; ===============================================================================================================================
 Func _LOCalc_ComError_UserFunction($vUserFunction = Default, $vParam1 = Null, $vParam2 = Null, $vParam3 = Null, $vParam4 = Null, $vParam5 = Null)
 	#forceref $vParam1, $vParam2, $vParam3, $vParam4, $vParam5
+
 	; If user does not set a function, UDF must use internal function to avoid AutoItError.
 	Local Static $vUserFunction_Static = Default
 	Local $avUserFuncWParams[@NumParams]
@@ -159,6 +160,7 @@ Func _LOCalc_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $iCM
 	Local $aiReturn[0]
 
 	If (@NumParams = 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 	Select
 		Case IsInt($iHex) ; Long to Hex
 			$nRed = BitAND(BitShift($iHex, 16), 0xff)
@@ -316,9 +318,11 @@ Func _LOCalc_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $vV
 	Local $nMaxRGB, $nMinRGB, $nChroma, $nHuePre, $nCyan, $nMagenta, $nYellow, $nBlack
 
 	If (@NumParams = 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 	Switch @NumParams
 		Case 1 ; Hex
 			If Not IsString($vVal1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; not a string
+
 			$vVal1 = StringStripWS($vVal1, $STR_STRIPALL)
 			$dHex = $vVal1
 
@@ -359,8 +363,10 @@ Func _LOCalc_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $vV
 
 				$iHue = Number($vVal1)
 				If (StringLen($vVal1)) <> (StringLen($iHue)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; String contained more than just digits
+
 				$iSaturation = Number($vVal2)
 				If (StringLen($vVal2)) <> (StringLen($iSaturation)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; String contained more than just digits
+
 				$iBrightness = Number($vVal3)
 				If (StringLen($vVal3)) <> (StringLen($iBrightness)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0) ; String contained more than just digits
 
@@ -480,6 +486,7 @@ Func _LOCalc_ConvertFromMicrometer($nInchOut = Null, $nCentimeterOut = Null, $nM
 
 	If ($nInchOut <> Null) Then
 		If Not IsNumber($nInchOut) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 		$nReturnValue = __LOCalc_UnitConvert($nInchOut, $__LOCONST_CONVERT_UM_INCH)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -488,6 +495,7 @@ Func _LOCalc_ConvertFromMicrometer($nInchOut = Null, $nCentimeterOut = Null, $nM
 
 	If ($nCentimeterOut <> Null) Then
 		If Not IsNumber($nCentimeterOut) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$nReturnValue = __LOCalc_UnitConvert($nCentimeterOut, $__LOCONST_CONVERT_UM_CM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -496,6 +504,7 @@ Func _LOCalc_ConvertFromMicrometer($nInchOut = Null, $nCentimeterOut = Null, $nM
 
 	If ($nMillimeterOut <> Null) Then
 		If Not IsNumber($nMillimeterOut) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$nReturnValue = __LOCalc_UnitConvert($nMillimeterOut, $__LOCONST_CONVERT_UM_MM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
@@ -504,6 +513,7 @@ Func _LOCalc_ConvertFromMicrometer($nInchOut = Null, $nCentimeterOut = Null, $nM
 
 	If ($nPointsOut <> Null) Then
 		If Not IsNumber($nPointsOut) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$nReturnValue = __LOCalc_UnitConvert($nPointsOut, $__LOCONST_CONVERT_UM_PT)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
@@ -553,6 +563,7 @@ Func _LOCalc_ConvertToMicrometer($nInchIn = Null, $nCentimeterIn = Null, $nMilli
 
 	If ($nInchIn <> Null) Then
 		If Not IsNumber($nInchIn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 		$nReturnValue = __LOCalc_UnitConvert($nInchIn, $__LOCONST_CONVERT_INCH_UM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -561,6 +572,7 @@ Func _LOCalc_ConvertToMicrometer($nInchIn = Null, $nCentimeterIn = Null, $nMilli
 
 	If ($nCentimeterIn <> Null) Then
 		If Not IsNumber($nCentimeterIn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$nReturnValue = __LOCalc_UnitConvert($nCentimeterIn, $__LOCONST_CONVERT_CM_UM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -569,6 +581,7 @@ Func _LOCalc_ConvertToMicrometer($nInchIn = Null, $nCentimeterIn = Null, $nMilli
 
 	If ($nMillimeterIn <> Null) Then
 		If Not IsNumber($nMillimeterIn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$nReturnValue = __LOCalc_UnitConvert($nMillimeterIn, $__LOCONST_CONVERT_MM_UM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
@@ -577,6 +590,7 @@ Func _LOCalc_ConvertToMicrometer($nInchIn = Null, $nCentimeterIn = Null, $nMilli
 
 	If ($nPointsIn <> Null) Then
 		If Not IsNumber($nPointsIn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$nReturnValue = __LOCalc_UnitConvert($nPointsIn, $__LOCONST_CONVERT_PT_UM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
@@ -755,6 +769,7 @@ Func _LOCalc_FilterDescriptorModify(ByRef $oRange, ByRef $oFilterDesc, $atFilter
 
 	If ($atFilterField <> Null) Then
 		If Not IsArray($atFilterField) Or Not (UBound($atFilterField) <= 8) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		For $i = 0 To UBound($atFilterField) - 1
 			If Not IsObj($atFilterField[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, $i)
 		Next
@@ -764,27 +779,32 @@ Func _LOCalc_FilterDescriptorModify(ByRef $oRange, ByRef $oFilterDesc, $atFilter
 
 	If ($bCaseSensitive <> Null) Then
 		If Not IsBool($bCaseSensitive) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oFilterDesc.IsCaseSensitive = $bCaseSensitive
 	EndIf
 
 	If ($bSkipDupl <> Null) Then
 		If Not IsBool($bSkipDupl) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oFilterDesc.SkipDuplicates = $bSkipDupl
 	EndIf
 
 	If ($bUseRegExp <> Null) Then
 		If Not IsBool($bUseRegExp) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oFilterDesc.UseRegularExpressions = $bUseRegExp
 	EndIf
 
 	If ($bHeaders <> Null) Then
 		If Not IsBool($bHeaders) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oFilterDesc.ContainsHeader = $bHeaders
 	EndIf
 
 	If ($bCopyOutput <> Null) Then
 		If Not IsBool($bCopyOutput) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		If ($bCopyOutput = True) And Not IsObj($oCopyOutput) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
 		$oFilterDesc.CopyOutputData = $bCopyOutput
 	EndIf
 
@@ -806,6 +826,7 @@ Func _LOCalc_FilterDescriptorModify(ByRef $oRange, ByRef $oFilterDesc, $atFilter
 
 	If ($bSaveCriteria <> Null) Then
 		If Not IsBool($bSaveCriteria) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+
 		$oFilterDesc.SaveOutputPosition = $bSaveCriteria
 	EndIf
 
@@ -919,31 +940,37 @@ Func _LOCalc_FilterFieldModify(ByRef $tFilterField, $iColumn = Null, $bIsNumeric
 
 	If ($iColumn <> Null) Then
 		If Not IsInt($iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$tFilterField.Field = $iColumn
 	EndIf
 
 	If ($bIsNumeric <> Null) Then
 		If Not IsBool($bIsNumeric) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$tFilterField.IsNumeric = $bIsNumeric
 	EndIf
 
 	If ($nValue <> Null) Then
 		If Not IsNumber($nValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$tFilterField.NumericValue = $nValue
 	EndIf
 
 	If ($sString <> Null) Then
 		If Not IsString($sString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$tFilterField.StringValue = $sString
 	EndIf
 
 	If ($iCondition <> Null) Then ; L.O. calls Operator "Condition" in U.I.
 		If Not __LOCalc_IntIsBetween($iCondition, $LOC_FILTER_CONDITION_EMPTY, $LOC_FILTER_CONDITION_DOES_NOT_END_WITH) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$tFilterField.Operator = $iCondition
 	EndIf
 
 	If ($iOperator <> Null) Then ; L.O. calls Connection "Operator" in U.I.
 		If Not __LOCalc_IntIsBetween($iOperator, $LOC_FILTER_OPERATOR_AND, $LOC_FILTER_OPERATOR_OR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$tFilterField.Connection = $iOperator
 	EndIf
 
@@ -986,10 +1013,13 @@ Func _LOCalc_FormatKeyCreate(ByRef $oDoc, $sFormat)
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	$tLocale = __LOCalc_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	$oFormats = $oDoc.getNumberFormats()
 	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	$iFormatKey = $oFormats.queryKey($sFormat, $tLocale, False)
 	If ($iFormatKey > -1) Then Return SetError($__LO_STATUS_SUCCESS, 1, $iFormatKey) ; Format already existed
 	$iFormatKey = $oFormats.addNew($sFormat, $tLocale)
@@ -1080,10 +1110,13 @@ Func _LOCalc_FormatKeyExists(ByRef $oDoc, $iFormatKey, $iFormatType = $LOC_FORMA
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsInt($iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsInt($iFormatType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 	$tLocale = __LOCalc_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	$oFormats = $oDoc.getNumberFormats()
 	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	$aiFormatKeys = $oFormats.queryKeys($iFormatType, $tLocale, False)
 	If Not IsArray($aiFormatKeys) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -1133,6 +1166,7 @@ Func _LOCalc_FormatKeyGetStandard(ByRef $oDoc, $iFormatKeyType)
 
 	$tLocale = __LOCalc_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	$oFormats = $oDoc.getNumberFormats()
 	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -1174,6 +1208,7 @@ Func _LOCalc_FormatKeyGetString(ByRef $oDoc, $iFormatKey)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsInt($iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not _LOCalc_FormatKeyExists($oDoc, $iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 	$oFormatKey = $oDoc.getNumberFormats().getByKey($iFormatKey)
 	If Not IsObj($oFormatKey) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Key not found.
 
@@ -1224,14 +1259,17 @@ Func _LOCalc_FormatKeysGetList(ByRef $oDoc, $bIsUser = False, $bUserOnly = False
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsBool($bIsUser) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bUserOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 	$iColumns = ($bIsUser = True) ? ($iColumns) : (2)
 
 	If Not IsInt($iFormatKeyType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$tLocale = __LOCalc_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	$oFormats = $oDoc.getNumberFormats()
 	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	$aiFormatKeys = $oFormats.queryKeys($iFormatKeyType, $tLocale, False)
 	If Not IsArray($aiFormatKeys) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -1463,31 +1501,37 @@ Func _LOCalc_SearchDescriptorModify(ByRef $oSrchDescript, $bBackwards = Null, $b
 
 	If ($bBackwards <> Null) Then
 		If Not IsBool($bBackwards) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oSrchDescript.SearchBackwards = $bBackwards
 	EndIf
 
 	If ($bSearchRows <> Null) Then
 		If Not IsBool($bSearchRows) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oSrchDescript.SearchByRow = $bSearchRows
 	EndIf
 
 	If ($bMatchCase <> Null) Then
 		If Not IsBool($bMatchCase) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oSrchDescript.SearchCaseSensitive = $bMatchCase
 	EndIf
 
 	If ($iSearchIn <> Null) Then
 		If Not __LOCalc_IntIsBetween($iSearchIn, $LOC_SEARCH_IN_FORMULAS, $LOC_SEARCH_IN_COMMENTS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oSrchDescript.SearchType = $iSearchIn
 	EndIf
 
 	If ($bEntireCell <> Null) Then
 		If Not IsBool($bEntireCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oSrchDescript.SearchWords = $bEntireCell
 	EndIf
 
 	If ($bWildcards <> Null) Then
 		If Not IsBool($bWildcards) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 		If ($bWildcards = True) And ($oSrchDescript.SearchSimilarity = True) Then $oSrchDescript.SearchSimilarity = False
 		If ($bWildcards = True) And ($oSrchDescript.SearchRegularExpression = True) Then $oSrchDescript.SearchRegularExpression = False
 		$oSrchDescript.SearchWildcard = $bWildcards
@@ -1496,12 +1540,14 @@ Func _LOCalc_SearchDescriptorModify(ByRef $oSrchDescript, $bBackwards = Null, $b
 	; -- Slated to be fixed L.O. 24.8.0
 	If ($bRegExp <> Null) Then
 		If Not IsBool($bRegExp) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		If ($bRegExp = True) And ($oSrchDescript.SearchSimilarity = True) Then $oSrchDescript.SearchSimilarity = False
 		$oSrchDescript.SearchRegularExpression = $bRegExp
 	EndIf
 
 	If ($bStyles <> Null) Then
 		If Not IsBool($bStyles) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
 		$oSrchDescript.SearchStyles = $bStyles
 	EndIf
 
@@ -1559,6 +1605,7 @@ Func _LOCalc_SearchDescriptorSimilarityModify(ByRef $oSrchDescript, $bSimilarity
 
 	If ($bSimilarity <> Null) Then
 		If Not IsBool($bSimilarity) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		If ($bSimilarity = True) And ($oSrchDescript.SearchRegularExpression = True) Then $oSrchDescript.SearchRegularExpression = False
 		If ($bSimilarity = True) And ($oSrchDescript.SearchWildcard = True) Then $oSrchDescript.SearchWildcard = False
 		$oSrchDescript.SearchSimilarity = $bSimilarity
@@ -1566,23 +1613,28 @@ Func _LOCalc_SearchDescriptorSimilarityModify(ByRef $oSrchDescript, $bSimilarity
 
 	If ($bCombine <> Null) Then
 		If Not IsBool($bCombine) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oSrchDescript.SearchSimilarityRelax = $bCombine
 	EndIf
 
 	If Not __LOCalc_VarsAreNull($iRemove, $iAdd, $iExchange) Then
 		If ($oSrchDescript.SearchSimilarity() = False) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		If ($iRemove <> Null) Then
 			If Not IsInt($iRemove) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 			$oSrchDescript.SearchSimilarityRemove = $iRemove
 		EndIf
 
 		If ($iAdd <> Null) Then
 			If Not IsInt($iAdd) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 			$oSrchDescript.SearchSimilarityAdd = $iAdd
 		EndIf
 
 		If ($iExchange <> Null) Then
 			If Not IsInt($iExchange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 			$oSrchDescript.SearchSimilarityExchange = $iExchange
 		EndIf
 	EndIf
@@ -1684,21 +1736,25 @@ Func _LOCalc_SortFieldModify(ByRef $tSortField, $iIndex = Null, $iDataType = Nul
 
 	If ($iIndex <> Null) Then
 		If Not __LOCalc_IntIsBetween($iIndex, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$tSortField.Field = $iIndex
 	EndIf
 
 	If ($iDataType <> Null) Then
 		If Not __LOCalc_IntIsBetween($iDataType, $LOC_SORT_DATA_TYPE_AUTO, $LOC_SORT_DATA_TYPE_ALPHANUMERIC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$tSortField.FieldType = $iDataType
 	EndIf
 
 	If ($bAscending <> Null) Then
 		If Not IsBool($bAscending) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$tSortField.IsAscending = $bAscending
 	EndIf
 
 	If ($bCaseSensitive <> Null) Then
 		If Not IsBool($bCaseSensitive) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$tSortField.IsCaseSensitive = $bCaseSensitive
 	EndIf
 

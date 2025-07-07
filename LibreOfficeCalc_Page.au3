@@ -107,12 +107,14 @@ Func _LOCalc_PageStyleAreaColor(ByRef $oPageStyle, $iBackColor = Null, $bBackTra
 
 	If ($iBackColor <> Null) Then
 		If Not __LOCalc_IntIsBetween($iBackColor, $LOC_COLOR_OFF, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oPageStyle.BackColor = $iBackColor
 		$iError = ($oPageStyle.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bBackTransparent <> Null) Then
 		If Not IsBool($bBackTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oPageStyle.BackTransparent = $bBackTransparent
 		$iError = ($oPageStyle.BackTransparent() = $bBackTransparent) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -170,7 +172,6 @@ Func _LOCalc_PageStyleBorderColor(ByRef $oPageStyle, $iTop = Null, $iBottom = Nu
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
 	If ($iTop <> Null) And Not __LOCalc_IntIsBetween($iTop, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If ($iBottom <> Null) And Not __LOCalc_IntIsBetween($iBottom, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If ($iLeft <> Null) And Not __LOCalc_IntIsBetween($iLeft, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
@@ -238,30 +239,35 @@ Func _LOCalc_PageStyleBorderPadding(ByRef $oPageStyle, $iAll = Null, $iTop = Nul
 
 	If ($iAll <> Null) Then
 		If Not __LOCalc_IntIsBetween($iAll, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oPageStyle.BorderDistance = $iAll
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.BorderDistance(), $iAll - 1, $iAll + 1)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iTop <> Null) Then
 		If Not __LOCalc_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oPageStyle.TopBorderDistance = $iTop
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.TopBorderDistance(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iBottom <> Null) Then
 		If Not __LOCalc_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oPageStyle.BottomBorderDistance = $iBottom
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.BottomBorderDistance(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iLeft <> Null) Then
 		If Not __LOCalc_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oPageStyle.LeftBorderDistance = $iLeft
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.LeftBorderDistance(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iRight <> Null) Then
 		If Not __LOCalc_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oPageStyle.RightBorderDistance = $iRight
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.RightBorderDistance(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
@@ -319,7 +325,6 @@ Func _LOCalc_PageStyleBorderStyle(ByRef $oPageStyle, $iTop = Null, $iBottom = Nu
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
 	If ($iTop <> Null) And Not __LOCalc_IntIsBetween($iTop, $LOC_BORDERSTYLE_SOLID, $LOC_BORDERSTYLE_DASH_DOT_DOT, "", $LOC_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If ($iBottom <> Null) And Not __LOCalc_IntIsBetween($iBottom, $LOC_BORDERSTYLE_SOLID, $LOC_BORDERSTYLE_DASH_DOT_DOT, "", $LOC_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If ($iLeft <> Null) And Not __LOCalc_IntIsBetween($iLeft, $LOC_BORDERSTYLE_SOLID, $LOC_BORDERSTYLE_DASH_DOT_DOT, "", $LOC_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
@@ -375,7 +380,6 @@ Func _LOCalc_PageStyleBorderWidth(ByRef $oPageStyle, $iTop = Null, $iBottom = Nu
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
 	If ($iTop <> Null) And Not __LOCalc_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If ($iBottom <> Null) And Not __LOCalc_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If ($iLeft <> Null) And Not __LOCalc_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
@@ -421,9 +425,11 @@ Func _LOCalc_PageStyleCreate(ByRef $oDoc, $sPageStyle)
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	$oPageStyles = $oDoc.StyleFamilies().getByName("PageStyles")
 	If Not IsObj($oPageStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	If _LOCalc_PageStyleExists($oDoc, $sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 	$oStyle = $oDoc.createInstance("com.sun.star.style.PageStyle")
 	If Not IsObj($oStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
@@ -477,9 +483,9 @@ Func _LOCalc_PageStyleDelete(ByRef $oDoc, ByRef $oPageStyle)
 
 	$oPageStyles = $oDoc.StyleFamilies().getByName("PageStyles")
 	If Not IsObj($oPageStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	$sPageStyle = $oPageStyle.Name()
 	If Not IsString($sPageStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
 	If Not $oPageStyle.isUserDefined() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	If $oPageStyle.isInUse() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; If Style is in use return an error.
 
@@ -594,12 +600,14 @@ Func _LOCalc_PageStyleFooter(ByRef $oPageStyle, $bFooterOn = Null, $bSameLeftRig
 
 	If ($bFooterOn <> Null) Then
 		If Not IsBool($bFooterOn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oPageStyle.FooterIsOn = $bFooterOn
 		$iError = ($oPageStyle.FooterIsOn() = $bFooterOn) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bSameLeftRight <> Null) Then
 		If Not IsBool($bSameLeftRight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oPageStyle.FooterIsShared = $bSameLeftRight
 		$iError = ($oPageStyle.FooterIsShared() = $bSameLeftRight) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -607,36 +615,42 @@ Func _LOCalc_PageStyleFooter(ByRef $oPageStyle, $bFooterOn = Null, $bSameLeftRig
 	If ($bSameOnFirst <> Null) Then
 		If Not IsBool($bSameOnFirst) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		If Not __LOCalc_VersionCheck(4.0) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+
 		$oPageStyle.FirstPageFooterIsShared = $bSameOnFirst
 		$iError = ($oPageStyle.FirstPageFooterIsShared() = $bSameOnFirst) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iLeftMargin <> Null) Then
 		If Not IsInt($iLeftMargin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oPageStyle.FooterLeftMargin = $iLeftMargin
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.FooterLeftMargin(), $iLeftMargin - 1, $iLeftMargin + 1)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iRightMargin <> Null) Then
 		If Not IsInt($iRightMargin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oPageStyle.FooterRightMargin = $iRightMargin
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.FooterRightMargin(), $iRightMargin - 1, $iRightMargin + 1)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($iSpacing <> Null) Then
 		If Not IsInt($iSpacing) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oPageStyle.FooterBodyDistance = $iSpacing
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.FooterBodyDistance(), $iSpacing - 1, $iSpacing + 1)) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($iHeight <> Null) Then
 		If Not IsInt($iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 		$oPageStyle.FooterHeight = $iHeight
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.FooterHeight(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
 	If ($bAutoHeight <> Null) Then
 		If Not IsBool($bAutoHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
 		$oPageStyle.FooterIsDynamicHeight = $bAutoHeight
 		$iError = ($oPageStyle.FooterIsDynamicHeight() = $bAutoHeight) ? ($iError) : (BitOR($iError, 128))
 	EndIf
@@ -694,12 +708,14 @@ Func _LOCalc_PageStyleFooterAreaColor(ByRef $oPageStyle, $iBackColor = Null, $bB
 
 	If ($iBackColor <> Null) Then
 		If Not __LOCalc_IntIsBetween($iBackColor, $LOC_COLOR_OFF, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oPageStyle.FooterBackColor = $iBackColor
 		$iError = ($oPageStyle.FooterBackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bBackTransparent <> Null) Then
 		If Not IsBool($bBackTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oPageStyle.FooterBackTransparent = $bBackTransparent
 		$iError = ($oPageStyle.FooterBackTransparent() = $bBackTransparent) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -757,7 +773,6 @@ Func _LOCalc_PageStyleFooterBorderColor(ByRef $oPageStyle, $iTop = Null, $iBotto
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($oPageStyle.FooterIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
 	If ($iTop <> Null) And Not __LOCalc_IntIsBetween($iTop, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If ($iBottom <> Null) And Not __LOCalc_IntIsBetween($iBottom, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If ($iLeft <> Null) And Not __LOCalc_IntIsBetween($iLeft, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
@@ -828,30 +843,35 @@ Func _LOCalc_PageStyleFooterBorderPadding(ByRef $oPageStyle, $iAll = Null, $iTop
 
 	If ($iAll <> Null) Then
 		If Not (IsInt($iAll) Or ($iAll > 0)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oPageStyle.FooterBorderDistance = $iAll
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.FooterBorderDistance(), $iAll - 1, $iAll + 1)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iTop <> Null) Then
 		If Not (IsInt($iTop) Or ($iTop > 0)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oPageStyle.FooterTopBorderDistance = $iTop
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.FooterTopBorderDistance(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iBottom <> Null) Then
 		If Not (IsInt($iBottom) Or ($iBottom > 0)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oPageStyle.FooterBottomBorderDistance = $iBottom
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.FooterBottomBorderDistance(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iLeft <> Null) Then
 		If Not (IsInt($iLeft) Or ($iLeft > 0)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oPageStyle.FooterLeftBorderDistance = $iLeft
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.FooterLeftBorderDistance(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iRight <> Null) Then
 		If Not (IsInt($iRight) Or ($iRight > 0)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oPageStyle.FooterRightBorderDistance = $iRight
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.FooterRightBorderDistance(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
@@ -909,7 +929,6 @@ Func _LOCalc_PageStyleFooterBorderStyle(ByRef $oPageStyle, $iTop = Null, $iBotto
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($oPageStyle.FooterIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
 	If ($iTop <> Null) And Not __LOCalc_IntIsBetween($iTop, $LOC_BORDERSTYLE_SOLID, $LOC_BORDERSTYLE_DASH_DOT_DOT, "", $LOC_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If ($iBottom <> Null) And Not __LOCalc_IntIsBetween($iBottom, $LOC_BORDERSTYLE_SOLID, $LOC_BORDERSTYLE_DASH_DOT_DOT, "", $LOC_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If ($iLeft <> Null) And Not __LOCalc_IntIsBetween($iLeft, $LOC_BORDERSTYLE_SOLID, $LOC_BORDERSTYLE_DASH_DOT_DOT, "", $LOC_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
@@ -965,7 +984,6 @@ Func _LOCalc_PageStyleFooterBorderWidth(ByRef $oPageStyle, $iTop = Null, $iBotto
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($oPageStyle.FooterIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
 	If ($iTop <> Null) And Not __LOCalc_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If ($iBottom <> Null) And Not __LOCalc_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If ($iLeft <> Null) And Not __LOCalc_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
@@ -1097,6 +1115,7 @@ Func _LOCalc_PageStyleFooterObj(ByRef $oPageStyle, $oFirstPage = Null, $oRightPa
 
 	ElseIf IsObj($oFirstPage) Then
 		If Not ($oFirstPage.supportsService("com.sun.star.sheet.HeaderFooterContent")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oPageStyle.FirstPageFooterContent = $oFirstPage
 	EndIf
 
@@ -1108,6 +1127,7 @@ Func _LOCalc_PageStyleFooterObj(ByRef $oPageStyle, $oFirstPage = Null, $oRightPa
 
 	ElseIf IsObj($oRightPage) Then
 		If Not ($oRightPage.supportsService("com.sun.star.sheet.HeaderFooterContent")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oPageStyle.RightPageFooterContent = $oRightPage
 	EndIf
 
@@ -1119,6 +1139,7 @@ Func _LOCalc_PageStyleFooterObj(ByRef $oPageStyle, $oFirstPage = Null, $oRightPa
 
 	ElseIf IsObj($oLeftPage) Then
 		If Not ($oLeftPage.supportsService("com.sun.star.sheet.HeaderFooterContent")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oPageStyle.LeftPageFooterContent = $oLeftPage
 	EndIf
 
@@ -1188,21 +1209,25 @@ Func _LOCalc_PageStyleFooterShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = 
 
 	If ($iWidth <> Null) Then
 		If Not IsInt($iWidth) Or ($iWidth < 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$tShdwFrmt.ShadowWidth = $iWidth
 	EndIf
 
 	If ($iColor <> Null) Then
 		If Not __LOCalc_IntIsBetween($iColor, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$tShdwFrmt.Color = $iColor
 	EndIf
 
 	If ($bTransparent <> Null) Then
 		If Not IsBool($bTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$tShdwFrmt.IsTransparent = $bTransparent
 	EndIf
 
 	If ($iLocation <> Null) Then
 		If Not __LOCalc_IntIsBetween($iLocation, $LOC_SHADOW_NONE, $LOC_SHADOW_BOTTOM_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$tShdwFrmt.Location = $iLocation
 	EndIf
 
@@ -1251,6 +1276,7 @@ Func _LOCalc_PageStyleGetObj(ByRef $oDoc, $sPageStyle)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not _LOCalc_PageStyleExists($oDoc, $sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 	$oPageStyle = $oDoc.StyleFamilies().getByName("PageStyles").getByName($sPageStyle)
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -1331,12 +1357,14 @@ Func _LOCalc_PageStyleHeader(ByRef $oPageStyle, $bHeaderOn = Null, $bSameLeftRig
 
 	If ($bHeaderOn <> Null) Then
 		If Not IsBool($bHeaderOn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oPageStyle.HeaderIsOn = $bHeaderOn
 		$iError = ($oPageStyle.HeaderIsOn() = $bHeaderOn) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bSameLeftRight <> Null) Then
 		If Not IsBool($bSameLeftRight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oPageStyle.HeaderIsShared = $bSameLeftRight
 		$iError = ($oPageStyle.HeaderIsShared() = $bSameLeftRight) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -1344,36 +1372,42 @@ Func _LOCalc_PageStyleHeader(ByRef $oPageStyle, $bHeaderOn = Null, $bSameLeftRig
 	If ($bSameOnFirst <> Null) Then
 		If Not IsBool($bSameOnFirst) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		If Not __LOCalc_VersionCheck(4.0) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+
 		$oPageStyle.FirstPageHeaderIsShared = $bSameOnFirst
 		$iError = ($oPageStyle.FirstPageHeaderIsShared() = $bSameOnFirst) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iLeftMargin <> Null) Then
 		If Not IsInt($iLeftMargin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oPageStyle.HeaderLeftMargin = $iLeftMargin
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.HeaderLeftMargin(), $iLeftMargin - 1, $iLeftMargin + 1)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iRightMargin <> Null) Then
 		If Not IsInt($iRightMargin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oPageStyle.HeaderRightMargin = $iRightMargin
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.HeaderRightMargin(), $iRightMargin - 1, $iRightMargin + 1)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($iSpacing <> Null) Then
 		If Not IsInt($iSpacing) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oPageStyle.HeaderBodyDistance = $iSpacing
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.HeaderBodyDistance(), $iSpacing - 1, $iSpacing + 1)) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($iHeight <> Null) Then
 		If Not IsInt($iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 		$oPageStyle.HeaderHeight = $iHeight
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.HeaderHeight(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
 	If ($bAutoHeight <> Null) Then
 		If Not IsBool($bAutoHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
 		$oPageStyle.HeaderIsDynamicHeight = $bAutoHeight
 		$iError = ($oPageStyle.HeaderIsDynamicHeight() = $bAutoHeight) ? ($iError) : (BitOR($iError, 128))
 	EndIf
@@ -1431,12 +1465,14 @@ Func _LOCalc_PageStyleHeaderAreaColor(ByRef $oPageStyle, $iBackColor = Null, $bB
 
 	If ($iBackColor <> Null) Then
 		If Not __LOCalc_IntIsBetween($iBackColor, $LOC_COLOR_OFF, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oPageStyle.HeaderBackColor = $iBackColor
 		$iError = ($oPageStyle.HeaderBackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bBackTransparent <> Null) Then
 		If Not IsBool($bBackTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oPageStyle.HeaderBackTransparent = $bBackTransparent
 		$iError = ($oPageStyle.HeaderBackTransparent() = $bBackTransparent) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -1494,7 +1530,6 @@ Func _LOCalc_PageStyleHeaderBorderColor(ByRef $oPageStyle, $iTop = Null, $iBotto
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($oPageStyle.HeaderIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
 	If ($iTop <> Null) And Not __LOCalc_IntIsBetween($iTop, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If ($iBottom <> Null) And Not __LOCalc_IntIsBetween($iBottom, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If ($iLeft <> Null) And Not __LOCalc_IntIsBetween($iLeft, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
@@ -1565,30 +1600,35 @@ Func _LOCalc_PageStyleHeaderBorderPadding(ByRef $oPageStyle, $iAll = Null, $iTop
 
 	If ($iAll <> Null) Then
 		If Not __LOCalc_IntIsBetween($iAll, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oPageStyle.HeaderBorderDistance = $iAll
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.HeaderBorderDistance(), $iAll - 1, $iAll + 1)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iTop <> Null) Then
 		If Not __LOCalc_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oPageStyle.HeaderTopBorderDistance = $iTop
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.HeaderTopBorderDistance(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iBottom <> Null) Then
 		If Not __LOCalc_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oPageStyle.HeaderBottomBorderDistance = $iBottom
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.HeaderBottomBorderDistance(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iLeft <> Null) Then
 		If Not __LOCalc_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oPageStyle.HeaderLeftBorderDistance = $iLeft
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.HeaderLeftBorderDistance(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iRight <> Null) Then
 		If Not __LOCalc_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oPageStyle.HeaderRightBorderDistance = $iRight
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.HeaderRightBorderDistance(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
@@ -1645,7 +1685,6 @@ Func _LOCalc_PageStyleHeaderBorderStyle(ByRef $oPageStyle, $iTop = Null, $iBotto
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($oPageStyle.HeaderIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
 	If ($iTop <> Null) And Not __LOCalc_IntIsBetween($iTop, $LOC_BORDERSTYLE_SOLID, $LOC_BORDERSTYLE_DASH_DOT_DOT, "", $LOC_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If ($iBottom <> Null) And Not __LOCalc_IntIsBetween($iBottom, $LOC_BORDERSTYLE_SOLID, $LOC_BORDERSTYLE_DASH_DOT_DOT, "", $LOC_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If ($iLeft <> Null) And Not __LOCalc_IntIsBetween($iLeft, $LOC_BORDERSTYLE_SOLID, $LOC_BORDERSTYLE_DASH_DOT_DOT, "", $LOC_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
@@ -1701,7 +1740,6 @@ Func _LOCalc_PageStyleHeaderBorderWidth(ByRef $oPageStyle, $iTop = Null, $iBotto
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($oPageStyle.HeaderIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
 	If ($iTop <> Null) And Not __LOCalc_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If ($iBottom <> Null) And Not __LOCalc_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If ($iLeft <> Null) And Not __LOCalc_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
@@ -1833,6 +1871,7 @@ Func _LOCalc_PageStyleHeaderObj(ByRef $oPageStyle, $oFirstPage = Null, $oRightPa
 
 	ElseIf IsObj($oFirstPage) Then
 		If Not ($oFirstPage.supportsService("com.sun.star.sheet.HeaderFooterContent")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oPageStyle.FirstPageHeaderContent = $oFirstPage
 	EndIf
 
@@ -1844,6 +1883,7 @@ Func _LOCalc_PageStyleHeaderObj(ByRef $oPageStyle, $oFirstPage = Null, $oRightPa
 
 	ElseIf IsObj($oRightPage) Then
 		If Not ($oRightPage.supportsService("com.sun.star.sheet.HeaderFooterContent")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oPageStyle.RightPageHeaderContent = $oRightPage
 	EndIf
 
@@ -1855,6 +1895,7 @@ Func _LOCalc_PageStyleHeaderObj(ByRef $oPageStyle, $oFirstPage = Null, $oRightPa
 
 	ElseIf IsObj($oLeftPage) Then
 		If Not ($oLeftPage.supportsService("com.sun.star.sheet.HeaderFooterContent")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oPageStyle.LeftPageHeaderContent = $oLeftPage
 	EndIf
 
@@ -1913,6 +1954,7 @@ Func _LOCalc_PageStyleHeaderShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = 
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($oPageStyle.HeaderIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	$tShdwFrmt = $oPageStyle.HeaderShadowFormat()
 	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -1924,21 +1966,25 @@ Func _LOCalc_PageStyleHeaderShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = 
 
 	If ($iWidth <> Null) Then
 		If Not IsInt($iWidth) Or ($iWidth < 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$tShdwFrmt.ShadowWidth = $iWidth
 	EndIf
 
 	If ($iColor <> Null) Then
 		If Not __LOCalc_IntIsBetween($iColor, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$tShdwFrmt.Color = $iColor
 	EndIf
 
 	If ($bTransparent <> Null) Then
 		If Not IsBool($bTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$tShdwFrmt.IsTransparent = $bTransparent
 	EndIf
 
 	If ($iLocation <> Null) Then
 		If Not __LOCalc_IntIsBetween($iLocation, $LOC_SHADOW_NONE, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$tShdwFrmt.Location = $iLocation
 	EndIf
 
@@ -2015,30 +2061,35 @@ Func _LOCalc_PageStyleLayout(ByRef $oPageStyle, $iLayout = Null, $iNumFormat = N
 
 	If ($iLayout <> Null) Then
 		If Not __LOCalc_IntIsBetween($iLayout, $LOC_PAGE_LAYOUT_ALL, $LOC_PAGE_LAYOUT_MIRRORED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oPageStyle.PageStyleLayout = $iLayout
 		$iError = ($oPageStyle.PageStyleLayout() = $iLayout) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iNumFormat <> Null) Then
 		If Not __LOCalc_IntIsBetween($iNumFormat, $LOC_NUM_STYLE_CHARS_UPPER_LETTER, $LOC_NUM_STYLE_NUMBER_LEGAL_KO) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oPageStyle.NumberingType = $iNumFormat
 		$iError = ($oPageStyle.NumberingType() = $iNumFormat) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bTableAlignHori <> Null) Then
 		If Not IsBool($bTableAlignHori) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oPageStyle.CenterHorizontally = $bTableAlignHori
 		$iError = ($oPageStyle.CenterHorizontally() = $bTableAlignHori) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bTableAlignVert <> Null) Then
 		If Not IsBool($bTableAlignVert) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oPageStyle.CenterVertically = $bTableAlignVert
 		$iError = ($oPageStyle.CenterVertically() = $bTableAlignVert) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($sPaperTray <> Null) Then
 		If Not IsString($sPaperTray) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oPageStyle.PrinterPaperTray = $sPaperTray
 		$iError = ($oPageStyle.PrinterPaperTray() = $sPaperTray) ? ($iError) : (BitOR($iError, 16))
 	EndIf
@@ -2099,24 +2150,28 @@ Func _LOCalc_PageStyleMargins(ByRef $oPageStyle, $iLeft = Null, $iRight = Null, 
 
 	If ($iLeft <> Null) Then
 		If Not IsInt($iLeft) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oPageStyle.LeftMargin = $iLeft
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.LeftMargin(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iRight <> Null) Then
 		If Not IsInt($iRight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oPageStyle.RightMargin = $iRight
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.RightMargin(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iTop <> Null) Then
 		If Not IsInt($iTop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oPageStyle.TopMargin = $iTop
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.TopMargin(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iBottom <> Null) Then
 		If Not IsInt($iBottom) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oPageStyle.BottomMargin = $iBottom
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.BottomMargin(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
@@ -2183,6 +2238,7 @@ Func _LOCalc_PageStyleOrganizer(ByRef $oDoc, ByRef $oPageStyle, $sNewPageStyleNa
 	If ($sNewPageStyleName <> Null) Then
 		If Not IsString($sNewPageStyleName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		If _LOCalc_PageStyleExists($oDoc, $sNewPageStyleName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oPageStyle.Name = $sNewPageStyleName
 		$iError = ($oPageStyle.Name() = $sNewPageStyleName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -2190,6 +2246,7 @@ Func _LOCalc_PageStyleOrganizer(ByRef $oDoc, ByRef $oPageStyle, $sNewPageStyleNa
 	If ($bHidden <> Null) Then
 		If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		If Not __LOCalc_VersionCheck(4.0) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+
 		$oPageStyle.Hidden = $bHidden
 		$iError = ($oPageStyle.Hidden() = $bHidden) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -2247,12 +2304,14 @@ Func _LOCalc_PageStylePaperFormat(ByRef $oPageStyle, $iWidth = Null, $iHeight = 
 
 	If ($iWidth <> Null) Then
 		If Not IsInt($iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oPageStyle.Width = $iWidth
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iHeight <> Null) Then
 		If Not IsInt($iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oPageStyle.Height = $iHeight
 		$iError = (__LOCalc_IntIsBetween($oPageStyle.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -2363,8 +2422,10 @@ Func _LOCalc_PageStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly =
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsBool($bUserOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bAppliedOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 	Local $oStyles = $oDoc.StyleFamilies.getByName("PageStyles")
 	If Not IsObj($oStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	ReDim $aStyles[$oStyles.getCount()]
 
 	If Not $bUserOnly And Not $bAppliedOnly Then
@@ -2441,6 +2502,7 @@ Func _LOCalc_PageStyleShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = Null, 
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	$tShdwFrmt = $oPageStyle.ShadowFormat()
 	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -2452,21 +2514,25 @@ Func _LOCalc_PageStyleShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = Null, 
 
 	If ($iWidth <> Null) Then
 		If Not IsInt($iWidth) Or ($iWidth < 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$tShdwFrmt.ShadowWidth = $iWidth
 	EndIf
 
 	If ($iColor <> Null) Then
 		If Not __LOCalc_IntIsBetween($iColor, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$tShdwFrmt.Color = $iColor
 	EndIf
 
 	If ($bTransparent <> Null) Then
 		If Not IsBool($bTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$tShdwFrmt.IsTransparent = $bTransparent
 	EndIf
 
 	If ($iLocation <> Null) Then
 		If Not __LOCalc_IntIsBetween($iLocation, $LOC_SHADOW_NONE, $LOC_SHADOW_BOTTOM_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$tShdwFrmt.Location = $iLocation
 	EndIf
 
@@ -2533,18 +2599,21 @@ Func _LOCalc_PageStyleSheetPageOrder(ByRef $oPageStyle, $bTop2Bottom = Null, $bF
 
 	If ($bTop2Bottom <> Null) Then
 		If Not IsBool($bTop2Bottom) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oPageStyle.PrintDownFirst = $bTop2Bottom
 		$iError = ($oPageStyle.PrintDownFirst() = $bTop2Bottom) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bFirstPageNum <> Null) Then
 		If Not IsBool($bFirstPageNum) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oPageStyle.FirstPageNumber = ($bFirstPageNum) ? (1) : (0)
 		$iError = ($oPageStyle.FirstPageNumber() = ($bFirstPageNum) ? (1) : (0)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iFirstPage <> Null) Then
 		If Not __LOCalc_IntIsBetween($iFirstPage, 0, 9999) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oPageStyle.FirstPageNumber = $iFirstPage
 		$iError = ($oPageStyle.FirstPageNumber() = $iFirstPage) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -2618,48 +2687,56 @@ Func _LOCalc_PageStyleSheetPrint(ByRef $oPageStyle, $bHeaders = Null, $bGrid = N
 
 	If ($bHeaders <> Null) Then
 		If Not IsBool($bHeaders) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oPageStyle.PrintHeaders = $bHeaders
 		$iError = ($oPageStyle.PrintHeaders() = $bHeaders) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bGrid <> Null) Then
 		If Not IsBool($bGrid) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oPageStyle.PrintGrid = $bGrid
 		$iError = ($oPageStyle.PrintGrid() = $bGrid) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bComments <> Null) Then
 		If Not IsBool($bComments) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oPageStyle.PrintAnnotations = $bComments
 		$iError = ($oPageStyle.PrintAnnotations() = $bComments) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bObjectsOrImages <> Null) Then
 		If Not IsBool($bObjectsOrImages) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oPageStyle.PrintObjects = $bObjectsOrImages
 		$iError = ($oPageStyle.PrintObjects() = $bObjectsOrImages) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($bCharts <> Null) Then
 		If Not IsBool($bCharts) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oPageStyle.PrintCharts = $bCharts
 		$iError = ($oPageStyle.PrintCharts() = $bCharts) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($bDrawing <> Null) Then
 		If Not IsBool($bDrawing) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oPageStyle.PrintDrawing = $bDrawing
 		$iError = ($oPageStyle.PrintDrawing() = $bDrawing) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($bFormulas <> Null) Then
 		If Not IsBool($bFormulas) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 		$oPageStyle.PrintFormulas = $bFormulas
 		$iError = ($oPageStyle.PrintFormulas() = $bFormulas) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
 	If ($bZeroValues <> Null) Then
 		If Not IsBool($bZeroValues) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
 		$oPageStyle.PrintZeroValues = $bZeroValues
 		$iError = ($oPageStyle.PrintZeroValues() = $bZeroValues) ? ($iError) : (BitOR($iError, 128))
 	EndIf
@@ -2776,23 +2853,27 @@ Func _LOCalc_PageStyleSheetScale(ByRef $oPageStyle, $iMode = Null, $iVariable1 =
 		If ($oPageStyle.ScaleToPagesX() > 0) Or ($oPageStyle.ScaleToPagesY() > 0) Then ; Determine which Scale mode is active
 			If ($iVariable1 <> Null) Then
 				If Not __LOCalc_IntIsBetween($iVariable1, 1, 1000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 				$oPageStyle.ScaleToPagesX = $iVariable1
 				$iError = ($oPageStyle.ScaleToPagesX = $iVariable1) ? ($iError) : (BitOR($iError, 4))
 			EndIf
 
 			If ($iVariable2 <> Null) Then
 				If Not __LOCalc_IntIsBetween($iVariable2, 1, 1000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 				$oPageStyle.ScaleToPagesY = $iVariable2
 				$iError = ($oPageStyle.ScaleToPagesY = $iVariable2) ? ($iError) : (BitOR($iError, 8))
 			EndIf
 
 		ElseIf ($oPageStyle.ScaleToPages() > 0) Then
 			If Not __LOCalc_IntIsBetween($iVariable1, 1, 1000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 			$oPageStyle.ScaleToPages = $iVariable1
 			$iError = ($oPageStyle.ScaleToPages = $iVariable1) ? ($iError) : (BitOR($iError, 16))
 
 		ElseIf ($oPageStyle.PageScale() > 0) Then ; Page Scale has to be last because each time I Set one of the other settings, Scale returns to 100%, if I set it back to 0 I lose my other settings.
 			If Not __LOCalc_IntIsBetween($iVariable1, 10, 400) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			$oPageStyle.PageScale = $iVariable1
 			$iError = ($oPageStyle.PageScale = $iVariable1) ? ($iError) : (BitOR($iError, 2))
 		EndIf

@@ -104,6 +104,7 @@ Func __LOCalc_AddTo1DArray(ByRef $aArray, $vData, $bCountInFirst = False)
 	EndIf
 
 	If $bCountInFirst And (($aArray[0] <> "") And Not IsInt($aArray[0])) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 	ReDim $aArray[UBound($aArray) + 1]
 	$aArray[UBound($aArray) - 1] = $vData
 	If $bCountInFirst Then $aArray[0] += 1
@@ -230,12 +231,14 @@ Func __LOCalc_CellBackColor(ByRef $oObj, $iBackColor, $bBackTransparent)
 
 	If ($iBackColor <> Null) Then
 		If Not __LOCalc_IntIsBetween($iBackColor, $LOC_COLOR_OFF, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oObj.CellBackColor = $iBackColor
 		$iError = ($oObj.CellBackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bBackTransparent <> Null) Then
 		If Not IsBool($bBackTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oObj.IsCellBackgroundTransparent = $bBackTransparent
 		$iError = ($oObj.IsCellBackgroundTransparent() = $bBackTransparent) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -323,11 +326,13 @@ Func __LOCalc_CellBorder(ByRef $oRange, $bWid, $bSty, $bCol, $iTop, $iBottom, $i
 
 	$tBL2 = __LOCalc_CreateStruct("com.sun.star.table.BorderLine2")
 	If Not IsObj($tBL2) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	$tTB2 = $oRange.TableBorder2
 	If Not IsObj($tTB2) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If $iTop <> Null Then
 		If Not $bWid And ($tTB2.TopLine.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0) ; If Width not set, cant set color or style.
+
 		; Top Line
 		$tBL2.LineWidth = ($bWid) ? ($iTop) : ($tTB2.TopLine.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iTop) : ($tTB2.TopLine.LineStyle()) ; copy Line style over to new size structure
@@ -337,6 +342,7 @@ Func __LOCalc_CellBorder(ByRef $oRange, $bWid, $bSty, $bCol, $iTop, $iBottom, $i
 
 	If $iBottom <> Null Then
 		If Not $bWid And ($tTB2.BottomLine.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 2, 0) ; If Width not set, cant set color or style.
+
 		; Bottom Line
 		$tBL2.LineWidth = ($bWid) ? ($iBottom) : ($tTB2.BottomLine.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iBottom) : ($tTB2.BottomLine.LineStyle()) ; copy Line style over to new size structure
@@ -346,6 +352,7 @@ Func __LOCalc_CellBorder(ByRef $oRange, $bWid, $bSty, $bCol, $iTop, $iBottom, $i
 
 	If $iLeft <> Null Then
 		If Not $bWid And ($tTB2.LeftLine.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 3, 0) ; If Width not set, cant set color or style.
+
 		; Left Line
 		$tBL2.LineWidth = ($bWid) ? ($iLeft) : ($tTB2.LeftLine.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iLeft) : ($tTB2.LeftLine.LineStyle()) ; copy Line style over to new size structure
@@ -355,6 +362,7 @@ Func __LOCalc_CellBorder(ByRef $oRange, $bWid, $bSty, $bCol, $iTop, $iBottom, $i
 
 	If $iRight <> Null Then
 		If Not $bWid And ($tTB2.RightLine.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 4, 0) ; If Width not set, cant set color or style.
+
 		; Right Line
 		$tBL2.LineWidth = ($bWid) ? ($iRight) : ($tTB2.RightLine.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iRight) : ($tTB2.RightLine.LineStyle()) ; copy Line style over to new size structure
@@ -364,6 +372,7 @@ Func __LOCalc_CellBorder(ByRef $oRange, $bWid, $bSty, $bCol, $iTop, $iBottom, $i
 
 	If $iVert <> Null Then
 		If Not $bWid And ($tTB2.VerticalLine.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 5, 0) ; If Width not set, cant set color or style.
+
 		; Vertical Line
 		$tBL2.LineWidth = ($bWid) ? ($iVert) : ($tTB2.VerticalLine.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iVert) : ($tTB2.VerticalLine.LineStyle()) ; copy Line style over to new size structure
@@ -373,6 +382,7 @@ Func __LOCalc_CellBorder(ByRef $oRange, $bWid, $bSty, $bCol, $iTop, $iBottom, $i
 
 	If $iHori <> Null Then
 		If Not $bWid And ($tTB2.HorizontalLine.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 6, 0) ; If Width not set, cant set color or style.
+
 		; Horizontal Line
 ;~ 		$tBL2.LineWidth = ($bWid) ? ($iHori) : ($tTB2.HorizontalLine.LineWidth()) ; copy Line Width over to new size structure
 
@@ -387,6 +397,7 @@ Func __LOCalc_CellBorder(ByRef $oRange, $bWid, $bSty, $bCol, $iTop, $iBottom, $i
 
 	If $iTLBRDiag <> Null Then
 		If Not $bWid And ($oRange.DiagonalTLBR2.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 7, 0) ; If Width not set, cant set color or style.
+
 		; Top-Left to Bottom Right Diagonal Line
 		$tBL2.LineWidth = ($bWid) ? ($iTLBRDiag) : ($oRange.DiagonalTLBR2.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iTLBRDiag) : ($oRange.DiagonalTLBR2.LineStyle()) ; copy Line style over to new size structure
@@ -396,6 +407,7 @@ Func __LOCalc_CellBorder(ByRef $oRange, $bWid, $bSty, $bCol, $iTop, $iBottom, $i
 
 	If $iBLTRDiag <> Null Then
 		If Not $bWid And ($oRange.DiagonalBLTR2.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 8, 0) ; If Width not set, cant set color or style.
+
 		; Bottom-Left to Top-Right Diagonal Line
 		$tBL2.LineWidth = ($bWid) ? ($iBLTRDiag) : ($oRange.DiagonalBLTR2.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iBLTRDiag) : ($oRange.DiagonalBLTR2.LineStyle()) ; copy Line style over to new size structure
@@ -459,6 +471,7 @@ Func __LOCalc_CellBorderPadding(ByRef $oObj, $iAll, $iTop, $iBottom, $iLeft, $iR
 
 	If ($iAll <> Null) Then
 		If Not __LOCalc_IntIsBetween($iAll, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oObj.ParaTopMargin = $iAll
 		$oObj.ParaBottomMargin = $iAll
 		$oObj.ParaLeftMargin = $iAll
@@ -471,24 +484,28 @@ Func __LOCalc_CellBorderPadding(ByRef $oObj, $iAll, $iTop, $iBottom, $iLeft, $iR
 
 	If ($iTop <> Null) Then
 		If Not __LOCalc_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oObj.ParaTopMargin = $iTop
 		$iError = (__LOCalc_IntIsBetween($oObj.ParaTopMargin(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iBottom <> Null) Then
 		If Not __LOCalc_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oObj.ParaBottomMargin = $iBottom
 		$iError = (__LOCalc_IntIsBetween($oObj.ParaBottomMargin(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iLeft <> Null) Then
 		If Not __LOCalc_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oObj.ParaLeftMargin = $iLeft
 		$iError = (__LOCalc_IntIsBetween($oObj.ParaLeftMargin(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iRight <> Null) Then
 		If Not __LOCalc_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oObj.ParaRightMargin = $iRight
 		$iError = (__LOCalc_IntIsBetween($oObj.ParaRightMargin(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
@@ -544,18 +561,21 @@ Func __LOCalc_CellEffect(ByRef $oObj, $iRelief, $bOutline, $bShadow)
 
 	If ($iRelief <> Null) Then
 		If Not __LOCalc_IntIsBetween($iRelief, $LOC_RELIEF_NONE, $LOC_RELIEF_ENGRAVED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oObj.CharRelief = $iRelief
 		$iError = ($oObj.CharRelief() = $iRelief) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bOutline <> Null) Then
 		If Not IsBool($bOutline) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oObj.CharContoured = $bOutline
 		$iError = ($oObj.CharContoured() = $bOutline) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bShadow <> Null) Then
 		If Not IsBool($bShadow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oObj.CharShadowed = $bShadow
 		$iError = ($oObj.CharShadowed() = $bShadow) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -616,24 +636,28 @@ Func __LOCalc_CellFont(ByRef $oObj, $sFontName, $nFontSize, $iPosture, $iWeight)
 
 	If ($sFontName <> Null) Then
 		If Not IsString($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oObj.CharFontName = $sFontName
 		$iError = ($oObj.CharFontName() = $sFontName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($nFontSize <> Null) Then
 		If Not IsNumber($nFontSize) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oObj.CharHeight = $nFontSize
 		$iError = ($oObj.CharHeight() = $nFontSize) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iPosture <> Null) Then
 		If Not __LOCalc_IntIsBetween($iPosture, $LOC_POSTURE_NONE, $LOC_POSTURE_ITALIC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oObj.CharPosture = $iPosture
 		$iError = ($oObj.CharPosture() = $iPosture) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iWeight <> Null) Then
 		If Not __LOCalc_IntIsBetween($iWeight, $LOC_WEIGHT_THIN, $LOC_WEIGHT_BLACK, "", $LOC_WEIGHT_DONT_KNOW) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oObj.CharWeight = $iWeight
 		$iError = ($oObj.CharWeight() = $iWeight) ? ($iError) : (BitOR($iError, 8))
 	EndIf
@@ -681,6 +705,7 @@ Func __LOCalc_CellFontColor(ByRef $oObj, $iFontColor)
 
 	If ($iFontColor <> Null) Then
 		If Not __LOCalc_IntIsBetween($iFontColor, $LOC_COLOR_OFF, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oObj.CharColor = $iFontColor
 		$iError = ($oObj.CharColor() = $iFontColor) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -726,8 +751,8 @@ Func __LOCalc_CellNumberFormat(ByRef $oDoc, ByRef $oObj, $iFormatKey)
 	If __LOCalc_VarsAreNull($iFormatKey) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oObj.NumberFormat())
 
 	If Not IsInt($iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
 	If Not _LOCalc_FormatKeyExists($oDoc, $iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 	$oObj.NumberFormat = $iFormatKey
 	$iError = ($oObj.NumberFormat() = $iFormatKey) ? ($iError) : (BitOR($iError, 1))
 
@@ -786,24 +811,28 @@ Func __LOCalc_CellOverLine(ByRef $oObj, $bWordOnly, $iOverLineStyle, $bOLHasColo
 
 	If ($bWordOnly <> Null) Then
 		If Not IsBool($bWordOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oObj.CharWordMode = $bWordOnly
 		$iError = ($oObj.CharWordMode() = $bWordOnly) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iOverLineStyle <> Null) Then
 		If Not __LOCalc_IntIsBetween($iOverLineStyle, $LOC_UNDERLINE_NONE, $LOC_UNDERLINE_BOLD_WAVE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oObj.CharOverline = $iOverLineStyle
 		$iError = ($oObj.CharOverline() = $iOverLineStyle) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bOLHasColor <> Null) Then
 		If Not IsBool($bOLHasColor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oObj.CharOverlineHasColor = $bOLHasColor
 		$iError = ($oObj.CharOverlineHasColor() = $bOLHasColor) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iOLColor <> Null) Then
 		If Not __LOCalc_IntIsBetween($iOLColor, $LOC_COLOR_OFF, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oObj.CharOverlineColor = $iOLColor
 		$iError = ($oObj.CharOverlineColor() = $iOLColor) ? ($iError) : (BitOR($iError, 8))
 	EndIf
@@ -869,21 +898,25 @@ Func __LOCalc_CellProtection(ByRef $oObj, $bHideAll, $bProtected, $bHideFormula,
 
 	If ($bHideAll <> Null) Then
 		If Not IsBool($bHideAll) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$tCellProtection.IsHidden = $bHideAll
 	EndIf
 
 	If ($bProtected <> Null) Then
 		If Not IsBool($bProtected) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$tCellProtection.IsLocked = $bProtected
 	EndIf
 
 	If ($bHideFormula <> Null) Then
 		If Not IsBool($bHideFormula) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$tCellProtection.IsFormulaHidden = $bHideFormula
 	EndIf
 
 	If ($bHideWhenPrint <> Null) Then
 		If Not IsBool($bHideWhenPrint) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$tCellProtection.IsPrintHidden = $bHideWhenPrint
 	EndIf
 
@@ -954,21 +987,25 @@ Func __LOCalc_CellShadow(ByRef $oObj, $iWidth, $iColor, $bTransparent, $iLocatio
 
 	If ($iWidth <> Null) Then
 		If Not __LOCalc_IntIsBetween($iWidth, 0, 5009) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$tShdwFrmt.ShadowWidth = $iWidth
 	EndIf
 
 	If ($iColor <> Null) Then
 		If Not __LOCalc_IntIsBetween($iColor, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$tShdwFrmt.Color = $iColor
 	EndIf
 
 	If ($bTransparent <> Null) Then
 		If Not IsBool($bTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$tShdwFrmt.IsTransparent = $bTransparent
 	EndIf
 
 	If ($iLocation <> Null) Then
 		If Not __LOCalc_IntIsBetween($iLocation, $LOC_SHADOW_NONE, $LOC_SHADOW_BOTTOM_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$tShdwFrmt.Location = $iLocation
 	EndIf
 
@@ -1030,18 +1067,21 @@ Func __LOCalc_CellStrikeOut(ByRef $oObj, $bWordOnly, $bStrikeOut, $iStrikeLineSt
 
 	If ($bWordOnly <> Null) Then
 		If Not IsBool($bWordOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oObj.CharWordMode = $bWordOnly
 		$iError = ($oObj.CharWordMode() = $bWordOnly) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bStrikeOut <> Null) Then
 		If Not IsBool($bStrikeOut) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oObj.CharCrossedOut = $bStrikeOut
 		$iError = ($oObj.CharCrossedOut() = $bStrikeOut) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iStrikeLineStyle <> Null) Then
 		If Not __LOCalc_IntIsBetween($iStrikeLineStyle, $LOC_STRIKEOUT_NONE, $LOC_STRIKEOUT_X) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oObj.CharStrikeout = $iStrikeLineStyle
 		$iError = ($oObj.CharStrikeout() = $iStrikeLineStyle) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -1124,6 +1164,7 @@ Func __LOCalc_CellStyleBorder(ByRef $oCellStyle, $bWid, $bSty, $bCol, $iTop, $iB
 
 	If $iTop <> Null Then
 		If Not $bWid And ($oCellStyle.TopBorder2.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0) ; If Width not set, cant set color or style.
+
 		; Top Line
 		$tBL2.LineWidth = ($bWid) ? ($iTop) : ($oCellStyle.TopBorder2.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iTop) : ($oCellStyle.TopBorder2.LineStyle()) ; copy Line style over to new size structure
@@ -1133,6 +1174,7 @@ Func __LOCalc_CellStyleBorder(ByRef $oCellStyle, $bWid, $bSty, $bCol, $iTop, $iB
 
 	If $iBottom <> Null Then
 		If Not $bWid And ($oCellStyle.BottomBorder2.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 2, 0) ; If Width not set, cant set color or style.
+
 		; Bottom Line
 		$tBL2.LineWidth = ($bWid) ? ($iBottom) : ($oCellStyle.BottomBorder2.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iBottom) : ($oCellStyle.BottomBorder2.LineStyle()) ; copy Line style over to new size structure
@@ -1142,6 +1184,7 @@ Func __LOCalc_CellStyleBorder(ByRef $oCellStyle, $bWid, $bSty, $bCol, $iTop, $iB
 
 	If $iLeft <> Null Then
 		If Not $bWid And ($oCellStyle.LeftBorder2.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 3, 0) ; If Width not set, cant set color or style.
+
 		; Left Line
 		$tBL2.LineWidth = ($bWid) ? ($iLeft) : ($oCellStyle.LeftBorder2.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iLeft) : ($oCellStyle.LeftBorder2.LineStyle()) ; copy Line style over to new size structure
@@ -1151,6 +1194,7 @@ Func __LOCalc_CellStyleBorder(ByRef $oCellStyle, $bWid, $bSty, $bCol, $iTop, $iB
 
 	If $iRight <> Null Then
 		If Not $bWid And ($oCellStyle.RightBorder2.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 4, 0) ; If Width not set, cant set color or style.
+
 		; Right Line
 		$tBL2.LineWidth = ($bWid) ? ($iRight) : ($oCellStyle.RightBorder2.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iRight) : ($oCellStyle.RightBorder2.LineStyle()) ; copy Line style over to new size structure
@@ -1160,6 +1204,7 @@ Func __LOCalc_CellStyleBorder(ByRef $oCellStyle, $bWid, $bSty, $bCol, $iTop, $iB
 
 	If $iTLBRDiag <> Null Then
 		If Not $bWid And ($oCellStyle.DiagonalTLBR2.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 5, 0) ; If Width not set, cant set color or style.
+
 		; Right Line
 		$tBL2.LineWidth = ($bWid) ? ($iTLBRDiag) : ($oCellStyle.DiagonalTLBR2.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iTLBRDiag) : ($oCellStyle.DiagonalTLBR2.LineStyle()) ; copy Line style over to new size structure
@@ -1169,6 +1214,7 @@ Func __LOCalc_CellStyleBorder(ByRef $oCellStyle, $bWid, $bSty, $bCol, $iTop, $iB
 
 	If $iBLTRDiag <> Null Then
 		If Not $bWid And ($oCellStyle.DiagonalBLTR2.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 6, 0) ; If Width not set, cant set color or style.
+
 		; Right Line
 		$tBL2.LineWidth = ($bWid) ? ($iBLTRDiag) : ($oCellStyle.DiagonalBLTR2.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iBLTRDiag) : ($oCellStyle.DiagonalBLTR2.LineStyle()) ; copy Line style over to new size structure
@@ -1228,6 +1274,7 @@ Func __LOCalc_CellTextAlign(ByRef $oObj, $iHoriAlign, $iVertAlign, $iIndent)
 
 	If ($iHoriAlign <> Null) Then
 		If Not __LOCalc_IntIsBetween($iHoriAlign, $LOC_CELL_ALIGN_HORI_DEFAULT, $LOC_CELL_ALIGN_HORI_DISTRIBUTED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		; $LOC_CELL_ALIGN_HORI_DISTRIBUTED Isn't a real setting, it is a combination of Filled (Block) and an undocumented setting called "HoriJustifyMethod" set to 1, instead of 0.
 
 		If ($iHoriAlign = $LOC_CELL_ALIGN_HORI_DISTRIBUTED) Then
@@ -1244,6 +1291,7 @@ Func __LOCalc_CellTextAlign(ByRef $oObj, $iHoriAlign, $iVertAlign, $iIndent)
 
 	If ($iVertAlign <> Null) Then
 		If Not __LOCalc_IntIsBetween($iVertAlign, $LOC_CELL_ALIGN_VERT_DEFAULT, $LOC_CELL_ALIGN_VERT_DISTRIBUTED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		; $LOC_CELL_ALIGN_VERT_DISTRIBUTED Isn't a real setting, it is a combination of Filled (Block) and an undocumented setting called "VertJustifyMethod" set to 1, instead of 0.
 
 		If ($iVertAlign = $LOC_CELL_ALIGN_VERT_DISTRIBUTED) Then
@@ -1260,6 +1308,7 @@ Func __LOCalc_CellTextAlign(ByRef $oObj, $iHoriAlign, $iVertAlign, $iIndent)
 
 	If ($iIndent <> Null) Then
 		If Not IsInt($iIndent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oObj.ParaIndent = $iIndent
 		$iError = (__LOCalc_IntIsBetween($oObj.ParaIndent(), $iIndent - 1, $iIndent + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -1321,18 +1370,21 @@ Func __LOCalc_CellTextOrient(ByRef $oObj, $iRotate, $iReference, $bVerticalStack
 
 	If ($iRotate <> Null) Then
 		If Not __LOCalc_IntIsBetween($iRotate, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oObj.RotateAngle = ($iRotate * 100) ; Rotate Angle is in 100ths of degrees.
 		$iError = ($oObj.RotateAngle = ($iRotate * 100)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iReference <> Null) Then
 		If Not __LOCalc_IntIsBetween($iReference, $LOC_CELL_ALIGN_VERT_DEFAULT, $LOC_CELL_ALIGN_VERT_TOP, "", $LOC_CELL_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oObj.RotateReference = $iReference
 		$iError = ($oObj.RotateReference() = $iReference) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bVerticalStack <> Null) Then
 		If Not IsBool($bVerticalStack) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		; According to Libre Office IDL Vertical Stack (Orientation set to 3) is only taken into account when RotateAngle is set to 0.
 		If ($bVerticalStack = True) Then
 			$oObj.RotateAngle = 0
@@ -1347,6 +1399,7 @@ Func __LOCalc_CellTextOrient(ByRef $oObj, $iRotate, $iReference, $bVerticalStack
 
 	If ($bAsianLayout <> Null) Then
 		If Not IsBool($bAsianLayout) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oObj.AsianVerticalMode = $bAsianLayout
 		$iError = ($oObj.AsianVerticalMode() = $bAsianLayout) ? ($iError) : (BitOR($iError, 8))
 	EndIf
@@ -1405,24 +1458,28 @@ Func __LOCalc_CellTextProperties(ByRef $oObj, $bAutoWrapText, $bHyphen, $bShrink
 
 	If ($bAutoWrapText <> Null) Then
 		If Not IsBool($bAutoWrapText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oObj.IsTextWrapped = $bAutoWrapText
 		$iError = ($oObj.IsTextWrapped = $bAutoWrapText) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bHyphen <> Null) Then
 		If Not IsBool($bHyphen) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oObj.ParaIsHyphenation = $bHyphen
 		$iError = ($oObj.ParaIsHyphenation() = $bHyphen) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bShrinkToFit <> Null) Then
 		If Not IsBool($bShrinkToFit) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oObj.ShrinkToFit = $bShrinkToFit
 		$iError = ($oObj.ShrinkToFit() = $bShrinkToFit) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iTextDirection <> Null) Then
 		If Not __LOCalc_IntIsBetween($iTextDirection, $LOC_TXT_DIR_LR, $LOC_TXT_DIR_RL, "", $LOC_TXT_DIR_CONTEXT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oObj.WritingMode = $iTextDirection
 		$iError = ($oObj.WritingMode() = $iTextDirection) ? ($iError) : (BitOR($iError, 8))
 	EndIf
@@ -1481,24 +1538,28 @@ Func __LOCalc_CellUnderLine(ByRef $oObj, $bWordOnly, $iUnderLineStyle, $bULHasCo
 
 	If ($bWordOnly <> Null) Then
 		If Not IsBool($bWordOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oObj.CharWordMode = $bWordOnly
 		$iError = ($oObj.CharWordMode() = $bWordOnly) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iUnderLineStyle <> Null) Then
 		If Not __LOCalc_IntIsBetween($iUnderLineStyle, $LOC_UNDERLINE_NONE, $LOC_UNDERLINE_BOLD_WAVE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oObj.CharUnderline = $iUnderLineStyle
 		$iError = ($oObj.CharUnderline() = $iUnderLineStyle) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bULHasColor <> Null) Then
 		If Not IsBool($bULHasColor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oObj.CharUnderlineHasColor = $bULHasColor
 		$iError = ($oObj.CharUnderlineHasColor() = $bULHasColor) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iULColor <> Null) Then
 		If Not __LOCalc_IntIsBetween($iULColor, $LOC_COLOR_OFF, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oObj.CharUnderlineColor = $iULColor
 		$iError = ($oObj.CharUnderlineColor() = $iULColor) ? ($iError) : (BitOR($iError, 8))
 	EndIf
@@ -1563,6 +1624,7 @@ Func __LOCalc_CharPosition(ByRef $oObj, $bAutoSuper, $iSuperScript, $bAutoSub, $
 
 	If ($bAutoSuper <> Null) Then
 		If Not IsBool($bAutoSuper) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		; If $bAutoSuper = True set it to 14000 (automatic Superscript) else if $iSuperScript is set, let that overwrite
 		;	the current setting, else if subscript is true or set to an integer, it will overwrite the setting. If nothing
 		; else set Subscript to 1
@@ -1571,6 +1633,7 @@ Func __LOCalc_CharPosition(ByRef $oObj, $bAutoSuper, $iSuperScript, $bAutoSub, $
 
 	If ($bAutoSub <> Null) Then
 		If Not IsBool($bAutoSub) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		; If $bAutoSub = True set it to -14000 (automatic Subscript) else if $iSubScript is set, let that overwrite
 		;	the current setting, else if superscript is true or set to an integer, it will overwrite the setting.
 		$iSubScript = ($bAutoSub) ? (-14000) : ((IsInt($iSubScript)) ? ($iSubScript) : ((IsInt($iSuperScript)) ? ($iSubScript) : (1)))
@@ -1578,12 +1641,14 @@ Func __LOCalc_CharPosition(ByRef $oObj, $bAutoSuper, $iSuperScript, $bAutoSub, $
 
 	If ($iSuperScript <> Null) Then
 		If Not __LOCalc_IntIsBetween($iSuperScript, 0, 100, "", 14000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oObj.CharEscapement = $iSuperScript
 		$iError = ($oObj.CharEscapement() = $iSuperScript) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iSubScript <> Null) Then
 		If Not __LOCalc_IntIsBetween($iSubScript, -100, 100, "", "-14000:14000") Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$iSubScript = ($iSubScript > 0) ? Int("-" & $iSubScript) : $iSubScript
 		$oObj.CharEscapement = $iSubScript
 		$iError = ($oObj.CharEscapement() = $iSubScript) ? ($iError) : (BitOR($iError, 2))
@@ -1591,6 +1656,7 @@ Func __LOCalc_CharPosition(ByRef $oObj, $bAutoSuper, $iSuperScript, $bAutoSub, $
 
 	If ($iRelativeSize <> Null) Then
 		If Not __LOCalc_IntIsBetween($iRelativeSize, 1, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oObj.CharEscapementHeight = $iRelativeSize
 		$iError = ($oObj.CharEscapementHeight() = $iRelativeSize) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -1648,12 +1714,14 @@ Func __LOCalc_CharSpacing(ByRef $oObj, $bAutoKerning, $nKerning)
 
 	If ($bAutoKerning <> Null) Then
 		If Not IsBool($bAutoKerning) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oObj.CharAutoKerning = $bAutoKerning
 		$iError = ($oObj.CharAutoKerning() = $bAutoKerning) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($nKerning <> Null) Then
 		If Not __LOCalc_NumIsBetween($nKerning, -2, 928.8) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$nKerning = __LOCalc_UnitConvert($nKerning, $__LOCONST_CONVERT_PT_UM)
 		$oObj.CharKerning = $nKerning
 		$iError = ($oObj.CharKerning() = $nKerning) ? ($iError) : (BitOR($iError, 2))
@@ -2058,8 +2126,10 @@ Func __LOCalc_CreateStruct($sStructName)
 	Local $oServiceManager, $tStruct
 
 	If Not IsString($sStructName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	$tStruct = $oServiceManager.Bridge_GetStruct($sStructName)
 	If Not IsObj($tStruct) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
@@ -2139,8 +2209,8 @@ Func __LOCalc_FieldGetObj(ByRef $oTextCursor, $iType = $LOC_FIELD_TYPE_ALL)
 			If ($oTextPortion.TextPortionType = "TextField") Then
 				$oTextField = $oTextPortion.TextField()
 				If Not IsObj($oTextField) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
-
 				If ($iTotalFound >= $iTotalFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+
 				For $i = 0 To UBound($avFieldTypes) - 1
 					If $oTextField.supportsService($avFieldTypes[$i][1]) And ($oInternalCursor.compareRegionEnds($oInternalCursor, $oTextField.Anchor.End()) = 0) Then
 						$oField = $oFields.getByIndex($iTotalFound)
@@ -2241,6 +2311,7 @@ Func __LOCalc_FilterNameGet(ByRef $sDocSavePath, $bExportFilters = False)
 
 	If Not IsString($sDocSavePath) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsBool($bExportFilters) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	$iLength = StringLen($sDocSavePath)
 
 	$msSaveAsFilters[".csv"] = "Text - txt - csv (StarCalc)"
@@ -2666,6 +2737,7 @@ Func __LOCalc_PageStyleBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTop, $iB
 
 	If $iTop <> Null Then
 		If Not $bWid And ($oPageStyle.TopBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0) ; If Width not set, cant set color or style.
+
 		; Top Line
 		$tBL2.LineWidth = ($bWid) ? ($iTop) : ($oPageStyle.TopBorder.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iTop) : ($oPageStyle.TopBorder.LineStyle()) ; copy Line style over to new size structure
@@ -2675,6 +2747,7 @@ Func __LOCalc_PageStyleBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTop, $iB
 
 	If $iBottom <> Null Then
 		If Not $bWid And ($oPageStyle.BottomBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 2, 0) ; If Width not set, cant set color or style.
+
 		; Bottom Line
 		$tBL2.LineWidth = ($bWid) ? ($iBottom) : ($oPageStyle.BottomBorder.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iBottom) : ($oPageStyle.BottomBorder.LineStyle()) ; copy Line style over to new size structure
@@ -2684,6 +2757,7 @@ Func __LOCalc_PageStyleBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTop, $iB
 
 	If $iLeft <> Null Then
 		If Not $bWid And ($oPageStyle.LeftBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 3, 0) ; If Width not set, cant set color or style.
+
 		; Left Line
 		$tBL2.LineWidth = ($bWid) ? ($iLeft) : ($oPageStyle.LeftBorder.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iLeft) : ($oPageStyle.LeftBorder.LineStyle()) ; copy Line style over to new size structure
@@ -2693,6 +2767,7 @@ Func __LOCalc_PageStyleBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTop, $iB
 
 	If $iRight <> Null Then
 		If Not $bWid And ($oPageStyle.RightBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 4, 0) ; If Width not set, cant set color or style.
+
 		; Right Line
 		$tBL2.LineWidth = ($bWid) ? ($iRight) : ($oPageStyle.RightBorder.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iRight) : ($oPageStyle.RightBorder.LineStyle()) ; copy Line style over to new size structure
@@ -2771,6 +2846,7 @@ Func __LOCalc_PageStyleFooterBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTo
 
 	If $iTop <> Null Then
 		If Not $bWid And ($oPageStyle.FooterTopBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0) ; If Width not set, cant set color or style.
+
 		; Top Line
 		$tBL2.LineWidth = ($bWid) ? ($iTop) : ($oPageStyle.FooterTopBorder.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iTop) : ($oPageStyle.FooterTopBorder.LineStyle()) ; copy Line style over to new size structure
@@ -2780,6 +2856,7 @@ Func __LOCalc_PageStyleFooterBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTo
 
 	If $iBottom <> Null Then
 		If Not $bWid And ($oPageStyle.FooterBottomBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 2, 0) ; If Width not set, cant set color or style.
+
 		; Bottom Line
 		$tBL2.LineWidth = ($bWid) ? ($iBottom) : ($oPageStyle.FooterBottomBorder.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iBottom) : ($oPageStyle.FooterBottomBorder.LineStyle()) ; copy Line style over to new size structure
@@ -2789,6 +2866,7 @@ Func __LOCalc_PageStyleFooterBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTo
 
 	If $iLeft <> Null Then
 		If Not $bWid And ($oPageStyle.FooterLeftBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 3, 0) ; If Width not set, cant set color or style.
+
 		; Left Line
 		$tBL2.LineWidth = ($bWid) ? ($iLeft) : ($oPageStyle.FooterLeftBorder.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iLeft) : ($oPageStyle.FooterLeftBorder.LineStyle()) ; copy Line style over to new size structure
@@ -2798,6 +2876,7 @@ Func __LOCalc_PageStyleFooterBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTo
 
 	If $iRight <> Null Then
 		If Not $bWid And ($oPageStyle.FooterRightBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 4, 0) ; If Width not set, cant set color or style.
+
 		; Right Line
 		$tBL2.LineWidth = ($bWid) ? ($iRight) : ($oPageStyle.FooterRightBorder.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iRight) : ($oPageStyle.FooterRightBorder.LineStyle()) ; copy Line style over to new size structure
@@ -2876,6 +2955,7 @@ Func __LOCalc_PageStyleHeaderBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTo
 
 	If $iTop <> Null Then
 		If Not $bWid And ($oPageStyle.HeaderTopBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0) ; If Width not set, cant set color or style.
+
 		; Top Line
 		$tBL2.LineWidth = ($bWid) ? ($iTop) : ($oPageStyle.HeaderTopBorder.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iTop) : ($oPageStyle.HeaderTopBorder.LineStyle()) ; copy Line style over to new size structure
@@ -2885,6 +2965,7 @@ Func __LOCalc_PageStyleHeaderBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTo
 
 	If $iBottom <> Null Then
 		If Not $bWid And ($oPageStyle.HeaderBottomBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 2, 0) ; If Width not set, cant set color or style.
+
 		; Bottom Line
 		$tBL2.LineWidth = ($bWid) ? ($iBottom) : ($oPageStyle.HeaderBottomBorder.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iBottom) : ($oPageStyle.HeaderBottomBorder.LineStyle()) ; copy Line style over to new size structure
@@ -2894,6 +2975,7 @@ Func __LOCalc_PageStyleHeaderBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTo
 
 	If $iLeft <> Null Then
 		If Not $bWid And ($oPageStyle.HeaderLeftBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 3, 0) ; If Width not set, cant set color or style.
+
 		; Left Line
 		$tBL2.LineWidth = ($bWid) ? ($iLeft) : ($oPageStyle.HeaderLeftBorder.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iLeft) : ($oPageStyle.HeaderLeftBorder.LineStyle()) ; copy Line style over to new size structure
@@ -2903,6 +2985,7 @@ Func __LOCalc_PageStyleHeaderBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTo
 
 	If $iRight <> Null Then
 		If Not $bWid And ($oPageStyle.HeaderRightBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 4, 0) ; If Width not set, cant set color or style.
+
 		; Right Line
 		$tBL2.LineWidth = ($bWid) ? ($iRight) : ($oPageStyle.HeaderRightBorder.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iRight) : ($oPageStyle.HeaderRightBorder.LineStyle()) ; copy Line style over to new size structure
@@ -2977,8 +3060,10 @@ Func __LOCalc_SetPropertyValue($sName, $vValue)
 	Local $tProperties
 
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 	$tProperties = __LOCalc_CreateStruct("com.sun.star.beans.PropertyValue")
 	If @error Or Not IsObj($tProperties) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	$tProperties.Name = $sName
 	$tProperties.Value = $vValue
 
@@ -3069,6 +3154,7 @@ Func __LOCalc_SheetCursorMove(ByRef $oCursor, $iMove, $iColumns, $iRows, $iCount
 			Return SetError($__LO_STATUS_SUCCESS, 1, 1)
 
 		Case $LOC_SHEETCUR_GOTO_NEXT, $LOC_SHEETCUR_GOTO_PREV
+
 			Do
 				Execute("$oCursor." & $asMoves[$iMove] & "()")
 				$iCounted += 1
@@ -3467,6 +3553,7 @@ EndFunc   ;==>__LOCalc_VarsAreNull
 Func __LOCalc_VersionCheck($fRequiredVersion)
 	Local Static $sCurrentVersion = _LOCalc_VersionGet(True, False)
 	If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, False)
+
 	Local Static $fCurrentVersion = Number($sCurrentVersion)
 
 	If Not IsNumber($fRequiredVersion) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, False)

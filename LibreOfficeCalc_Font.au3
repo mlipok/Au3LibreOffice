@@ -65,6 +65,7 @@ Func _LOCalc_FontExists($sFontName, $oDoc = Null)
 	If Not IsObj($oDoc) Then
 		$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
 		If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 		$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
 		If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
@@ -73,6 +74,7 @@ Func _LOCalc_FontExists($sFontName, $oDoc = Null)
 
 		$oDoc = $oDesktop.loadComponentFromURL("private:factory/scalc", "_blank", $iURLFrameCreate, $atProperties)
 		If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+
 		$bClose = True
 	EndIf
 
@@ -140,6 +142,7 @@ Func _LOCalc_FontsGetNames($oDoc = Null)
 	If Not IsObj($oDoc) Then
 		$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
 		If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 		$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
 		If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
@@ -148,6 +151,7 @@ Func _LOCalc_FontsGetNames($oDoc = Null)
 
 		$oDoc = $oDesktop.loadComponentFromURL("private:factory/scalc", "_blank", $iURLFrameCreate, $atProperties)
 		If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+
 		$bClose = True
 	EndIf
 
