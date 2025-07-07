@@ -865,9 +865,9 @@ Func __LOWriter_CharFontColor(ByRef $oObj, $iFontColor, $iTransparency, $iHighli
 		If Not __LOWriter_IntIsBetween($iHighlight, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		; CharHighlight; same as CharBackColor---Libre seems to use back color for highlighting however, so using that for setting.
-;~ 		If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 2, 0)
-;~ 		$oObj.CharHighlight = $iHighlight ;-- keeping old method in case.
-;~ 		$iError = ($oObj.CharHighlight() = $iHighlight) ? ($iError) : (BitOR($iError, 4)
+		;~ 		If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 2, 0)
+		;~ 		$oObj.CharHighlight = $iHighlight ;-- keeping old method in case.
+		;~ 		$iError = ($oObj.CharHighlight() = $iHighlight) ? ($iError) : (BitOR($iError, 4)
 		$oObj.CharBackColor = $iHighlight
 		$iError = ($oObj.CharBackColor() = $iHighlight) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -7051,18 +7051,18 @@ Func __LOWriter_Shape_CreateSymbol($oDoc, $iWidth, $iHeight, $iShapeType)
 			$oShape.FillColor = $LOW_COLOR_OFF
 
 		Case $LOW_SHAPE_TYPE_SYMBOL_CLOUD
-;~ Custom Shape Geometry Type = "non-primitive" ???? Try "cloud"
+			;~ Custom Shape Geometry Type = "non-primitive" ???? Try "cloud"
 			$tProp.Value = "cloud"
 
 		Case $LOW_SHAPE_TYPE_SYMBOL_FLOWER
-;~ Custom Shape Geometry Type = "non-primitive" ???? Try "flower"
+			;~ Custom Shape Geometry Type = "non-primitive" ???? Try "flower"
 			$tProp.Value = "flower"
 
 		Case $LOW_SHAPE_TYPE_SYMBOL_HEART
 			$tProp.Value = "heart"
 
 		Case $LOW_SHAPE_TYPE_SYMBOL_LIGHTNING
-;~ Custom Shape Geometry Type = "non-primitive" ???? Try "lightning"
+			;~ Custom Shape Geometry Type = "non-primitive" ???? Try "lightning"
 			$tProp.Value = "lightning"
 
 		Case $LOW_SHAPE_TYPE_SYMBOL_MOON
@@ -7186,8 +7186,8 @@ Func __LOWriter_Shape_GetCustomType($sCusShapeType)
 
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_DOWN)
 
-;~ 	Case "mso-spt100" ; Can't include this one as other shapes return mso-spt100 also
-;~ Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT)
+			;~ 	Case "mso-spt100" ; Can't include this one as other shapes return mso-spt100 also
+			;~ Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT)
 
 		Case "circular-arrow"
 
@@ -7284,7 +7284,7 @@ Func __LOWriter_Shape_GetCustomType($sCusShapeType)
 		Case "ellipse"
 
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_CIRCLE)
-;~ $LOW_SHAPE_TYPE_BASIC_ELLIPSE
+			;~ $LOW_SHAPE_TYPE_BASIC_ELLIPSE
 
 		Case "paper"
 
@@ -7309,12 +7309,12 @@ Func __LOWriter_Shape_GetCustomType($sCusShapeType)
 		Case "rectangle"
 
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_SQUARE)
-;~ $LOW_SHAPE_TYPE_BASIC_RECTANGLE
+			;~ $LOW_SHAPE_TYPE_BASIC_RECTANGLE
 
 		Case "round-rectangle"
 
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED)
-;~ $LOW_SHAPE_TYPE_BASIC_RECTANGLE_ROUNDED
+			;~ $LOW_SHAPE_TYPE_BASIC_RECTANGLE_ROUNDED
 
 		Case "pentagon"
 
@@ -7561,12 +7561,12 @@ Func __LOWriter_Shape_GetCustomType($sCusShapeType)
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_BRACKET_RIGHT)
 
 		Case "cloud"
-;~ Custom Shape Geometry Type = "non-primitive" ???? Try "cloud"
+			;~ Custom Shape Geometry Type = "non-primitive" ???? Try "cloud"
 
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_CLOUD)
 
 		Case "flower"
-;~ Custom Shape Geometry Type = "non-primitive" ???? Try "flower"
+			;~ Custom Shape Geometry Type = "non-primitive" ???? Try "flower"
 
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_FLOWER)
 
@@ -7575,7 +7575,7 @@ Func __LOWriter_Shape_GetCustomType($sCusShapeType)
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_HEART)
 
 		Case "lightning"
-;~ Custom Shape Geometry Type = "non-primitive" ???? Try "lightning"
+			;~ Custom Shape Geometry Type = "non-primitive" ???? Try "lightning"
 
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_LIGHTNING)
 

@@ -637,14 +637,14 @@ Func _LOWriter_ShapeGetType(ByRef $oShape)
 			EndIf
 
 		Case "com.sun.star.drawing.OpenBezierShape"
-;~ $LOW_SHAPE_TYPE_LINE_CURVE ; No way to differentiate between these??
-;~ $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE
+			;~ $LOW_SHAPE_TYPE_LINE_CURVE ; No way to differentiate between these??
+			;~ $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE
 
 			Return SetError($__LO_STATUS_SUCCESS, 3, $LOW_SHAPE_TYPE_LINE_CURVE)
 
 		Case "com.sun.star.drawing.ClosedBezierShape"
-;~ $LOW_SHAPE_TYPE_LINE_CURVE_FILLED ; No way to differentiate between these??
-;~ $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE_FILLED
+			;~ $LOW_SHAPE_TYPE_LINE_CURVE_FILLED ; No way to differentiate between these??
+			;~ $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE_FILLED
 
 			Return SetError($__LO_STATUS_SUCCESS, 4, $LOW_SHAPE_TYPE_LINE_CURVE_FILLED)
 
@@ -655,9 +655,9 @@ Func _LOWriter_ShapeGetType(ByRef $oShape)
 		Case "com.sun.star.drawing.PolyPolygonShape"
 
 			Return SetError($__LO_STATUS_SUCCESS, 6, $LOW_SHAPE_TYPE_LINE_POLYGON)
-;~ $LOW_SHAPE_TYPE_LINE_POLYGON ; No way to differentiate between these??
-;~ $LOW_SHAPE_TYPE_LINE_POLYGON_45
-;~ $LOW_SHAPE_TYPE_LINE_POLYGON_45_FILLED
+			;~ $LOW_SHAPE_TYPE_LINE_POLYGON ; No way to differentiate between these??
+			;~ $LOW_SHAPE_TYPE_LINE_POLYGON_45
+			;~ $LOW_SHAPE_TYPE_LINE_POLYGON_45_FILLED
 
 		Case Else
 
