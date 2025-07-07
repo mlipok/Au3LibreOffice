@@ -429,7 +429,6 @@ Func _LOBase_ReportConFormattedFieldGeneral(ByRef $oFormatField, $sName = Null, 
 		Do
 			$oDoc = $oDoc.getParent()
 			If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
 		Until $oDoc.supportsService("com.sun.star.report.ReportDefinition")
 		If Not _LOBase_FormatKeyExists($oDoc, $iFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 
@@ -697,6 +696,7 @@ Func _LOBase_ReportConInsert(ByRef $oSection, $iControl, $iX, $iY, $iWidth, $iHe
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 	If ($sName = "") Then
+
 		Do
 			$iCount += 1
 			For $i = 0 To $oSection.Count() - 1
