@@ -47,7 +47,7 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to create a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Modify the Data settings for the Report.
-	_LOBase_ReportData($oReportDoc, $LOB_REP_CONTENT_TYPE_TABLE, "tblNew_Table", True, "SELECT * FROM ""tblNew_Table""", $LOB_REP_OUTPUT_TYPE_SPREADSHEET)
+	_LOBase_ReportData($oReportDoc, $LOB_REP_CONTENT_TYPE_TABLE, "tblNew_Table", True, "SELECT * FROM ""tblNew_Table""", $LOB_REP_OUTPUT_TYPE_SPREADSHEET, True)
 	If @error Then _ERROR($oDoc, $oReportDoc, "Failed to modify Report's property values. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings for the Report. Return will be an Array in order of function parameters.
@@ -59,7 +59,8 @@ Func Example()
 			"The Data source name is: " & $avReport[1] & @CRLF & _
 			"Is SQL statements analyzed? True/False: " & $avReport[2] & @CRLF & _
 			"The filter statement is: " & $avReport[3] & @CRLF & _
-			"The Report Output document type is (See UDF Constants): " & $avReport[4])
+			"The Report Output document type is (See UDF Constants): " & $avReport[4] & @CRLF & _
+			"Is the ""Add a Field"" dialog suppressed? True/False: " & $avReport[5])
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to close the document.")
 

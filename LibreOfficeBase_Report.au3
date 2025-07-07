@@ -1490,13 +1490,14 @@ EndFunc   ;==>_LOBase_ReportCreate
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_ReportData
 ; Description ...: Set or Retrieve Data related properties for a Report Document.
-; Syntax ........: _LOBase_ReportData(ByRef $oReportDoc[, $iContentType = Null[, $sContent = Null[, $bAnalyzeSQL = Null[, $sFilter = Null[, $iReportOutput = Null]]]]])
+; Syntax ........: _LOBase_ReportData(ByRef $oReportDoc[, $iContentType = Null[, $sContent = Null[, $bAnalyzeSQL = Null[, $sFilter = Null[, $iReportOutput = Null[, $bSuppress = Null]]]]]])
 ; Parameters ....: $oReportDoc          - [in/out] an object. A Report Document object returned by a previous _LOBase_ReportConnect, _LOBase_ReportOpen or _LOBase_ReportCreate function.
 ;                  $iContentType        - [optional] an integer value (0-2). Default is Null. The Type of data source for the Report. See Constants, $LOB_REP_CONTENT_TYPE_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $sContent            - [optional] a string value. Default is Null. The Content to be used for the Report, either a Table or Query name, or an SQL statement.
 ;                  $bAnalyzeSQL         - [optional] a boolean value. Default is Null. If True, SQL commands will be analyzed by LibreOffice.
 ;                  $sFilter             - [optional] a string value. Default is Null. The SQL filter command.
 ;                  $iReportOutput       - [optional] an integer value (1-2). Default is Null. The type of output document when the Report is executed. See Constants, $LOB_REP_OUTPUT_TYPE_* as defined in LibreOfficeBase_Constants.au3.
+;                  $bSuppress           - [optional] a boolean value. Default is Null. If True, the "Add a Field" dialog will be suppressed from coming up. See remarks.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1507,6 +1508,7 @@ EndFunc   ;==>_LOBase_ReportCreate
 ;                  @Error 1 @Extended 5 Return 0 = $bAnalyzeSQL not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $sFilter not a String.
 ;                  @Error 1 @Extended 7 Return 0 = $iReportOutput not an Integer, less than 1 or greater than 2. See Constants, $LOB_REP_OUTPUT_TYPE_* as defined in LibreOfficeBase_Constants.au3.
+;                  @Error 1 @Extended 8 Return 0 = $bSuppress not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $iContentType
@@ -1514,32 +1516,36 @@ EndFunc   ;==>_LOBase_ReportCreate
 ;                  |                               4 = Error setting $bAnalyzeSQL
 ;                  |                               8 = Error setting $sFilter
 ;                  |                               16 = Error setting $iReportOutput
+;                  |                               32 = Error setting $bSuppress
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                  Modifying these values may open the "Add a Field" dialogue.
+;                  Modifying $iContentType and $sContent  will open the "Add a Field" dialog unless it is suppressed.
+;                  When $bSuppress is True, changing $iContentType and $sContent, either in the UI or via AutoIt, will not activate the "Add a Field" dialog, until the report is re-opened again, or $bSuppress is set to False again.
+;                  Setting $bSuppress to False will activate the "Add a Field" dialog, regardless if any settings are changed.
 ; Related .......: _LOBase_ReportGeneral
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOBase_ReportData(ByRef $oReportDoc, $iContentType = Null, $sContent = Null, $bAnalyzeSQL = Null, $sFilter = Null, $iReportOutput = Null)
+Func _LOBase_ReportData(ByRef $oReportDoc, $iContentType = Null, $sContent = Null, $bAnalyzeSQL = Null, $sFilter = Null, $iReportOutput = Null, $bSuppress = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0
-	Local $avReport[5]
+	Local $avReport[6]
 	Local Const $__LOB_REP_OUTPUT_TEXT_DOC = "application/vnd.oasis.opendocument.text", $__LOB_REP_OUTPUT_SPREADSHEET_DOC = "application/vnd.oasis.opendocument.spreadsheet"
 
 	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOBase_VarsAreNull($iContentType, $sContent, $bAnalyzeSQL, $sFilter, $iReportOutput) Then
+	If __LOBase_VarsAreNull($iContentType, $sContent, $bAnalyzeSQL, $sFilter, $iReportOutput, $bSuppress) Then
 		__LOBase_ArrayFill($avReport, $oReportDoc.CommandType(), $oReportDoc.Command(), $oReportDoc.EscapeProcessing(), $oReportDoc.Filter(), _
-				($oReportDoc.MimeType() = $__LOB_REP_OUTPUT_TEXT_DOC) ? ($LOB_REP_OUTPUT_TYPE_TEXT) : (($oReportDoc.MimeType() = $__LOB_REP_OUTPUT_SPREADSHEET_DOC) ? ($LOB_REP_OUTPUT_TYPE_SPREADSHEET) : ($LOB_REP_OUTPUT_TYPE_UNKNOWN)))
+				($oReportDoc.MimeType() = $__LOB_REP_OUTPUT_TEXT_DOC) ? ($LOB_REP_OUTPUT_TYPE_TEXT) : (($oReportDoc.MimeType() = $__LOB_REP_OUTPUT_SPREADSHEET_DOC) ? ($LOB_REP_OUTPUT_TYPE_SPREADSHEET) : ($LOB_REP_OUTPUT_TYPE_UNKNOWN)), _
+				($oReportDoc.CurrentController.Frame.Controller.Mode() = "normal") ? (False) : (True))
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avReport)
 	EndIf
@@ -1547,6 +1553,7 @@ Func _LOBase_ReportData(ByRef $oReportDoc, $iContentType = Null, $sContent = Nul
 	If ($iContentType <> Null) Then
 		If Not __LOBase_IntIsBetween($iContentType, $LOB_REP_CONTENT_TYPE_TABLE, $LOB_REP_CONTENT_TYPE_SQL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
+		If ($bSuppress = True) Then $oReportDoc.CurrentController.Frame.Controller.Mode = "remote"
 		$oReportDoc.CommandType = $iContentType
 		$iError = ($oReportDoc.CommandType() = $iContentType) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -1554,6 +1561,7 @@ Func _LOBase_ReportData(ByRef $oReportDoc, $iContentType = Null, $sContent = Nul
 	If ($sContent <> Null) Then
 		If Not IsString($sContent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
+		If ($bSuppress = True) Then $oReportDoc.CurrentController.Frame.Controller.Mode = "remote"
 		$oReportDoc.Command = $sContent
 		$iError = ($oReportDoc.Command() = $sContent) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -1577,6 +1585,13 @@ Func _LOBase_ReportData(ByRef $oReportDoc, $iContentType = Null, $sContent = Nul
 
 		$oReportDoc.MimeType = ($iReportOutput = $LOB_REP_OUTPUT_TYPE_TEXT) ? ($__LOB_REP_OUTPUT_TEXT_DOC) : ($__LOB_REP_OUTPUT_SPREADSHEET_DOC)
 		$iError = ($oReportDoc.MimeType() = ($iReportOutput = $LOB_REP_OUTPUT_TYPE_TEXT) ? ($__LOB_REP_OUTPUT_TEXT_DOC) : ($__LOB_REP_OUTPUT_SPREADSHEET_DOC)) ? ($iError) : (BitOR($iError, 16))
+	EndIf
+
+	If ($bSuppress <> Null) Then
+		If Not IsBool($bSuppress) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
+		$oReportDoc.CurrentController.Frame.Controller.Mode = ($bSuppress) ? ("remote") : ("normal"); Remote prevents the Add Field dialog from coming up when changing "Command" and "CommandType". Normal behaves as normal.
+		$iError = ($oReportDoc.CurrentController.Frame.Controller.Mode = ($bSuppress) ? ("remote") : ("normal")) ? ($iError) : (BitOR($iError, 32)); Method found in "ReportBuilderImplementation.java" file, line 160, function "switchOffAddFieldWindow"
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
