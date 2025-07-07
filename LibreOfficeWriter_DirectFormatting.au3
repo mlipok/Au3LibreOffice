@@ -12,7 +12,6 @@
 #include "LibreOfficeWriter_Internal.au3"
 
 ; Other includes for Writer
-#include "LibreOfficeWriter_Font.au3"
 #include "LibreOfficeWriter_Char.au3"
 #include "LibreOfficeWriter_Page.au3"
 
