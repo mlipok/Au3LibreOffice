@@ -27,39 +27,55 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve currently active sheet. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	$oCell = _LOCalc_RangeGetCellByPosition($oSheet, 0, 0)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
 	_LOCalc_CellString($oCell, "Font Name")
 	If @error Then _ERROR($oDoc, "Failed to insert string. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	$oCell = _LOCalc_RangeGetCellByPosition($oSheet, 1, 0)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
 	_LOCalc_CellString($oCell, "Font Style Name")
 	If @error Then _ERROR($oDoc, "Failed to insert string. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	$oCell = _LOCalc_RangeGetCellByPosition($oSheet, 2, 0)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
 	_LOCalc_CellString($oCell, "Font Weight")
 	If @error Then _ERROR($oDoc, "Failed to insert string. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	$oCell = _LOCalc_RangeGetCellByPosition($oSheet, 3, 0)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
 	_LOCalc_CellString($oCell, "Font Slant")
 	If @error Then _ERROR($oDoc, "Failed to insert string. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	For $i = 0 To UBound($asFonts) - 1
 		; Insert the Font Name
 		$oCell = _LOCalc_RangeGetCellByPosition($oSheet, 0, $i + 1)
+		If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
 		_LOCalc_CellString($oCell, $asFonts[$i][0])
 		If @error Then _ERROR($oDoc, "Failed to insert string. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 		; Insert the Style Name
 		$oCell = _LOCalc_RangeGetCellByPosition($oSheet, 1, $i + 1)
+		If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
 		_LOCalc_CellString($oCell, $asFonts[$i][1])
 		If @error Then _ERROR($oDoc, "Failed to insert string. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 		; Insert the Font Weight
 		$oCell = _LOCalc_RangeGetCellByPosition($oSheet, 2, $i + 1)
+		If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
 		_LOCalc_CellValue($oCell, $asFonts[$i][2])
 		If @error Then _ERROR($oDoc, "Failed to insert value. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 		; Insert the Font slant
 		$oCell = _LOCalc_RangeGetCellByPosition($oSheet, 3, $i + 1)
+		If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
 		_LOCalc_CellValue($oCell, $asFonts[$i][3])
 		If @error Then _ERROR($oDoc, "Failed to insert value. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
