@@ -69,7 +69,6 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- LibreOfficeCalc_Cursor.au3
 	- LibreOfficeCalc_Doc.au3
 	- LibreOfficeCalc_Field.au3
-	- LibreOfficeCalc_Font.au3
 	- LibreOfficeCalc_Helper.au3
 	- LibreOfficeCalc_Internal.au3
 	- LibreOfficeCalc_Page.au3
@@ -330,9 +329,6 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_FieldsGetList
 	- _LOCalc_FieldSheetNameInsert
 	- _LOCalc_FieldTitleInsert
-- Font Query Functions
-	- _LOCalc_FontExists
-	- _LOCalc_FontsGetNames
 - Helper Functions
 	- _LOCalc_ComError_UserFunction
 	- _LOCalc_ConvertColorFromLong
@@ -343,6 +339,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_FilterDescriptorModify
 	- _LOCalc_FilterFieldCreate
 	- _LOCalc_FilterFieldModify
+	- _LOCalc_FontExists
+	- _LOCalc_FontsGetNames
 	- _LOCalc_FormatKeyCreate
 	- _LOCalc_FormatKeyDelete
 	- _LOCalc_FormatKeyExists
@@ -600,6 +598,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 ### Removed
 
 - __LOCalc_VarsAreDefault
+- LibreOfficeCalc_Font file, combined functions into LibreOfficeCalc_Helper.
 
 > [!NOTE]
 > **LibreOfficeWriter**
