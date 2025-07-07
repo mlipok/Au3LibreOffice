@@ -562,7 +562,6 @@ Func _LOBase_SQLResultRowRead(ByRef $oResult, $iRead, $iColumn)
 			$vReturn = $tDateTime
 
 		Case $LOB_RESULT_ROW_READ_TIME
-
 			$vReturn = Execute("$oResult." & $asRead[$iRead] & "(" & $iColumn & ")")
 			If Not IsObj($vReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 

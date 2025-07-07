@@ -137,7 +137,6 @@ Func _LOBase_ReportClose(ByRef $oReportDoc, $bForceClose = False)
 			$oReport = $oSource.getByName($sTitle)
 
 		Else
-
 			For $i = 0 To UBound($asNames) - 1
 				$oObj = $oSource.getByName($asNames[$i])
 				If Not IsObj($oObj) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
@@ -696,7 +695,6 @@ Func _LOBase_ReportConInsert(ByRef $oSection, $iControl, $iX, $iY, $iWidth, $iHe
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 	If ($sName = "") Then
-
 		Do
 			$iCount += 1
 			For $i = 0 To $oSection.Count() - 1
@@ -1025,7 +1023,6 @@ Func _LOBase_ReportConnect($bConnectCurrent = True)
 		EndIf
 
 	Else
-
 		ReDim $aoConnectAll[1][3]
 		$iCount = 0
 		While $oEnumDoc.hasMoreElements()
@@ -4149,7 +4146,6 @@ Func _LOBase_ReportSave(ByRef $oReportDoc)
 			$oReport = $oSource.getByName($sTitle)
 
 		Else
-
 			For $i = 0 To UBound($asNames) - 1
 				$oObj = $oSource.getByName($asNames[$i])
 				If Not IsObj($oObj) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)

@@ -1423,7 +1423,6 @@ Func _LOBase_TablePrimaryKey(ByRef $oTable, $aoPrimary = Null)
 		Next
 
 	Else
-
 		$oKeyDesc = $oKeys.createDataDescriptor()
 		If Not IsObj($oKeyDesc) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 

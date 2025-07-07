@@ -114,7 +114,6 @@ Func _LOBase_FormClose(ByRef $oFormDoc, $bForceClose = False)
 		$oForm = $oSource.getByName($sTitle)
 
 	Else
-
 		For $i = 0 To UBound($asNames) - 1
 			$oObj = $oSource.getByName($asNames[$i])
 			If Not IsObj($oObj) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
@@ -222,7 +221,6 @@ Func _LOBase_FormConnect($bConnectCurrent = True)
 		Return (($oDoc.supportsService($sServiceName) And IsObj($oDoc.Parent()))) ? (SetError($__LO_STATUS_SUCCESS, 1, $oDoc)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0))
 
 	Else
-
 		ReDim $aoConnectAll[1][2]
 		$iCount = 0
 		While $oEnumDoc.hasMoreElements()
@@ -1565,7 +1563,6 @@ Func _LOBase_FormSave(ByRef $oFormDoc)
 		$oForm = $oSource.getByName($sTitle)
 
 	Else
-
 		For $i = 0 To UBound($asNames) - 1
 			$oObj = $oSource.getByName($asNames[$i])
 			If Not IsObj($oObj) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)

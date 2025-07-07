@@ -539,7 +539,6 @@ Func _LOBase_DatabaseMetaDataQuery(ByRef $oConnection, $iQuery, $vParam1 = Null,
 			If Not IsInt($vReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		Case $LOB_DBASE_META_GET_CATALOGS, $LOB_DBASE_META_GET_SCHEMAS, $LOB_DBASE_META_GET_TABLE_TYPES, $LOB_DBASE_META_GET_TYPE_INFO
-
 			$vReturn = Execute("$oConnection.MetaData" & $sCall & "()")
 			If Not IsObj($vReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
@@ -554,7 +553,6 @@ Func _LOBase_DatabaseMetaDataQuery(ByRef $oConnection, $iQuery, $vParam1 = Null,
 			If Not IsBool($vReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		Case $LOB_DBASE_META_SUPPORTS_CONVERT
-
 			If Not __LOBase_IntIsBetween($vParam1, $LOB_DATA_TYPE_LONGNVARCHAR, $LOB_DATA_TYPE_TIMESTAMP_WITH_TIMEZONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 			If Not __LOBase_IntIsBetween($vParam2, $LOB_DATA_TYPE_LONGNVARCHAR, $LOB_DATA_TYPE_TIMESTAMP_WITH_TIMEZONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
@@ -562,7 +560,6 @@ Func _LOBase_DatabaseMetaDataQuery(ByRef $oConnection, $iQuery, $vParam1 = Null,
 			If Not IsBool($vReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		Case $LOB_DBASE_META_SUPPORTS_RESULT_SET_CONCURRENCY
-
 			If Not __LOBase_IntIsBetween($vParam1, $LOB_RESULT_TYPE_FORWARD_ONLY, $LOB_RESULT_TYPE_SCROLL_SENSITIVE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 			If Not __LOBase_IntIsBetween($vParam2, $LOB_DBASE_RESULT_SET_CONCURRENCY_READ_ONLY, $LOB_DBASE_RESULT_SET_CONCURRENCY_UPDATABLE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
@@ -570,7 +567,6 @@ Func _LOBase_DatabaseMetaDataQuery(ByRef $oConnection, $iQuery, $vParam1 = Null,
 			If Not IsBool($vReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		Case $LOB_DBASE_META_SUPPORTS_TRANSACTION_ISOLATION_LEVEL
-
 			If Not __LOBase_IntIsBetween($vParam1, $LOB_DBASE_TRANSACTION_ISOLATION_NONE, $LOB_DBASE_TRANSACTION_ISOLATION_SERIALIZED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 			$vReturn = Execute("$oConnection.MetaData" & $sCall & "(" & $vParam1 & ")")
@@ -587,7 +583,6 @@ Func _LOBase_DatabaseMetaDataQuery(ByRef $oConnection, $iQuery, $vParam1 = Null,
 			If Not IsObj($vReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		Case $LOB_DBASE_META_GET_COLS, $LOB_DBASE_META_GET_COL_PRIVILEGES, $LOB_DBASE_META_GET_PROCEDURE_COLS
-
 			If Not IsString($vParam1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 			If Not IsString($vParam2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 			If Not IsString($vParam3) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
@@ -597,7 +592,6 @@ Func _LOBase_DatabaseMetaDataQuery(ByRef $oConnection, $iQuery, $vParam1 = Null,
 			If Not IsObj($vReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		Case $LOB_DBASE_META_GET_TABLES
-
 			If Not IsString($vParam1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 			If Not IsString($vParam2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 			If Not IsString($vParam3) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
@@ -607,7 +601,6 @@ Func _LOBase_DatabaseMetaDataQuery(ByRef $oConnection, $iQuery, $vParam1 = Null,
 			If Not IsObj($vReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		Case $LOB_DBASE_META_GET_UDTS
-
 			If Not IsString($vParam1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 			If Not IsString($vParam2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 			If Not IsString($vParam3) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
@@ -617,7 +610,6 @@ Func _LOBase_DatabaseMetaDataQuery(ByRef $oConnection, $iQuery, $vParam1 = Null,
 			If Not IsObj($vReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		Case $LOB_DBASE_META_GET_BEST_ROW_ID
-
 			If Not IsString($vParam1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 			If Not IsString($vParam2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 			If Not IsString($vParam3) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
@@ -628,7 +620,6 @@ Func _LOBase_DatabaseMetaDataQuery(ByRef $oConnection, $iQuery, $vParam1 = Null,
 			If Not IsObj($vReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		Case $LOB_DBASE_META_GET_INDEX_INFO
-
 			If Not IsString($vParam1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 			If Not IsString($vParam2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 			If Not IsString($vParam3) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
@@ -639,7 +630,6 @@ Func _LOBase_DatabaseMetaDataQuery(ByRef $oConnection, $iQuery, $vParam1 = Null,
 			If Not IsObj($vReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		Case $LOB_DBASE_META_GET_CROSS_REF
-
 			If Not IsString($vParam1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 			If Not IsString($vParam2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 			If Not IsString($vParam3) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)

@@ -100,7 +100,6 @@ Func _LOBase_DocClose(ByRef $oDoc, $bSaveChanges = True, $sSaveName = "", $bDeli
 			Return SetError($__LO_STATUS_SUCCESS, 2, $sDocPath)
 
 		Else
-
 			If ($oDoc.DataSource.URL() = "") Then Return SetError($__LO_STATUS_DOC_ERROR, 2, 0)
 
 			$sSavePath = @DesktopDir & "\"

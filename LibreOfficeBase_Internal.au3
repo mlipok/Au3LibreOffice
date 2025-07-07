@@ -618,7 +618,6 @@ Func __LOBase_IntIsBetween($iTest, $iMin, $iMax = 0, $vNot = "", $vIncl = "")
 			Return SetError($__LO_STATUS_SUCCESS, 0, (($iTest < $iMin) Or ($iTest > $iMax)) ? (False) : (True))
 
 		Case 4, 5
-
 			If IsString($vNot) Then
 				If StringInStr(":" & $vNot & ":", ":" & $iTest & ":") Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
 
@@ -637,7 +636,6 @@ Func __LOBase_IntIsBetween($iTest, $iMin, $iMax = 0, $vNot = "", $vIncl = "")
 				If StringInStr(":" & $vIncl & ":", ":" & $iTest & ":") Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 
 			ElseIf IsInt($vIncl) Then
-
 				If ($iTest = $vIncl) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 			EndIf
 
