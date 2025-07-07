@@ -12,7 +12,7 @@ If IsString($sPath) Then FileDelete($sPath)
 
 Func Example()
 	Local $oDoc, $oFormDoc, $oDBase, $oConnection
-	Local $sSavePath
+	Local $sSavePath, $sForms = ""
 	Local $avForms[0]
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -46,9 +46,13 @@ Func Example()
 	$avForms = _LOBase_FormConnect(False)
 	If @error Then Return _ERROR($oDoc, "Failed to retrieve array of open form Documents. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now display an array of open forms, and then connect to the currently open form and close it.")
+	For $i = 0 To @extended - 1
+		$sForms &= (IsObj($avForms[$i][0]) ? ("[Object]") : ("[Not an Object]")) & @TAB
+		$sForms &= $avForms[$i][1] & @CRLF
+	Next
 
-	_ArrayDisplay($avForms)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The following Forms are open:" & @CRLF & $sForms & @CRLF & _
+			"I will now connect to the currently open form and close it.")
 
 	; Connect to the currently open form.
 	$oFormDoc = _LOBase_FormConnect(True)

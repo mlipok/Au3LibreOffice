@@ -12,7 +12,7 @@ If IsString($sPath) Then FileDelete($sPath)
 
 Func Example()
 	Local $oDoc, $oFormDoc, $oDBase, $oConnection
-	Local $sSavePath
+	Local $sSavePath, $sForms = ""
 	Local $asForms[0]
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -66,9 +66,11 @@ Func Example()
 	$asForms = _LOBase_FormsGetNames($oDoc, True)
 	If @error Then Return _ERROR($oDoc, "Failed to retrieve array of form names. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "Here is a list of forms contained in the document.")
+	For $i = 0 To @extended - 1
+		$sForms &= $asForms[$i] & @CRLF
+	Next
 
-	_ArrayDisplay($asForms)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Database contains the following Form Documents:" & @CRLF & $sForms)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the Base document.")
 
