@@ -214,6 +214,7 @@ Func _LOWriter_ShapeAreaGradient(ByRef $oDoc, ByRef $oShape, $sGradientName = Nu
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	$tStyleGradient = $oShape.FillGradient()
 	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -230,6 +231,7 @@ Func _LOWriter_ShapeAreaGradient(ByRef $oDoc, ByRef $oShape, $sGradientName = Nu
 
 	If ($sGradientName <> Null) Then
 		If Not IsString($sGradientName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		__LOWriter_GradientPresets($oDoc, $oShape, $tStyleGradient, $sGradientName)
 		$iError = ($oShape.FillGradientName() = $sGradientName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -243,11 +245,13 @@ Func _LOWriter_ShapeAreaGradient(ByRef $oDoc, ByRef $oShape, $sGradientName = Nu
 		EndIf
 
 		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$tStyleGradient.Style = $iType
 	EndIf
 
 	If ($iIncrement <> Null) Then
 		If Not __LOWriter_IntIsBetween($iIncrement, 3, 256, "", 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oShape.FillGradientStepCount = $iIncrement
 		$tStyleGradient.StepCount = $iIncrement ; Must set both of these in order for it to take effect.
 		$iError = ($oShape.FillGradientStepCount() = $iIncrement) ? ($iError) : (BitOR($iError, 4))
@@ -255,26 +259,31 @@ Func _LOWriter_ShapeAreaGradient(ByRef $oDoc, ByRef $oShape, $sGradientName = Nu
 
 	If ($iXCenter <> Null) Then
 		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$tStyleGradient.XOffset = $iXCenter
 	EndIf
 
 	If ($iYCenter <> Null) Then
 		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$tStyleGradient.YOffset = $iYCenter
 	EndIf
 
 	If ($iAngle <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$tStyleGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iTransitionStart <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 		$tStyleGradient.Border = $iTransitionStart
 	EndIf
 
 	If ($iFromColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iFromColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
 		$tStyleGradient.StartColor = $iFromColor
 
 		If __LOWriter_VersionCheck(7.6) Then
@@ -299,6 +308,7 @@ Func _LOWriter_ShapeAreaGradient(ByRef $oDoc, ByRef $oShape, $sGradientName = Nu
 
 	If ($iToColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iToColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+
 		$tStyleGradient.EndColor = $iToColor
 
 		If __LOWriter_VersionCheck(7.6) Then
@@ -323,11 +333,13 @@ Func _LOWriter_ShapeAreaGradient(ByRef $oDoc, ByRef $oShape, $sGradientName = Nu
 
 	If ($iFromIntense <> Null) Then
 		If Not __LOWriter_IntIsBetween($iFromIntense, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+
 		$tStyleGradient.StartIntensity = $iFromIntense
 	EndIf
 
 	If ($iToIntense <> Null) Then
 		If Not __LOWriter_IntIsBetween($iToIntense, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+
 		$tStyleGradient.EndIntensity = $iToIntense
 	EndIf
 
@@ -598,6 +610,7 @@ Func _LOWriter_ShapeGetType(ByRef $oShape)
 				If ($atCusShapeGeo[$i].Name() = "Type") Then
 					$sType = $atCusShapeGeo[$i].Value()
 					If Not IsString($sType) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
 					ExitLoop
 				EndIf
 
@@ -713,7 +726,6 @@ Func _LOWriter_ShapeInsert(ByRef $oDoc, ByRef $oCursor, $iShapeType, $iWidth, $i
 
 	$iCursorType = __LOWriter_Internal_CursorGetType($oCursor)
 	If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
 	If ($iCursorType = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	Switch $iShapeType
@@ -869,8 +881,10 @@ Func _LOWriter_ShapeLineArrowStyles(ByRef $oShape, $vStartStyle = Null, $iStartW
 
 	If ($vStartStyle <> Null) Then
 		If Not IsString($vStartStyle) And Not IsInt($vStartStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		If IsInt($vStartStyle) Then
 			If Not __LOWriter_IntIsBetween($vStartStyle, $LOW_SHAPE_LINE_ARROW_TYPE_NONE, $LOW_SHAPE_LINE_ARROW_TYPE_CF_ZERO_MANY) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 			$sStartStyle = __LOWriter_ShapeArrowStyleName($vStartStyle)
 			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -884,18 +898,21 @@ Func _LOWriter_ShapeLineArrowStyles(ByRef $oShape, $vStartStyle = Null, $iStartW
 
 	If ($iStartWidth <> Null) Then
 		If Not __LOWriter_IntIsBetween($iStartWidth, 0, 5004) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oShape.LineStartWidth = $iStartWidth
 		$iError = (__LOWriter_IntIsBetween($oShape.LineStartWidth(), $iStartWidth - 1, $iStartWidth + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bStartCenter <> Null) Then
 		If Not IsBool($bStartCenter) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oShape.LineStartCenter = $bStartCenter
 		$iError = ($oShape.LineStartCenter() = $bStartCenter) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bSync <> Null) Then
 		If Not IsBool($bSync) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		If ($bSync = True) Then
 			$oShape.LineEndName = $oShape.LineStartName()
 			$oShape.LineEndWidth = $oShape.LineStartWidth()
@@ -908,8 +925,10 @@ Func _LOWriter_ShapeLineArrowStyles(ByRef $oShape, $vStartStyle = Null, $iStartW
 
 	If ($vEndStyle <> Null) Then
 		If Not IsString($vEndStyle) And Not IsInt($vEndStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		If IsInt($vEndStyle) Then
 			If Not __LOWriter_IntIsBetween($vEndStyle, $LOW_SHAPE_LINE_ARROW_TYPE_NONE, $LOW_SHAPE_LINE_ARROW_TYPE_CF_ZERO_MANY) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 			$sEndStyle = __LOWriter_ShapeArrowStyleName($vEndStyle)
 			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -923,12 +942,14 @@ Func _LOWriter_ShapeLineArrowStyles(ByRef $oShape, $vStartStyle = Null, $iStartW
 
 	If ($iEndWidth <> Null) Then
 		If Not __LOWriter_IntIsBetween($iEndWidth, 0, 5004) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 		$oShape.LineEndWidth = $iEndWidth
 		$iError = (__LOWriter_IntIsBetween($oShape.LineEndWidth(), $iEndWidth - 1, $iEndWidth + 1)) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($bEndCenter <> Null) Then
 		If Not IsBool($bEndCenter) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
 		$oShape.LineEndCenter = $bEndCenter
 		$iError = ($oShape.LineEndCenter() = $bEndCenter) ? ($iError) : (BitOR($iError, 64))
 	EndIf
@@ -1035,6 +1056,7 @@ Func _LOWriter_ShapeLineProperties(ByRef $oShape, $vStyle = Null, $iColor = Null
 
 					$sStyle = __LOWriter_ShapeLineStyleName($vStyle)
 					If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 					$oShape.LineStyle = $__LOW_SHAPE_LINE_STYLE_DASH
 					$oShape.LineDashName = $sStyle
 					$iError = ($oShape.LineDashName() = $sStyle) ? ($iError) : (BitOR($iError, 1))
@@ -1050,30 +1072,35 @@ Func _LOWriter_ShapeLineProperties(ByRef $oShape, $vStyle = Null, $iColor = Null
 
 	If ($iColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oShape.LineColor = $iColor
 		$iError = ($oShape.LineColor() = $iColor) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iWidth <> Null) Then
 		If Not __LOWriter_IntIsBetween($iWidth, 0, 5004) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oShape.LineWidth = $iWidth
 		$iError = (__LOWriter_IntIsBetween($oShape.LineWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iTransparency <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oShape.LineTransparence = $iTransparency
 		$iError = ($oShape.LineTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iCornerStyle <> Null) Then
 		If Not __LOWriter_IntIsBetween($iCornerStyle, $LOW_SHAPE_LINE_JOINT_NONE, $LOW_SHAPE_LINE_JOINT_ROUND, $LOW_SHAPE_LINE_JOINT_MIDDLE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oShape.LineJoint = $iCornerStyle
 		$iError = ($oShape.LineJoint() = $iCornerStyle) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($iCapStyle <> Null) Then
 		If Not __LOWriter_IntIsBetween($iCapStyle, $LOW_SHAPE_LINE_CAP_FLAT, $LOW_SHAPE_LINE_CAP_SQUARE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oShape.LineCap = $iCapStyle
 		$iError = ($oShape.LineCap() = $iCapStyle) ? ($iError) : (BitOR($iError, 32))
 	EndIf
@@ -1121,6 +1148,7 @@ Func _LOWriter_ShapeName(ByRef $oDoc, ByRef $oShape, $sName = Null)
 
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If _LOWriter_ShapeExists($oDoc, $sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 	$oShape.Name = $sName
 	$iError = ($oShape.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 
@@ -1185,7 +1213,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 
 	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not ($oShape.getPropertySetInfo().hasPropertyByName("PolyPolygonBezier")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
 	If Not __LOWriter_IntIsBetween($iPoint, 0, _LOWriter_ShapePointsGetCount($oShape)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; Error if point called is not between 0 or number of points.
 	If Not IsInt($iX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not IsInt($iY) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
@@ -1614,7 +1641,6 @@ Func _LOWriter_ShapePointsGetCount(ByRef $oShape)
 	Local $aiFlags[0]
 
 	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-
 	If Not ($oShape.getPropertySetInfo().hasPropertyByName("PolyPolygonBezier")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	; Retrieve the Array of Point Type Constants. There is one flag per point, so I can just use these to count them by.
@@ -1728,6 +1754,7 @@ Func _LOWriter_ShapePointsModify(ByRef $oShape, $iPoint, $iX = Null, $iY = Null,
 	If ($iPointType <> Null) Then
 		If Not __LOWriter_IntIsBetween($iPointType, $LOW_SHAPE_POINT_TYPE_NORMAL, $LOW_SHAPE_POINT_TYPE_SYMMETRIC, $LOW_SHAPE_POINT_TYPE_CONTROL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		If ($iArrayElement = 0) Or ($iArrayElement = (UBound($atPoints) - 1)) And ($iPointType <> $LOW_SHAPE_POINT_TYPE_NORMAL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0) ; First or last point can't be a curve.
+
 		; ## TEMPORARY
 		If ($iPointType = $LOW_SHAPE_POINT_TYPE_SMOOTH) Then $iPointType = $LOW_SHAPE_POINT_TYPE_SYMMETRIC
 	EndIf
@@ -2147,11 +2174,13 @@ Func _LOWriter_ShapePosition(ByRef $oShape, $iX = Null, $iY = Null, $bProtectPos
 	If ($iX <> Null) Or ($iY <> Null) Then
 		If ($iX <> Null) Then
 			If Not IsInt($iX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 			$tPos.X = $iX
 		EndIf
 
 		If ($iY <> Null) Then
 			If Not IsInt($iY) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 			$tPos.Y = $iY
 		EndIf
 
@@ -2163,6 +2192,7 @@ Func _LOWriter_ShapePosition(ByRef $oShape, $iX = Null, $iY = Null, $bProtectPos
 
 	If ($bProtectPos <> Null) Then
 		If Not IsBool($bProtectPos) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oShape.MoveProtect = $bProtectPos
 		$iError = ($oShape.MoveProtect() = $bProtectPos) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -2219,12 +2249,14 @@ Func _LOWriter_ShapeRotateSlant(ByRef $oShape, $nRotate = Null, $nSlant = Null)
 
 	If ($nRotate <> Null) Then
 		If Not __LOWriter_NumIsBetween($nRotate, 0, 359.99) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oShape.RotateAngle = ($nRotate * 100) ; * 100 to match L.O. Values.
 		$iError = (($oShape.RotateAngle() / 100) = $nRotate) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($nSlant <> Null) Then
 		If Not __LOWriter_NumIsBetween($nSlant, -89, 89) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oShape.ShearAngle = ($nSlant * 100) ; * 100 to match L.O. Values.
 		$iError = (($oShape.ShearAngle() / 100) = $nSlant) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -2267,6 +2299,7 @@ Func _LOWriter_ShapesGetNames(ByRef $oDoc)
 	Local $oShapes
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 	$oShapes = $oDoc.DrawPage()
 	If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -2332,12 +2365,14 @@ Func _LOWriter_ShapeTextBox(ByRef $oShape, $bTextBox = Null, $sContent = Null)
 
 	If ($bTextBox <> Null) Then
 		If Not IsBool($bTextBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oShape.TextBox = $bTextBox
 		$iError = ($oShape.TextBox() = $bTextBox) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sContent <> Null) Then
 		If Not IsString($sContent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oShape.String = $sContent
 		$iError = ($oShape.String() = $sContent) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -2381,6 +2416,7 @@ Func _LOWriter_ShapeTransparency(ByRef $oShape, $iTransparency = Null)
 	If __LOWriter_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oShape.FillTransparence())
 
 	If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	$oShape.FillTransparenceGradientName = "" ; Turn of Gradient if it is on, else settings wont be applied.
 	$oShape.FillTransparence = $iTransparency
 	$iError = ($oShape.FillTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 1))
@@ -2452,6 +2488,7 @@ Func _LOWriter_ShapeTransparencyGradient(ByRef $oDoc, ByRef $oShape, $iType = Nu
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	$tGradient = $oShape.FillTransparenceGradient()
 	If Not IsObj($tGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -2471,31 +2508,37 @@ Func _LOWriter_ShapeTransparencyGradient(ByRef $oDoc, ByRef $oShape, $iType = Nu
 		EndIf
 
 		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$tGradient.Style = $iType
 	EndIf
 
 	If ($iXCenter <> Null) Then
 		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$tGradient.XOffset = $iXCenter
 	EndIf
 
 	If ($iYCenter <> Null) Then
 		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$tGradient.YOffset = $iYCenter
 	EndIf
 
 	If ($iAngle <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$tGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iTransitionStart <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$tGradient.Border = $iTransitionStart
 	EndIf
 
 	If ($iStart <> Null) Then
 		If Not __LOWriter_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$tGradient.StartColor = __LOWriter_TransparencyGradientConvert($iStart)
 
 		If __LOWriter_VersionCheck(7.6) Then
@@ -2522,6 +2565,7 @@ Func _LOWriter_ShapeTransparencyGradient(ByRef $oDoc, ByRef $oShape, $iType = Nu
 
 	If ($iEnd <> Null) Then
 		If Not __LOWriter_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 		$tGradient.EndColor = __LOWriter_TransparencyGradientConvert($iEnd)
 
 		If __LOWriter_VersionCheck(7.6) Then
@@ -2690,24 +2734,28 @@ Func _LOWriter_ShapeTypePosition(ByRef $oShape, $iHorAlign = Null, $iHorPos = Nu
 	; Accepts HoriOrient Left, Right, Center, and "None" = "From Left"
 	If ($iHorAlign <> Null) Then ; Cant be set if Anchor is set to "As Char"
 		If Not __LOWriter_IntIsBetween($iHorAlign, $LOW_ORIENT_HORI_NONE, $LOW_ORIENT_HORI_LEFT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oShape.HoriOrient = $iHorAlign
 		$iError = ($oShape.HoriOrient() = $iHorAlign) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iHorPos <> Null) Then
 		If Not IsInt($iHorPos) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oShape.HoriOrientPosition = $iHorPos
 		$iError = (__LOWriter_IntIsBetween($oShape.HoriOrientPosition(), $iHorPos - 1, $iHorPos + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iHorRelation <> Null) Then
 		If Not __LOWriter_IntIsBetween($iHorRelation, $LOW_RELATIVE_PARAGRAPH, $LOW_RELATIVE_PAGE_PRINT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oShape.HoriOrientRelation = $iHorRelation
 		$iError = ($oShape.HoriOrientRelation() = $iHorRelation) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bMirror <> Null) Then
 		If Not IsBool($bMirror) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oShape.PageToggle = $bMirror
 		$iError = ($oShape.PageToggle() = $bMirror) ? ($iError) : (BitOR($iError, 8))
 	EndIf
@@ -2715,18 +2763,21 @@ Func _LOWriter_ShapeTypePosition(ByRef $oShape, $iHorAlign = Null, $iHorPos = Nu
 	; Accepts Orient Top, Bottom, Center, and "None" = "From Top"/From Bottom, plus Row and Char.
 	If ($iVertAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ORIENT_VERT_NONE, $LOW_ORIENT_VERT_LINE_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oShape.VertOrient = $iVertAlign
 		$iError = ($oShape.VertOrient() = $iVertAlign) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($iVertPos <> Null) Then
 		If Not IsInt($iVertPos) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oShape.VertOrientPosition = $iVertPos
 		$iError = (__LOWriter_IntIsBetween($oShape.VertOrientPosition(), $iVertPos - 1, $iVertPos + 1)) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($iVertRelation <> Null) Then
 		If Not __LOWriter_IntIsBetween($iVertRelation, $LOW_RELATIVE_ROW, $LOW_RELATIVE_TEXT_LINE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$iCurrentAnchor = (($iAnchorPos <> Null) ? $iAnchorPos : $oShape.AnchorType())
 
 		; Libre Office is a bit complex in this anchor setting; When set to "As Character", there aren't specific setting
@@ -2795,12 +2846,14 @@ Func _LOWriter_ShapeTypePosition(ByRef $oShape, $iHorAlign = Null, $iHorPos = Nu
 
 	If ($bKeepInside <> Null) Then
 		If Not IsBool($bKeepInside) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 		$oShape.IsFollowingTextFlow = $bKeepInside
 		$iError = ($oShape.IsFollowingTextFlow() = $bKeepInside) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
 	If ($iAnchorPos <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAnchorPos, $LOW_ANCHOR_AT_PARAGRAPH, $LOW_ANCHOR_AS_CHARACTER, "", $LOW_ANCHOR_AT_CHARACTER) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
 		$oShape.AnchorType = $iAnchorPos
 		$iError = ($oShape.AnchorType() = $iAnchorPos) ? ($iError) : (BitOR($iError, 256))
 	EndIf
@@ -2864,11 +2917,13 @@ Func _LOWriter_ShapeTypeSize(ByRef $oShape, $iWidth = Null, $iHeight = Null, $bP
 	If ($iWidth <> Null) Or ($iHeight <> Null) Then
 		If ($iWidth <> Null) Then ; Min 51
 			If Not __LOWriter_IntIsBetween($iWidth, 51) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 			$tSize.Width = $iWidth
 		EndIf
 
 		If ($iHeight <> Null) Then
 			If Not __LOWriter_IntIsBetween($iHeight, 51) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 			$tSize.Height = $iHeight
 		EndIf
 
@@ -2880,6 +2935,7 @@ Func _LOWriter_ShapeTypeSize(ByRef $oShape, $iWidth = Null, $iHeight = Null, $bP
 
 	If ($bProtectSize <> Null) Then
 		If Not IsBool($bProtectSize) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oShape.SizeProtect = $bProtectSize
 		$iError = ($oShape.SizeProtect() = $bProtectSize) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -2935,6 +2991,7 @@ Func _LOWriter_ShapeWrap(ByRef $oShape, $iWrapType = Null, $iLeft = Null, $iRigh
 	Local $avWrap[5]
 
 	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 	$oPropInfo = $oShape.getPropertySetInfo()
 	If Not IsObj($oPropInfo) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -2953,6 +3010,7 @@ Func _LOWriter_ShapeWrap(ByRef $oShape, $iWrapType = Null, $iLeft = Null, $iRigh
 
 	If ($iWrapType <> Null) Then
 		If Not __LOWriter_IntIsBetween($iWrapType, $LOW_WRAP_MODE_NONE, $LOW_WRAP_MODE_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		If $oPropInfo.hasPropertyByName("Surround") Then $oShape.Surround = $iWrapType
 		If $oPropInfo.hasPropertyByName("TextWrap") Then $oShape.TextWrap = $iWrapType
 
@@ -2966,24 +3024,28 @@ Func _LOWriter_ShapeWrap(ByRef $oShape, $iWrapType = Null, $iLeft = Null, $iRigh
 
 	If ($iLeft <> Null) Then
 		If Not IsInt($iLeft) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oShape.LeftMargin = $iLeft
 		$iError = (__LOWriter_IntIsBetween($oShape.LeftMargin(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iRight <> Null) Then
 		If Not IsInt($iRight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oShape.RightMargin = $iRight
 		$iError = (__LOWriter_IntIsBetween($oShape.RightMargin(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iTop <> Null) Then
 		If Not IsInt($iTop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oShape.TopMargin = $iTop
 		$iError = (__LOWriter_IntIsBetween($oShape.TopMargin(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iBottom <> Null) Then
 		If Not IsInt($iBottom) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oShape.BottomMargin = $iBottom
 		$iError = (__LOWriter_IntIsBetween($oShape.BottomMargin(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
@@ -3041,18 +3103,21 @@ Func _LOWriter_ShapeWrapOptions(ByRef $oShape, $bFirstPar = Null, $bInBackground
 
 	If ($bFirstPar <> Null) Then
 		If Not IsBool($bFirstPar) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oShape.SurroundAnchorOnly = $bFirstPar
 		$iError = ($oShape.SurroundAnchorOnly() = $bFirstPar) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bInBackground <> Null) Then
 		If Not IsBool($bInBackground) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oShape.Opaque = (($bInBackground) ? False : True)
 		$iError = ($oShape.Opaque() = (($bInBackground) ? False : True)) ? ($iError) : (BitOR($iError, 2)) ; Opaque/Background is False when InBackground is checked, so switch Boolean values around.
 	EndIf
 
 	If ($bAllowOverlap <> Null) Then
 		If Not IsBool($bAllowOverlap) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oShape.AllowOverlap = $bAllowOverlap
 		$iError = ($oShape.AllowOverlap() = $bAllowOverlap) ? ($iError) : (BitOR($iError, 4))
 	EndIf

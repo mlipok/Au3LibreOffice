@@ -71,9 +71,11 @@ Func _LOWriter_NumStyleCreate(ByRef $oDoc, $sNumStyle)
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sNumStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	$oNumStyles = $oDoc.StyleFamilies().getByName("NumberingStyles")
 	If Not IsObj($oNumStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	If _LOWriter_NumStyleExists($oDoc, $sNumStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 	$oStyle = $oDoc.createInstance("com.sun.star.style.NumberingStyle")
 	If Not IsObj($oStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
@@ -169,6 +171,7 @@ Func _LOWriter_NumStyleCustomize(ByRef $oDoc, $oNumStyle, $iLevel, $iNumFormat =
 	If Not IsObj($oNumStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not $oNumStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not __LOWriter_IntIsBetween($iLevel, 0, 10) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 	$iLevel = ($iLevel - 1) ; Numbering Levels are  0 based, minus 1 to compensate.
 
 	$oNumRules = $oNumStyle.NumberingRules()
@@ -218,6 +221,7 @@ Func _LOWriter_NumStyleCustomize(ByRef $oDoc, $oNumStyle, $iLevel, $iNumFormat =
 
 		If ($iNumFormat <> Null) Then
 			If Not __LOWriter_IntIsBetween($iNumFormat, $LOW_NUM_STYLE_CHARS_UPPER_LETTER, $LOW_NUM_STYLE_NUMBER_LEGAL_KO) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 			$atNumLevel[$mNumLevel["NumberingType"]].Value = $iNumFormat
 
 			__LOWriter_NumStyleModify($oDoc, $oNumRules, $i, $atNumLevel) ; Modify the Setting in case it is switching from/to a bullet type.
@@ -231,12 +235,14 @@ Func _LOWriter_NumStyleCustomize(ByRef $oDoc, $oNumStyle, $iLevel, $iNumFormat =
 
 		If ($iStartAt <> Null) Then
 			If Not IsInt($iStartAt) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 			$atNumLevel[$mNumLevel["StartWith"]].Value = $iStartAt
 		EndIf
 
 		If ($sCharStyle <> Null) Then
 			If Not IsString($sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 			If Not _LOWriter_CharStyleExists($oDoc, $sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 			$atNumLevel[$mNumLevel["CharStyleName"]].Value = $sCharStyle
 		EndIf
 
@@ -254,6 +260,7 @@ Func _LOWriter_NumStyleCustomize(ByRef $oDoc, $oNumStyle, $iLevel, $iNumFormat =
 
 		If ($sSepBefore <> Null) Then
 			If Not IsString($sSepBefore) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+
 			$atNumLevel[$mNumLevel["Prefix"]].Value = $sSepBefore
 			If MapExists($mNumLevel, "ListFormat") Then
 				$atNumLevel[$mNumLevel["ListFormat"]].Value = __LOWriter_NumStyleListFormat($atNumLevel, $i, $atNumLevel[$mNumLevel["ParentNumbering"]].Value(), $sSepBefore, Null) ; Add prefix to ListFormat
@@ -262,6 +269,7 @@ Func _LOWriter_NumStyleCustomize(ByRef $oDoc, $oNumStyle, $iLevel, $iNumFormat =
 
 		If ($sSepAfter <> Null) Then
 			If Not IsString($sSepAfter) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+
 			$atNumLevel[$mNumLevel["Suffix"]].Value = $sSepAfter
 			If MapExists($mNumLevel, "ListFormat") Then
 				$atNumLevel[$mNumLevel["ListFormat"]].Value = __LOWriter_NumStyleListFormat($atNumLevel, $i, $atNumLevel[$mNumLevel["ParentNumbering"]].Value(), Null, $sSepAfter) ; Add suffix to ListFormat
@@ -270,6 +278,7 @@ Func _LOWriter_NumStyleCustomize(ByRef $oDoc, $oNumStyle, $iLevel, $iNumFormat =
 
 		If ($bConsecutiveNum <> Null) Then
 			If Not IsBool($bConsecutiveNum) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+
 			$oNumRules.IsContinuousNumbering = $bConsecutiveNum
 		EndIf
 
@@ -277,12 +286,14 @@ Func _LOWriter_NumStyleCustomize(ByRef $oDoc, $oNumStyle, $iLevel, $iNumFormat =
 			If Not IsString($sBulletFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 			If Not _LOWriter_FontExists($sBulletFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 			If Not MapExists($mNumLevel, "BulletFontName") Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+
 			$atNumLevel[$mNumLevel["BulletFontName"]].Value = $sBulletFont
 		EndIf
 
 		If ($iCharDecimal <> Null) Then
 			If Not IsInt($iCharDecimal) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 			If Not MapExists($mNumLevel, "BulletChar") Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
+
 			$atNumLevel[$mNumLevel["BulletChar"]].Value = Chr($iCharDecimal)
 		EndIf
 
@@ -350,9 +361,9 @@ Func _LOWriter_NumStyleDelete(ByRef $oDoc, $oNumStyle)
 
 	$oNumStyles = $oDoc.StyleFamilies().getByName("NumberingStyles")
 	If Not IsObj($oNumStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	$sNumStyle = $oNumStyle.Name()
 	If Not IsString($sNumStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
 	If Not $oNumStyle.isUserDefined() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	If $oNumStyle.isInUse() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; If Style is in use return an error unless force delete is true.
 
@@ -424,6 +435,7 @@ Func _LOWriter_NumStyleGetObj(ByRef $oDoc, $sNumStyle)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sNumStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not _LOWriter_NumStyleExists($oDoc, $sNumStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 	$oNumStyle = $oDoc.StyleFamilies().getByName("NumberingStyles").getByName($sNumStyle)
 	If Not IsObj($oNumStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -489,6 +501,7 @@ Func _LOWriter_NumStyleOrganizer(ByRef $oDoc, $oNumStyle, $sNewNumStyleName = Nu
 	If ($sNewNumStyleName <> Null) Then
 		If Not IsString($sNewNumStyleName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		If _LOWriter_NumStyleExists($oDoc, $sNewNumStyleName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oNumStyle.Name = $sNewNumStyleName
 		$iError = ($oNumStyle.Name() = $sNewNumStyleName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -496,6 +509,7 @@ Func _LOWriter_NumStyleOrganizer(ByRef $oDoc, $oNumStyle, $sNewNumStyleName = Nu
 	If ($bHidden <> Null) Then
 		If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		If Not __LOWriter_VersionCheck(4.0) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+
 		$oNumStyle.Hidden = $bHidden
 		$iError = ($oNumStyle.Hidden() = $bHidden) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -566,6 +580,7 @@ Func _LOWriter_NumStylePosition(ByRef $oDoc, $oNumStyle, $iLevel, $iAlignedAt = 
 	If Not IsObj($oNumStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not $oNumStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not __LOWriter_IntIsBetween($iLevel, 0, 10) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 	$iLevel = ($iLevel - 1) ; Numbering Levels are  0 based, minus 1 to compensate.
 
 	$oNumRules = $oNumStyle.NumberingRules()
@@ -600,26 +615,31 @@ Func _LOWriter_NumStylePosition(ByRef $oDoc, $oNumStyle, $iLevel, $iAlignedAt = 
 
 		If ($iAlignedAt <> Null) Then
 			If Not IsInt($iAlignedAt) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 			$atNumLevel[$mNumLevel["FirstLineIndent"]].Value = $iAlignedAt
 		EndIf
 
 		If ($iNumAlign <> Null) Then
 			If Not __LOWriter_IntIsBetween($iNumAlign, $LOW_ORIENT_HORI_RIGHT, $LOW_ORIENT_HORI_LEFT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 			$atNumLevel[$mNumLevel["Adjust"]].Value = $iNumAlign
 		EndIf
 
 		If ($iFollowedBy <> Null) Then
 			If Not __LOWriter_IntIsBetween($iFollowedBy, $LOW_FOLLOW_BY_TABSTOP, $LOW_FOLLOW_BY_NEWLINE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 			$atNumLevel[$mNumLevel["LabelFollowedBy"]].Value = $iFollowedBy
 		EndIf
 
 		If ($iTabStop <> Null) Then
 			If Not IsInt($iTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 			$atNumLevel[$mNumLevel["ListtabStopPosition"]].Value = $iTabStop
 		EndIf
 
 		If ($iIndent <> Null) Then
 			If Not IsInt($iIndent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 			$atNumLevel[$mNumLevel["IndentAt"]].Value = $iIndent
 		EndIf
 
@@ -679,6 +699,7 @@ Func _LOWriter_NumStyleSet(ByRef $oDoc, ByRef $oObj, $sNumStyle)
 	If Not $oObj.supportsService("com.sun.star.style.ParagraphProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsString($sNumStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not _LOWriter_NumStyleExists($oDoc, $sNumStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 	$oObj.NumberingStyleName = $sNumStyle
 
 	Return ($oObj.NumberingStyleName() = $sNumStyle) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
@@ -758,12 +779,15 @@ Func _LOWriter_NumStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly 
 	Local $iCount = 0
 	Local $sExecute = ""
 	Local $aStyles[0]
+	Local $oStyles
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsBool($bUserOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bAppliedOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	Local $oStyles = $oDoc.StyleFamilies.getByName("NumberingStyles")
+
+	$oStyles = $oDoc.StyleFamilies.getByName("NumberingStyles")
 	If Not IsObj($oStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	ReDim $aStyles[$oStyles.getCount()]
 
 	If Not $bUserOnly And Not $bAppliedOnly Then

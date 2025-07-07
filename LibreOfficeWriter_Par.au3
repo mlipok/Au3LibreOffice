@@ -293,6 +293,7 @@ Func _LOWriter_ParObjSectionsGet(ByRef $oParagraph)
 
 	$oSecEnum = $oParagraph.createEnumeration()
 	If Not IsObj($oSecEnum) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	While $oSecEnum.hasMoreElements()
 		$oParSection = $oSecEnum.nextElement()
 
@@ -507,7 +508,6 @@ Func _LOWriter_ParStyleBorderColor(ByRef $oParStyle, $iTop = Null, $iBottom = Nu
 
 	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
 	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
@@ -621,7 +621,6 @@ Func _LOWriter_ParStyleBorderStyle(ByRef $oParStyle, $iTop = Null, $iBottom = Nu
 
 	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
 	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
@@ -679,7 +678,6 @@ Func _LOWriter_ParStyleBorderWidth(ByRef $oParStyle, $iTop = Null, $iBottom = Nu
 
 	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
 	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
@@ -736,9 +734,11 @@ Func _LOWriter_ParStyleCreate(ByRef $oDoc, $sParStyle)
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	$oParStyles = $oDoc.StyleFamilies().getByName("ParagraphStyles")
 	If Not IsObj($oParStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	If _LOWriter_ParStyleExists($oDoc, $sParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 	$oStyle = $oDoc.createInstance("com.sun.star.style.ParagraphStyle")
 	If Not IsObj($oStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
@@ -800,9 +800,9 @@ Func _LOWriter_ParStyleDelete(ByRef $oDoc, ByRef $oParStyle, $bForceDelete = Fal
 
 	$oParStyles = $oDoc.StyleFamilies().getByName("ParagraphStyles")
 	If Not IsObj($oParStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	$sParStyle = $oParStyle.Name()
 	If Not IsString($sParStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
 	If Not $oParStyle.isUserDefined() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	If $oParStyle.isInUse() And Not ($bForceDelete) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; If Style is in use return an error unless force delete is true.
 
@@ -1007,7 +1007,6 @@ Func _LOWriter_ParStyleFont(ByRef $oParStyle, $sFontName = Null, $nFontSize = Nu
 
 	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
 	If ($sFontName <> Null) And Not _LOWriter_FontExists($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$vReturn = __LOWriter_CharFont($oParStyle, $sFontName, $nFontSize, $iPosture, $iWeight)
@@ -1098,6 +1097,7 @@ Func _LOWriter_ParStyleGetObj(ByRef $oDoc, $sParStyle)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not _LOWriter_ParStyleExists($oDoc, $sParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 	$oParStyle = $oDoc.StyleFamilies().getByName("ParagraphStyles").getByName($sParStyle)
 	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -1284,6 +1284,7 @@ Func _LOWriter_ParStyleOrganizer(ByRef $oDoc, ByRef $oParStyle, $sNewParStyleNam
 	If ($sNewParStyleName <> Null) Then
 		If Not IsString($sNewParStyleName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		If _LOWriter_ParStyleExists($oDoc, $sNewParStyleName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oParStyle.Name = $sNewParStyleName
 		$iError = ($oParStyle.Name() = $sNewParStyleName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -1291,6 +1292,7 @@ Func _LOWriter_ParStyleOrganizer(ByRef $oDoc, ByRef $oParStyle, $sNewParStyleNam
 	If ($sFollowStyle <> Null) Then
 		If Not IsString($sFollowStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		If Not _LOWriter_ParStyleExists($oDoc, $sFollowStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$sFollowStyle = __LOWriter_ParStyleNameToggle($sFollowStyle)
 		$oParStyle.setPropertyValue("FollowStyle", $sFollowStyle)
 		$iError = ($oParStyle.getPropertyValue("FollowStyle") = $sFollowStyle) ? ($iError) : (BitOR($iError, 2))
@@ -1298,8 +1300,10 @@ Func _LOWriter_ParStyleOrganizer(ByRef $oDoc, ByRef $oParStyle, $sNewParStyleNam
 
 	If ($sParentStyle <> Null) Then
 		If Not IsString($sParentStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		If ($sParentStyle <> "") Then
 			If Not _LOWriter_ParStyleExists($oDoc, $sParentStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 			$sParentStyle = __LOWriter_ParStyleNameToggle($sParentStyle)
 		EndIf
 		$oParStyle.ParentStyle = $sParentStyle
@@ -1308,6 +1312,7 @@ Func _LOWriter_ParStyleOrganizer(ByRef $oDoc, ByRef $oParStyle, $sNewParStyleNam
 
 	If ($bAutoUpdate <> Null) Then
 		If Not IsBool($bAutoUpdate) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
 		$oParStyle.IsAutoUpdate = $bAutoUpdate
 		$iError = ($oParStyle.IsAutoUpdate() = $bAutoUpdate) ? ($iError) : (BitOR($iError, 8))
 	EndIf
@@ -1315,6 +1320,7 @@ Func _LOWriter_ParStyleOrganizer(ByRef $oDoc, ByRef $oParStyle, $sNewParStyleNam
 	If ($bHidden <> Null) Then
 		If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		If Not __LOWriter_VersionCheck(4.0) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+
 		$oParStyle.Hidden = $bHidden
 		$iError = ($oParStyle.Hidden() = $bHidden) ? ($iError) : (BitOR($iError, 16))
 	EndIf
@@ -1619,6 +1625,7 @@ Func _LOWriter_ParStyleSet(ByRef $oDoc, ByRef $oObj, $sParStyle)
 	If Not $oObj.supportsService("com.sun.star.style.ParagraphProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsString($sParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not _LOWriter_ParStyleExists($oDoc, $sParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 	$sParStyle = __LOWriter_ParStyleNameToggle($sParStyle)
 	$oObj.ParaStyleName = $sParStyle
 
@@ -1666,8 +1673,10 @@ Func _LOWriter_ParStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsBool($bUserOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bAppliedOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 	$oStyles = $oDoc.StyleFamilies.getByName("ParagraphStyles")
 	If Not IsObj($oStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	ReDim $aStyles[$oStyles.getCount()]
 
 	If Not $bUserOnly And Not $bAppliedOnly Then

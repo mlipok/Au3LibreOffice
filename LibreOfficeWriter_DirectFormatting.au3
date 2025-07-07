@@ -116,6 +116,7 @@ Func _LOWriter_DirFrmtCharBorderColor(ByRef $oSelection, $iTop = Null, $iBottom 
 	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	If $bClearDirFrmt Then
 		$oSelection.setPropertyToDefault("CharTopBorder")
 		$oSelection.setPropertyToDefault("CharBottomBorder") ; Resetting one truly resets all, but just to be sure, reset all.
@@ -480,7 +481,6 @@ Func _LOWriter_DirFrmtCharPosition(ByRef $oSelection, $bAutoSuper = Null, $iSupe
 	Local $vReturn
 
 	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-
 	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If $bClearDirFrmt Then
@@ -766,6 +766,7 @@ Func _LOWriter_DirFrmtClear(ByRef $oDoc, ByRef $oSelection)
 			$oText = __LOWriter_CursorGetText($oDoc, $oViewCursor)
 			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 			If Not IsObj($oText) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
 			$oViewCursorBackup = $oText.createTextCursorByRange($oViewCursor)
 			If Not IsObj($oViewCursorBackup) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
@@ -925,6 +926,7 @@ Func _LOWriter_DirFrmtFontColor(ByRef $oSelection, $iFontColor = Null, $iTranspa
 
 		If ($iTransparency = Default) Then
 			If Not __LOWriter_VersionCheck(7.0) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+
 			$oSelection.setPropertyToDefault("CharTransparence")
 			$iTransparency = Null
 		EndIf
@@ -972,6 +974,7 @@ Func _LOWriter_DirFrmtGetCurStyles(ByRef $oSelection)
 	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oSelection.supportsService("com.sun.star.style.ParagraphProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not $oSelection.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 	__LOWriter_ArrayFill($asStyles, __LOWriter_ParStyleNameToggle($oSelection.ParaStyleName(), True), _
 			__LOWriter_CharStyleNameToggle($oSelection.CharStyleName(), True), _
 			__LOWriter_PageStyleNameToggle($oSelection.PageStyleName(), True), _
@@ -1028,7 +1031,6 @@ Func _LOWriter_DirFrmtOverLine(ByRef $oSelection, $bWordOnly = Null, $iOverLineS
 	Local $vReturn
 
 	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-
 	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_AnyAreDefault($bWordOnly, $iOverLineStyle, $bOLHasColor, $iOLColor) Then
@@ -2005,6 +2007,7 @@ Func _LOWriter_DirFrmtParSpace(ByRef $oSelection, $iAbovePar = Null, $iBelowPar 
 
 		If ($bAddSpace = Default) Then
 			If Not __LOWriter_VersionCheck(3.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+
 			$oSelection.setPropertyToDefault("ParaContextMargin")
 			$bAddSpace = Null
 		EndIf
@@ -2081,7 +2084,6 @@ EndFunc   ;==>_LOWriter_DirFrmtParSpace
 Func _LOWriter_DirFrmtParTabStopCreate(ByRef $oSelection, $iPosition, $iFillChar = Null, $iAlignment = Null, $iDecChar = Null)
 	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
 	If Not IsInt($iPosition) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If __LOWriter_ParHasTabStop($oSelection, $iPosition) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 

@@ -155,51 +155,61 @@ Func _LOWriter_FontDescEdit(ByRef $mFontDesc, $sFontName = Null, $iWeight = Null
 	If ($sFontName <> Null) Then
 		If Not IsString($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		If Not _LOWriter_FontExists($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$mFontDesc.CharFontName = $sFontName
 	EndIf
 
 	If ($iWeight <> Null) Then
 		If Not __LOWriter_IntIsBetween($iWeight, $LOW_WEIGHT_DONT_KNOW, $LOW_WEIGHT_BLACK) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$mFontDesc.CharWeight = $iWeight
 	EndIf
 
 	If ($iSlant <> Null) Then
 		If Not __LOWriter_IntIsBetween($iSlant, $LOW_POSTURE_NONE, $LOW_POSTURE_REV_ITALIC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$mFontDesc.CharPosture = $iSlant
 	EndIf
 
 	If ($nSize <> Null) Then
 		If Not IsNumber($nSize) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$mFontDesc.CharHeight = $nSize
 	EndIf
 
 	If ($iColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$mFontDesc.CharColor = $iColor
 	EndIf
 
 	If ($iUnderlineStyle <> Null) Then
 		If Not __LOWriter_IntIsBetween($iUnderlineStyle, $LOW_UNDERLINE_NONE, $LOW_UNDERLINE_BOLD_WAVE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$mFontDesc.CharUnderline = $iUnderlineStyle
 	EndIf
 
 	If ($iUnderlineColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iUnderlineColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 		$mFontDesc.CharUnderlineColor = $iUnderlineColor
 	EndIf
 
 	If ($iStrikelineStyle <> Null) Then
 		If Not __LOWriter_IntIsBetween($iStrikelineStyle, $LOW_STRIKEOUT_NONE, $LOW_STRIKEOUT_X) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
 		$mFontDesc.CharStrikeout = $iStrikelineStyle
 	EndIf
 
 	If ($bIndividualWords <> Null) Then
 		If Not IsBool($bIndividualWords) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+
 		$mFontDesc.CharWordMode = $bIndividualWords
 	EndIf
 
 	If ($iRelief <> Null) Then
 		If Not __LOWriter_IntIsBetween($iRelief, $LOW_RELIEF_NONE, $LOW_RELIEF_ENGRAVED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+
 		$mFontDesc.CharRelief = $iRelief
 	EndIf
 
@@ -247,6 +257,7 @@ Func _LOWriter_FontExists($sFontName, $oDoc = Null)
 	If Not IsObj($oDoc) Then
 		$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
 		If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 		$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
 		If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
@@ -325,6 +336,7 @@ Func _LOWriter_FontsGetNames($oDoc = Null)
 	If Not IsObj($oDoc) Then
 		$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
 		If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 		$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
 		If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 

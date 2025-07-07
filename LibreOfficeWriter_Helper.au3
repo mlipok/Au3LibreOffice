@@ -104,6 +104,7 @@
 ; ===============================================================================================================================
 Func _LOWriter_ComError_UserFunction($vUserFunction = Default, $vParam1 = Null, $vParam2 = Null, $vParam3 = Null, $vParam4 = Null, $vParam5 = Null)
 	#forceref $vParam1, $vParam2, $vParam3, $vParam4, $vParam5
+
 	; If user does not set a function, UDF must use internal function to avoid AutoItError.
 	Local Static $vUserFunction_Static = Default
 	Local $avUserFuncWParams[@NumParams]
@@ -175,6 +176,7 @@ Func _LOWriter_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $i
 	Local $aiReturn[0]
 
 	If (@NumParams = 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 	Select
 		Case IsInt($iHex) ; Long TO Hex
 			$nRed = BitAND(BitShift($iHex, 16), 0xff)
@@ -333,9 +335,11 @@ Func _LOWriter_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $
 	Local $nMaxRGB, $nMinRGB, $nChroma, $nHuePre, $nCyan, $nMagenta, $nYellow, $nBlack
 
 	If (@NumParams = 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 	Switch @NumParams
 		Case 1 ; Hex
 			If Not IsString($vVal1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; not a string
+
 			$vVal1 = StringStripWS($vVal1, $STR_STRIPALL)
 			$dHex = $vVal1
 
@@ -376,8 +380,10 @@ Func _LOWriter_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $
 
 				$iHue = Number($vVal1)
 				If (StringLen($vVal1)) <> (StringLen($iHue)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; String contained more than just digits
+
 				$iSaturation = Number($vVal2)
 				If (StringLen($vVal2)) <> (StringLen($iSaturation)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; String contained more than just digits
+
 				$iBrightness = Number($vVal3)
 				If (StringLen($vVal3)) <> (StringLen($iBrightness)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0) ; String contained more than just digits
 
@@ -497,6 +503,7 @@ Func _LOWriter_ConvertFromMicrometer($nInchOut = Null, $nCentimeterOut = Null, $
 
 	If ($nInchOut <> Null) Then
 		If Not IsNumber($nInchOut) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 		$nReturnValue = __LOWriter_UnitConvert($nInchOut, $__LOCONST_CONVERT_UM_INCH)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -505,6 +512,7 @@ Func _LOWriter_ConvertFromMicrometer($nInchOut = Null, $nCentimeterOut = Null, $
 
 	If ($nCentimeterOut <> Null) Then
 		If Not IsNumber($nCentimeterOut) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$nReturnValue = __LOWriter_UnitConvert($nCentimeterOut, $__LOCONST_CONVERT_UM_CM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -513,6 +521,7 @@ Func _LOWriter_ConvertFromMicrometer($nInchOut = Null, $nCentimeterOut = Null, $
 
 	If ($nMillimeterOut <> Null) Then
 		If Not IsNumber($nMillimeterOut) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$nReturnValue = __LOWriter_UnitConvert($nMillimeterOut, $__LOCONST_CONVERT_UM_MM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
@@ -521,6 +530,7 @@ Func _LOWriter_ConvertFromMicrometer($nInchOut = Null, $nCentimeterOut = Null, $
 
 	If ($nPointsOut <> Null) Then
 		If Not IsNumber($nPointsOut) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$nReturnValue = __LOWriter_UnitConvert($nPointsOut, $__LOCONST_CONVERT_UM_PT)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
@@ -569,6 +579,7 @@ Func _LOWriter_ConvertToMicrometer($nInchIn = Null, $nCentimeterIn = Null, $nMil
 
 	If ($nInchIn <> Null) Then
 		If Not IsNumber($nInchIn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 		$nReturnValue = __LOWriter_UnitConvert($nInchIn, $__LOCONST_CONVERT_INCH_UM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -577,6 +588,7 @@ Func _LOWriter_ConvertToMicrometer($nInchIn = Null, $nCentimeterIn = Null, $nMil
 
 	If ($nCentimeterIn <> Null) Then
 		If Not IsNumber($nCentimeterIn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$nReturnValue = __LOWriter_UnitConvert($nCentimeterIn, $__LOCONST_CONVERT_CM_UM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -585,6 +597,7 @@ Func _LOWriter_ConvertToMicrometer($nInchIn = Null, $nCentimeterIn = Null, $nMil
 
 	If ($nMillimeterIn <> Null) Then
 		If Not IsNumber($nMillimeterIn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$nReturnValue = __LOWriter_UnitConvert($nMillimeterIn, $__LOCONST_CONVERT_MM_UM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
@@ -593,6 +606,7 @@ Func _LOWriter_ConvertToMicrometer($nInchIn = Null, $nCentimeterIn = Null, $nMil
 
 	If ($nPointsIn <> Null) Then
 		If Not IsNumber($nPointsIn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$nReturnValue = __LOWriter_UnitConvert($nPointsIn, $__LOCONST_CONVERT_PT_UM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
@@ -638,10 +652,13 @@ Func _LOWriter_DateFormatKeyCreate(ByRef $oDoc, $sFormat)
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	$tLocale = __LOWriter_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	$oFormats = $oDoc.getNumberFormats()
 	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	$iFormatKey = $oFormats.queryKey($sFormat, $tLocale, False)
 	If ($iFormatKey > -1) Then Return SetError($__LO_STATUS_SUCCESS, 1, $iFormatKey) ; Format already existed
 	$iFormatKey = $oFormats.addNew($sFormat, $tLocale)
@@ -762,6 +779,7 @@ Func _LOWriter_DateFormatKeyGetString(ByRef $oDoc, $iFormatKey)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsInt($iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not _LOWriter_DateFormatKeyExists($oDoc, $iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 	$oFormatKey = $oDoc.getNumberFormats().getByKey($iFormatKey)
 	If Not IsObj($oFormatKey) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Failed to retrieve Key
 
@@ -826,8 +844,10 @@ Func _LOWriter_DateFormatKeysGetList(ByRef $oDoc, $bIsUser = False, $bUserOnly =
 
 	$tLocale = __LOWriter_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	$oFormats = $oDoc.getNumberFormats()
 	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	$aiFormatKeys = $oFormats.queryKeys($iQueryType, $tLocale, False)
 	If Not IsArray($aiFormatKeys) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -904,6 +924,7 @@ Func _LOWriter_DateStructCreate($iYear = Null, $iMonth = Null, $iDay = Null, $iH
 	If ($iYear <> Null) Then
 		If Not IsInt($iYear) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 		If Not (StringLen($iYear) = 4) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$tDateStruct.Year = $iYear
 
 	Else
@@ -912,6 +933,7 @@ Func _LOWriter_DateStructCreate($iYear = Null, $iMonth = Null, $iDay = Null, $iH
 
 	If ($iMonth <> Null) Then
 		If Not __LOWriter_IntIsBetween($iMonth, 0, 12) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$tDateStruct.Month = $iMonth
 
 	Else
@@ -920,6 +942,7 @@ Func _LOWriter_DateStructCreate($iYear = Null, $iMonth = Null, $iDay = Null, $iH
 
 	If ($iDay <> Null) Then
 		If Not __LOWriter_IntIsBetween($iDay, 0, 31) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$tDateStruct.Day = $iDay
 
 	Else
@@ -928,6 +951,7 @@ Func _LOWriter_DateStructCreate($iYear = Null, $iMonth = Null, $iDay = Null, $iH
 
 	If ($iHours <> Null) Then
 		If Not __LOWriter_IntIsBetween($iHours, 0, 23) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$tDateStruct.Hours = $iHours
 
 	Else
@@ -936,6 +960,7 @@ Func _LOWriter_DateStructCreate($iYear = Null, $iMonth = Null, $iDay = Null, $iH
 
 	If ($iMinutes <> Null) Then
 		If Not __LOWriter_IntIsBetween($iMinutes, 0, 59) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$tDateStruct.Minutes = $iMinutes
 
 	Else
@@ -944,6 +969,7 @@ Func _LOWriter_DateStructCreate($iYear = Null, $iMonth = Null, $iDay = Null, $iH
 
 	If ($iSeconds <> Null) Then
 		If Not __LOWriter_IntIsBetween($iSeconds, 0, 59) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$tDateStruct.Seconds = $iSeconds
 
 	Else
@@ -952,6 +978,7 @@ Func _LOWriter_DateStructCreate($iYear = Null, $iMonth = Null, $iDay = Null, $iH
 
 	If ($iNanoSeconds <> Null) Then
 		If Not __LOWriter_IntIsBetween($iNanoSeconds, 0, 999999999) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$tDateStruct.NanoSeconds = $iNanoSeconds
 
 	Else
@@ -961,6 +988,7 @@ Func _LOWriter_DateStructCreate($iYear = Null, $iMonth = Null, $iDay = Null, $iH
 	If ($bIsUTC <> Null) Then
 		If Not IsBool($bIsUTC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		If Not __LOWriter_VersionCheck(4.1) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+
 		$tDateStruct.IsUTC = $bIsUTC
 
 	Else
@@ -1044,42 +1072,49 @@ Func _LOWriter_DateStructModify(ByRef $tDateStruct, $iYear = Null, $iMonth = Nul
 	If ($iYear <> Null) Then
 		If Not IsInt($iYear) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		If Not (StringLen($iYear) = 4) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$tDateStruct.Year = $iYear
 		$iError = ($tDateStruct.Year() = $iYear) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iMonth <> Null) Then
 		If Not __LOWriter_IntIsBetween($iMonth, 0, 12) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$tDateStruct.Month = $iMonth
 		$iError = ($tDateStruct.Month() = $iMonth) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iDay <> Null) Then
 		If Not __LOWriter_IntIsBetween($iDay, 0, 31) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$tDateStruct.Day = $iDay
 		$iError = ($tDateStruct.Day() = $iDay) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iHours <> Null) Then
 		If Not __LOWriter_IntIsBetween($iHours, 0, 23) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$tDateStruct.Hours = $iHours
 		$iError = ($tDateStruct.Hours() = $iHours) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iMinutes <> Null) Then
 		If Not __LOWriter_IntIsBetween($iMinutes, 0, 59) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$tDateStruct.Minutes = $iMinutes
 		$iError = ($tDateStruct.Minutes() = $iMinutes) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($iSeconds <> Null) Then
 		If Not __LOWriter_IntIsBetween($iSeconds, 0, 59) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$tDateStruct.Seconds = $iSeconds
 		$iError = ($tDateStruct.Seconds() = $iSeconds) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($iNanoSeconds <> Null) Then
 		If Not __LOWriter_IntIsBetween($iNanoSeconds, 0, 999999999) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 		$tDateStruct.NanoSeconds = $iNanoSeconds
 		$iError = ($tDateStruct.NanoSeconds() = $iNanoSeconds) ? ($iError) : (BitOR($iError, 64))
 	EndIf
@@ -1087,6 +1122,7 @@ Func _LOWriter_DateStructModify(ByRef $tDateStruct, $iYear = Null, $iMonth = Nul
 	If ($bIsUTC <> Null) Then
 		If Not IsBool($bIsUTC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		If Not __LOWriter_VersionCheck(4.1) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+
 		$tDateStruct.IsUTC = $bIsUTC
 		$iError = ($tDateStruct.IsUTC() = $bIsUTC) ? ($iError) : (BitOR($iError, 128))
 	EndIf
@@ -1138,6 +1174,7 @@ Func _LOWriter_FindFormatModifyAlignment(ByRef $atFormat, $iHorAlign = Null, $iV
 
 		Else
 			If Not __LOWriter_IntIsBetween($iHorAlign, $LOW_PAR_ALIGN_HOR_LEFT, $LOW_PAR_ALIGN_HOR_CENTER) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("ParaAdjust", $iHorAlign))
 		EndIf
 	EndIf
@@ -1148,6 +1185,7 @@ Func _LOWriter_FindFormatModifyAlignment(ByRef $atFormat, $iHorAlign = Null, $iV
 
 		Else
 			If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_PAR_ALIGN_VERT_AUTO, $LOW_PAR_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("ParaVertAlignment", $iVertAlign))
 		EndIf
 	EndIf
@@ -1158,6 +1196,7 @@ Func _LOWriter_FindFormatModifyAlignment(ByRef $atFormat, $iHorAlign = Null, $iV
 
 		Else
 			If Not __LOWriter_IntIsBetween($iLastLineAlign, $LOW_PAR_LAST_LINE_JUSTIFIED, $LOW_PAR_LAST_LINE_CENTER, "", $LOW_PAR_LAST_LINE_START) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("ParaLastLineAdjust", $iLastLineAlign))
 		EndIf
 	EndIf
@@ -1168,6 +1207,7 @@ Func _LOWriter_FindFormatModifyAlignment(ByRef $atFormat, $iHorAlign = Null, $iV
 
 		Else
 			If Not IsBool($bExpandSingleWord) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("ParaExpandSingleWord", $bExpandSingleWord))
 		EndIf
 	EndIf
@@ -1178,6 +1218,7 @@ Func _LOWriter_FindFormatModifyAlignment(ByRef $atFormat, $iHorAlign = Null, $iV
 
 		Else
 			If Not IsBool($bSnapToGrid) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("SnapToGrid", $bSnapToGrid))
 		EndIf
 	EndIf
@@ -1188,6 +1229,7 @@ Func _LOWriter_FindFormatModifyAlignment(ByRef $atFormat, $iHorAlign = Null, $iV
 
 		Else
 			If Not __LOWriter_IntIsBetween($iTxtDirection, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("WritingMode", $iTxtDirection))
 		EndIf
 	EndIf
@@ -1234,6 +1276,7 @@ Func _LOWriter_FindFormatModifyEffects(ByRef $atFormat, $iRelief = Null, $iCase 
 
 		Else
 			If Not __LOWriter_IntIsBetween($iRelief, $LOW_RELIEF_NONE, $LOW_RELIEF_ENGRAVED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharRelief", $iRelief))
 		EndIf
 	EndIf
@@ -1244,6 +1287,7 @@ Func _LOWriter_FindFormatModifyEffects(ByRef $atFormat, $iRelief = Null, $iCase 
 
 		Else
 			If Not __LOWriter_IntIsBetween($iCase, $LOW_CASEMAP_NONE, $LOW_CASEMAP_SM_CAPS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharCaseMap", $iCase))
 		EndIf
 	EndIf
@@ -1254,6 +1298,7 @@ Func _LOWriter_FindFormatModifyEffects(ByRef $atFormat, $iRelief = Null, $iCase 
 
 		Else
 			If Not IsBool($bOutline) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharContoured", $bOutline))
 		EndIf
 	EndIf
@@ -1264,6 +1309,7 @@ Func _LOWriter_FindFormatModifyEffects(ByRef $atFormat, $iRelief = Null, $iCase 
 
 		Else
 			If Not IsBool($bShadow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharShadowed", $bShadow))
 		EndIf
 	EndIf
@@ -1323,6 +1369,7 @@ Func _LOWriter_FindFormatModifyFont(ByRef $atFormat, $sFontName = Null, $iFontSi
 		Else
 			If Not IsString($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 			If Not _LOWriter_FontExists($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharFontName", $sFontName))
 		EndIf
 	EndIf
@@ -1333,6 +1380,7 @@ Func _LOWriter_FindFormatModifyFont(ByRef $atFormat, $sFontName = Null, $iFontSi
 
 		Else
 			If Not IsInt($iFontSize) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharHeight", $iFontSize))
 		EndIf
 	EndIf
@@ -1343,6 +1391,7 @@ Func _LOWriter_FindFormatModifyFont(ByRef $atFormat, $sFontName = Null, $iFontSi
 
 		Else
 			If Not __LOWriter_IntIsBetween($iFontWeight, $LOW_WEIGHT_THIN, $LOW_WEIGHT_BLACK, "", $LOW_WEIGHT_DONT_KNOW) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharWeight", $iFontWeight))
 		EndIf
 	EndIf
@@ -1353,6 +1402,7 @@ Func _LOWriter_FindFormatModifyFont(ByRef $atFormat, $sFontName = Null, $iFontSi
 
 		Else
 			If Not __LOWriter_IntIsBetween($iFontPosture, $LOW_POSTURE_NONE, $LOW_POSTURE_ITALIC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharPosture", $iFontPosture))
 		EndIf
 	EndIf
@@ -1363,6 +1413,7 @@ Func _LOWriter_FindFormatModifyFont(ByRef $atFormat, $sFontName = Null, $iFontSi
 
 		Else
 			If Not __LOWriter_IntIsBetween($iFontColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharColor", $iFontColor))
 		EndIf
 	EndIf
@@ -1374,6 +1425,7 @@ Func _LOWriter_FindFormatModifyFont(ByRef $atFormat, $sFontName = Null, $iFontSi
 		Else
 			If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 			If Not __LOWriter_VersionCheck(7.0) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharTransparence", $iTransparency))
 		EndIf
 	EndIf
@@ -1385,6 +1437,7 @@ Func _LOWriter_FindFormatModifyFont(ByRef $atFormat, $sFontName = Null, $iFontSi
 
 		Else
 			If Not __LOWriter_IntIsBetween($iHighlight, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 			; CharHighlight; same as CharBackColor---Libre seems to use back color for highlighting.
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharBackColor", $iHighlight))
 			If __LOWriter_VersionCheck(4.2) Then __LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharHighlight", $iHighlight))
@@ -1438,6 +1491,7 @@ Func _LOWriter_FindFormatModifyHyphenation(ByRef $atFormat, $bAutoHyphen = Null,
 
 		Else
 			If Not IsBool($bAutoHyphen) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("ParaIsHyphenation", $bAutoHyphen))
 		EndIf
 	EndIf
@@ -1449,6 +1503,7 @@ Func _LOWriter_FindFormatModifyHyphenation(ByRef $atFormat, $bAutoHyphen = Null,
 		Else
 			If Not IsBool($bHyphenNoCaps) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 			If Not __LOWriter_VersionCheck(6.4) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("ParaHyphenationNoCaps", $bHyphenNoCaps))
 		EndIf
 	EndIf
@@ -1459,6 +1514,7 @@ Func _LOWriter_FindFormatModifyHyphenation(ByRef $atFormat, $bAutoHyphen = Null,
 
 		Else
 			If Not __LOWriter_IntIsBetween($iMaxHyphens, 0, 99) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("ParaHyphenationMaxHyphens", $iMaxHyphens))
 		EndIf
 	EndIf
@@ -1469,6 +1525,7 @@ Func _LOWriter_FindFormatModifyHyphenation(ByRef $atFormat, $bAutoHyphen = Null,
 
 		Else
 			If Not __LOWriter_IntIsBetween($iMinLeadingChar, 2, 9) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("ParaHyphenationMaxLeadingChars", $iMinLeadingChar))
 		EndIf
 	EndIf
@@ -1479,6 +1536,7 @@ Func _LOWriter_FindFormatModifyHyphenation(ByRef $atFormat, $bAutoHyphen = Null,
 
 		Else
 			If Not __LOWriter_IntIsBetween($iMinTrailingChar, 2, 9) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("ParaHyphenationMaxTrailingChars", $iMinTrailingChar))
 		EndIf
 	EndIf
@@ -1527,6 +1585,7 @@ Func _LOWriter_FindFormatModifyIndent(ByRef $atFormat, $iBeforeText = Null, $iAf
 
 		Else
 			If Not __LOWriter_IntIsBetween($iBeforeText, -9998989, 17094) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("ParaLeftMargin", $iBeforeText))
 		EndIf
 	EndIf
@@ -1537,6 +1596,7 @@ Func _LOWriter_FindFormatModifyIndent(ByRef $atFormat, $iBeforeText = Null, $iAf
 
 		Else
 			If Not __LOWriter_IntIsBetween($iAfterText, -9998989, 17094) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("ParaRightMargin", $iAfterText))
 		EndIf
 	EndIf
@@ -1548,6 +1608,7 @@ Func _LOWriter_FindFormatModifyIndent(ByRef $atFormat, $iBeforeText = Null, $iAf
 
 		Else
 			If Not __LOWriter_IntIsBetween($iFirstLine, -57785, 17094) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("ParaFirstLineIndent", $iFirstLine))
 		EndIf
 	EndIf
@@ -1558,6 +1619,7 @@ Func _LOWriter_FindFormatModifyIndent(ByRef $atFormat, $iBeforeText = Null, $iAf
 
 		Else
 			If Not IsBool($bAutoFirstLine) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("ParaIsAutoFirstLineIndent", $bAutoFirstLine))
 		EndIf
 	EndIf
@@ -1606,6 +1668,7 @@ Func _LOWriter_FindFormatModifyOverline(ByRef $atFormat, $iOverLineStyle = Null,
 
 		Else
 			If Not __LOWriter_IntIsBetween($iOverLineStyle, $LOW_UNDERLINE_NONE, $LOW_UNDERLINE_BOLD_WAVE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharOverline", $iOverLineStyle))
 		EndIf
 	EndIf
@@ -1616,6 +1679,7 @@ Func _LOWriter_FindFormatModifyOverline(ByRef $atFormat, $iOverLineStyle = Null,
 
 		Else
 			If Not IsBool($bWordOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharWordMode", $bWordOnly))
 		EndIf
 	EndIf
@@ -1626,6 +1690,7 @@ Func _LOWriter_FindFormatModifyOverline(ByRef $atFormat, $iOverLineStyle = Null,
 
 		Else
 			If Not IsBool($bOLHasColor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharOverlineHasColor", $bOLHasColor))
 		EndIf
 	EndIf
@@ -1636,6 +1701,7 @@ Func _LOWriter_FindFormatModifyOverline(ByRef $atFormat, $iOverLineStyle = Null,
 
 		Else
 			If Not __LOWriter_IntIsBetween($iOLColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharOverlineColor", $iOLColor))
 		EndIf
 	EndIf
@@ -1686,6 +1752,7 @@ Func _LOWriter_FindFormatModifyPageBreak(ByRef $oDoc, ByRef $atFormat, $iBreakTy
 
 		Else
 			If Not __LOWriter_IntIsBetween($iBreakType, $LOW_BREAK_NONE, $LOW_BREAK_PAGE_BOTH) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("BreakType", $iBreakType))
 		EndIf
 	EndIf
@@ -1697,6 +1764,7 @@ Func _LOWriter_FindFormatModifyPageBreak(ByRef $oDoc, ByRef $atFormat, $iBreakTy
 		Else
 			If Not IsString($sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 			If Not _LOWriter_PageStyleExists($oDoc, $sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("PageStyleName", $sPageStyle))
 		EndIf
 	EndIf
@@ -1707,6 +1775,7 @@ Func _LOWriter_FindFormatModifyPageBreak(ByRef $oDoc, ByRef $atFormat, $iBreakTy
 
 		Else
 			If Not __LOWriter_IntIsBetween($iPgNumOffSet, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("PageNumberOffset", $iPgNumOffSet))
 		EndIf
 	EndIf
@@ -1760,6 +1829,7 @@ Func _LOWriter_FindFormatModifyPosition(ByRef $atFormat, $bAutoSuper = Null, $iS
 
 		Else
 			If Not IsBool($bAutoSuper) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 			; If $bAutoSuper = True set it to 14000 (automatic Superscript) else if $iSuperScript is set, let that overwrite
 			;	the current setting, else if subscript is true or set to an integer, it will overwrite the setting. If nothing
 			; else set Subscript to 1
@@ -1773,6 +1843,7 @@ Func _LOWriter_FindFormatModifyPosition(ByRef $atFormat, $bAutoSuper = Null, $iS
 
 		Else
 			If Not IsBool($bAutoSub) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 			; If $bAutoSub = True set it to -14000 (automatic Subscript) else if $iSubScript is set, let that overwrite
 			;	the current setting, else if superscript is true or set to an integer, it will overwrite the setting.
 			$iSubScript = ($bAutoSub) ? (-14000) : ((IsInt($iSubScript)) ? ($iSubScript) : ((IsInt($iSuperScript)) ? ($iSubScript) : (1)))
@@ -1785,6 +1856,7 @@ Func _LOWriter_FindFormatModifyPosition(ByRef $atFormat, $bAutoSuper = Null, $iS
 
 		Else
 			If Not __LOWriter_IntIsBetween($iSuperScript, 0, 100, "", 14000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharEscapement", $iSuperScript))
 		EndIf
 	EndIf
@@ -1795,6 +1867,7 @@ Func _LOWriter_FindFormatModifyPosition(ByRef $atFormat, $bAutoSuper = Null, $iS
 
 		Else
 			If Not __LOWriter_IntIsBetween($iSubScript, -100, 100, "", "-14000:14000") Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 			$iSubScript = ($iSubScript > 0) ? (Int("-" & $iSubScript)) : ($iSubScript)
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharEscapement", $iSubScript))
 		EndIf
@@ -1806,6 +1879,7 @@ Func _LOWriter_FindFormatModifyPosition(ByRef $atFormat, $bAutoSuper = Null, $iS
 
 		Else
 			If Not __LOWriter_IntIsBetween($iRelativeSize, 1, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharEscapementHeight", $iRelativeSize))
 		EndIf
 	EndIf
@@ -1858,6 +1932,7 @@ Func _LOWriter_FindFormatModifyRotateScaleSpace(ByRef $atFormat, $iRotation = Nu
 
 		Else
 			If Not __LOWriter_IntIsBetween($iRotation, 0, 0, "", "90:270") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 			$iRotation = ($iRotation > 0) ? ($iRotation * 10) : ($iRotation) ; Rotation set in hundredths (90 deg = 900 etc), so times by 10.
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharRotation", $iRotation))
 		EndIf
@@ -1869,6 +1944,7 @@ Func _LOWriter_FindFormatModifyRotateScaleSpace(ByRef $atFormat, $iRotation = Nu
 
 		Else
 			If Not __LOWriter_IntIsBetween($iScaleWidth, 1, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharScaleWidth", $iScaleWidth))
 		EndIf
 	EndIf
@@ -1879,6 +1955,7 @@ Func _LOWriter_FindFormatModifyRotateScaleSpace(ByRef $atFormat, $iRotation = Nu
 
 		Else
 			If Not IsBool($bAutoKerning) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharAutoKerning", $bAutoKerning))
 		EndIf
 	EndIf
@@ -1889,6 +1966,7 @@ Func _LOWriter_FindFormatModifyRotateScaleSpace(ByRef $atFormat, $iRotation = Nu
 
 		Else
 			If Not __LOWriter_NumIsBetween($nKerning, -2, 928.8) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 			$nKerning = __LOWriter_UnitConvert($nKerning, $__LOCONST_CONVERT_PT_UM)
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharKerning", $nKerning))
 		EndIf
@@ -1952,6 +2030,7 @@ Func _LOWriter_FindFormatModifySpacing(ByRef $atFormat, $iAbovePar = Null, $iBel
 
 		Else
 			If Not __LOWriter_IntIsBetween($iAbovePar, 0, 10008) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("ParaTopMargin", $iAbovePar))
 		EndIf
 	EndIf
@@ -1962,6 +2041,7 @@ Func _LOWriter_FindFormatModifySpacing(ByRef $atFormat, $iAbovePar = Null, $iBel
 
 		Else
 			If Not __LOWriter_IntIsBetween($iBelowPar, 0, 10008) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("ParaBottomMargin", $iBelowPar))
 		EndIf
 	EndIf
@@ -1973,6 +2053,7 @@ Func _LOWriter_FindFormatModifySpacing(ByRef $atFormat, $iAbovePar = Null, $iBel
 		Else
 			If Not IsBool($bAddSpace) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 			If Not __LOWriter_VersionCheck(3.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("ParaContextMargin", $bAddSpace))
 		EndIf
 	EndIf
@@ -1989,11 +2070,13 @@ Func _LOWriter_FindFormatModifySpacing(ByRef $atFormat, $iAbovePar = Null, $iBel
 
 			If ($iLineSpcMode <> Default) And ($iLineSpcMode <> Null) Then
 				If Not __LOWriter_IntIsBetween($iLineSpcMode, $LOW_LINE_SPC_MODE_PROP, $LOW_LINE_SPC_MODE_FIX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 				$tLine.Mode = $iLineSpcMode
 			EndIf
 
 			If ($iLineSpcHeight <> Default) And ($iLineSpcHeight <> Null) Then
 				If Not IsInt($iLineSpcHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 				Switch $tLine.Mode()
 					Case $LOW_LINE_SPC_MODE_PROP ; Proportional
 						If Not __LOWriter_IntIsBetween($iLineSpcHeight, 6, 65535) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0) ; Min setting on Proportional is 6%
@@ -2052,6 +2135,7 @@ Func _LOWriter_FindFormatModifyStrikeout(ByRef $atFormat, $bWordOnly = Null, $bS
 
 		Else
 			If Not IsBool($bWordOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharWordMode", $bWordOnly))
 		EndIf
 	EndIf
@@ -2062,6 +2146,7 @@ Func _LOWriter_FindFormatModifyStrikeout(ByRef $atFormat, $bWordOnly = Null, $bS
 
 		Else
 			If Not IsBool($bStrikeOut) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharCrossedOut", $bStrikeOut))
 		EndIf
 	EndIf
@@ -2072,6 +2157,7 @@ Func _LOWriter_FindFormatModifyStrikeout(ByRef $atFormat, $bWordOnly = Null, $bS
 
 		Else
 			If Not __LOWriter_IntIsBetween($iStrikeLineStyle, $LOW_STRIKEOUT_NONE, $LOW_STRIKEOUT_X) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharStrikeout", $iStrikeLineStyle))
 		EndIf
 	EndIf
@@ -2120,6 +2206,7 @@ Func _LOWriter_FindFormatModifyTxtFlowOpt(ByRef $atFormat, $bParSplit = Null, $b
 
 		Else
 			If Not IsBool($bParSplit) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("ParaSplit", $bParSplit))
 		EndIf
 	EndIf
@@ -2130,6 +2217,7 @@ Func _LOWriter_FindFormatModifyTxtFlowOpt(ByRef $atFormat, $bParSplit = Null, $b
 
 		Else
 			If Not IsBool($bKeepTogether) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("ParaKeepTogether", $bKeepTogether))
 		EndIf
 	EndIf
@@ -2140,6 +2228,7 @@ Func _LOWriter_FindFormatModifyTxtFlowOpt(ByRef $atFormat, $bParSplit = Null, $b
 
 		Else
 			If Not __LOWriter_IntIsBetween($iParOrphans, 0, 9, 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("ParaOrphans", $iParOrphans))
 		EndIf
 	EndIf
@@ -2150,6 +2239,7 @@ Func _LOWriter_FindFormatModifyTxtFlowOpt(ByRef $atFormat, $bParSplit = Null, $b
 
 		Else
 			If Not __LOWriter_IntIsBetween($iParWidows, 0, 9, 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("ParaWidows", $iParWidows))
 		EndIf
 	EndIf
@@ -2197,6 +2287,7 @@ Func _LOWriter_FindFormatModifyUnderline(ByRef $atFormat, $iUnderLineStyle = Nul
 
 		Else
 			If Not __LOWriter_IntIsBetween($iUnderLineStyle, $LOW_UNDERLINE_NONE, $LOW_UNDERLINE_BOLD_WAVE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharUnderline", $iUnderLineStyle))
 		EndIf
 	EndIf
@@ -2207,6 +2298,7 @@ Func _LOWriter_FindFormatModifyUnderline(ByRef $atFormat, $iUnderLineStyle = Nul
 
 		Else
 			If Not IsBool($bWordOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharWordMode", $bWordOnly))
 		EndIf
 	EndIf
@@ -2217,6 +2309,7 @@ Func _LOWriter_FindFormatModifyUnderline(ByRef $atFormat, $iUnderLineStyle = Nul
 
 		Else
 			If Not IsBool($bULHasColor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharUnderlineHasColor", $bULHasColor))
 		EndIf
 	EndIf
@@ -2227,6 +2320,7 @@ Func _LOWriter_FindFormatModifyUnderline(ByRef $atFormat, $iUnderLineStyle = Nul
 
 		Else
 			If Not __LOWriter_IntIsBetween($iULColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharUnderlineColor", $iULColor))
 		EndIf
 	EndIf
@@ -2270,10 +2364,13 @@ Func _LOWriter_FormatKeyCreate(ByRef $oDoc, $sFormat)
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	$tLocale = __LOWriter_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	$oFormats = $oDoc.getNumberFormats()
 	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	$iFormatKey = $oFormats.queryKey($sFormat, $tLocale, False)
 	If ($iFormatKey > -1) Then Return SetError($__LO_STATUS_SUCCESS, 1, $iFormatKey) ; Format already existed
 	$iFormatKey = $oFormats.addNew($sFormat, $tLocale)
@@ -2364,10 +2461,13 @@ Func _LOWriter_FormatKeyExists(ByRef $oDoc, $iFormatKey, $iFormatType = $LOW_FOR
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsInt($iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsInt($iFormatType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 	$tLocale = __LOWriter_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	$oFormats = $oDoc.getNumberFormats()
 	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	$aiFormatKeys = $oFormats.queryKeys($iFormatType, $tLocale, False)
 	If Not IsArray($aiFormatKeys) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -2417,6 +2517,7 @@ Func _LOWriter_FormatKeyGetStandard(ByRef $oDoc, $iFormatKeyType)
 
 	$tLocale = __LOWriter_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	$oFormats = $oDoc.getNumberFormats()
 	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -2458,6 +2559,7 @@ Func _LOWriter_FormatKeyGetString(ByRef $oDoc, $iFormatKey)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsInt($iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not _LOWriter_FormatKeyExists($oDoc, $iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 	$oFormatKey = $oDoc.getNumberFormats().getByKey($iFormatKey)
 	If Not IsObj($oFormatKey) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Key not found.
 
@@ -2508,14 +2610,17 @@ Func _LOWriter_FormatKeysGetList(ByRef $oDoc, $bIsUser = False, $bUserOnly = Fal
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsBool($bIsUser) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bUserOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 	$iColumns = ($bIsUser = True) ? ($iColumns) : (2)
 
 	If Not IsInt($iFormatKeyType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$tLocale = __LOWriter_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	$oFormats = $oDoc.getNumberFormats()
 	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	$aiFormatKeys = $oFormats.queryKeys($iFormatKeyType, $tLocale, False)
 	If Not IsArray($aiFormatKeys) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -2660,7 +2765,6 @@ Func _LOWriter_SearchDescriptorCreate(ByRef $oDoc, $bBackwards = False, $bMatchC
 	Local $oSrchDescript
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-
 	If Not IsBool($bBackwards) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bMatchCase) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsBool($bWholeWord) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
@@ -2670,6 +2774,7 @@ Func _LOWriter_SearchDescriptorCreate(ByRef $oDoc, $bBackwards = False, $bMatchC
 
 	$oSrchDescript = $oDoc.createSearchDescriptor()
 	If Not IsObj($oSrchDescript) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	With $oSrchDescript
 		.SearchBackwards = $bBackwards
 		.SearchCaseSensitive = $bMatchCase
@@ -2736,32 +2841,38 @@ Func _LOWriter_SearchDescriptorModify(ByRef $oSrchDescript, $bBackwards = Null, 
 
 	If ($bBackwards <> Null) Then
 		If Not IsBool($bBackwards) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oSrchDescript.SearchBackwards = $bBackwards
 	EndIf
 
 	If ($bMatchCase <> Null) Then
 		If Not IsBool($bMatchCase) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oSrchDescript.SearchCaseSensitive = $bMatchCase
 	EndIf
 
 	If ($bWholeWord <> Null) Then
 		If Not IsBool($bWholeWord) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oSrchDescript.SearchWords = $bWholeWord
 	EndIf
 
 	If ($bRegExp <> Null) Then
 		If Not IsBool($bRegExp) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		If ($bRegExp = True) And ($oSrchDescript.SearchSimilarity = True) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 		$oSrchDescript.SearchRegularExpression = $bRegExp
 	EndIf
 
 	If ($bStyles <> Null) Then
 		If Not IsBool($bStyles) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oSrchDescript.SearchStyles = $bStyles
 	EndIf
 
 	If ($bSearchPropValues <> Null) Then
 		If Not IsBool($bSearchPropValues) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oSrchDescript.ValueSearch = $bSearchPropValues
 	EndIf
 
@@ -2821,28 +2932,34 @@ Func _LOWriter_SearchDescriptorSimilarityModify(ByRef $oSrchDescript, $bSimilari
 	If ($bSimilarity <> Null) Then
 		If Not IsBool($bSimilarity) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		If ($bSimilarity = True) And ($oSrchDescript.SearchRegularExpression = True) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 		$oSrchDescript.SearchSimilarity = $bSimilarity
 	EndIf
 
 	If ($bCombine <> Null) Then
 		If Not IsBool($bCombine) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oSrchDescript.SearchSimilarityRelax = $bCombine
 	EndIf
 
 	If Not __LOWriter_VarsAreNull($iRemove, $iAdd, $iExchange) Then
 		If ($oSrchDescript.SearchSimilarity() = False) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		If ($iRemove <> Null) Then
 			If Not IsInt($iRemove) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 			$oSrchDescript.SearchSimilarityRemove = $iRemove
 		EndIf
 
 		If ($iAdd <> Null) Then
 			If Not IsInt($iAdd) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 			$oSrchDescript.SearchSimilarityAdd = $iAdd
 		EndIf
 
 		If ($iExchange <> Null) Then
 			If Not IsInt($iExchange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 			$oSrchDescript.SearchSimilarityExchange = $iExchange
 		EndIf
 	EndIf
