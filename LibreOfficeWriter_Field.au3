@@ -4975,6 +4975,7 @@ Func _LOWriter_FieldSetVarMasterExists(ByRef $oDoc, $sMasterFieldName)
 
 	$oMasterFields = $oDoc.getTextFieldMasters()
 	If Not IsObj($oMasterFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	If $oMasterFields.hasByName($sFullFieldName) Then Return SetError($__LO_STATUS_SUCCESS, 1, True)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, False)

@@ -86,6 +86,7 @@ Func _LOWriter_ShapeAreaColor(ByRef $oShape, $iColor = Null)
 	If ($iColor = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, ($oShape.FillStyle() = $LOW_AREA_FILL_STYLE_SOLID) ? (__LOWriter_ColorRemoveAlpha($oShape.FillColor())) : ($LOW_COLOR_OFF))
 
 	If Not __LOWriter_IntIsBetween($iColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	If ($iColor = $LOW_COLOR_OFF) Then
 		$oShape.FillStyle = $LOW_AREA_FILL_STYLE_OFF
 
@@ -1017,15 +1018,12 @@ Func _LOWriter_ShapeLineProperties(ByRef $oShape, $vStyle = Null, $iColor = Null
 	If __LOWriter_VarsAreNull($vStyle, $iColor, $iWidth, $iTransparency, $iCornerStyle, $iCapStyle) Then
 		Switch $oShape.LineStyle()
 			Case $__LOW_SHAPE_LINE_STYLE_NONE
-
 				$vReturn = $LOW_SHAPE_LINE_STYLE_NONE
 
 			Case $__LOW_SHAPE_LINE_STYLE_SOLID
-
 				$vReturn = $LOW_SHAPE_LINE_STYLE_CONTINUOUS
 
 			Case $__LOW_SHAPE_LINE_STYLE_DASH
-
 				$vReturn = __LOWriter_ShapeLineStyleName(Null, $oShape.LineDashName())
 				If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 		EndSwitch
@@ -1043,17 +1041,14 @@ Func _LOWriter_ShapeLineProperties(ByRef $oShape, $vStyle = Null, $iColor = Null
 
 			Switch $vStyle
 				Case $LOW_SHAPE_LINE_STYLE_NONE
-
 					$oShape.LineStyle = $__LOW_SHAPE_LINE_STYLE_NONE
 					$iError = ($oShape.LineStyle() = $__LOW_SHAPE_LINE_STYLE_NONE) ? ($iError) : (BitOR($iError, 1))
 
 				Case $LOW_SHAPE_LINE_STYLE_CONTINUOUS
-
 					$oShape.LineStyle = $__LOW_SHAPE_LINE_STYLE_SOLID
 					$iError = ($oShape.LineStyle() = $__LOW_SHAPE_LINE_STYLE_SOLID) ? ($iError) : (BitOR($iError, 1))
 
 				Case Else
-
 					$sStyle = __LOWriter_ShapeLineStyleName($vStyle)
 					If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -1063,7 +1058,6 @@ Func _LOWriter_ShapeLineProperties(ByRef $oShape, $vStyle = Null, $iColor = Null
 			EndSwitch
 
 		Else
-
 			$sStyle = $vStyle
 			$oShape.LineDashName = $sStyle
 			$iError = ($oShape.LineDashName() = $sStyle) ? ($iError) : (BitOR($iError, 1))
@@ -1235,7 +1229,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 		$iArrayElement = -1
 
 	Else
-
 		; Identify the Array element to add the point after.
 		For $i = 0 To UBound($aiFlags) - 1
 			If ($aiFlags[$i] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then $iCount += 1 ; Skip any points that are Control Points, as they aren't actual points used for drawing the shape.
@@ -1285,7 +1278,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 			$aiFlags = $avArray2
 
 		Else ; Point is a regular point.
-
 			ReDim $avArray[UBound($atPoints) + 1]
 			ReDim $avArray2[UBound($aiFlags) + 1]
 
@@ -1304,7 +1296,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 		EndIf
 
 	ElseIf ($iArrayElement = (UBound($aiFlags) - 1)) Then ; Insertion will be at the end of the Points.
-
 		If ($iPointType <> $LOW_SHAPE_POINT_TYPE_NORMAL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0) ; Last Point in a shape can only be a "Normal" type Point.
 
 		ReDim $avArray[UBound($atPoints) + 1]
@@ -1324,7 +1315,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 		$aiFlags = $avArray2
 
 	Else ; Insertion is in the middle.
-
 		For $i = ($iArrayElement + 1) To UBound($aiFlags) - 1 ; Locate the next non-Control Point in the Array for later use.
 			If ($aiFlags[$i] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then
 				$iNextArrayElement = $i
@@ -1345,7 +1335,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 				If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			Else
-
 				$tControlPoint1 = $atPoints[$iArrayElement + 1] ; Copy the existing Control point.
 			EndIf
 
@@ -1366,7 +1355,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 				$tControlPoint4 = $atPoints[$iArrayElement + 2]
 
 			Else
-
 				; Make the Fourth control Point's Coordinates the Next Point's Coordinates, minus $iSymmetricalPointXValue and $iSymmetricalPointYValue
 				$tControlPoint4 = __LOWriter_CreatePoint(($atPoints[$iNextArrayElement].X() - $iSymmetricalPointXValue), ($atPoints[$iNextArrayElement].Y() - $iSymmetricalPointYValue))
 				If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
@@ -1420,7 +1408,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 			$aiFlags = $avArray2
 
 		Else ; New Point is a Normal Point.
-
 			If ($aiFlags[$iArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then ; Point after the point I am inserting my point at is a control point. I need to determine which point is a curve, and adjust as needed.
 
 				; If the Point I am inserting after is not a normal Point, or if it is a normal point but the coordintes of the Point and the first control point after it are not identical,
@@ -1445,7 +1432,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 						$tControlPoint4 = $atPoints[$iArrayElement + 2] ; Copy the second control point after the point I am inserting after.
 
 					Else ; Create the fourth point.
-
 						; Make the Fourth control Point's Coordinates the Next Point's Coordintes, minus half the difference between this new point and the next point, which will be in the $iNextArrayElement of the Points array.
 						$tControlPoint4 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $iX) * .5)), Int($atPoints[$iNextArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $iY) * .5)))
 						If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
@@ -1538,7 +1524,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 				$aiFlags = $avArray2
 
 			Else ; Point after the insertion point is a regular point.
-
 				If ($bIsCurve = True) Then ; If the New Point is a Curved Normal point then create two new control Points.
 
 					; Make the First control Point's Coordinates the New Point's Coordinates, plus half the difference between this new point and the next point, which will be in the $iNextArrayElement of the Points array.
@@ -1929,7 +1914,6 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 		$aiFlags = $avArray2
 
 	Else ; Point to be deleted is in the middle.
-
 		If ($aiFlags[$iPreviousArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then ; If there is a control point after the Previous point.
 
 			If ($aiFlags[$iPreviousArrayElement] <> $LOW_SHAPE_POINT_TYPE_NORMAL) Then ; If Previous Point is not a normal point.
@@ -1946,7 +1930,6 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 				EndIf
 
 			Else ; Previous Point is a normal point.
-
 				; If the X and Y Coordinate of the previous point, and the control point after it do not match, the previous point is a "Curve".
 				If ($atPoints[$iPreviousArrayElement].X() <> $atPoints[$iPreviousArrayElement + 1].X()) And ($atPoints[$iPreviousArrayElement].Y() <> $atPoints[$iPreviousArrayElement + 1].Y()) Then
 					$tControlPoint1 = $atPoints[$iPreviousArrayElement + 1] ; Copy the first control point after the previous point.
@@ -2015,7 +1998,6 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 			$aiFlags = $avArray2
 
 		ElseIf ($aiFlags[$iNextArrayElement] <> $LOW_SHAPE_POINT_TYPE_NORMAL) Then ; If the next point is not a Normal Point
-
 			If ($aiFlags[$iNextArrayElement - 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then
 				$tControlPoint4 = $atPoints[$iNextArrayElement - 1]
 
@@ -2078,7 +2060,6 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 			$aiFlags = $avArray2
 
 		Else ; There are no control points before or after the point to be deleted.
-
 			ReDim $avArray[UBound($atPoints) - 1]
 			ReDim $avArray2[UBound($aiFlags) - 1]
 

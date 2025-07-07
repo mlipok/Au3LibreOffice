@@ -1882,7 +1882,6 @@ Func __LOWriter_FieldsGetList(ByRef $oDoc, $bSupportedServices, $bFieldType, $bF
 					ExitLoop
 
 				Else
-
 					$avTextFields[$iCount][0] = $oTextField
 
 					If ($bSupportedServices = True) Then $avTextFields[$iCount][1] = $avFieldTypes[$i][1]
@@ -2809,7 +2808,6 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 
 	Switch $sGradientName
 		Case $LOW_GRAD_NAME_PASTEL_BOUQUET
-
 			With $tGradient
 				.Style = $LOW_GRAD_TYPE_LINEAR
 				.StepCount = 0
@@ -2834,7 +2832,6 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 			EndWith
 
 		Case $LOW_GRAD_NAME_PASTEL_DREAM
-
 			With $tGradient
 				.Style = $LOW_GRAD_TYPE_RECT
 				.StepCount = 0
@@ -2859,7 +2856,6 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 			EndWith
 
 		Case $LOW_GRAD_NAME_BLUE_TOUCH
-
 			With $tGradient
 				.Style = $LOW_GRAD_TYPE_LINEAR
 				.StepCount = 0
@@ -2884,7 +2880,6 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 			EndWith
 
 		Case $LOW_GRAD_NAME_BLANK_W_GRAY
-
 			With $tGradient
 				.Style = $LOW_GRAD_TYPE_LINEAR
 				.StepCount = 0
@@ -2909,7 +2904,6 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 			EndWith
 
 		Case $LOW_GRAD_NAME_SPOTTED_GRAY
-
 			With $tGradient
 				.Style = $LOW_GRAD_TYPE_RADIAL
 				.StepCount = 0
@@ -2934,7 +2928,6 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 			EndWith
 
 		Case $LOW_GRAD_NAME_LONDON_MIST
-
 			With $tGradient
 				.Style = $LOW_GRAD_TYPE_LINEAR
 				.StepCount = 0
@@ -2959,7 +2952,6 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 			EndWith
 
 		Case $LOW_GRAD_NAME_TEAL_TO_BLUE
-
 			With $tGradient
 				.Style = $LOW_GRAD_TYPE_LINEAR
 				.StepCount = 0
@@ -2984,7 +2976,6 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 			EndWith
 
 		Case $LOW_GRAD_NAME_MIDNIGHT
-
 			With $tGradient
 				.Style = $LOW_GRAD_TYPE_LINEAR
 				.StepCount = 0
@@ -3009,7 +3000,6 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 			EndWith
 
 		Case $LOW_GRAD_NAME_DEEP_OCEAN
-
 			With $tGradient
 				.Style = $LOW_GRAD_TYPE_RADIAL
 				.StepCount = 0
@@ -3034,7 +3024,6 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 			EndWith
 
 		Case $LOW_GRAD_NAME_SUBMARINE
-
 			With $tGradient
 				.Style = $LOW_GRAD_TYPE_LINEAR
 				.StepCount = 0
@@ -3059,7 +3048,6 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 			EndWith
 
 		Case $LOW_GRAD_NAME_GREEN_GRASS
-
 			With $tGradient
 				.Style = $LOW_GRAD_TYPE_LINEAR
 				.StepCount = 0
@@ -3084,7 +3072,6 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 			EndWith
 
 		Case $LOW_GRAD_NAME_NEON_LIGHT
-
 			With $tGradient
 				.Style = $LOW_GRAD_TYPE_ELLIPTICAL
 				.StepCount = 0
@@ -3109,7 +3096,6 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 			EndWith
 
 		Case $LOW_GRAD_NAME_SUNSHINE
-
 			With $tGradient
 				.Style = $LOW_GRAD_TYPE_RADIAL
 				.StepCount = 0
@@ -3134,7 +3120,6 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 			EndWith
 
 		Case $LOW_GRAD_NAME_PRESENT
-
 			With $tGradient
 				.Style = $LOW_GRAD_TYPE_SQUARE
 				.StepCount = 0
@@ -3159,7 +3144,6 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 			EndWith
 
 		Case $LOW_GRAD_NAME_MAHOGANY
-
 			With $tGradient
 				.Style = $LOW_GRAD_TYPE_SQUARE
 				.StepCount = 0
@@ -3184,7 +3168,6 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 			EndWith
 
 		Case $LOW_GRAD_NAME_RAINBOW
-
 			With $tGradient
 				.Style = $LOW_GRAD_TYPE_RADIAL
 				.StepCount = 0
@@ -3278,7 +3261,6 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 			EndWith
 
 		Case $LOW_GRAD_NAME_SUNRISE
-
 			With $tGradient
 				.Style = $LOW_GRAD_TYPE_LINEAR
 				.StepCount = 0
@@ -3333,7 +3315,6 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 			EndWith
 
 		Case $LOW_GRAD_NAME_SUNDOWN
-
 			With $tGradient
 				.Style = $LOW_GRAD_TYPE_LINEAR
 				.StepCount = 0
@@ -3874,7 +3855,6 @@ Func __LOWriter_IntIsBetween($iTest, $iMin, $iMax = 0, $vNot = "", $vIncl = "")
 			Return SetError($__LO_STATUS_SUCCESS, 0, (($iTest < $iMin) Or ($iTest > $iMax)) ? (False) : (True))
 
 		Case 4, 5
-
 			If IsString($vNot) Then
 				If StringInStr(":" & $vNot & ":", ":" & $iTest & ":") Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
 
@@ -3893,7 +3873,6 @@ Func __LOWriter_IntIsBetween($iTest, $iMin, $iMax = 0, $vNot = "", $vIncl = "")
 				If StringInStr(":" & $vIncl & ":", ":" & $iTest & ":") Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 
 			ElseIf IsInt($vIncl) Then
-
 				If ($iTest = $vIncl) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 			EndIf
 
@@ -4091,6 +4070,7 @@ Func __LOWriter_NumStyleCreateScript(ByRef $oDoc)
 
 	$oStandardLibrary = $oDoc.BasicLibraries.Standard()
 	If Not IsObj($oStandardLibrary) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	If $oStandardLibrary.hasByName("AU3LibreOffice_UDF_Macros") Then $oStandardLibrary.removeByName("AU3LibreOffice_UDF_Macros")
 
 	$oStandardLibrary.insertByName("AU3LibreOffice_UDF_Macros", $sNumStyleScript)
@@ -4137,6 +4117,7 @@ Func __LOWriter_NumStyleDeleteScript(ByRef $oDoc)
 
 	$oStandardLibrary = $oDoc.BasicLibraries.Standard()
 	If Not IsObj($oStandardLibrary) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	If $oStandardLibrary.hasByName("AU3LibreOffice_UDF_Macros") Then $oStandardLibrary.removeByName("AU3LibreOffice_UDF_Macros")
 
 	If $oStandardLibrary.hasByName("AU3LibreOffice_UDF_Macros") Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
@@ -7984,7 +7965,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 					EndIf
 
 				Else ; Previous point is a normal point, need to create new control points.
-
 					$tControlPoint1 = __LOWriter_CreatePoint($atPoints[$iPreviousArrayElement].X(), $atPoints[$iPreviousArrayElement].Y())
 					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
@@ -8011,7 +7991,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 					EndIf
 
 				Else ; Next point is a normal point, need to create new control points.
-
 					$tControlPoint3 = __LOWriter_CreatePoint(($atPoints[$iArrayElement].X() + $iSymmetricalPointXValue), ($atPoints[$iArrayElement].Y() + $iSymmetricalPointYValue))
 					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
@@ -8079,7 +8058,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 			EndIf
 
 		Else ; New Point is a Normal Point.
-
 			If ($aiFlags[$iArrayElement] <> $LOW_SHAPE_POINT_TYPE_NORMAL) Then ; Point being modified is not a normal type of point.
 
 				If ($aiFlags[$iPreviousArrayElement] = $LOW_SHAPE_POINT_TYPE_NORMAL) Then ; If previous point is a normal point, see if I need to delete control points or not.
@@ -8144,7 +8122,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 							$avArray2[$i + $iForOffset] = $LOW_SHAPE_POINT_TYPE_CONTROL
 
 						Else
-
 							If ($aiFlags[$iPreviousArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then $iOffset += 1 ; If there is a control point present, I need to skip it.
 						EndIf
 
@@ -8198,7 +8175,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 				$aiFlags = $avArray2
 
 			Else ; Point being modified is a normal point already.
-
 				; Do nothing?
 			EndIf
 		EndIf
@@ -8233,7 +8209,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 				EndIf
 
 			Else ; Need to create new control points if IsCurve = True.
-
 				If ($bIsCurve = True) Then
 					$tControlPoint3 = __LOWriter_CreatePoint(Int($atPoints[$iArrayElement].X() + (($atPoints[$iNextArrayElement].X() - $atPoints[$iArrayElement].X()) * .5)), Int($atPoints[$iArrayElement].Y() + (($atPoints[$iNextArrayElement].Y() - $atPoints[$iArrayElement].Y()) * .5)))
 					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
@@ -8277,7 +8252,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 						$avArray2[$i + $iForOffset] = $LOW_SHAPE_POINT_TYPE_CONTROL
 
 					Else
-
 						If ($aiFlags[$iArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then $iOffset += 1 ; If there is a control point present, I need to skip it.
 					EndIf
 
@@ -8289,7 +8263,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 						$avArray2[$i + $iForOffset] = $LOW_SHAPE_POINT_TYPE_CONTROL
 
 					Else
-
 						If (($iArrayElement + 2 < $iNextArrayElement) And ($aiFlags[$iArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL)) Then $iOffset += 1 ; If there is a control point present, I need to skip it.
 					EndIf
 				EndIf
@@ -8301,7 +8274,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 			$aiFlags = $avArray2
 
 		Else ; Point is a Curve, see if bIsCurve = False.
-
 			If ($bIsCurve = False) Then ; If bIsCurve = True, I can just skip it, as there is nothing to do when the point is a curve already.
 
 				If ($aiFlags[$iNextArrayElement] <> $LOW_SHAPE_POINT_TYPE_NORMAL) Then ; Next point is a curve, need to keep the control points.
@@ -8357,7 +8329,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 							$avArray2[$i + $iForOffset] = $LOW_SHAPE_POINT_TYPE_CONTROL
 
 						Else
-
 							If ($aiFlags[$iPreviousArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then $iOffset += 1 ; If there is a control point present, I need to skip it.
 						EndIf
 
@@ -8384,7 +8355,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 							$avArray2[$i + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL
 
 						Else
-
 							If ($aiFlags[$iPreviousArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then $iOffset += 1 ; If there is a control point present, I need to skip it.
 						EndIf
 
@@ -9390,7 +9360,6 @@ Func __LOWriter_ViewCursorMove(ByRef $oCursor, $iMove, $iCount, $bSelect = False
 			Return SetError($__LO_STATUS_SUCCESS, $oCursor.getPage(), $bMoved)
 
 		Case $LOW_VIEWCUR_JUMP_TO_NEXT_PAGE, $LOW_VIEWCUR_JUMP_TO_PREV_PAGE, $LOW_VIEWCUR_SCREEN_DOWN, $LOW_VIEWCUR_SCREEN_UP
-
 			Do
 				$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "()")
 				$iCounted += ($bMoved) ? (1) : (0)

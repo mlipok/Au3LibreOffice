@@ -757,7 +757,6 @@ Func _LOWriter_DirFrmtClear(ByRef $oDoc, ByRef $oSelection)
 
 	Switch $iCursorType
 		Case $LOW_CURTYPE_TEXT_CURSOR, $LOW_CURTYPE_PARAGRAPH, $LOW_CURTYPE_TEXT_PORTION
-
 			; Retrieve the ViewCursor.
 			$oViewCursor = $oDoc.CurrentController.getViewCursor()
 			If Not IsObj($oViewCursor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
@@ -778,7 +777,6 @@ Func _LOWriter_DirFrmtClear(ByRef $oDoc, ByRef $oSelection)
 			$oViewCursor.gotoRange($oViewCursorBackup, False)
 
 		Case $LOW_CURTYPE_VIEW_CURSOR
-
 			$oDispatcher.executeDispatch($oDoc.CurrentController(), ".uno:ResetAttributes", "", 0, $aArray)
 	EndSwitch
 

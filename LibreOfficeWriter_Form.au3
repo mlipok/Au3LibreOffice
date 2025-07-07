@@ -502,7 +502,6 @@ Func _LOWriter_FormConCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLabel =
 		$oCheckBox.Control.setPropertyToDefault("VerticalAlign")
 
 	ElseIf ($iVertAlign <> Null) Then
-
 		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 
 		$oCheckBox.Control.VerticalAlign = $iVertAlign
@@ -880,7 +879,6 @@ Func _LOWriter_FormConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLabelFi
 		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
-
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oComboBox.Control.Name = $sName
@@ -1417,7 +1415,6 @@ Func _LOWriter_FormConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = Null,
 		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
-
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oCurrencyField.Control.Name = $sName
@@ -2043,7 +2040,6 @@ Func _LOWriter_FormConDateFieldGeneral(ByRef $oDateField, $sName = Null, $oLabel
 		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
-
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oDateField.Control.Name = $sName
@@ -2581,7 +2577,6 @@ Func _LOWriter_FormConFileSelFieldGeneral(ByRef $oFileSel, $sName = Null, $iTxtD
 		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
-
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oFileSel.Control.Name = $sName
@@ -3806,7 +3801,6 @@ Func _LOWriter_FormConImageButtonGeneral(ByRef $oImageButton, $sName = Null, $iT
 		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
-
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oImageButton.Control.Name = $sName
@@ -4199,7 +4193,6 @@ Func _LOWriter_FormConImageControlGeneral(ByRef $oImageControl, $sName = Null, $
 		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
-
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oImageControl.Control.Name = $sName
@@ -4527,7 +4520,6 @@ Func _LOWriter_FormConInsert(ByRef $oParentForm, $iControl, $iX, $iY, $iWidth, $
 		Return SetError($__LO_STATUS_SUCCESS, 1, $oGroupShape)
 
 	Else ; Non-Group Box Control
-
 		$oDoc.DrawPage.Add($oShape)
 		$oShape.Control.SetParent($oParentForm)
 		$oShape.AnchorType = $LOW_ANCHOR_AT_PARAGRAPH
@@ -4644,7 +4636,6 @@ Func _LOWriter_FormConLabelGeneral(ByRef $oLabel, $sName = Null, $sLabel = Null,
 		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
-
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oLabel.Control.Name = $sName
@@ -5034,7 +5025,6 @@ Func _LOWriter_FormConListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabelFiel
 		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
-
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oListBox.Control.Name = $sName
@@ -5503,7 +5493,6 @@ Func _LOWriter_FormConNavBarGeneral(ByRef $oNavBar, $sName = Null, $iTxtDir = Nu
 		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
-
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oNavBar.Control.Name = $sName
@@ -5902,7 +5891,6 @@ Func _LOWriter_FormConNumericFieldGeneral(ByRef $oNumericField, $sName = Null, $
 		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
-
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oNumericField.Control.Name = $sName
@@ -6449,7 +6437,6 @@ Func _LOWriter_FormConOptionButtonGeneral(ByRef $oOptionButton, $sName = Null, $
 		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
-
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oOptionButton.Control.Name = $sName
@@ -6948,7 +6935,6 @@ Func _LOWriter_FormConPatternFieldGeneral(ByRef $oPatternField, $sName = Null, $
 		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
-
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oPatternField.Control.Name = $sName
@@ -7548,7 +7534,6 @@ Func _LOWriter_FormConPushButtonGeneral(ByRef $oPushButton, $sName = Null, $sLab
 		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
-
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oPushButton.Control.Name = $sName
@@ -8005,7 +7990,6 @@ Func _LOWriter_FormConsGetList(ByRef $oObj, $iType = $LOW_FORM_CON_TYPE_ALL)
 		Next
 
 	ElseIf $oObj.supportsService("com.sun.star.text.TextDocument") Then ; Get all controls in document.
-
 		$oShapes = $oObj.DrawPage()
 		If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -8029,7 +8013,6 @@ Func _LOWriter_FormConsGetList(ByRef $oObj, $iType = $LOW_FORM_CON_TYPE_ALL)
 		Next
 
 	ElseIf $oObj.supportsService("com.sun.star.drawing.GroupShape") Then
-
 		ReDim $aoControls[$oObj.Count()][2]
 
 		For $i = 0 To $oObj.Count() - 1
@@ -8833,7 +8816,6 @@ Func _LOWriter_FormConTableConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $
 		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
-
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oComboBox.Name = $sName
@@ -9192,7 +9174,6 @@ Func _LOWriter_FormConTableConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName
 		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
-
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oCurrencyField.Name = $sName
@@ -9654,7 +9635,6 @@ Func _LOWriter_FormConTableConDateFieldGeneral(ByRef $oDateField, $sName = Null,
 		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
-
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oDateField.Name = $sName
@@ -10399,7 +10379,6 @@ Func _LOWriter_FormConTableConGeneral(ByRef $oTableCon, $sName = Null, $iTxtDir 
 		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
-
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oTableCon.Control.Name = $sName
@@ -10769,7 +10748,6 @@ Func _LOWriter_FormConTableConListBoxGeneral(ByRef $oListBox, $sName = Null, $sL
 		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
-
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oListBox.Name = $sName
@@ -11113,7 +11091,6 @@ Func _LOWriter_FormConTableConNumericFieldGeneral(ByRef $oNumericField, $sName =
 		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
-
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oNumericField.Name = $sName
@@ -11525,7 +11502,6 @@ Func _LOWriter_FormConTableConPatternFieldGeneral(ByRef $oPatternField, $sName =
 		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
-
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oPatternField.Name = $sName
@@ -11882,7 +11858,6 @@ Func _LOWriter_FormConTableConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $sL
 		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
-
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oTextBox.Name = $sName
@@ -12262,7 +12237,6 @@ Func _LOWriter_FormConTableConTimeFieldGeneral(ByRef $oTimeField, $sName = Null,
 		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
-
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oTimeField.Name = $sName
@@ -12751,7 +12725,6 @@ Func _LOWriter_FormConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabelFiel
 		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
-
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oTextBox.Control.Name = $sName
@@ -13296,7 +13269,6 @@ Func _LOWriter_FormConTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oLabel
 		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
-
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oTimeField.Control.Name = $sName
@@ -13793,7 +13765,6 @@ Func _LOWriter_FormGetObjByIndex(ByRef $oObj, $iForm)
 		Next
 
 	ElseIf $oObj.supportsService("com.sun.star.text.TextDocument") Then
-
 		$oForm = $oObj.DrawPage.Forms.getByIndex($iForm)
 
 	Else
@@ -14256,7 +14227,6 @@ Func _LOWriter_FormsGetCount(ByRef $oObj)
 		Next
 
 	ElseIf $oObj.supportsService("com.sun.star.text.TextDocument") Then
-
 		$iCount = $oObj.DrawPage.Forms.Count()
 		If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -14308,7 +14278,6 @@ Func _LOWriter_FormsGetList(ByRef $oObj)
 		Next
 
 	ElseIf $oObj.supportsService("com.sun.star.text.TextDocument") Then
-
 		ReDim $aoForms[$oObj.DrawPage.Forms.Count()]
 
 		For $i = 0 To $oObj.DrawPage.Forms.Count() - 1

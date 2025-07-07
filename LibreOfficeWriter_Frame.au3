@@ -2837,6 +2837,7 @@ Func _LOWriter_FrameStyleExists(ByRef $oDoc, $sFrameStyle)
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	If $oDoc.StyleFamilies.getByName("FrameStyles").hasByName($sFrameStyle) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, False)

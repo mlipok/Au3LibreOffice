@@ -249,6 +249,7 @@ Func _LOWriter_NumStyleCustomize(ByRef $oDoc, $oNumStyle, $iLevel, $iNumFormat =
 		If ($iSubLevels <> Null) Then
 			If Not __LOWriter_IntIsBetween($iSubLevels, 1, 10) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 			If ($iLevel = -1) And ($iSubLevels > 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0) ; -1 for $iLevel = 0 = Modify all Numbering Style levels.
+
 			If ($iLevel <> -1) And ($iLevel < $iSubLevels) Then SetError($__LO_STATUS_INPUT_ERROR, 11, 0) ; Sub-level higher than requested level
 			$atNumLevel[$mNumLevel["ParentNumbering"]].Value = $iSubLevels
 
@@ -398,6 +399,7 @@ Func _LOWriter_NumStyleExists(ByRef $oDoc, $sNumStyle)
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sNumStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	If $oDoc.StyleFamilies.getByName("NumberingStyles").hasByName($sNumStyle) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, False)
