@@ -72,6 +72,7 @@ Func __LOBase_AddTo1DArray(ByRef $aArray, $vData, $bCountInFirst = False)
 	EndIf
 
 	If $bCountInFirst And (($aArray[0] <> "") And Not IsInt($aArray[0])) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 	ReDim $aArray[UBound($aArray) + 1]
 	$aArray[UBound($aArray) - 1] = $vData
 	If $bCountInFirst Then $aArray[0] += 1
@@ -339,8 +340,10 @@ Func __LOBase_CreateStruct($sStructName)
 	Local $oServiceManager, $tStruct
 
 	If Not IsString($sStructName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	$tStruct = $oServiceManager.Bridge_GetStruct($sStructName)
 	If Not IsObj($tStruct) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
@@ -828,8 +831,10 @@ Func __LOBase_SetPropertyValue($sName, $vValue)
 	Local $tProperties
 
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 	$tProperties = __LOBase_CreateStruct("com.sun.star.beans.PropertyValue")
 	If @error Or Not IsObj($tProperties) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	$tProperties.Name = $sName
 	$tProperties.Value = $vValue
 
@@ -1017,6 +1022,7 @@ EndFunc   ;==>__LOBase_VarsAreNull
 Func __LOBase_VersionCheck($fRequiredVersion)
 	Local Static $sCurrentVersion = _LOBase_VersionGet(True, False)
 	If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, False)
+
 	Local Static $fCurrentVersion = Number($sCurrentVersion)
 
 	If Not IsNumber($fRequiredVersion) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, False)

@@ -85,6 +85,7 @@
 ; ===============================================================================================================================
 Func _LOBase_ComError_UserFunction($vUserFunction = Default, $vParam1 = Null, $vParam2 = Null, $vParam3 = Null, $vParam4 = Null, $vParam5 = Null)
 	#forceref $vParam1, $vParam2, $vParam3, $vParam4, $vParam5
+
 	; If user does not set a function, UDF must use internal function to avoid AutoItError.
 	Local Static $vUserFunction_Static = Default
 	Local $avUserFuncWParams[@NumParams]
@@ -156,6 +157,7 @@ Func _LOBase_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $iCM
 	Local $aiReturn[0]
 
 	If (@NumParams = 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 	Select
 		Case IsInt($iHex) ; Long TO Hex
 			$nRed = BitAND(BitShift($iHex, 16), 0xff)
@@ -314,9 +316,11 @@ Func _LOBase_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $vV
 	Local $nMaxRGB, $nMinRGB, $nChroma, $nHuePre, $nCyan, $nMagenta, $nYellow, $nBlack
 
 	If (@NumParams = 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 	Switch @NumParams
 		Case 1 ; Hex
 			If Not IsString($vVal1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; not a string
+
 			$vVal1 = StringStripWS($vVal1, $STR_STRIPALL)
 			$dHex = $vVal1
 
@@ -357,8 +361,10 @@ Func _LOBase_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $vV
 
 				$iHue = Number($vVal1)
 				If (StringLen($vVal1)) <> (StringLen($iHue)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; String contained more than just digits
+
 				$iSaturation = Number($vVal2)
 				If (StringLen($vVal2)) <> (StringLen($iSaturation)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; String contained more than just digits
+
 				$iBrightness = Number($vVal3)
 				If (StringLen($vVal3)) <> (StringLen($iBrightness)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0) ; String contained more than just digits
 
@@ -478,6 +484,7 @@ Func _LOBase_ConvertFromMicrometer($nInchOut = Null, $nCentimeterOut = Null, $nM
 
 	If ($nInchOut <> Null) Then
 		If Not IsNumber($nInchOut) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 		$nReturnValue = __LOBase_UnitConvert($nInchOut, $__LOCONST_CONVERT_UM_INCH)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -486,6 +493,7 @@ Func _LOBase_ConvertFromMicrometer($nInchOut = Null, $nCentimeterOut = Null, $nM
 
 	If ($nCentimeterOut <> Null) Then
 		If Not IsNumber($nCentimeterOut) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$nReturnValue = __LOBase_UnitConvert($nCentimeterOut, $__LOCONST_CONVERT_UM_CM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -494,6 +502,7 @@ Func _LOBase_ConvertFromMicrometer($nInchOut = Null, $nCentimeterOut = Null, $nM
 
 	If ($nMillimeterOut <> Null) Then
 		If Not IsNumber($nMillimeterOut) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$nReturnValue = __LOBase_UnitConvert($nMillimeterOut, $__LOCONST_CONVERT_UM_MM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
@@ -502,6 +511,7 @@ Func _LOBase_ConvertFromMicrometer($nInchOut = Null, $nCentimeterOut = Null, $nM
 
 	If ($nPointsOut <> Null) Then
 		If Not IsNumber($nPointsOut) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$nReturnValue = __LOBase_UnitConvert($nPointsOut, $__LOCONST_CONVERT_UM_PT)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
@@ -550,6 +560,7 @@ Func _LOBase_ConvertToMicrometer($nInchIn = Null, $nCentimeterIn = Null, $nMilli
 
 	If ($nInchIn <> Null) Then
 		If Not IsNumber($nInchIn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 		$nReturnValue = __LOBase_UnitConvert($nInchIn, $__LOCONST_CONVERT_INCH_UM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -558,6 +569,7 @@ Func _LOBase_ConvertToMicrometer($nInchIn = Null, $nCentimeterIn = Null, $nMilli
 
 	If ($nCentimeterIn <> Null) Then
 		If Not IsNumber($nCentimeterIn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$nReturnValue = __LOBase_UnitConvert($nCentimeterIn, $__LOCONST_CONVERT_CM_UM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -566,6 +578,7 @@ Func _LOBase_ConvertToMicrometer($nInchIn = Null, $nCentimeterIn = Null, $nMilli
 
 	If ($nMillimeterIn <> Null) Then
 		If Not IsNumber($nMillimeterIn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$nReturnValue = __LOBase_UnitConvert($nMillimeterIn, $__LOCONST_CONVERT_MM_UM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
@@ -574,6 +587,7 @@ Func _LOBase_ConvertToMicrometer($nInchIn = Null, $nCentimeterIn = Null, $nMilli
 
 	If ($nPointsIn <> Null) Then
 		If Not IsNumber($nPointsIn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$nReturnValue = __LOBase_UnitConvert($nPointsIn, $__LOCONST_CONVERT_PT_UM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
@@ -632,6 +646,7 @@ Func _LOBase_DateStructCreate($iYear = Null, $iMonth = Null, $iDay = Null, $iHou
 	If ($iYear <> Null) Then
 		If Not IsInt($iYear) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 		If Not (StringLen($iYear) = 4) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$tDateStruct.Year = $iYear
 
 	Else
@@ -640,6 +655,7 @@ Func _LOBase_DateStructCreate($iYear = Null, $iMonth = Null, $iDay = Null, $iHou
 
 	If ($iMonth <> Null) Then
 		If Not __LOBase_IntIsBetween($iMonth, 0, 12) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$tDateStruct.Month = $iMonth
 
 	Else
@@ -648,6 +664,7 @@ Func _LOBase_DateStructCreate($iYear = Null, $iMonth = Null, $iDay = Null, $iHou
 
 	If ($iDay <> Null) Then
 		If Not __LOBase_IntIsBetween($iDay, 0, 31) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$tDateStruct.Day = $iDay
 
 	Else
@@ -656,6 +673,7 @@ Func _LOBase_DateStructCreate($iYear = Null, $iMonth = Null, $iDay = Null, $iHou
 
 	If ($iHours <> Null) Then
 		If Not __LOBase_IntIsBetween($iHours, 0, 23) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$tDateStruct.Hours = $iHours
 
 	Else
@@ -664,6 +682,7 @@ Func _LOBase_DateStructCreate($iYear = Null, $iMonth = Null, $iDay = Null, $iHou
 
 	If ($iMinutes <> Null) Then
 		If Not __LOBase_IntIsBetween($iMinutes, 0, 59) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$tDateStruct.Minutes = $iMinutes
 
 	Else
@@ -672,6 +691,7 @@ Func _LOBase_DateStructCreate($iYear = Null, $iMonth = Null, $iDay = Null, $iHou
 
 	If ($iSeconds <> Null) Then
 		If Not __LOBase_IntIsBetween($iSeconds, 0, 59) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$tDateStruct.Seconds = $iSeconds
 
 	Else
@@ -680,6 +700,7 @@ Func _LOBase_DateStructCreate($iYear = Null, $iMonth = Null, $iDay = Null, $iHou
 
 	If ($iNanoSeconds <> Null) Then
 		If Not __LOBase_IntIsBetween($iNanoSeconds, 0, 999999999) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$tDateStruct.NanoSeconds = $iNanoSeconds
 
 	Else
@@ -689,6 +710,7 @@ Func _LOBase_DateStructCreate($iYear = Null, $iMonth = Null, $iDay = Null, $iHou
 	If ($bIsUTC <> Null) Then
 		If Not IsBool($bIsUTC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		If Not __LOBase_VersionCheck(4.1) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+
 		$tDateStruct.IsUTC = $bIsUTC
 
 	Else
@@ -772,42 +794,49 @@ Func _LOBase_DateStructModify(ByRef $tDateStruct, $iYear = Null, $iMonth = Null,
 	If ($iYear <> Null) Then
 		If Not IsInt($iYear) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		If Not (StringLen($iYear) = 4) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$tDateStruct.Year = $iYear
 		$iError = ($tDateStruct.Year() = $iYear) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iMonth <> Null) Then
 		If Not __LOBase_IntIsBetween($iMonth, 0, 12) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$tDateStruct.Month = $iMonth
 		$iError = ($tDateStruct.Month() = $iMonth) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iDay <> Null) Then
 		If Not __LOBase_IntIsBetween($iDay, 0, 31) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$tDateStruct.Day = $iDay
 		$iError = ($tDateStruct.Day() = $iDay) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iHours <> Null) Then
 		If Not __LOBase_IntIsBetween($iHours, 0, 23) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$tDateStruct.Hours = $iHours
 		$iError = ($tDateStruct.Hours() = $iHours) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iMinutes <> Null) Then
 		If Not __LOBase_IntIsBetween($iMinutes, 0, 59) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$tDateStruct.Minutes = $iMinutes
 		$iError = ($tDateStruct.Minutes() = $iMinutes) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($iSeconds <> Null) Then
 		If Not __LOBase_IntIsBetween($iSeconds, 0, 59) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$tDateStruct.Seconds = $iSeconds
 		$iError = ($tDateStruct.Seconds() = $iSeconds) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($iNanoSeconds <> Null) Then
 		If Not __LOBase_IntIsBetween($iNanoSeconds, 0, 999999999) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 		$tDateStruct.NanoSeconds = $iNanoSeconds
 		$iError = ($tDateStruct.NanoSeconds() = $iNanoSeconds) ? ($iError) : (BitOR($iError, 64))
 	EndIf
@@ -815,6 +844,7 @@ Func _LOBase_DateStructModify(ByRef $tDateStruct, $iYear = Null, $iMonth = Null,
 	If ($bIsUTC <> Null) Then
 		If Not IsBool($bIsUTC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		If Not __LOBase_VersionCheck(4.1) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+
 		$tDateStruct.IsUTC = $bIsUTC
 		$iError = ($tDateStruct.IsUTC() = $bIsUTC) ? ($iError) : (BitOR($iError, 128))
 	EndIf
@@ -975,71 +1005,85 @@ Func _LOBase_FontDescEdit(ByRef $mFontDesc, $sFontName = Null, $iWeight = Null, 
 	If ($sFontName <> Null) Then
 		If Not IsString($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		If Not _LOBase_FontExists($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$mFontDesc.CharFontName = $sFontName
 	EndIf
 
 	If ($iWeight <> Null) Then
 		If Not __LOBase_IntIsBetween($iWeight, $LOB_WEIGHT_DONT_KNOW, $LOB_WEIGHT_BLACK) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$mFontDesc.CharWeight = $iWeight
 	EndIf
 
 	If ($iSlant <> Null) Then
 		If Not __LOBase_IntIsBetween($iSlant, $LOB_POSTURE_NONE, $LOB_POSTURE_REV_ITALIC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$mFontDesc.CharPosture = $iSlant
 	EndIf
 
 	If ($nSize <> Null) Then
 		If Not IsNumber($nSize) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$mFontDesc.CharHeight = $nSize
 	EndIf
 
 	If ($iColor <> Null) Then
 		If Not __LOBase_IntIsBetween($iColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$mFontDesc.CharColor = $iColor
 	EndIf
 
 	If ($iUnderlineStyle <> Null) Then
 		If Not __LOBase_IntIsBetween($iUnderlineStyle, $LOB_UNDERLINE_NONE, $LOB_UNDERLINE_BOLD_WAVE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$mFontDesc.CharUnderline = $iUnderlineStyle
 	EndIf
 
 	If ($iUnderlineColor <> Null) Then
 		If Not __LOBase_IntIsBetween($iUnderlineColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 		$mFontDesc.CharUnderlineColor = $iUnderlineColor
 	EndIf
 
 	If ($iStrikelineStyle <> Null) Then
 		If Not __LOBase_IntIsBetween($iStrikelineStyle, $LOB_STRIKEOUT_NONE, $LOB_STRIKEOUT_X) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
 		$mFontDesc.CharStrikeout = $iStrikelineStyle
 	EndIf
 
 	If ($bIndividualWords <> Null) Then
 		If Not IsBool($bIndividualWords) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+
 		$mFontDesc.CharWordMode = $bIndividualWords
 	EndIf
 
 	If ($iRelief <> Null) Then
 		If Not __LOBase_IntIsBetween($iRelief, $LOB_RELIEF_NONE, $LOB_RELIEF_ENGRAVED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+
 		$mFontDesc.CharRelief = $iRelief
 	EndIf
 
 	If ($iCase <> Null) Then
 		If Not __LOBase_IntIsBetween($iCase, $LOB_CASEMAP_NONE, $LOB_CASEMAP_SM_CAPS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+
 		$mFontDesc.CharCaseMap = $iCase
 	EndIf
 
 	If ($bHidden <> Null) Then
 		If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+
 		$mFontDesc.CharHidden = $bHidden
 	EndIf
 
 	If ($bOutline <> Null) Then
 		If Not IsBool($bOutline) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
+
 		$mFontDesc.CharContoured = $bOutline
 	EndIf
 
 	If ($bShadow <> Null) Then
 		If Not IsBool($bShadow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
+
 		$mFontDesc.CharShadowed = $bShadow
 	EndIf
 
@@ -1087,6 +1131,7 @@ Func _LOBase_FontExists($sFontName, $oDoc = Null)
 	If Not IsObj($oDoc) Then
 		$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
 		If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 		$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
 		If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
@@ -1165,6 +1210,7 @@ Func _LOBase_FontsGetNames($oDoc = Null)
 	If Not IsObj($oDoc) Then
 		$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
 		If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 		$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
 		If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 

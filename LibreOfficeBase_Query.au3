@@ -66,7 +66,6 @@ Func _LOBase_QueriesGetCount(ByRef $oConnection)
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$iCount = $oConnection.Queries.Count()
@@ -105,7 +104,6 @@ Func _LOBase_QueriesGetNames(ByRef $oConnection)
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$asNames = $oConnection.Queries.getElementNames()
@@ -164,15 +162,12 @@ Func _LOBase_QueryAddByName(ByRef $oConnection, $sQueryName, $sSourceName, $sFie
 	If Not IsString($sQueryName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsString($sSourceName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not IsString($sFieldName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oQueries = $oConnection.Queries()
 	If Not IsObj($oQueries) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
 	If $oQueries.hasByName($sQueryName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 	If $oConnection.Tables.hasByName($sQueryName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
-
 	If (Not $oQueries.hasByName($sSourceName) And Not $oConnection.Tables.hasByName($sSourceName)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 	If $oQueries.hasByName($sSourceName) Then
@@ -186,7 +181,6 @@ Func _LOBase_QueryAddByName(ByRef $oConnection, $sQueryName, $sSourceName, $sFie
 
 	$sQuote = $oConnection.MetaData.getIdentifierQuoteString()
 	If Not IsString($sQuote) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
-
 	If ($sFieldName <> "*") And Not $oSource.Columns.hasByName($sFieldName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 	$oQueryDesc = $oQueries.createDataDescriptor()
@@ -253,12 +247,10 @@ Func _LOBase_QueryAddBySQL(ByRef $oConnection, $sQueryName, $sSQL_Command)
 	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsString($sQueryName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsString($sSQL_Command) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oQueries = $oConnection.Queries()
 	If Not IsObj($oQueries) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
 	If $oQueries.hasByName($sQueryName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	If $oConnection.Tables.hasByName($sQueryName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
@@ -316,7 +308,6 @@ Func _LOBase_QueryDelete(ByRef $oConnection, ByRef $oQuery)
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsObj($oQuery) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oQueries = $oConnection.Queries()
@@ -324,7 +315,6 @@ Func _LOBase_QueryDelete(ByRef $oConnection, ByRef $oQuery)
 
 	$sName = $oQuery.Name()
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-
 	If Not $oQueries.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$oQueries.dropByName($sName)
@@ -369,7 +359,6 @@ Func _LOBase_QueryExists(ByRef $oConnection, $sName)
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oQueries = $oConnection.Queries()
@@ -414,7 +403,6 @@ Func _LOBase_QueryFieldGetObjByIndex(ByRef $oQuery, $iField)
 
 	$oColumns = $oQuery.Columns()
 	If Not IsObj($oColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
 	If Not __LOBase_IntIsBetween($iField, 0, $oColumns.Count() - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oColumn = $oColumns.getByIndex($iField)
@@ -458,7 +446,6 @@ Func _LOBase_QueryFieldGetObjByName(ByRef $oQuery, $sName)
 
 	$oColumns = $oQuery.Columns()
 	If Not IsObj($oColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
 	If Not $oColumns.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oColumn = $oColumns.getByName($sName)
@@ -514,12 +501,14 @@ Func _LOBase_QueryFieldModify(ByRef $oField, $sAlias = Null, $bVisible = Null, $
 
 	If ($sAlias <> Null) Then
 		If Not IsString($sAlias) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oField.setName($sAlias)
 		$iError = ($oField.Name() = $sAlias) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bVisible <> Null) Then
 		If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oField.Hidden = $bVisible
 		$iError = ($oField.Hidden() = $bVisible) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -628,12 +617,10 @@ Func _LOBase_QueryGetObjByIndex(ByRef $oConnection, $iQuery)
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oQueries = $oConnection.Queries()
 	If Not IsObj($oQueries) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
 	If Not __LOBase_IntIsBetween($iQuery, 0, $oQueries.Count() - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oQuery = $oQueries.getByIndex($iQuery)
@@ -677,12 +664,10 @@ Func _LOBase_QueryGetObjByName(ByRef $oConnection, $sName)
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oQueries = $oConnection.Queries()
 	If Not IsObj($oQueries) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
 	If Not $oQueries.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$oQuery = $oQueries.getByName($sName)

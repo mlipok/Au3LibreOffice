@@ -140,7 +140,6 @@ Func _LOBase_DatabaseConnectionClose(ByRef $oConnection)
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oConnection.Close()
@@ -301,7 +300,6 @@ Func _LOBase_DatabaseGetObjByDoc(ByRef $oDoc)
 
 	$sURL = $oDoc.URL()
 	If Not IsString($sURL) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
 	If ($sURL = "") Then Return SetError($__LO_STATUS_DOC_ERROR, 1, 0)
 
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
@@ -487,7 +485,6 @@ Func _LOBase_DatabaseMetaDataQuery(ByRef $oConnection, $iQuery, $vParam1 = Null,
 
 	$sCall = __LOBase_DatabaseMetaGetQuery($iQuery)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Switch $iQuery
@@ -736,7 +733,6 @@ Func _LOBase_DatabaseRegisteredAdd(ByRef $oDBase, $sName)
 
 	$oDBaseContext = $oServiceManager.createInstance("com.sun.star.sdb.DatabaseContext")
 	If Not IsObj($oDBaseContext) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
-
 	If $oDBaseContext.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oDBaseContext.registerObject($sName, $oDBase)
@@ -866,7 +862,6 @@ Func _LOBase_DatabaseRegisteredRemoveByName($sName)
 
 	$oDBaseContext = $oServiceManager.createInstance("com.sun.star.sdb.DatabaseContext")
 	If Not IsObj($oDBaseContext) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
-
 	If Not $oDBaseContext.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oDBaseContext.revokeObject($sName)

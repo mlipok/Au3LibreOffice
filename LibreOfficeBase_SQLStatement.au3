@@ -97,7 +97,6 @@ Func _LOBase_SQLResultColumnMetaDataQuery(ByRef $oResult, $iColumn, $iQuery)
 
 	$iCount = $oResult.Columns.Count()
 	If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
 	If Not __LOBase_IntIsBetween($iColumn, 1, $iCount) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not __LOBase_IntIsBetween($iQuery, $LOB_RESULT_METADATA_QUERY_GET_CATALOG_NAME, $LOB_RESULT_METADATA_QUERY_IS_WRITABLE_DEFINITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
@@ -247,6 +246,7 @@ Func _LOBase_SQLResultCursorMove(ByRef $oResult, $iMove, $iNumber = Null)
 
 		Case $LOB_RESULT_CURSOR_MOVE_ABSOLUTE, $LOB_RESULT_CURSOR_MOVE_RELATIVE
 			If Not IsInt($iNumber) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			$bReturn = Execute("$oResult." & $asMoves[$iMove] & "(" & $iNumber & ")")
 	EndSwitch
 
@@ -363,30 +363,37 @@ Func _LOBase_SQLResultRowModify(ByRef $oResult, $iModify, $iColumn, $vValue)
 
 		Case $LOB_RESULT_ROW_MOD_BOOL
 			If Not IsBool($vValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 			$oResult.updateBoolean($iColumn, $vValue)
 
 		Case $LOB_RESULT_ROW_MOD_SHORT
 			If Not IsInt($vValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 			$oResult.updateShort($iColumn, $vValue)
 
 		Case $LOB_RESULT_ROW_MOD_INT
 			If Not IsInt($vValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 			$oResult.updateInt($iColumn, $vValue)
 
 		Case $LOB_RESULT_ROW_MOD_LONG
 			If Not IsInt($vValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 			$oResult.updateLong($iColumn, $vValue)
 
 		Case $LOB_RESULT_ROW_MOD_FLOAT
 			If Not IsNumber($vValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 			$oResult.updateFloat($iColumn, $vValue)
 
 		Case $LOB_RESULT_ROW_MOD_DOUBLE
 			If Not IsNumber($vValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 			$oResult.updateDouble($iColumn, $vValue)
 
 		Case $LOB_RESULT_ROW_MOD_STRING
 			If Not IsString($vValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 			$oResult.updateString($iColumn, $vValue)
 
 		Case $LOB_RESULT_ROW_MOD_DATE
@@ -417,14 +424,17 @@ Func _LOBase_SQLResultRowModify(ByRef $oResult, $iModify, $iColumn, $vValue)
 
 		Case $LOB_RESULT_ROW_MOD_TIMESTAMP
 			If Not IsObj($vValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 			$oResult.updateTimestamp($iColumn, $vValue)
 
 		Case $LOB_RESULT_ROW_MOD_BYTE
 			If Not IsBinary($vValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
 			$oResult.updateByte($iColumn, $vValue)
 
 		Case $LOB_RESULT_ROW_MOD_BYTES
 			If Not IsBinary($vValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
 			$oResult.updateBytes($iColumn, $vValue)
 
 		Case Else
@@ -686,7 +696,6 @@ Func _LOBase_SQLStatementCreate(ByRef $oConnection, $sSQL = Null)
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsString($sSQL) And ($sSQL <> Null) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If IsString($sSQL) Then
@@ -874,38 +883,47 @@ Func _LOBase_SQLStatementPreparedSetData(ByRef $oStatement, $iCommand = Null, $i
 
 		Case $LOB_DATA_SET_TYPE_BOOL
 			If Not IsBool($vValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 			$oStatement.setBoolean($iCommand, $vValue)
 
 		Case $LOB_DATA_SET_TYPE_BYTE
 			If Not IsBinary($vValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 			$oStatement.setByte($iCommand, $vValue)
 
 		Case $LOB_DATA_SET_TYPE_BYTES
 			If Not IsBinary($vValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 			$oStatement.setBytes($iCommand, $vValue)
 
 		Case $LOB_DATA_SET_TYPE_SHORT
 			If Not IsInt($vValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 			$oStatement.setShort($iCommand, $vValue)
 
 		Case $LOB_DATA_SET_TYPE_INT
 			If Not IsInt($vValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 			$oStatement.setInt($iCommand, $vValue)
 
 		Case $LOB_DATA_SET_TYPE_LONG
 			If Not IsInt($vValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 			$oStatement.setLong($iCommand, $vValue)
 
 		Case $LOB_DATA_SET_TYPE_FLOAT
 			If Not IsNumber($vValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 			$oStatement.setFloat($iCommand, $vValue)
 
 		Case $LOB_DATA_SET_TYPE_DOUBLE
 			If Not IsNumber($vValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 			$oStatement.setDouble($iCommand, $vValue)
 
 		Case $LOB_DATA_SET_TYPE_STRING
 			If Not IsString($vValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 			$oStatement.setString($iCommand, $vValue)
 
 		Case $LOB_DATA_SET_TYPE_DATE
@@ -922,6 +940,7 @@ Func _LOBase_SQLStatementPreparedSetData(ByRef $oStatement, $iCommand = Null, $i
 
 		Case $LOB_DATA_SET_TYPE_TIME
 			If Not IsObj($vValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
 			$tDateTime = __LOBase_CreateStruct("com.sun.star.util.Time")
 			If Not IsObj($tDateTime) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
@@ -935,6 +954,7 @@ Func _LOBase_SQLStatementPreparedSetData(ByRef $oStatement, $iCommand = Null, $i
 
 		Case $LOB_DATA_SET_TYPE_TIMESTAMP
 			If Not IsObj($vValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
 			$oStatement.setTimestamp($iCommand, $vValue)
 
 		Case $LOB_DATA_SET_TYPE_ARRAY

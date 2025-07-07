@@ -103,12 +103,10 @@ Func _LOBase_TableAdd(ByRef $oConnection, $sName, $sColName, $iColType = $LOB_DA
 
 	If ($sColTypeName = "") Then $sColTypeName = __LOBase_ColTypeName($iColType)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$oTables = $oConnection.getTables()
 	If Not IsObj($oTables) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-
 	If $oTables.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 	If $oConnection.Queries.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
@@ -232,7 +230,6 @@ Func _LOBase_TableColAdd(ByRef $oTable, $sName, $iType, $sTypeName = "", $sDescr
 
 	$oColumns = $oTable.getColumns()
 	If Not IsObj($oColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
 	If $oColumns.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$oColumn = $oColumns.createDataDescriptor()
@@ -355,6 +352,7 @@ Func _LOBase_TableColDefinition(ByRef $oTable, ByRef $oColumn, $sName = Null, $i
 	If ($sName <> Null) Then
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		If $oTable.Columns.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oColumn.setName($sName)
 		$iError = ($oColumn.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -368,6 +366,7 @@ Func _LOBase_TableColDefinition(ByRef $oTable, ByRef $oColumn, $sName = Null, $i
 
 		If ($iType <> Null) Then
 			If Not __LOBase_IntIsBetween($iType, $LOB_DATA_TYPE_LONGNVARCHAR, $LOB_DATA_TYPE_TIMESTAMP_WITH_TIMEZONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 			$oNewCol.Type = $iType
 			If ($sTypeName = Null) Then $sTypeName = __LOBase_ColTypeName($iType)
 			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
@@ -375,6 +374,7 @@ Func _LOBase_TableColDefinition(ByRef $oTable, ByRef $oColumn, $sName = Null, $i
 
 		If ($sTypeName <> Null) Then
 			If Not IsString($sTypeName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 			$oNewCol.TypeName = $sTypeName
 		EndIf
 
@@ -382,6 +382,7 @@ Func _LOBase_TableColDefinition(ByRef $oTable, ByRef $oColumn, $sName = Null, $i
 
 		$oNewCol = $oTable.Columns.getByName($sName)
 		If Not IsObj($oNewCol) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
 		$oColumn = $oNewCol
 
 		$iError = ($iType = Null) ? ($iError) : (($oColumn.Type() = $iType) ? ($iError) : (BitOR($iError, 2)))
@@ -391,6 +392,7 @@ Func _LOBase_TableColDefinition(ByRef $oTable, ByRef $oColumn, $sName = Null, $i
 	If ($sDescription <> Null) Then
 		If Not IsString($sDescription) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		If Not $oColumn.supportsService("com.sun.star.sdbcx.Column") Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0) ; Normal Column
+
 		$oNewCol.HelpText = $sDescription
 		$iError = ($oColumn.HelpText() = $sDescription) ? ($iError) : (BitOR($iError, 8))
 	EndIf
@@ -477,7 +479,6 @@ Func _LOBase_TableColGetObjByIndex(ByRef $oTable, $iIndex)
 
 	$oColumns = $oTable.getColumns()
 	If Not IsObj($oColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
 	If Not __LOBase_IntIsBetween($iIndex, 0, $oColumns.Count() - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oColumn = $oColumns.getByIndex($iIndex)
@@ -521,7 +522,6 @@ Func _LOBase_TableColGetObjByName(ByRef $oTable, $sName)
 
 	$oColumns = $oTable.getColumns()
 	If Not IsObj($oColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
 	If Not $oColumns.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oColumn = $oColumns.getByName($sName)
@@ -621,30 +621,35 @@ Func _LOBase_TableColProperties(ByRef $oConnection, ByRef $oTable, ByRef $oColum
 
 	If ($iLength <> Null) Then
 		If Not IsInt($iLength) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oNewCol.Precision = $iLength
 		$bAlter = True
 	EndIf
 
 	If ($sDefaultVal <> Null) Then
 		If Not IsString($sDefaultVal) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oColumn.ControlDefault = $sDefaultVal
 		$iError = ($oColumn.ControlDefault() = $sDefaultVal) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bRequired <> Null) Then
 		If Not IsBool($bRequired) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oNewCol.IsNullable = ($bRequired) ? ($__LOB_IS_REQUIRED_YES) : ($__LOB_IS_REQUIRED_NO)
 		$bAlter = True
 	EndIf
 
 	If ($iDecimalPlace <> Null) Then
 		If Not __LOBase_IntIsBetween($iDecimalPlace, 0, 32767) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oNewCol.Scale = $iDecimalPlace
 		$bAlter = True
 	EndIf
 
 	If ($bAutoValue <> Null) Then
 		If Not IsBool($bAutoValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 		$oNewCol.IsAutoIncrement = $bAutoValue
 		$bAlter = True
 	EndIf
@@ -654,6 +659,7 @@ Func _LOBase_TableColProperties(ByRef $oConnection, ByRef $oTable, ByRef $oColum
 
 		$oNewCol = $oTable.Columns.getByName($oColumn.Name())
 		If Not IsObj($oNewCol) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
 		$oColumn = $oNewCol
 	EndIf
 
@@ -661,12 +667,14 @@ Func _LOBase_TableColProperties(ByRef $oConnection, ByRef $oTable, ByRef $oColum
 	If ($iFormat <> Null) Then
 		If Not IsInt($iFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		If Not _LOBase_FormatKeyExists($oConnection, $iFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+
 		$oColumn.FormatKey = $iFormat
 		$iError = ($oColumn.FormatKey() = $iFormat) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($iAlign <> Null) Then
 		If Not __LOBase_IntIsBetween($iAlign, $LOB_COL_TXT_ALIGN_LEFT, $LOB_COL_TXT_ALIGN_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+
 		$oColumn.Align = $iAlign
 		$iError = ($oColumn.Align() = $iAlign) ? ($iError) : (BitOR($iError, 64))
 	EndIf
@@ -795,7 +803,6 @@ Func _LOBase_TableDelete(ByRef $oConnection, ByRef $oTable)
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oTables = $oConnection.getTables()
@@ -846,7 +853,6 @@ Func _LOBase_TableExists(ByRef $oConnection, $sName)
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oTables = $oConnection.getTables()
@@ -891,12 +897,10 @@ Func _LOBase_TableGetObjByIndex(ByRef $oConnection, $iTable)
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oTables = $oConnection.getTables()
 	If Not IsObj($oTables) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
 	If Not __LOBase_IntIsBetween($iTable, 0, $oTables.Count() - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oTable = $oTables.getByIndex($iTable)
@@ -940,12 +944,10 @@ Func _LOBase_TableGetObjByName(ByRef $oConnection, $sName)
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oTables = $oConnection.getTables()
 	If Not IsObj($oTables) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
 	If Not $oTables.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$oTable = $oTables.getByName($sName)
@@ -1014,6 +1016,7 @@ Func _LOBase_TableIndexAdd(ByRef $oTable, $sName, $avColumns, $bIsUnique = False
 
 		$oColumnDesc = $oIndexDesc.Columns.createDataDescriptor()
 		If Not IsObj($oColumnDesc) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
 		$oColumnDesc.setName($avColumns[$i][0])
 		$oColumnDesc.IsAscending = $avColumns[$i][1]
 		$oIndexDesc.Columns.appendByDescriptor($oColumnDesc)
@@ -1202,6 +1205,7 @@ Func _LOBase_TableIndexModify(ByRef $oTable, $sName, $avColumns = Null, $bIsUniq
 	For $i = 0 To $oIndex.Columns.Count() - 1
 		$oColumn = $oIndex.Columns.getByIndex($i)
 		If Not IsObj($oColumn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
 		$avCurrentColumns[$i][0] = $oColumn.Name()
 		$avCurrentColumns[$i][1] = $oColumn.IsAscending()
 		Sleep((IsInt($i / $__LOBCONST_SLEEP_DIV)) ? (10) : (0))
@@ -1230,6 +1234,7 @@ Func _LOBase_TableIndexModify(ByRef $oTable, $sName, $avColumns = Null, $bIsUniq
 
 					$oColumnDesc = $oIndex.Columns.createDataDescriptor()
 					If Not IsObj($oColumnDesc) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 					$oColumnDesc.setName($avColumns[$i][0])
 					$oColumnDesc.IsAscending = $avColumns[$i][1]
 					$oIndex.Columns.appendByDescriptor($oColumnDesc)
@@ -1238,6 +1243,7 @@ Func _LOBase_TableIndexModify(ByRef $oTable, $sName, $avColumns = Null, $bIsUniq
 			Else
 				$oColumnDesc = $oIndex.Columns.createDataDescriptor()
 				If Not IsObj($oColumnDesc) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 				$oColumnDesc.setName($avColumns[$i][0])
 				$oColumnDesc.IsAscending = $avColumns[$i][1]
 				$oIndex.Columns.appendByDescriptor($oColumnDesc)
@@ -1276,6 +1282,7 @@ Func _LOBase_TableIndexModify(ByRef $oTable, $sName, $avColumns = Null, $bIsUniq
 			For $i = 0 To $oIndex.Columns.Count() - 1
 				$oColumn = $oIndex.Columns.getByIndex($i)
 				If Not IsObj($oColumn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
 				$oIndexDesc.Columns.appendByDescriptor($oColumn)
 				Sleep((IsInt($i / $__LOBCONST_SLEEP_DIV)) ? (10) : (0))
 			Next
@@ -1381,6 +1388,7 @@ Func _LOBase_TablePrimaryKey(ByRef $oTable, $aoPrimary = Null)
 		If ($oKeys.getByIndex($i).Type() = $__LOB_KEY_TYPE_PRIMARY) Then
 			$oPrimary = $oKeys.getByIndex($i)
 			If Not IsObj($oPrimary) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
 			ExitLoop
 		EndIf
 		Sleep((IsInt($i / $__LOBCONST_SLEEP_DIV)) ? (10) : (0))
@@ -1465,7 +1473,6 @@ Func _LOBase_TablesGetCount(ByRef $oConnection)
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oTables = $oConnection.getTables()
@@ -1507,7 +1514,6 @@ Func _LOBase_TablesGetNames(ByRef $oConnection)
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$asNames = $oConnection.Tables.getElementNames()

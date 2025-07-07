@@ -114,7 +114,6 @@ Func _LOBase_ReportClose(ByRef $oReportDoc, $bForceClose = False)
 
 	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsBool($bForceClose) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
 	If $oReportDoc.isModified() And Not $bForceClose Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If $oReportDoc.supportsService("com.sun.star.text.TextDocument") Then ; Report Doc is in viewing/Read-Only mode.
@@ -272,7 +271,6 @@ Func _LOBase_ReportConFormattedFieldData(ByRef $oFormatField, $sDataField = Null
 	Local $iError = 0
 
 	If Not IsObj($oFormatField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-
 	If (__LOBase_ReportConIdentify($oFormatField) <> $LOB_REP_CON_TYPE_FORMATTED_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -282,6 +280,7 @@ Func _LOBase_ReportConFormattedFieldData(ByRef $oFormatField, $sDataField = Null
 	EndIf
 
 	If Not IsString($sDataField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 	$oFormatField.DataField = $sDataField
 	$iError = ($oFormatField.DataField() = $sDataField) ? ($iError) : (BitOR($iError, 1))
 
@@ -353,7 +352,6 @@ Func _LOBase_ReportConFormattedFieldGeneral(ByRef $oFormatField, $sName = Null, 
 	Local $avControl[10]
 
 	If Not IsObj($oFormatField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-
 	If (__LOBase_ReportConIdentify($oFormatField) <> $LOB_REP_CON_TYPE_FORMATTED_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -368,61 +366,73 @@ Func _LOBase_ReportConFormattedFieldGeneral(ByRef $oFormatField, $sName = Null, 
 
 	If ($sName <> Null) Then
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oFormatField.Name = $sName
 		$iError = ($oFormatField.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sCondPrint <> Null) Then
 		If Not IsString($sCondPrint) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oFormatField.ConditionalPrintExpression = $sCondPrint
 		$iError = ($oFormatField.ConditionalPrintExpression() = $sCondPrint) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bPrintRep <> Null) Then
 		If Not IsBool($bPrintRep) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oFormatField.PrintRepeatedValues = $bPrintRep
 		$iError = ($oFormatField.PrintRepeatedValues() = $bPrintRep) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bPrintRepOnGroup <> Null) Then
 		If Not IsBool($bPrintRepOnGroup) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oFormatField.PrintWhenGroupChange = $bPrintRepOnGroup
 		$iError = ($oFormatField.PrintWhenGroupChange = $bPrintRepOnGroup) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iBackColor <> Null) Then
 		If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oFormatField.ControlBackground = $iBackColor
 		$iError = ($oFormatField.ControlBackground() = $iBackColor) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		__LOBase_ReportConSetGetFontDesc($oFormatField, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($iAlign <> Null) Then
 		If Not __LOBase_IntIsBetween($iAlign, $LOB_TXT_ALIGN_HORI_LEFT, $LOB_TXT_ALIGN_HORI_CENTER) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 		$oFormatField.ParaAdjust = $iAlign
 		$iError = ($oFormatField.ParaAdjust() = $iAlign) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
 	If ($iVertAlign <> Null) Then
 		If Not __LOBase_IntIsBetween($iVertAlign, $LOB_ALIGN_VERT_TOP, $LOB_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
 		$oFormatField.VerticalAlign = $iVertAlign
 		$iError = ($oFormatField.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
 	If ($iFormat <> Null) Then
 		If Not IsInt($iFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+
 		$oDoc = $oFormatField.Parent() ; Identify the parent document.
 		If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
 		Do
 			$oDoc = $oDoc.getParent()
 			If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
 		Until $oDoc.supportsService("com.sun.star.report.ReportDefinition")
 		If Not _LOBase_FormatKeyExists($oDoc, $iFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+
 		$oFormatField.FormatKey = $iFormat
 		$iError = ($oFormatField.FormatKey() = $iFormat) ? ($iError) : (BitOR($iError, 256))
 	EndIf
@@ -469,7 +479,6 @@ Func _LOBase_ReportConImageConData(ByRef $oImageControl, $sDataField = Null)
 	Local $iError = 0
 
 	If Not IsObj($oImageControl) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-
 	If (__LOBase_ReportConIdentify($oImageControl) <> $LOB_REP_CON_TYPE_IMAGE_CONTROL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -479,6 +488,7 @@ Func _LOBase_ReportConImageConData(ByRef $oImageControl, $sDataField = Null)
 	EndIf
 
 	If Not IsString($sDataField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 	$oImageControl.DataField = $sDataField
 	$iError = ($oImageControl.DataField() = $sDataField) ? ($iError) : (BitOR($iError, 1))
 
@@ -547,7 +557,6 @@ Func _LOBase_ReportConImageConGeneral(ByRef $oImageControl, $sName = Null, $bPre
 	Local $avControl[9]
 
 	If Not IsObj($oImageControl) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-
 	If (__LOBase_ReportConIdentify($oImageControl) <> $LOB_REP_CON_TYPE_IMAGE_CONTROL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -561,54 +570,63 @@ Func _LOBase_ReportConImageConGeneral(ByRef $oImageControl, $sName = Null, $bPre
 
 	If ($sName <> Null) Then
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oImageControl.Name = $sName
 		$iError = ($oImageControl.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bPreserveAsLink <> Null) Then
 		If Not IsBool($bPreserveAsLink) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oImageControl.PreserveIRI = $bPreserveAsLink
 		$iError = ($oImageControl.PreserveIRI() = $bPreserveAsLink) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($sCondPrint <> Null) Then
 		If Not IsString($sCondPrint) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oImageControl.ConditionalPrintExpression = $sCondPrint
 		$iError = ($oImageControl.ConditionalPrintExpression() = $sCondPrint) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bPrintRep <> Null) Then
 		If Not IsBool($bPrintRep) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oImageControl.PrintRepeatedValues = $bPrintRep
 		$iError = ($oImageControl.PrintRepeatedValues() = $bPrintRep) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($bPrintRepOnGroup <> Null) Then
 		If Not IsBool($bPrintRepOnGroup) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oImageControl.PrintWhenGroupChange = $bPrintRepOnGroup
 		$iError = ($oImageControl.PrintWhenGroupChange = $bPrintRepOnGroup) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($iBackColor <> Null) Then
 		If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oImageControl.ControlBackground = $iBackColor
 		$iError = ($oImageControl.ControlBackground() = $iBackColor) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($iVertAlign <> Null) Then
 		If Not __LOBase_IntIsBetween($iVertAlign, $LOB_ALIGN_VERT_TOP, $LOB_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 		$oImageControl.VerticalAlign = $iVertAlign
 		$iError = ($oImageControl.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
 	If ($sGraphics <> Null) Then
 		If Not IsString($sGraphics) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
 		$oImageControl.ImageURL = _LOBase_PathConvert($sGraphics, $LOB_PATHCONV_OFFICE_RETURN)
 		$iError = ($oImageControl.ImageURL() = _LOBase_PathConvert($sGraphics, $LOB_PATHCONV_OFFICE_RETURN)) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
 	If ($iScale <> Null) Then
 		If Not __LOBase_IntIsBetween($iScale, $LOB_REP_CON_IMG_BTN_SCALE_NONE, $LOB_REP_CON_IMG_BTN_SCALE_FIT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+
 		$oImageControl.ScaleMode = $iScale
 		$iError = ($oImageControl.ScaleMode() = $iScale) ? ($iError) : (BitOR($iError, 256))
 	EndIf
@@ -786,7 +804,6 @@ Func _LOBase_ReportConLabelGeneral(ByRef $oLabel, $sName = Null, $sLabel = Null,
 	Local $avControl[9]
 
 	If Not IsObj($oLabel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-
 	If (__LOBase_ReportConIdentify($oLabel) <> $LOB_REP_CON_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -800,54 +817,63 @@ Func _LOBase_ReportConLabelGeneral(ByRef $oLabel, $sName = Null, $sLabel = Null,
 
 	If ($sName <> Null) Then
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oLabel.Name = $sName
 		$iError = ($oLabel.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sLabel <> Null) Then
 		If Not IsString($sLabel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oLabel.Label = $sLabel
 		$iError = ($oLabel.Label() = $sLabel) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($sCondPrint <> Null) Then
 		If Not IsString($sCondPrint) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oLabel.ConditionalPrintExpression = $sCondPrint
 		$iError = ($oLabel.ConditionalPrintExpression() = $sCondPrint) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bPrintRep <> Null) Then
 		If Not IsBool($bPrintRep) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oLabel.PrintRepeatedValues = $bPrintRep
 		$iError = ($oLabel.PrintRepeatedValues() = $bPrintRep) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($bPrintRepOnGroup <> Null) Then
 		If Not IsBool($bPrintRepOnGroup) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oLabel.PrintWhenGroupChange = $bPrintRepOnGroup
 		$iError = ($oLabel.PrintWhenGroupChange = $bPrintRepOnGroup) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($iBackColor <> Null) Then
 		If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oLabel.ControlBackground = $iBackColor
 		$iError = ($oLabel.ControlBackground() = $iBackColor) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 		__LOBase_ReportConSetGetFontDesc($oLabel, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
 	If ($iAlign <> Null) Then
 		If Not __LOBase_IntIsBetween($iAlign, $LOB_TXT_ALIGN_HORI_LEFT, $LOB_TXT_ALIGN_HORI_CENTER) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
 		$oLabel.ParaAdjust = $iAlign
 		$iError = ($oLabel.ParaAdjust() = $iAlign) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
 	If ($iVertAlign <> Null) Then
 		If Not __LOBase_IntIsBetween($iVertAlign, $LOB_ALIGN_VERT_TOP, $LOB_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+
 		$oLabel.VerticalAlign = $iVertAlign
 		$iError = ($oLabel.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 256))
 	EndIf
@@ -898,7 +924,6 @@ Func _LOBase_ReportConLineGeneral(ByRef $oLine, $sName = Null, $iVertAlign = Nul
 	Local $avControl[3]
 
 	If Not IsObj($oLine) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-
 	If (__LOBase_ReportConIdentify($oLine) <> $LOB_REP_CON_TYPE_LINE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -910,18 +935,21 @@ Func _LOBase_ReportConLineGeneral(ByRef $oLine, $sName = Null, $iVertAlign = Nul
 
 	If ($sName <> Null) Then
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oLine.Name = $sName
 		$iError = ($oLine.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iVertAlign <> Null) Then
 		If Not __LOBase_IntIsBetween($iVertAlign, $LOB_ALIGN_VERT_TOP, $LOB_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oLine.VerticalAlign = $iVertAlign
 		$iError = ($oLine.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iOrient <> Null) Then
 		If Not __LOBase_IntIsBetween($iOrient, $LOB_REP_CON_LINE_HORI, $LOB_REP_CON_LINE_VERT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oLine.Orientation = $iOrient
 		$iError = ($oLine.Orientation() = $iOrient) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -973,10 +1001,11 @@ Func _LOBase_ReportConnect($bConnectCurrent = True)
 
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
 	If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
-
 	If Not $oDesktop.getComponents.hasElements() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; no L.O open
+
 	$oEnumDoc = $oDesktop.getComponents.createEnumeration()
 	If Not IsObj($oEnumDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
@@ -1067,11 +1096,13 @@ Func _LOBase_ReportConPosition(ByRef $oControl, $iX = Null, $iY = Null)
 
 	If ($iX <> Null) Then
 		If Not IsInt($iX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$tPos.X = $iX
 	EndIf
 
 	If ($iY <> Null) Then
 		If Not IsInt($iY) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$tPos.Y = $iY
 	EndIf
 
@@ -1127,6 +1158,7 @@ Func _LOBase_ReportConsGetList(ByRef $oSection, $iType = $LOB_REP_CON_TYPE_ALL)
 
 		$iControlType = __LOBase_ReportConIdentify($oControl)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
 		If BitAND($iType, $iControlType) Then
 			$aoControls[$iCount][0] = $oControl
 			$aoControls[$iCount][1] = $iControlType
@@ -1196,11 +1228,13 @@ Func _LOBase_ReportConSize(ByRef $oControl, $iWidth = Null, $iHeight = Null, $bA
 	If ($iWidth <> Null) Or ($iHeight <> Null) Then
 		If ($iWidth <> Null) Then ; Min 51
 			If Not __LOBase_IntIsBetween($iWidth, 51) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 			$tSize.Width = $iWidth
 		EndIf
 
 		If ($iHeight <> Null) Then
 			If Not __LOBase_IntIsBetween($iHeight, 51) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 			$tSize.Height = $iHeight
 		EndIf
 
@@ -1212,6 +1246,7 @@ Func _LOBase_ReportConSize(ByRef $oControl, $iWidth = Null, $iHeight = Null, $bA
 
 	If ($bAutoGrow <> Null) Then
 		If Not IsBool($bAutoGrow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oControl.AutoGrow = $bAutoGrow
 		$iError = ($oControl.AutoGrow() = $bAutoGrow) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -1272,7 +1307,6 @@ Func _LOBase_ReportCopy(ByRef $oDoc, ByRef $oConnection, $sInputReport, $sOutput
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsString($sInputReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsString($sOutputReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oSource = $oDoc.ReportDocuments()
@@ -1282,6 +1316,7 @@ Func _LOBase_ReportCopy(ByRef $oDoc, ByRef $oConnection, $sInputReport, $sOutput
 
 	For $i = 1 To $asSplit[0] - 1
 		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oSource = $oSource.getByName($asSplit[$i])
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	Next
@@ -1301,6 +1336,7 @@ Func _LOBase_ReportCopy(ByRef $oDoc, ByRef $oConnection, $sInputReport, $sOutput
 
 	For $i = 1 To $asSplit[0] - 1
 		If Not $oDestination.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oDestination = $oDestination.getByName($asSplit[$i])
 		If Not IsObj($oDestination) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 	Next
@@ -1383,7 +1419,6 @@ Func _LOBase_ReportCreate(ByRef $oDoc, ByRef $oConnection, $sReport, $bOpen = Fa
 	If Not IsString($sReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsBool($bOpen) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oSource = $oDoc.ReportDocuments()
@@ -1393,6 +1428,7 @@ Func _LOBase_ReportCreate(ByRef $oDoc, ByRef $oConnection, $sReport, $bOpen = Fa
 
 	For $i = 1 To $asSplit[0] - 1
 		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oSource = $oSource.getByName($asSplit[$i])
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	Next
@@ -1513,30 +1549,35 @@ Func _LOBase_ReportData(ByRef $oReportDoc, $iContentType = Null, $sContent = Nul
 
 	If ($iContentType <> Null) Then
 		If Not __LOBase_IntIsBetween($iContentType, $LOB_REP_CONTENT_TYPE_TABLE, $LOB_REP_CONTENT_TYPE_SQL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oReportDoc.CommandType = $iContentType
 		$iError = ($oReportDoc.CommandType() = $iContentType) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sContent <> Null) Then
 		If Not IsString($sContent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oReportDoc.Command = $sContent
 		$iError = ($oReportDoc.Command() = $sContent) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bAnalyzeSQL <> Null) Then
 		If Not IsBool($bAnalyzeSQL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oReportDoc.EscapeProcessing = $bAnalyzeSQL
 		$iError = ($oReportDoc.EscapeProcessing() = $bAnalyzeSQL) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($sFilter <> Null) Then
 		If Not IsString($sFilter) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oReportDoc.Filter = $sFilter
 		$iError = ($oReportDoc.Filter() = $sFilter) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iReportOutput <> Null) Then
 		If Not __LOBase_IntIsBetween($iReportOutput, $LOB_REP_OUTPUT_TYPE_TEXT, $LOB_REP_OUTPUT_TYPE_SPREADSHEET) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oReportDoc.MimeType = ($iReportOutput = $LOB_REP_OUTPUT_TYPE_TEXT) ? ($__LOB_REP_OUTPUT_TEXT_DOC) : ($__LOB_REP_OUTPUT_SPREADSHEET_DOC)
 		$iError = ($oReportDoc.MimeType() = ($iReportOutput = $LOB_REP_OUTPUT_TYPE_TEXT) ? ($__LOB_REP_OUTPUT_TEXT_DOC) : ($__LOB_REP_OUTPUT_SPREADSHEET_DOC)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
@@ -1588,6 +1629,7 @@ Func _LOBase_ReportDelete(ByRef $oDoc, $sName)
 
 	For $i = 1 To $asSplit[0] - 1
 		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oSource = $oSource.getByName($asSplit[$i])
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	Next
@@ -1669,42 +1711,49 @@ Func _LOBase_ReportDetail(ByRef $oReportDoc, $sName = Null, $iForceNewPage = Nul
 
 	If ($sName <> Null) Then
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oReportDoc.Detail.Name = $sName
 		$iError = ($oReportDoc.Detail.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iForceNewPage <> Null) Then
 		If Not __LOBase_IntIsBetween($iForceNewPage, $LOB_REP_FORCE_PAGE_NONE, $LOB_REP_FORCE_PAGE_BEFORE_AFTER_SECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oReportDoc.Detail.ForceNewPage = $iForceNewPage
 		$iError = ($oReportDoc.Detail.ForceNewPage() = $iForceNewPage) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bKeepTogether <> Null) Then
 		If Not IsBool($bKeepTogether) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oReportDoc.Detail.KeepTogether = $bKeepTogether
 		$iError = ($oReportDoc.Detail.KeepTogether() = $bKeepTogether) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bVisible <> Null) Then
 		If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oReportDoc.Detail.Visible = $bVisible
 		$iError = ($oReportDoc.Detail.Visible() = $bVisible) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iHeight <> Null) Then
 		If Not __LOBase_IntIsBetween($iHeight, 1753) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oReportDoc.Detail.Height = $iHeight
 		$iError = (__LOBase_IntIsBetween($oReportDoc.Detail.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($sCondPrint <> Null) Then
 		If Not IsString($sCondPrint) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oReportDoc.Detail.ConditionalPrintExpression = $sCondPrint
 		$iError = ($oReportDoc.Detail.ConditionalPrintExpression() = $sCondPrint) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($iBackColor <> Null) Then
 		If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 		$oReportDoc.Detail.BackColor = $iBackColor
 		$iError = ($oReportDoc.Detail.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 64))
 	EndIf
@@ -1742,6 +1791,7 @@ Func _LOBase_ReportDocVisible(ByRef $oReportDoc, $bVisible = Null)
 	Local $iError = 0
 
 	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 	If ($bVisible = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oReportDoc.CurrentController.Frame.ContainerWindow.isVisible())
 
 	If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -1804,6 +1854,7 @@ Func _LOBase_ReportExists(ByRef $oDoc, $sName, $bExhaustive = True)
 
 	For $i = 1 To $asSplit[0] - 1
 		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oSource = $oSource.getByName($asSplit[$i])
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	Next
@@ -1921,6 +1972,7 @@ Func _LOBase_ReportFolderCopy(ByRef $oDoc, $sInputFolder, $sOutputFolder)
 
 	For $i = 1 To $asSplit[0] - 1
 		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oSource = $oSource.getByName($asSplit[$i])
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	Next
@@ -1940,6 +1992,7 @@ Func _LOBase_ReportFolderCopy(ByRef $oDoc, $sInputFolder, $sOutputFolder)
 
 	For $i = 1 To $asSplit[0] - 1
 		If Not $oDestination.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oDestination = $oDestination.getByName($asSplit[$i])
 		If Not IsObj($oDestination) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 	Next
@@ -2003,6 +2056,7 @@ Func _LOBase_ReportFolderCreate(ByRef $oDoc, $sFolder)
 
 	For $i = 1 To $asSplit[0] - 1
 		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oSource = $oSource.getByName($asSplit[$i])
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	Next
@@ -2065,6 +2119,7 @@ Func _LOBase_ReportFolderDelete(ByRef $oDoc, $sName)
 
 	For $i = 1 To $asSplit[0] - 1
 		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oSource = $oSource.getByName($asSplit[$i])
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	Next
@@ -2133,6 +2188,7 @@ Func _LOBase_ReportFolderExists(ByRef $oDoc, $sName, $bExhaustive = True)
 
 	For $i = 1 To $asSplit[0] - 1
 		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oSource = $oSource.getByName($asSplit[$i])
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	Next
@@ -2239,6 +2295,7 @@ Func _LOBase_ReportFolderRename(ByRef $oDoc, $sFolder, $sNewName)
 
 	For $i = 1 To $asSplit[0] - 1
 		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oSource = $oSource.getByName($asSplit[$i])
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	Next
@@ -2246,7 +2303,6 @@ Func _LOBase_ReportFolderRename(ByRef $oDoc, $sFolder, $sNewName)
 	$sFolder = $asSplit[$asSplit[0]] ; Last element of Array will be the Folder name to Rename
 
 	If $oSource.hasByName($sNewName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
 	If Not $oSource.hasByName($sFolder) Or Not $oSource.getByName($sFolder).supportsService("com.sun.star.sdb.Reports") Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$oSource.getByName($sFolder).rename($sNewName)
@@ -2309,6 +2365,7 @@ Func _LOBase_ReportFoldersGetCount(ByRef $oDoc, $bExhaustive = True, $sFolder = 
 
 		For $i = 1 To $asSplit[0]
 			If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			$oSource = $oSource.getByName($asSplit[$i])
 			If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		Next
@@ -2415,6 +2472,7 @@ Func _LOBase_ReportFoldersGetNames(ByRef $oDoc, $bExhaustive = True, $sFolder = 
 
 		For $i = 1 To $asSplit[0]
 			If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			$oSource = $oSource.getByName($asSplit[$i])
 			If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		Next
@@ -2547,6 +2605,7 @@ Func _LOBase_ReportFooter(ByRef $oReportDoc, $bEnabled = Null, $sName = Null, $i
 
 	If ($bEnabled <> Null) Then
 		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oReportDoc.ReportFooterOn = $bEnabled
 		$iError = ($oReportDoc.ReportFooterOn() = $bEnabled) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -2554,6 +2613,7 @@ Func _LOBase_ReportFooter(ByRef $oReportDoc, $bEnabled = Null, $sName = Null, $i
 	If ($sName <> Null) Then
 		If $oReportDoc.ReportFooterOn() Then
 			If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			$oReportDoc.ReportFooter.Name = $sName
 			$iError = ($oReportDoc.ReportFooter.Name() = $sName) ? ($iError) : (BitOR($iError, 2))
 
@@ -2565,6 +2625,7 @@ Func _LOBase_ReportFooter(ByRef $oReportDoc, $bEnabled = Null, $sName = Null, $i
 	If ($iForceNewPage <> Null) Then
 		If $oReportDoc.ReportFooterOn() Then
 			If Not __LOBase_IntIsBetween($iForceNewPage, $LOB_REP_FORCE_PAGE_NONE, $LOB_REP_FORCE_PAGE_BEFORE_AFTER_SECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 			$oReportDoc.ReportFooter.ForceNewPage = $iForceNewPage
 			$iError = ($oReportDoc.ReportFooter.ForceNewPage() = $iForceNewPage) ? ($iError) : (BitOR($iError, 4))
 
@@ -2576,6 +2637,7 @@ Func _LOBase_ReportFooter(ByRef $oReportDoc, $bEnabled = Null, $sName = Null, $i
 	If ($bKeepTogether <> Null) Then
 		If $oReportDoc.ReportFooterOn() Then
 			If Not IsBool($bKeepTogether) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 			$oReportDoc.ReportFooter.KeepTogether = $bKeepTogether
 			$iError = ($oReportDoc.ReportFooter.KeepTogether() = $bKeepTogether) ? ($iError) : (BitOR($iError, 8))
 
@@ -2587,6 +2649,7 @@ Func _LOBase_ReportFooter(ByRef $oReportDoc, $bEnabled = Null, $sName = Null, $i
 	If ($bVisible <> Null) Then
 		If $oReportDoc.ReportFooterOn() Then
 			If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 			$oReportDoc.ReportFooter.Visible = $bVisible
 			$iError = ($oReportDoc.ReportFooter.Visible() = $bVisible) ? ($iError) : (BitOR($iError, 16))
 
@@ -2598,6 +2661,7 @@ Func _LOBase_ReportFooter(ByRef $oReportDoc, $bEnabled = Null, $sName = Null, $i
 	If ($iHeight <> Null) Then
 		If $oReportDoc.ReportFooterOn() Then
 			If Not __LOBase_IntIsBetween($iHeight, 1753) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 			$oReportDoc.ReportFooter.Height = $iHeight
 			$iError = (__LOBase_IntIsBetween($oReportDoc.ReportFooter.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 32))
 
@@ -2609,6 +2673,7 @@ Func _LOBase_ReportFooter(ByRef $oReportDoc, $bEnabled = Null, $sName = Null, $i
 	If ($sCondPrint <> Null) Then
 		If $oReportDoc.ReportFooterOn() Then
 			If Not IsString($sCondPrint) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 			$oReportDoc.ReportFooter.ConditionalPrintExpression = $sCondPrint
 			$iError = ($oReportDoc.ReportFooter.ConditionalPrintExpression() = $sCondPrint) ? ($iError) : (BitOR($iError, 64))
 
@@ -2620,6 +2685,7 @@ Func _LOBase_ReportFooter(ByRef $oReportDoc, $bEnabled = Null, $sName = Null, $i
 	If ($iBackColor <> Null) Then
 		If $oReportDoc.ReportFooterOn() Then
 			If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
 			$oReportDoc.ReportFooter.BackColor = $iBackColor
 			$iError = ($oReportDoc.ReportFooter.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 128))
 
@@ -2687,30 +2753,35 @@ Func _LOBase_ReportGeneral(ByRef $oReportDoc, $sName = Null, $iPageHeader = Null
 
 	If ($sName <> Null) Then
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oReportDoc.Name = $sName
 		$iError = ($oReportDoc.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iPageHeader <> Null) Then
 		If Not __LOBase_IntIsBetween($iPageHeader, $LOB_REP_PAGE_PRINT_OPT_ALL_PAGES, $LOB_REP_PAGE_PRINT_OPT_NOT_WITH_REP_HEADER_FOOTER) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oReportDoc.PageHeaderOption = $iPageHeader
 		$iError = ($oReportDoc.PageHeaderOption() = $iPageHeader) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iPageFooter <> Null) Then
 		If Not __LOBase_IntIsBetween($iPageFooter, $LOB_REP_PAGE_PRINT_OPT_ALL_PAGES, $LOB_REP_PAGE_PRINT_OPT_NOT_WITH_REP_HEADER_FOOTER) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oReportDoc.PageFooterOption = $iPageFooter
 		$iError = ($oReportDoc.PageFooterOption() = $iPageFooter) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bAutoGrow <> Null) Then
 		If Not IsBool($bAutoGrow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oReportDoc.AutoGrow = $bAutoGrow
 		$iError = ($oReportDoc.AutoGrow() = $bAutoGrow) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($bPrintRep <> Null) Then
 		If Not IsBool($bPrintRep) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oReportDoc.PrintRepeatedValues = $bPrintRep
 		$iError = ($oReportDoc.PrintRepeatedValues() = $bPrintRep) ? ($iError) : (BitOR($iError, 16))
 	EndIf
@@ -2944,6 +3015,7 @@ Func _LOBase_ReportGroupFooter(ByRef $oGroup, $bFooterOn = Null, $sName = Null, 
 
 	If ($bFooterOn <> Null) Then
 		If Not IsBool($bFooterOn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oGroup.FooterOn = $bFooterOn
 		$iError = ($oGroup.FooterOn() = $bFooterOn) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -2951,6 +3023,7 @@ Func _LOBase_ReportGroupFooter(ByRef $oGroup, $bFooterOn = Null, $sName = Null, 
 	If ($sName <> Null) Then
 		If $oGroup.FooterOn() Then
 			If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			$oGroup.Footer.Name = $sName
 			$iError = ($oGroup.Footer.Name() = $sName) ? ($iError) : (BitOR($iError, 2))
 
@@ -2962,6 +3035,7 @@ Func _LOBase_ReportGroupFooter(ByRef $oGroup, $bFooterOn = Null, $sName = Null, 
 	If ($iForceNewPage <> Null) Then
 		If $oGroup.FooterOn() Then
 			If Not __LOBase_IntIsBetween($iForceNewPage, $LOB_REP_FORCE_PAGE_NONE, $LOB_REP_FORCE_PAGE_BEFORE_AFTER_SECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 			$oGroup.Footer.ForceNewPage = $iForceNewPage
 			$iError = ($oGroup.Footer.ForceNewPage() = $iForceNewPage) ? ($iError) : (BitOR($iError, 4))
 
@@ -2973,6 +3047,7 @@ Func _LOBase_ReportGroupFooter(ByRef $oGroup, $bFooterOn = Null, $sName = Null, 
 	If ($bKeepTogether <> Null) Then
 		If $oGroup.FooterOn() Then
 			If Not IsBool($bKeepTogether) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 			$oGroup.Footer.KeepTogether = $bKeepTogether
 			$iError = ($oGroup.Footer.KeepTogether() = $bKeepTogether) ? ($iError) : (BitOR($iError, 8))
 
@@ -2984,6 +3059,7 @@ Func _LOBase_ReportGroupFooter(ByRef $oGroup, $bFooterOn = Null, $sName = Null, 
 	If ($bRepeatSec <> Null) Then
 		If $oGroup.FooterOn() Then
 			If Not IsBool($bRepeatSec) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 			$oGroup.Footer.RepeatSection = $bRepeatSec
 			$iError = ($oGroup.Footer.RepeatSection() = $bRepeatSec) ? ($iError) : (BitOR($iError, 16))
 
@@ -2995,6 +3071,7 @@ Func _LOBase_ReportGroupFooter(ByRef $oGroup, $bFooterOn = Null, $sName = Null, 
 	If ($bVisible <> Null) Then
 		If $oGroup.FooterOn() Then
 			If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 			$oGroup.Footer.Visible = $bVisible
 			$iError = ($oGroup.Footer.Visible() = $bVisible) ? ($iError) : (BitOR($iError, 32))
 
@@ -3006,6 +3083,7 @@ Func _LOBase_ReportGroupFooter(ByRef $oGroup, $bFooterOn = Null, $sName = Null, 
 	If ($iHeight <> Null) Then
 		If $oGroup.FooterOn() Then
 			If Not __LOBase_IntIsBetween($iHeight, 1753) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 			$oGroup.Footer.Height = $iHeight
 			$iError = ($oGroup.Footer.Height() = $iHeight) ? ($iError) : (BitOR($iError, 64))
 
@@ -3017,6 +3095,7 @@ Func _LOBase_ReportGroupFooter(ByRef $oGroup, $bFooterOn = Null, $sName = Null, 
 	If ($sCondPrint <> Null) Then
 		If $oGroup.FooterOn() Then
 			If Not IsString($sCondPrint) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
 			$oGroup.Footer.ConditionalPrintExpression = $sCondPrint
 			$iError = ($oGroup.Footer.ConditionalPrintExpression() = $sCondPrint) ? ($iError) : (BitOR($iError, 128))
 
@@ -3028,6 +3107,7 @@ Func _LOBase_ReportGroupFooter(ByRef $oGroup, $bFooterOn = Null, $sName = Null, 
 	If ($iBackColor <> Null) Then
 		If $oGroup.FooterOn() Then
 			If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+
 			$oGroup.Footer.BackColor = $iBackColor
 			$iError = ($oGroup.Footer.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 256))
 
@@ -3156,6 +3236,7 @@ Func _LOBase_ReportGroupHeader(ByRef $oGroup, $bHeaderOn = Null, $sName = Null, 
 
 	If ($bHeaderOn <> Null) Then
 		If Not IsBool($bHeaderOn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oGroup.HeaderOn = $bHeaderOn
 		$iError = ($oGroup.HeaderOn() = $bHeaderOn) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -3163,6 +3244,7 @@ Func _LOBase_ReportGroupHeader(ByRef $oGroup, $bHeaderOn = Null, $sName = Null, 
 	If ($sName <> Null) Then
 		If $oGroup.HeaderOn() Then
 			If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			$oGroup.Header.Name = $sName
 			$iError = ($oGroup.Header.Name() = $sName) ? ($iError) : (BitOR($iError, 2))
 
@@ -3174,6 +3256,7 @@ Func _LOBase_ReportGroupHeader(ByRef $oGroup, $bHeaderOn = Null, $sName = Null, 
 	If ($iForceNewPage <> Null) Then
 		If $oGroup.HeaderOn() Then
 			If Not __LOBase_IntIsBetween($iForceNewPage, $LOB_REP_FORCE_PAGE_NONE, $LOB_REP_FORCE_PAGE_BEFORE_AFTER_SECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 			$oGroup.Header.ForceNewPage = $iForceNewPage
 			$iError = ($oGroup.Header.ForceNewPage() = $iForceNewPage) ? ($iError) : (BitOR($iError, 4))
 
@@ -3185,6 +3268,7 @@ Func _LOBase_ReportGroupHeader(ByRef $oGroup, $bHeaderOn = Null, $sName = Null, 
 	If ($bKeepTogether <> Null) Then
 		If $oGroup.HeaderOn() Then
 			If Not IsBool($bKeepTogether) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 			$oGroup.Header.KeepTogether = $bKeepTogether
 			$iError = ($oGroup.Header.KeepTogether() = $bKeepTogether) ? ($iError) : (BitOR($iError, 8))
 
@@ -3196,6 +3280,7 @@ Func _LOBase_ReportGroupHeader(ByRef $oGroup, $bHeaderOn = Null, $sName = Null, 
 	If ($bRepeatSec <> Null) Then
 		If $oGroup.HeaderOn() Then
 			If Not IsBool($bRepeatSec) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 			$oGroup.Header.RepeatSection = $bRepeatSec
 			$iError = ($oGroup.Header.RepeatSection() = $bRepeatSec) ? ($iError) : (BitOR($iError, 16))
 
@@ -3207,6 +3292,7 @@ Func _LOBase_ReportGroupHeader(ByRef $oGroup, $bHeaderOn = Null, $sName = Null, 
 	If ($bVisible <> Null) Then
 		If $oGroup.HeaderOn() Then
 			If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 			$oGroup.Header.Visible = $bVisible
 			$iError = ($oGroup.Header.Visible() = $bVisible) ? ($iError) : (BitOR($iError, 32))
 
@@ -3218,6 +3304,7 @@ Func _LOBase_ReportGroupHeader(ByRef $oGroup, $bHeaderOn = Null, $sName = Null, 
 	If ($iHeight <> Null) Then
 		If $oGroup.HeaderOn() Then
 			If Not __LOBase_IntIsBetween($iHeight, 1753) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 			$oGroup.Header.Height = $iHeight
 			$iError = ($oGroup.Header.Height() = $iHeight) ? ($iError) : (BitOR($iError, 64))
 
@@ -3229,6 +3316,7 @@ Func _LOBase_ReportGroupHeader(ByRef $oGroup, $bHeaderOn = Null, $sName = Null, 
 	If ($sCondPrint <> Null) Then
 		If $oGroup.HeaderOn() Then
 			If Not IsString($sCondPrint) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
 			$oGroup.Header.ConditionalPrintExpression = $sCondPrint
 			$iError = ($oGroup.Header.ConditionalPrintExpression() = $sCondPrint) ? ($iError) : (BitOR($iError, 128))
 
@@ -3240,6 +3328,7 @@ Func _LOBase_ReportGroupHeader(ByRef $oGroup, $bHeaderOn = Null, $sName = Null, 
 	If ($iBackColor <> Null) Then
 		If $oGroup.HeaderOn() Then
 			If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+
 			$oGroup.Header.BackColor = $iBackColor
 			$iError = ($oGroup.Header.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 256))
 
@@ -3345,30 +3434,35 @@ Func _LOBase_ReportGroupSort(ByRef $oGroup, $sField = Null, $bSortAsc = Null, $i
 
 	If ($sField <> Null) Then
 		If Not IsString($sField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oGroup.Expression = $sField
 		$iError = ($oGroup.Expression() = $sField) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bSortAsc <> Null) Then
 		If Not IsBool($bSortAsc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oGroup.SortAscending = $bSortAsc
 		$iError = ($oGroup.SortAscending() = $bSortAsc) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iGroupOn <> Null) Then
 		If Not __LOBase_IntIsBetween($iGroupOn, $LOB_REP_GROUP_ON_DEFAULT, $LOB_REP_GROUP_ON_INTERVAL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oGroup.GroupOn = $iGroupOn
 		$iError = ($oGroup.GroupOn() = $iGroupOn) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iGroupInt <> Null) Then
 		If Not __LOBase_IntIsBetween($iGroupInt, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oGroup.GroupInterval = $iGroupInt
 		$iError = ($oGroup.GroupInterval() = $iGroupInt) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iKeepTogether <> Null) Then
 		If Not __LOBase_IntIsBetween($iKeepTogether, $LOB_REP_KEEP_TOG_NO, $LOB_REP_KEEP_TOG_WITH_FIRST_DETAIL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oGroup.KeepTogether = $iKeepTogether
 		$iError = ($oGroup.KeepTogether() = $iKeepTogether) ? ($iError) : (BitOR($iError, 16))
 	EndIf
@@ -3451,6 +3545,7 @@ Func _LOBase_ReportHeader(ByRef $oReportDoc, $bEnabled = Null, $sName = Null, $i
 
 	If ($bEnabled <> Null) Then
 		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oReportDoc.ReportHeaderOn = $bEnabled
 		$iError = ($oReportDoc.ReportHeaderOn() = $bEnabled) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -3458,6 +3553,7 @@ Func _LOBase_ReportHeader(ByRef $oReportDoc, $bEnabled = Null, $sName = Null, $i
 	If ($sName <> Null) Then
 		If $oReportDoc.ReportHeaderOn() Then
 			If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			$oReportDoc.ReportHeader.Name = $sName
 			$iError = ($oReportDoc.ReportHeader.Name() = $sName) ? ($iError) : (BitOR($iError, 2))
 
@@ -3469,6 +3565,7 @@ Func _LOBase_ReportHeader(ByRef $oReportDoc, $bEnabled = Null, $sName = Null, $i
 	If ($iForceNewPage <> Null) Then
 		If $oReportDoc.ReportHeaderOn() Then
 			If Not __LOBase_IntIsBetween($iForceNewPage, $LOB_REP_FORCE_PAGE_NONE, $LOB_REP_FORCE_PAGE_BEFORE_AFTER_SECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 			$oReportDoc.ReportHeader.ForceNewPage = $iForceNewPage
 			$iError = ($oReportDoc.ReportHeader.ForceNewPage() = $iForceNewPage) ? ($iError) : (BitOR($iError, 4))
 
@@ -3480,6 +3577,7 @@ Func _LOBase_ReportHeader(ByRef $oReportDoc, $bEnabled = Null, $sName = Null, $i
 	If ($bKeepTogether <> Null) Then
 		If $oReportDoc.ReportHeaderOn() Then
 			If Not IsBool($bKeepTogether) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 			$oReportDoc.ReportHeader.KeepTogether = $bKeepTogether
 			$iError = ($oReportDoc.ReportHeader.KeepTogether() = $bKeepTogether) ? ($iError) : (BitOR($iError, 8))
 
@@ -3491,6 +3589,7 @@ Func _LOBase_ReportHeader(ByRef $oReportDoc, $bEnabled = Null, $sName = Null, $i
 	If ($bVisible <> Null) Then
 		If $oReportDoc.ReportHeaderOn() Then
 			If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 			$oReportDoc.ReportHeader.Visible = $bVisible
 			$iError = ($oReportDoc.ReportHeader.Visible() = $bVisible) ? ($iError) : (BitOR($iError, 16))
 
@@ -3502,6 +3601,7 @@ Func _LOBase_ReportHeader(ByRef $oReportDoc, $bEnabled = Null, $sName = Null, $i
 	If ($iHeight <> Null) Then
 		If $oReportDoc.ReportHeaderOn() Then
 			If Not __LOBase_IntIsBetween($iHeight, 1753) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 			$oReportDoc.ReportHeader.Height = $iHeight
 			$iError = (__LOBase_IntIsBetween($oReportDoc.ReportHeader.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 32))
 
@@ -3513,6 +3613,7 @@ Func _LOBase_ReportHeader(ByRef $oReportDoc, $bEnabled = Null, $sName = Null, $i
 	If ($sCondPrint <> Null) Then
 		If $oReportDoc.ReportHeaderOn() Then
 			If Not IsString($sCondPrint) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 			$oReportDoc.ReportHeader.ConditionalPrintExpression = $sCondPrint
 			$iError = ($oReportDoc.ReportHeader.ConditionalPrintExpression() = $sCondPrint) ? ($iError) : (BitOR($iError, 64))
 
@@ -3524,6 +3625,7 @@ Func _LOBase_ReportHeader(ByRef $oReportDoc, $bEnabled = Null, $sName = Null, $i
 	If ($iBackColor <> Null) Then
 		If $oReportDoc.ReportHeaderOn() Then
 			If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
 			$oReportDoc.ReportHeader.BackColor = $iBackColor
 			$iError = ($oReportDoc.ReportHeader.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 128))
 
@@ -3612,7 +3714,6 @@ Func _LOBase_ReportOpen(ByRef $oDoc, ByRef $oConnection, $sName, $bDesign = True
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsBool($bDesign) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If Not $oDoc.CurrentController.isConnected() Then $oDoc.CurrentController.connect()
@@ -3624,6 +3725,7 @@ Func _LOBase_ReportOpen(ByRef $oDoc, ByRef $oConnection, $sName, $bDesign = True
 
 	For $i = 1 To $asSplit[0] - 1
 		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oSource = $oSource.getByName($asSplit[$i])
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	Next
@@ -3719,6 +3821,7 @@ Func _LOBase_ReportPageFooter(ByRef $oReportDoc, $bEnabled = Null, $sName = Null
 
 	If ($bEnabled <> Null) Then
 		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oReportDoc.PageFooterOn = $bEnabled
 		$iError = ($oReportDoc.PageFooterOn() = $bEnabled) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -3726,6 +3829,7 @@ Func _LOBase_ReportPageFooter(ByRef $oReportDoc, $bEnabled = Null, $sName = Null
 	If ($sName <> Null) Then
 		If $oReportDoc.PageFooterOn() Then
 			If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			$oReportDoc.PageFooter.Name = $sName
 			$iError = ($oReportDoc.PageFooter.Name() = $sName) ? ($iError) : (BitOR($iError, 2))
 
@@ -3737,6 +3841,7 @@ Func _LOBase_ReportPageFooter(ByRef $oReportDoc, $bEnabled = Null, $sName = Null
 	If ($bVisible <> Null) Then
 		If $oReportDoc.PageFooterOn() Then
 			If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 			$oReportDoc.PageFooter.Visible = $bVisible
 			$iError = ($oReportDoc.PageFooter.Visible() = $bVisible) ? ($iError) : (BitOR($iError, 4))
 
@@ -3748,6 +3853,7 @@ Func _LOBase_ReportPageFooter(ByRef $oReportDoc, $bEnabled = Null, $sName = Null
 	If ($iHeight <> Null) Then
 		If $oReportDoc.PageFooterOn() Then
 			If Not __LOBase_IntIsBetween($iHeight, 1753) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 			$oReportDoc.PageFooter.Height = $iHeight
 			$iError = (__LOBase_IntIsBetween($oReportDoc.PageFooter.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 8))
 
@@ -3759,6 +3865,7 @@ Func _LOBase_ReportPageFooter(ByRef $oReportDoc, $bEnabled = Null, $sName = Null
 	If ($sCondPrint <> Null) Then
 		If $oReportDoc.PageFooterOn() Then
 			If Not IsString($sCondPrint) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 			$oReportDoc.PageFooter.ConditionalPrintExpression = $sCondPrint
 			$iError = ($oReportDoc.PageFooter.ConditionalPrintExpression() = $sCondPrint) ? ($iError) : (BitOR($iError, 16))
 
@@ -3770,6 +3877,7 @@ Func _LOBase_ReportPageFooter(ByRef $oReportDoc, $bEnabled = Null, $sName = Null
 	If ($iBackColor <> Null) Then
 		If $oReportDoc.PageFooterOn() Then
 			If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 			$oReportDoc.PageFooter.BackColor = $iBackColor
 			$iError = ($oReportDoc.PageFooter.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 32))
 
@@ -3849,6 +3957,7 @@ Func _LOBase_ReportPageHeader(ByRef $oReportDoc, $bEnabled = Null, $sName = Null
 
 	If ($bEnabled <> Null) Then
 		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oReportDoc.PageHeaderOn = $bEnabled
 		$iError = ($oReportDoc.PageHeaderOn() = $bEnabled) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -3856,6 +3965,7 @@ Func _LOBase_ReportPageHeader(ByRef $oReportDoc, $bEnabled = Null, $sName = Null
 	If ($sName <> Null) Then
 		If $oReportDoc.PageHeaderOn() Then
 			If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			$oReportDoc.PageHeader.Name = $sName
 			$iError = ($oReportDoc.PageHeader.Name() = $sName) ? ($iError) : (BitOR($iError, 2))
 
@@ -3867,6 +3977,7 @@ Func _LOBase_ReportPageHeader(ByRef $oReportDoc, $bEnabled = Null, $sName = Null
 	If ($bVisible <> Null) Then
 		If $oReportDoc.PageHeaderOn() Then
 			If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 			$oReportDoc.PageHeader.Visible = $bVisible
 			$iError = ($oReportDoc.PageHeader.Visible() = $bVisible) ? ($iError) : (BitOR($iError, 4))
 
@@ -3878,6 +3989,7 @@ Func _LOBase_ReportPageHeader(ByRef $oReportDoc, $bEnabled = Null, $sName = Null
 	If ($iHeight <> Null) Then
 		If $oReportDoc.PageHeaderOn() Then
 			If Not __LOBase_IntIsBetween($iHeight, 1753) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 			$oReportDoc.PageHeader.Height = $iHeight
 			$iError = (__LOBase_IntIsBetween($oReportDoc.PageHeader.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 8))
 
@@ -3889,6 +4001,7 @@ Func _LOBase_ReportPageHeader(ByRef $oReportDoc, $bEnabled = Null, $sName = Null
 	If ($sCondPrint <> Null) Then
 		If $oReportDoc.PageHeaderOn() Then
 			If Not IsString($sCondPrint) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 			$oReportDoc.PageHeader.ConditionalPrintExpression = $sCondPrint
 			$iError = ($oReportDoc.PageHeader.ConditionalPrintExpression() = $sCondPrint) ? ($iError) : (BitOR($iError, 16))
 
@@ -3900,6 +4013,7 @@ Func _LOBase_ReportPageHeader(ByRef $oReportDoc, $bEnabled = Null, $sName = Null
 	If ($iBackColor <> Null) Then
 		If $oReportDoc.PageHeaderOn() Then
 			If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 			$oReportDoc.PageHeader.BackColor = $iBackColor
 			$iError = ($oReportDoc.PageHeader.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 32))
 
@@ -3958,6 +4072,7 @@ Func _LOBase_ReportRename(ByRef $oDoc, $sReport, $sNewName)
 
 	For $i = 1 To $asSplit[0] - 1
 		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oSource = $oSource.getByName($asSplit[$i])
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	Next
@@ -3965,7 +4080,6 @@ Func _LOBase_ReportRename(ByRef $oDoc, $sReport, $sNewName)
 	$sReport = $asSplit[$asSplit[0]] ; Last element of Array will be the Report name to Rename
 
 	If $oSource.hasByName($sNewName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
 	If Not $oSource.hasByName($sReport) Or Not $oSource.getByName($sReport).supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$oSource.getByName($sReport).rename($sNewName)
@@ -4198,6 +4312,7 @@ Func _LOBase_ReportsGetCount(ByRef $oDoc, $bExhaustive = True, $sFolder = "")
 
 		For $i = 1 To $asSplit[0]
 			If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			$oSource = $oSource.getByName($asSplit[$i])
 			If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		Next
@@ -4308,6 +4423,7 @@ Func _LOBase_ReportsGetNames(ByRef $oDoc, $bExhaustive = True, $sFolder = "")
 
 		For $i = 1 To $asSplit[0]
 			If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			$oSource = $oSource.getByName($asSplit[$i])
 			If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		Next

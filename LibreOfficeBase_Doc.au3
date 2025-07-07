@@ -102,6 +102,7 @@ Func _LOBase_DocClose(ByRef $oDoc, $bSaveChanges = True, $sSaveName = "", $bDeli
 		Else
 
 			If ($oDoc.DataSource.URL() = "") Then Return SetError($__LO_STATUS_DOC_ERROR, 2, 0)
+
 			$sSavePath = @DesktopDir & "\"
 			If ($sSaveName = "") Or ($sSaveName = " ") Then
 				$sSaveName = @YEAR & "-" & @MON & "-" & @MDAY & "_" & @HOUR & "-" & @MIN & "-" & @SEC & ".odb"
@@ -184,12 +185,14 @@ Func _LOBase_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 	If Not IsString($sFile) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsBool($bConnectCurrent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bConnectAll) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
 	If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
-
 	If Not $oDesktop.getComponents.hasElements() Then Return SetError($__LO_STATUS_DOC_ERROR, 3, 0) ; no L.O open
+
 	$oEnumDoc = $oDesktop.getComponents.createEnumeration()
 	If Not IsObj($oEnumDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
@@ -334,6 +337,7 @@ Func _LOBase_DocCreate($bForceNew = True, $bHidden = False, $bWizard = False)
 	$aArgs[0] = __LOBase_SetPropertyValue("Hidden", $bHidden)
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
 	If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
@@ -341,6 +345,7 @@ Func _LOBase_DocCreate($bForceNew = True, $bHidden = False, $bWizard = False)
 	If Not $bForceNew And $oDesktop.getComponents.hasElements() Then
 		$oEnumDoc = $oDesktop.getComponents.createEnumeration()
 		If Not IsObj($oEnumDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+
 		While $oEnumDoc.hasMoreElements()
 			$oDoc = $oEnumDoc.nextElement()
 			If $oDoc.supportsService($sServiceName) _
@@ -419,7 +424,6 @@ Func _LOBase_DocDatabaseType(ByRef $oDoc, $sType = Default, $bOverwrite = False)
 
 	If Not IsString($sType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bOverwrite) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
 	If ($sDataType <> "jdbc:") And ($bOverwrite = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$oDoc.DataSource.URL = $sType
@@ -714,17 +718,21 @@ Func _LOBase_DocOpen($sFilePath, $bConnectIfOpen = True, $bHidden = Null, $bRead
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsString($sFilePath) Or Not FileExists($sFilePath) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 	$sFileURL = _LOBase_PathConvert($sFilePath, $LOB_PATHCONV_OFFICE_RETURN)
 	If @error Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bConnectIfOpen) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
 	If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	If Not __LOBase_VarsAreNull($bHidden, $bReadOnly, $sPassword, $bLoadAsTemplate) Then
 		If ($bHidden <> Null) Then
 			If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			$vProperty = __LOBase_SetPropertyValue("Hidden", $bHidden)
 			If @error Then $iError = BitOR($iError, 1)
 			If Not BitAND($iError, 1) Then __LOBase_AddTo1DArray($aoProperties, $vProperty)
@@ -732,6 +740,7 @@ Func _LOBase_DocOpen($sFilePath, $bConnectIfOpen = True, $bHidden = Null, $bRead
 
 		If ($bReadOnly <> Null) Then
 			If Not IsBool($bReadOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 			$vProperty = __LOBase_SetPropertyValue("ReadOnly", $bReadOnly)
 			If @error Then $iError = BitOR($iError, 2)
 			If Not BitAND($iError, 2) Then __LOBase_AddTo1DArray($aoProperties, $vProperty)
@@ -739,6 +748,7 @@ Func _LOBase_DocOpen($sFilePath, $bConnectIfOpen = True, $bHidden = Null, $bRead
 
 		If ($sPassword <> Null) Then
 			If Not IsString($sPassword) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 			$vProperty = __LOBase_SetPropertyValue("Password", $sPassword)
 			If @error Then $iError = BitOR($iError, 4)
 			If Not BitAND($iError, 4) Then __LOBase_AddTo1DArray($aoProperties, $vProperty)
@@ -746,6 +756,7 @@ Func _LOBase_DocOpen($sFilePath, $bConnectIfOpen = True, $bHidden = Null, $bRead
 
 		If ($bLoadAsTemplate <> Null) Then
 			If Not IsBool($bLoadAsTemplate) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 			$vProperty = __LOBase_SetPropertyValue("AsTemplate", $bLoadAsTemplate)
 			If @error Then $iError = BitOR($iError, 8)
 			If Not BitAND($iError, 8) Then __LOBase_AddTo1DArray($aoProperties, $vProperty)
@@ -787,6 +798,7 @@ Func _LOBase_DocSave(ByRef $oDoc)
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oDoc.hasLocation Or $oDoc.isReadOnly Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	$oDoc.store()
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
@@ -848,6 +860,7 @@ Func _LOBase_DocSaveAs(ByRef $oDoc, $sFilePath, $bOverwrite = Null, $sPassword =
 
 	If ($bOverwrite <> Null) Then
 		If Not IsBool($bOverwrite) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		ReDim $aProperties[UBound($aProperties) + 1]
 		$aProperties[UBound($aProperties) - 1] = __LOBase_SetPropertyValue("Overwrite", $bOverwrite)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
@@ -855,6 +868,7 @@ Func _LOBase_DocSaveAs(ByRef $oDoc, $sFilePath, $bOverwrite = Null, $sPassword =
 
 	If $sPassword <> Null Then
 		If Not IsString($sPassword) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		ReDim $aProperties[UBound($aProperties) + 1]
 		$aProperties[UBound($aProperties) - 1] = __LOBase_SetPropertyValue("Password", $sPassword)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
@@ -919,6 +933,7 @@ Func _LOBase_DocSaveCopy(ByRef $oDoc, $sFilePath, $bOverwrite = Null, $sPassword
 
 	If ($bOverwrite <> Null) Then
 		If Not IsBool($bOverwrite) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		ReDim $aProperties[UBound($aProperties) + 1]
 		$aProperties[UBound($aProperties) - 1] = __LOBase_SetPropertyValue("Overwrite", $bOverwrite)
 		If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0)
@@ -926,6 +941,7 @@ Func _LOBase_DocSaveCopy(ByRef $oDoc, $sFilePath, $bOverwrite = Null, $sPassword
 
 	If ($sPassword <> Null) Then
 		If Not IsString($sPassword) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		ReDim $aProperties[UBound($aProperties) + 1]
 		$aProperties[UBound($aProperties) - 1] = __LOBase_SetPropertyValue("Password", $sPassword)
 		If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 2, 0)
@@ -1017,12 +1033,10 @@ Func _LOBase_DocTableUIOpenByName(ByRef $oDoc, ByRef $oConnection, $sTable, $bEd
 	If Not IsString($sTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not IsBool($bEdit) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oTables = $oConnection.getTables()
 	If Not IsObj($oTables) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
 	If Not $oTables.hasByName($sTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 	If Not $oDoc.CurrentController.isConnected() Then $oDoc.CurrentController.connect()
@@ -1083,7 +1097,6 @@ Func _LOBase_DocTableUIOpenByObject(ByRef $oDoc, ByRef $oConnection, ByRef $oTab
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not IsBool($bEdit) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$sTable = $oTable.Name()
@@ -1178,6 +1191,7 @@ Func _LOBase_DocVisible(ByRef $oDoc, $bVisible = Null)
 	Local $iError = 0
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 	If ($bVisible = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.CurrentController.Frame.ContainerWindow.isVisible())
 
 	If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)

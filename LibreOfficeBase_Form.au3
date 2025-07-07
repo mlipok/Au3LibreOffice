@@ -88,9 +88,7 @@ Func _LOBase_FormClose(ByRef $oFormDoc, $bForceClose = False)
 
 	If Not IsObj($oFormDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsBool($bForceClose) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
 	If $oFormDoc.isModified() And Not $bForceClose Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
 	If Not $oFormDoc.hasLocation() Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	; Retrieve the unique name of the form.
@@ -210,10 +208,11 @@ Func _LOBase_FormConnect($bConnectCurrent = True)
 
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
 	If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
-
 	If Not $oDesktop.getComponents.hasElements() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; no L.O open
+
 	$oEnumDoc = $oDesktop.getComponents.createEnumeration()
 	If Not IsObj($oEnumDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
@@ -295,7 +294,6 @@ Func _LOBase_FormCopy(ByRef $oDoc, ByRef $oConnection, $sInputForm, $sOutputForm
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsString($sInputForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsString($sOutputForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oSource = $oDoc.FormDocuments()
@@ -305,6 +303,7 @@ Func _LOBase_FormCopy(ByRef $oDoc, ByRef $oConnection, $sInputForm, $sOutputForm
 
 	For $i = 1 To $asSplit[0] - 1
 		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oSource = $oSource.getByName($asSplit[$i])
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	Next
@@ -324,6 +323,7 @@ Func _LOBase_FormCopy(ByRef $oDoc, ByRef $oConnection, $sInputForm, $sOutputForm
 
 	For $i = 1 To $asSplit[0] - 1
 		If Not $oDestination.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oDestination = $oDestination.getByName($asSplit[$i])
 		If Not IsObj($oDestination) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 	Next
@@ -407,7 +407,6 @@ Func _LOBase_FormCreate(ByRef $oDoc, ByRef $oConnection, $sForm, $bOpen = False,
 	If Not IsBool($bOpen) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not IsBool($bDesign) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oSource = $oDoc.FormDocuments()
@@ -417,6 +416,7 @@ Func _LOBase_FormCreate(ByRef $oDoc, ByRef $oConnection, $sForm, $bOpen = False,
 
 	For $i = 1 To $asSplit[0] - 1
 		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oSource = $oSource.getByName($asSplit[$i])
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	Next
@@ -533,6 +533,7 @@ Func _LOBase_FormDelete(ByRef $oDoc, $sName)
 
 	For $i = 1 To $asSplit[0] - 1
 		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oSource = $oSource.getByName($asSplit[$i])
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	Next
@@ -579,6 +580,7 @@ Func _LOBase_FormDocVisible(ByRef $oFormDoc, $bVisible = Null)
 	Local $iError = 0
 
 	If Not IsObj($oFormDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 	If ($bVisible = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oFormDoc.CurrentController.Frame.ContainerWindow.isVisible())
 
 	If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -641,6 +643,7 @@ Func _LOBase_FormExists(ByRef $oDoc, $sName, $bExhaustive = True)
 
 	For $i = 1 To $asSplit[0] - 1
 		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oSource = $oSource.getByName($asSplit[$i])
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	Next
@@ -758,6 +761,7 @@ Func _LOBase_FormFolderCopy(ByRef $oDoc, $sInputFolder, $sOutputFolder)
 
 	For $i = 1 To $asSplit[0] - 1
 		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oSource = $oSource.getByName($asSplit[$i])
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	Next
@@ -777,6 +781,7 @@ Func _LOBase_FormFolderCopy(ByRef $oDoc, $sInputFolder, $sOutputFolder)
 
 	For $i = 1 To $asSplit[0] - 1
 		If Not $oDestination.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oDestination = $oDestination.getByName($asSplit[$i])
 		If Not IsObj($oDestination) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 	Next
@@ -840,6 +845,7 @@ Func _LOBase_FormFolderCreate(ByRef $oDoc, $sFolder)
 
 	For $i = 1 To $asSplit[0] - 1
 		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oSource = $oSource.getByName($asSplit[$i])
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	Next
@@ -902,6 +908,7 @@ Func _LOBase_FormFolderDelete(ByRef $oDoc, $sName)
 
 	For $i = 1 To $asSplit[0] - 1
 		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oSource = $oSource.getByName($asSplit[$i])
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	Next
@@ -970,6 +977,7 @@ Func _LOBase_FormFolderExists(ByRef $oDoc, $sName, $bExhaustive = True)
 
 	For $i = 1 To $asSplit[0] - 1
 		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oSource = $oSource.getByName($asSplit[$i])
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	Next
@@ -1076,6 +1084,7 @@ Func _LOBase_FormFolderRename(ByRef $oDoc, $sFolder, $sNewName)
 
 	For $i = 1 To $asSplit[0] - 1
 		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oSource = $oSource.getByName($asSplit[$i])
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	Next
@@ -1083,7 +1092,6 @@ Func _LOBase_FormFolderRename(ByRef $oDoc, $sFolder, $sNewName)
 	$sFolder = $asSplit[$asSplit[0]] ; Last element of Array will be the Folder name to Rename
 
 	If $oSource.hasByName($sNewName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
 	If Not $oSource.hasByName($sFolder) Or Not $oSource.getByName($sFolder).supportsService("com.sun.star.sdb.Forms") Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$oSource.getByName($sFolder).rename($sNewName)
@@ -1146,6 +1154,7 @@ Func _LOBase_FormFoldersGetCount(ByRef $oDoc, $bExhaustive = True, $sFolder = ""
 
 		For $i = 1 To $asSplit[0]
 			If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			$oSource = $oSource.getByName($asSplit[$i])
 			If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		Next
@@ -1252,6 +1261,7 @@ Func _LOBase_FormFoldersGetNames(ByRef $oDoc, $bExhaustive = True, $sFolder = ""
 
 		For $i = 1 To $asSplit[0]
 			If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			$oSource = $oSource.getByName($asSplit[$i])
 			If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		Next
@@ -1386,7 +1396,6 @@ Func _LOBase_FormOpen(ByRef $oDoc, ByRef $oConnection, $sName, $bDesign = True, 
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsBool($bDesign) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If Not $oDoc.CurrentController.isConnected() Then $oDoc.CurrentController.connect()
@@ -1398,6 +1407,7 @@ Func _LOBase_FormOpen(ByRef $oDoc, ByRef $oConnection, $sName, $bDesign = True, 
 
 	For $i = 1 To $asSplit[0] - 1
 		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oSource = $oSource.getByName($asSplit[$i])
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	Next
@@ -1472,6 +1482,7 @@ Func _LOBase_FormRename(ByRef $oDoc, $sForm, $sNewName)
 
 	For $i = 1 To $asSplit[0] - 1
 		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oSource = $oSource.getByName($asSplit[$i])
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	Next
@@ -1479,7 +1490,6 @@ Func _LOBase_FormRename(ByRef $oDoc, $sForm, $sNewName)
 	$sForm = $asSplit[$asSplit[0]] ; Last element of Array will be the Form name to Rename
 
 	If $oSource.hasByName($sNewName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
 	If Not $oSource.hasByName($sForm) Or Not $oSource.getByName($sForm).supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$oSource.getByName($sForm).rename($sNewName)
@@ -1658,6 +1668,7 @@ Func _LOBase_FormsGetCount(ByRef $oDoc, $bExhaustive = True, $sFolder = "")
 
 		For $i = 1 To $asSplit[0]
 			If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			$oSource = $oSource.getByName($asSplit[$i])
 			If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		Next
@@ -1768,6 +1779,7 @@ Func _LOBase_FormsGetNames(ByRef $oDoc, $bExhaustive = True, $sFolder = "")
 
 		For $i = 1 To $asSplit[0]
 			If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 			$oSource = $oSource.getByName($asSplit[$i])
 			If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		Next
