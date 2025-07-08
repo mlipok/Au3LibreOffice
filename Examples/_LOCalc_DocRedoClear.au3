@@ -1,5 +1,4 @@
 #include <MsgBoxConstants.au3>
-#include <Array.au3>
 
 #include "..\LibreOfficeCalc.au3"
 
@@ -7,6 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oSheet, $oCell
+	Local $sRedos = ""
 	Local $asRedo[0]
 	Local $iCount = 0
 
@@ -43,8 +43,12 @@ Func Example()
 	$asRedo = _LOCalc_DocRedoGetAllActionTitles($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve array of Redo action titles. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
+	For $sRedo In $asRedo
+		$sRedos &= $sRedo & @CRLF
+	Next
+
 	; Display the available Redo action titles.
-	_ArrayDisplay($asRedo)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The available Redo Actions are:" & @CRLF & $sRedos)
 
 	; Clear the Redo Action list.
 	_LOCalc_DocRedoClear($oDoc)
@@ -56,8 +60,14 @@ Func Example()
 	$asRedo = _LOCalc_DocRedoGetAllActionTitles($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve array of Redo action titles. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
+	$sRedos = ""
+
+	For $sRedo In $asRedo
+		$sRedos &= $sRedo & @CRLF
+	Next
+
 	; Display the available Redo action titles again, if any.
-	_ArrayDisplay($asRedo)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The available Redo Actions are:" & @CRLF & $sRedos)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
