@@ -51,7 +51,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to Create a Paragraph Tab stop. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve an array of tab stop positions.
-	$aiTabStops = _LOWriter_DirFrmtParTabStopList($oViewCursor)
+	$aiTabStops = _LOWriter_DirFrmtParTabStopsGetList($oViewCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve array of Paragraph tab stop positions. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	For $iTabStop In $aiTabStops
