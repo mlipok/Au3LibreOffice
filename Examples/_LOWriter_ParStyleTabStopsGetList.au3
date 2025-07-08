@@ -1,4 +1,3 @@
-#include <Array.au3>
 #include <MsgBoxConstants.au3>
 
 #include "..\LibreOfficeWriter.au3"
@@ -7,6 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oParStyle
+	Local $sTabStops = ""
 	Local $iMicrometers
 	Local $aiTabstops
 
@@ -43,13 +43,14 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to Create a Paragraph Tab stop. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve an array of tab stop positions.
-	$aiTabstops = _LOWriter_ParStyleTabStopsGetList($oParStyle)
+	$aiTabstops = _LOWriter_ParStyleTabStopList($oParStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve array of Paragraph style tab stop positions. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "The number of Tabstops found is " & @extended & @CRLF & @CRLF & "I will now display the array of tab stop positions.")
+	For $iTabStop In $aiTabstops
+		$sTabStops &= $iTabStop & @CRLF
+	Next
 
-	; Display the Array.
-	_ArrayDisplay($aiTabstops)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The number of Tabstops found is " & @extended & @CRLF & @CRLF & "The following TabStops were found:" & @CRLF & $sTabStops)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

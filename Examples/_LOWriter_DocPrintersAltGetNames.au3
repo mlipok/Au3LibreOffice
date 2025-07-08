@@ -1,4 +1,3 @@
-#include <Array.au3>
 #include <MsgBoxConstants.au3>
 
 #include "..\LibreOfficeWriter.au3"
@@ -6,7 +5,7 @@
 Example()
 
 Func Example()
-	Local $sDefault, $sSearch
+	Local $sDefault, $sSearch, $sPrinters = ""
 	Local $asPrinters
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will list your currently available printers")
@@ -16,7 +15,10 @@ Func Example()
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "There were " & @extended & " results.")
 
-	_ArrayDisplay($asPrinters)
+	For $i = 0 To UBound($asPrinters) - 1
+		$sPrinters &= $asPrinters[$i] & @CRLF
+	Next
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The printers currently available are:" & @CRLF & $sPrinters)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will list your currently default printer next.")
 
@@ -41,7 +43,13 @@ Func Example()
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "There were: " & @extended & " results")
 
-	_ArrayDisplay($asPrinters)
+	$sPrinters = ""
+
+	For $i = 0 To UBound($asPrinters) - 1
+		$sPrinters &= $asPrinters[$i] & @CRLF
+	Next
+
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The printers returned from the search are:" & @CRLF & $sPrinters)
 
 EndFunc
 

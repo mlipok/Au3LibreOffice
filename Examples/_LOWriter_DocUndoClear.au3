@@ -1,5 +1,4 @@
 #include <MsgBoxConstants.au3>
-#include <Array.au3>
 
 #include "..\LibreOfficeWriter.au3"
 
@@ -7,6 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oViewCursor
+	Local $sUndos = "", $sRedos = ""
 	Local $asUndo[0], $asRedo[0]
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -41,11 +41,19 @@ Func Example()
 	$asRedo = _LOWriter_DocRedoGetAllActionTitles($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve array of Redo action titles. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
+	For $sUndo In $asUndo
+		$sUndos &= $sUndo & @CRLF
+	Next
+
 	; Display the available Undo action titles.
-	_ArrayDisplay($asUndo)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The available Undo Actions are:" & @CRLF & $sUndos)
+
+	For $sRedo In $asRedo
+		$sRedos &= $sRedo & @CRLF
+	Next
 
 	; Display the available Redo action titles.
-	_ArrayDisplay($asRedo)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The available Redo Actions are:" & @CRLF & $sRedos)
 
 	; Clear the Undo/Redo list.
 	_LOWriter_DocUndoClear($oDoc)
@@ -61,11 +69,23 @@ Func Example()
 	$asRedo = _LOWriter_DocRedoGetAllActionTitles($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve array of Redo action titles. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Display the available Undo action titles again, if any.
-	_ArrayDisplay($asUndo)
+	$sUndos = ""
+
+	For $sUndo In $asUndo
+		$sUndos &= $sUndo & @CRLF
+	Next
+
+	; Display the available Undo action titles.
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The available Undo Actions are:" & @CRLF & $sUndos)
+
+	$sRedos = ""
+
+	For $sRedo In $asRedo
+		$sRedos &= $sRedo & @CRLF
+	Next
 
 	; Display the available Redo action titles.
-	_ArrayDisplay($asRedo)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The available Redo Actions are:" & @CRLF & $sRedos)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

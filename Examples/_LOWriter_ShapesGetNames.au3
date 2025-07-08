@@ -1,4 +1,3 @@
-#include <Array.au3>
 #include <MsgBoxConstants.au3>
 
 #include "..\LibreOfficeWriter.au3"
@@ -7,6 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oViewCursor
+	Local $sShapes = ""
 	Local $asShapes
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -29,7 +29,12 @@ Func Example()
 	$asShapes = _LOWriter_ShapesGetNames($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve a list of Shapes. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	_ArrayDisplay($asShapes)
+	For $i = 0 To UBound($asShapes) - 1
+		$sShapes &= "Shape Name: " & $asShapes[$i][0] & @TAB & "Shape type: " & $asShapes[$i][1] & @CRLF
+	Next
+
+	; Display the available Undo action titles.
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Document contains the following Shapes:" & @CRLF & $sShapes)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

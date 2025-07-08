@@ -1,4 +1,3 @@
-#include <Array.au3>
 #include <MsgBoxConstants.au3>
 
 #include "..\LibreOfficeWriter.au3"
@@ -7,7 +6,7 @@ Example()
 
 Func Example()
 	Local $iCount
-	Local $sDefault
+	Local $sDefault, $sPrinters = ""
 	Local $asPrinters
 
 	; Minimum Libre version is 4.1, Check Libre Office Version.
@@ -22,7 +21,10 @@ Func Example()
 
 	; If results, display them, else display a message and exit.
 	If $iCount > 0 Then
-		_ArrayDisplay($asPrinters)
+		For $i = 0 To $iCount - 1
+			$sPrinters &= $asPrinters[$i] & @CRLF
+		Next
+		MsgBox($MB_OK + $MB_TOPMOST, Default, "The printers currently available are:" & @CRLF & $sPrinters)
 	Else
 		_ERROR("No printers found.")
 	EndIf

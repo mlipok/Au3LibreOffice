@@ -880,6 +880,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- __LOWriter_ParTabStopList-->__LOWriter_ParTabStopsGetList
 - Made $oDoc Parameter optional for _LOWriter_FontsGetNames.
 - Added count of number of results for _LOWriter_DocConnect, connect-all and partial name search when more than one result is present.
+- Removed _ArrayDisplay from most examples.
 
 ### Fixed
 
