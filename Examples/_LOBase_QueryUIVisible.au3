@@ -11,8 +11,9 @@ Example()
 If IsString($sPath) Then FileDelete($sPath)
 
 Func Example()
-	Local $oDoc, $oDBase, $oConnection, $oTable, $oTableUI
+	Local $oDoc, $oDBase, $oConnection, $oQueryUI
 	Local $sSavePath
+	Local $bReturn
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOBase_DocCreate(True, False)
@@ -38,23 +39,43 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to create a connection to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Add a Table to the Database.
-	$oTable = _LOBase_TableAdd($oConnection, "tblNew_Table", "Col1")
+	_LOBase_TableAdd($oConnection, "tblNew_Table", "Col1")
 	If @error Then Return _ERROR($oDoc, "Failed to add a table to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Add a Column to the Table.
-	_LOBase_TableColAdd($oTable, "AutoIt Col", $LOB_DATA_TYPE_BOOLEAN, "", "A New Boolean Column.")
-	If @error Then Return _ERROR($oDoc, "Failed to add a Column to the Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Add a Query to the Document.
+	_LOBase_QueryAddByName($oConnection, "qryAutoIt_Query", "tblNew_Table", "*")
+	If @error Then Return _ERROR($oDoc, "Failed to add a Query to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Open the Table UI.
-	$oTableUI = _LOBase_TableUIOpenByObject($oDoc, $oConnection, $oTable)
-	If @error Then Return _ERROR($oDoc, "Failed to open Table UI. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Open the Query UI.
+	$oQueryUI = _LOBase_QueryUIOpenByName($oDoc, $oConnection, "qryAutoIt_Query")
+	If @error Then Return _ERROR($oDoc, "Failed to open Query UI. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have added a Column to the table named ""tblNew_Table"", and have opened the Table." & @CRLF & _
-			"Press OK to close the window and document and delete the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have just opened the Query UI, press Ok to make the window invisible.")
 
-	; Close Table UI.
-	_LOBase_TableUIClose($oTableUI)
-	If @error Then Return _ERROR($oDoc, "Failed to close Table UI. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Make the Query UI Window invisible by setting visible to False
+	_LOBase_QueryUIVisible($oQueryUI, False)
+	If (@error > 0) Then _ERROR($oDoc, "Failed to change Window visibility settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Test if the document is Visible
+	$bReturn = _LOBase_QueryUIVisible($oQueryUI)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Window visibility status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Is the Query window currently visible? True/False: " & $bReturn & @CRLF & @CRLF & _
+			"Press Ok to make the window visible again.")
+
+	; Make the window visible by setting visible to True
+	_LOBase_QueryUIVisible($oQueryUI, True)
+	If (@error > 0) Then _ERROR($oDoc, "Failed to change Query Window visibility settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Test if the document is Visible
+	$bReturn = _LOBase_QueryUIVisible($oQueryUI)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Window visibility status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Is the Query window now visible? True/False: " & $bReturn)
+
+	; Close Query UI.
+	_LOBase_QueryUIClose($oQueryUI)
+	If @error Then Return _ERROR($oDoc, "Failed to close Query UI. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Close the connection.
 	_LOBase_DatabaseConnectionClose($oConnection)

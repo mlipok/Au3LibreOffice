@@ -74,13 +74,13 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to Insert new Row. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Open the Table UI.
-	$oTableUI = _LOBase_DocTableUIOpenByObject($oDoc, $oConnection, $oTable)
+	$oTableUI = _LOBase_TableUIOpenByObject($oDoc, $oConnection, $oTable)
 	If @error Then Return _ERROR($oDoc, "Failed to open Table User Interface. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to Close and Delete the Document.")
 
 	; Close the Table UI
-	_LOBase_DocTableUIClose($oTableUI)
+	_LOBase_TableUIClose($oTableUI)
 	If @error Then Return _ERROR($oDoc, "Failed to close Table User Interface. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Close the connection.

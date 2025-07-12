@@ -11,7 +11,7 @@ Example()
 If IsString($sPath) Then FileDelete($sPath)
 
 Func Example()
-	Local $oDoc, $oDBase, $oConnection, $oTable, $oTableUI
+	Local $oDoc, $oDBase, $oConnection, $oTable, $oTableUI, $oRowSet
 	Local $sSavePath
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -38,19 +38,44 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to create a connection to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Add a Table to the Database.
-	$oTable = _LOBase_TableAdd($oConnection, "tblNew_Table", "Col1")
+	$oTable = _LOBase_TableAdd($oConnection, "tblNew_Table", "Col1", $LOB_DATA_TYPE_INTEGER)
 	If @error Then Return _ERROR($oDoc, "Failed to add a table to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Add a Column to the Table.
-	_LOBase_TableColAdd($oTable, "AutoIt Col", $LOB_DATA_TYPE_BOOLEAN, "", "A New Boolean Column.")
+	_LOBase_TableColAdd($oTable, "AutoIt Col", $LOB_DATA_TYPE_VARCHAR, "")
 	If @error Then Return _ERROR($oDoc, "Failed to add a Column to the Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Open the Table UI.
-	$oTableUI = _LOBase_TableUIOpenByObject($oDoc, $oConnection, $oTable)
+	$oTableUI = _LOBase_TableUIOpenByName($oDoc, $oConnection, "tblNew_Table")
 	If @error Then Return _ERROR($oDoc, "Failed to open Table UI. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have added a Column to the table named ""tblNew_Table"", and have opened the Table." & @CRLF & _
-			"Press OK to close the window and document and delete the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have just opened the Table UI in Data entry mode, press Ok to add some Data.")
+
+	; Retrieve the Row Set.
+	$oRowSet = _LOBase_TableUIGetRowSet($oTableUI)
+	If @error Then Return _ERROR($oDoc, "Failed to retrieve Table UI Row Set. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Insert a couple rows of Data.
+	For $i = 1 To 5
+		; Move to a new row to insert some Data.
+		_LOBase_SQLResultRowUpdate($oRowSet, $LOB_RESULT_ROW_UPDATE_MOVE_TO_INSERT)
+		If @error Then Return _ERROR($oDoc, "Failed to move to Insert Result Row. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+		; Set first Column to an Integer.
+		_LOBase_SQLResultRowModify($oRowSet, $LOB_RESULT_ROW_MOD_INT, 1, $i)
+		If @error Then Return _ERROR($oDoc, "Failed to modify Result Row Data. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+		; Set second Column to some Text.
+		_LOBase_SQLResultRowModify($oRowSet, $LOB_RESULT_ROW_MOD_STRING, 2, "Row " & $i)
+		If @error Then Return _ERROR($oDoc, "Failed to modify Result Row Data. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+		; Insert the new row.
+		_LOBase_SQLResultRowUpdate($oRowSet, $LOB_RESULT_ROW_UPDATE_INSERT)
+		If @error Then Return _ERROR($oDoc, "Failed to move to Insert Result Row. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	Next
+
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have finished entering Data, press ok to close the Document.")
 
 	; Close Table UI.
 	_LOBase_TableUIClose($oTableUI)

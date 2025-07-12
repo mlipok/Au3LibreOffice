@@ -72,13 +72,13 @@ Func Example()
 	Next
 
 	; Open the Table UI.
-	$oTableUI = _LOBase_DocTableUIOpenByObject($oDoc, $oConnection, $oTable)
+	$oTableUI = _LOBase_TableUIOpenByObject($oDoc, $oConnection, $oTable)
 	If @error Then Return _ERROR($oDoc, "Failed to open Table User Interface. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to close and delete the document.")
 
 	; Close the Table UI
-	_LOBase_DocTableUIClose($oTableUI)
+	_LOBase_TableUIClose($oTableUI)
 	If @error Then Return _ERROR($oDoc, "Failed to close Table User Interface. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber, $oTableUI)
 
 	; Close the connection.
@@ -135,7 +135,7 @@ EndFunc
 
 Func _ERROR($oDoc, $sErrorText, $oTableUI = Null)
 	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
-	If IsObj($oTableUI) Then _LOBase_DocTableUIClose($oTableUI)
+	If IsObj($oTableUI) Then _LOBase_TableUIClose($oTableUI)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	If IsString($sPath) Then FileDelete($sPath)
 

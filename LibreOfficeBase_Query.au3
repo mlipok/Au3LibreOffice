@@ -34,6 +34,12 @@
 ; _LOBase_QueryGetObjByName
 ; _LOBase_QueryName
 ; _LOBase_QuerySQLCommand
+; _LOBase_QueryUIClose
+; _LOBase_QueryUIConnect
+; _LOBase_QueryUIGetRowSet
+; _LOBase_QueryUIOpenByName
+; _LOBase_QueryUIOpenByObject
+; _LOBase_QueryUIVisible
 ; ===============================================================================================================================
 
 ; #FUNCTION# ====================================================================================================================
@@ -757,3 +763,359 @@ Func _LOBase_QuerySQLCommand(ByRef $oQuery, $sSQL_Command = Null)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOBase_QuerySQLCommand
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_QueryUIClose
+; Description ...: Close a Query User Interface window.
+; Syntax ........: _LOBase_QueryUIClose(ByRef $oQueryUI[, $bDeliverOwnership = True])
+; Parameters ....: $oQueryUI            - [in/out] an object. A Query User Interface Object from a previous _LOBase_QueryUIOpenByName, _LOBase_QueryUIOpenByObject or _LOBase_QueryUIConnect function.
+;                  $bDeliverOwnership   - [optional] a boolean value. Default is True. If True, deliver ownership of the Query UI Object from the script to LibreOffice, recommended is True.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oQueryUI not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $bDeliverOwnership not a Boolean.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Successfully closed the Query User Interface window.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOBase_QueryUIOpenByName, _LOBase_QueryUIOpenByObject, _LOBase_QueryUIConnect
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_QueryUIClose(ByRef $oQueryUI, $bDeliverOwnership = True)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oQueryUI) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsBool($bDeliverOwnership) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oQueryUI.Frame.close($bDeliverOwnership)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOBase_QueryUIClose
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_QueryUIConnect
+; Description ...: Connect to an open instance of a Database Query User Interface.
+; Syntax ........: _LOBase_QueryUIConnect([$bConnectCurrent = True])
+; Parameters ....: $bConnectCurrent     - [optional] a boolean value. Default is True. If True, returns the currently active, or last active Document, unless it is not a QueryUI Document.
+; Return values .: Success: Object or Array.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $bConnectCurrent not a Boolean.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error creating ServiceManager object.
+;                  @Error 2 @Extended 2 Return 0 = Error creating Desktop object.
+;                  @Error 2 @Extended 3 Return 0 = Error creating enumeration of open documents.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Row Set Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Query name.
+;                  --Document Errors--
+;                  @Error 5 @Extended 1 Return 0 = No open Libre Office documents found.
+;                  @Error 5 @Extended 2 Return 0 = Current Component not a QueryUI Document.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success, The Object for the current, or last active QueryUI document is returned. The Query is open in Viewing/Data entry mode.
+;                  @Error 0 @Extended 1 Return Object = Success, The Object for the current, or last active document is returned. The Query is open in Design mode.
+;                  @Error 0 @Extended ? Return Array = Success, An Array of all open LibreOffice QueryUI documents is returned. See remarks. @Extended is set to number of results.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The Connect all option returns an array with three columns per result. ($aArray[0][3]).
+;                  Row 1, Column 0 contains the Object for that document. e.g. $aArray[0][0] = $oDoc
+;                  Row 1, Column 1 contains the Document's full title. e.g. $aArray[0][1] = "Query1 - DBaseName" [Viewing mode] OR "DBaseName.odb : Query1" [Design Mode]
+;                  Row 1, Column 2 contains a Boolean of whether the QueryUI is in Design mode [True] or not.. e.g. $aArray[0][2] = True
+;                  Row 2, Column 0 contains the Object for the next document. And so on. e.g. $aArray[1][0] = $oDoc2
+; Related .......: _LOBase_QueryUIOpenByName, _LOBase_QueryUIOpenByObject
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_QueryUIConnect($bConnectCurrent = True)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iCount = 0
+	Local $aoConnectAll[1][3]
+	Local $oEnumDoc, $oDoc, $oServiceManager, $oDesktop, $oRowSet
+	Local $sQueryName
+	Local Const $sQueryDesignServ = "com.sun.star.sdb.QueryDesign", $sQueryViewServ = "com.sun.star.sdb.DataSourceBrowser"
+
+	If Not IsBool($bConnectCurrent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
+	If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not $oDesktop.getComponents.hasElements() Then Return SetError($__LO_STATUS_DOC_ERROR, 1, 0) ; no L.O open
+
+	$oEnumDoc = $oDesktop.getComponents.createEnumeration()
+	If Not IsObj($oEnumDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+
+	If $bConnectCurrent Then
+		$oDoc = $oDesktop.currentComponent()
+
+		If $oDoc.supportsService($sQueryDesignServ) Then
+			Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc)
+
+		ElseIf $oDoc.supportsService($sQueryViewServ) Then
+			$oRowSet = $oDoc.FormOperations.Cursor
+			If Not IsObj($oRowSet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+			$sQueryName = $oRowSet.Command()
+			If Not IsString($sQueryName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+			If Not $oRowSet.ActiveConnection.Queries.hasByName($sQueryName) Then Return SetError($__LO_STATUS_DOC_ERROR, 2, 0) ; Not a Query UI, but perhaps a Table.
+
+			Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc)
+
+		Else
+
+			Return SetError($__LO_STATUS_DOC_ERROR, 2, 0)
+		EndIf
+	EndIf
+
+	; Else Connect All.
+	$iCount = 0
+	While $oEnumDoc.hasMoreElements()
+		$oDoc = $oEnumDoc.nextElement()
+		If $oDoc.supportsService($sQueryDesignServ) Then
+
+			ReDim $aoConnectAll[$iCount + 1][3]
+			$aoConnectAll[$iCount][0] = $oDoc
+			$aoConnectAll[$iCount][1] = $oDoc.Title()
+			$aoConnectAll[$iCount][2] = True    ; True = In Design mode.
+			$iCount += 1
+
+		ElseIf $oDoc.supportsService($sQueryViewServ) Then
+			$oRowSet = $oDoc.FormOperations.Cursor
+			If Not IsObj($oRowSet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+			$sQueryName = $oRowSet.Command()
+			If Not IsString($sQueryName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+			If $oRowSet.ActiveConnection.Queries.hasByName($sQueryName) Then
+				ReDim $aoConnectAll[$iCount + 1][3]
+				$aoConnectAll[$iCount][0] = $oDoc
+				$aoConnectAll[$iCount][1] = $oDoc.Title()
+				$aoConnectAll[$iCount][2] = False ; False = In Viewing mode.
+				$iCount += 1
+			EndIf
+		EndIf
+
+		Sleep(10)
+	WEnd
+
+	Return SetError($__LO_STATUS_SUCCESS, $iCount, $aoConnectAll)
+EndFunc   ;==>_LOBase_QueryUIConnect
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_QueryUIGetRowSet
+; Description ...: Retrieve a Row Set for a Query opened for Data entry/Viewing. See remarks.
+; Syntax ........: _LOBase_QueryUIGetRowSet(ByRef $oQueryUI)
+; Parameters ....: $oQueryUI            - [in/out] an object. A Query User Interface Object from a previous _LOBase_QueryUIOpenByName, _LOBase_QueryUIOpenByObject or _LOBase_QueryUIConnect function.
+; Return values .: Success: Object
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oQueryUI not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oQueryUI not Query opened in viewing/data entry mode.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve RowSet Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Returning Query's RowSet Object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Retrieving the RowSet for the Query allows you to manipulate data contained in the Query using _LOBase_SQLResultRowUpdate, etc. functions.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_QueryUIGetRowSet(ByRef $oQueryUI)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oResultSet
+
+	If Not IsObj($oQueryUI) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oQueryUI.supportsService("com.sun.star.sdb.DataSourceBrowser") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oResultSet = $oQueryUI.FormOperations.Cursor()
+	If Not IsObj($oResultSet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oResultSet)
+EndFunc   ;==>_LOBase_QueryUIGetRowSet
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_QueryUIOpenByName
+; Description ...: Open a Query's User Interface window either in design mode or viewing mode.
+; Syntax ........: _LOBase_QueryUIOpenByName(ByRef $oDoc, ByRef $oConnection, $sQuery[, $bEdit = False[, $bHidden = False]])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOBase_DocOpen, _LOBase_DocConnect, or _LOBase_DocCreate function.
+;                  $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
+;                  $sQuery              - a string value. The Query's name.
+;                  $bEdit               - [optional] a boolean value. Default is False. If True, the Query is opened in editing mode to add or remove columns. If False, the Query is opened in data viewing mode, to modify Query Data.
+;                  $bHidden            - [optional] a boolean value. Default is False. If True, the UI window will be invisible.
+; Return values .: Success: Object
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oConnection not an Object.
+;                  @Error 1 @Extended 3 Return 0 = Object called in $oConnection not a Connection Object.
+;                  @Error 1 @Extended 4 Return 0 = $sQuery not a String.
+;                  @Error 1 @Extended 5 Return 0 = $bEdit not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $bHidden not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = No Query with name called in $sQuery found.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Connection called in $oConnection is closed.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Queries Object.
+;                  @Error 3 @Extended 3 Return 0 = Failed to create a Connection to Database.
+;                  @Error 3 @Extended 4 Return 0 = Failed to open Query UI.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully opened Query's User Interface, returning its object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOBase_QueryUIOpenByObject, _LOBase_QueryUIConnect, _LOBase_QueryUIClose, _LOBase_QueryUIVisible
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_QueryUIOpenByName(ByRef $oDoc, ByRef $oConnection, $sQuery, $bEdit = False, $bHidden = False)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oQueries, $oQueryUI
+	Local Const $__LOB_OBJ_TYPE_QUERY = 1 ; com.sun.star.sdb.application.DatabaseObject
+	Local $aArgs[1]
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsString($sQuery) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsBool($bEdit) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$oQueries = $oConnection.getQueries()
+	If Not IsObj($oQueries) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If Not $oQueries.hasByName($sQuery) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
+	If Not $oDoc.CurrentController.isConnected() Then $oDoc.CurrentController.connect()
+	If Not $oDoc.CurrentController.isConnected() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+	$aArgs[0] = __LOBase_SetPropertyValue("Hidden", $bHidden)
+
+	$oQueryUI = $oDoc.CurrentController.loadComponentWithArguments($__LOB_OBJ_TYPE_QUERY, $sQuery, $bEdit, $aArgs)
+	If Not IsObj($oQueryUI) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oQueryUI)
+EndFunc   ;==>_LOBase_QueryUIOpenByName
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_QueryUIOpenByObject
+; Description ...: Open a Query's User Interface windows either in design mode or viewing mode.
+; Syntax ........: _LOBase_QueryUIOpenByObject(ByRef $oDoc, ByRef $oConnection, ByRef $oQuery[, $bEdit = False[, $bHidden = False]])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOBase_DocOpen, _LOBase_DocConnect, or _LOBase_DocCreate function.
+;                  $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
+;                  $oQuery              - [in/out] an object. A Query object returned by a previous _LOBase_QueryGetObjByIndex, _LOBase_QueryGetObjByName or _LOBase_QueryAdd function.
+;                  $bEdit               - [optional] a boolean value. Default is False. If True, the Query is opened in editing mode to add or remove columns. If False, the Query is opened in data viewing mode, to modify Query Data.
+;                  $bHidden             - [optional] a boolean value. Default is False. If True, the UI window will be invisible.
+; Return values .: Success: Object
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oConnection not an Object.
+;                  @Error 1 @Extended 3 Return 0 = Object called in $oConnection not a Connection Object.
+;                  @Error 1 @Extended 4 Return 0 = $oQuery not an Object.
+;                  @Error 1 @Extended 5 Return 0 = $bEdit not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $bHidden not a Boolean.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Connection called in $oConnection is closed.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Query Name.
+;                  @Error 3 @Extended 3 Return 0 = Failed to create a Connection to Database.
+;                  @Error 3 @Extended 4 Return 0 = Failed to open Query UI.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully opened Query's User Interface, returning its object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOBase_QueryUIOpenByName, _LOBase_QueryUIConnect, _LOBase_QueryUIClose, _LOBase_QueryUIVisible
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_QueryUIOpenByObject(ByRef $oDoc, ByRef $oConnection, ByRef $oQuery, $bEdit = False, $bHidden = False)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oQueryUI
+	Local $sQuery
+	Local Const $__LOB_OBJ_TYPE_QUERY = 1 ; com.sun.star.sdb.application.DatabaseObject
+	Local $aArgs[1]
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oQuery) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsBool($bEdit) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$sQuery = $oQuery.Name()
+	If Not IsString($sQuery) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	If Not $oDoc.CurrentController.isConnected() Then $oDoc.CurrentController.connect()
+	If Not $oDoc.CurrentController.isConnected() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+	$aArgs[0] = __LOBase_SetPropertyValue("Hidden", $bHidden)
+
+	$oQueryUI = $oDoc.CurrentController.loadComponentWithArguments($__LOB_OBJ_TYPE_QUERY, $sQuery, $bEdit, $aArgs)
+
+	If Not IsObj($oQueryUI) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oQueryUI)
+EndFunc   ;==>_LOBase_QueryUIOpenByObject
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_QueryUIVisible
+; Description ...: Set or Retrieve Query UI Visibility.
+; Syntax ........: _LOBase_QueryUIVisible(ByRef $oQueryUI[, $bVisible = Null])
+; Parameters ....: $oQueryUI            - [in/out] an object. A Query User Interface Object from a previous _LOBase_QueryUIOpenByName, _LOBase_QueryUIOpenByObject or _LOBase_QueryUIConnect function.
+;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the Query UI Window is visible.
+; Return values .: Success: 1 or Boolean.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oQueryUI not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $bVisible not a Boolean.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve current visibility setting.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $bVisible
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Boolean = Success. All optional parameters were set to Null, returning current visibility setting.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_QueryUIVisible(ByRef $oQueryUI, $bVisible = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oQueryUI) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If ($bVisible = Null) Then
+		$bVisible = $oQueryUI.Frame.ContainerWindow.IsVisible()
+		If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $bVisible)
+	EndIf
+
+	If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oQueryUI.Frame.ContainerWindow.Visible = $bVisible
+	If Not ($oQueryUI.Frame.ContainerWindow.IsVisible() = $bVisible) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOBase_QueryUIVisible

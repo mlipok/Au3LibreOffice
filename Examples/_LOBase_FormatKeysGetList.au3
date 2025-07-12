@@ -86,13 +86,13 @@ Func Example()
 	Next
 
 	; Open the Table UI.
-	$oTableUI = _LOBase_DocTableUIOpenByObject($oDoc, $oConnection, $oTable)
+	$oTableUI = _LOBase_TableUIOpenByObject($oDoc, $oConnection, $oTable)
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to open Table User Interface. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to close the document.")
 
 	; Close the Table UI
-	_LOBase_DocTableUIClose($oTableUI)
+	_LOBase_TableUIClose($oTableUI)
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to close Table User Interface. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Close the Report Document.

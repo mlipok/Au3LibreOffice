@@ -11,7 +11,7 @@ Example()
 If IsString($sPath) Then FileDelete($sPath)
 
 Func Example()
-	Local $oDoc, $oDBase, $oConnection, $oTableUI
+	Local $oDoc, $oDBase, $oConnection, $oQuery, $oQueryUI
 	Local $sSavePath
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -41,30 +41,34 @@ Func Example()
 	_LOBase_TableAdd($oConnection, "tblNew_Table", "Col1")
 	If @error Then Return _ERROR($oDoc, "Failed to add a table to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have added a table named ""tblNew_Table""." & @CRLF & _
-			"Press OK to open the Table UI in Viewing/ Data editing mode.")
+	; Add a Query to the Document.
+	$oQuery = _LOBase_QueryAddByName($oConnection, "qryAutoIt_Query", "tblNew_Table", "*")
+	If @error Then Return _ERROR($oDoc, "Failed to add a Query to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Open the Table UI.
-	$oTableUI = _LOBase_DocTableUIOpenByName($oDoc, $oConnection, "tblNew_Table")
-	If @error Then Return _ERROR($oDoc, "Failed to open Table UI. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have added a Query named ""qryAutoIt_Query""." & @CRLF & _
+			"Press OK to open the Query UI in Viewing/ Data editing mode.")
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have opened the table named ""tblNew_Table"" in Viewing/ Data editing mode." & @CRLF & _
-			"Press OK to close the window reopen the table in editing mode.")
+	; Open the Query UI.
+	$oQueryUI = _LOBase_QueryUIOpenByObject($oDoc, $oConnection, $oQuery)
+	If @error Then Return _ERROR($oDoc, "Failed to open Query UI. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Close Table UI.
-	_LOBase_DocTableUIClose($oTableUI)
-	If @error Then Return _ERROR($oDoc, "Failed to close Table UI. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have opened the Query named ""qryAutoIt_Query"" in Viewing/ Data editing mode." & @CRLF & _
+			"Press OK to close the window reopen the Query in editing mode.")
 
-	; Open the Table UI.
-	$oTableUI = _LOBase_DocTableUIOpenByName($oDoc, $oConnection, "tblNew_Table", True)
-	If @error Then Return _ERROR($oDoc, "Failed to open Table UI. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Close Query UI.
+	_LOBase_QueryUIClose($oQueryUI)
+	If @error Then Return _ERROR($oDoc, "Failed to close Query UI. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have opened the table named ""tblNew_Table"" in Editing mode." & @CRLF & _
+	; Open the Query UI.
+	$oQueryUI = _LOBase_QueryUIOpenByObject($oDoc, $oConnection, $oQuery, True)
+	If @error Then Return _ERROR($oDoc, "Failed to open Query UI. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have opened the Query named ""qryAutoIt_Query"" in Editing mode." & @CRLF & _
 			"Press OK to close the window and document and delete the document.")
 
-	; Close Table UI.
-	_LOBase_DocTableUIClose($oTableUI)
-	If @error Then Return _ERROR($oDoc, "Failed to close Table UI. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Close Query UI.
+	_LOBase_QueryUIClose($oQueryUI)
+	If @error Then Return _ERROR($oDoc, "Failed to close Query UI. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Close the connection.
 	_LOBase_DatabaseConnectionClose($oConnection)

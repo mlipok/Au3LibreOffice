@@ -145,10 +145,6 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOBase_DocSave
 	- _LOBase_DocSaveAs
 	- _LOBase_DocSaveCopy
-	- _LOBase_DocTableUIClose
-	- _LOBase_DocTableUIOpenByName
-	- _LOBase_DocTableUIOpenByObject
-	- _LOBase_DocTableUIVisible
 	- _LOBase_DocVisible
 
 - Form Functions
@@ -226,6 +222,12 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOBase_QueryGetObjByName
 	- _LOBase_QueryName
 	- _LOBase_QuerySQLCommand
+	- _LOBase_QueryUIClose
+	- _LOBase_QueryUIConnect
+	- _LOBase_QueryUIGetRowSet
+	- _LOBase_QueryUIOpenByName
+	- _LOBase_QueryUIOpenByObject
+	- _LOBase_QueryUIVisible
 
 - Report functions
 	- _LOBase_ReportClose
@@ -315,6 +317,12 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOBase_TablePrimaryKey
 	- _LOBase_TablesGetCount
 	- _LOBase_TablesGetNames
+	- _LOBase_TableUIClose
+	- _LOBase_TableUIConnect
+	- _LOBase_TableUIGetRowSet
+	- _LOBase_TableUIOpenByName
+	- _LOBase_TableUIOpenByObject
+	- _LOBase_TableUIVisible
 
 ### Changed
 

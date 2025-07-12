@@ -1,5 +1,5 @@
-#include <File.au3>
 #include <MsgBoxConstants.au3>
+#include <File.au3>
 
 #include "..\LibreOfficeBase.au3"
 
@@ -13,6 +13,7 @@ If IsString($sPath) Then FileDelete($sPath)
 Func Example()
 	Local $oDoc, $oDBase, $oConnection, $oTable, $oTableUI
 	Local $sSavePath
+	Local $bReturn
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOBase_DocCreate(True, False)
@@ -41,16 +42,32 @@ Func Example()
 	$oTable = _LOBase_TableAdd($oConnection, "tblNew_Table", "Col1")
 	If @error Then Return _ERROR($oDoc, "Failed to add a table to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Add a Column to the Table.
-	_LOBase_TableColAdd($oTable, "AutoIt Col", $LOB_DATA_TYPE_BOOLEAN, "", "A New Boolean Column.")
-	If @error Then Return _ERROR($oDoc, "Failed to add a Column to the Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 	; Open the Table UI.
 	$oTableUI = _LOBase_TableUIOpenByObject($oDoc, $oConnection, $oTable)
 	If @error Then Return _ERROR($oDoc, "Failed to open Table UI. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have added a Column to the table named ""tblNew_Table"", and have opened the Table." & @CRLF & _
-			"Press OK to close the window and document and delete the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have just opened the Table UI, press Ok to make the window invisible.")
+
+	; Make the Table UI Window invisible by setting visible to False
+	_LOBase_TableUIVisible($oTableUI, False)
+	If (@error > 0) Then _ERROR($oDoc, "Failed to change Window visibility settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Test if the document is Visible
+	$bReturn = _LOBase_TableUIVisible($oTableUI)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Window visibility status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Is the Table window currently visible? True/False: " & $bReturn & @CRLF & @CRLF & _
+			"Press Ok to make the window visible again.")
+
+	; Make the window visible by setting visible to True
+	_LOBase_TableUIVisible($oTableUI, True)
+	If (@error > 0) Then _ERROR($oDoc, "Failed to change Table Window visibility settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Test if the document is Visible
+	$bReturn = _LOBase_TableUIVisible($oTableUI)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Window visibility status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Is the Table window now visible? True/False: " & $bReturn)
 
 	; Close Table UI.
 	_LOBase_TableUIClose($oTableUI)
@@ -69,5 +86,5 @@ EndFunc
 Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
-	If IsString($sPath) Then FileDelete($sPath)
+	Exit
 EndFunc
