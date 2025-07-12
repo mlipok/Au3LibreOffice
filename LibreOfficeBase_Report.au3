@@ -1375,16 +1375,14 @@ EndFunc   ;==>_LOBase_ReportCopy
 ;                  @Error 1 @Extended 6 Return 0 = Folder or Sub-Folder not found.
 ;                  @Error 1 @Extended 7 Return 0 = Name called in $sReport already exists in Folder.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to create com.sun.star.ServiceManager Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to create com.sun.star.frame.Desktop Object.
-;                  @Error 2 @Extended 3 Return 0 = Failed to open a new Database Document instance.
-;                  @Error 2 @Extended 4 Return 0 = Failed to create com.sun.star.sdb.DocumentDefinition Object.
+;                  @Error 2 @Extended 1 Return 0 = Failed to create com.sun.star.sdb.DocumentDefinition Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Connection called in $oConnection is closed.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Report Documents Object.
-;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Destination Folder Object.
-;                  @Error 3 @Extended 4 Return 0 = Failed to insert new Report into Base Document.
-;                  @Error 3 @Extended 5 Return 0 = Failed to open new Report Document.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Document URL.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Destination Folder Object.
+;                  @Error 3 @Extended 5 Return 0 = Failed to insert new Report into Base Document.
+;                  @Error 3 @Extended 6 Return 0 = Failed to open new Report Document.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $bVisible
@@ -1396,6 +1394,7 @@ EndFunc   ;==>_LOBase_ReportCopy
 ; Remarks .......: To create a Report inside a folder, the Report name MUST be prefixed by the folder path, separated by forward slashes (/). e.g. to create ReportXYZ contained in folder 3, which is located in Folder 2, which is located inside folder 1, you would call $sReport with the following path: Folder1/Folder2/Folder3/ReportXYZ.
 ;                  When created, the report will not have a Data source set, so it will not be able to be opened in viewing mode, only in Design mode.
 ;                  When created, the report will have neither Page Header nor Page Footer enabled.
+;                  Thanks to sokol92 on the LibreOffice forum for this method. https://ask.libreoffice.org/t/create-a-new-report-document-using-a-macro/123584/16?u=donh1
 ; Related .......: _LOBase_ReportDelete, _LOBase_ReportCopy
 ; Link ..........:
 ; Example .......: Yes
@@ -1404,12 +1403,10 @@ Func _LOBase_ReportCreate(ByRef $oDoc, ByRef $oConnection, $sReport, $bOpen = Fa
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $oServiceManager, $oDesktop, $oSource, $oReportDoc, $oDocDef
+	Local $oSource, $oReportDoc, $oDocDef
 	Local $asSplit[0]
-	Local Const $iURLFrameCreate = 8 ; frame will be created if not found
 	Local $aArgs[1]
-	Local $iError = 0, $iCount = 0
-	Local $sPath = @TempDir & "AutoIt_Report_Temp_Doc_"
+	Local $sDocURL
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -1421,62 +1418,40 @@ Func _LOBase_ReportCreate(ByRef $oDoc, ByRef $oConnection, $sReport, $bOpen = Fa
 	$oSource = $oDoc.ReportDocuments()
 	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
+	$sDocURL = $oDoc.URL()
+	If Not IsString($sDocURL) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
 	$asSplit = StringSplit($sReport, "/")
 
 	For $i = 1 To $asSplit[0] - 1
 		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oSource = $oSource.getByName($asSplit[$i])
-		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 	Next
 
 	$sReport = $asSplit[$asSplit[0]] ; Last element of Array will be the Report name to Create
 
 	If $oSource.hasByName($sReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
-	$aArgs[0] = __LOBase_SetPropertyValue("Hidden", True)
-	If Not IsObj($aArgs[0]) Then $iError = BitOR($iError, 1)
-
-	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
-	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-
-	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
-	If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
-
-	$oReportDoc = $oDesktop.loadComponentFromURL("private:factory/sdatabase", "_blank", $iURLFrameCreate, $aArgs)
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
-
-	While FileExists($sPath & $iCount & ".odb")
-		$iCount += 1
-		Sleep((IsInt($iCount / $__LOBCONST_SLEEP_DIV)) ? (10) : (0))
-	WEnd
-
-	$aArgs[0] = __LOBase_SetPropertyValue("FilterName", "StarOffice XML (Base) Report")
-
-	$sPath &= $iCount & ".odb"
-	$oReportDoc.StoreAsUrl(_LOBase_PathConvert($sPath, $LOB_PATHCONV_OFFICE_RETURN), $aArgs)
-	$oReportDoc.close(True)
-
 	ReDim $aArgs[3]
 
 	$aArgs[0] = __LOBase_SetPropertyValue("Name", $sReport)
 	$aArgs[1] = __LOBase_SetPropertyValue("Parent", $oDoc.ReportDocuments())
-	$aArgs[2] = __LOBase_SetPropertyValue("URL", _LOBase_PathConvert($sPath, $LOB_PATHCONV_OFFICE_RETURN))
+	$aArgs[2] = __LOBase_SetPropertyValue("URL", _LOBase_PathConvert($sDocURL, $LOB_PATHCONV_OFFICE_RETURN))
 
 	$oDocDef = $oSource.createInstanceWithArguments("com.sun.star.sdb.DocumentDefinition", $aArgs)
-	If Not IsObj($oDocDef) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+	If Not IsObj($oDocDef) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oSource.insertbyName($sReport, $oDocDef)
 
-	FileDelete($sPath) ; Delete the file, as it is no longer needed.
-
-	If Not $oSource.hasByName($sReport) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+	If Not $oSource.hasByName($sReport) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
 	If $bOpen Then
 		If Not $oDoc.CurrentController.isConnected() Then $oDoc.CurrentController.connect()
 
 		$oReportDoc = $oSource.getByName($sReport).openDesign()
-		If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+		If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
 
 		$oReportDoc.CurrentController.Frame.ContainerWindow.Visible = $bVisible
 		If ($oReportDoc.CurrentController.Frame.ContainerWindow.isVisible() <> $bVisible) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, $oReportDoc)
@@ -1590,8 +1565,8 @@ Func _LOBase_ReportData(ByRef $oReportDoc, $iContentType = Null, $sContent = Nul
 	If ($bSuppress <> Null) Then
 		If Not IsBool($bSuppress) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
-		$oReportDoc.CurrentController.Frame.Controller.Mode = ($bSuppress) ? ("remote") : ("normal"); Remote prevents the Add Field dialog from coming up when changing "Command" and "CommandType". Normal behaves as normal.
-		$iError = ($oReportDoc.CurrentController.Frame.Controller.Mode = ($bSuppress) ? ("remote") : ("normal")) ? ($iError) : (BitOR($iError, 32)); Method found in "ReportBuilderImplementation.java" file, line 160, function "switchOffAddFieldWindow"
+		$oReportDoc.CurrentController.Frame.Controller.Mode = ($bSuppress) ? ("remote") : ("normal") ; Remote prevents the Add Field dialog from coming up when changing "Command" and "CommandType". Normal behaves as normal.
+		$iError = ($oReportDoc.CurrentController.Frame.Controller.Mode = ($bSuppress) ? ("remote") : ("normal")) ? ($iError) : (BitOR($iError, 32)) ; Method found in "ReportBuilderImplementation.java" file, line 160, function "switchOffAddFieldWindow"
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
