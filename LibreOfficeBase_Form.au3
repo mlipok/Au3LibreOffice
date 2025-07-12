@@ -1347,12 +1347,12 @@ EndFunc   ;==>_LOBase_FormIsModified
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_FormOpen
 ; Description ...: Open a Form Document
-; Syntax ........: _LOBase_FormOpen(ByRef $oDoc, ByRef $oConnection, $sName[, $bDesign = True[, $bVisible = True]])
+; Syntax ........: _LOBase_FormOpen(ByRef $oDoc, ByRef $oConnection, $sName[, $bDesign = True[, $bHidden = False]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOBase_DocOpen, _LOBase_DocConnect, or _LOBase_DocCreate function.
 ;                  $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
 ;                  $sName               - a string value. The Form name to Open. See remarks.
 ;                  $bDesign             - [optional] a boolean value. Default is True. If True, the form is opened in Design mode.
-;                  $bVisible            - [optional] a boolean value. Default is True. If True, the form document will be visible when opened.
+;                  $bHidden             - [optional] a boolean value. Default is False. If True, the form document will be invisible when opened.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1360,7 +1360,7 @@ EndFunc   ;==>_LOBase_FormIsModified
 ;                  @Error 1 @Extended 2 Return 0 = $oConnection not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
 ;                  @Error 1 @Extended 4 Return 0 = $bDesign not a Boolean.
-;                  @Error 1 @Extended 5 Return 0 = $bVisible not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $bHidden not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = Folder or Sub-Folder not found.
 ;                  @Error 1 @Extended 7 Return 0 = Name called in $sName not found in Folder.
 ;                  @Error 1 @Extended 8 Return 0 = Name called in $sName not a Form.
@@ -1368,11 +1368,7 @@ EndFunc   ;==>_LOBase_FormIsModified
 ;                  @Error 3 @Extended 1 Return 0 = Connection called in $oConnection is closed.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Form Documents Object.
 ;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Destination Folder Object.
-;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Form Object.
-;                  @Error 3 @Extended 5 Return 0 = Failed to open Form Document.
-;                  --Property Setting Errors--
-;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                               1 = Error setting $bVisible
+;                  @Error 3 @Extended 4 Return 0 = Failed to open Form Document.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Returning opened Form Document's Object.
 ; Author ........: donnyh13
@@ -1382,18 +1378,20 @@ EndFunc   ;==>_LOBase_FormIsModified
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOBase_FormOpen(ByRef $oDoc, ByRef $oConnection, $sName, $bDesign = True, $bVisible = True)
+Func _LOBase_FormOpen(ByRef $oDoc, ByRef $oConnection, $sName, $bDesign = True, $bHidden = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $oObj, $oSource, $oFormDoc
+	Local Const $iURLFrameCreate = 8 ; Frame will be created if not found
+	Local $oSource, $oFormDoc
 	Local $asSplit[0]
+	Local $aArgs[3]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsBool($bDesign) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If Not $oDoc.CurrentController.isConnected() Then $oDoc.CurrentController.connect()
@@ -1413,22 +1411,15 @@ Func _LOBase_FormOpen(ByRef $oDoc, ByRef $oConnection, $sName, $bDesign = True, 
 	$sName = $asSplit[$asSplit[0]] ; Last element of Array will be the Form name to Open
 
 	If Not $oSource.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+	If Not $oSource.getByName($sName).supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
-	$oObj = $oSource.getByName($sName)
-	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
-	If Not $oObj.supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+	$aArgs[0] = __LOBase_SetPropertyValue("ActiveConnection", $oConnection)
+	$aArgs[1] = __LOBase_SetPropertyValue("OpenMode", ($bDesign) ? ("openDesign") : ("open"))
+	$aArgs[2] = __LOBase_SetPropertyValue("Hidden", $bHidden)
 
-	If $bDesign Then
-		$oFormDoc = $oObj.openDesign()
+	$oFormDoc = $oSource.loadComponentFromURL($sName, "_blank", $iURLFrameCreate, $aArgs)
 
-	Else
-		$oFormDoc = $oObj.open()
-	EndIf
-
-	If Not IsObj($oFormDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
-
-	$oFormDoc.CurrentController.Frame.ContainerWindow.Visible = $bVisible
-	If ($oFormDoc.CurrentController.Frame.ContainerWindow.isVisible() <> $bVisible) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, $oFormDoc)
+	If Not IsObj($oFormDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oFormDoc)
 EndFunc   ;==>_LOBase_FormOpen

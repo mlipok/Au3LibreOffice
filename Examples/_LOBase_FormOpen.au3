@@ -50,7 +50,7 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to create a form Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Open the new Form in Design Mode.
-	$oFormDoc = _LOBase_FormOpen($oDoc, $oConnection, "frmAutoIt_Form", True, True)
+	$oFormDoc = _LOBase_FormOpen($oDoc, $oConnection, "frmAutoIt_Form", True)
 	If @error Then Return _ERROR($oDoc, "Failed to open a form Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have opened the form called ""frmAutoIt_Form"" in Design Mode. Press ok to close it.")
@@ -60,7 +60,7 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to close the form Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Open the new Form that is located in a Folder, in Form Mode.
-	$oFormDoc = _LOBase_FormOpen($oDoc, $oConnection, "AutoIt_Folder/frmAutoIt_Form2", False, True)
+	$oFormDoc = _LOBase_FormOpen($oDoc, $oConnection, "AutoIt_Folder/frmAutoIt_Form2", False)
 	If @error Then Return _ERROR($oDoc, "Failed to open a form Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have opened the form called ""frmAutoIt_Form2"" located in the folder ""AutoIt_Folder"" in non-Design Mode. Press ok to close it.")
