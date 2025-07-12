@@ -46,7 +46,7 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to create a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Open a Report in Design Mode.
-	$oReportDoc = _LOBase_ReportOpen($oDoc, $oConnection, "rptAutoIt_Report", True, True)
+	$oReportDoc = _LOBase_ReportOpen($oDoc, $oConnection, "rptAutoIt_Report", True)
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to open a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have opened the Report called ""rptAutoIt_Report"" in Design Mode. Press ok to close it.")
@@ -60,11 +60,11 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to create a Report folder. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a new Report in the Folder.
-	$oReportDoc = _LOBase_ReportCreate($oDoc, $oConnection, "AutoIt_Folder/rptAutoIt_Report2", False)
+	_LOBase_ReportCreate($oDoc, $oConnection, "AutoIt_Folder/rptAutoIt_Report2", False)
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to create a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Open a Report in Design Mode, invisibly.
-	$oReportDoc = _LOBase_ReportOpen($oDoc, $oConnection, "AutoIt_Folder/rptAutoIt_Report2", True, False)
+	$oReportDoc = _LOBase_ReportOpen($oDoc, $oConnection, "AutoIt_Folder/rptAutoIt_Report2", True, True)
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to open a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set the DataSource of the Report.
@@ -80,7 +80,7 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to close the Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Open the new Report that is located in a Folder, in Report view Mode.
-	$oReportDoc = _LOBase_ReportOpen($oDoc, $oConnection, "AutoIt_Folder/rptAutoIt_Report2", False, True)
+	$oReportDoc = _LOBase_ReportOpen($oDoc, $oConnection, "AutoIt_Folder/rptAutoIt_Report2", False)
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to open a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have opened the Report called ""rptAutoIt_Report2"" located in the folder ""AutoIt_Folder"" in viewing Mode. Press ok to close it.")

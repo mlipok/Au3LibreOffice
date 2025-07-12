@@ -1520,7 +1520,7 @@ Func _LOBase_ReportData(ByRef $oReportDoc, $iContentType = Null, $sContent = Nul
 	If __LOBase_VarsAreNull($iContentType, $sContent, $bAnalyzeSQL, $sFilter, $iReportOutput, $bSuppress) Then
 		__LOBase_ArrayFill($avReport, $oReportDoc.CommandType(), $oReportDoc.Command(), $oReportDoc.EscapeProcessing(), $oReportDoc.Filter(), _
 				($oReportDoc.MimeType() = $__LOB_REP_OUTPUT_TEXT_DOC) ? ($LOB_REP_OUTPUT_TYPE_TEXT) : (($oReportDoc.MimeType() = $__LOB_REP_OUTPUT_SPREADSHEET_DOC) ? ($LOB_REP_OUTPUT_TYPE_SPREADSHEET) : ($LOB_REP_OUTPUT_TYPE_UNKNOWN)), _
-				($oReportDoc.CurrentController.Frame.Controller.Mode() = "normal") ? (False) : (True))
+				($oReportDoc.CurrentController.Mode() = "normal") ? (False) : (True))
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avReport)
 	EndIf
@@ -1528,7 +1528,7 @@ Func _LOBase_ReportData(ByRef $oReportDoc, $iContentType = Null, $sContent = Nul
 	If ($iContentType <> Null) Then
 		If Not __LOBase_IntIsBetween($iContentType, $LOB_REP_CONTENT_TYPE_TABLE, $LOB_REP_CONTENT_TYPE_SQL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-		If ($bSuppress = True) Then $oReportDoc.CurrentController.Frame.Controller.Mode = "remote"
+		If ($bSuppress = True) Then $oReportDoc.CurrentController.Mode = "remote"
 		$oReportDoc.CommandType = $iContentType
 		$iError = ($oReportDoc.CommandType() = $iContentType) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -1536,7 +1536,7 @@ Func _LOBase_ReportData(ByRef $oReportDoc, $iContentType = Null, $sContent = Nul
 	If ($sContent <> Null) Then
 		If Not IsString($sContent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-		If ($bSuppress = True) Then $oReportDoc.CurrentController.Frame.Controller.Mode = "remote"
+		If ($bSuppress = True) Then $oReportDoc.CurrentController.Mode = "remote"
 		$oReportDoc.Command = $sContent
 		$iError = ($oReportDoc.Command() = $sContent) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -1565,8 +1565,8 @@ Func _LOBase_ReportData(ByRef $oReportDoc, $iContentType = Null, $sContent = Nul
 	If ($bSuppress <> Null) Then
 		If Not IsBool($bSuppress) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
-		$oReportDoc.CurrentController.Frame.Controller.Mode = ($bSuppress) ? ("remote") : ("normal") ; Remote prevents the Add Field dialog from coming up when changing "Command" and "CommandType". Normal behaves as normal.
-		$iError = ($oReportDoc.CurrentController.Frame.Controller.Mode = ($bSuppress) ? ("remote") : ("normal")) ? ($iError) : (BitOR($iError, 32)) ; Method found in "ReportBuilderImplementation.java" file, line 160, function "switchOffAddFieldWindow"
+		$oReportDoc.CurrentController.Mode = ($bSuppress) ? ("remote") : ("normal") ; Remote prevents the Add Field dialog from coming up when changing "Command" and "CommandType". Normal behaves as normal.
+		$iError = ($oReportDoc.CurrentController.Mode = ($bSuppress) ? ("remote") : ("normal")) ? ($iError) : (BitOR($iError, 32)) ; Method found in "ReportBuilderImplementation.java" file, line 160, function "switchOffAddFieldWindow"
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
@@ -3654,12 +3654,12 @@ EndFunc   ;==>_LOBase_ReportIsModified
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_ReportOpen
 ; Description ...: Open a Report Document
-; Syntax ........: _LOBase_ReportOpen(ByRef $oDoc, ByRef $oConnection, $sName[, $bDesign = True[, $bVisible = True]])
+; Syntax ........: _LOBase_ReportOpen(ByRef $oDoc, ByRef $oConnection, $sName[, $bDesign = True[, $bHidden = False]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOBase_DocOpen, _LOBase_DocConnect, or _LOBase_DocCreate function.
 ;                  $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
 ;                  $sName               - a string value. The Report name to Open. See remarks.
 ;                  $bDesign             - [optional] a boolean value. Default is True. If True, the Report is opened in Design mode.
-;                  $bVisible            - [optional] a boolean value. Default is True. If True, the Report document will be visible when opened.
+;                  $bHidden             - [optional] a boolean value. Default is False. If True, the Report document will be invisible when opened.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -3667,7 +3667,7 @@ EndFunc   ;==>_LOBase_ReportIsModified
 ;                  @Error 1 @Extended 2 Return 0 = $oConnection not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
 ;                  @Error 1 @Extended 4 Return 0 = $bDesign not a Boolean.
-;                  @Error 1 @Extended 5 Return 0 = $bVisible not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $bHidden not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = Folder or Sub-Folder not found.
 ;                  @Error 1 @Extended 7 Return 0 = Name called in $sName not found in Folder.
 ;                  @Error 1 @Extended 8 Return 0 = Name called in $sName not a Report.
@@ -3675,11 +3675,7 @@ EndFunc   ;==>_LOBase_ReportIsModified
 ;                  @Error 3 @Extended 1 Return 0 = Connection called in $oConnection is closed.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Report Documents Object.
 ;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Destination Folder Object.
-;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Report Object.
-;                  @Error 3 @Extended 5 Return 0 = Failed to open Report Document.
-;                  --Property Setting Errors--
-;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                               1 = Error setting $bVisible
+;                  @Error 3 @Extended 4 Return 0 = Failed to open Report Document.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Returning opened Report Document's Object.
 ; Author ........: donnyh13
@@ -3689,18 +3685,20 @@ EndFunc   ;==>_LOBase_ReportIsModified
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOBase_ReportOpen(ByRef $oDoc, ByRef $oConnection, $sName, $bDesign = True, $bVisible = True)
+Func _LOBase_ReportOpen(ByRef $oDoc, ByRef $oConnection, $sName, $bDesign = True, $bHidden = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $oObj, $oSource, $oReportDoc
+	Local Const $iURLFrameCreate = 8 ; Frame will be created if not found
+	Local $oSource, $oReportDoc
 	Local $asSplit[0]
+	Local $aArgs[3]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsBool($bDesign) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If Not $oDoc.CurrentController.isConnected() Then $oDoc.CurrentController.connect()
@@ -3720,22 +3718,15 @@ Func _LOBase_ReportOpen(ByRef $oDoc, ByRef $oConnection, $sName, $bDesign = True
 	$sName = $asSplit[$asSplit[0]] ; Last element of Array will be the Report name to Open
 
 	If Not $oSource.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+	If Not $oSource.getByName($sName).supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
-	$oObj = $oSource.getByName($sName)
-	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
-	If Not $oObj.supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+	$aArgs[0] = __LOBase_SetPropertyValue("ActiveConnection", $oConnection)
+	$aArgs[1] = __LOBase_SetPropertyValue("OpenMode", ($bDesign) ? ("openDesign") : ("open"))
+	$aArgs[2] = __LOBase_SetPropertyValue("Hidden", $bHidden)
 
-	If $bDesign Then
-		$oReportDoc = $oObj.openDesign()
+	$oReportDoc = $oSource.loadComponentFromURL($sName, "_blank", $iURLFrameCreate, $aArgs)
 
-	Else
-		$oReportDoc = $oObj.open()
-	EndIf
-
-	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
-
-	$oReportDoc.CurrentController.Frame.ContainerWindow.Visible = $bVisible
-	If ($oReportDoc.CurrentController.Frame.ContainerWindow.isVisible() <> $bVisible) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, $oReportDoc)
+	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oReportDoc)
 EndFunc   ;==>_LOBase_ReportOpen
