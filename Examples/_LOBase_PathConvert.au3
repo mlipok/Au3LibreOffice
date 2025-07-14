@@ -44,5 +44,4 @@ Func Example()
 			"when the path is already a Libre Office URL." & @CRLF & _
 			"Original Path: " & @CRLF & $sOfficePath & @CRLF & "Result: " & @CRLF & _
 			_LOBase_PathConvert($sOfficePath, $LOB_PATHCONV_OFFICE_RETURN))
-
 EndFunc

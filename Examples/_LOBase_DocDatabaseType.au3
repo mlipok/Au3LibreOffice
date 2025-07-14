@@ -27,7 +27,6 @@ Func Example()
 	; Close the document.
 	_LOBase_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close and save opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

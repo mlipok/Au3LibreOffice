@@ -17,7 +17,6 @@ Func Example()
 	If @error Then Return _ERROR("Failed to Query Database for Password requirement. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Is the Database ""Bibliography"", Password protected? True/False: " & $bReturn)
-
 EndFunc
 
 Func _ERROR($sErrorText)

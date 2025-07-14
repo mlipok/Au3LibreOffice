@@ -53,7 +53,6 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to Retrieve the Database Name. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have retrieved the Database Object for a Database that comes with LibreOffice, the Database Name is: " & $sName)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

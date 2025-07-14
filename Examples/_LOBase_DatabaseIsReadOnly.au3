@@ -17,7 +17,6 @@ Func Example()
 	If @error Then Return _ERROR("Failed to Query Database for Read-Only status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Is the Database ""Bibliography"", currently set to Read Only? True/False: " & $bReturn)
-
 EndFunc
 
 Func _ERROR($sErrorText)

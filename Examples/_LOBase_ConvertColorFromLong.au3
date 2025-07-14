@@ -32,7 +32,6 @@ Func Example()
 			"Long->Hex = " & $sHex & " Should be bf0041" & @CRLF & _
 			"Long->CMYK = " & "C, " & $aiCMYK[0] & "; M " & $aiCMYK[1] & "; Y " & $aiCMYK[2] & "; K " & $aiCMYK[3] & " Should be: C, 0; M, 100; Y, 66; K, 25." & @CRLF & _
 			"Long->HSB = " & "H, " & $aiHSB[0] & "; S " & $aiHSB[1] & "; B " & $aiHSB[2] & " Should be: H, 340; S, 100; B, 75")
-
 EndFunc
 
 Func _ERROR($sErrorText)

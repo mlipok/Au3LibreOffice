@@ -38,7 +38,6 @@ Func Example()
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have created and saved a blank L.O. Base Doc to your Desktop, found at the following Path: " _
 			& $sPath & @CRLF & "Press Ok to delete it.")
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

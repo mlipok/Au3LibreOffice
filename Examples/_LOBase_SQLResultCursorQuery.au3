@@ -51,7 +51,6 @@ Func Example()
 		; Move the Cursor to the first record.
 		_LOBase_SQLResultCursorMove($oResult, $LOB_RESULT_CURSOR_MOVE_NEXT)
 		If @error Then Return _ERROR($oDoc, "Failed to move Result Row Cursor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 	Until _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_IS_AFTER_LAST)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Current status of the Result Set Cursor is: " & @CRLF & _
@@ -70,7 +69,6 @@ Func Example()
 	; Close the document.
 	_LOBase_DocClose($oDoc, False)
 	If @error Then Return _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _FillDatabase(ByRef $oDoc, ByRef $oConnection, ByRef $oTable)

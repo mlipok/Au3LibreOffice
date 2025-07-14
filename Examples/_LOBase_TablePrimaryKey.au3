@@ -56,13 +56,11 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to retrieve current primary key. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	For $i = 0 To @extended - 1
-
 		; Retrieve Column Properties.
 		$asSettings = _LOBase_TableColDefinition($oTable, $aoPrimaryKey[$i])
 		If @error Then Return _ERROR($oDoc, "Failed to retrieve Column Properties. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 		MsgBox($MB_OK + $MB_TOPMOST, Default, "The Primary Key Column name is " & $asSettings[0])
-
 	Next
 
 	; Set the Primary key to "AutoIt Col".
@@ -77,13 +75,11 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to retrieve current primary key. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	For $i = 0 To UBound($aoPrimaryKey) - 1
-
 		; Retrieve Column Properties.
 		$asSettings = _LOBase_TableColDefinition($oTable, $aoPrimaryKey[$i])
 		If @error Then Return _ERROR($oDoc, "Failed to retrieve Column Properties. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 		MsgBox($MB_OK + $MB_TOPMOST, Default, "The Primary Key Column name is " & $asSettings[0])
-
 	Next
 
 	; Set the Primary key to "AutoIt Col" and "New Col".
@@ -100,13 +96,11 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to retrieve current primary key. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	For $i = 0 To UBound($aoPrimaryKey) - 1
-
 		; Retrieve Column Properties.
 		$asSettings = _LOBase_TableColDefinition($oTable, $aoPrimaryKey[$i])
 		If @error Then Return _ERROR($oDoc, "Failed to retrieve Column Properties. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 		MsgBox($MB_OK + $MB_TOPMOST, Default, "One of the Primary Key Columns has the name of " & $asSettings[0])
-
 	Next
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
@@ -118,7 +112,6 @@ Func Example()
 	; Close the document.
 	_LOBase_DocClose($oDoc, False)
 	If @error Then Return _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

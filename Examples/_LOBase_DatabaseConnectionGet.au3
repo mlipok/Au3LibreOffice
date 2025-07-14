@@ -20,7 +20,6 @@ Func Example()
 	; Close the connection.
 	_LOBase_DatabaseConnectionClose($oConnection)
 	If @error Then Return _ERROR($oConnection, "Failed to close a connection to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oConnection, $sErrorText)

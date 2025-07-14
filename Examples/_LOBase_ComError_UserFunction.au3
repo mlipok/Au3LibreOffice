@@ -45,11 +45,9 @@ Func Example()
 
 	; Create a COM Error by calling a non existent Method.
 	$oServiceManager.FakeMethod()
-
 EndFunc
 
 Func _FunctionForErrors($oObjectError)
-
 	MsgBox($MB_OK, "COM Error", "A COM Error occurred, here's what we know:" & @CRLF & _
 			"Error Number: 0x" & Hex($oObjectError.number, 8) & @CRLF & _
 			"Description: " & $oObjectError.windescription & @CRLF & _
@@ -60,7 +58,6 @@ Func _FunctionForErrors($oObjectError)
 			"Help content: " & $oObjectError.helpcontent & @CRLF & _
 			"LastdllError: " & $oObjectError.lastdllerror & @CRLF & @CRLF & _
 			"Some of the above are, as best I know, almost always blank for Libre Office errors.")
-
 EndFunc
 
 Func _ERROR($sErrorText)

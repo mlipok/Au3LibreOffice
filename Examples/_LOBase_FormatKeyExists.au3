@@ -52,6 +52,7 @@ Func Example()
 
 	If ($bExists = True) Then
 		MsgBox($MB_OK + $MB_TOPMOST, Default, "I created a new Date format key.")
+
 	Else
 		MsgBox($MB_OK + $MB_TOPMOST, Default, "I Failed to create a new Date format key.")
 	EndIf
@@ -66,6 +67,7 @@ Func Example()
 
 	If ($bExists = True) Then
 		MsgBox($MB_OK + $MB_TOPMOST, Default, "I created a new Number format key.")
+
 	Else
 		MsgBox($MB_OK + $MB_TOPMOST, Default, "I Failed to create a new Number format key.")
 	EndIf
@@ -87,7 +89,6 @@ Func Example()
 	; Close the document.
 	_LOBase_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, $oReportDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oDoc, $oReportDoc, $sErrorText)

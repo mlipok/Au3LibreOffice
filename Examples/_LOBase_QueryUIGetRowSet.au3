@@ -76,7 +76,6 @@ Func Example()
 		; Insert the new row.
 		_LOBase_SQLResultRowUpdate($oRowSet, $LOB_RESULT_ROW_UPDATE_INSERT)
 		If @error Then Return _ERROR($oDoc, "Failed to move to Insert Result Row. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 	Next
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have finished entering Data, press ok to close the Document.")
@@ -92,7 +91,6 @@ Func Example()
 	; Close the document.
 	_LOBase_DocClose($oDoc, False)
 	If @error Then Return _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

@@ -106,7 +106,6 @@ Func Example()
 	; Close the document.
 	_LOBase_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, $oReportDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _FillDatabase(ByRef $oDoc, ByRef $oReportDoc, ByRef $oConnection, ByRef $oTable)
@@ -143,6 +142,7 @@ Func _FillDatabase(ByRef $oDoc, ByRef $oReportDoc, ByRef $oConnection, ByRef $oT
 	; Add a Column to the Table.
 	_LOBase_TableColAdd($oTable, "Is_User_Created", $LOB_DATA_TYPE_BOOLEAN)
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to add a Column to the Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
 	Return True
 EndFunc
 
