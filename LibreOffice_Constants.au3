@@ -15,14 +15,13 @@
 #Tidy_ILC_Pos=65
 ; Error Codes
 Global Enum _
-		$__LO_STATUS_SUCCESS = 0, _                            ; 0 Function finished successfully.
+		$__LO_STATUS_SUCCESS, _                                ; 0 Function finished successfully.
 		$__LO_STATUS_INPUT_ERROR, _                            ; 1 Function encountered a input error.
 		$__LO_STATUS_INIT_ERROR, _                             ; 2 Function encountered a Initialization error.
 		$__LO_STATUS_PROCESSING_ERROR, _                       ; 3 Function encountered a Processing error.
 		$__LO_STATUS_PROP_SETTING_ERROR, _                     ; 4 Function encountered a Property setting error.
-		$__LO_STATUS_DOC_ERROR, _                              ; 5 Function encountered a Document related error.
-		$__LO_STATUS_PRINTER_RELATED_ERROR, _                  ; 6 Function encountered a Printer related error.
-		$__LO_STATUS_VER_ERROR                                 ; 7 Function encountered a Version error.
+		$__LO_STATUS_PRINTER_RELATED_ERROR, _                  ; 5 Function encountered a Printer related error.
+		$__LO_STATUS_VER_ERROR                                 ; 6 Function encountered a Version error.
 
 ; Conversion Constants.
 Global Enum _

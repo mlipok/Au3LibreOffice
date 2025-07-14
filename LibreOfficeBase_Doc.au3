@@ -55,11 +55,10 @@
 ;                  @Error 1 @Extended 3 Return 0 = $sSaveName not a String.
 ;                  @Error 1 @Extended 4 Return 0 = $bDeliverOwnership not a Boolean.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Path Conversion to L.O. URL Failed.
-;                  @Error 3 @Extended 2 Return 0 = Error while setting Filter Name properties.
-;                  --Document Errors--
-;                  @Error 5 @Extended 1 Return 0 = $bSaveChanges set to True, and Document hasn't been assigned a Database type yet. Set it using _LOBase_DocDatabaseType.
-;                  @Error 5 @Extended 2 Return 0 = Document hasn't been assigned a Database type yet. Set it using _LOBase_DocDatabaseType.
+;                  @Error 3 @Extended 1 Return 0 = $bSaveChanges set to True, and Document hasn't been assigned a Database type yet. Set it using _LOBase_DocDatabaseType.
+;                  @Error 3 @Extended 2 Return 0 = Document hasn't been assigned a Database type yet. Set it using _LOBase_DocDatabaseType.
+;                  @Error 3 @Extended 3 Return 0 = Path Conversion to L.O. URL Failed.
+;                  @Error 3 @Extended 4 Return 0 = Error while setting Filter Name properties.
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return String = Success, Document was successfully closed, and was saved to the returned file Path.
 ;                  @Error 0 @Extended 2 Return String = Success, Document was successfully closed, document's changes were saved to its existing location.
@@ -85,7 +84,7 @@ Func _LOBase_DocClose(ByRef $oDoc, $bSaveChanges = True, $sSaveName = "", $bDeli
 	If Not IsBool($bSaveChanges) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsString($sSaveName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsBool($bDeliverOwnership) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If $bSaveChanges And ($oDoc.DataSource.URL() = "") Then Return SetError($__LO_STATUS_DOC_ERROR, 1, 0)
+	If $bSaveChanges And ($oDoc.DataSource.URL() = "") Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If ($bSaveChanges = True) Then
 		If $oDoc.hasLocation() Then
@@ -96,7 +95,7 @@ Func _LOBase_DocClose(ByRef $oDoc, $bSaveChanges = True, $sSaveName = "", $bDeli
 			Return SetError($__LO_STATUS_SUCCESS, 2, $sDocPath)
 
 		Else
-			If ($oDoc.DataSource.URL() = "") Then Return SetError($__LO_STATUS_DOC_ERROR, 2, 0)
+			If ($oDoc.DataSource.URL() = "") Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 			$sSavePath = @DesktopDir & "\"
 			If ($sSaveName = "") Or ($sSaveName = " ") Then
@@ -107,10 +106,10 @@ Func _LOBase_DocClose(ByRef $oDoc, $bSaveChanges = True, $sSaveName = "", $bDeli
 			If Not StringRegExp($sSaveName, "\Q.odb\E[ ]*$") Then $sSaveName &= ".odb"
 
 			$sSavePath = _LOBase_PathConvert($sSavePath & $sSaveName, 1)
-			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 			$aArgs[0] = __LOBase_SetPropertyValue("FilterName", "StarOffice XML (Base)")
-			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 			$oDoc.storeAsURL($sSavePath, $aArgs)
 			$oDoc.Close($bDeliverOwnership)
@@ -142,11 +141,10 @@ EndFunc   ;==>_LOBase_DocClose
 ;                  @Error 2 @Extended 2 Return 0 = Error creating Desktop object.
 ;                  @Error 2 @Extended 3 Return 0 = Error creating enumeration of open documents.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error converting path to Libre Office URL.
-;                  --Document Errors--
-;                  @Error 5 @Extended 1 Return 0 = No matches found.
-;                  @Error 5 @Extended 2 Return 0 = Current Component not a Base Document.
-;                  @Error 5 @Extended 3 Return 0 = No open Libre Office documents found.
+;                  @Error 3 @Extended 1 Return 0 = No open Libre Office documents found.
+;                  @Error 3 @Extended 2 Return 0 = Current Component not a Base Document.
+;                  @Error 3 @Extended 3 Return 0 = Error converting path to Libre Office URL.
+;                  @Error 3 @Extended 4 Return 0 = No matches found.
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return Object = Success, The Object for the current, or last active document is returned.
 ;                  @Error 0 @Extended ? Return Array = Success, An Array of all open LibreOffice Base documents is returned. See remarks. @Extended is set to number of results.
@@ -186,7 +184,7 @@ Func _LOBase_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 
 	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
 	If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
-	If Not $oDesktop.getComponents.hasElements() Then Return SetError($__LO_STATUS_DOC_ERROR, 3, 0) ; no L.O open
+	If Not $oDesktop.getComponents.hasElements() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; no L.O open
 
 	$oEnumDoc = $oDesktop.getComponents.createEnumeration()
 	If Not IsObj($oEnumDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
@@ -194,7 +192,7 @@ Func _LOBase_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 	If $bConnectCurrent Then
 		$oDoc = $oDesktop.currentComponent()
 
-		Return ($oDoc.supportsService($sServiceName)) ? (SetError($__LO_STATUS_SUCCESS, 1, $oDoc)) : (SetError($__LO_STATUS_DOC_ERROR, 2, 0))
+		Return ($oDoc.supportsService($sServiceName)) ? (SetError($__LO_STATUS_SUCCESS, 1, $oDoc)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0))
 	EndIf
 
 	If $bConnectAll Then
@@ -217,7 +215,7 @@ Func _LOBase_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 
 	$sFile = StringStripWS($sFile, $STR_STRIPLEADING)
 	If StringInStr($sFile, "\") Then $sFile = _LOBase_PathConvert($sFile, $LOB_PATHCONV_OFFICE_RETURN) ; Convert to L.O File path.
-	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	If StringInStr($sFile, "file:///") Then ; URL/Path and Name search
 
@@ -227,7 +225,7 @@ Func _LOBase_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 			If ($oDoc.getURL() == $sFile) Then Return SetError($__LO_STATUS_SUCCESS, 3, $oDoc) ; Match
 		WEnd
 
-		Return SetError($__LO_STATUS_DOC_ERROR, 1, 0) ; no match
+		Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; no match
 
 	Else
 		If Not StringInStr($sFile, "/") And StringInStr($sFile, ".") Then ; Name with extension only search
@@ -236,7 +234,7 @@ Func _LOBase_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 				If StringInStr($oDoc.Title, $sFile) Then Return SetError($__LO_STATUS_SUCCESS, 4, $oDoc) ; Match
 			WEnd
 
-			Return SetError($__LO_STATUS_DOC_ERROR, 1, 0) ; no match
+			Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; no match
 		EndIf
 
 		$iCount = 0 ; partial name or partial URL search
@@ -275,7 +273,7 @@ Func _LOBase_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 
 		Else
 
-			Return SetError($__LO_STATUS_DOC_ERROR, 1, 0) ; no match
+			Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; no match
 		EndIf
 	EndIf
 EndFunc   ;==>_LOBase_DocConnect
@@ -815,12 +813,11 @@ EndFunc   ;==>_LOBase_DocSave
 ;                  @Error 1 @Extended 3 Return 0 = $bOverwrite not a Boolean.
 ;                  @Error 1 @Extended 4 Return 0 = $sPassword not a String.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error Converting Path to/from L.O. URL
-;                  @Error 3 @Extended 2 Return 0 = Error setting FilterName Property
-;                  @Error 3 @Extended 3 Return 0 = Error setting Overwrite Property
-;                  @Error 3 @Extended 4 Return 0 = Error setting Password Property
-;                  --Document Errors--
-;                  @Error 5 @Extended 1 Return 0 = Document hasn't been assigned a Database type yet. Set it using _LOBase_DocDatabaseType.
+;                  @Error 3 @Extended 1 Return 0 = Document hasn't been assigned a Database type yet. Set it using _LOBase_DocDatabaseType.
+;                  @Error 3 @Extended 2 Return 0 = Error Converting Path to/from L.O. URL
+;                  @Error 3 @Extended 3 Return 0 = Error setting FilterName Property
+;                  @Error 3 @Extended 4 Return 0 = Error setting Overwrite Property
+;                  @Error 3 @Extended 5 Return 0 = Error setting Password Property
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return String = Successfully Saved the document. Returning document save path.
 ; Author ........: donnyh13
@@ -842,23 +839,23 @@ Func _LOBase_DocSaveAs(ByRef $oDoc, $sFilePath, $bOverwrite = Null, $sPassword =
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sFilePath) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If ($oDoc.DataSource.URL() = "") Then Return SetError($__LO_STATUS_DOC_ERROR, 1, 0)
+	If ($oDoc.DataSource.URL() = "") Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$sFilePath = StringStripWS($sFilePath, $__STR_STRIPLEADING + $__STR_STRIPTRAILING)
 	If Not StringRegExp($sFilePath, "\Q.odb\E[ ]*$") Then $sFilePath &= ".odb"
 
 	$sFilePath = _LOBase_PathConvert($sFilePath, $LOB_PATHCONV_OFFICE_RETURN)
-	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$aProperties[0] = __LOBase_SetPropertyValue("FilterName", "StarOffice XML (Base)")
-	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	If ($bOverwrite <> Null) Then
 		If Not IsBool($bOverwrite) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		ReDim $aProperties[UBound($aProperties) + 1]
 		$aProperties[UBound($aProperties) - 1] = __LOBase_SetPropertyValue("Overwrite", $bOverwrite)
-		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 	EndIf
 
 	If $sPassword <> Null Then
@@ -866,13 +863,13 @@ Func _LOBase_DocSaveAs(ByRef $oDoc, $sFilePath, $bOverwrite = Null, $sPassword =
 
 		ReDim $aProperties[UBound($aProperties) + 1]
 		$aProperties[UBound($aProperties) - 1] = __LOBase_SetPropertyValue("Password", $sPassword)
-		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 	EndIf
 
 	$oDoc.storeAsURL($sFilePath, $aProperties)
 
 	$sSavePath = _LOBase_PathConvert($sFilePath, $LOB_PATHCONV_PCPATH_RETURN)
-	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $sSavePath)
 EndFunc   ;==>_LOBase_DocSaveAs
@@ -893,13 +890,12 @@ EndFunc   ;==>_LOBase_DocSaveAs
 ;                  @Error 1 @Extended 3 Return 0 = $bOverwrite not a Boolean.
 ;                  @Error 1 @Extended 4 Return 0 = $sPassword not a String.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error Converting Path to/from L.O. URL
-;                  @Error 3 @Extended 2 Return 0 = Error setting FilterName Property
+;                  @Error 3 @Extended 1 Return 0 = Document hasn't been assigned a Database type yet. Set it using _LOBase_DocDatabaseType.
+;                  @Error 3 @Extended 2 Return 0 = Error Converting Path to/from L.O. URL
+;                  @Error 3 @Extended 3 Return 0 = Error setting FilterName Property
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended 1 Return 0 = Error setting Overwrite Property
 ;                  @Error 4 @Extended 2 Return 0 = Error setting Password Property
-;                  --Document Errors--
-;                  @Error 5 @Extended 1 Return 0 = $bSaveChanges set to True, and Document hasn't been assigned a Database type yet. Set it using _LOBase_DocDatabaseType.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return String = Success. Returning save path for exported document.
 ; Author ........: donnyh13
@@ -918,13 +914,13 @@ Func _LOBase_DocSaveCopy(ByRef $oDoc, $sFilePath, $bOverwrite = Null, $sPassword
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sFilePath) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If ($oDoc.DataSource.URL() = "") Then Return SetError($__LO_STATUS_DOC_ERROR, 1, 0)
+	If ($oDoc.DataSource.URL() = "") Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$sFilePath = _LOBase_PathConvert($sFilePath, $LOB_PATHCONV_OFFICE_RETURN)
-	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$aProperties[0] = __LOBase_SetPropertyValue("FilterName", "StarOffice XML (Base)")
-	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	If ($bOverwrite <> Null) Then
 		If Not IsBool($bOverwrite) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
@@ -945,7 +941,7 @@ Func _LOBase_DocSaveCopy(ByRef $oDoc, $sFilePath, $bOverwrite = Null, $sPassword
 	$oDoc.storeToURL($sFilePath, $aProperties)
 
 	$sSavePath = _LOBase_PathConvert($sFilePath, $LOB_PATHCONV_PCPATH_RETURN)
-	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $sSavePath)
 EndFunc   ;==>_LOBase_DocSaveCopy

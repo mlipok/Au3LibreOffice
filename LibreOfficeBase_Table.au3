@@ -1573,11 +1573,10 @@ EndFunc   ;==>_LOBase_TableUIClose
 ;                  @Error 2 @Extended 2 Return 0 = Error creating Desktop object.
 ;                  @Error 2 @Extended 3 Return 0 = Error creating enumeration of open documents.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Row Set Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Table name.
-;                  --Document Errors--
-;                  @Error 5 @Extended 1 Return 0 = No open Libre Office documents found.
-;                  @Error 5 @Extended 2 Return 0 = Current Component not a TableUI Document.
+;                  @Error 3 @Extended 1 Return 0 = No open Libre Office documents found.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Row Set Object.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Table name.
+;                  @Error 3 @Extended 4 Return 0 = Current Component not a TableUI Document.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success, The Object for the current, or last active TableUI document is returned. The Table is open in Viewing/Data entry mode.
 ;                  @Error 0 @Extended 1 Return Object = Success, The Object for the current, or last active document is returned. The Table is open in Design mode.
@@ -1610,7 +1609,7 @@ Func _LOBase_TableUIConnect($bConnectCurrent = True)
 
 	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
 	If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
-	If Not $oDesktop.getComponents.hasElements() Then Return SetError($__LO_STATUS_DOC_ERROR, 1, 0) ; no L.O open
+	If Not $oDesktop.getComponents.hasElements() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; no L.O open
 
 	$oEnumDoc = $oDesktop.getComponents.createEnumeration()
 	If Not IsObj($oEnumDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
@@ -1624,17 +1623,17 @@ Func _LOBase_TableUIConnect($bConnectCurrent = True)
 
 		ElseIf $oDoc.supportsService($sTableViewServ) Then
 			$oRowSet = $oDoc.FormOperations.Cursor
-			If Not IsObj($oRowSet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+			If Not IsObj($oRowSet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 			$sTableName = $oRowSet.Command()
-			If Not IsString($sTableName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-			If Not $oRowSet.ActiveConnection.Tables.hasByName($sTableName) Then Return SetError($__LO_STATUS_DOC_ERROR, 2, 0) ; Not a Table UI, but perhaps a Query.
+			If Not IsString($sTableName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+			If Not $oRowSet.ActiveConnection.Tables.hasByName($sTableName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; Not a Table UI, but perhaps a Query.
 
 			Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc)
 
 		Else
 
-			Return SetError($__LO_STATUS_DOC_ERROR, 2, 0)
+			Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 		EndIf
 	EndIf
 

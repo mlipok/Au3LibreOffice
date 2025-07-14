@@ -810,11 +810,10 @@ EndFunc   ;==>_LOBase_QueryUIClose
 ;                  @Error 2 @Extended 2 Return 0 = Error creating Desktop object.
 ;                  @Error 2 @Extended 3 Return 0 = Error creating enumeration of open documents.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Row Set Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Query name.
-;                  --Document Errors--
-;                  @Error 5 @Extended 1 Return 0 = No open Libre Office documents found.
-;                  @Error 5 @Extended 2 Return 0 = Current Component not a QueryUI Document.
+;                  @Error 3 @Extended 1 Return 0 = No open Libre Office documents found.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Row Set Object.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Query name.
+;                  @Error 3 @Extended 4 Return 0 = Current Component not a QueryUI Document.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success, The Object for the current, or last active QueryUI document is returned. The Query is open in Viewing/Data entry mode.
 ;                  @Error 0 @Extended 1 Return Object = Success, The Object for the current, or last active document is returned. The Query is open in Design mode.
@@ -847,7 +846,7 @@ Func _LOBase_QueryUIConnect($bConnectCurrent = True)
 
 	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
 	If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
-	If Not $oDesktop.getComponents.hasElements() Then Return SetError($__LO_STATUS_DOC_ERROR, 1, 0) ; no L.O open
+	If Not $oDesktop.getComponents.hasElements() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; no L.O open
 
 	$oEnumDoc = $oDesktop.getComponents.createEnumeration()
 	If Not IsObj($oEnumDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
@@ -861,17 +860,17 @@ Func _LOBase_QueryUIConnect($bConnectCurrent = True)
 
 		ElseIf $oDoc.supportsService($sQueryViewServ) Then
 			$oRowSet = $oDoc.FormOperations.Cursor
-			If Not IsObj($oRowSet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+			If Not IsObj($oRowSet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 			$sQueryName = $oRowSet.Command()
-			If Not IsString($sQueryName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-			If Not $oRowSet.ActiveConnection.Queries.hasByName($sQueryName) Then Return SetError($__LO_STATUS_DOC_ERROR, 2, 0) ; Not a Query UI, but perhaps a Table.
+			If Not IsString($sQueryName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+			If Not $oRowSet.ActiveConnection.Queries.hasByName($sQueryName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; Not a Query UI, but perhaps a Table.
 
 			Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc)
 
 		Else
 
-			Return SetError($__LO_STATUS_DOC_ERROR, 2, 0)
+			Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 		EndIf
 	EndIf
 

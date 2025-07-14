@@ -276,9 +276,8 @@ EndFunc   ;==>_LOBase_DatabaseGetDefaultQuote
 ;                  @Error 2 @Extended 2 Return 0 = Failed to create "com.sun.star.sdb.DatabaseContext" Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Document Save path.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Database Object.
-;                  --Document Errors--
-;                  @Error 5 @Extended 1 Return 0 = Document hasn't been saved yet.
+;                  @Error 3 @Extended 2 Return 0 = Document hasn't been saved yet.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Database Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Returning requested Database Object.
 ; Author ........: donnyh13
@@ -300,7 +299,7 @@ Func _LOBase_DatabaseGetObjByDoc(ByRef $oDoc)
 
 	$sURL = $oDoc.URL()
 	If Not IsString($sURL) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-	If ($sURL = "") Then Return SetError($__LO_STATUS_DOC_ERROR, 1, 0)
+	If ($sURL = "") Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
@@ -309,7 +308,7 @@ Func _LOBase_DatabaseGetObjByDoc(ByRef $oDoc)
 	If Not IsObj($oDBaseContext) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	$oDBase = $oDBaseContext.getByName($sURL)
-	If Not IsObj($oDBase) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If Not IsObj($oDBase) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oDBase)
 EndFunc   ;==>_LOBase_DatabaseGetObjByDoc
