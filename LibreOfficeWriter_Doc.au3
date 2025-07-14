@@ -1029,7 +1029,7 @@ EndFunc   ;==>_LOWriter_DocCreateTextCursor
 ;                  |                               1024 = Error setting $sSource
 ;                  |                               2048 = Error setting $sType
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current LibreOffice version is less than 24.2.
+;                  @Error 6 @Extended 1 Return 0 = Current LibreOffice version is less than 24.2.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array or a 12 Element array if current LibreOffice version 24.2 or greater. Returning array with values in order of function parameters. Any array values could be empty if no values are presently set.
@@ -3255,7 +3255,7 @@ EndFunc   ;==>_LOWriter_DocPrint
 ;                  @Error 2 @Extended 1 Return 0 = Failure Creating Object.
 ;                  @Error 2 @Extended 2 Return 0 = Failure retrieving printer list Object.
 ;                  --Printer Related Errors--
-;                  @Error 6 @Extended 1 Return 0 = No default printer found.
+;                  @Error 5 @Extended 1 Return 0 = No default printer found.
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return String = Returning the default printer name. See remarks. @Extended is set to the number of results.
 ;                  @Error 0 @Extended ? Return Array = Returning an array of strings containing all installed printers. See remarks. Number of results returned in @Extended.
@@ -3323,8 +3323,8 @@ EndFunc   ;==>_LOWriter_DocPrintersAltGetNames
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Default printer name.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Array of printer names.
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.1.
-;                  @Error 7 @Extended 2 Return 0 = Current Libre Office version lower than 6.3.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 4.1.
+;                  @Error 6 @Extended 2 Return 0 = Current Libre Office version lower than 6.3.
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return String = Returning the default printer name.
 ;                  @Error 0 @Extended ? Return Array = Returning an array of strings containing all installed printers. @Extended set to number of results.
@@ -3498,7 +3498,7 @@ EndFunc   ;==>_LOWriter_DocPrintIncludedSettings
 ;                  |                               16 = Error setting $bBrochureRTL
 ;                  |                               32 = Error setting $bReversed
 ;                  --Printer Related Errors--
-;                  @Error 6 @Extended 1 Return 0 = Printer does not allow changing paper orientation.
+;                  @Error 5 @Extended 1 Return 0 = Printer does not allow changing paper orientation.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
@@ -3716,8 +3716,8 @@ EndFunc   ;==>_LOWriter_DocPrintPageSettings
 ;                  |                               2 = Error setting $iPaperWidth
 ;                  |                               4 = Error setting $iPaperHeight
 ;                  --Printer Related Errors--
-;                  @Error 6 @Extended 1 Return 0 = Printer doesn't allow paper format to be set.
-;                  @Error 6 @Extended 2 Return 0 = Printer doesn't allow paper size to be set.
+;                  @Error 5 @Extended 1 Return 0 = Printer doesn't allow paper format to be set.
+;                  @Error 5 @Extended 2 Return 0 = Printer doesn't allow paper size to be set.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.

@@ -94,7 +94,7 @@
 ;                  @Error 4 @Extended 5 Return 0 = Cannot set Vertical Border Color when Vertical Border width not set.
 ;                  @Error 4 @Extended 6 Return 0 = Cannot set Horizontal Border Color when Horizontal Border width not set.
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
@@ -256,7 +256,7 @@ EndFunc   ;==>_LOWriter_TableBorderPadding
 ;                  @Error 4 @Extended 5 Return 0 = Cannot set Vertical Border Style when Vertical Border width not set.
 ;                  @Error 4 @Extended 6 Return 0 = Cannot set Horizontal Border Style when Horizontal Border width not set.
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
@@ -315,7 +315,7 @@ EndFunc   ;==>_LOWriter_TableBorderStyle
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving Object "TableBorder2".
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.

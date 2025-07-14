@@ -902,7 +902,7 @@ EndFunc   ;==>_LOWriter_DateFormatKeysGetList
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.util.DateTime" Object.
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.1.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 4.1.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Structure = Success. Successfully created the Date/Time Structure, Returning its Object.
 ; Author ........: donnyh13
@@ -1035,7 +1035,7 @@ EndFunc   ;==>_LOWriter_DateStructCreate
 ;                  |                               64 = Error setting $iNanoSeconds
 ;                  |                               128 = Error setting $bIsUTC
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.1.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 4.1.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 or 8 Element Array with values in order of function parameters. If current Libre Office version is less than 4.1, the Array will contain 7 elements, as $bIsUTC will be eliminated.
@@ -1342,7 +1342,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyEffects
 ;                  @Error 1 @Extended 8 Return 0 = $iTransparency not an Integer, Less than 0, or greater than 100.
 ;                  @Error 1 @Extended 9 Return 0 = $iHighlight not an Integer, less than -1, or greater than 16777215.
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 7.0.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 7.0.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. FindFormat Array of Settings was successfully modified.
 ; Author ........: donnyh13
@@ -1467,7 +1467,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyFont
 ;                  @Error 1 @Extended 5 Return 0 = $iMinLeadingChar not an Integer, less than 2, or greater than 9.
 ;                  @Error 1 @Extended 6 Return 0 = $iMinTrailingChar not an Integer, less than 2, or greater than 9.
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 6.4.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 6.4.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. FindFormat Array of Settings was successfully modified.
 ; Author ........: donnyh13
@@ -2000,7 +2000,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyRotateScaleSpace
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error creating LineSpacing Object.
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. FindFormat Array of Settings was successfully modified.
 ; Author ........: donnyh13

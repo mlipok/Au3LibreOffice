@@ -933,6 +933,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - $LOW_FIELD_TYPE_URL Constant. -- "com.sun.star.text.TextField.URL" is a Calc-only Field type.
 - __LOWriter_NumStyleRetrieve function as it is no longer needed.
 - Remove LibreOfficeWriter_Font file, and merge functions into LibreOfficeWriter_Helper
+- $__LO_STATUS_DOC_ERROR Error Constant and renumber all after errors.
 
 [To Top](#releases)
 

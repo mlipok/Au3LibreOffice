@@ -647,7 +647,7 @@ EndFunc   ;==>_LOWriter_ImageAreaTransparencyGradient
 ;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Left Border width not set.
 ;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Right Border width not set.
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -795,7 +795,7 @@ EndFunc   ;==>_LOWriter_ImageBorderPadding
 ;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Left Border width not set.
 ;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Right Border width not set.
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -847,7 +847,7 @@ EndFunc   ;==>_LOWriter_ImageBorderStyle
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -2288,7 +2288,7 @@ EndFunc   ;==>_LOWriter_ImageTypePosition
 ;                  |                               32 = Error setting $iHeightRelativeTo
 ;                  |                               64 = Error setting $bKeepRatio
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.3.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 4.3.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 or 7 Element Array depending on current Libre Office Version, If the current Libre Office version is greater than or equal to 4.3, then a 7 element Array is returned, else 5 element array with both $iWidthRelativeTo and $iHeightRelativeTo skipped. Array Element values will be in order of function parameters.

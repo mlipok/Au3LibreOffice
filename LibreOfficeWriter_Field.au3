@@ -518,7 +518,7 @@ EndFunc   ;==>_LOWriter_FieldCombCharModify
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.text.TextField.Annotation" Object.
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office Version lower than 4.0.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office Version lower than 4.0.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Successfully inserted comment field, returning Comment Object.
 ; Author ........: donnyh13
@@ -617,7 +617,7 @@ EndFunc   ;==>_LOWriter_FieldCommentInsert
 ;                  @Error 1 @Extended 7 Return 0 = $sName not a String.
 ;                  @Error 1 @Extended 8 Return 0 = $bResolved not a Boolean.
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office Version lower than 4.0.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office Version lower than 4.0.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $sContent

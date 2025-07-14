@@ -436,7 +436,7 @@ EndFunc   ;==>_LOWriter_PageStyleAreaGradient
 ;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Left Border width not set.
 ;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Right Border width not set.
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -588,7 +588,7 @@ EndFunc   ;==>_LOWriter_PageStyleBorderPadding
 ;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Left Border width not set.
 ;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Right Border width not set.
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -642,7 +642,7 @@ EndFunc   ;==>_LOWriter_PageStyleBorderStyle
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -1180,7 +1180,7 @@ EndFunc   ;==>_LOWriter_PageStyleExists
 ;                  |                               128 = Error setting $iHeight
 ;                  |                               256 = Error setting $bAutoHeight
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.0.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 4.0.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 or 9 Element Array with values in order of function parameters. If Libre Office version is less than 4.0, then the Array returned will contain 8 elements, because $bSameOnFirst will not be available.
@@ -2480,7 +2480,7 @@ EndFunc   ;==>_LOWriter_PageStyleGetObj
 ;                  |                               128 = Error setting $iHeight
 ;                  |                               256 = Error setting $bAutoHeight
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.0.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 4.0.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 or 9 Element Array with values in order of function parameters. If Libre Office version is less than 4.0, then the Array returned will contain 8 elements, because $bSameOnFirst will not be available.
@@ -3569,7 +3569,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderTransparencyGradient
 ;                  |                               32 = Error setting $bBackCoversMargins
 ;                  |                               64 = Error setting $sPaperTray
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 7.2.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 7.2.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 or 7 Element Array with values in order of function parameters. If the current Libre Office version is less than 7.2, the Array will be a 4 element Array, because $bGutterOnRight, $bGutterAtTop, and $bBackCoversMargins will not be available.
@@ -3697,7 +3697,7 @@ EndFunc   ;==>_LOWriter_PageStyleLayout
 ;                  |                               8 = Error setting $iBottom
 ;                  |                               16 = Error setting $iGutter
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 7.2.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 7.2.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 or 5 Element Array with values in order of function parameters. If the current Libre Office version is less than 7.2, then the array will have 4 elements as Gutter Margin will not be available.
@@ -3796,7 +3796,7 @@ EndFunc   ;==>_LOWriter_PageStyleMargins
 ;                  |                               2 = Error setting $bHidden
 ;                  |                               4 = Error setting $sFollowStyle
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.0.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 4.0.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 or 3 Element Array with values in order of function parameters. If the Libre Office version is below 4.0, the Array will contain 2 elements because $bHidden is not available.
