@@ -161,7 +161,7 @@ Func _LOBase_TableAdd(ByRef $oConnection, $sName, $sColName, $iColType = $LOB_DA
 		Case $LOB_DATA_TYPE_NUMERIC, $LOB_DATA_TYPE_DECIMAL
 			$oColumn.Precision = 646456993
 
-;~ 		Case $LOB_DATA_TYPE_DATE, $LOB_DATA_TYPE_TIME, $LOB_DATA_TYPE_TIMESTAMP; No value needed.
+			;~ 		Case $LOB_DATA_TYPE_DATE, $LOB_DATA_TYPE_TIME, $LOB_DATA_TYPE_TIMESTAMP; No value needed.
 	EndSwitch
 
 	$oColumns.appendByDescriptor($oColumn)
@@ -1619,6 +1619,7 @@ Func _LOBase_TableUIConnect($bConnectCurrent = True)
 		$oDoc = $oDesktop.currentComponent()
 
 		If $oDoc.supportsService($sTableDesignServ) Then
+
 			Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc)
 
 		ElseIf $oDoc.supportsService($sTableViewServ) Then
@@ -1627,7 +1628,6 @@ Func _LOBase_TableUIConnect($bConnectCurrent = True)
 
 			$sTableName = $oRowSet.Command()
 			If Not IsString($sTableName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
 			If Not $oRowSet.ActiveConnection.Tables.hasByName($sTableName) Then Return SetError($__LO_STATUS_DOC_ERROR, 2, 0) ; Not a Table UI, but perhaps a Query.
 
 			Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc)
@@ -1643,7 +1643,6 @@ Func _LOBase_TableUIConnect($bConnectCurrent = True)
 	While $oEnumDoc.hasMoreElements()
 		$oDoc = $oEnumDoc.nextElement()
 		If $oDoc.supportsService($sTableDesignServ) Then
-
 			ReDim $aoConnectAll[$iCount + 1][3]
 			$aoConnectAll[$iCount][0] = $oDoc
 			$aoConnectAll[$iCount][1] = $oDoc.Title()

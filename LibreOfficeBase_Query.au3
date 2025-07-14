@@ -856,6 +856,7 @@ Func _LOBase_QueryUIConnect($bConnectCurrent = True)
 		$oDoc = $oDesktop.currentComponent()
 
 		If $oDoc.supportsService($sQueryDesignServ) Then
+
 			Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc)
 
 		ElseIf $oDoc.supportsService($sQueryViewServ) Then
@@ -864,7 +865,6 @@ Func _LOBase_QueryUIConnect($bConnectCurrent = True)
 
 			$sQueryName = $oRowSet.Command()
 			If Not IsString($sQueryName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
 			If Not $oRowSet.ActiveConnection.Queries.hasByName($sQueryName) Then Return SetError($__LO_STATUS_DOC_ERROR, 2, 0) ; Not a Query UI, but perhaps a Table.
 
 			Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc)
@@ -880,7 +880,6 @@ Func _LOBase_QueryUIConnect($bConnectCurrent = True)
 	While $oEnumDoc.hasMoreElements()
 		$oDoc = $oEnumDoc.nextElement()
 		If $oDoc.supportsService($sQueryDesignServ) Then
-
 			ReDim $aoConnectAll[$iCount + 1][3]
 			$aoConnectAll[$iCount][0] = $oDoc
 			$aoConnectAll[$iCount][1] = $oDoc.Title()
