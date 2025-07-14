@@ -94,9 +94,9 @@ Func Example()
 	; Close the document.
 	_LOBase_DocClose($oDoc, False)
 	If @error Then Return _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-EndFunc   ;==>Example
+EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
-EndFunc   ;==>_ERROR
+EndFunc
