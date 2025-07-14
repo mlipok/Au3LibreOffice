@@ -431,10 +431,10 @@ EndFunc   ;==>_LOWriter_ShapeDelete
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ShapeExists(ByRef $oDoc, $sShapeName)
-	Local $oShapes
-
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
+
+	Local $oShapes
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sShapeName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
