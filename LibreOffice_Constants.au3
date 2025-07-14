@@ -16,8 +16,8 @@
 ; Error Codes
 Global Enum _
 		$__LO_STATUS_SUCCESS = 0, _                            ; 0 Function finished successfully.
-		$__LO_STATUS_INPUT_ERROR, _                            ; 1 Function encountered a input error.
-		$__LO_STATUS_INIT_ERROR, _                             ; 2 Function encountered a Initialization error.
+		$__LO_STATUS_INPUT_ERROR, _                            ; 1 Function encountered an input error.
+		$__LO_STATUS_INIT_ERROR, _                             ; 2 Function encountered an Initialization error.
 		$__LO_STATUS_PROCESSING_ERROR, _                       ; 3 Function encountered a Processing error.
 		$__LO_STATUS_PROP_SETTING_ERROR, _                     ; 4 Function encountered a Property setting error.
 		$__LO_STATUS_DOC_ERROR, _                              ; 5 Function encountered a Document related error.
