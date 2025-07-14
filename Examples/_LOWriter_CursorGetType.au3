@@ -27,13 +27,15 @@ Func Example()
 
 	; Display a message depending on what type the cursor is.
 	Switch $iCursorType
-
 		Case $LOW_CURTYPE_TEXT_CURSOR
 			MsgBox($MB_OK + $MB_TOPMOST, Default, "The Cursor Type is a Text Cursor, with an integer value of : " & $iCursorType & " — Or $LOW_CURTYPE_TEXT_CURSOR")
+
 		Case $LOW_CURTYPE_TABLE_CURSOR
 			MsgBox($MB_OK + $MB_TOPMOST, Default, "The Cursor Type is a Table Cursor, with an integer value of : " & $iCursorType & " — Or $LOW_CURTYPE_TABLE_CURSOR")
+
 		Case $LOW_CURTYPE_VIEW_CURSOR
 			MsgBox($MB_OK + $MB_TOPMOST, Default, "The Cursor Type is a View Cursor, with an integer value of : " & $iCursorType & " — Or $LOW_CURTYPE_VIEW_CURSOR")
+
 		Case Else
 			MsgBox($MB_OK + $MB_TOPMOST, Default, "Something went wrong.")
 	EndSwitch
@@ -41,7 +43,6 @@ Func Example()
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Following Error codes returned: Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

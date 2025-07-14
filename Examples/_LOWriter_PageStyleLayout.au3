@@ -18,14 +18,12 @@ Func Example()
 
 	; If Libre Office version is higher or equal to 7.2 then set Gutter settings.
 	If (_LOWriter_VersionGet(True) >= 7.2) Then
-
 		; Set Page layout to, $LOW_PAGE_LAYOUT_MIRRORED, Numbering format to $LOW_NUM_STYLE_CHARS_UPPER_LETTER_N, Reference Paragraph style to
 		; "Default Paragraph Style", Gutter on Right to False, Gutter At top to False, Background covers margins to True.
 		_LOWriter_PageStyleLayout($oDoc, $oPageStyle, $LOW_PAGE_LAYOUT_MIRRORED, $LOW_NUM_STYLE_CHARS_UPPER_LETTER_N, "Default Paragraph Style", False, False, True)
 		If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	Else ; Set all other settings, except the Gutter settings.
-
 		; Set layout to, $LOW_PAGE_LAYOUT_MIRRORED, Numbering format to $LOW_NUM_STYLE_CHARS_UPPER_LETTER_N, Reference Paragraph style to
 		; "Default Paragraph Style", Background covers margins to True.
 		_LOWriter_PageStyleLayout($oDoc, $oPageStyle, $LOW_PAGE_LAYOUT_MIRRORED, $LOW_NUM_STYLE_CHARS_UPPER_LETTER_N, "Default Paragraph Style", Null, Null, True)
@@ -61,7 +59,6 @@ Func Example()
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

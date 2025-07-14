@@ -40,7 +40,6 @@ Func Example()
 	While 1
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE, $hClose
-
 				; Close the document.
 				_LOWriter_DocClose($oDoc, False)
 				If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
@@ -58,7 +57,6 @@ Func Example()
 				MsgBox($MB_OK + $MB_TOPMOST, Default, "The command """ & $sExecuteCommand & """ was successfully performed.")
 		EndSwitch
 	WEnd
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

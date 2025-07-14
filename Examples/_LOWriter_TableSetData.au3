@@ -34,7 +34,6 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve Text Table Column count. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	For $iRow = 0 To $iRows - 1
-
 		For $iColumn = 0 To $iColumns - 1
 			; Retrieve each cell by position in the Table.
 			$oCell = _LOWriter_TableGetCellObjByPosition($oTable, $iColumn, $iRow)
@@ -54,13 +53,11 @@ Func Example()
 	; This "For" will loop through the Rows array adding a Columns Array to each element once I fill the Columns array. When I add an array to
 	; another array it puts a copy into the array, so I can keep re-using  the same columns array.
 	For $k = 0 To $iRows - 1
-
 		For $i = 0 To $iColumns - 1
 			$avColumns[$i] = "Array Column " & $i & @CR & "Array Row " & $k
 		Next
 		$avRows[$k] = $avColumns
 		Sleep(10)
-
 	Next
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now replace the existing data in the Table")
@@ -74,7 +71,6 @@ Func Example()
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

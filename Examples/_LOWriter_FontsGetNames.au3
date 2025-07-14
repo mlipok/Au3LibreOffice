@@ -38,7 +38,6 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to insert Text Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	For $iRow = 0 To $iCount - 1
-
 		; Retrieve each cell by position in the Table.
 		$oCell = _LOWriter_TableGetCellObjByPosition($oTable, 0, $iRow)
 		If @error Then _ERROR($oDoc, "Failed to retrieve Text Table Cell by position. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
@@ -70,7 +69,6 @@ Func Example()
 		; Set Cell text String to Font's Italic setting.
 		_LOWriter_CellValue($oCell, $asFonts[$iRow][3])
 		If @error Then _ERROR($oDoc, "Failed to set Text Table Cell Value. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 	Next
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
@@ -78,7 +76,6 @@ Func Example()
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
