@@ -487,11 +487,10 @@ EndFunc   ;==>_LOWriter_DocClose
 ;                  @Error 2 @Extended 2 Return 0 = Error creating Desktop object.
 ;                  @Error 2 @Extended 3 Return 0 = Error creating enumeration of open documents.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error converting path to Libre Office URL.
-;                  --Document Errors--
-;                  @Error 5 @Extended 1 Return 0 = No matches found.
-;                  @Error 5 @Extended 2 Return 0 = Current Component not a Text Document.
-;                  @Error 5 @Extended 3 Return 0 = No open Libre Office documents found.
+;                  @Error 3 @Extended 1 Return 0 = No open Libre Office documents found.
+;                  @Error 3 @Extended 2 Return 0 = Current Component not a Text Document.
+;                  @Error 3 @Extended 3 Return 0 = Error converting path to Libre Office URL.
+;                  @Error 3 @Extended 4 Return 0 = No matches found.
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return Object = Success, The Object for the current, or last active document is returned.
 ;                  @Error 0 @Extended ? Return Array = Success, An Array of all open LibreOffice Writer Text documents is returned. See remarks. @Extended is set to number of results.
@@ -530,7 +529,7 @@ Func _LOWriter_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False
 
 	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
 	If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
-	If Not $oDesktop.getComponents.hasElements() Then Return SetError($__LO_STATUS_DOC_ERROR, 3, 0) ; no L.O open
+	If Not $oDesktop.getComponents.hasElements() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; no L.O open
 
 	$oEnumDoc = $oDesktop.getComponents.createEnumeration()
 	If Not IsObj($oEnumDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
@@ -538,7 +537,7 @@ Func _LOWriter_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False
 	If $bConnectCurrent Then
 		$oDoc = $oDesktop.currentComponent()
 
-		Return ($oDoc.supportsService($sServiceName) And Not IsObj($oDoc.Parent())) ? (SetError($__LO_STATUS_SUCCESS, 1, $oDoc)) : (SetError($__LO_STATUS_DOC_ERROR, 2, 0))
+		Return ($oDoc.supportsService($sServiceName) And Not IsObj($oDoc.Parent())) ? (SetError($__LO_STATUS_SUCCESS, 1, $oDoc)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0))
 	EndIf
 
 	If $bConnectAll Then
@@ -562,7 +561,7 @@ Func _LOWriter_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False
 
 	$sFile = StringStripWS($sFile, $STR_STRIPLEADING)
 	If StringInStr($sFile, "\") Then $sFile = _LOWriter_PathConvert($sFile, $LOW_PATHCONV_OFFICE_RETURN) ; Convert to L.O File path.
-	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	If StringInStr($sFile, "file:///") Then ; URL/Path and Name search
 
@@ -572,7 +571,7 @@ Func _LOWriter_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False
 			If ($oDoc.getURL() == $sFile) Then Return SetError($__LO_STATUS_SUCCESS, 3, $oDoc) ; Match
 		WEnd
 
-		Return SetError($__LO_STATUS_DOC_ERROR, 1, 0) ; no match
+		Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; no match
 
 	Else
 		If Not StringInStr($sFile, "/") And StringInStr($sFile, ".") Then ; Name with extension only search
@@ -581,7 +580,7 @@ Func _LOWriter_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False
 				If StringInStr($oDoc.Title, $sFile) Then Return SetError($__LO_STATUS_SUCCESS, 4, $oDoc) ; Match
 			WEnd
 
-			Return SetError($__LO_STATUS_DOC_ERROR, 1, 0) ; no match
+			Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; no match
 		EndIf
 
 		$iCount = 0 ; partial name or partial URL search
@@ -620,7 +619,7 @@ Func _LOWriter_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False
 
 		Else
 
-			Return SetError($__LO_STATUS_DOC_ERROR, 1, 0) ; no match
+			Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; no match
 		EndIf
 	EndIf
 EndFunc   ;==>_LOWriter_DocConnect
@@ -1261,13 +1260,12 @@ EndFunc   ;==>_LOWriter_DocExecuteDispatch
 ;                  @Error 1 @Extended 6 Return 0 = $sPassword not a String.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error Converting Path to/from L.O. URL
-;                  @Error 3 @Extended 2 Return 0 = Error retrieving FilterName.
+;                  @Error 3 @Extended 2 Return 0 = Document has no save path, and $bSamePath is set to True.
+;                  @Error 3 @Extended 3 Return 0 = Error retrieving FilterName.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended 1 Return 0 = Error setting FilterName Property
 ;                  @Error 4 @Extended 2 Return 0 = Error setting Overwrite Property
 ;                  @Error 4 @Extended 3 Return 0 = Error setting Password Property
-;                  --Document Errors--
-;                  @Error 5 @Extended 1 Return 0 = Document has no save path, and $bSamePath is set to True.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return String = Success. Returning save path for exported document.
 ; Author ........: donnyh13
@@ -1301,7 +1299,7 @@ Func _LOWriter_DocExport(ByRef $oDoc, $sFilePath, $bSamePath = False, $sFilterNa
 
 		Else
 
-			Return SetError($__LO_STATUS_DOC_ERROR, 1, 0)
+			Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		EndIf
 	EndIf
 
@@ -1309,7 +1307,7 @@ Func _LOWriter_DocExport(ByRef $oDoc, $sFilePath, $bSamePath = False, $sFilterNa
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If ($sFilterName = "") Or ($sFilterName = " ") Then $sFilterName = __LOWriter_FilterNameGet($sFilePath, True)
-	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	$aProperties[0] = __LOWriter_SetPropertyValue("FilterName", $sFilterName)
 	If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0)
