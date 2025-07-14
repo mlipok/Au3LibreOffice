@@ -42,7 +42,7 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to add a table to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Open the Table UI.
-	_LOBase_TableUIOpenByName($oDoc, $oConnection, "tblNew_Table")
+	_LOBase_TableUIOpenByName($oConnection, "tblNew_Table")
 	If @error Then Return _ERROR($oDoc, "Failed to open Table UI. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have just opened the Table UI, press Ok to connect to it and close it.")

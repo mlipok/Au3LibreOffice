@@ -38,7 +38,7 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to create a connection to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a new form.
-	$oFormDoc = _LOBase_FormCreate($oDoc, $oConnection, "frmAutoIt_Form", False)
+	$oFormDoc = _LOBase_FormCreate($oConnection, "frmAutoIt_Form", False)
 	If @error Then Return _ERROR($oDoc, "Failed to create a form Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a Folder
@@ -46,11 +46,11 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to create a form folder. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a new form in the Folder.
-	$oFormDoc = _LOBase_FormCreate($oDoc, $oConnection, "AutoIt_Folder/frmAutoIt_Form2", False)
+	$oFormDoc = _LOBase_FormCreate($oConnection, "AutoIt_Folder/frmAutoIt_Form2", False)
 	If @error Then Return _ERROR($oDoc, "Failed to create a form Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Open the new Form in Design Mode.
-	$oFormDoc = _LOBase_FormOpen($oDoc, $oConnection, "frmAutoIt_Form", True)
+	$oFormDoc = _LOBase_FormOpen($oConnection, "frmAutoIt_Form", True)
 	If @error Then Return _ERROR($oDoc, "Failed to open a form Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have opened the form called ""frmAutoIt_Form"" in Design Mode. Press ok to close it.")
@@ -60,7 +60,7 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to close the form Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Open the new Form that is located in a Folder, in Form Mode.
-	$oFormDoc = _LOBase_FormOpen($oDoc, $oConnection, "AutoIt_Folder/frmAutoIt_Form2", False)
+	$oFormDoc = _LOBase_FormOpen($oConnection, "AutoIt_Folder/frmAutoIt_Form2", False)
 	If @error Then Return _ERROR($oDoc, "Failed to open a form Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have opened the form called ""frmAutoIt_Form2"" located in the folder ""AutoIt_Folder"" in non-Design Mode. Press ok to close it.")

@@ -947,22 +947,20 @@ EndFunc   ;==>_LOBase_QueryUIGetRowSet
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_QueryUIOpenByName
 ; Description ...: Open a Query's User Interface window either in design mode or viewing mode.
-; Syntax ........: _LOBase_QueryUIOpenByName(ByRef $oDoc, ByRef $oConnection, $sQuery[, $bEdit = False[, $bHidden = False]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOBase_DocOpen, _LOBase_DocConnect, or _LOBase_DocCreate function.
-;                  $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
+; Syntax ........: _LOBase_QueryUIOpenByName(ByRef $oConnection, $sQuery[, $bEdit = False[, $bHidden = False]])
+; Parameters ....: $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
 ;                  $sQuery              - a string value. The Query's name.
 ;                  $bEdit               - [optional] a boolean value. Default is False. If True, the Query is opened in editing mode to add or remove columns. If False, the Query is opened in data viewing mode, to modify Query Data.
-;                  $bHidden            - [optional] a boolean value. Default is False. If True, the UI window will be invisible.
+;                  $bHidden             - [optional] a boolean value. Default is False. If True, the UI window will be invisible.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oConnection not an Object.
-;                  @Error 1 @Extended 3 Return 0 = Object called in $oConnection not a Connection Object.
-;                  @Error 1 @Extended 4 Return 0 = $sQuery not a String.
-;                  @Error 1 @Extended 5 Return 0 = $bEdit not a Boolean.
-;                  @Error 1 @Extended 6 Return 0 = $bHidden not a Boolean.
-;                  @Error 1 @Extended 7 Return 0 = No Query with name called in $sQuery found.
+;                  @Error 1 @Extended 1 Return 0 = $oConnection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oConnection not a Connection Object.
+;                  @Error 1 @Extended 3 Return 0 = $sQuery not a String.
+;                  @Error 1 @Extended 4 Return 0 = $bEdit not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $bHidden not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = No Query with name called in $sQuery found.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Connection called in $oConnection is closed.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Queries Object.
@@ -977,7 +975,7 @@ EndFunc   ;==>_LOBase_QueryUIGetRowSet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOBase_QueryUIOpenByName(ByRef $oDoc, ByRef $oConnection, $sQuery, $bEdit = False, $bHidden = False)
+Func _LOBase_QueryUIOpenByName(ByRef $oConnection, $sQuery, $bEdit = False, $bHidden = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -985,24 +983,23 @@ Func _LOBase_QueryUIOpenByName(ByRef $oDoc, ByRef $oConnection, $sQuery, $bEdit 
 	Local Const $__LOB_OBJ_TYPE_QUERY = 1 ; com.sun.star.sdb.application.DatabaseObject
 	Local $aArgs[1]
 
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsString($sQuery) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If Not IsBool($bEdit) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsString($sQuery) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bEdit) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oQueries = $oConnection.getQueries()
 	If Not IsObj($oQueries) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-	If Not $oQueries.hasByName($sQuery) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+	If Not $oQueries.hasByName($sQuery) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
-	If Not $oDoc.CurrentController.isConnected() Then $oDoc.CurrentController.connect()
-	If Not $oDoc.CurrentController.isConnected() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If Not $oConnection.Parent.DatabaseDocument.CurrentController.isConnected() Then $oConnection.Parent.DatabaseDocument.CurrentController.connect()
+	If Not $oConnection.Parent.DatabaseDocument.CurrentController.isConnected() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	$aArgs[0] = __LOBase_SetPropertyValue("Hidden", $bHidden)
 
-	$oQueryUI = $oDoc.CurrentController.loadComponentWithArguments($__LOB_OBJ_TYPE_QUERY, $sQuery, $bEdit, $aArgs)
+	$oQueryUI = $oConnection.Parent.DatabaseDocument.CurrentController.loadComponentWithArguments($__LOB_OBJ_TYPE_QUERY, $sQuery, $bEdit, $aArgs)
 	If Not IsObj($oQueryUI) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oQueryUI)
@@ -1011,21 +1008,19 @@ EndFunc   ;==>_LOBase_QueryUIOpenByName
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_QueryUIOpenByObject
 ; Description ...: Open a Query's User Interface windows either in design mode or viewing mode.
-; Syntax ........: _LOBase_QueryUIOpenByObject(ByRef $oDoc, ByRef $oConnection, ByRef $oQuery[, $bEdit = False[, $bHidden = False]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOBase_DocOpen, _LOBase_DocConnect, or _LOBase_DocCreate function.
-;                  $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
+; Syntax ........: _LOBase_QueryUIOpenByObject(ByRef $oConnection, ByRef $oQuery[, $bEdit = False[, $bHidden = False]])
+; Parameters ....: $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
 ;                  $oQuery              - [in/out] an object. A Query object returned by a previous _LOBase_QueryGetObjByIndex, _LOBase_QueryGetObjByName, _LOBase_QueryAddByName or _LOBase_QueryAddBySQL function.
 ;                  $bEdit               - [optional] a boolean value. Default is False. If True, the Query is opened in editing mode to add or remove columns. If False, the Query is opened in data viewing mode, to modify Query Data.
 ;                  $bHidden             - [optional] a boolean value. Default is False. If True, the UI window will be invisible.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oConnection not an Object.
-;                  @Error 1 @Extended 3 Return 0 = Object called in $oConnection not a Connection Object.
-;                  @Error 1 @Extended 4 Return 0 = $oQuery not an Object.
-;                  @Error 1 @Extended 5 Return 0 = $bEdit not a Boolean.
-;                  @Error 1 @Extended 6 Return 0 = $bHidden not a Boolean.
+;                  @Error 1 @Extended 1 Return 0 = $oConnection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oConnection not a Connection Object.
+;                  @Error 1 @Extended 3 Return 0 = $oQuery not an Object.
+;                  @Error 1 @Extended 4 Return 0 = $bEdit not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $bHidden not a Boolean.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Connection called in $oConnection is closed.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Query Name.
@@ -1040,7 +1035,7 @@ EndFunc   ;==>_LOBase_QueryUIOpenByName
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOBase_QueryUIOpenByObject(ByRef $oDoc, ByRef $oConnection, ByRef $oQuery, $bEdit = False, $bHidden = False)
+Func _LOBase_QueryUIOpenByObject(ByRef $oConnection, ByRef $oQuery, $bEdit = False, $bHidden = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1049,23 +1044,22 @@ Func _LOBase_QueryUIOpenByObject(ByRef $oDoc, ByRef $oConnection, ByRef $oQuery,
 	Local Const $__LOB_OBJ_TYPE_QUERY = 1 ; com.sun.star.sdb.application.DatabaseObject
 	Local $aArgs[1]
 
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsObj($oQuery) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If Not IsBool($bEdit) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oQuery) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bEdit) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$sQuery = $oQuery.Name()
 	If Not IsString($sQuery) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	If Not $oDoc.CurrentController.isConnected() Then $oDoc.CurrentController.connect()
-	If Not $oDoc.CurrentController.isConnected() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If Not $oConnection.Parent.DatabaseDocument.CurrentController.isConnected() Then $oConnection.Parent.DatabaseDocument.CurrentController.connect()
+	If Not $oConnection.Parent.DatabaseDocument.CurrentController.isConnected() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	$aArgs[0] = __LOBase_SetPropertyValue("Hidden", $bHidden)
 
-	$oQueryUI = $oDoc.CurrentController.loadComponentWithArguments($__LOB_OBJ_TYPE_QUERY, $sQuery, $bEdit, $aArgs)
+	$oQueryUI = $oConnection.Parent.DatabaseDocument.CurrentController.loadComponentWithArguments($__LOB_OBJ_TYPE_QUERY, $sQuery, $bEdit, $aArgs)
 
 	If Not IsObj($oQueryUI) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 

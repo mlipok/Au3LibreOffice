@@ -43,7 +43,7 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to create a Report folder. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a new Report in the Folder.
-	_LOBase_ReportCreate($oDoc, $oConnection, "AutoIt_Folder/rptAutoIt_Report", False)
+	_LOBase_ReportCreate($oConnection, "AutoIt_Folder/rptAutoIt_Report", False)
 	If @error Then Return _ERROR($oDoc, "Failed to create a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have a folder that contains a Report. Press ok to copy it and its contents.")

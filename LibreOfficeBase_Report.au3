@@ -1254,23 +1254,21 @@ EndFunc   ;==>_LOBase_ReportConSize
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_ReportCopy
 ; Description ...: Create a copy of an existing Report.
-; Syntax ........: _LOBase_ReportCopy(ByRef $oDoc, ByRef $oConnection, $sInputReport, $sOutputReport)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOBase_DocOpen, _LOBase_DocConnect, or _LOBase_DocCreate function.
-;                  $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
+; Syntax ........: _LOBase_ReportCopy(ByRef $oConnection, $sInputReport, $sOutputReport)
+; Parameters ....: $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
 ;                  $sInputReport        - a string value. The Name of the Report to Copy. Also the Sub-directory the Report is in. See Remarks.
 ;                  $sOutputReport       - a string value. The Name of the Report to Create. Also the Sub-directory to place the Report in. See Remarks.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oConnection not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $sInputReport not a String.
-;                  @Error 1 @Extended 4 Return 0 = $sOutputReport not a String.
-;                  @Error 1 @Extended 5 Return 0 = Folder name called in $sInputReport not found.
-;                  @Error 1 @Extended 6 Return 0 = Requested report not found.
-;                  @Error 1 @Extended 7 Return 0 = Report name called in $sInputReport not a Report.
-;                  @Error 1 @Extended 8 Return 0 = Folder name called in $sOutputReport not found.
-;                  @Error 1 @Extended 9 Return 0 = Report already exists with called name in Destination.
+;                  @Error 1 @Extended 1 Return 0 = $oConnection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sInputReport not a String.
+;                  @Error 1 @Extended 3 Return 0 = $sOutputReport not a String.
+;                  @Error 1 @Extended 4 Return 0 = Folder name called in $sInputReport not found.
+;                  @Error 1 @Extended 5 Return 0 = Requested report not found.
+;                  @Error 1 @Extended 6 Return 0 = Report name called in $sInputReport not a Report.
+;                  @Error 1 @Extended 7 Return 0 = Folder name called in $sOutputReport not found.
+;                  @Error 1 @Extended 8 Return 0 = Report already exists with called name in Destination.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.sdb.DocumentDefinition" Object.
 ;                  --Processing Errors--
@@ -1291,7 +1289,7 @@ EndFunc   ;==>_LOBase_ReportConSize
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOBase_ReportCopy(ByRef $oDoc, ByRef $oConnection, $sInputReport, $sOutputReport)
+Func _LOBase_ReportCopy(ByRef $oConnection, $sInputReport, $sOutputReport)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1300,19 +1298,18 @@ Func _LOBase_ReportCopy(ByRef $oDoc, ByRef $oConnection, $sInputReport, $sOutput
 	Local $aArgs[3]
 	Local $sSourceReport, $sDestReport
 
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsString($sInputReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsString($sOutputReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sInputReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsString($sOutputReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	$oSource = $oDoc.ReportDocuments()
+	$oSource = $oConnection.Parent.DatabaseDocument.ReportDocuments()
 	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$asSplit = StringSplit($sInputReport, "/")
 
 	For $i = 1 To $asSplit[0] - 1
-		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		$oSource = $oSource.getByName($asSplit[$i])
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
@@ -1320,19 +1317,19 @@ Func _LOBase_ReportCopy(ByRef $oDoc, ByRef $oConnection, $sInputReport, $sOutput
 
 	$sSourceReport = $asSplit[$asSplit[0]] ; Last element of Array will be the Input Report's name to Copy
 
-	If Not $oSource.hasByName($sSourceReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not $oSource.hasByName($sSourceReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$oRepDef = $oSource.getByName($sSourceReport)
 	If Not IsObj($oRepDef) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
-	If Not $oRepDef.supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+	If Not $oRepDef.supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
-	$oDestination = $oDoc.ReportDocuments()
+	$oDestination = $oConnection.Parent.DatabaseDocument.ReportDocuments()
 	If Not IsObj($oDestination) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$asSplit = StringSplit($sOutputReport, "/")
 
 	For $i = 1 To $asSplit[0] - 1
-		If Not $oDestination.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		If Not $oDestination.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$oDestination = $oDestination.getByName($asSplit[$i])
 		If Not IsObj($oDestination) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
@@ -1340,7 +1337,7 @@ Func _LOBase_ReportCopy(ByRef $oDoc, ByRef $oConnection, $sInputReport, $sOutput
 
 	$sDestReport = $asSplit[$asSplit[0]] ; Last element of Array will be the Output Report name to Create
 
-	If $oDestination.hasByName($sDestReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+	If $oDestination.hasByName($sDestReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 	$aArgs[0] = __LOBase_SetPropertyValue("Name", $sDestReport)
 	$aArgs[1] = __LOBase_SetPropertyValue("ActiveConnection", $oConnection)
@@ -1358,22 +1355,20 @@ EndFunc   ;==>_LOBase_ReportCopy
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_ReportCreate
 ; Description ...: Create and Insert a new Report Document into a Base Document.
-; Syntax ........: _LOBase_ReportCreate(ByRef $oDoc, ByRef $oConnection, $sReport[, $bOpen = False[, $bVisible = True]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOBase_DocOpen, _LOBase_DocConnect, or _LOBase_DocCreate function.
-;                  $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
+; Syntax ........: _LOBase_ReportCreate(ByRef $oConnection, $sReport[, $bOpen = False[, $bHidden = False]])
+; Parameters ....: $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
 ;                  $sReport             - a string value. The Name of the Report to Create. Also the Sub-directory to place the Report in. See Remarks.
 ;                  $bOpen               - [optional] a boolean value. Default is False. If True, the new Report will be opened in Design mode.
-;                  $bVisible            - [optional] a boolean value. Default is True. If True, the Report will be visible when opened.
+;                  $bHidden             - [optional] a boolean value. Default is False. If True, the Report will be invisible when opened.
 ; Return values .: Success: 1 or Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oConnection not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $sReport not a String.
-;                  @Error 1 @Extended 4 Return 0 = $bOpen not a Boolean.
-;                  @Error 1 @Extended 5 Return 0 = $bVisible not a Boolean.
-;                  @Error 1 @Extended 6 Return 0 = Folder or Sub-Folder not found.
-;                  @Error 1 @Extended 7 Return 0 = Name called in $sReport already exists in Folder.
+;                  @Error 1 @Extended 1 Return 0 = $oConnection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sReport not a String.
+;                  @Error 1 @Extended 3 Return 0 = $bOpen not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = $bHidden not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = Folder or Sub-Folder not found.
+;                  @Error 1 @Extended 6 Return 0 = Name called in $sReport already exists in Folder.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create com.sun.star.sdb.DocumentDefinition Object.
 ;                  --Processing Errors--
@@ -1383,9 +1378,6 @@ EndFunc   ;==>_LOBase_ReportCopy
 ;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Destination Folder Object.
 ;                  @Error 3 @Extended 5 Return 0 = Failed to insert new Report into Base Document.
 ;                  @Error 3 @Extended 6 Return 0 = Failed to open new Report Document.
-;                  --Property Setting Errors--
-;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                               1 = Error setting $bVisible
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. New Report was successfully inserted.
 ;                  @Error 0 @Extended 1 Return Object = Success. Returning opened Report Document's Object.
@@ -1399,32 +1391,32 @@ EndFunc   ;==>_LOBase_ReportCopy
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOBase_ReportCreate(ByRef $oDoc, ByRef $oConnection, $sReport, $bOpen = False, $bVisible = True)
+Func _LOBase_ReportCreate(ByRef $oConnection, $sReport, $bOpen = False, $bHidden = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
+	Local Const $iURLFrameCreate = 8 ; Frame will be created if not found
 	Local $oSource, $oReportDoc, $oDocDef
 	Local $asSplit[0]
-	Local $aArgs[1]
+	Local $aArgs[3]
 	Local $sDocURL
 
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsString($sReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsBool($bOpen) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bOpen) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	$oSource = $oDoc.ReportDocuments()
+	$oSource = $oConnection.Parent.DatabaseDocument.ReportDocuments()
 	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	$sDocURL = $oDoc.URL()
+	$sDocURL = $oConnection.Parent.DatabaseDocument.URL()
 	If Not IsString($sDocURL) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	$asSplit = StringSplit($sReport, "/")
 
 	For $i = 1 To $asSplit[0] - 1
-		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oSource = $oSource.getByName($asSplit[$i])
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
@@ -1432,12 +1424,10 @@ Func _LOBase_ReportCreate(ByRef $oDoc, ByRef $oConnection, $sReport, $bOpen = Fa
 
 	$sReport = $asSplit[$asSplit[0]] ; Last element of Array will be the Report name to Create
 
-	If $oSource.hasByName($sReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
-
-	ReDim $aArgs[3]
+	If $oSource.hasByName($sReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$aArgs[0] = __LOBase_SetPropertyValue("Name", $sReport)
-	$aArgs[1] = __LOBase_SetPropertyValue("Parent", $oDoc.ReportDocuments())
+	$aArgs[1] = __LOBase_SetPropertyValue("Parent", $oConnection.Parent.DatabaseDocument.ReportDocuments())
 	$aArgs[2] = __LOBase_SetPropertyValue("URL", _LOBase_PathConvert($sDocURL, $LOB_PATHCONV_OFFICE_RETURN))
 
 	$oDocDef = $oSource.createInstanceWithArguments("com.sun.star.sdb.DocumentDefinition", $aArgs)
@@ -1448,13 +1438,14 @@ Func _LOBase_ReportCreate(ByRef $oDoc, ByRef $oConnection, $sReport, $bOpen = Fa
 	If Not $oSource.hasByName($sReport) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
 	If $bOpen Then
-		If Not $oDoc.CurrentController.isConnected() Then $oDoc.CurrentController.connect()
+		If Not $oConnection.Parent.DatabaseDocument.CurrentController.isConnected() Then $oConnection.Parent.DatabaseDocument.CurrentController.connect()
 
-		$oReportDoc = $oSource.getByName($sReport).openDesign()
+		$aArgs[0] = __LOBase_SetPropertyValue("ActiveConnection", $oConnection)
+		$aArgs[1] = __LOBase_SetPropertyValue("OpenMode", "openDesign")
+		$aArgs[2] = __LOBase_SetPropertyValue("Hidden", $bHidden)
+
+		$oReportDoc = $oSource.loadComponentFromURL($sReport, "_blank", $iURLFrameCreate, $aArgs)
 		If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
-
-		$oReportDoc.CurrentController.Frame.ContainerWindow.Visible = $bVisible
-		If ($oReportDoc.CurrentController.Frame.ContainerWindow.isVisible() <> $bVisible) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, $oReportDoc)
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $oReportDoc)
 	EndIf
@@ -3673,23 +3664,21 @@ EndFunc   ;==>_LOBase_ReportIsModified
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_ReportOpen
 ; Description ...: Open a Report Document
-; Syntax ........: _LOBase_ReportOpen(ByRef $oDoc, ByRef $oConnection, $sName[, $bDesign = True[, $bHidden = False]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOBase_DocOpen, _LOBase_DocConnect, or _LOBase_DocCreate function.
-;                  $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
+; Syntax ........: _LOBase_ReportOpen(ByRef $oConnection, $sName[, $bDesign = True[, $bHidden = False]])
+; Parameters ....: $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
 ;                  $sName               - a string value. The Report name to Open. See remarks.
 ;                  $bDesign             - [optional] a boolean value. Default is True. If True, the Report is opened in Design mode.
 ;                  $bHidden             - [optional] a boolean value. Default is False. If True, the Report document will be invisible when opened.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oConnection not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
-;                  @Error 1 @Extended 4 Return 0 = $bDesign not a Boolean.
-;                  @Error 1 @Extended 5 Return 0 = $bHidden not a Boolean.
-;                  @Error 1 @Extended 6 Return 0 = Folder or Sub-Folder not found.
-;                  @Error 1 @Extended 7 Return 0 = Name called in $sName not found in Folder.
-;                  @Error 1 @Extended 8 Return 0 = Name called in $sName not a Report.
+;                  @Error 1 @Extended 1 Return 0 = $oConnection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 3 Return 0 = $bDesign not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = $bHidden not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = Folder or Sub-Folder not found.
+;                  @Error 1 @Extended 6 Return 0 = Name called in $sName not found in Folder.
+;                  @Error 1 @Extended 7 Return 0 = Name called in $sName not a Report.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Connection called in $oConnection is closed.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Report Documents Object.
@@ -3704,7 +3693,7 @@ EndFunc   ;==>_LOBase_ReportIsModified
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOBase_ReportOpen(ByRef $oDoc, ByRef $oConnection, $sName, $bDesign = True, $bHidden = False)
+Func _LOBase_ReportOpen(ByRef $oConnection, $sName, $bDesign = True, $bHidden = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -3713,22 +3702,21 @@ Func _LOBase_ReportOpen(ByRef $oDoc, ByRef $oConnection, $sName, $bDesign = True
 	Local $asSplit[0]
 	Local $aArgs[3]
 
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsBool($bDesign) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bDesign) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If Not $oDoc.CurrentController.isConnected() Then $oDoc.CurrentController.connect()
+	If Not $oConnection.Parent.DatabaseDocument.CurrentController.isConnected() Then $oConnection.Parent.DatabaseDocument.CurrentController.connect()
 
-	$oSource = $oDoc.ReportDocuments()
+	$oSource = $oConnection.Parent.DatabaseDocument.ReportDocuments()
 	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$asSplit = StringSplit($sName, "/")
 
 	For $i = 1 To $asSplit[0] - 1
-		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oSource = $oSource.getByName($asSplit[$i])
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
@@ -3736,8 +3724,8 @@ Func _LOBase_ReportOpen(ByRef $oDoc, ByRef $oConnection, $sName, $bDesign = True
 
 	$sName = $asSplit[$asSplit[0]] ; Last element of Array will be the Report name to Open
 
-	If Not $oSource.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
-	If Not $oSource.getByName($sName).supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+	If Not $oSource.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not $oSource.getByName($sName).supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 	$aArgs[0] = __LOBase_SetPropertyValue("ActiveConnection", $oConnection)
 	$aArgs[1] = __LOBase_SetPropertyValue("OpenMode", ($bDesign) ? ("openDesign") : ("open"))

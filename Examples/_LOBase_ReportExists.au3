@@ -39,7 +39,7 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to create a connection to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a new Report.
-	_LOBase_ReportCreate($oDoc, $oConnection, "rptAutoIt_Report")
+	_LOBase_ReportCreate($oConnection, "rptAutoIt_Report")
 	If @error Then Return _ERROR($oDoc, "Failed to create a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a Folder
@@ -47,11 +47,11 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to create a Report folder. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a new Report in the Folder.
-	_LOBase_ReportCreate($oDoc, $oConnection, "AutoIt_Folder/rptAutoIt_Report2", False)
+	_LOBase_ReportCreate($oConnection, "AutoIt_Folder/rptAutoIt_Report2", False)
 	If @error Then Return _ERROR($oDoc, "Failed to create a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a third new Report in the Folder.
-	_LOBase_ReportCreate($oDoc, $oConnection, "AutoIt_Folder/rptAutoIt_Report3", False)
+	_LOBase_ReportCreate($oConnection, "AutoIt_Folder/rptAutoIt_Report3", False)
 	If @error Then Return _ERROR($oDoc, "Failed to create a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; See if a Report exists with the name "rptAutoIt_Report"

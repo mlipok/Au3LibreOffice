@@ -53,15 +53,15 @@ Func Example()
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to copy some Reports.")
 
 	; Make a copy of the contained Report.
-	_LOBase_ReportCopy($oDoc, $oConnection, "rptAutoIt_Report", "rptAutoIt_Report3")
+	_LOBase_ReportCopy($oConnection, "rptAutoIt_Report", "rptAutoIt_Report3")
 	If @error Then Return _ERROR($oDoc, "Failed to copy a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Make a copy of the contained Report in AutoIt_Folder.
-	_LOBase_ReportCopy($oDoc, $oConnection, "rptAutoIt_Report", "AutoIt_Folder/rptAutoIt_Report4")
+	_LOBase_ReportCopy($oConnection, "rptAutoIt_Report", "AutoIt_Folder/rptAutoIt_Report4")
 	If @error Then Return _ERROR($oDoc, "Failed to copy a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Make a copy of the Report contained in AutoIt_Folder to the main level.
-	_LOBase_ReportCopy($oDoc, $oConnection, "AutoIt_Folder/rptAutoIt_Report2", "rptAutoIt_Report5")
+	_LOBase_ReportCopy($oConnection, "AutoIt_Folder/rptAutoIt_Report2", "rptAutoIt_Report5")
 	If @error Then Return _ERROR($oDoc, "Failed to copy a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve an array of all the Reports contained in the Document.

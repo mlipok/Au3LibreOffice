@@ -39,7 +39,7 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to create a connection to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a new form.
-	_LOBase_FormCreate($oDoc, $oConnection, "frmAutoIt_Form")
+	_LOBase_FormCreate($oConnection, "frmAutoIt_Form")
 	If @error Then Return _ERROR($oDoc, "Failed to create a form Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a Folder
@@ -49,7 +49,7 @@ Func Example()
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have created a form. Press ok to copy it into the Folder ""AutoIt_Folder"".")
 
 	; Copy the Form.
-	_LOBase_FormCopy($oDoc, $oConnection, "frmAutoIt_Form", "AutoIt_Folder/Copied_Form")
+	_LOBase_FormCopy($oConnection, "frmAutoIt_Form", "AutoIt_Folder/frmCopied_Form")
 	If @error Then Return _ERROR($oDoc, "Failed to copy the form Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve an array of Form names.

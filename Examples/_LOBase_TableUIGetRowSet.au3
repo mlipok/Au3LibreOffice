@@ -46,7 +46,7 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to add a Column to the Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Open the Table UI.
-	$oTableUI = _LOBase_TableUIOpenByName($oDoc, $oConnection, "tblNew_Table")
+	$oTableUI = _LOBase_TableUIOpenByName($oConnection, "tblNew_Table")
 	If @error Then Return _ERROR($oDoc, "Failed to open Table UI. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have just opened the Table UI in Data entry mode, press Ok to add some Data.")

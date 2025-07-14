@@ -46,7 +46,7 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to add a Query to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Open the Query UI.
-	$oQueryUI = _LOBase_QueryUIOpenByName($oDoc, $oConnection, "qryAutoIt_Query")
+	$oQueryUI = _LOBase_QueryUIOpenByName($oConnection, "qryAutoIt_Query")
 	If @error Then Return _ERROR($oDoc, "Failed to open Query UI. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have opened the Query named ""qryAutoIt_Query"" in Viewing/ Data editing mode." & @CRLF & _

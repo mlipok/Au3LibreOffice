@@ -38,7 +38,7 @@ Func Example()
 	If @error Then Return _ERROR($oConnection, "Failed to create a connection to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a new form and open it.
-	$oFormDoc = _LOBase_FormCreate($oDoc, $oConnection, "frmAutoIt_Form", True)
+	$oFormDoc = _LOBase_FormCreate($oConnection, "frmAutoIt_Form", True)
 	If @error Then Return _ERROR($oDoc, "Failed to create a form Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have created and saved a Form Document to this Database, and then opened it. Press ok to close it.")

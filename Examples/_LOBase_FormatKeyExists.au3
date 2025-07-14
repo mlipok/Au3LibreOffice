@@ -40,7 +40,7 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to create a connection to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a new Report and open it.
-	$oReportDoc = _LOBase_ReportCreate($oDoc, $oConnection, "rptAutoIt_Report", True)
+	$oReportDoc = _LOBase_ReportCreate($oConnection, "rptAutoIt_Report", True)
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to create a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a new FormatKey H:MM:SS (Hour, Minute, Second, AM/PM, Month Day Name(Day) Year

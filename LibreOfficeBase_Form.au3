@@ -242,23 +242,21 @@ EndFunc   ;==>_LOBase_FormConnect
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_FormCopy
 ; Description ...: Create a copy of an existing Form.
-; Syntax ........: _LOBase_FormCopy(ByRef $oDoc, ByRef $oConnection, $sInputForm, $sOutputForm)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOBase_DocOpen, _LOBase_DocConnect, or _LOBase_DocCreate function.
-;                  $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
+; Syntax ........: _LOBase_FormCopy(ByRef $oConnection, $sInputForm, $sOutputForm)
+; Parameters ....: $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
 ;                  $sInputForm          - a string value. The Name of the Form to Copy. Also the Sub-directory the Form is in. See Remarks.
 ;                  $sOutputForm       - a string value. The Name of the Form to Create. Also the Sub-directory to place the Form in. See Remarks.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oConnection not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $sInputForm not a String.
-;                  @Error 1 @Extended 4 Return 0 = $sOutputForm not a String.
-;                  @Error 1 @Extended 5 Return 0 = Folder name called in $sInputForm not found.
-;                  @Error 1 @Extended 6 Return 0 = Requested Form not found.
-;                  @Error 1 @Extended 7 Return 0 = Form name called in $sInputForm not a Form.
-;                  @Error 1 @Extended 8 Return 0 = Folder name called in $sOutputForm not found.
-;                  @Error 1 @Extended 9 Return 0 = Form already exists with called name in Destination.
+;                  @Error 1 @Extended 1 Return 0 = $oConnection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sInputForm not a String.
+;                  @Error 1 @Extended 3 Return 0 = $sOutputForm not a String.
+;                  @Error 1 @Extended 4 Return 0 = Folder name called in $sInputForm not found.
+;                  @Error 1 @Extended 5 Return 0 = Requested Form not found.
+;                  @Error 1 @Extended 6 Return 0 = Form name called in $sInputForm not a Form.
+;                  @Error 1 @Extended 7 Return 0 = Folder name called in $sOutputForm not found.
+;                  @Error 1 @Extended 8 Return 0 = Form already exists with called name in Destination.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.sdb.DocumentDefinition" Object.
 ;                  --Processing Errors--
@@ -279,7 +277,7 @@ EndFunc   ;==>_LOBase_FormConnect
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOBase_FormCopy(ByRef $oDoc, ByRef $oConnection, $sInputForm, $sOutputForm)
+Func _LOBase_FormCopy(ByRef $oConnection, $sInputForm, $sOutputForm)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -288,19 +286,18 @@ Func _LOBase_FormCopy(ByRef $oDoc, ByRef $oConnection, $sInputForm, $sOutputForm
 	Local $aArgs[3]
 	Local $sSourceForm, $sDestForm
 
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsString($sInputForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsString($sOutputForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sInputForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsString($sOutputForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	$oSource = $oDoc.FormDocuments()
+	$oSource = $oConnection.Parent.DatabaseDocument.FormDocuments()
 	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$asSplit = StringSplit($sInputForm, "/")
 
 	For $i = 1 To $asSplit[0] - 1
-		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		$oSource = $oSource.getByName($asSplit[$i])
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
@@ -308,19 +305,19 @@ Func _LOBase_FormCopy(ByRef $oDoc, ByRef $oConnection, $sInputForm, $sOutputForm
 
 	$sSourceForm = $asSplit[$asSplit[0]] ; Last element of Array will be the Input Form's name to Copy
 
-	If Not $oSource.hasByName($sSourceForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not $oSource.hasByName($sSourceForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$oFormDef = $oSource.getByName($sSourceForm)
 	If Not IsObj($oFormDef) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
-	If Not $oFormDef.supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+	If Not $oFormDef.supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
-	$oDestination = $oDoc.FormDocuments()
+	$oDestination = $oConnection.Parent.DatabaseDocument.FormDocuments()
 	If Not IsObj($oDestination) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$asSplit = StringSplit($sOutputForm, "/")
 
 	For $i = 1 To $asSplit[0] - 1
-		If Not $oDestination.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		If Not $oDestination.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$oDestination = $oDestination.getByName($asSplit[$i])
 		If Not IsObj($oDestination) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
@@ -328,7 +325,7 @@ Func _LOBase_FormCopy(ByRef $oDoc, ByRef $oConnection, $sInputForm, $sOutputForm
 
 	$sDestForm = $asSplit[$asSplit[0]] ; Last element of Array will be the Output Form name to Create
 
-	If $oDestination.hasByName($sDestForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+	If $oDestination.hasByName($sDestForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 	$aArgs[0] = __LOBase_SetPropertyValue("Name", $sDestForm)
 	$aArgs[1] = __LOBase_SetPropertyValue("ActiveConnection", $oConnection)
@@ -346,24 +343,22 @@ EndFunc   ;==>_LOBase_FormCopy
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_FormCreate
 ; Description ...: Create and Insert a new Form Document into a Base Document.
-; Syntax ........: _LOBase_FormCreate(ByRef $oDoc, ByRef $oConnection, $sForm[, $bOpen = False[, $bDesign = True[, $bVisible = True]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOBase_DocOpen, _LOBase_DocConnect, or _LOBase_DocCreate function.
-;                  $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
+; Syntax ........: _LOBase_FormCreate(ByRef $oConnection, $sForm[, $bOpen = False[, $bDesign = True[, $bHidden = False]]])
+; Parameters ....: $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
 ;                  $sForm               - a string value. The Name of the Form to Create. Also the Sub-directory to place the form in. See Remarks.
 ;                  $bOpen               - [optional] a boolean value. Default is False. If True, the new Form will be opened.
 ;                  $bDesign             - [optional] a boolean value. Default is True. If True, and $bOpen is True, the Form will be opened in Design mode. Else in Form mode.
-;                  $bVisible            - [optional] a boolean value. Default is True. If True, the Form will be visible.
+;                  $bHidden             - [optional] a boolean value. Default is False. If True, the Form will be invisible when opened.
 ; Return values .: Success: 1 or Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oConnection not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $sForm not a String.
-;                  @Error 1 @Extended 4 Return 0 = $bOpen not a Boolean.
-;                  @Error 1 @Extended 5 Return 0 = $bDesign not a Boolean.
-;                  @Error 1 @Extended 6 Return 0 = $bVisible not a Boolean.
-;                  @Error 1 @Extended 7 Return 0 = Folder or Sub-Folder not found.
-;                  @Error 1 @Extended 8 Return 0 = Name called in $sForm already exists in Folder.
+;                  @Error 1 @Extended 1 Return 0 = $oConnection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sForm not a String.
+;                  @Error 1 @Extended 3 Return 0 = $bOpen not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = $bDesign not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $bHidden not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = Folder or Sub-Folder not found.
+;                  @Error 1 @Extended 7 Return 0 = Name called in $sForm already exists in Folder.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create com.sun.star.ServiceManager Object.
 ;                  @Error 2 @Extended 2 Return 0 = Failed to create com.sun.star.frame.Desktop Object.
@@ -375,9 +370,6 @@ EndFunc   ;==>_LOBase_FormCopy
 ;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Destination Folder Object.
 ;                  @Error 3 @Extended 4 Return 0 = Failed to insert new Form into Base Document.
 ;                  @Error 3 @Extended 5 Return 0 = Failed to open new Form Document.
-;                  --Property Setting Errors--
-;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                               1 = Error setting $bVisible
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. New Form was successfully inserted.
 ;                  @Error 0 @Extended 1 Return Object = Success. Returning opened Form Document's Object.
@@ -388,7 +380,7 @@ EndFunc   ;==>_LOBase_FormCopy
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOBase_FormCreate(ByRef $oDoc, ByRef $oConnection, $sForm, $bOpen = False, $bDesign = True, $bVisible = True)
+Func _LOBase_FormCreate(ByRef $oConnection, $sForm, $bOpen = False, $bDesign = True, $bHidden = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -399,21 +391,20 @@ Func _LOBase_FormCreate(ByRef $oDoc, ByRef $oConnection, $sForm, $bOpen = False,
 	Local $iError = 0, $iCount = 0
 	Local $sPath = @TempDir & "AutoIt_Form_Temp_Doc_"
 
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsString($sForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsBool($bOpen) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If Not IsBool($bDesign) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bOpen) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bDesign) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	$oSource = $oDoc.FormDocuments()
+	$oSource = $oConnection.Parent.DatabaseDocument.FormDocuments()
 	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$asSplit = StringSplit($sForm, "/")
 
 	For $i = 1 To $asSplit[0] - 1
-		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oSource = $oSource.getByName($asSplit[$i])
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
@@ -421,7 +412,7 @@ Func _LOBase_FormCreate(ByRef $oDoc, ByRef $oConnection, $sForm, $bOpen = False,
 
 	$sForm = $asSplit[$asSplit[0]] ; Last element of Array will be the Form name to Create
 
-	If $oSource.hasByName($sForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+	If $oSource.hasByName($sForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 	$aArgs[0] = __LOBase_SetPropertyValue("Hidden", True)
 	If Not IsObj($aArgs[0]) Then $iError = BitOR($iError, 1)
@@ -433,7 +424,7 @@ Func _LOBase_FormCreate(ByRef $oDoc, ByRef $oConnection, $sForm, $bOpen = False,
 	If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	$oFormDoc = $oDesktop.loadComponentFromURL("private:factory/swriter", "_blank", $iURLFrameCreate, $aArgs)
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($oFormDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 	$oFormDoc.ApplyFormDesignMode = False
 
@@ -454,7 +445,7 @@ Func _LOBase_FormCreate(ByRef $oDoc, ByRef $oConnection, $sForm, $bOpen = False,
 	ReDim $aArgs[3]
 
 	$aArgs[0] = __LOBase_SetPropertyValue("Name", $sForm)
-	$aArgs[1] = __LOBase_SetPropertyValue("Parent", $oDoc.FormDocuments())
+	$aArgs[1] = __LOBase_SetPropertyValue("Parent", $oConnection.Parent.DatabaseDocument.FormDocuments())
 	$aArgs[2] = __LOBase_SetPropertyValue("URL", _LOBase_PathConvert($sPath, $LOB_PATHCONV_OFFICE_RETURN))
 
 	$oDocDef = $oSource.createInstanceWithArguments("com.sun.star.sdb.DocumentDefinition", $aArgs)
@@ -467,19 +458,15 @@ Func _LOBase_FormCreate(ByRef $oDoc, ByRef $oConnection, $sForm, $bOpen = False,
 	If Not $oSource.hasByName($sForm) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 	If $bOpen Then
-		If Not $oDoc.CurrentController.isConnected() Then $oDoc.CurrentController.connect()
+		If Not $oConnection.Parent.DatabaseDocument.CurrentController.isConnected() Then $oConnection.Parent.DatabaseDocument.CurrentController.connect()
 
-		If $bDesign Then
-			$oFormDoc = $oSource.getByName($sForm).openDesign()
+		$aArgs[0] = __LOBase_SetPropertyValue("ActiveConnection", $oConnection)
+		$aArgs[1] = __LOBase_SetPropertyValue("OpenMode", ($bDesign) ? ("openDesign") : ("open"))
+		$aArgs[2] = __LOBase_SetPropertyValue("Hidden", $bHidden)
 
-		Else
-			$oFormDoc = $oSource.getByName($sForm).open()
-		EndIf
+		$oFormDoc = $oSource.loadComponentFromURL($sForm, "_blank", $iURLFrameCreate, $aArgs)
 
 		If Not IsObj($oFormDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
-
-		$oFormDoc.CurrentController.Frame.ContainerWindow.Visible = $bVisible
-		If ($oFormDoc.CurrentController.Frame.ContainerWindow.isVisible() <> $bVisible) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, $oFormDoc)
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $oFormDoc)
 	EndIf
@@ -1367,23 +1354,21 @@ EndFunc   ;==>_LOBase_FormIsModified
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_FormOpen
 ; Description ...: Open a Form Document
-; Syntax ........: _LOBase_FormOpen(ByRef $oDoc, ByRef $oConnection, $sName[, $bDesign = True[, $bHidden = False]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOBase_DocOpen, _LOBase_DocConnect, or _LOBase_DocCreate function.
-;                  $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
+; Syntax ........: _LOBase_FormOpen(ByRef $oConnection, $sName[, $bDesign = True[, $bHidden = False]])
+; Parameters ....: $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
 ;                  $sName               - a string value. The Form name to Open. See remarks.
 ;                  $bDesign             - [optional] a boolean value. Default is True. If True, the form is opened in Design mode.
 ;                  $bHidden             - [optional] a boolean value. Default is False. If True, the form document will be invisible when opened.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oConnection not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
-;                  @Error 1 @Extended 4 Return 0 = $bDesign not a Boolean.
-;                  @Error 1 @Extended 5 Return 0 = $bHidden not a Boolean.
-;                  @Error 1 @Extended 6 Return 0 = Folder or Sub-Folder not found.
-;                  @Error 1 @Extended 7 Return 0 = Name called in $sName not found in Folder.
-;                  @Error 1 @Extended 8 Return 0 = Name called in $sName not a Form.
+;                  @Error 1 @Extended 1 Return 0 = $oConnection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 3 Return 0 = $bDesign not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = $bHidden not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = Folder or Sub-Folder not found.
+;                  @Error 1 @Extended 6 Return 0 = Name called in $sName not found in Folder.
+;                  @Error 1 @Extended 7 Return 0 = Name called in $sName not a Form.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Connection called in $oConnection is closed.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Form Documents Object.
@@ -1398,7 +1383,7 @@ EndFunc   ;==>_LOBase_FormIsModified
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOBase_FormOpen(ByRef $oDoc, ByRef $oConnection, $sName, $bDesign = True, $bHidden = False)
+Func _LOBase_FormOpen(ByRef $oConnection, $sName, $bDesign = True, $bHidden = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1407,22 +1392,21 @@ Func _LOBase_FormOpen(ByRef $oDoc, ByRef $oConnection, $sName, $bDesign = True, 
 	Local $asSplit[0]
 	Local $aArgs[3]
 
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsBool($bDesign) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bDesign) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If Not $oDoc.CurrentController.isConnected() Then $oDoc.CurrentController.connect()
+	If Not $oConnection.Parent.DatabaseDocument.CurrentController.isConnected() Then $oConnection.Parent.DatabaseDocument.CurrentController.connect()
 
-	$oSource = $oDoc.FormDocuments()
+	$oSource = $oConnection.Parent.DatabaseDocument.FormDocuments()
 	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$asSplit = StringSplit($sName, "/")
 
 	For $i = 1 To $asSplit[0] - 1
-		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oSource = $oSource.getByName($asSplit[$i])
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
@@ -1430,8 +1414,8 @@ Func _LOBase_FormOpen(ByRef $oDoc, ByRef $oConnection, $sName, $bDesign = True, 
 
 	$sName = $asSplit[$asSplit[0]] ; Last element of Array will be the Form name to Open
 
-	If Not $oSource.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
-	If Not $oSource.getByName($sName).supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+	If Not $oSource.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not $oSource.getByName($sName).supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 	$aArgs[0] = __LOBase_SetPropertyValue("ActiveConnection", $oConnection)
 	$aArgs[1] = __LOBase_SetPropertyValue("OpenMode", ($bDesign) ? ("openDesign") : ("open"))

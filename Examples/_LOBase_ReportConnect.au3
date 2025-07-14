@@ -38,7 +38,7 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to create a connection to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a new Report and open it.
-	_LOBase_ReportCreate($oDoc, $oConnection, "rptAutoIt_Report", True)
+	_LOBase_ReportCreate($oConnection, "rptAutoIt_Report", True)
 	If @error Then Return _ERROR($oDoc, "Failed to create a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have opened the Report called ""rptAutoIt_Report"" in Design Mode. Press ok to connect to it, and close it.")
