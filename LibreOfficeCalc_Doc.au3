@@ -564,7 +564,7 @@ EndFunc   ;==>_LOCalc_DocExport
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $iHeight
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version less than 7.4.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version less than 7.4.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current Formula Bar Height as an Integer.
@@ -1189,7 +1189,7 @@ EndFunc   ;==>_LOCalc_DocPrint
 ;                  @Error 2 @Extended 1 Return 0 = Failure Creating Object.
 ;                  @Error 2 @Extended 2 Return 0 = Failure retrieving printer list Object.
 ;                  --Printer Related Errors--
-;                  @Error 6 @Extended 1 Return 0 = No default printer found.
+;                  @Error 5 @Extended 1 Return 0 = No default printer found.
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return String = Returning the default printer name. See remarks.
 ;                  @Error 0 @Extended ? Return Array = Returning an array of strings containing all installed printers. See remarks. @Extended is set to the number of results.
@@ -1257,8 +1257,8 @@ EndFunc   ;==>_LOCalc_DocPrintersAltGetNames
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Default printer name.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Array of printer names.
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.1.
-;                  @Error 7 @Extended 2 Return 0 = Current Libre Office version lower than 6.3.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 4.1.
+;                  @Error 6 @Extended 2 Return 0 = Current Libre Office version lower than 6.3.
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return String = Returning the default printer name.
 ;                  @Error 0 @Extended ? Return Array = Returning an array of strings containing all installed printers. @Extended set to number of results.

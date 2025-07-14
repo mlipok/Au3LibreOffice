@@ -641,7 +641,7 @@ EndFunc   ;==>_LOCalc_SheetGetObjByPosition
 ;                  @Error 3 @Extended 2 Return 0 = Failed to import the Sheet.
 ;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve new Sheet's Object.
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office Version less than 3.5.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office Version less than 3.5.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Successfully imported the requested Sheet, returning the new Sheet's Object.
 ; Author ........: donnyh13

@@ -600,6 +600,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 - __LOCalc_VarsAreDefault
 - LibreOfficeCalc_Font file, combined functions into LibreOfficeCalc_Helper.
+- $__LO_STATUS_DOC_ERROR Error Constant and renumber all after errors.
 
 > [!NOTE]
 > **LibreOfficeWriter**
