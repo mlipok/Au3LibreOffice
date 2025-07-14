@@ -333,6 +333,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Removed requirement of $oDoc in _LOBase_FontsGetNames
 - Added optional $oDoc parameter to _LOBase_FontExists for potential quicker execution.
 
+### Removed
+
+- $__LO_STATUS_DOC_ERROR Error Constant and renumber all after errors.
+
 > [!NOTE]
 > **LibreOfficeCalc**
 
