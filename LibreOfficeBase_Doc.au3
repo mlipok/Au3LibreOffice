@@ -702,15 +702,15 @@ EndFunc   ;==>_LOBase_DocMinimize
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOBase_DocOpen($sFilePath, $bConnectIfOpen = True, $bHidden = Null, $bReadOnly = Null, $sPassword = Null, $bLoadAsTemplate = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
 	Local Const $iURLFrameCreate = 8 ; Frame will be created if not found
 	Local $iError = 0
 	Local $oDoc, $oServiceManager, $oDesktop
 	Local $aoProperties[0]
 	Local $vProperty
 	Local $sFileURL
-
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
 
 	If Not IsString($sFilePath) Or Not FileExists($sFilePath) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 

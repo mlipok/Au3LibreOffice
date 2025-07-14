@@ -1015,7 +1015,7 @@ EndFunc   ;==>_LOBase_QueryUIOpenByName
 ; Syntax ........: _LOBase_QueryUIOpenByObject(ByRef $oDoc, ByRef $oConnection, ByRef $oQuery[, $bEdit = False[, $bHidden = False]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOBase_DocOpen, _LOBase_DocConnect, or _LOBase_DocCreate function.
 ;                  $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
-;                  $oQuery              - [in/out] an object. A Query object returned by a previous _LOBase_QueryGetObjByIndex, _LOBase_QueryGetObjByName or _LOBase_QueryAdd function.
+;                  $oQuery              - [in/out] an object. A Query object returned by a previous _LOBase_QueryGetObjByIndex, _LOBase_QueryGetObjByName, _LOBase_QueryAddByName or _LOBase_QueryAddBySQL function.
 ;                  $bEdit               - [optional] a boolean value. Default is False. If True, the Query is opened in editing mode to add or remove columns. If False, the Query is opened in data viewing mode, to modify Query Data.
 ;                  $bHidden             - [optional] a boolean value. Default is False. If True, the UI window will be invisible.
 ; Return values .: Success: Object
