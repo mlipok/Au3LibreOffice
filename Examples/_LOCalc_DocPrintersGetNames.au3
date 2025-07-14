@@ -25,6 +25,7 @@ Func Example()
 			$sPrinters &= $asPrinters[$i] & @CRLF
 		Next
 		MsgBox($MB_OK + $MB_TOPMOST, Default, "The printers currently available are:" & @CRLF & $sPrinters)
+
 	Else
 		_ERROR("No printers found.")
 	EndIf
@@ -32,6 +33,7 @@ Func Example()
 	; Check Libre version for searching default printer.
 	If (_LOCalc_VersionGet(True) < 6.3) Then
 		_ERROR("Libre Office version is less than 6.3, I cannot list your default printer." & " On Line: " & @ScriptLineNumber)
+
 	Else
 		MsgBox($MB_OK + $MB_TOPMOST, Default, "I will list your currently default printer next.")
 	EndIf
@@ -42,10 +44,10 @@ Func Example()
 
 	If ($sDefault = "") Then
 		MsgBox($MB_OK + $MB_TOPMOST, Default, "You do not have a default printer.")
+
 	Else
 		MsgBox($MB_OK + $MB_TOPMOST, Default, "Your default printer is: " & $sDefault)
 	EndIf
-
 EndFunc
 
 Func _ERROR($sErrorText)

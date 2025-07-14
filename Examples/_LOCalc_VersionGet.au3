@@ -22,7 +22,6 @@ Func Example()
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Your current full Libre Office version, including the name is: " & $sVersionAndName & @CRLF & _
 			"Your current full Libre Office version is: " & $sFullVersion & @CRLF & _
 			"Your current simple Libre Office version is: " & $sSimpleVersion)
-
 EndFunc
 
 Func _ERROR($sErrorText)

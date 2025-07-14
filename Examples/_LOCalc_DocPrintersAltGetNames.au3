@@ -27,12 +27,14 @@ Func Example()
 
 	If ($sDefault = "") Then
 		MsgBox($MB_OK + $MB_TOPMOST, Default, "You do not have a default printer.")
+
 	Else
 		MsgBox($MB_OK + $MB_TOPMOST, Default, "Your default printer is: " & $sDefault)
 	EndIf
 
 	If (MsgBox($MB_YESNO, "", "We will search for a specific printer next, would you like to enter a phrase to search for?") = $IDYES) Then
 		$sSearch = InputBox("", "Enter a search term, if the name is not full and exact, use an asterisk (*), such as ""*PDF*""", "*PDF*")
+
 	Else
 		MsgBox($MB_OK + $MB_TOPMOST, Default, "Okay, I will search for ""*PDF*""")
 		$sSearch = "*PDF*"
@@ -50,7 +52,6 @@ Func Example()
 	Next
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The printers returned from the search are:" & @CRLF & $sPrinters)
-
 EndFunc
 
 Func _ERROR($sErrorText)

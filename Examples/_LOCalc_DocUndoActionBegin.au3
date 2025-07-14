@@ -30,9 +30,7 @@ Func Example()
 			If @error Then _ERROR($oDoc, "Failed to set Cell Value. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 			$iCount += 1
-
 		Next
-
 	Next
 
 	; Retrieve an array of available undo action titles.
@@ -69,9 +67,7 @@ Func Example()
 			If @error Then _ERROR($oDoc, "Failed to set Cell Value. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 			$iCount += 1
-
 		Next
-
 	Next
 
 	; End the Undo Action Record.
@@ -96,7 +92,6 @@ Func Example()
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

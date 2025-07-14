@@ -78,7 +78,6 @@ Func Example()
 
 		_LOCalc_CellValue($oCell, $asFonts[$i][3])
 		If @error Then _ERROR($oDoc, "Failed to insert value. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 	Next
 
 	; Retrieve Column A's Object
@@ -94,7 +93,6 @@ Func Example()
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
