@@ -803,22 +803,26 @@ EndFunc   ;==>_LOBase_FormFolderCopy
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_FormFolderCreate
 ; Description ...: Create a Form Folder.
-; Syntax ........: _LOBase_FormFolderCreate(ByRef $oDoc, $sFolder)
+; Syntax ........: _LOBase_FormFolderCreate(ByRef $oDoc, $sFolder[, $bCreateMulti = False])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOBase_DocOpen, _LOBase_DocConnect, or _LOBase_DocCreate function.
 ;                  $sFolder             - a string value. The Folder name to create. Can also include the sub-folder path. See Remarks.
+;                  $bCreateMulti        - [optional] a boolean value. Default is False. If True, multiple folders in a path will be created if they do not exist.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sFolder not a String.
-;                  @Error 1 @Extended 3 Return 0 = Folder or Sub-Folder not found.
-;                  @Error 1 @Extended 4 Return 0 = Name called in $sFolder already exists in Folder.
+;                  @Error 1 @Extended 3 Return 0 = $bCreateMulti not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = Folder or Sub-Folder not found.
+;                  @Error 1 @Extended 5 Return 0 = Name called in $sFolder already exists in Folder.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create Folder Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Form Documents Object.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Destination Folder Object.
 ;                  @Error 3 @Extended 3 Return 0 = Failed to insert new Folder into Base Document.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Successfully created a Folder.
+;                  @Error 0 @Extended 0 Return 1 = Success. Successfully created the Folder(s).
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To create a Folder inside a folder, the Folder name MUST be prefixed by the folder path, separated by forward slashes (/). e.g. to create FolderXYZ contained in folder 3, which is located in Folder 2, which is located inside folder 1, you would call $sFolder with the following path: Folder1/Folder2/Folder3/FolderXYZ.
@@ -826,7 +830,7 @@ EndFunc   ;==>_LOBase_FormFolderCopy
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOBase_FormFolderCreate(ByRef $oDoc, $sFolder)
+Func _LOBase_FormFolderCreate(ByRef $oDoc, $sFolder, $bCreateMulti = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -835,6 +839,7 @@ Func _LOBase_FormFolderCreate(ByRef $oDoc, $sFolder)
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bCreateMulti) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oSource = $oDoc.FormDocuments()
 	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -842,20 +847,35 @@ Func _LOBase_FormFolderCreate(ByRef $oDoc, $sFolder)
 	$asSplit = StringSplit($sFolder, "/")
 
 	For $i = 1 To $asSplit[0] - 1
-		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		If Not $bCreateMulti And Not $oSource.hasByName($asSplit[$i]) Then
 
-		$oSource = $oSource.getByName($asSplit[$i])
-		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+			Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+		ElseIf $bCreateMulti And Not $oSource.hasByName($asSplit[$i]) Then
+			$oObj = $oSource.createInstance("com.sun.star.sdb.Forms")
+			If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+			$oSource.insertbyName($asSplit[$i], $oObj)
+
+			If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+			$oSource = $oSource.getByName($asSplit[$i])
+			If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+		Else
+			$oSource = $oSource.getByName($asSplit[$i])
+			If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		EndIf
 	Next
 
 	$sFolder = $asSplit[$asSplit[0]] ; Last element of Array will be the Folder name to Create
 
-	If $oSource.hasByName($sFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If $oSource.hasByName($sFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$oObj = $oSource.createInstance("com.sun.star.sdb.Forms")
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oSource.insertbyName($sFolder, $oObj)
-
 	If Not $oSource.hasByName($sFolder) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
