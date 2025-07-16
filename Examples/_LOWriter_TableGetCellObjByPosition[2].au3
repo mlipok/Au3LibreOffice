@@ -43,7 +43,6 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve Text Table Column Count. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	For $iRow = 0 To $iRows - 1
-
 		For $iColumn = 0 To $iColumns - 1
 			; Retrieve each cell by name as returned in the array of cell names
 			$oCell = _LOWriter_TableGetCellObjByPosition($oTable, $iColumn, $iRow)
@@ -60,7 +59,6 @@ Func Example()
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

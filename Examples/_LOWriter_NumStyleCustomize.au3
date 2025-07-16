@@ -63,7 +63,6 @@ Func Example()
 			"The Separator After the Numbering symbol is: " & $avSettings[5] & @CRLF & _
 			"Consecutively number levels? True/False: " & $avSettings[6])
 
-
 	; Modify the Numbering Style Customization settings: Modify all levels, Numbering format = $LOW_NUM_STYLE_ROMAN_UPPER, Consecutive Numbering = True.
 	_LOWriter_NumStyleCustomize($oDoc, $oNumStyle, 0, $LOW_NUM_STYLE_ROMAN_UPPER, Null, Null, Null, Null, Null, True)
 	If @error Then _ERROR($oDoc, "Failed to set Numbering Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
@@ -84,13 +83,11 @@ Func Example()
 				"Consecutively number levels? True/False: " & ($avSettings[$i])[6])
 	Next
 
-
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

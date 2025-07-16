@@ -25,7 +25,6 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve a list of Shape names. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	If (UBound($asShapes) > 0) Then
-
 		; Retrieve the object for the first Shape listed in the Array.
 		$oShape = _LOWriter_ShapeGetObjByName($oDoc, $asShapes[0][0])
 		If @error Then _ERROR($oDoc, "Failed to retrieve a Shape Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
@@ -45,7 +44,6 @@ Func Example()
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

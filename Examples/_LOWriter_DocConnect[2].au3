@@ -31,7 +31,6 @@ Func Example()
 		_LOWriter_DocClose($oDoc2, False)
 		If @error Then _ERROR($oDoc, $oDoc2, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 	EndIf
-
 EndFunc
 
 Func _ERROR($oDoc, $oDoc2, $sErrorText)

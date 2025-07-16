@@ -94,7 +94,7 @@
 ;                  @Error 4 @Extended 5 Return 0 = Cannot set Vertical Border Color when Vertical Border width not set.
 ;                  @Error 4 @Extended 6 Return 0 = Cannot set Horizontal Border Color when Horizontal Border width not set.
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
@@ -112,7 +112,6 @@ Func _LOWriter_TableBorderColor(ByRef $oTable, $iTop = Null, $iBottom = Null, $i
 	Local $vReturn
 
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-
 	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
@@ -187,21 +186,25 @@ Func _LOWriter_TableBorderPadding(ByRef $oTable, $iTop = Null, $iBottom = Null, 
 
 	If ($iTop <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$tBD.TopDistance = $iTop
 	EndIf
 
 	If ($iBottom <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$tBD.BottomDistance = $iBottom
 	EndIf
 
 	If ($iLeft <> Null) Then
 		If Not __LOWriter_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$tBD.LeftDistance = $iLeft
 	EndIf
 
 	If ($iRight <> Null) Then
 		If Not __LOWriter_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$tBD.RightDistance = $iRight
 	EndIf
 
@@ -253,7 +256,7 @@ EndFunc   ;==>_LOWriter_TableBorderPadding
 ;                  @Error 4 @Extended 5 Return 0 = Cannot set Vertical Border Style when Vertical Border width not set.
 ;                  @Error 4 @Extended 6 Return 0 = Cannot set Horizontal Border Style when Horizontal Border width not set.
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
@@ -271,7 +274,6 @@ Func _LOWriter_TableBorderStyle(ByRef $oTable, $iTop = Null, $iBottom = Null, $i
 	Local $vReturn
 
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-
 	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
@@ -313,7 +315,7 @@ EndFunc   ;==>_LOWriter_TableBorderStyle
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving Object "TableBorder2".
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
@@ -331,7 +333,6 @@ Func _LOWriter_TableBorderWidth(ByRef $oTable, $iTop = Null, $iBottom = Null, $i
 	Local $vReturn
 
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-
 	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
@@ -399,6 +400,7 @@ Func _LOWriter_TableBreak(ByRef $oDoc, ByRef $oTable, $iBreakType = Null, $sPage
 
 	If ($iBreakType <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBreakType, 0, 6) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oTable.BreakType = $iBreakType
 		$iError = ($oTable.BreakType() = $iBreakType) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -406,12 +408,14 @@ Func _LOWriter_TableBreak(ByRef $oDoc, ByRef $oTable, $iBreakType = Null, $sPage
 	If ($sPageStyle <> Null) Then
 		If Not IsString($sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		If ($sPageStyle <> "") And Not _LOWriter_PageStyleExists($oDoc, $sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oTable.PageDescName = $sPageStyle
 		$iError = ($oTable.PageDescName() = $sPageStyle) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iPgNumOffSet <> Null) Then
 		If Not __LOWriter_IntIsBetween($iPgNumOffSet, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oTable.PageNumberOffset = $iPgNumOffSet
 		$iError = ($oTable.PageNumberOffset() = $iPgNumOffSet) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -446,6 +450,7 @@ Func _LOWriter_TableCellsGetNames(ByRef $oTable)
 	Local $asCellNames
 
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0) ; Not an Object.
+
 	$asCellNames = $oTable.getCellNames()
 	If Not IsArray($asCellNames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; failed to get array of names.
 
@@ -497,12 +502,14 @@ Func _LOWriter_TableColor(ByRef $oTable, $iBackColor = Null, $bBackTransparent =
 
 	If ($iBackColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oTable.BackColor = $iBackColor
 		$iError = ($oTable.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1)) ; Error setting color.
 	EndIf
 
 	If ($bBackTransparent <> Null) Then
 		If Not IsBool($bBackTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oTable.BackTransparent = $bBackTransparent
 		$iError = ($oTable.BackTransparent() = $bBackTransparent) ? ($iError) : (BitOR($iError, 2)) ; Error setting BackTransparent.
 	EndIf
@@ -547,8 +554,10 @@ Func _LOWriter_TableColumnDelete(ByRef $oTable, $iColumn, $iCount = 1)
 	If Not __LOWriter_IsTableInDoc($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; can't delete columns if Table not in doc.
 	If Not IsInt($iColumn) Or ($iColumn < 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsInt($iCount) Or ($iCount < 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 	$iColumnCount = $oTable.getColumns.getCount()
 	If ($iColumnCount <= $iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; Requested column out of bounds.
+
 	$iCount = ($iCount > ($iColumnCount - $iColumn)) ? ($iColumnCount - $iColumn) : ($iCount)
 	$iReturn = ($iCount > ($iColumnCount - $iColumn)) ? (2) : (1) ; Return 1 if full amount deleted else 2 if only partial.
 	$oTable.getColumns.removeByIndex($iColumn, $iCount)
@@ -585,6 +594,7 @@ Func _LOWriter_TableColumnGetCount(ByRef $oTable)
 
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0) ; Not an Object.
 	If Not __LOWriter_IsTableInDoc($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; can't get columns/rows if Table not in doc.
+
 	$iColumnSize = $oTable.getColumns.getCount()
 	If ($iColumnSize = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Failed to retrieve column count.
 
@@ -629,8 +639,10 @@ Func _LOWriter_TableColumnInsert(ByRef $oTable, $iCount, $iColumn = -1)
 	If Not __LOWriter_IsTableInDoc($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; can't insert columns if Table not in doc.
 	If Not IsInt($iCount) Or ($iCount < 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsInt($iColumn) Or ($iColumn < -1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 	$iColumnCount = $oTable.getColumns.getCount()
 	If ($iColumnCount < $iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; Requested column out of bounds.
+
 	$iColumn = ($iColumn <= -1) ? ($iColumnCount) : ($iColumn)
 	$oTable.getColumns.insertByIndex($iColumn, $iCount)
 
@@ -683,21 +695,25 @@ Func _LOWriter_TableCreate(ByRef $oDoc, $iRows = 3, $iColumns = 2, $bSplit = Nul
 	$oTable = $oDoc.createInstance("com.sun.star.text.TextTable")
 
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	$oTable.initialize($iRows, $iColumns)
 
 	If ($bSplit <> Null) Then
 		If Not IsBool($bSplit) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oTable.Split = $bSplit
 	EndIf
 
 	If ($iBackColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oTable.BackColor = $iBackColor
 		$oTable.BackTransparent = False
 	EndIf
 
 	If ($sTableName <> "") Then
 		If Not IsString($sTableName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oTable.setName($sTableName)
 	EndIf
 
@@ -751,6 +767,7 @@ Func _LOWriter_TableCreateCursor(ByRef $oDoc, ByRef $oTable, $sCellName = "", $o
 			Case $LOW_CURDATA_CELL ; Transform to TextTableCursor
 				$oTable = $oDoc.TextTables.getByName($oCursor.TextTable.Name)
 				If Not IsObj($oTable) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 				$sCellName = ($sCellName = "") ? ($oCursor.Cell.CellName) : ($sCellName)
 
 			Case Else
@@ -762,6 +779,7 @@ Func _LOWriter_TableCreateCursor(ByRef $oDoc, ByRef $oTable, $sCellName = "", $o
 	If ($sCellName = "") Then ; If cell name undefined, get first cell.
 		$asCells = $oTable.getCellNames()
 		If Not IsArray($asCells) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; no cells
+
 		$sCellName = $asCells[0]
 	EndIf
 
@@ -817,6 +835,7 @@ Func _LOWriter_TableCursor(ByRef $oCursor, $sGoToCellByName = Null, $bSelect = F
 	If ($sGoToCellByName <> Null) Then
 		If Not IsString($sGoToCellByName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		If Not IsBool($bSelect) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$vReturn = $oCursor.gotoCellByName($sGoToCellByName, $bSelect)
 		$iError = ($vReturn = True) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -829,6 +848,7 @@ Func _LOWriter_TableCursor(ByRef $oCursor, $sGoToCellByName = Null, $bSelect = F
 	If ($iSplitRangeInto <> Null) Then
 		If Not __LOWriter_IntIsBetween($iSplitRangeInto, 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		If Not IsBool($bSplitRangeHori) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$vReturn = $oCursor.splitRange($iSplitRangeInto, $bSplitRangeHori)
 		$iError = ($vReturn = True) ? ($iError) : (BitOR($iError, 4, 0))
 	EndIf
@@ -867,8 +887,10 @@ Func _LOWriter_TableDelete(ByRef $oDoc, ByRef $oTable)
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	$sTableName = $oTable.getName()
 	If Not ($oDoc.TextTables.hasByName($sTableName)) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Document doesn't contain Table named this yet.
+
 	$oTable.dispose()
 	If ($oDoc.TextTables.hasByName($sTableName)) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; Document still contains Table named the same.
 
@@ -905,6 +927,7 @@ Func _LOWriter_TableExists(ByRef $oDoc, $sTableName)
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sTableName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	$oTables = $oDoc.TextTables()
 	If Not IsObj($oTables) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -965,6 +988,7 @@ Func _LOWriter_TableGetCellObjByCursor(ByRef $oDoc, ByRef $oTable, ByRef $oCurso
 		Case $LOW_CURTYPE_TEXT_CURSOR
 			$iCursorDataType = __LOWriter_Internal_CursorGetDataType($oDoc, $oCursor)
 			If Not ($iCursorDataType = $LOW_CURDATA_CELL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; Cursor not in a Table cell.
+
 			$oCell = $oTable.getCellByName($oCursor.Cell.CellName)
 
 		Case $LOW_CURTYPE_VIEW_CURSOR
@@ -975,6 +999,7 @@ Func _LOWriter_TableGetCellObjByCursor(ByRef $oDoc, ByRef $oTable, ByRef $oCurso
 			Else
 				$iCursorDataType = __LOWriter_Internal_CursorGetDataType($oDoc, $oCursor)
 				If Not ($iCursorDataType = $LOW_CURDATA_CELL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; Cursor not in a Table cell.
+
 				$oCell = $oTable.getCellByName($oCursor.Cell.CellName)
 			EndIf
 
@@ -1093,12 +1118,10 @@ Func _LOWriter_TableGetCellObjByPosition(ByRef $oTable, $iColumn, $iRow, $iToCol
 	If Not IsInt($iToColumn) Or ($iToColumn < 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not IsInt($iToRow) Or ($iToRow < 0) And ($iToRow <> Null) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	If Not __LOWriter_IsTableInDoc($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-
 	If Not __LOWriter_TableHasColumnRange($oTable, $iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 	If Not __LOWriter_TableHasColumnRange($oTable, $iToColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 	If Not __LOWriter_TableHasRowRange($oTable, $iRow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 	If Not __LOWriter_TableHasRowRange($oTable, $iToRow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
-
 	If ($iToColumn < $iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0) ; ToColumn Lower than beginning column.
 	If ($iToRow < $iRow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0) ; ToRow Lower than beginning Row.
 
@@ -1154,6 +1177,7 @@ Func _LOWriter_TableGetData(ByRef $oTable, $iRow = -1, $iColumn = -1)
 	If Not __LOWriter_IsTableInDoc($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; can't get data if Table not in doc.
 	If Not IsInt($iRow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsInt($iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 	$avTableData = $oTable.getDataArray() ; Will fail if Columns are joined
 	If Not IsArray($avTableData) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -1169,11 +1193,13 @@ Func _LOWriter_TableGetData(ByRef $oTable, $iRow = -1, $iColumn = -1)
 	Next
 
 	If (UBound($avTableData) <= $iRow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; Requested Row higher than number of contained Rows.
+
 	$avTableDataReturn = ($iRow > -1) ? ($avTableData[$iRow]) : ($avTableData)
 	$iExtended = ($iRow > -1) ? (2) : (1) ; Set Extended to 1 If retrieving the full Table Data, else 2 if getting a specific row.
 
 	If ($iRow = -1) And ($iColumn <> -1) Then ;  getting only a specific column of Data
 		If (UBound($avTableData[0]) <= $iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; Requested Column higher than number of contained columns.
+
 		ReDim $avTableDataReturn[UBound($avTableData)]
 		For $i = 0 To UBound($avTableData) - 1
 			$avTableDataReturn[$i] = ($avTableData[$i])[$iColumn]
@@ -1182,6 +1208,7 @@ Func _LOWriter_TableGetData(ByRef $oTable, $iRow = -1, $iColumn = -1)
 
 	ElseIf ($iRow <> -1) And ($iColumn <> -1) Then ;
 		If (UBound($avTableDataReturn) <= $iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; Requested Column higher than number of contained columns.
+
 		$avTableDataReturn = $avTableDataReturn[$iColumn]
 		$iExtended = 4 ; Set Extended to 4 if retrieving a specific cell of Data
 	EndIf
@@ -1327,6 +1354,7 @@ Func _LOWriter_TableInsert(ByRef $oDoc, $oCursor, ByRef $oTable, $bHeading = Fal
 	EndIf
 	If Not IsObj($oInsertPoint) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	If Not IsObj($oText) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
 	$oText.insertTextContent($oInsertPoint, $oTable, False)
 
 	If Not __LOWriter_IsTableInDoc($oTable) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
@@ -1407,12 +1435,14 @@ Func _LOWriter_TableMargin(ByRef $oTable, $iTopMargin = Null, $iBottomMargin = N
 
 	If ($iTopMargin <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTopMargin, 0, 100000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oTable.TopMargin = $iTopMargin
 		$iError = (__LOWriter_IntIsBetween($oTable.TopMargin(), $iTopMargin - 1, $iTopMargin + 1)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iBottomMargin <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBottomMargin, 0, 100000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oTable.BottomMargin = $iBottomMargin
 		$iError = (__LOWriter_IntIsBetween($oTable.BottomMargin(), $iBottomMargin - 1, $iBottomMargin + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -1420,6 +1450,7 @@ Func _LOWriter_TableMargin(ByRef $oTable, $iTopMargin = Null, $iBottomMargin = N
 	If ($iLeftMargin <> Null) Then
 		If Not __LOWriter_IntIsBetween($iLeftMargin, -100000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		If (($oTable.HoriOrient() = $LOW_ORIENT_HORI_FULL) Or ($oTable.HoriOrient() = $LOW_ORIENT_HORI_LEFT)) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; Can't set Left Margin with orientation set to Auto(6/Full) Or Left (3)
+
 		$oTable.LeftMargin = $iLeftMargin
 		$iError = (__LOWriter_IntIsBetween($oTable.LeftMargin(), $iLeftMargin - 1, $iLeftMargin + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -1427,6 +1458,7 @@ Func _LOWriter_TableMargin(ByRef $oTable, $iTopMargin = Null, $iBottomMargin = N
 	If ($iRightMargin <> Null) Then
 		If Not __LOWriter_IntIsBetween($iRightMargin, -100000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		If Not (($oTable.HoriOrient() = $LOW_ORIENT_HORI_LEFT) Or ($oTable.HoriOrient() = $LOW_ORIENT_HORI_NONE)) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0) ; Can't set Right Margin with orientation set to other than Manual(0/None) Or Left (3)
+
 		$oTable.RightMargin = $iRightMargin
 		$iError = (__LOWriter_IntIsBetween($oTable.RightMargin(), $iRightMargin - 1, $iRightMargin + 1)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
@@ -1506,24 +1538,28 @@ Func _LOWriter_TableProperties(ByRef $oTable, $iTableAlign = Null, $bKeepTogethe
 
 	If ($iTableAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTableAlign, $LOW_ORIENT_HORI_NONE, $LOW_ORIENT_HORI_LEFT_AND_WIDTH) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oTable.HoriOrient = $iTableAlign
 		$iError = ($oTable.HoriOrient() = $iTableAlign) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bKeepTogether <> Null) Then
 		If Not IsBool($bKeepTogether) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oTable.KeepTogether = $bKeepTogether
 		$iError = ($oTable.KeepTogether() = $bKeepTogether) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($sTableName <> Null) Then
 		If Not IsString($sTableName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oTable.setName($sTableName)
 		$iError = (($oComError.Number = -2147352567)) ? (BitOR($iError, 4)) : ($iError) ; Table with same name already present.
 	EndIf
 
 	If ($bSplit <> Null) Then
 		If Not IsBool($bSplit) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oTable.Split = $bSplit
 		$iError = ($oTable.Split() = $bSplit) ? ($iError) : (BitOR($iError, 8))
 	EndIf
@@ -1531,6 +1567,7 @@ Func _LOWriter_TableProperties(ByRef $oTable, $iTableAlign = Null, $bKeepTogethe
 	If ($bSplitRows <> Null) Then
 		If Not IsBool($bSplitRows) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		If Not __LOWriter_IsTableInDoc($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		__LOWriter_TableRowSplitToggle($oTable, $bSplitRows)
 		$iError = (__LOWriter_TableRowSplitToggle($oTable) = $bSplitRows) ? ($iError) : (BitOR($iError, 16))
 	EndIf
@@ -1538,6 +1575,7 @@ Func _LOWriter_TableProperties(ByRef $oTable, $iTableAlign = Null, $bKeepTogethe
 	If ($bRepeatHeading <> Null) Then
 		If Not IsBool($bRepeatHeading) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		If Not __LOWriter_IsTableInDoc($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 		$oTable.RepeatHeadline = $bRepeatHeading
 		$iError = ($oTable.RepeatHeadline() = $bRepeatHeading) ? ($iError) : (BitOR($iError, 32))
 	EndIf
@@ -1545,6 +1583,7 @@ Func _LOWriter_TableProperties(ByRef $oTable, $iTableAlign = Null, $bKeepTogethe
 	If ($iHeaderRows <> Null) Then
 		If Not __LOWriter_IntIsBetween($iHeaderRows, 0, $oTable.getRows.getCount()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		If Not __LOWriter_IsTableInDoc($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+
 		$oTable.HeaderRowCount = $iHeaderRows
 		$iError = ($oTable.HeaderRowCount() = $iHeaderRows) ? ($iError) : (BitOR($iError, 64))
 	EndIf
@@ -1598,6 +1637,7 @@ Func _LOWriter_TableRowColor(ByRef $oTable, $iRow, $iBackColor = Null, $bBackTra
 	If Not __LOWriter_IsTableInDoc($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; can't set Row color if Table not in doc.
 	If Not IsInt($iRow) Or ($iRow < 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If ($oTable.getRows.getCount() < $iRow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0) ; Requested Row out of bounds.
+
 	$oRow = $oTable.getRows.getByIndex($iRow)
 	If Not IsObj($oRow) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -1609,6 +1649,7 @@ Func _LOWriter_TableRowColor(ByRef $oTable, $iRow, $iBackColor = Null, $bBackTra
 
 	If ($iBackColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oRow.BackColor = $iBackColor
 		If ($iBackColor = $LOW_COLOR_OFF) Then $oRow.BackTransparent = True
 		$iError = ($oRow.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1)) ; Error setting color.
@@ -1616,6 +1657,7 @@ Func _LOWriter_TableRowColor(ByRef $oTable, $iRow, $iBackColor = Null, $bBackTra
 
 	If ($bBackTransparent <> Null) Then
 		If Not IsBool($bBackTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oRow.BackTransparent = $bBackTransparent
 		$iError = ($oRow.BackTransparent() = $bBackTransparent) ? ($iError) : (BitOR($iError, 2)) ; Error setting BackTransparent.
 	EndIf
@@ -1660,8 +1702,10 @@ Func _LOWriter_TableRowDelete(ByRef $oTable, $iRow, $iCount = 1)
 	If Not __LOWriter_IsTableInDoc($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; can't delete Rows if Table not in doc.
 	If Not IsInt($iRow) Or ($iRow < 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsInt($iCount) Or ($iCount < 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 	$iRowCount = $oTable.getRows.getCount()
 	If ($iRowCount <= $iRow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; Requested Row out of bounds.
+
 	$iCount = ($iCount > ($iRowCount - $iRow)) ? ($iRowCount - $iRow) : ($iCount)
 	$iReturn = ($iCount > ($iRowCount - $iRow)) ? (2) : (1) ; Return 1 if full amount deleted else 2 if only partial.
 	$oTable.getRows.removeByIndex($iRow, $iCount)
@@ -1698,6 +1742,7 @@ Func _LOWriter_TableRowGetCount(ByRef $oTable)
 
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0) ; Not an Object.
 	If Not __LOWriter_IsTableInDoc($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; can't get columns/rows if Table not in doc.
+
 	$iRowSize = $oTable.getRows.getCount()
 	If ($iRowSize = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Failed to retrieve Row count.
 
@@ -1743,8 +1788,10 @@ Func _LOWriter_TableRowInsert(ByRef $oTable, $iCount, $iRow = -1)
 	If Not __LOWriter_IsTableInDoc($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; can't insert Rows if Table not in doc.
 	If Not IsInt($iCount) Or ($iCount < 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsInt($iRow) Or ($iRow < -1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 	$iRowCount = $oTable.getRows.getCount()
 	If ($iRowCount < $iRow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; Requested Row out of bounds.
+
 	$iRow = ($iRow <= -1) ? ($iRowCount) : ($iRow)
 	$oTable.getRows.insertByIndex($iRow, $iCount)
 
@@ -1802,6 +1849,7 @@ Func _LOWriter_TableRowProperty(ByRef $oTable, $iRow, $iHeight = Null, $bIsAutoH
 	If Not __LOWriter_IsTableInDoc($oTable) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Table not already inserted into document.
 	If Not IsInt($iRow) Or ($iRow < 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($oTable.getRows.getCount() <= $iRow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; Requested Row out of bounds.
+
 	$oRow = $oTable.getRows.getByIndex($iRow)
 	If Not IsObj($oRow) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -1813,18 +1861,21 @@ Func _LOWriter_TableRowProperty(ByRef $oTable, $iRow, $iHeight = Null, $bIsAutoH
 
 	If ($iHeight <> Null) Then
 		If Not IsInt($iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0) ; not an integer
+
 		$oRow.Height = $iHeight
 		$iError = (__LOWriter_IntIsBetween($oRow.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bIsAutoHeight <> Null) Then
 		If Not IsBool($bIsAutoHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; not a Boolean
+
 		$oRow.IsAutoHeight = $bIsAutoHeight
 		$iError = ($oRow.IsAutoHeight() = $bIsAutoHeight) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bIsSplitAllowed <> Null) Then
 		If Not IsBool($bIsSplitAllowed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; not a Boolean
+
 		$oRow.IsSplitAllowed = $bIsSplitAllowed
 		$iError = ($oRow.IsSplitAllowed() = $bIsSplitAllowed) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -1869,9 +1920,11 @@ Func _LOWriter_TableSetData(ByRef $oTable, ByRef $avData)
 	If Not __LOWriter_IsTableInDoc($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; can't set data if Table not in doc.
 	If Not IsArray($avData) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If (UBound($avData) <> $oTable.getRows.getCount()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0) ; Array doesn't contain enough elements to match Table.
+
 	$iColumns = $oTable.getColumns.getCount()
 	For $i = 0 To UBound($avData) - 1
 		If (UBound($avData[$i]) <> $iColumns) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i) ; Array contains too short of array for Table column count.
+
 		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	Next
 	$oTable.setDataArray($avData)
@@ -1907,6 +1960,7 @@ Func _LOWriter_TablesGetNames(ByRef $oDoc)
 	Local $asTableNames[0]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 	$oTables = $oDoc.TextTables()
 	If Not IsObj($oTables) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -1980,21 +2034,25 @@ Func _LOWriter_TableShadow(ByRef $oTable, $iWidth = Null, $iColor = Null, $bTran
 
 	If ($iWidth <> Null) Then
 		If Not __LOWriter_IntIsBetween($iWidth, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$tShdwFrmt.ShadowWidth = $iWidth
 	EndIf
 
 	If ($iColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$tShdwFrmt.Color = $iColor
 	EndIf
 
 	If ($bTransparent <> Null) Then
 		If Not IsBool($bTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$tShdwFrmt.IsTransparent = $bTransparent
 	EndIf
 
 	If ($iLocation <> Null) Then
 		If Not __LOWriter_IntIsBetween($iLocation, $LOW_SHADOW_NONE, $LOW_SHADOW_BOTTOM_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$tShdwFrmt.Location = $iLocation
 	EndIf
 
@@ -2061,6 +2119,7 @@ Func _LOWriter_TableWidth(ByRef $oTable, $iWidth = Null, $iRelativeWidth = Null)
 	If ($iWidth <> Null) Then
 		If Not IsInt($iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; not an integer
 		If ($oTable.HoriOrient() = $LOW_ORIENT_HORI_FULL) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; Can't set Width/ Relative width with orientation set to Auto(6/Full)
+
 		$oTable.Width = $iWidth
 		$iError = (__LOWriter_IntIsBetween($oTable.Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -2068,6 +2127,7 @@ Func _LOWriter_TableWidth(ByRef $oTable, $iWidth = Null, $iRelativeWidth = Null)
 	If ($iRelativeWidth <> Null) Then
 		If Not IsInt($iRelativeWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; not an integer
 		If ($oTable.HoriOrient() = $LOW_ORIENT_HORI_FULL) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0) ; Can't set Width/ Relative width with orientation set to Auto(6/Full)
+
 		$oTable.RelativeWidth = $iRelativeWidth
 		$iError = (__LOWriter_IntIsBetween($oTable.RelativeWidth(), $iRelativeWidth - 1, $iRelativeWidth + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf

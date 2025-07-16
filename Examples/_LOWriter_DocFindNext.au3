@@ -48,13 +48,13 @@ Func Example()
 		$sResultString = _LOWriter_DocGetString($oResult)
 		If @error Then _ERROR($oDoc, "Failed to retrieve String. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 		MsgBox($MB_OK + $MB_TOPMOST, Default, "The search was successful, I searched and found the following word within the selection: " & $sResultString)
+
 	Else
 		MsgBox($MB_OK + $MB_TOPMOST, Default, "The search was successful, but returned no results.")
 	EndIf
 
 	; Search for all matching results in this document, one at a time.
 	While IsObj($oResult)
-
 		; Search for the word "Search" using the search descriptor I just created. Starting from my last result.
 		$oResult = _LOWriter_DocFindNext($oDoc, $oSrchDesc, "Search", $aAnEmptyArray, $oViewCursor, $oResult)
 		If @error Then _ERROR($oDoc, "Failed to perform search in the document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
@@ -64,10 +64,10 @@ Func Example()
 			$sResultString = _LOWriter_DocGetString($oResult)
 			If @error Then _ERROR($oDoc, "Failed to retrieve String. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 			MsgBox($MB_OK + $MB_TOPMOST, Default, "The search was successful, I searched, and found the following word within the selection: " & $sResultString)
+
 		Else
 			MsgBox($MB_OK + $MB_TOPMOST, Default, "The search was successful, but returned no results.")
 		EndIf
-
 	WEnd
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
@@ -75,7 +75,6 @@ Func Example()
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

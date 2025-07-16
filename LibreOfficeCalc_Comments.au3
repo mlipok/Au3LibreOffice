@@ -851,7 +851,7 @@ Func _LOCalc_CommentCallout(ByRef $oComment, $iCalloutStyle = Null, $iSpacing = 
 
 	If __LOCalc_VarsAreNull($iCalloutStyle, $iSpacing, $iExtension, $iExtendBy, $bOptimal, $iLength) Then
 		__LOCalc_ArrayFill($aiCallout, $oAnnotationShape.CaptionType(), $oAnnotationShape.CaptionGap(), $oAnnotationShape.CaptionEscapeDirection(), _
-				(($oAnnotationShape.CaptionIsEscapeRelative) ? ($oAnnotationShape.CaptionEscapeRelative()) : ($oAnnotationShape.CaptionEscapeAbsolute())), _
+				(($oAnnotationShape.CaptionIsEscapeRelative()) ? ($oAnnotationShape.CaptionEscapeRelative()) : ($oAnnotationShape.CaptionEscapeAbsolute())), _
 				$oAnnotationShape.CaptionIsFitLineLength(), $oAnnotationShape.CaptionLineLength())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiCallout)
