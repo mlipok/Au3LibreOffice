@@ -87,8 +87,8 @@
 ; _LOWriter_FieldRefInsert
 ; _LOWriter_FieldRefMarkDelete
 ; _LOWriter_FieldRefMarkGetAnchor
-; _LOWriter_FieldRefMarkList
 ; _LOWriter_FieldRefMarkSet
+; _LOWriter_FieldRefMarksGetNames
 ; _LOWriter_FieldRefModify
 ; _LOWriter_FieldsAdvGetList
 ; _LOWriter_FieldsDocInfoGetList
@@ -163,16 +163,19 @@ Func _LOWriter_FieldAuthorInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = Fals
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oAuthField.IsFixed = $bIsFixed
 	EndIf
 
 	If ($sAuthor <> Null) Then
 		If Not IsString($sAuthor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oAuthField.Content = $sAuthor
 	EndIf
 
 	If ($bFullName <> Null) Then
 		If Not IsBool($bFullName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oAuthField.FullName = $bFullName
 	EndIf
 
@@ -235,18 +238,21 @@ Func _LOWriter_FieldAuthorModify(ByRef $oAuthField, $bIsFixed = Null, $sAuthor =
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oAuthField.IsFIxed = $bIsFixed
 		$iError = ($oAuthField.IsFIxed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sAuthor <> Null) Then
 		If Not IsString($sAuthor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oAuthField.Content = $sAuthor
 		$iError = ($oAuthField.Content() = $sAuthor) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bFullName <> Null) Then
 		If Not IsBool($bFullName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oAuthField.FullName = $bFullName
 		$iError = ($oAuthField.FullName() = $bFullName) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -301,11 +307,13 @@ Func _LOWriter_FieldChapterInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = Fal
 
 	If ($iChapFrmt <> Null) Then
 		If Not __LOWriter_IntIsBetween($iChapFrmt, $LOW_FIELD_CHAP_FRMT_NAME, $LOW_FIELD_CHAP_FRMT_DIGIT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oChapField.ChapterFormat = $iChapFrmt
 	EndIf
 
 	If ($iLevel <> Null) Then
 		If Not __LOWriter_IntIsBetween($iLevel, 1, 10) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oChapField.Level = ($iLevel - 1) ; Level is 0 Based
 	EndIf
 
@@ -361,12 +369,14 @@ Func _LOWriter_FieldChapterModify(ByRef $oChapField, $iChapFrmt = Null, $iLevel 
 
 	If ($iChapFrmt <> Null) Then
 		If Not __LOWriter_IntIsBetween($iChapFrmt, $LOW_FIELD_CHAP_FRMT_NAME, $LOW_FIELD_CHAP_FRMT_DIGIT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oChapField.ChapterFormat = $iChapFrmt
 		$iError = ($oChapField.ChapterFormat() = $iChapFrmt) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iLevel <> Null) Then
 		If Not __LOWriter_IntIsBetween($iLevel, 1, 10) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oChapField.Level = ($iLevel - 1) ; Level is 0 Based
 		$iError = ($oChapField.Level() = ($iLevel - 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -421,6 +431,7 @@ Func _LOWriter_FieldCombCharInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = Fa
 	If ($sCharacters <> Null) Then
 		If Not IsString($sCharacters) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		If (StringLen($sCharacters) > 6) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oCombCharField.Content = $sCharacters
 	EndIf
 
@@ -469,6 +480,7 @@ Func _LOWriter_FieldCombCharModify(ByRef $oCombCharField, $sCharacters = Null)
 
 	If Not IsString($sCharacters) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If (StringLen($sCharacters) > 6) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 	$oCombCharField.Content = $sCharacters
 	$iError = ($oCombCharField.Content() = $sCharacters) ? ($iError) : (BitOR($iError, 1))
 
@@ -506,7 +518,7 @@ EndFunc   ;==>_LOWriter_FieldCombCharModify
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.text.TextField.Annotation" Object.
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office Version lower than 4.0.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office Version lower than 4.0.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Successfully inserted comment field, returning Comment Object.
 ; Author ........: donnyh13
@@ -532,6 +544,7 @@ Func _LOWriter_FieldCommentInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = Fal
 
 	If ($sContent <> Null) Then
 		If Not IsString($sContent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oCommentField.Content = $sContent
 
 	Else
@@ -540,11 +553,13 @@ Func _LOWriter_FieldCommentInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = Fal
 
 	If ($sAuthor <> Null) Then
 		If Not IsString($sAuthor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oCommentField.Author = $sAuthor
 	EndIf
 
 	If ($tDateStruct <> Null) Then
 		If Not IsObj($tDateStruct) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oCommentField.DateTimeValue = $tDateStruct
 
 	Else
@@ -554,17 +569,20 @@ Func _LOWriter_FieldCommentInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = Fal
 	If ($sInitials <> Null) Then
 		If Not IsString($sInitials) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		If Not __LOWriter_VersionCheck(4.0) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+
 		$oCommentField.Initials = $sInitials
 	EndIf
 
 	If ($sName <> Null) Then
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		If Not __LOWriter_VersionCheck(4.0) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+
 		$oCommentField.Name = $sName
 	EndIf
 
 	If ($bResolved <> Null) Then
 		If Not IsBool($bResolved) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
 		$oCommentField.Resolved = $bResolved
 	EndIf
 
@@ -599,7 +617,7 @@ EndFunc   ;==>_LOWriter_FieldCommentInsert
 ;                  @Error 1 @Extended 7 Return 0 = $sName not a String.
 ;                  @Error 1 @Extended 8 Return 0 = $bResolved not a Boolean.
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office Version lower than 4.0.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office Version lower than 4.0.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $sContent
@@ -644,18 +662,21 @@ Func _LOWriter_FieldCommentModify(ByRef $oDoc, ByRef $oCommentField, $sContent =
 
 	If ($sContent <> Null) Then
 		If Not IsString($sContent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oCommentField.Content = $sContent
 		$iError = ($oCommentField.Content() = $sContent) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sAuthor <> Null) Then
 		If Not IsString($sAuthor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oCommentField.Author = $sAuthor
 		$iError = ($oCommentField.Author() = $sAuthor) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($tDateStruct <> Null) Then
 		If Not IsObj($tDateStruct) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oCommentField.DateTimeValue = $tDateStruct
 		$iError = (__LOWriter_DateStructCompare($oCommentField.DateTimeValue(), $tDateStruct)) ? ($iError) : (BitOR($iError, 4))
 		$bRefresh = True
@@ -664,6 +685,7 @@ Func _LOWriter_FieldCommentModify(ByRef $oDoc, ByRef $oCommentField, $sContent =
 	If ($sInitials <> Null) Then
 		If Not IsString($sInitials) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		If Not __LOWriter_VersionCheck(4.0) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+
 		$oCommentField.Initials = $sInitials
 		$iError = ($oCommentField.Initials() = $sInitials) ? ($iError) : (BitOR($iError, 8))
 	EndIf
@@ -671,12 +693,14 @@ Func _LOWriter_FieldCommentModify(ByRef $oDoc, ByRef $oCommentField, $sContent =
 	If ($sName <> Null) Then
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		If Not __LOWriter_VersionCheck(4.0) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+
 		$oCommentField.Name = $sName
 		$iError = ($oCommentField.Name = $sName) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($bResolved <> Null) Then
 		If Not IsBool($bResolved) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oCommentField.Resolved = $bResolved
 		$iError = ($oCommentField.Resolved() = $bResolved) ? ($iError) : (BitOR($iError, 32))
 		$bRefresh = True
@@ -737,16 +761,19 @@ Func _LOWriter_FieldCondTextInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = Fa
 
 	If ($sCondition <> Null) Then
 		If Not IsString($sCondition) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oCondTextField.Condition = $sCondition
 	EndIf
 
 	If ($sThen <> Null) Then
 		If Not IsString($sThen) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oCondTextField.TrueContent = $sThen
 	EndIf
 
 	If ($sElse <> Null) Then
 		If Not IsString($sElse) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oCondTextField.FalseContent = $sElse
 	EndIf
 
@@ -806,18 +833,21 @@ Func _LOWriter_FieldCondTextModify(ByRef $oCondTextField, $sCondition = Null, $s
 
 	If ($sCondition <> Null) Then
 		If Not IsString($sCondition) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oCondTextField.Condition = $sCondition
 		$iError = ($oCondTextField.Condition() = $sCondition) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sThen <> Null) Then
 		If Not IsString($sThen) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oCondTextField.TrueContent = $sThen
 		$iError = ($oCondTextField.TrueContent() = $sThen) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($sElse <> Null) Then
 		If Not IsString($sElse) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oCondTextField.FalseContent = $sElse
 		$iError = ($oCondTextField.FalseContent() = $sElse) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -876,7 +906,7 @@ EndFunc   ;==>_LOWriter_FieldCurrentDisplayGet
 ;                  $tDateStruct         - [optional] a dll struct value. Default is Null. The date to display for the comment, created previously by _LOWriter_DateStructCreate.
 ;                  $bIsDate             - [optional] a boolean value. Default is Null. If True, the field is considered as containing a Date, $iOffset will be evaluated in Days. Else if False, Field will be considered as containing a Time, $iOffset will be evaluated in minutes.
 ;                  $iOffset             - [optional] an integer value. Default is Null. The offset to apply to the date, either in Minutes or Days, depending on the current $bIsDate setting.
-;                  $iDateFormatKey      - [optional] an integer value. Default is Null. A Date or Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeyList function.
+;                  $iDateFormatKey      - [optional] an integer value. Default is Null. A Date or Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeysGetList function.
 ; Return values .: Success: Object.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -917,21 +947,25 @@ Func _LOWriter_FieldDateTimeInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = Fa
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oDateTimeField.IsFixed = $bIsFixed
 	EndIf
 
 	If ($tDateStruct <> Null) Then
 		If Not IsObj($tDateStruct) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oDateTimeField.DateTimeValue = $tDateStruct
 	EndIf
 
 	If ($bIsDate <> Null) Then
 		If Not IsBool($bIsDate) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oDateTimeField.IsDate = $bIsDate
 	EndIf
 
 	If ($iOffset <> Null) Then
 		If Not IsInt($iOffset) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oDateTimeField.Adjust = ($oDateTimeField.IsDate() = True) ? (Int((1440 * $iOffset))) : ($iOffset)
 		; If IsDate = True, Then Calculate number of minutes in a day (1440) times number of days to off set the Date/ Value,
 		; else, just set it to Number of minutes called.
@@ -940,6 +974,7 @@ Func _LOWriter_FieldDateTimeInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = Fa
 	If ($iDateFormatKey <> Null) Then
 		If Not IsInt($iDateFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		If Not _LOWriter_DateFormatKeyExists($oDoc, $iDateFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
 		$oDateTimeField.NumberFormat = $iDateFormatKey
 	EndIf
 
@@ -964,7 +999,7 @@ EndFunc   ;==>_LOWriter_FieldDateTimeInsert
 ;                  $tDateStruct         - [optional] a dll struct value. Default is Null. The date to display for the comment, created previously by _LOWriter_DateStructCreate.
 ;                  $bIsDate             - [optional] a boolean value. Default is Null. If True, the field is considered as containing a Date, $iOffset will be evaluated in Days. Else False, Field will be considered as containing a Time, $iOffset will be evaluated in minutes.
 ;                  $iOffset             - [optional] an integer value. Default is Null. The offset to apply to the date, either in Minutes or Days, depending on the current $bIsDate setting.
-;                  $iDateFormatKey      - [optional] an integer value. Default is Null. A Date or Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeyList function.
+;                  $iDateFormatKey      - [optional] an integer value. Default is Null. A Date or Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeysGetList function.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1013,8 +1048,7 @@ Func _LOWriter_FieldDateTimeModify(ByRef $oDoc, ByRef $oDateTimeField, $bIsFixed
 
 		__LOWriter_ArrayFill($avDateTime, $oDateTimeField.IsFixed(), $oDateTimeField.DateTimeValue(), $oDateTimeField.IsDate(), _
 				($oDateTimeField.IsDate() = True) ? (Int(($oDateTimeField.Adjust() / 1440))) : ($oDateTimeField.Adjust()), $iNumberFormat)
-		; If IsDate = True, Then Calculate number of minutes in a day (1440) divided by number of days of off set. Otherwise
-		; return Number of minutes.
+		; If IsDate = True, Then Calculate number of minutes in a day (1440) divided by number of days of off set. Otherwise return Number of minutes.
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDateTime)
 	EndIf
@@ -1167,11 +1201,13 @@ Func _LOWriter_FieldDocInfoCommentsInsert(ByRef $oDoc, ByRef $oCursor, $bOverwri
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oDocInfoCommentField.IsFixed = $bIsFixed
 	EndIf
 
 	If ($sComments <> Null) Then
 		If Not IsString($sComments) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oDocInfoCommentField.Content = $sComments
 	EndIf
 
@@ -1231,12 +1267,14 @@ Func _LOWriter_FieldDocInfoCommentsModify(ByRef $oDocInfoComment, $bIsFixed = Nu
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oDocInfoComment.IsFixed = $bIsFixed
 		$iError = ($oDocInfoComment.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sComments <> Null) Then
 		If Not IsString($sComments) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oDocInfoComment.Content = $sComments
 		$iError = ($oDocInfoComment.Content() = $sComments) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -1291,11 +1329,13 @@ Func _LOWriter_FieldDocInfoCreateAuthInsert(ByRef $oDoc, ByRef $oCursor, $bOverw
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oDocInfoCreateAuthField.IsFixed = $bIsFixed
 	EndIf
 
 	If ($sAuthor <> Null) Then
 		If Not IsString($sAuthor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oDocInfoCreateAuthField.Author = $sAuthor
 	EndIf
 
@@ -1355,12 +1395,14 @@ Func _LOWriter_FieldDocInfoCreateAuthModify(ByRef $oDocInfoCreateAuth, $bIsFixed
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oDocInfoCreateAuth.IsFixed = $bIsFixed
 		$iError = ($oDocInfoCreateAuth.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sAuthor <> Null) Then
 		If Not IsString($sAuthor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oDocInfoCreateAuth.Author = $sAuthor
 		$iError = ($oDocInfoCreateAuth.Author() = $sAuthor) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -1378,7 +1420,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoCreateAuthModify
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
 ;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
-;                  $iDateFormatKey      - [optional] an integer value. Default is Null. A Date or Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeyList function.
+;                  $iDateFormatKey      - [optional] an integer value. Default is Null. A Date or Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeysGetList function.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1396,7 +1438,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoCreateAuthModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldDocInfoCreateDateTimeModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeyList, _LOWriter_DocGenPropCreation
+; Related .......: _LOWriter_FieldDocInfoCreateDateTimeModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeysGetList, _LOWriter_DocGenPropCreation
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1416,12 +1458,14 @@ Func _LOWriter_FieldDocInfoCreateDateTimeInsert(ByRef $oDoc, ByRef $oCursor, $bO
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oDocInfoCreateDtTmField.IsFixed = $bIsFixed
 	EndIf
 
 	If ($iDateFormatKey <> Null) Then
 		If Not IsInt($iDateFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		If Not _LOWriter_DateFormatKeyExists($oDoc, $iDateFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oDocInfoCreateDtTmField.NumberFormat = $iDateFormatKey
 	EndIf
 
@@ -1439,7 +1483,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoCreateDateTimeInsert
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oDocInfoCreateDtTm  - [in/out] an object. A Created at Date/Time field Object from a previous _LOWriter_FieldDocInfoCreateDateTimeInsert, or _LOWriter_FieldsDocInfoGetList function.
 ;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
-;                  $iDateFormatKey      - [optional] an integer value. Default is Null. A Date or Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeyList function.
+;                  $iDateFormatKey      - [optional] an integer value. Default is Null. A Date or Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeysGetList function.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1459,7 +1503,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoCreateDateTimeInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_FieldDocInfoCreateDateTimeInsert, _LOWriter_FieldsDocInfoGetList, _LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeyList, _LOWriter_DocGenPropCreation
+; Related .......: _LOWriter_FieldDocInfoCreateDateTimeInsert, _LOWriter_FieldsDocInfoGetList, _LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeysGetList, _LOWriter_DocGenPropCreation
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1487,6 +1531,7 @@ Func _LOWriter_FieldDocInfoCreateDateTimeModify(ByRef $oDoc, ByRef $oDocInfoCrea
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oDocInfoCreateDtTm.IsFixed = $bIsFixed
 		$iError = ($oDocInfoCreateDtTm.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -1494,6 +1539,7 @@ Func _LOWriter_FieldDocInfoCreateDateTimeModify(ByRef $oDoc, ByRef $oDocInfoCrea
 	If ($iDateFormatKey <> Null) Then
 		If Not IsInt($iDateFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		If Not _LOWriter_DateFormatKeyExists($oDoc, $iDateFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oDocInfoCreateDtTm.NumberFormat = $iDateFormatKey
 		$iError = ($oDocInfoCreateDtTm.NumberFormat() = $iDateFormatKey) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -1511,7 +1557,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoCreateDateTimeModify
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
 ;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
-;                  $iTimeFormatKey      - [optional] an integer value. Default is Null. A Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeyList function.
+;                  $iTimeFormatKey      - [optional] an integer value. Default is Null. A Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeysGetList function.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1528,7 +1574,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoCreateDateTimeModify
 ;                  @Error 0 @Extended 0 Return Object = Success. Successfully Inserted a Document Info Total Editing Time Field, returning its Object.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: _LOWriter_FieldDocInfoEditTimeModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeyList, _LOWriter_DocGenProp
+; Remarks .......: _LOWriter_FieldDocInfoEditTimeModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeysGetList, _LOWriter_DocGenProp
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -1549,12 +1595,14 @@ Func _LOWriter_FieldDocInfoEditTimeInsert(ByRef $oDoc, ByRef $oCursor, $bOverwri
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oDocInfoEditTimeField.IsFixed = $bIsFixed
 	EndIf
 
 	If ($iTimeFormatKey <> Null) Then
 		If Not IsInt($iTimeFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		If Not _LOWriter_DateFormatKeyExists($oDoc, $iTimeFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oDocInfoEditTimeField.NumberFormat = $iTimeFormatKey
 	EndIf
 
@@ -1571,7 +1619,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoEditTimeInsert
 ; Syntax ........: _LOWriter_FieldDocInfoEditTimeModify(ByRef $oDocInfoEditTime[, $bIsFixed = Null[, $iTimeFormatKey = Null]])
 ; Parameters ....: $oDocInfoEditTime    - [in/out] an object. A Doc Info Total Editing Time field Object from a previous _LOWriter_FieldDocInfoEditTimeInsert, or _LOWriter_FieldsDocInfoGetList function.
 ;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
-;                  $iTimeFormatKey      - [optional] an integer value. Default is Null. A Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeyList function.
+;                  $iTimeFormatKey      - [optional] an integer value. Default is Null. A Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeysGetList function.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1590,7 +1638,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoEditTimeInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_FieldDocInfoEditTimeInsert, _LOWriter_FieldsDocInfoGetList, _LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeyList, _LOWriter_DocGenProp
+; Related .......: _LOWriter_FieldDocInfoEditTimeInsert, _LOWriter_FieldsDocInfoGetList, _LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeysGetList, _LOWriter_DocGenProp
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1617,6 +1665,7 @@ Func _LOWriter_FieldDocInfoEditTimeModify(ByRef $oDocInfoEditTime, $bIsFixed = N
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oDocInfoEditTime.IsFixed = $bIsFixed
 		$iError = ($oDocInfoEditTime.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -1624,6 +1673,7 @@ Func _LOWriter_FieldDocInfoEditTimeModify(ByRef $oDocInfoEditTime, $bIsFixed = N
 	If ($iTimeFormatKey <> Null) Then
 		If Not IsInt($iTimeFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		If Not IsInt($iTimeFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oDocInfoEditTime.NumberFormat = $iTimeFormatKey
 		$iError = ($oDocInfoEditTime.NumberFormat() = $iTimeFormatKey) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -1678,11 +1728,13 @@ Func _LOWriter_FieldDocInfoKeywordsInsert(ByRef $oDoc, ByRef $oCursor, $bOverwri
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oDocInfoKeywordField.IsFixed = $bIsFixed
 	EndIf
 
 	If ($sKeywords <> Null) Then
 		If Not IsString($sKeywords) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oDocInfoKeywordField.Content = $sKeywords
 	EndIf
 
@@ -1742,12 +1794,14 @@ Func _LOWriter_FieldDocInfoKeywordsModify(ByRef $oDocInfoKeyword, $bIsFixed = Nu
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oDocInfoKeyword.IsFixed = $bIsFixed
 		$iError = ($oDocInfoKeyword.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sKeywords <> Null) Then
 		If Not IsString($sKeywords) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oDocInfoKeyword.Content = $sKeywords
 		$iError = ($oDocInfoKeyword.Content() = $sKeywords) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -1802,11 +1856,13 @@ Func _LOWriter_FieldDocInfoModAuthInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrit
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oDocInfoModAuthField.IsFixed = $bIsFixed
 	EndIf
 
 	If ($sAuthor <> Null) Then
 		If Not IsString($sAuthor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oDocInfoModAuthField.Author = $sAuthor
 	EndIf
 
@@ -1866,12 +1922,14 @@ Func _LOWriter_FieldDocInfoModAuthModify(ByRef $oDocInfoModAuth, $bIsFixed = Nul
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oDocInfoModAuth.IsFixed = $bIsFixed
 		$iError = ($oDocInfoModAuth.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sAuthor <> Null) Then
 		If Not IsString($sAuthor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oDocInfoModAuth.Author = $sAuthor
 		$iError = ($oDocInfoModAuth.Author() = $sAuthor) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -1889,7 +1947,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoModAuthModify
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
 ;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
-;                  $iDateFormatKey      - [optional] an integer value. Default is Null. A Date or Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeyList function.
+;                  $iDateFormatKey      - [optional] an integer value. Default is Null. A Date or Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeysGetList function.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1907,7 +1965,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoModAuthModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldDocInfoModDateTimeModify, _LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeyList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_DocGenPropModification
+; Related .......: _LOWriter_FieldDocInfoModDateTimeModify, _LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeysGetList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_DocGenPropModification
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1927,12 +1985,14 @@ Func _LOWriter_FieldDocInfoModDateTimeInsert(ByRef $oDoc, ByRef $oCursor, $bOver
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oDocInfoModDtTmField.IsFixed = $bIsFixed
 	EndIf
 
 	If ($iDateFormatKey <> Null) Then
 		If Not IsInt($iDateFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		If Not _LOWriter_DateFormatKeyExists($oDoc, $iDateFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oDocInfoModDtTmField.NumberFormat = $iDateFormatKey
 	EndIf
 
@@ -1950,7 +2010,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoModDateTimeInsert
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oDocInfoModDtTm     - [in/out] an object. A Modified at Date/Time field Object from a previous _LOWriter_FieldDocInfoModDateTimeInsert, or _LOWriter_FieldsDocInfoGetList function.
 ;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
-;                  $iDateFormatKey      - [optional] an integer value. Default is Null. A Date or Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeyList function.
+;                  $iDateFormatKey      - [optional] an integer value. Default is Null. A Date or Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeysGetList function.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1970,7 +2030,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoModDateTimeInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_FieldDocInfoModDateTimeInsert, _LOWriter_FieldsDocInfoGetList, _LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeyList, _LOWriter_DocGenPropModification
+; Related .......: _LOWriter_FieldDocInfoModDateTimeInsert, _LOWriter_FieldsDocInfoGetList, _LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeysGetList, _LOWriter_DocGenPropModification
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1998,6 +2058,7 @@ Func _LOWriter_FieldDocInfoModDateTimeModify(ByRef $oDoc, ByRef $oDocInfoModDtTm
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oDocInfoModDtTm.IsFixed = $bIsFixed
 		$iError = ($oDocInfoModDtTm.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -2005,6 +2066,7 @@ Func _LOWriter_FieldDocInfoModDateTimeModify(ByRef $oDoc, ByRef $oDocInfoModDtTm
 	If ($iDateFormatKey <> Null) Then
 		If Not IsInt($iDateFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		If Not _LOWriter_DateFormatKeyExists($oDoc, $iDateFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oDocInfoModDtTm.NumberFormat = $iDateFormatKey
 		$iError = ($oDocInfoModDtTm.NumberFormat() = $iDateFormatKey) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -2059,11 +2121,13 @@ Func _LOWriter_FieldDocInfoPrintAuthInsert(ByRef $oDoc, ByRef $oCursor, $bOverwr
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oDocInfoPrintAuthField.IsFixed = $bIsFixed
 	EndIf
 
 	If ($sAuthor <> Null) Then
 		If Not IsString($sAuthor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oDocInfoPrintAuthField.Author = $sAuthor
 	EndIf
 
@@ -2123,12 +2187,14 @@ Func _LOWriter_FieldDocInfoPrintAuthModify(ByRef $oDocInfoPrintAuth, $bIsFixed =
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oDocInfoPrintAuth.IsFixed = $bIsFixed
 		$iError = ($oDocInfoPrintAuth.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sAuthor <> Null) Then
 		If Not IsString($sAuthor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oDocInfoPrintAuth.Author = $sAuthor
 		$iError = ($oDocInfoPrintAuth.Author() = $sAuthor) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -2146,7 +2212,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoPrintAuthModify
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
 ;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
-;                  $iDateFormatKey      - [optional] an integer value. Default is Null. A Date or Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeyList function.
+;                  $iDateFormatKey      - [optional] an integer value. Default is Null. A Date or Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeysGetList function.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2164,7 +2230,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoPrintAuthModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldDocInfoPrintDateTimeModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeyList, _LOWriter_DocGenPropPrint
+; Related .......: _LOWriter_FieldDocInfoPrintDateTimeModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeysGetList, _LOWriter_DocGenPropPrint
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2184,12 +2250,14 @@ Func _LOWriter_FieldDocInfoPrintDateTimeInsert(ByRef $oDoc, ByRef $oCursor, $bOv
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oDocInfoPrintDtTmField.IsFixed = $bIsFixed
 	EndIf
 
 	If ($iDateFormatKey <> Null) Then
 		If Not IsInt($iDateFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		If Not _LOWriter_DateFormatKeyExists($oDoc, $iDateFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oDocInfoPrintDtTmField.NumberFormat = $iDateFormatKey
 	EndIf
 
@@ -2207,7 +2275,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoPrintDateTimeInsert
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oDocInfoPrintDtTm   - [in/out] an object. A Printed at Date/Time field Object from a previous _LOWriter_FieldDocInfoPrintDateTimeInsert, or _LOWriter_FieldsDocInfoGetList function.
 ;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
-;                  $iDateFormatKey      - [optional] an integer value. Default is Null. A Date or Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeyList function.
+;                  $iDateFormatKey      - [optional] an integer value. Default is Null. A Date or Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeysGetList function.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2227,7 +2295,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoPrintDateTimeInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_FieldDocInfoPrintDateTimeInsert, _LOWriter_FieldsDocInfoGetList, _LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeyList, _LOWriter_DocGenPropPrint
+; Related .......: _LOWriter_FieldDocInfoPrintDateTimeInsert, _LOWriter_FieldsDocInfoGetList, _LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeysGetList, _LOWriter_DocGenPropPrint
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2255,6 +2323,7 @@ Func _LOWriter_FieldDocInfoPrintDateTimeModify(ByRef $oDoc, ByRef $oDocInfoPrint
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oDocInfoPrintDtTm.IsFixed = $bIsFixed
 		$iError = ($oDocInfoPrintDtTm.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -2262,6 +2331,7 @@ Func _LOWriter_FieldDocInfoPrintDateTimeModify(ByRef $oDoc, ByRef $oDocInfoPrint
 	If ($iDateFormatKey <> Null) Then
 		If Not IsInt($iDateFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		If Not _LOWriter_DateFormatKeyExists($oDoc, $iDateFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oDocInfoPrintDtTm.NumberFormat = $iDateFormatKey
 		$iError = ($oDocInfoPrintDtTm.NumberFormat() = $iDateFormatKey) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -2316,11 +2386,13 @@ Func _LOWriter_FieldDocInfoRevNumInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oDocInfoRevNumField.IsFixed = $bIsFixed
 	EndIf
 
 	If ($iRevNum <> Null) Then
 		If Not IsInt($iRevNum) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oDocInfoRevNumField.Revision = $iRevNum
 	EndIf
 
@@ -2380,12 +2452,14 @@ Func _LOWriter_FieldDocInfoRevNumModify(ByRef $oDocInfoRevNum, $bIsFixed = Null,
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oDocInfoRevNum.IsFixed = $bIsFixed
 		$iError = ($oDocInfoRevNum.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iRevNum <> Null) Then
 		If Not IsInt($iRevNum) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oDocInfoRevNum.Revision = $iRevNum
 		$iError = ($oDocInfoRevNum.Revision() = $iRevNum) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -2440,11 +2514,13 @@ Func _LOWriter_FieldDocInfoSubjectInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrit
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oDocInfoSubField.IsFixed = $bIsFixed
 	EndIf
 
 	If ($sSubject <> Null) Then
 		If Not IsString($sSubject) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oDocInfoSubField.Content = $sSubject
 	EndIf
 
@@ -2504,12 +2580,14 @@ Func _LOWriter_FieldDocInfoSubjectModify(ByRef $oDocInfoSub, $bIsFixed = Null, $
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oDocInfoSub.IsFixed = $bIsFixed
 		$iError = ($oDocInfoSub.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sSubject <> Null) Then
 		If Not IsString($sSubject) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oDocInfoSub.Content = $sSubject
 		$iError = ($oDocInfoSub.Content() = $sSubject) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -2564,11 +2642,13 @@ Func _LOWriter_FieldDocInfoTitleInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite 
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oDocInfoTitleField.IsFixed = $bIsFixed
 	EndIf
 
 	If ($sTitle <> Null) Then
 		If Not IsString($sTitle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oDocInfoTitleField.Content = $sTitle
 	EndIf
 
@@ -2628,12 +2708,14 @@ Func _LOWriter_FieldDocInfoTitleModify(ByRef $oDocInfoTitle, $bIsFixed = Null, $
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oDocInfoTitle.IsFixed = $bIsFixed
 		$iError = ($oDocInfoTitle.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sTitle <> Null) Then
 		If Not IsString($sTitle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oDocInfoTitle.Content = $sTitle
 		$iError = ($oDocInfoTitle.Content() = $sTitle) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -2689,11 +2771,13 @@ Func _LOWriter_FieldFileNameInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = Fa
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oFileNameField.IsFixed = $bIsFixed
 	EndIf
 
 	If ($iFormat <> Null) Then
 		If Not __LOWriter_IntIsBetween($iFormat, $LOW_FIELD_FILENAME_FULL_PATH, $LOW_FIELD_FILENAME_NAME_AND_EXT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oFileNameField.FileFormat = $iFormat
 	EndIf
 
@@ -2742,7 +2826,7 @@ Func _LOWriter_FieldFileNameModify(ByRef $oFileNameField, $bIsFixed = Null, $iFo
 
 	If Not IsObj($oFileNameField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($iFormat, $bIsFixed) Then
+	If __LOWriter_VarsAreNull($bIsFixed, $iFormat) Then
 		__LOWriter_ArrayFill($avFileName, $oFileNameField.IsFixed(), $oFileNameField.FileFormat())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avFileName)
@@ -2750,12 +2834,14 @@ Func _LOWriter_FieldFileNameModify(ByRef $oFileNameField, $bIsFixed = Null, $iFo
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oFileNameField.IsFixed = $bIsFixed
 		$iError = ($oFileNameField.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iFormat <> Null) Then
 		If Not __LOWriter_IntIsBetween($iFormat, $LOW_FIELD_FILENAME_FULL_PATH, $LOW_FIELD_FILENAME_NAME_AND_EXT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oFileNameField.FileFormat = $iFormat
 		$iError = ($oFileNameField.FileFormat() = $iFormat) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -2808,6 +2894,7 @@ Func _LOWriter_FieldFuncHiddenParInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite
 
 	If ($sCondition <> Null) Then
 		If Not IsString($sCondition) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oHidParField.Condition = $sCondition
 	EndIf
 
@@ -2860,6 +2947,7 @@ Func _LOWriter_FieldFuncHiddenParModify(ByRef $oHidParField, $sCondition = Null)
 
 	If ($sCondition <> Null) Then
 		If Not IsString($sCondition) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oHidParField.Condition = $sCondition
 		$iError = ($oHidParField.Condition() = $sCondition) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -2914,11 +3002,13 @@ Func _LOWriter_FieldFuncHiddenTextInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrit
 
 	If ($sCondition <> Null) Then
 		If Not IsString($sCondition) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oHidTxtField.Condition = $sCondition
 	EndIf
 
 	If ($sText <> Null) Then
 		If Not IsString($sText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oHidTxtField.Content = $sText
 	EndIf
 
@@ -2974,12 +3064,14 @@ Func _LOWriter_FieldFuncHiddenTextModify(ByRef $oHidTxtField, $sCondition = Null
 
 	If ($sCondition <> Null) Then
 		If Not IsString($sCondition) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oHidTxtField.Condition = $sCondition
 		$iError = ($oHidTxtField.Condition() = $sCondition) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sText <> Null) Then
 		If Not IsString($sText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oHidTxtField.Content = $sText
 		$iError = ($oHidTxtField.Content() = $sText) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -3034,11 +3126,13 @@ Func _LOWriter_FieldFuncInputInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = F
 
 	If ($sReference <> Null) Then
 		If Not IsString($sReference) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oInputField.Hint = $sReference
 	EndIf
 
 	If ($sText <> Null) Then
 		If Not IsString($sText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oInputField.Content = $sText
 	EndIf
 
@@ -3094,12 +3188,14 @@ Func _LOWriter_FieldFuncInputModify(ByRef $oInputField, $sReference = Null, $sTe
 
 	If ($sReference <> Null) Then
 		If Not IsString($sReference) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oInputField.Hint = $sReference
 		$iError = ($oInputField.Hint() = $sReference) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sText <> Null) Then
 		If Not IsString($sText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oInputField.Content = $sText
 		$iError = ($oInputField.Content() = $sText) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -3156,16 +3252,19 @@ Func _LOWriter_FieldFuncPlaceholderInsert(ByRef $oDoc, ByRef $oCursor, $bOverwri
 
 	If ($iPHolderType <> Null) Then
 		If Not __LOWriter_IntIsBetween($iPHolderType, $LOW_FIELD_PLACEHOLD_TYPE_TEXT, $LOW_FIELD_PLACEHOLD_TYPE_OBJECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oPHolderField.PlaceHolderType = $iPHolderType
 	EndIf
 
 	If ($sPHolderName <> Null) Then
 		If Not IsString($sPHolderName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oPHolderField.PlaceHolder = $sPHolderName
 	EndIf
 
 	If ($sReference <> Null) Then
 		If Not IsString($sReference) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oPHolderField.Hint = $sReference
 	EndIf
 
@@ -3224,18 +3323,21 @@ Func _LOWriter_FieldFuncPlaceholderModify(ByRef $oPHolderField, $iPHolderType = 
 
 	If ($iPHolderType <> Null) Then
 		If Not __LOWriter_IntIsBetween($iPHolderType, $LOW_FIELD_PLACEHOLD_TYPE_TEXT, $LOW_FIELD_PLACEHOLD_TYPE_OBJECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oPHolderField.PlaceHolderType = $iPHolderType
 		$iError = ($oPHolderField.PlaceHolderType() = $iPHolderType) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sPHolderName <> Null) Then
 		If Not IsString($sPHolderName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oPHolderField.PlaceHolder = $sPHolderName
 		$iError = ($oPHolderField.PlaceHolder() = $sPHolderName) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($sReference <> Null) Then
 		If Not IsString($sReference) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oPHolderField.Hint = $sReference
 		$iError = ($oPHolderField.Hint() = $sReference) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -3326,16 +3428,19 @@ Func _LOWriter_FieldInputListInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = F
 
 	If ($asItems <> Null) Then
 		If Not IsArray($asItems) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oInputField.Items = $asItems
 	EndIf
 
 	If ($sName <> Null) Then
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oInputField.Name = $sName
 	EndIf
 
 	If ($sSelectedItem <> Null) Then
 		If Not IsString($sSelectedItem) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oInputField.SelectedItem = $sSelectedItem
 	EndIf
 
@@ -3394,18 +3499,21 @@ Func _LOWriter_FieldInputListModify(ByRef $oInputField, $asItems = Null, $sName 
 
 	If ($asItems <> Null) Then
 		If Not IsArray($asItems) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oInputField.Items = $asItems
 		$iError = (UBound($oInputField.Items()) = UBound($asItems)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sName <> Null) Then
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oInputField.Name = $sName
 		$iError = ($oInputField.Name() = $sName) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($sSelectedItem <> Null) Then
 		If Not IsString($sSelectedItem) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oInputField.SelectedItem = $sSelectedItem
 		$iError = ($oInputField.SelectedItem() = $sSelectedItem) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -3464,6 +3572,7 @@ Func _LOWriter_FieldPageNumberInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = 
 
 	If ($iNumFormat <> Null) Then
 		If Not __LOWriter_IntIsBetween($iNumFormat, $LOW_NUM_STYLE_CHARS_UPPER_LETTER, $LOW_NUM_STYLE_NUMBER_LEGAL_KO) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oPageField.NumberingType = $iNumFormat
 
 	Else
@@ -3472,11 +3581,13 @@ Func _LOWriter_FieldPageNumberInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = 
 
 	If ($iOffset <> Null) Then
 		If Not IsInt($iOffset) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oPageField.Offset = $iOffset
 	EndIf
 
 	If ($iPageNumType <> Null) Then
 		If Not __LOWriter_IntIsBetween($iPageNumType, $LOW_PAGE_NUM_TYPE_PREV, $LOW_PAGE_NUM_TYPE_NEXT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oPageField.SubType = $iPageNumType
 
 		If ($iPageNumType = $LOW_PAGE_NUM_TYPE_PREV) Then
@@ -3492,6 +3603,7 @@ Func _LOWriter_FieldPageNumberInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = 
 
 	If ($sUserText <> Null) Then
 		If Not IsString($sUserText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oPageField.UserText = $sUserText
 	EndIf
 
@@ -3582,18 +3694,21 @@ Func _LOWriter_FieldPageNumberModify(ByRef $oDoc, ByRef $oPageNumField, $iNumFor
 
 	If ($iOffset <> Null) Then
 		If Not IsInt($iOffset) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oPageNumField.Offset = $iOffset
 		$iError = ($oPageNumField.Offset() = $iOffset) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iPageNumType <> Null) Then
 		If Not __LOWriter_IntIsBetween($iPageNumType, $LOW_PAGE_NUM_TYPE_PREV, $LOW_PAGE_NUM_TYPE_NEXT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oPageNumField.SubType = $iPageNumType
 		$iError = ($oPageNumField.SubType() = $iPageNumType) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($sUserText <> Null) Then
 		If Not IsString($sUserText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oPageNumField.UserText = $sUserText
 		$iError = ($oPageNumField.UserText() = $sUserText) ? ($iError) : (BitOR($iError, 8))
 	EndIf
@@ -3644,7 +3759,6 @@ Func _LOWriter_FieldRefBookMarkInsert(ByRef $oDoc, ByRef $oCursor, $sBookmarkNam
 	If (__LOWriter_Internal_CursorGetType($oCursor) = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsString($sBookmarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not IsBool($bOverwrite) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
 	If Not _LOWriter_DocBookmarkExists($oDoc, $sBookmarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$oBookmarkRefField = $oDoc.createInstance("com.sun.star.text.TextField.GetReference")
@@ -3655,6 +3769,7 @@ Func _LOWriter_FieldRefBookMarkInsert(ByRef $oDoc, ByRef $oCursor, $sBookmarkNam
 
 	If ($iRefUsing <> Null) Then
 		If Not __LOWriter_IntIsBetween($iRefUsing, $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED, $LOW_FIELD_REF_USING_PAGE_NUM_STYLED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oBookmarkRefField.ReferenceFieldPart = $iRefUsing
 	EndIf
 
@@ -3715,6 +3830,7 @@ Func _LOWriter_FieldRefBookMarkModify(ByRef $oDoc, ByRef $oBookmarkRefField, $sB
 	If ($sBookmarkName <> Null) Then
 		If Not IsString($sBookmarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		If Not _LOWriter_DocBookmarkExists($oDoc, $sBookmarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oBookmarkRefField.SourceName = $sBookmarkName
 		$oBookmarkRefField.ReferenceFieldSource = $LOW_FIELD_REF_TYPE_BOOKMARK ; Set Type to Bookmark in case input field Obj is a diff type.
 		$iError = ($oBookmarkRefField.SourceName = $sBookmarkName) ? ($iError) : (BitOR($iError, 1))
@@ -3722,6 +3838,7 @@ Func _LOWriter_FieldRefBookMarkModify(ByRef $oDoc, ByRef $oBookmarkRefField, $sB
 
 	If ($iRefUsing <> Null) Then
 		If Not __LOWriter_IntIsBetween($iRefUsing, $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED, $LOW_FIELD_REF_USING_PAGE_NUM_STYLED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oBookmarkRefField.ReferenceFieldPart = $iRefUsing
 		$iError = ($oBookmarkRefField.ReferenceFieldPart = $iRefUsing) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -3781,6 +3898,7 @@ Func _LOWriter_FieldRefEndnoteInsert(ByRef $oDoc, ByRef $oCursor, ByRef $oEndNot
 
 	If ($iRefUsing <> Null) Then
 		If Not __LOWriter_IntIsBetween($iRefUsing, $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED, $LOW_FIELD_REF_USING_PAGE_NUM_STYLED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oENoteRefField.ReferenceFieldPart = $iRefUsing
 	EndIf
 
@@ -3836,6 +3954,7 @@ Func _LOWriter_FieldRefEndnoteModify(ByRef $oDoc, ByRef $oEndNoteRefField, $oEnd
 
 	If __LOWriter_VarsAreNull($oEndNote, $iRefUsing) Then
 		If Not ($oEndNoteRefField.ReferenceFieldSource() = $LOW_FIELD_REF_TYPE_ENDNOTE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		If $oDoc.Endnotes.hasElements() Then
 			$iSourceSeq = $oEndNoteRefField.SequenceNumber()
 			For $i = 0 To $oDoc.Endnotes.Count() - 1 ; Locate referenced Endnote.
@@ -3853,6 +3972,7 @@ Func _LOWriter_FieldRefEndnoteModify(ByRef $oDoc, ByRef $oEndNoteRefField, $oEnd
 
 	If ($oEndNote <> Null) Then
 		If Not IsObj($oEndNote) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oEndNoteRefField.SourceName = ""
 		$oEndNoteRefField.SequenceNumber = $oEndNote.ReferenceId()
 		$oEndNoteRefField.ReferenceFieldSource = $LOW_FIELD_REF_TYPE_ENDNOTE ; Set Type to Endnote in case input field Obj is a diff type.
@@ -3861,6 +3981,7 @@ Func _LOWriter_FieldRefEndnoteModify(ByRef $oDoc, ByRef $oEndNoteRefField, $oEnd
 
 	If ($iRefUsing <> Null) Then
 		If Not __LOWriter_IntIsBetween($iRefUsing, $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED, $LOW_FIELD_REF_USING_PAGE_NUM_STYLED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oEndNoteRefField.ReferenceFieldPart = $iRefUsing
 		$iError = ($oEndNoteRefField.ReferenceFieldPart = $iRefUsing) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -3920,6 +4041,7 @@ Func _LOWriter_FieldRefFootnoteInsert(ByRef $oDoc, ByRef $oCursor, ByRef $oFootN
 
 	If ($iRefUsing <> Null) Then
 		If Not __LOWriter_IntIsBetween($iRefUsing, $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED, $LOW_FIELD_REF_USING_PAGE_NUM_STYLED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oFNoteRefField.ReferenceFieldPart = $iRefUsing
 	EndIf
 
@@ -3975,6 +4097,7 @@ Func _LOWriter_FieldRefFootnoteModify(ByRef $oDoc, ByRef $oFootNoteRefField, $oF
 
 	If __LOWriter_VarsAreNull($oFootNote, $iRefUsing) Then
 		If Not ($oFootNoteRefField.ReferenceFieldSource() = $LOW_FIELD_REF_TYPE_FOOTNOTE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		If $oDoc.Footnotes.hasElements() Then
 			$iSourceSeq = $oFootNoteRefField.SequenceNumber()
 			For $i = 0 To $oDoc.Footnotes.Count() - 1 ; Locate referenced Footnote.
@@ -3992,6 +4115,7 @@ Func _LOWriter_FieldRefFootnoteModify(ByRef $oDoc, ByRef $oFootNoteRefField, $oF
 
 	If ($oFootNote <> Null) Then
 		If Not IsObj($oFootNote) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oFootNoteRefField.SourceName = ""
 		$oFootNoteRefField.SequenceNumber = $oFootNote.ReferenceId()
 		$oFootNoteRefField.ReferenceFieldSource = $LOW_FIELD_REF_TYPE_FOOTNOTE ; Set Type to Footnote in case input field Obj is a diff type.
@@ -4000,6 +4124,7 @@ Func _LOWriter_FieldRefFootnoteModify(ByRef $oDoc, ByRef $oFootNoteRefField, $oF
 
 	If ($iRefUsing <> Null) Then
 		If Not __LOWriter_IntIsBetween($iRefUsing, $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED, $LOW_FIELD_REF_USING_PAGE_NUM_STYLED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oFootNoteRefField.ReferenceFieldPart = $iRefUsing
 		$iError = ($oFootNoteRefField.ReferenceFieldPart = $iRefUsing) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -4064,7 +4189,7 @@ EndFunc   ;==>_LOWriter_FieldRefGetType
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldRefModify, _LOWriter_FieldRefMarkSet, _LOWriter_FieldRefMarkList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_FieldRefModify, _LOWriter_FieldRefMarkSet, _LOWriter_FieldRefMarksGetNames, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4082,7 +4207,6 @@ Func _LOWriter_FieldRefInsert(ByRef $oDoc, ByRef $oCursor, $sRefMarkName, $bOver
 
 	$oRefMarks = $oDoc.getReferenceMarks()
 	If Not IsObj($oRefMarks) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
 	If Not $oRefMarks.hasByName($sRefMarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$oMarkRefField = $oDoc.createInstance("com.sun.star.text.TextField.GetReference")
@@ -4093,6 +4217,7 @@ Func _LOWriter_FieldRefInsert(ByRef $oDoc, ByRef $oCursor, $sRefMarkName, $bOver
 
 	If ($iRefUsing <> Null) Then
 		If Not __LOWriter_IntIsBetween($iRefUsing, $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED, $LOW_FIELD_REF_USING_PAGE_NUM_STYLED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oMarkRefField.ReferenceFieldPart = $iRefUsing
 	EndIf
 
@@ -4124,7 +4249,7 @@ EndFunc   ;==>_LOWriter_FieldRefInsert
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldRefMarkSet, _LOWriter_FieldRefMarkList
+; Related .......: _LOWriter_FieldRefMarkSet, _LOWriter_FieldRefMarksGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4139,7 +4264,6 @@ Func _LOWriter_FieldRefMarkDelete(ByRef $oDoc, $sName)
 
 	$oRefMarks = $oDoc.getReferenceMarks()
 	If Not IsObj($oRefMarks) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
 	If Not $oRefMarks.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oRefMark = $oRefMarks.getByName($sName)
@@ -4170,7 +4294,7 @@ EndFunc   ;==>_LOWriter_FieldRefMarkDelete
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldRefMarkList, _LOWriter_CursorMove
+; Related .......: _LOWriter_FieldRefMarksGetNames, _LOWriter_CursorMove
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4185,7 +4309,6 @@ Func _LOWriter_FieldRefMarkGetAnchor(ByRef $oDoc, $sName)
 
 	$oRefMarks = $oDoc.getReferenceMarks()
 	If Not IsObj($oRefMarks) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
 	If Not $oRefMarks.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oRefMark = $oRefMarks.getByName($sName)
@@ -4193,45 +4316,6 @@ Func _LOWriter_FieldRefMarkGetAnchor(ByRef $oDoc, $sName)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oRefMark.Anchor.Text.createTextCursorByRange($oRefMark.Anchor()))
 EndFunc   ;==>_LOWriter_FieldRefMarkGetAnchor
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FieldRefMarkList
-; Description ...: Retrieve an Array of Reference Mark names.
-; Syntax ........: _LOWriter_FieldRefMarkList(ByRef $oDoc)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-; Return values .: Success: Array
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Reference Marks Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Array of Reference Mark Names.
-;                  --Success--
-;                  @Error 0 @Extended ? Return Array = Success. Successfully searched for Reference Marks, returning Array of Reference Mark Names, with @Extended set to number of results.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......: _LOWriter_FieldRefMarkDelete
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_FieldRefMarkList(ByRef $oDoc)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $oRefMarks
-	Local $asRefMarks[0]
-
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-
-	$oRefMarks = $oDoc.getReferenceMarks()
-	If Not IsObj($oRefMarks) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	$asRefMarks = $oRefMarks.getElementNames()
-	If Not IsArray($asRefMarks) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-	Return SetError($__LO_STATUS_SUCCESS, UBound($asRefMarks), $asRefMarks)
-EndFunc   ;==>_LOWriter_FieldRefMarkList
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldRefMarkSet
@@ -4277,7 +4361,6 @@ Func _LOWriter_FieldRefMarkSet(ByRef $oDoc, ByRef $oCursor, $sName, $bOverwrite 
 
 	$oRefMarks = $oDoc.getReferenceMarks()
 	If Not IsObj($oRefMarks) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
 	If $oRefMarks.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$oRefMark = $oDoc.createInstance("com.sun.star.text.ReferenceMark")
@@ -4289,6 +4372,45 @@ Func _LOWriter_FieldRefMarkSet(ByRef $oDoc, ByRef $oCursor, $sName, $bOverwrite 
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_FieldRefMarkSet
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FieldRefMarksGetNames
+; Description ...: Retrieve an Array of Reference Mark names.
+; Syntax ........: _LOWriter_FieldRefMarksGetNames(ByRef $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Return values .: Success: Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Reference Marks Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Array of Reference Mark Names.
+;                  --Success--
+;                  @Error 0 @Extended ? Return Array = Success. Successfully searched for Reference Marks, returning Array of Reference Mark Names, with @Extended set to number of results.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOWriter_FieldRefMarkDelete
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FieldRefMarksGetNames(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oRefMarks
+	Local $asRefMarks[0]
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oRefMarks = $oDoc.getReferenceMarks()
+	If Not IsObj($oRefMarks) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$asRefMarks = $oRefMarks.getElementNames()
+	If Not IsArray($asRefMarks) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, UBound($asRefMarks), $asRefMarks)
+EndFunc   ;==>_LOWriter_FieldRefMarksGetNames
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldRefModify
@@ -4319,7 +4441,7 @@ EndFunc   ;==>_LOWriter_FieldRefMarkSet
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_FieldRefInsert, _LOWriter_FieldsGetList, _LOWriter_FieldRefMarkSet, _LOWriter_FieldRefMarkList
+; Related .......: _LOWriter_FieldRefInsert, _LOWriter_FieldsGetList, _LOWriter_FieldRefMarkSet, _LOWriter_FieldRefMarksGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4342,9 +4464,11 @@ Func _LOWriter_FieldRefModify(ByRef $oDoc, ByRef $oRefField, $sRefMarkName = Nul
 
 	If ($sRefMarkName <> Null) Then
 		If Not IsString($sRefMarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oRefMarks = $oDoc.getReferenceMarks()
 		If Not IsObj($oRefMarks) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 		If Not $oRefMarks.hasByName($sRefMarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oRefField.SourceName = $sRefMarkName
 		$oRefField.ReferenceFieldSource = $LOW_FIELD_REF_TYPE_REF_MARK ; Set Type to RefMark in case input field Obj is a diff type.
 		$iError = ($oRefField.SourceName = $sRefMarkName) ? ($iError) : (BitOR($iError, 1))
@@ -4352,6 +4476,7 @@ Func _LOWriter_FieldRefModify(ByRef $oDoc, ByRef $oRefField, $sRefMarkName = Nul
 
 	If ($iRefUsing <> Null) Then
 		If Not __LOWriter_IntIsBetween($iRefUsing, $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED, $LOW_FIELD_REF_USING_PAGE_NUM_STYLED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oRefField.ReferenceFieldPart = $iRefUsing
 		$iError = ($oRefField.ReferenceFieldPart = $iRefUsing) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -4403,6 +4528,7 @@ Func _LOWriter_FieldsAdvGetList(ByRef $oDoc, $iType = $LOW_FIELD_ADV_TYPE_ALL, $
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not __LOWriter_IntIsBetween($iType, $LOW_FIELD_ADV_TYPE_ALL, 1023) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	; 1023 is all possible Consts added together
 	If Not IsBool($bSupportedServices) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsBool($bFieldType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
@@ -4458,6 +4584,7 @@ Func _LOWriter_FieldsDocInfoGetList(ByRef $oDoc, $iType = $LOW_FIELD_DOCINFO_TYP
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not __LOWriter_IntIsBetween($iType, $LOW_FIELD_ADV_TYPE_ALL, 16383) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	; 16383 is all possible Consts added together
 	If Not IsBool($bSupportedServices) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsBool($bFieldType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
@@ -4518,16 +4645,19 @@ Func _LOWriter_FieldSenderInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = Fals
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oSenderField.IsFixed = $bIsFixed
 	EndIf
 
 	If ($sContent <> Null) Then
 		If Not IsString($sContent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oSenderField.Content = $sContent
 	EndIf
 
 	If ($iDataType <> Null) Then
 		If Not __LOWriter_IntIsBetween($iDataType, $LOW_FIELD_USER_DATA_COMPANY, $LOW_FIELD_USER_DATA_STATE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oSenderField.UserDataType = $iDataType
 	EndIf
 
@@ -4590,18 +4720,21 @@ Func _LOWriter_FieldSenderModify(ByRef $oSenderField, $bIsFixed = Null, $sConten
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oSenderField.IsFixed = $bIsFixed
 		$iError = ($oSenderField.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sContent <> Null) Then
 		If Not IsString($sContent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oSenderField.Content = $sContent
 		$iError = ($oSenderField.Content() = $sContent) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iDataType <> Null) Then
 		If Not __LOWriter_IntIsBetween($iDataType, $LOW_FIELD_USER_DATA_COMPANY, $LOW_FIELD_USER_DATA_STATE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oSenderField.UserDataType = $iDataType
 		$iError = ($oSenderField.UserDataType() = $iDataType) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -4642,7 +4775,7 @@ EndFunc   ;==>_LOWriter_FieldSenderModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldSetVarModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_FormatKeyCreate _LOWriter_FormatKeyList, _LOWriter_FieldSetVarMasterCreate, _LOWriter_FieldSetVarMastersGetNames
+; Related .......: _LOWriter_FieldSetVarModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_FormatKeyCreate _LOWriter_FormatKeysGetList, _LOWriter_FieldSetVarMasterCreate, _LOWriter_FieldSetVarMastersGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4678,6 +4811,7 @@ Func _LOWriter_FieldSetVarInsert(ByRef $oDoc, ByRef $oCursor, $sName, $sValue, $
 	If ($iNumFormatKey <> Null) Then
 		If Not IsInt($iNumFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		If ($iNumFormatKey <> -1) And Not _LOWriter_FormatKeyExists($oDoc, $iNumFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oSetVarField.NumberFormat = $iNumFormatKey
 
 	Else
@@ -4686,6 +4820,7 @@ Func _LOWriter_FieldSetVarInsert(ByRef $oDoc, ByRef $oCursor, $sName, $sValue, $
 
 	If ($bIsVisible <> Null) Then
 		If Not IsBool($bIsVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 		$oSetVarField.IsVisible = $bIsVisible
 	EndIf
 
@@ -4793,6 +4928,7 @@ Func _LOWriter_FieldSetVarMasterDelete(ByRef $oDoc, $vMasterField)
 	Else
 		$sFullFieldName = $sField & "." & $vMasterField
 		If Not $oMasterFields.hasByName($sFullFieldName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oMasterfield = $oMasterFields.getByName($sFullFieldName)
 	EndIf
 
@@ -4834,10 +4970,12 @@ Func _LOWriter_FieldSetVarMasterExists(ByRef $oDoc, $sMasterFieldName)
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sMasterFieldName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	$sFullFieldName &= $sMasterFieldName
 
 	$oMasterFields = $oDoc.getTextFieldMasters()
 	If Not IsObj($oMasterFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	If $oMasterFields.hasByName($sFullFieldName) Then Return SetError($__LO_STATUS_SUCCESS, 1, True)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, False)
@@ -4910,6 +5048,7 @@ Func _LOWriter_FieldSetVarMasterGetObj(ByRef $oDoc, $sMasterFieldName)
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sMasterFieldName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	$sFullFieldName &= $sMasterFieldName
 
 	$oMasterFields = $oDoc.getTextFieldMasters()
@@ -5006,7 +5145,7 @@ EndFunc   ;==>_LOWriter_FieldSetVarMastersGetNames
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_FieldSetVarInsert, _LOWriter_FieldsGetList, _LOWriter_FormatKeyCreate _LOWriter_FormatKeyList
+; Related .......: _LOWriter_FieldSetVarInsert, _LOWriter_FieldsGetList, _LOWriter_FormatKeyCreate _LOWriter_FormatKeysGetList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -5034,6 +5173,7 @@ Func _LOWriter_FieldSetVarModify(ByRef $oDoc, ByRef $oSetVarField, $sValue = Nul
 
 	If ($sValue <> Null) Then
 		If Not IsString($sValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oSetVarField.Content = $sValue
 		$iError = ($oSetVarField.Content() = $sValue) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -5041,12 +5181,14 @@ Func _LOWriter_FieldSetVarModify(ByRef $oDoc, ByRef $oSetVarField, $sValue = Nul
 	If ($iNumFormatKey <> Null) Then
 		If Not IsInt($iNumFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		If ($iNumFormatKey <> -1) And Not _LOWriter_FormatKeyExists($oDoc, $iNumFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oSetVarField.NumberFormat = $iNumFormatKey
 		$iError = ($oSetVarField.NumberFormat() = $iNumFormatKey) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bIsVisible <> Null) Then
 		If Not IsBool($bIsVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oSetVarField.IsVisible = $bIsVisible
 		$iError = ($oSetVarField.IsVisible() = $bIsVisible) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -5098,6 +5240,7 @@ Func _LOWriter_FieldsGetList(ByRef $oDoc, $iType = $LOW_FIELD_TYPE_ALL, $bSuppor
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not __LOWriter_IntIsBetween($iType, $LOW_FIELD_TYPE_ALL, 1073741823) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	; 1073741823 is all possible Consts added together
 	If Not IsBool($bSupportedServices) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsBool($bFieldType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
@@ -5140,7 +5283,7 @@ EndFunc   ;==>_LOWriter_FieldsGetList
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function checks if there is a Set Variable matching the name called in $sSetVarName.
-; Related .......: _LOWriter_FieldShowVarModify, _LOWriter_FieldSetVarInsert, _LOWriter_FieldsGetList, _LOWriter_FormatKeyCreate _LOWriter_FormatKeyList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_FieldShowVarModify, _LOWriter_FieldSetVarInsert, _LOWriter_FieldsGetList, _LOWriter_FormatKeyCreate _LOWriter_FormatKeysGetList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -5157,19 +5300,21 @@ Func _LOWriter_FieldShowVarInsert(ByRef $oDoc, ByRef $oCursor, $sSetVarName, $bO
 
 	$oShowVarField = $oDoc.createInstance("com.sun.star.text.TextField.GetExpression")
 	If Not IsObj($oShowVarField) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-
 	If Not IsString($sSetVarName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	If Not _LOWriter_FieldSetVarMasterExists($oDoc, $sSetVarName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 	$oShowVarField.Content = $sSetVarName
 
 	If ($iNumFormatKey <> Null) Then
 		If Not IsInt($iNumFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		If Not _LOWriter_FormatKeyExists($oDoc, $iNumFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oShowVarField.NumberFormat = $iNumFormatKey
 	EndIf
 
 	If ($bShowName <> Null) Then
 		If Not IsBool($bShowName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 		$oShowVarField.IsShowFormula = $bShowName
 		If ($bShowName = True) Then $oShowVarField.NumberFormat = -1
 	EndIf
@@ -5213,7 +5358,7 @@ EndFunc   ;==>_LOWriter_FieldShowVarInsert
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  This function checks if there is a Set Variable matching the name called in $sSetVarName.
-; Related .......: _LOWriter_FieldShowVarInsert, _LOWriter_FieldsGetList, _LOWriter_FormatKeyCreate, _LOWriter_FormatKeyList
+; Related .......: _LOWriter_FieldShowVarInsert, _LOWriter_FieldsGetList, _LOWriter_FormatKeyCreate, _LOWriter_FormatKeysGetList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -5242,6 +5387,7 @@ Func _LOWriter_FieldShowVarModify(ByRef $oDoc, ByRef $oShowVarField, $sSetVarNam
 	If ($sSetVarName <> Null) Then
 		If Not IsString($sSetVarName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		If Not _LOWriter_FieldSetVarMasterExists($oDoc, $sSetVarName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oShowVarField.Content = $sSetVarName
 		$iError = ($oShowVarField.Content() = $sSetVarName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -5249,12 +5395,14 @@ Func _LOWriter_FieldShowVarModify(ByRef $oDoc, ByRef $oShowVarField, $sSetVarNam
 	If ($iNumFormatKey <> Null) Then
 		If Not IsInt($iNumFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		If Not _LOWriter_FormatKeyExists($oDoc, $iNumFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oShowVarField.NumberFormat = $iNumFormatKey
 		$iError = ($oShowVarField.NumberFormat() = ($iNumFormatKey)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bShowName <> Null) Then
 		If Not IsBool($bShowName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oShowVarField.IsShowFormula = $bShowName
 		$iError = ($oShowVarField.IsShowFormula() = $bShowName) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -5316,6 +5464,7 @@ Func _LOWriter_FieldStatCountInsert(ByRef $oDoc, ByRef $oCursor, $iCountType, $b
 
 	If ($iNumFormat <> Null) Then
 		If Not __LOWriter_IntIsBetween($iNumFormat, $LOW_NUM_STYLE_CHARS_UPPER_LETTER, $LOW_NUM_STYLE_NUMBER_LEGAL_KO) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oCountField.NumberingType = $iNumFormat
 
 	Else
@@ -5385,6 +5534,7 @@ Func _LOWriter_FieldStatCountModify(ByRef $oDoc, ByRef $oCountField, $iCountType
 
 	If ($iCountType <> Null) Then
 		If Not __LOWriter_IntIsBetween($iCountType, $LOW_FIELD_COUNT_TYPE_CHARACTERS, $LOW_FIELD_COUNT_TYPE_WORDS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$sFieldType = __LOWriter_FieldCountType($iCountType)
 		If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -5410,6 +5560,7 @@ Func _LOWriter_FieldStatCountModify(ByRef $oDoc, ByRef $oCountField, $iCountType
 
 	If ($iNumFormat <> Null) Then
 		If Not __LOWriter_IntIsBetween($iNumFormat, $LOW_NUM_STYLE_CHARS_UPPER_LETTER, $LOW_NUM_STYLE_NUMBER_LEGAL_KO) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oCountField.NumberingType = $iNumFormat
 		$iError = ($oCountField.NumberingType() = $iNumFormat) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -5462,6 +5613,7 @@ Func _LOWriter_FieldStatTemplateInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite 
 
 	If ($iFormat <> Null) Then
 		If Not __LOWriter_IntIsBetween($iFormat, $LOW_FIELD_FILENAME_FULL_PATH, $LOW_FIELD_FILENAME_TEMPLATE_NAME) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oTemplateField.FileFormat = $iFormat
 	EndIf
 
@@ -5508,6 +5660,7 @@ Func _LOWriter_FieldStatTemplateModify(ByRef $oTemplateField, $iFormat = Null)
 	If __LOWriter_VarsAreNull($iFormat) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oTemplateField.FileFormat())
 
 	If Not __LOWriter_IntIsBetween($iFormat, $LOW_FIELD_FILENAME_FULL_PATH, $LOW_FIELD_FILENAME_TEMPLATE_NAME) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	$oTemplateField.FileFormat = $iFormat
 	$iError = ($oTemplateField.FileFormat() = $iFormat) ? ($iError) : (BitOR($iError, 1))
 
@@ -5639,11 +5792,13 @@ Func _LOWriter_FieldVarSetPageInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = 
 
 	If ($bRefOn <> Null) Then
 		If Not IsBool($bRefOn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oPageVarSetField.On = $bRefOn
 	EndIf
 
 	If ($iOffset <> Null) Then
 		If Not IsInt($iOffset) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oPageVarSetField.Offset = $iOffset
 	EndIf
 
@@ -5699,12 +5854,14 @@ Func _LOWriter_FieldVarSetPageModify(ByRef $oPageVarSetField, $bRefOn = Null, $i
 
 	If ($bRefOn <> Null) Then
 		If Not IsBool($bRefOn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oPageVarSetField.On = $bRefOn
 		$iError = ($oPageVarSetField.On() = $bRefOn) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iOffset <> Null) Then
 		If Not IsInt($iOffset) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oPageVarSetField.Offset = $iOffset
 		$iError = ($oPageVarSetField.Offset() = $iOffset) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -5757,6 +5914,7 @@ Func _LOWriter_FieldVarShowPageInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite =
 
 	If ($iNumFormat <> Null) Then
 		If Not __LOWriter_IntIsBetween($iNumFormat, $LOW_NUM_STYLE_CHARS_UPPER_LETTER, $LOW_NUM_STYLE_NUMBER_LEGAL_KO) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oPageShowField.NumberingType = $iNumFormat
 
 	Else
@@ -5806,6 +5964,7 @@ Func _LOWriter_FieldVarShowPageModify(ByRef $oPageShowField, $iNumFormat = Null)
 	If __LOWriter_VarsAreNull($iNumFormat) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oPageShowField.NumberingType())
 
 	If Not __LOWriter_IntIsBetween($iNumFormat, $LOW_NUM_STYLE_CHARS_UPPER_LETTER, $LOW_NUM_STYLE_NUMBER_LEGAL_KO) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	$oPageShowField.NumberingType = $iNumFormat
 	$iError = ($oPageShowField.NumberingType() = $iNumFormat) ? ($iError) : (BitOR($iError, 1))
 

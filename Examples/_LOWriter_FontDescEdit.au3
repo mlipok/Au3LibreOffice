@@ -17,7 +17,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to Create a form in the Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a Label Form Control
-	$oLabel = _LOWriter_FormControlInsert($oForm, $LOW_FORM_CONTROL_TYPE_LABEL, 3500, 2300, 10000, 2000, "AutoIt_Form_Label_Control")
+	$oLabel = _LOWriter_FormConInsert($oForm, $LOW_FORM_CON_TYPE_LABEL, 3500, 2300, 10000, 2000, "AutoIt_Form_Label_Control")
 	If @error Then _ERROR($oDoc, "Failed to insert a form control. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a Font Descriptor.
@@ -25,11 +25,11 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to create a Font Descriptor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Modify the Control's General properties.
-	_LOWriter_FormControlLabelGeneral($oLabel, Null, "A Label control inserted by AutoIt!", Null, Null, Null, Null, $mFont)
+	_LOWriter_FormConLabelGeneral($oLabel, Null, "A Label control inserted by AutoIt!", Null, Null, Null, Null, $mFont)
 	If @error Then _ERROR($oDoc, "Failed to modify a Control's properties. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the properties of the control to modify the font.
-	$avControl = _LOWriter_FormControlLabelGeneral($oLabel)
+	$avControl = _LOWriter_FormConLabelGeneral($oLabel)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Control's properties. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the Font's current settings. Return will be an Array in order of function parameters.
@@ -54,7 +54,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to modify the Font Descriptor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Apply the new Font descriptor to the Label.
-	_LOWriter_FormControlLabelGeneral($oLabel, Null, Null, Null, Null, Null, Null, $avControl[6])
+	_LOWriter_FormConLabelGeneral($oLabel, Null, Null, Null, Null, Null, Null, $avControl[6])
 	If @error Then _ERROR($oDoc, "Failed to modify the Label control. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
@@ -62,7 +62,6 @@ Func Example()
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

@@ -949,83 +949,106 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - __LOWriter_NumRuleCreateMap for modifying Numbering Rules more efficiently.
 - LibreOffice SDK/API Constant names to constants.
 - Form/Form Control Constants
-	- $LOW_FORM_CONTROL_BORDER_*
-	- $LOW_FORM_CONTROL_CHKBX_STATE_*
-	- $LOW_FORM_CONTROL_DATE_FRMT_*
-	- $LOW_FORM_CONTROL_IMG_ALIGN_*
-	- $LOW_FORM_CONTROL_IMG_BTN_SCALE_*
-	- $LOW_FORM_CONTROL_MOUSE_SCROLL_*
-	- $LOW_FORM_CONTROL_PUSH_CMD_*
-	- $LOW_FORM_CONTROL_SCROLL_*
-	- $LOW_FORM_CONTROL_SOURCE_TYPE_*
-	- $LOW_FORM_CONTROL_TIME_FRMT_*
-	- $LOW_FORM_CONTROL_TXT_TYPE_*
-	- $LOW_FORM_CONTROL_TYPE_*
+	- $LOW_FORM_CON_BORDER_*
+	- $LOW_FORM_CON_CHKBX_STATE_*
+	- $LOW_FORM_CON_DATE_FRMT_*
+	- $LOW_FORM_CON_IMG_ALIGN_*
+	- $LOW_FORM_CON_IMG_BTN_SCALE_*
+	- $LOW_FORM_CON_MOUSE_SCROLL_*
+	- $LOW_FORM_CON_PUSH_CMD_*
+	- $LOW_FORM_CON_SCROLL_*
+	- $LOW_FORM_CON_SOURCE_TYPE_*
+	- $LOW_FORM_CON_TIME_FRMT_*
+	- $LOW_FORM_CON_TXT_TYPE_*
+	- $LOW_FORM_CON_TYPE_*
 	- $LOW_FORM_CONTENT_TYPE_*
 	- $LOW_FORM_CYCLE_MODE_*
 	- $LOW_FORM_NAV_BAR_MODE_*
 	- $LOW_FORM_SUBMIT_ENCODING_*
 	- $LOW_FORM_SUBMIT_METHOD_*
 - Internal Form Functions
-	- __LOWriter_FormControlIdentify
-	- __LOWriter_ControlSetGetFontDesc
-	- __LOWriter_FormControlGetObj
+	- __LOWriter_FormConIdentify
+	- __LOWriter_FormConGetObj
+	- __LOWriter_FormConSetGetFontDesc
 - Form functions
 	- _LOWriter_DocFormSettings
 	- _LOWriter_FontDescCreate
 	- _LOWriter_FontDescEdit
 	- _LOWriter_FormAdd
-	- _LOWriter_FormControlCheckBoxData
-	- _LOWriter_FormControlCheckBoxGeneral
-	- _LOWriter_FormControlCheckBoxState
-	- _LOWriter_FormControlComboBoxData
-	- _LOWriter_FormControlComboBoxGeneral
-	- _LOWriter_FormControlComboBoxValue
-	- _LOWriter_FormControlCurrencyFieldData
-	- _LOWriter_FormControlCurrencyFieldGeneral
-	- _LOWriter_FormControlCurrencyFieldValue
-	- _LOWriter_FormControlDateFieldData
-	- _LOWriter_FormControlDateFieldGeneral
-	- _LOWriter_FormControlDateFieldValue
-	- _LOWriter_FormControlDelete
-	- _LOWriter_FormControlFileSelFieldGeneral
-	- _LOWriter_FormControlFileSelFieldValue
-	- _LOWriter_FormControlFormattedFieldData
-	- _LOWriter_FormControlFormattedFieldGeneral
-	- _LOWriter_FormControlFormattedFieldValue
-	- _LOWriter_FormControlGetParent
-	- _LOWriter_FormControlGroupBoxGeneral
-	- _LOWriter_FormControlImageButtonGeneral
-	- _LOWriter_FormControlImageControlData
-	- _LOWriter_FormControlImageControlGeneral
-	- _LOWriter_FormControlInsert
-	- _LOWriter_FormControlLabelGeneral
-	- _LOWriter_FormControlListBoxData
-	- _LOWriter_FormControlListBoxGeneral
-	- _LOWriter_FormControlListBoxGetCount
-	- _LOWriter_FormControlListBoxSelection
-	- _LOWriter_FormControlNavBarGeneral
-	- _LOWriter_FormControlNumericFieldData
-	- _LOWriter_FormControlNumericFieldGeneral
-	- _LOWriter_FormControlNumericFieldValue
-	- _LOWriter_FormControlOptionButtonData
-	- _LOWriter_FormControlOptionButtonGeneral
-	- _LOWriter_FormControlOptionButtonState
-	- _LOWriter_FormControlPatternFieldData
-	- _LOWriter_FormControlPatternFieldGeneral
-	- _LOWriter_FormControlPatternFieldValue
-	- _LOWriter_FormControlPosition
-	- _LOWriter_FormControlPushButtonGeneral
-	- _LOWriter_FormControlPushButtonState
-	- _LOWriter_FormControlsGetList
-	- _LOWriter_FormControlSize
-	- _LOWriter_FormControlTableConGeneral
-	- _LOWriter_FormControlTextBoxCreateTextCursor
-	- _LOWriter_FormControlTextBoxData
-	- _LOWriter_FormControlTextBoxGeneral
-	- _LOWriter_FormControlTimeFieldData
-	- _LOWriter_FormControlTimeFieldGeneral
-	- _LOWriter_FormControlTimeFieldValue
+	- _LOWriter_FormConCheckBoxData
+	- _LOWriter_FormConCheckBoxGeneral
+	- _LOWriter_FormConCheckBoxState
+	- _LOWriter_FormConComboBoxData
+	- _LOWriter_FormConComboBoxGeneral
+	- _LOWriter_FormConComboBoxValue
+	- _LOWriter_FormConCurrencyFieldData
+	- _LOWriter_FormConCurrencyFieldGeneral
+	- _LOWriter_FormConCurrencyFieldValue
+	- _LOWriter_FormConDateFieldData
+	- _LOWriter_FormConDateFieldGeneral
+	- _LOWriter_FormConDateFieldValue
+	- _LOWriter_FormConDelete
+	- _LOWriter_FormConFileSelFieldGeneral
+	- _LOWriter_FormConFileSelFieldValue
+	- _LOWriter_FormConFormattedFieldData
+	- _LOWriter_FormConFormattedFieldGeneral
+	- _LOWriter_FormConFormattedFieldValue
+	- _LOWriter_FormConGetParent
+	- _LOWriter_FormConGroupBoxGeneral
+	- _LOWriter_FormConImageButtonGeneral
+	- _LOWriter_FormConImageControlData
+	- _LOWriter_FormConImageControlGeneral
+	- _LOWriter_FormConInsert
+	- _LOWriter_FormConLabelGeneral
+	- _LOWriter_FormConListBoxData
+	- _LOWriter_FormConListBoxGeneral
+	- _LOWriter_FormConListBoxGetCount
+	- _LOWriter_FormConListBoxSelection
+	- _LOWriter_FormConNavBarGeneral
+	- _LOWriter_FormConNumericFieldData
+	- _LOWriter_FormConNumericFieldGeneral
+	- _LOWriter_FormConNumericFieldValue
+	- _LOWriter_FormConOptionButtonData
+	- _LOWriter_FormConOptionButtonGeneral
+	- _LOWriter_FormConOptionButtonState
+	- _LOWriter_FormConPatternFieldData
+	- _LOWriter_FormConPatternFieldGeneral
+	- _LOWriter_FormConPatternFieldValue
+	- _LOWriter_FormConPosition
+	- _LOWriter_FormConPushButtonGeneral
+	- _LOWriter_FormConPushButtonState
+	- _LOWriter_FormConsGetList
+	- _LOWriter_FormConSize
+	- _LOWriter_FormConTableConCheckBoxData
+	- _LOWriter_FormConTableConCheckBoxGeneral
+	- _LOWriter_FormConTableConColumnAdd
+	- _LOWriter_FormConTableConColumnDelete
+	- _LOWriter_FormConTableConColumnsGetList
+	- _LOWriter_FormConTableConComboBoxData
+	- _LOWriter_FormConTableConComboBoxGeneral
+	- _LOWriter_FormConTableConCurrencyFieldData
+	- _LOWriter_FormConTableConCurrencyFieldGeneral
+	- _LOWriter_FormConTableConDateFieldData
+	- _LOWriter_FormConTableConDateFieldGeneral
+	- _LOWriter_FormConTableConFormattedFieldData
+	- _LOWriter_FormConTableConFormattedFieldGeneral
+	- _LOWriter_FormConTableConGeneral
+	- _LOWriter_FormConTableConListBoxData
+	- _LOWriter_FormConTableConListBoxGeneral
+	- _LOWriter_FormConTableConNumericFieldData
+	- _LOWriter_FormConTableConNumericFieldGeneral
+	- _LOWriter_FormConTableConPatternFieldData
+	- _LOWriter_FormConTableConPatternFieldGeneral
+	- _LOWriter_FormConTableConTextBoxData
+	- _LOWriter_FormConTableConTextBoxGeneral
+	- _LOWriter_FormConTableConTimeFieldData
+	- _LOWriter_FormConTableConTimeFieldGeneral
+	- _LOWriter_FormConTextBoxCreateTextCursor
+	- _LOWriter_FormConTextBoxData
+	- _LOWriter_FormConTextBoxGeneral
+	- _LOWriter_FormConTimeFieldData
+	- _LOWriter_FormConTimeFieldGeneral
+	- _LOWriter_FormConTimeFieldValue
 	- _LOWriter_FormDelete
 	- _LOWriter_FormGetObjByIndex
 	- _LOWriter_FormParent
@@ -1117,7 +1140,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Modified _LOWriter_DocPrintersAltGetNames @Extended value when retrieving the default printer name, @Extended is now 1, instead of 2.
 - _LOWriter_DocRedoGetAllActionTitles now returns the number of results in @Extended value.
 - _LOWriter_DocUndoGetAllActionTitles now returns the number of results in @Extended value.
-- Removed $oDoc parameter from _LOWriter_FontExists. This will affect the parameters and error return values of the following functions:
+- Made $oDoc parameter for _LOWriter_FontExists optional. This will affect the parameters and error return values of the following functions:
 	- __LOWriter_CharFont
 	- _LOWriter_CharStyleFont
 	- _LOWriter_DirFrmtFont
@@ -1127,6 +1150,20 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_FontDescEdit
 	- _LOWriter_ParStyleFont
 - Modified _LOWriter_ShapesGetNames to return Shape Type instead of Implementation name.
+- Renamed "__LOWriter_ControlSetGetFontDesc" --> "__LOWriter_FormConSetGetFontDesc" to match other Form control function names.
+- Renamed all internal and user "_LOWriter_FormControl*" functions to "_LOWriter_FormCon*" for brevity.
+- Renamed all $LOW_FORM_CONTROL_* constants to $LOW_FORM_CON_* for brevity.
+- Add $iBorderColor to _LOWriter_FormTableConGeneral parameters. Update function and example as necessary.
+- Renamed more Functions to be consistent when retrieving arrays of names or objects:
+	- _LOWriter_DateFormatKeyList-->_LOWriter_DateFormatKeysGetList
+	- _LOWriter_DirFrmtParTabStopList-->_LOWriter_DirFrmtParTabStopsGetList
+	- _LOWriter_FieldRefMarkList-->_LOWriter_FieldRefMarksGetNames
+	- _LOWriter_FormatKeyList-->_LOWriter_FormatKeysGetList
+	- _LOWriter_ParStyleTabStopList-->_LOWriter_ParStyleTabStopsGetList
+	- __LOWriter_ParTabStopList-->__LOWriter_ParTabStopsGetList
+- Made $oDoc Parameter optional for _LOWriter_FontsGetNames.
+- Added count of number of results for _LOWriter_DocConnect, connect-all and partial name search when more than one result is present.
+- Removed _ArrayDisplay from most examples.
 
 ### Fixed
 
@@ -1169,11 +1206,17 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - _LOWriter_DocPrintMiscSettings #2 example no longer worked after a change to how one of the functions worked.
 - __LOWriter_GetShapeName had an error where a COM Error would be triggered each time it was called.
 - Added missing example. _LOWriter_ImageExists
+- Backwards Parameters in VarsAreNull in the following functions:
+	- _LOWriter_FieldDateTimeModify
+	- _LOWriter_FieldFileNameModify
+- Add missing parameter to VarsAreNull in _LOWriter_DocFormSettings.
 
 ### Removed
 
 - $LOW_FIELD_TYPE_URL Constant. -- "com.sun.star.text.TextField.URL" is a Calc-only Field type.
 - __LOWriter_NumStyleRetrieve function as it is no longer needed.
+- Remove LibreOfficeWriter_Font file, and merge functions into LibreOfficeWriter_Helper
+- $__LO_STATUS_DOC_ERROR Error Constant and renumber all after errors.
 
 [To Top](#releases)
 

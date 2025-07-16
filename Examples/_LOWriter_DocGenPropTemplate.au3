@@ -35,9 +35,11 @@ Func Example()
 		If IsBool($avDate[$i]) Then
 			If ($avDate[$i] = True) Then
 				$sDateTime &= " UTC"
+
 			Else
 				; Skip UTC setting
 			EndIf
+
 		Else
 			$sDateTime &= $avDate[$i] & ":"
 		EndIf
@@ -52,7 +54,6 @@ Func Example()
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

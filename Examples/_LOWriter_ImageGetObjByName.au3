@@ -26,7 +26,6 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve a list of Images. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	If (UBound($asImages) > 0) Then
-
 		; Retrieve the object for the first Image listed in the Array.
 		$oImage = _LOWriter_ImageGetObjByName($oDoc, $asImages[0])
 		If @error Then _ERROR($oDoc, "Failed to retrieve an Image Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
@@ -46,7 +45,6 @@ Func Example()
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

@@ -336,129 +336,129 @@ Global Const _                                                  ; com.sun.star.s
 
 ; Form Control Border Type.
 Global Const _                                                  ; "com.sun.star.awt.VisualEffect"
-		$LOW_FORM_CONTROL_BORDER_WITHOUT = 0, _                 ; No Effect.
-		$LOW_FORM_CONTROL_BORDER_3D = 1, _                      ; 3D visual effect.
-		$LOW_FORM_CONTROL_BORDER_FLAT = 2                       ; Flat/simple visual effect.
+		$LOW_FORM_CON_BORDER_WITHOUT = 0, _                     ; No Effect.
+		$LOW_FORM_CON_BORDER_3D = 1, _                          ; 3D visual effect.
+		$LOW_FORM_CON_BORDER_FLAT = 2                           ; Flat/simple visual effect.
 
 ; Form Control Button/Box State.
 Global Const _                                                  ; "com.sun.star.awt.UnoControlCheckBoxModel" -- "State"
-		$LOW_FORM_CONTROL_CHKBX_STATE_NOT_SELECTED = 0, _       ; Not Checked.
-		$LOW_FORM_CONTROL_CHKBX_STATE_SELECTED = 1, _           ; Checked.
-		$LOW_FORM_CONTROL_CHKBX_STATE_NOT_DEFINED = 2           ; Don't know/TriState setting.
+		$LOW_FORM_CON_CHKBX_STATE_NOT_SELECTED = 0, _           ; Not Checked.
+		$LOW_FORM_CON_CHKBX_STATE_SELECTED = 1, _               ; Checked.
+		$LOW_FORM_CON_CHKBX_STATE_NOT_DEFINED = 2               ; Don't know/TriState setting.
 
 ; Date Field Format
 Global Const _                                                  ; "com.sun.star.awt.UnoControlDateFieldModel:DateFormat"
-		$LOW_FORM_CONTROL_DATE_FRMT_SYSTEM_SHORT = 0, _         ; Standard (Short)
-		$LOW_FORM_CONTROL_DATE_FRMT_SYSTEM_SHORT_YY = 1, _      ; Standard (Short YY)
-		$LOW_FORM_CONTROL_DATE_FRMT_SYSTEM_SHORT_YYYY = 2, _    ; Standard (Short YYYY)
-		$LOW_FORM_CONTROL_DATE_FRMT_SYSTEM_LONG = 3, _          ; Standard (Long)
-		$LOW_FORM_CONTROL_DATE_FRMT_SHORT_DDMMYY = 4, _         ; DD/MM/YY
-		$LOW_FORM_CONTROL_DATE_FRMT_SHORT_MMDDYY = 5, _         ; MM/DD/YY
-		$LOW_FORM_CONTROL_DATE_FRMT_SHORT_YYMMDD = 6, _         ; YY/MM/DD
-		$LOW_FORM_CONTROL_DATE_FRMT_SHORT_DDMMYYYY = 7, _       ; DD/MM/YYYY
-		$LOW_FORM_CONTROL_DATE_FRMT_SHORT_MMDDYYYY = 8, _       ; MM/DD/YYYY
-		$LOW_FORM_CONTROL_DATE_FRMT_SHORT_YYYYMMDD = 9, _       ; YYYY/MM/DD
-		$LOW_FORM_CONTROL_DATE_FRMT_SHORT_YY_MM_DD = 10, _      ; YY-MM-DD
-		$LOW_FORM_CONTROL_DATE_FRMT_SHORT_YYYY_MM_DD = 11       ; YYYY-MM-DD
+		$LOW_FORM_CON_DATE_FRMT_SYSTEM_SHORT = 0, _             ; Standard (Short)
+		$LOW_FORM_CON_DATE_FRMT_SYSTEM_SHORT_YY = 1, _          ; Standard (Short YY)
+		$LOW_FORM_CON_DATE_FRMT_SYSTEM_SHORT_YYYY = 2, _        ; Standard (Short YYYY)
+		$LOW_FORM_CON_DATE_FRMT_SYSTEM_LONG = 3, _              ; Standard (Long)
+		$LOW_FORM_CON_DATE_FRMT_SHORT_DDMMYY = 4, _             ; DD/MM/YY
+		$LOW_FORM_CON_DATE_FRMT_SHORT_MMDDYY = 5, _             ; MM/DD/YY
+		$LOW_FORM_CON_DATE_FRMT_SHORT_YYMMDD = 6, _             ; YY/MM/DD
+		$LOW_FORM_CON_DATE_FRMT_SHORT_DDMMYYYY = 7, _           ; DD/MM/YYYY
+		$LOW_FORM_CON_DATE_FRMT_SHORT_MMDDYYYY = 8, _           ; MM/DD/YYYY
+		$LOW_FORM_CON_DATE_FRMT_SHORT_YYYYMMDD = 9, _           ; YYYY/MM/DD
+		$LOW_FORM_CON_DATE_FRMT_SHORT_YY_MM_DD = 10, _          ; YY-MM-DD
+		$LOW_FORM_CON_DATE_FRMT_SHORT_YYYY_MM_DD = 11           ; YYYY-MM-DD
 
 ; Form Control Image Alignment.
 Global Const _                                                  ; "com.sun.star.awt.ImagePosition"
-		$LOW_FORM_CONTROL_IMG_ALIGN_LEFT_TOP = 0, _             ; Specifies that the image should be positioned at the left of, and top-aligned to, the other object.
-		$LOW_FORM_CONTROL_IMG_ALIGN_LEFT_CENTER = 1, _          ; Specifies that the image should be positioned at the left of, and vertically centered to, the other object.
-		$LOW_FORM_CONTROL_IMG_ALIGN_LEFT_BOTTOM = 2, _          ; Specifies that the image should be positioned at the left of, and bottom-aligned to, the other object.
-		$LOW_FORM_CONTROL_IMG_ALIGN_RIGHT_TOP = 3, _            ; Specifies that the image should be positioned at the right of, and top-aligned to, the other object.
-		$LOW_FORM_CONTROL_IMG_ALIGN_RIGHT_CENTER = 4, _         ; Specifies that the image should be positioned at the right of, and vertically centered to, the other object.
-		$LOW_FORM_CONTROL_IMG_ALIGN_RIGHT_BOTTOM = 5, _         ; Specifies that the image should be positioned at the right of, and bottom-aligned to, the other object.
-		$LOW_FORM_CONTROL_IMG_ALIGN_ABOVE_LEFT = 6, _           ; Specifies that the image should be positioned above and left-aligned to the other object.
-		$LOW_FORM_CONTROL_IMG_ALIGN_ABOVE_CENTER = 7, _         ; Specifies that the image should be positioned above and horizontally centered to the other object.
-		$LOW_FORM_CONTROL_IMG_ALIGN_ABOVE_RIGHT = 8, _          ; Specifies that the image should be positioned above and right-aligned to the other object.
-		$LOW_FORM_CONTROL_IMG_ALIGN_BELOW_LEFT = 9, _           ; Specifies that the image should be positioned below and left-aligned to the other object.
-		$LOW_FORM_CONTROL_IMG_ALIGN_BELOW_CENTER = 10, _        ; Specifies that the image should be positioned below and horizontally centered to the other object.
-		$LOW_FORM_CONTROL_IMG_ALIGN_BELOW_RIGHT = 11, _         ; Specifies that the image should be positioned below and right-aligned centered to the other object.
-		$LOW_FORM_CONTROL_IMG_ALIGN_CENTERED = 12               ; Specifies that the image should be horizontally and vertically centered to the other object.
+		$LOW_FORM_CON_IMG_ALIGN_LEFT_TOP = 0, _                 ; Specifies that the image should be positioned at the left of, and top-aligned to, the other object.
+		$LOW_FORM_CON_IMG_ALIGN_LEFT_CENTER = 1, _              ; Specifies that the image should be positioned at the left of, and vertically centered to, the other object.
+		$LOW_FORM_CON_IMG_ALIGN_LEFT_BOTTOM = 2, _              ; Specifies that the image should be positioned at the left of, and bottom-aligned to, the other object.
+		$LOW_FORM_CON_IMG_ALIGN_RIGHT_TOP = 3, _                ; Specifies that the image should be positioned at the right of, and top-aligned to, the other object.
+		$LOW_FORM_CON_IMG_ALIGN_RIGHT_CENTER = 4, _             ; Specifies that the image should be positioned at the right of, and vertically centered to, the other object.
+		$LOW_FORM_CON_IMG_ALIGN_RIGHT_BOTTOM = 5, _             ; Specifies that the image should be positioned at the right of, and bottom-aligned to, the other object.
+		$LOW_FORM_CON_IMG_ALIGN_ABOVE_LEFT = 6, _               ; Specifies that the image should be positioned above and left-aligned to the other object.
+		$LOW_FORM_CON_IMG_ALIGN_ABOVE_CENTER = 7, _             ; Specifies that the image should be positioned above and horizontally centered to the other object.
+		$LOW_FORM_CON_IMG_ALIGN_ABOVE_RIGHT = 8, _              ; Specifies that the image should be positioned above and right-aligned to the other object.
+		$LOW_FORM_CON_IMG_ALIGN_BELOW_LEFT = 9, _               ; Specifies that the image should be positioned below and left-aligned to the other object.
+		$LOW_FORM_CON_IMG_ALIGN_BELOW_CENTER = 10, _            ; Specifies that the image should be positioned below and horizontally centered to the other object.
+		$LOW_FORM_CON_IMG_ALIGN_BELOW_RIGHT = 11, _             ; Specifies that the image should be positioned below and right-aligned centered to the other object.
+		$LOW_FORM_CON_IMG_ALIGN_CENTERED = 12                   ; Specifies that the image should be horizontally and vertically centered to the other object.
 
 ; Form Control Image Scale.
 Global Const _                                                  ; "com.sun.star.awt.ImageScaleMode"
-		$LOW_FORM_CONTROL_IMG_BTN_SCALE_NONE = 0, _             ; No scaling should happen at all.
-		$LOW_FORM_CONTROL_IMG_BTN_SCALE_KEEP_ASPECT = 1, _      ; The image should be scaled up or down to the size of the surrounding area by keeping its aspect ratio.
-		$LOW_FORM_CONTROL_IMG_BTN_SCALE_FIT = 2                 ; The image should be scaled up or down to the size of the surrounding area, he image will finally cover all of the surrounding area, but its dimensions might be distorted.
+		$LOW_FORM_CON_IMG_BTN_SCALE_NONE = 0, _                 ; No scaling should happen at all.
+		$LOW_FORM_CON_IMG_BTN_SCALE_KEEP_ASPECT = 1, _          ; The image should be scaled up or down to the size of the surrounding area by keeping its aspect ratio.
+		$LOW_FORM_CON_IMG_BTN_SCALE_FIT = 2                     ; The image should be scaled up or down to the size of the surrounding area, he image will finally cover all of the surrounding area, but its dimensions might be distorted.
 
 ; Form Control Mouse Wheel Behaviour.
 Global Const _                                                  ; "com.sun.star.awt.MouseWheelBehavior"
-		$LOW_FORM_CONTROL_MOUSE_SCROLL_DISABLED = 0, _          ; The mouse wheel cannot be used to scroll through the control's content.
-		$LOW_FORM_CONTROL_MOUSE_SCROLL_FOCUS = 1, _             ; The mouse can only be used to scroll through the control's content if it currently has the focus.
-		$LOW_FORM_CONTROL_MOUSE_SCROLL_ALWAYS = 2               ; The mouse can be used to scroll through the control's content, no matter whether or not it has the focus, as long as the mouse pointer is over the control.
+		$LOW_FORM_CON_MOUSE_SCROLL_DISABLED = 0, _              ; The mouse wheel cannot be used to scroll through the control's content.
+		$LOW_FORM_CON_MOUSE_SCROLL_FOCUS = 1, _                 ; The mouse can only be used to scroll through the control's content if it currently has the focus.
+		$LOW_FORM_CON_MOUSE_SCROLL_ALWAYS = 2                   ; The mouse can be used to scroll through the control's content, no matter whether or not it has the focus, as long as the mouse pointer is over the control.
 
 ; Form Control Push Button Action.
 Global Enum _
-		$LOW_FORM_CONTROL_PUSH_CMD_NONE, _                      ; No action occurs.
-		$LOW_FORM_CONTROL_PUSH_CMD_SUBMIT_FORM, _               ; Submit the data that is entered in other control fields to the current form.
-		$LOW_FORM_CONTROL_PUSH_CMD_RESET_FORM, _                ; Resets the settings in other control fields to the predefined defaults.
-		$LOW_FORM_CONTROL_PUSH_CMD_OPEN, _                      ; Opens the URL that is specified under URL.
-		$LOW_FORM_CONTROL_PUSH_CMD_FIRST_REC, _                 ; Moves the current form to the first record.
-		$LOW_FORM_CONTROL_PUSH_CMD_LAST_REC, _                  ; Moves the current form to the last record.
-		$LOW_FORM_CONTROL_PUSH_CMD_NEXT_REC, _                  ; Moves the current form to the next record.
-		$LOW_FORM_CONTROL_PUSH_CMD_PREV_REC, _                  ; Moves the current form to the previous record.
-		$LOW_FORM_CONTROL_PUSH_CMD_SAVE_REC, _                  ; Saves the current record, if necessary.
-		$LOW_FORM_CONTROL_PUSH_CMD_UNDO, _                      ; Reverses the changes in the current record.
-		$LOW_FORM_CONTROL_PUSH_CMD_NEW_REC, _                   ; Moves the current form to the insert row.
-		$LOW_FORM_CONTROL_PUSH_CMD_DELETE_REC, _                ; Deletes the current record.
-		$LOW_FORM_CONTROL_PUSH_CMD_REFRESH_FORM                 ; Reloads the most recently saved version of the current form.
+		$LOW_FORM_CON_PUSH_CMD_NONE, _                          ; No action occurs.
+		$LOW_FORM_CON_PUSH_CMD_SUBMIT_FORM, _                   ; Submit the data that is entered in other control fields to the current form.
+		$LOW_FORM_CON_PUSH_CMD_RESET_FORM, _                    ; Resets the settings in other control fields to the predefined defaults.
+		$LOW_FORM_CON_PUSH_CMD_OPEN, _                          ; Opens the URL that is specified under URL.
+		$LOW_FORM_CON_PUSH_CMD_FIRST_REC, _                     ; Moves the current form to the first record.
+		$LOW_FORM_CON_PUSH_CMD_LAST_REC, _                      ; Moves the current form to the last record.
+		$LOW_FORM_CON_PUSH_CMD_NEXT_REC, _                      ; Moves the current form to the next record.
+		$LOW_FORM_CON_PUSH_CMD_PREV_REC, _                      ; Moves the current form to the previous record.
+		$LOW_FORM_CON_PUSH_CMD_SAVE_REC, _                      ; Saves the current record, if necessary.
+		$LOW_FORM_CON_PUSH_CMD_UNDO, _                          ; Reverses the changes in the current record.
+		$LOW_FORM_CON_PUSH_CMD_NEW_REC, _                       ; Moves the current form to the insert row.
+		$LOW_FORM_CON_PUSH_CMD_DELETE_REC, _                    ; Deletes the current record.
+		$LOW_FORM_CON_PUSH_CMD_REFRESH_FORM                     ; Reloads the most recently saved version of the current form.
 
 ; Form Control Scrollbars.
 Global Enum _
-		$LOW_FORM_CONTROL_SCROLL_NONE, _                        ; No Scrollbars are added.
-		$LOW_FORM_CONTROL_SCROLL_HORI, _                        ; A Horizontal Scrollbar is added.
-		$LOW_FORM_CONTROL_SCROLL_VERT, _                        ; A Vertical Scrollbar is added.
-		$LOW_FORM_CONTROL_SCROLL_BOTH                           ; Both a Horizontal and Vertical Scrollbar is added.
+		$LOW_FORM_CON_SCROLL_NONE, _                            ; No Scrollbars are added.
+		$LOW_FORM_CON_SCROLL_HORI, _                            ; A Horizontal Scrollbar is added.
+		$LOW_FORM_CON_SCROLL_VERT, _                            ; A Vertical Scrollbar is added.
+		$LOW_FORM_CON_SCROLL_BOTH                               ; Both a Horizontal and Vertical Scrollbar is added.
 
 ; Form Control List Source Type.
 Global Const _                                                  ; "com.sun.star.form.ListSourceType"
-		$LOW_FORM_CONTROL_SOURCE_TYPE_VALUE_LIST = 0, _         ; The control should be filled with a list of string values.
-		$LOW_FORM_CONTROL_SOURCE_TYPE_TABLE = 1, _              ; The control should be filled with the data of a table.
-		$LOW_FORM_CONTROL_SOURCE_TYPE_QUERY = 2, _              ; The control should be filled with the results of a database query.
-		$LOW_FORM_CONTROL_SOURCE_TYPE_SQL = 3, _                ; The control should be filled with the results of a database statement.
-		$LOW_FORM_CONTROL_SOURCE_TYPE_SQL_NATIVE = 4, _         ; The control should be filled with the results of a database statement, which is not evaluated by the database engine.
-		$LOW_FORM_CONTROL_SOURCE_TYPE_TABLE_FIELDS = 5          ; The control should be filled with the field names of a database table.
+		$LOW_FORM_CON_SOURCE_TYPE_VALUE_LIST = 0, _             ; The control should be filled with a list of string values.
+		$LOW_FORM_CON_SOURCE_TYPE_TABLE = 1, _                  ; The control should be filled with the data of a table.
+		$LOW_FORM_CON_SOURCE_TYPE_QUERY = 2, _                  ; The control should be filled with the results of a database query.
+		$LOW_FORM_CON_SOURCE_TYPE_SQL = 3, _                    ; The control should be filled with the results of a database statement.
+		$LOW_FORM_CON_SOURCE_TYPE_SQL_NATIVE = 4, _             ; The control should be filled with the results of a database statement, which is not evaluated by the database engine.
+		$LOW_FORM_CON_SOURCE_TYPE_TABLE_FIELDS = 5              ; The control should be filled with the field names of a database table.
 
 ; Time Field Format
 Global Const _                                                  ; "com.sun.star.awt.UnoControlTimeFieldModel:TimeFormat"
-		$LOW_FORM_CONTROL_TIME_FRMT_24_SHORT = 0, _             ; HH:MM
-		$LOW_FORM_CONTROL_TIME_FRMT_24_LONG = 1, _              ; HH:MM:SS
-		$LOW_FORM_CONTROL_TIME_FRMT_12_SHORT = 2, _             ; HH:MM AM/PM
-		$LOW_FORM_CONTROL_TIME_FRMT_12_LONG = 3, _              ; HH:MM:SS AM/PM
-		$LOW_FORM_CONTROL_TIME_FRMT_DURATION_SHORT = 4, _       ; - May not be available?
-		$LOW_FORM_CONTROL_TIME_FRMT_DURATION_LONG = 5           ; - May not be available?
+		$LOW_FORM_CON_TIME_FRMT_24_SHORT = 0, _                 ; HH:MM
+		$LOW_FORM_CON_TIME_FRMT_24_LONG = 1, _                  ; HH:MM:SS
+		$LOW_FORM_CON_TIME_FRMT_12_SHORT = 2, _                 ; HH:MM AM/PM
+		$LOW_FORM_CON_TIME_FRMT_12_LONG = 3, _                  ; HH:MM:SS AM/PM
+		$LOW_FORM_CON_TIME_FRMT_DURATION_SHORT = 4, _           ; - May not be available?
+		$LOW_FORM_CON_TIME_FRMT_DURATION_LONG = 5               ; - May not be available?
 
 ; Form Control Line Break type.
 Global Enum _
-		$LOW_FORM_CONTROL_TXT_TYPE_SINGLE_LINE, _               ; No line-breaks are used.
-		$LOW_FORM_CONTROL_TXT_TYPE_MULTI_LINE, _                ; Line-breaks may be used.
-		$LOW_FORM_CONTROL_TXT_TYPE_MULTI_LINE_FORMATTED         ; Line-breaks may be used and text can be formatted. Cannot bind the control to a database field.
+		$LOW_FORM_CON_TXT_TYPE_SINGLE_LINE, _                   ; No line-breaks are used.
+		$LOW_FORM_CON_TXT_TYPE_MULTI_LINE, _                    ; Line-breaks may be used.
+		$LOW_FORM_CON_TXT_TYPE_MULTI_LINE_FORMATTED             ; Line-breaks may be used and text can be formatted. Cannot bind the control to a database field.
 
 ; Form Control Type.
 Global Enum Step *2 _
-		$LOW_FORM_CONTROL_TYPE_CHECK_BOX = 1, _                 ; CHECKBOX
-		$LOW_FORM_CONTROL_TYPE_COMBO_BOX, _                     ; COMBOBOX
-		$LOW_FORM_CONTROL_TYPE_CURRENCY_FIELD, _                ; CURRENCY_FIELD
-		$LOW_FORM_CONTROL_TYPE_DATE_FIELD, _                    ; DATE_FIELD
-		$LOW_FORM_CONTROL_TYPE_FILE_SELECTION, _                ; FILE_CONTROL
-		$LOW_FORM_CONTROL_TYPE_FORMATTED_FIELD, _               ; FORMATTED_FIELD
-		$LOW_FORM_CONTROL_TYPE_GROUP_BOX, _                     ; GROUP_BOX
-		$LOW_FORM_CONTROL_TYPE_GROUPED_CONTROL, _               ; A Group of Controls, consisting of a Group box and various controls.
-		$LOW_FORM_CONTROL_TYPE_IMAGE_BUTTON, _                  ; IMAGE_BUTTON
-		$LOW_FORM_CONTROL_TYPE_IMAGE_CONTROL, _                 ; IMAGE_CONTROL
-		$LOW_FORM_CONTROL_TYPE_LABEL, _                         ; FIXED_TEXT
-		$LOW_FORM_CONTROL_TYPE_LIST_BOX, _                      ; LIST_BOX
-		$LOW_FORM_CONTROL_TYPE_NAV_BAR, _                       ; NAV_TOOLBAR
-		$LOW_FORM_CONTROL_TYPE_NUMERIC_FIELD, _                 ; NUMERIC_FIELD
-		$LOW_FORM_CONTROL_TYPE_OPTION_BUTTON, _                 ; RADIO_BUTTON
-		$LOW_FORM_CONTROL_TYPE_PATTERN_FIELD, _                 ; PATTERN_FIELD
-		$LOW_FORM_CONTROL_TYPE_PUSH_BUTTON, _                   ; COMMAND_BUTTON
-		$LOW_FORM_CONTROL_TYPE_TABLE_CONTROL, _                 ; GRID_CONTROL
-		$LOW_FORM_CONTROL_TYPE_TEXT_BOX, _                      ; TEXT_FIELD
-		$LOW_FORM_CONTROL_TYPE_TIME_FIELD, _                    ; TIME_FIELD
-		$LOW_FORM_CONTROL_TYPE_ALL = 1048575                    ; All of the above Control Types. (This value is the BitOR value of all above)
+		$LOW_FORM_CON_TYPE_CHECK_BOX = 1, _                     ; CHECKBOX
+		$LOW_FORM_CON_TYPE_COMBO_BOX, _                         ; COMBOBOX
+		$LOW_FORM_CON_TYPE_CURRENCY_FIELD, _                    ; CURRENCY_FIELD
+		$LOW_FORM_CON_TYPE_DATE_FIELD, _                        ; DATE_FIELD
+		$LOW_FORM_CON_TYPE_FILE_SELECTION, _                    ; FILE_CONTROL
+		$LOW_FORM_CON_TYPE_FORMATTED_FIELD, _                   ; FORMATTED_FIELD
+		$LOW_FORM_CON_TYPE_GROUP_BOX, _                         ; GROUP_BOX
+		$LOW_FORM_CON_TYPE_GROUPED_CONTROL, _                   ; A Group of Controls, consisting of a Group box and various controls.
+		$LOW_FORM_CON_TYPE_IMAGE_BUTTON, _                      ; IMAGE_BUTTON
+		$LOW_FORM_CON_TYPE_IMAGE_CONTROL, _                     ; IMAGE_CONTROL
+		$LOW_FORM_CON_TYPE_LABEL, _                             ; FIXED_TEXT
+		$LOW_FORM_CON_TYPE_LIST_BOX, _                          ; LIST_BOX
+		$LOW_FORM_CON_TYPE_NAV_BAR, _                           ; NAV_TOOLBAR
+		$LOW_FORM_CON_TYPE_NUMERIC_FIELD, _                     ; NUMERIC_FIELD
+		$LOW_FORM_CON_TYPE_OPTION_BUTTON, _                     ; RADIO_BUTTON
+		$LOW_FORM_CON_TYPE_PATTERN_FIELD, _                     ; PATTERN_FIELD
+		$LOW_FORM_CON_TYPE_PUSH_BUTTON, _                       ; COMMAND_BUTTON
+		$LOW_FORM_CON_TYPE_TABLE_CONTROL, _                     ; GRID_CONTROL
+		$LOW_FORM_CON_TYPE_TEXT_BOX, _                          ; TEXT_FIELD
+		$LOW_FORM_CON_TYPE_TIME_FIELD, _                        ; TIME_FIELD
+		$LOW_FORM_CON_TYPE_ALL = 1048575                        ; All of the above Control Types. (This value is the BitOR value of all above)
 
 ; Form Tab Key Action.
 Global Const _                                                  ; com.sun.star.form.TabulatorCycle
@@ -503,7 +503,7 @@ Global Const _                                                  ; com.sun.star.u
 		$LOW_FORMAT_KEYS_PERCENT = 128, _                       ; Returns Percentage number formats.
 		$LOW_FORMAT_KEYS_TEXT = 256, _                          ; Returns Text number formats.
 		$LOW_FORMAT_KEYS_LOGICAL = 1024, _                      ; Returns Boolean number formats.
-		$LOW_FORMAT_KEYS_UNDEFINED = 2048, _                    ; Returns Is used as a return value if no format exists.
+		$LOW_FORMAT_KEYS_UNDEFINED = 2048, _                    ; Is used as a return value if no format exists.
 		$LOW_FORMAT_KEYS_EMPTY = 4096, _                        ; Returns Empty Number formats (?)
 		$LOW_FORMAT_KEYS_DURATION = 8196                        ; Returns Duration number formats.
 
