@@ -28,7 +28,6 @@ Func Example()
 	While 1
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE, $hClose
-
 				ExitLoop
 
 			Case $hTest
@@ -37,7 +36,6 @@ Func Example()
 				If @error Then _ERROR($oDoc, "Failed to retrieve the current selection. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 				Switch @extended
-
 					Case 0     ; Single Cell
 						GUICtrlSetData($hEdit, "The current selection is a single Cell." & @CRLF & @CRLF & _
 								"The Address of the selected Cell is: " & @CRLF & _LOCalc_RangeGetAddressAsName($vReturn))
@@ -54,7 +52,6 @@ Func Example()
 							GUICtrlSetData($hEdit, _LOCalc_RangeGetAddressAsName($vReturn[$I]) & @CRLF, 1)
 						Next
 				EndSwitch
-
 		EndSwitch
 	WEnd
 

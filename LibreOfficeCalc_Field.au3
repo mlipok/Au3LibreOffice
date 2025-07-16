@@ -166,6 +166,7 @@ Func _LOCalc_FieldDelete(ByRef $mField)
 	Else
 		$oCursor = $mField["FieldObj"].Anchor.Text.createTextCursorByRange($mField["EnumFieldObj"].Anchor())
 		If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 		$oCursor.Text.insertString($oCursor, "", True)
 	EndIf
 
@@ -371,18 +372,21 @@ Func _LOCalc_FieldHyperlinkModify(ByRef $mHyperlinkField, $sURL = Null, $sText =
 
 	If ($sURL <> Null) Then
 		If Not IsString($sURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$mHyperlinkField["FieldObj"].URL = $sURL
 		$iError = ($mHyperlinkField["FieldObj"].URL() = $sURL) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sText <> Null) Then
 		If Not IsString($sText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$mHyperlinkField["FieldObj"].Representation = $sText
 		$iError = ($mHyperlinkField["FieldObj"].Representation() = $sText) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($sTargetFrame <> Null) Then
 		If Not IsString($sTargetFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$mHyperlinkField["FieldObj"].TargetFrame = $sTargetFrame
 		$iError = ($mHyperlinkField["FieldObj"].TargetFrame() = $sTargetFrame) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -536,6 +540,7 @@ Func _LOCalc_FieldsGetList(ByRef $oTextCursor, $iType = $LOC_FIELD_TYPE_ALL, $bF
 
 	If Not IsObj($oTextCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not __LOCalc_IntIsBetween($iType, $LOC_FIELD_TYPE_ALL, 255) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	; 255 is all possible Consts added together
 	If Not IsBool($bFieldTypeNum) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
@@ -571,8 +576,8 @@ Func _LOCalc_FieldsGetList(ByRef $oTextCursor, $iType = $LOC_FIELD_TYPE_ALL, $bF
 			If ($oTextPortion.TextPortionType = "TextField") Then
 				$oTextField = $oTextPortion.TextField()
 				If Not IsObj($oTextField) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
-
 				If ($iTotalFound >= $iTotalFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+
 				For $i = 0 To UBound($avFieldTypes) - 1
 					If $oTextField.supportsService($avFieldTypes[$i][1]) Then
 						$oField = $oFields.getByIndex($iTotalFound)

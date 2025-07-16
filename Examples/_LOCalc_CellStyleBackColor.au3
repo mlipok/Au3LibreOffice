@@ -2,7 +2,6 @@
 
 #include "..\LibreOfficeCalc.au3"
 
-
 Example()
 
 Func Example()
@@ -34,7 +33,6 @@ Func Example()
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

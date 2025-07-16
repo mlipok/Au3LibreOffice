@@ -45,7 +45,6 @@ Func Example()
 	$oRange = _LOCalc_RangeGetCellByName($oSheet, "A1", "B3")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-
 	; Set Data Validity rules for the range A1:B3. Only allow numbers between 1 and 10.
 	_LOCalc_RangeValidation($oRange, $LOC_VALIDATION_TYPE_WHOLE, $LOC_VALIDATION_COND_BETWEEN, "1", "10")
 	If @error Then _ERROR($oDoc, "Failed to set Range Validation settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)

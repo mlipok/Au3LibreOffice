@@ -37,7 +37,6 @@ Func Example()
 			"CMYK->Long = " & $iCMYK_TO_LONG & @CRLF & _
 			"HSB->Long = " & $iHSB_TO_LONG & @CRLF & @CRLF & _
 			"HSB is a little off, however that is as close as I can mathematically get it. It shouldn't cause a noticeable color difference.")
-
 EndFunc
 
 Func _ERROR($sErrorText)

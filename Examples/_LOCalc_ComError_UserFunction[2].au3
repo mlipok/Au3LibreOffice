@@ -61,11 +61,9 @@ Func Example()
 
 	; Create a COM Error by calling a non existent Method.
 	$oServiceManager.FakeMethod()
-
 EndFunc
 
 Func _FunctionForErrors($oObjectError, $vParam1 = Null, $vParam2 = Null, $vParam3 = Null, $vParam4 = Null, $vParam5 = Null)
-
 	MsgBox($MB_OK + $MB_TOPMOST, "COM Error", "A COM Error occurred, here's what we know:" & @CRLF & _
 			"Error Number: 0x" & Hex($oObjectError.number, 8) & @CRLF & _
 			"Description: " & $oObjectError.windescription & @CRLF & _
@@ -84,7 +82,6 @@ Func _FunctionForErrors($oObjectError, $vParam1 = Null, $vParam2 = Null, $vParam
 			"Parameter 5: " & $vParam5 & @CRLF & @CRLF & _
 			"Your own User function doesn't need to use any, or all Parameters other than a place for $oObjectError, if you like, " & _
 			"its just so the option is there.")
-
 EndFunc
 
 Func _ERROR($sErrorText)

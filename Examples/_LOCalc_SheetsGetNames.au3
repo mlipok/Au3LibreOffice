@@ -1,5 +1,4 @@
 #include <MsgBoxConstants.au3>
-#include <Array.au3>
 
 #include "..\LibreOfficeCalc.au3"
 
@@ -9,7 +8,7 @@ Func Example()
 	Local $oDoc, $oDoc2, $oSheet, $oCellRange
 	Local $aavData[3]
 	Local $avRowData[2]
-	Local $sFilePathName, $sPath
+	Local $sFilePathName, $sPath, $sSheets = ""
 	Local $asSheets[0]
 
 	; Create a New, invisible, Blank Libre Office Document.
@@ -75,15 +74,24 @@ Func Example()
 	$asSheets = _LOCalc_SheetsGetNames($oDoc2)
 	If @error Then _ERROR($oDoc2, "Failed to Retrieve an array of Sheet names. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber, Null, $sPath)
 
-	_ArrayDisplay($asSheets)
+	For $sSheet In $asSheets
+		$sSheets &= $sSheet & @CRLF
+	Next
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now display a list of Linked Sheet names.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The names of all the Sheets in the document are: " & @CRLF & $sSheets & @CRLF & _
+			"I will now display a list of Linked Sheet names.")
 
 	; Retrieve an Array of Linked Sheet names.
 	$asSheets = _LOCalc_SheetsGetNames($oDoc2, True)
 	If @error Then _ERROR($oDoc2, "Failed to Retrieve an array of Sheet names. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber, Null, $sPath)
 
-	_ArrayDisplay($asSheets)
+	$sSheets = ""
+
+	For $sSheet In $asSheets
+		$sSheets &= $sSheet & @CRLF
+	Next
+
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The names of all the linked Sheets in the document are: " & @CRLF & $sSheets)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

@@ -10,7 +10,6 @@
 #include "LibreOfficeCalc_Internal.au3"
 
 ; Other includes for Calc
-#include "LibreOfficeCalc_Font.au3"
 
 ; #INDEX# =======================================================================================================================
 ; Title .........: LibreOffice UDF
@@ -134,7 +133,7 @@ EndFunc   ;==>_LOCalc_CellBackColor
 ;                  @Error 4 @Extended 7 Return 0 = Cannot set Top-Left to Bottom-Right Diagonal Border Color when Top-Left to Bottom-Right Diagonal Border width not set.
 ;                  @Error 4 @Extended 8 Return 0 = Cannot set Bottom-Left to Top-Right Diagonal Border Color when Bottom-Left to Top-Right Diagonal Border width not set.
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 Element Array with values in order of function parameters.
@@ -268,7 +267,7 @@ EndFunc   ;==>_LOCalc_CellBorderPadding
 ;                  @Error 4 @Extended 7 Return 0 = Cannot set Top-Left to Bottom-Right Diagonal Border Style when Top-Left to Bottom-Right Diagonal Border width not set.
 ;                  @Error 4 @Extended 8 Return 0 = Cannot set Bottom-Left to Top-Right Diagonal Border Style when Bottom-Left to Top-Right Diagonal Border width not set.
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 Element Array with values in order of function parameters.
@@ -338,7 +337,7 @@ EndFunc   ;==>_LOCalc_CellBorderStyle
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
 ;                  @Error 3 @Extended 2 Return 0 = Error Retrieving TableBorder2 Object.
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 Element Array with values in order of function parameters.
@@ -656,7 +655,7 @@ EndFunc   ;==>_LOCalc_CellGetType
 ; Syntax ........: _LOCalc_CellNumberFormat(ByRef $oDoc, ByRef $oCell[, $iFormatKey = Null])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $oCell               - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
-;                  $iFormatKey          - [optional] an integer value. Default is Null. A Format Key from a previous _LOCalc_FormatKeyCreate or _LOCalc_FormatKeyList function.
+;                  $iFormatKey          - [optional] an integer value. Default is Null. A Format Key from a previous _LOCalc_FormatKeyCreate or _LOCalc_FormatKeysGetList function.
 ; Return values .: Success: 1 or Integer.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -676,7 +675,7 @@ EndFunc   ;==>_LOCalc_CellGetType
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOCalc_CellStyleNumberFormat, _LOCalc_FormatKeyCreate, _LOCalc_FormatKeyList
+; Related .......: _LOCalc_CellStyleNumberFormat, _LOCalc_FormatKeyCreate, _LOCalc_FormatKeysGetList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================

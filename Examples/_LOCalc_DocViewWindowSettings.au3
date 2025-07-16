@@ -54,7 +54,6 @@ Func Example()
 		If @error Then _ERROR($oDoc, "Failed to re-set Document Window settings to user's previous values. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 	EndIf
 
-
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.

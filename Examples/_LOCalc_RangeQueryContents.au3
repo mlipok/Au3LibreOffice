@@ -54,7 +54,6 @@ Func Example()
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _FillCells(ByRef $oDoc, ByRef $oSheet)
@@ -158,7 +157,6 @@ Func _FillCells(ByRef $oDoc, ByRef $oSheet)
 	; Fill the range with Data
 	_LOCalc_RangeData($oCellRange, $aavData)
 	If @error Then _ERROR($oDoc, "Failed to fill Cell Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

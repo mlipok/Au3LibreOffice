@@ -54,7 +54,6 @@ Func Example()
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _FillCells(ByRef $oDoc, ByRef $oSheet)
@@ -166,7 +165,6 @@ Func _FillCells(ByRef $oDoc, ByRef $oSheet)
 	; Set Cell C6 to a Formula
 	_LOCalc_CellFormula($oCell, "=SUM(C2:C5) + B5")
 	If @error Then _ERROR($oDoc, "Failed to set Cell Formula. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

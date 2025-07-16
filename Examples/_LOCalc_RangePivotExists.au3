@@ -63,7 +63,6 @@ Func Example()
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _PrepareRange($oDoc, $oSheet)
@@ -113,7 +112,6 @@ Func _PrepareRange($oDoc, $oSheet)
 	_LOCalc_CellFont($oCellRange, Null, Null, Null, $LOC_WEIGHT_BOLD)
 	If @error Then _ERROR($oDoc, "Failed to set Cell Range weight. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 EndFunc
-
 
 Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)

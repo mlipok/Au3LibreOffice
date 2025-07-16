@@ -28,7 +28,6 @@ Func Example()
 			"2540 Micrometers to MM = " & $iMM_From_MicroM & @CRLF & _
 			"2540 Micrometers to Printer's Points = " & $iPt_From_MicroM & @CRLF & @CRLF & _
 			"a Micrometer is 1000th of a centimeter.")
-
 EndFunc
 
 Func _ERROR($sErrorText)
