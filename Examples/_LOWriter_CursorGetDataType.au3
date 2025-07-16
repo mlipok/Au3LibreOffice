@@ -30,25 +30,30 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cursor Data type. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	Switch $iCursorDataType
-
 		Case $LOW_CURDATA_BODY_TEXT
 			MsgBox($MB_OK + $MB_TOPMOST, Default, "The Cursor is currently in body text type of Data, with an integer value of : " & $iCursorDataType & _
 					" — Or $LOW_CURDATA_BODY_TEXT")
+
 		Case $LOW_CURDATA_FRAME
 			MsgBox($MB_OK + $MB_TOPMOST, Default, "The Cursor is currently in Text Frame type of Data, with an integer value of : " & $iCursorDataType & _
 					" — Or $LOW_CURDATA_FRAME")
+
 		Case $LOW_CURDATA_CELL
 			MsgBox($MB_OK + $MB_TOPMOST, Default, "The Cursor is currently in Text Table Cell type of Data, with an integer value of : " & $iCursorDataType & _
 					" — Or $LOW_CURDATA_CELL")
+
 		Case $LOW_CURDATA_FOOTNOTE
 			MsgBox($MB_OK + $MB_TOPMOST, Default, "The Cursor is currently in Footnote type of Data, with an integer value of : " & $iCursorDataType & _
 					" — Or $LOW_CURDATA_FOOTNOTE")
+
 		Case $LOW_CURDATA_ENDNOTE
 			MsgBox($MB_OK + $MB_TOPMOST, Default, "The Cursor is currently in Endnote type of Data, with an integer value of : " & $iCursorDataType & _
 					" — Or $LOW_CURDATA_ENDNOTE")
+
 		Case $LOW_CURDATA_HEADER_FOOTER
 			MsgBox($MB_OK + $MB_TOPMOST, Default, "The Cursor is currently in Header/Footer type of Data, with an integer value of : " & $iCursorDataType & _
 					" — Or $LOW_CURDATA_HEADER_FOOTER")
+
 		Case Else
 			MsgBox($MB_OK + $MB_TOPMOST, Default, "Something went wrong.")
 	EndSwitch

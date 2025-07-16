@@ -13,7 +13,6 @@
 #include "LibreOfficeWriter_DirectFormatting.au3"
 #include "LibreOfficeWriter_Doc.au3"
 #include "LibreOfficeWriter_Field.au3"
-#include "LibreOfficeWriter_Font.au3"
 #include "LibreOfficeWriter_FootEndNotes.au3"
 #include "LibreOfficeWriter_Form.au3"
 #include "LibreOfficeWriter_Frame.au3"

@@ -25,7 +25,6 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve a list of Frame. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	If (UBound($asFrames) > 0) Then
-
 		; Retrieve the object for the first frame listed in the Array.
 		$oFrame = _LOWriter_FrameGetObjByName($oDoc, $asFrames[0])
 		If @error Then _ERROR($oDoc, "Failed to retrieve a frame Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
@@ -45,7 +44,6 @@ Func Example()
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

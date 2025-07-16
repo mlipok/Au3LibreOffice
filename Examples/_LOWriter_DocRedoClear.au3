@@ -1,5 +1,4 @@
 #include <MsgBoxConstants.au3>
-#include <Array.au3>
 
 #include "..\LibreOfficeWriter.au3"
 
@@ -7,6 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oViewCursor
+	Local $sRedos = ""
 	Local $asRedo[0]
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -33,8 +33,12 @@ Func Example()
 	$asRedo = _LOWriter_DocRedoGetAllActionTitles($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve array of Redo action titles. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
+	For $sRedo In $asRedo
+		$sRedos &= $sRedo & @CRLF
+	Next
+
 	; Display the available Redo action titles.
-	_ArrayDisplay($asRedo)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The available Redo Actions are:" & @CRLF & $sRedos)
 
 	; Clear the Redo Action list.
 	_LOWriter_DocRedoClear($oDoc)
@@ -46,15 +50,20 @@ Func Example()
 	$asRedo = _LOWriter_DocRedoGetAllActionTitles($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve array of Redo action titles. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
+	$sRedos = ""
+
+	For $sRedo In $asRedo
+		$sRedos &= $sRedo & @CRLF
+	Next
+
 	; Display the available Redo action titles again, if any.
-	_ArrayDisplay($asRedo)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The available Redo Actions are:" & @CRLF & $sRedos)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

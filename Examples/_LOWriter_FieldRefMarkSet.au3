@@ -45,7 +45,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve an Array of Reference Mark Names.
-	$asRefs = _LOWriter_FieldRefMarkList($oDoc)
+	$asRefs = _LOWriter_FieldRefMarksGetNames($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve an Array of Reference Marks. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	For $i = 0 To @extended - 1
@@ -59,7 +59,6 @@ Func Example()
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

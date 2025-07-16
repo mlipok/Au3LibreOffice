@@ -29,6 +29,7 @@ Func Example()
 
 	If ($bExists = True) Then
 		MsgBox($MB_OK + $MB_TOPMOST, Default, "I failed to delete the DateTime format key.")
+
 	Else
 		MsgBox($MB_OK + $MB_TOPMOST, Default, "I successfully deleted the new DateTime format key.")
 	EndIf
@@ -38,7 +39,6 @@ Func Example()
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
