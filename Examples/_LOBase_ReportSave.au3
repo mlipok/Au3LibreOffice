@@ -53,6 +53,18 @@ Func Example()
 	_LOBase_ReportSave($oReportDoc)
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to save changes to a Report. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have created a Control in the Report and saved it. I will now close the Report and re-open it.")
+
+	; Close the Report Document.
+	_LOBase_ReportClose($oReportDoc, True)
+	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to close the Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	; Re-open the Report document.
+	$oReportDoc = _LOBase_ReportOpen($oConnection, "rptAutoIt_Report")
+	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to open the Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have re-opened the Report document. Press ok to close it.")
+
 	; Close the Report Document.
 	_LOBase_ReportClose($oReportDoc, True)
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to close the Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)

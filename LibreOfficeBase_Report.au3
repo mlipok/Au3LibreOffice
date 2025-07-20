@@ -82,14 +82,10 @@
 ;                  @Error 1 @Extended 2 Return 0 = $bForceClose not a Boolean.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Document has been modified and not saved, and $bForceClose is False.
-;                  @Error 3 @Extended 2 Return 0 = Failed to identify Report Document's name.
-;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Report Documents Object.
-;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Array of Report and Folder names.
-;                  @Error 3 @Extended 5 Return 0 = Failed to retrieve Report or Folder Object.
-;                  @Error 3 @Extended 6 Return 0 = Failed to retrieve Array of Report and Folder names for Sub-Folder.
-;                  @Error 3 @Extended 7 Return 0 = Failed to retrieve Object in Sub-Folder.
-;                  @Error 3 @Extended 8 Return 0 = Failed to identify Report in Parent Document.
-;                  @Error 3 @Extended 9 Return 0 = Document called in $oReportDoc not a Report Document.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Report Documents Object.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Report Document's properties.
+;                  @Error 3 @Extended 4 Return 0 = Failed to identify Report in Parent Document.
+;                  @Error 3 @Extended 5 Return 0 = Document called in $oReportDoc not a Report Document.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Boolean = Success. Returning a Boolean value of whether the Report Document was successfully closed (True), or not.
 ; Author ........: donnyh13
@@ -104,13 +100,8 @@ Func _LOBase_ReportClose(ByRef $oReportDoc, $bForceClose = False)
 	#forceref $oCOM_ErrorHandler
 
 	Local $bReturn
-	Local $oReport, $oSource, $oObj
-	Local $sTitle
-	Local $iCount = 0, $iFolders = 1
-	Local $asResult[0], $asNames[0], $asFolderList[0]
-	Local $avFolders[0][2]
-	Local Enum $iName, $iObj, $iPrefix
-	Local Const $__STR_REGEXPARRAYMATCH = 1
+	Local $oReport, $oSource
+	Local $tPropertiesPair
 
 	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsBool($bForceClose) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -121,65 +112,14 @@ Func _LOBase_ReportClose(ByRef $oReportDoc, $bForceClose = False)
 		$bReturn = True
 
 	ElseIf $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then  ; Report is in Design mode.
-		; "Testing.odb : abc1Report2"
-		$asResult = StringRegExp($oReportDoc.Title(), "\: (.+)$", $__STR_REGEXPARRAYMATCH) ; Retrieve Report Title.
-		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-		$sTitle = $asResult[0]
-
 		$oSource = $oReportDoc.Parent.ReportDocuments()
-		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-		$asNames = $oSource.getElementNames()
-		If Not IsArray($asNames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+		$tPropertiesPair = $oSource.Parent.CurrentController.identifySubComponent($oReportDoc)
+		If Not IsObj($tPropertiesPair) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
-		If $oSource.hasByName($sTitle) And $oSource.getByName($sTitle).supportsService("com.sun.star.ucb.Content") And ($oSource.getByName($sTitle).getComponent() = $oReportDoc) Then ; getComponent will either return a Object or not (If the report isn't currently open.). If it does, and is the same as the called $oReportDoc, it is the one to close.
-			$oReport = $oSource.getByName($sTitle)
-
-		Else
-			For $i = 0 To UBound($asNames) - 1
-				$oObj = $oSource.getByName($asNames[$i])
-				If Not IsObj($oObj) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
-
-				If $oObj.supportsService("com.sun.star.sdb.Reports") Then ; Folder.
-					ReDim $avFolders[1][2]
-					$avFolders[0][$iName] = $asNames[$i]
-					$avFolders[0][$iObj] = $oObj
-				EndIf
-
-				While ($iCount < UBound($avFolders))
-					If $avFolders[$iCount][$iObj].hasByName($sTitle) And $avFolders[$iCount][$iObj].getByName($sTitle).supportsService("com.sun.star.ucb.Content") And _
-							($avFolders[$iCount][$iObj].getByName($sTitle).getComponent() = $oReportDoc) Then ; getComponent will either return a Object or not (If the report isn't currently open.). If it does, and is the same as the called $oReportDoc, it is the one to close.
-						$oReport = $avFolders[$iCount][$iObj].getByName($sTitle)
-						ExitLoop
-					EndIf
-
-					$asFolderList = $avFolders[$iCount][$iObj].getElementNames()
-					If Not IsArray($asFolderList) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
-
-					For $k = 0 To UBound($asFolderList) - 1
-						$oObj = $avFolders[$iCount][$iObj].getByName($asFolderList[$k])
-						If Not IsObj($oObj) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0)
-
-						If $oObj.supportsService("com.sun.star.sdb.Reports") Then ; Folder.
-							ReDim $avFolders[$iFolders + 1][2]
-							$avFolders[$iFolders][$iName] = $asFolderList[$k]
-							$avFolders[$iFolders][$iObj] = $oObj
-
-							$iFolders += 1
-						EndIf
-					Next
-
-					$iCount += 1
-				WEnd
-
-				If (UBound($avFolders) > 0) Then ReDim $avFolders[0][2]
-				$iCount = 0
-				$iFolders = 1
-			Next
-		EndIf
-
-		If Not IsObj($oReport) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 8, 0)
+		$oReport = $oSource.getByHierarchicalName($tPropertiesPair.Second())
+		If Not IsObj($oReport) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 		If $oReportDoc.isModified() Then $oReportDoc.Modified = False ; Set modified to false, so the user wont be prompted.
 
@@ -187,7 +127,7 @@ Func _LOBase_ReportClose(ByRef $oReportDoc, $bForceClose = False)
 
 	Else ; Error, unknown document?
 
-		Return SetError($__LO_STATUS_PROCESSING_ERROR, 9, 0)
+		Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 	EndIf
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $bReturn)
@@ -3939,14 +3879,10 @@ EndFunc   ;==>_LOBase_ReportRename
 ;                  @Error 1 @Extended 1 Return 0 = $oReportDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = Document called in $oReportDoc is read only.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to identify Report Document's name.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Report Documents Object.
-;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Array of Report and Folder names.
-;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Report or Folder Object.
-;                  @Error 3 @Extended 5 Return 0 = Failed to retrieve Array of Report and Folder names for Sub-Folder.
-;                  @Error 3 @Extended 6 Return 0 = Failed to retrieve Object in Sub-Folder.
-;                  @Error 3 @Extended 7 Return 0 = Document called in $oReportDoc not a Report Document.
-;                  @Error 3 @Extended 8 Return 0 = Failed to identify Report in Parent Document.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Report Documents Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Report Document's properties.
+;                  @Error 3 @Extended 3 Return 0 = Failed to identify Report in Parent Document.
+;                  @Error 3 @Extended 4 Return 0 = Document called in $oReportDoc not a Report Document.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Report was successfully saved.
 ; Author ........: donnyh13
@@ -3960,82 +3896,27 @@ Func _LOBase_ReportSave(ByRef $oReportDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $oSource, $oReport, $oObj
-	Local $asResult[0], $asNames[0], $asFolderList[0]
-	Local $iCount = 0, $iFolders = 1
-	Local $avFolders[0][2]
-	Local $sTitle
-	Local Enum $iName, $iObj, $iPrefix
-	Local Const $__STR_REGEXPARRAYMATCH = 1
+	Local $oSource, $oReport
+	Local $tPropertiesPair
 
 	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If $oReportDoc.supportsService("com.sun.star.text.TextDocument") And $oReportDoc.isReadOnly() Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Nothing to save in a Read only Doc.
 
 	If $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then ; Report is in Design mode.
-		; "Testing.odb : abc1Report2"
-		$asResult = StringRegExp($oReportDoc.Title(), "\: (.+)$", $__STR_REGEXPARRAYMATCH) ; Retrieve Report Title.
-		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-		$sTitle = $asResult[0]
 
 		$oSource = $oReportDoc.Parent.ReportDocuments()
-		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-		$asNames = $oSource.getElementNames()
-		If Not IsArray($asNames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		$tPropertiesPair = $oSource.Parent.CurrentController.identifySubComponent($oReportDoc)
+		If Not IsObj($tPropertiesPair) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-		If $oSource.hasByName($sTitle) And $oSource.getByName($sTitle).supportsService("com.sun.star.ucb.Content") And ($oSource.getByName($sTitle).getComponent() = $oReportDoc) Then ; getComponent will either return a Object or not (If the report isn't currently open.). If it does, and is the same as the called $oReportDoc, it is the one to close.
-			$oReport = $oSource.getByName($sTitle)
-
-		Else
-			For $i = 0 To UBound($asNames) - 1
-				$oObj = $oSource.getByName($asNames[$i])
-				If Not IsObj($oObj) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
-
-				If $oObj.supportsService("com.sun.star.sdb.Reports") Then ; Folder.
-					ReDim $avFolders[1][2]
-					$avFolders[0][$iName] = $asNames[$i]
-					$avFolders[0][$iObj] = $oObj
-				EndIf
-
-				While ($iCount < UBound($avFolders))
-					If $avFolders[$iCount][$iObj].hasByName($sTitle) And $avFolders[$iCount][$iObj].getByName($sTitle).supportsService("com.sun.star.ucb.Content") And _
-							($avFolders[$iCount][$iObj].getByName($sTitle).getComponent() = $oReportDoc) Then ; getComponent will either return a Object or not (If the report isn't currently open.). If it does, and is the same as the called $oReportDoc, it is the one to close.
-						$oReport = $avFolders[$iCount][$iObj].getByName($sTitle)
-						ExitLoop
-					EndIf
-
-					$asFolderList = $avFolders[$iCount][$iObj].getElementNames()
-					If Not IsArray($asFolderList) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
-
-					For $k = 0 To UBound($asFolderList) - 1
-						$oObj = $avFolders[$iCount][$iObj].getByName($asFolderList[$k])
-						If Not IsObj($oObj) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
-
-						If $oObj.supportsService("com.sun.star.sdb.Reports") Then ; Folder.
-							ReDim $avFolders[$iFolders + 1][2]
-							$avFolders[$iFolders][$iName] = $asFolderList[$k]
-							$avFolders[$iFolders][$iObj] = $oObj
-
-							$iFolders += 1
-						EndIf
-					Next
-
-					$iCount += 1
-				WEnd
-
-				If (UBound($avFolders) > 0) Then ReDim $avFolders[0][2]
-				$iCount = 0
-				$iFolders = 1
-			Next
-		EndIf
+		$oReport = $oSource.getByHierarchicalName($tPropertiesPair.Second())
+		If Not IsObj($oReport) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	Else ; Error, unknown document?
 
-		Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0)
+		Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 	EndIf
-
-	If Not IsObj($oReport) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 8, 0)
 
 	$oReport.Store()
 

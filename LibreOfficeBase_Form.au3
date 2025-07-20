@@ -56,14 +56,9 @@
 ;                  @Error 1 @Extended 3 Return 0 = Document called in $oFormDoc has not been saved to a Base Document yet.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Document has been modified and not saved, and $bForceClose is False.
-;                  @Error 3 @Extended 2 Return 0 = Failed to identify Form Document's Unique Identifier String.
-;                  @Error 3 @Extended 3 Return 0 = Failed to identify Form Document's name.
-;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Form Documents Object.
-;                  @Error 3 @Extended 5 Return 0 = Failed to retrieve Array of Form and Folder names.
-;                  @Error 3 @Extended 6 Return 0 = Failed to retrieve Form or Folder Object.
-;                  @Error 3 @Extended 7 Return 0 = Failed to retrieve Array of Form and Folder names for Sub-Folder.
-;                  @Error 3 @Extended 8 Return 0 = Failed to retrieve Object in Sub-Folder.
-;                  @Error 3 @Extended 9 Return 0 = Failed to identify Form in Parent Document.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Form Document's Object.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Form Document's properties.
+;                  @Error 3 @Extended 4 Return 0 = Failed to identify Form in Parent Document.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Boolean = Success. Returning a Boolean value of whether the Form Document was successfully closed (True), or not.
 ; Author ........: donnyh13
@@ -78,85 +73,22 @@ Func _LOBase_FormClose(ByRef $oFormDoc, $bForceClose = False)
 	#forceref $oCOM_ErrorHandler
 
 	Local $bReturn
-	Local $oForm, $oSource, $oObj
-	Local $sUniqueString, $sTitle
-	Local $iCount = 0, $iFolders = 1
-	Local $asResult[0], $asNames[0], $asFolderList[0]
-	Local $avFolders[0][2]
-	Local Enum $iName, $iObj, $iPrefix
-	Local Const $__STR_REGEXPARRAYMATCH = 1
+	Local $oForm, $oSource
+	Local $tPropertiesPair
 
 	If Not IsObj($oFormDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsBool($bForceClose) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If $oFormDoc.isModified() And Not $bForceClose Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	If Not $oFormDoc.hasLocation() Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-	; Retrieve the unique name of the form.
-	; file:///C:/Folder1/Autoit/Libre%20Office%20Base%20Info/Testing.odb/Obj61/
-	$asResult = StringRegExp($oFormDoc.NameSpace(), "/([a-zA-Z0-9]+)/$", $__STR_REGEXPARRAYMATCH)
-	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-	$sUniqueString = $asResult[0]
-
-	; "Testing.odb : abc1Form2"
-	$asResult = StringRegExp($oFormDoc.Title(), "\: (.+)$", $__STR_REGEXPARRAYMATCH)
-	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-
-	$sTitle = $asResult[0]
-
 	$oSource = $oFormDoc.Parent.FormDocuments()
-	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	$asNames = $oSource.getElementNames()
-	If Not IsArray($asNames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+	$tPropertiesPair = $oSource.Parent.CurrentController.identifySubComponent($oFormDoc)
+	If Not IsObj($tPropertiesPair) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
-	If $oSource.hasByName($sTitle) And $oSource.getByName($sTitle).supportsService("com.sun.star.ucb.Content") And ($oSource.getByName($sTitle).PersistentName() = $sUniqueString) Then
-		$oForm = $oSource.getByName($sTitle)
-
-	Else
-		For $i = 0 To UBound($asNames) - 1
-			$oObj = $oSource.getByName($asNames[$i])
-			If Not IsObj($oObj) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
-
-			If $oObj.supportsService("com.sun.star.sdb.Forms") Then ; Folder.
-				ReDim $avFolders[1][2]
-				$avFolders[0][$iName] = $asNames[$i]
-				$avFolders[0][$iObj] = $oObj
-			EndIf
-
-			While ($iCount < UBound($avFolders))
-				If $avFolders[$iCount][$iObj].hasByName($sTitle) And $avFolders[$iCount][$iObj].getByName($sTitle).supportsService("com.sun.star.ucb.Content") And _
-						($avFolders[$iCount][$iObj].getByName($sTitle).PersistentName() = $sUniqueString) Then
-					$oForm = $avFolders[$iCount][$iObj].getByName($sTitle)
-					ExitLoop
-				EndIf
-
-				$asFolderList = $avFolders[$iCount][$iObj].getElementNames()
-				If Not IsArray($asFolderList) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0)
-
-				For $k = 0 To UBound($asFolderList) - 1
-					$oObj = $avFolders[$iCount][$iObj].getByName($asFolderList[$k])
-					If Not IsObj($oObj) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 8, 0)
-
-					If $oObj.supportsService("com.sun.star.sdb.Forms") Then ; Folder.
-						ReDim $avFolders[$iFolders + 1][2]
-						$avFolders[$iFolders][$iName] = $asFolderList[$k]
-						$avFolders[$iFolders][$iObj] = $oObj
-
-						$iFolders += 1
-					EndIf
-				Next
-
-				$iCount += 1
-			WEnd
-
-			If (UBound($avFolders) > 0) Then ReDim $avFolders[0][2]
-			$iCount = 0
-			$iFolders = 1
-		Next
-	EndIf
-
-	If Not IsObj($oForm) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 9, 0)
+	$oForm = $oSource.getByHierarchicalName($tPropertiesPair.Second())
+	If Not IsObj($oForm) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 	If $oFormDoc.isModified() Then $oFormDoc.Modified = False ; Set modified to false, so the user wont be prompted.
 
@@ -1356,14 +1288,9 @@ EndFunc   ;==>_LOBase_FormRename
 ;                  @Error 1 @Extended 1 Return 0 = $oFormDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = Document called in $oFormDoc has not been saved to a Base Document yet or is read only.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to identify Form Document's Unique Identifier String.
-;                  @Error 3 @Extended 2 Return 0 = Failed to identify Form Document's name.
-;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Form Documents Object.
-;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Array of Form and Folder names.
-;                  @Error 3 @Extended 5 Return 0 = Failed to retrieve Form or Folder Object.
-;                  @Error 3 @Extended 6 Return 0 = Failed to retrieve Array of Form and Folder names for Sub-Folder.
-;                  @Error 3 @Extended 7 Return 0 = Failed to retrieve Object in Sub-Folder.
-;                  @Error 3 @Extended 8 Return 0 = Failed to identify Form in Parent Document.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Form Documents Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Form Document's properties.
+;                  @Error 3 @Extended 3 Return 0 = Failed to identify Form in Parent Document.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Form was successfully saved.
 ; Author ........: donnyh13
@@ -1377,83 +1304,20 @@ Func _LOBase_FormSave(ByRef $oFormDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $oSource, $oForm, $oObj
-	Local $asResult[0], $asNames[0], $asFolderList[0]
-	Local $iCount = 0, $iFolders = 1
-	Local $avFolders[0][2]
-	Local $sUniqueString, $sTitle
-	Local Enum $iName, $iObj, $iPrefix
-	Local Const $__STR_REGEXPARRAYMATCH = 1
+	Local $oSource, $oForm
+	Local $tPropertiesPair
 
 	If Not IsObj($oFormDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oFormDoc.hasLocation Or $oFormDoc.isReadOnly Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	; Retrieve the unique name of the form.
-	; file:///C:/Folder1/Autoit/Libre%20Office%20Base%20Info/Testing.odb/Obj61/
-	$asResult = StringRegExp($oFormDoc.NameSpace(), "/([a-zA-Z0-9]+)/$", $__STR_REGEXPARRAYMATCH)
-	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	$sUniqueString = $asResult[0]
-
-	; "Testing.odb : abc1Form2"
-	$asResult = StringRegExp($oFormDoc.Title(), "\: (.+)$", $__STR_REGEXPARRAYMATCH)
-	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-	$sTitle = $asResult[0]
-
 	$oSource = $oFormDoc.Parent.FormDocuments()
-	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	$asNames = $oSource.getElementNames()
-	If Not IsArray($asNames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+	$tPropertiesPair = $oSource.Parent.CurrentController.identifySubComponent($oFormDoc)
+	If Not IsObj($tPropertiesPair) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	If $oSource.hasByName($sTitle) And $oSource.getByName($sTitle).supportsService("com.sun.star.ucb.Content") And ($oSource.getByName($sTitle).PersistentName() = $sUniqueString) Then
-		$oForm = $oSource.getByName($sTitle)
-
-	Else
-		For $i = 0 To UBound($asNames) - 1
-			$oObj = $oSource.getByName($asNames[$i])
-			If Not IsObj($oObj) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
-
-			If $oObj.supportsService("com.sun.star.sdb.Forms") Then ; Folder.
-				ReDim $avFolders[1][2]
-				$avFolders[0][$iName] = $asNames[$i]
-				$avFolders[0][$iObj] = $oObj
-			EndIf
-
-			While ($iCount < UBound($avFolders))
-				If $avFolders[$iCount][$iObj].hasByName($sTitle) And $avFolders[$iCount][$iObj].getByName($sTitle).supportsService("com.sun.star.ucb.Content") And _
-						($avFolders[$iCount][$iObj].getByName($sTitle).PersistentName() = $sUniqueString) Then
-					$oForm = $avFolders[$iCount][$iObj].getByName($sTitle)
-					ExitLoop
-				EndIf
-
-				$asFolderList = $avFolders[$iCount][$iObj].getElementNames()
-				If Not IsArray($asFolderList) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
-
-				For $k = 0 To UBound($asFolderList) - 1
-					$oObj = $avFolders[$iCount][$iObj].getByName($asFolderList[$k])
-					If Not IsObj($oObj) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0)
-
-					If $oObj.supportsService("com.sun.star.sdb.Forms") Then ; Folder.
-						ReDim $avFolders[$iFolders + 1][2]
-						$avFolders[$iFolders][$iName] = $asFolderList[$k]
-						$avFolders[$iFolders][$iObj] = $oObj
-
-						$iFolders += 1
-					EndIf
-				Next
-
-				$iCount += 1
-			WEnd
-
-			If (UBound($avFolders) > 0) Then ReDim $avFolders[0][2]
-			$iCount = 0
-			$iFolders = 1
-		Next
-	EndIf
-
-	If Not IsObj($oForm) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 8, 0)
+	$oForm = $oSource.getByHierarchicalName($tPropertiesPair.Second())
+	If Not IsObj($oForm) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	$oForm.Store()
 
