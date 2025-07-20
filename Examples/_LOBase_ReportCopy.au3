@@ -39,7 +39,7 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to create a connection to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a new Report.
-	_LOBase_ReportCreate($oDoc, $oConnection, "rptAutoIt_Report")
+	_LOBase_ReportCreate($oConnection, "rptAutoIt_Report")
 	If @error Then Return _ERROR($oDoc, "Failed to create a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a Folder
@@ -47,10 +47,19 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to create a Report folder. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a new Report in the Folder.
-	_LOBase_ReportCreate($oDoc, $oConnection, "AutoIt_Folder/rptAutoIt_Report2", False)
+	_LOBase_ReportCreate($oConnection, "AutoIt_Folder/rptAutoIt_Report2", False)
 	If @error Then Return _ERROR($oDoc, "Failed to create a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to copy some Reports.")
+	; Retrieve an array of all the Reports contained in the Document.
+	$asReports = _LOBase_ReportsGetNames($oDoc, True)
+	If @error Then Return _ERROR($oDoc, "Failed to Retrieve an Array of Report names. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	For $i = 0 To @extended - 1
+		$sReports &= "- " & $asReports[$i] & @CRLF
+	Next
+
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Document contains the following Reports:" & @CRLF & $sReports & @CRLF & @CRLF & _
+			"Press Ok to copy some Reports.")
 
 	; Make a copy of the contained Report.
 	_LOBase_ReportCopy($oConnection, "rptAutoIt_Report", "rptAutoIt_Report3")
@@ -67,6 +76,8 @@ Func Example()
 	; Retrieve an array of all the Reports contained in the Document.
 	$asReports = _LOBase_ReportsGetNames($oDoc, True)
 	If @error Then Return _ERROR($oDoc, "Failed to Retrieve an Array of Report names. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	$sReports = ""
 
 	For $i = 0 To @extended - 1
 		$sReports &= "- " & $asReports[$i] & @CRLF

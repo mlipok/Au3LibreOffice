@@ -38,8 +38,8 @@ Func Example()
 	$oConnection = _LOBase_DatabaseConnectionGet($oDBase)
 	If @error Then Return _ERROR($oDoc, "Failed to create a connection to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Create a new Report and open it.
-	_LOBase_ReportCreate($oConnection, "rptAutoIt_Report", True)
+	; Create a new Report.
+	_LOBase_ReportCreate($oConnection, "rptAutoIt_Report")
 	If @error Then Return _ERROR($oDoc, "Failed to create a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a Folder

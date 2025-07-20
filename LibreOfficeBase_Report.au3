@@ -1264,20 +1264,18 @@ EndFunc   ;==>_LOBase_ReportConSize
 ;                  @Error 1 @Extended 1 Return 0 = $oConnection not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sInputReport not a String.
 ;                  @Error 1 @Extended 3 Return 0 = $sOutputReport not a String.
-;                  @Error 1 @Extended 4 Return 0 = Folder name called in $sInputReport not found.
-;                  @Error 1 @Extended 5 Return 0 = Requested report not found.
-;                  @Error 1 @Extended 6 Return 0 = Report name called in $sInputReport not a Report.
-;                  @Error 1 @Extended 7 Return 0 = Folder name called in $sOutputReport not found.
-;                  @Error 1 @Extended 8 Return 0 = Report already exists with called name in Destination.
+;                  @Error 1 @Extended 4 Return 0 = Requested report not found.
+;                  @Error 1 @Extended 5 Return 0 = Name called in $sInputReport not a Report.
+;                  @Error 1 @Extended 6 Return 0 = Folder name called in $sOutputReport not found.
+;                  @Error 1 @Extended 7 Return 0 = Report already exists with called name in Destination.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.sdb.DocumentDefinition" Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Connection called in $oConnection is closed.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Report Documents Object.
-;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Source Folder Object.
-;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Report Object.
-;                  @Error 3 @Extended 5 Return 0 = Failed to retrieve Destination Folder Object.
-;                  @Error 3 @Extended 6 Return 0 = Failed to insert copied Report.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Report Object.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Destination Report name.
+;                  @Error 3 @Extended 5 Return 0 = Failed to insert copied Report.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Copied report successfully inserted.
 ; Author ........: donnyh13
@@ -1293,10 +1291,9 @@ Func _LOBase_ReportCopy(ByRef $oConnection, $sInputReport, $sOutputReport)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $oSource, $oDestination, $oRepDef, $oDocDef
-	Local $asSplit[0]
+	Local $oSource, $oRepDef, $oDocDef
 	Local $aArgs[3]
-	Local $sSourceReport, $sDestReport
+	Local $sDestReport
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sInputReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -1305,49 +1302,26 @@ Func _LOBase_ReportCopy(ByRef $oConnection, $sInputReport, $sOutputReport)
 
 	$oSource = $oConnection.Parent.DatabaseDocument.ReportDocuments()
 	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If Not $oSource.hasByHierarchicalName($sInputReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-	$asSplit = StringSplit($sInputReport, "/")
+	$oRepDef = $oSource.getByHierarchicalName($sInputReport)
+	If Not IsObj($oRepDef) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If Not $oRepDef.supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If StringInStr($sOutputReport, "/") And Not $oSource.hasByHierarchicalName(StringLeft($sOutputReport, StringInStr($sOutputReport, "/", 0, -1) - 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If $oSource.hasByHierarchicalName($sOutputReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
-	For $i = 1 To $asSplit[0] - 1
-		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-
-		$oSource = $oSource.getByName($asSplit[$i])
-		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-	Next
-
-	$sSourceReport = $asSplit[$asSplit[0]] ; Last element of Array will be the Input Report's name to Copy
-
-	If Not $oSource.hasByName($sSourceReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
-	$oRepDef = $oSource.getByName($sSourceReport)
-	If Not IsObj($oRepDef) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
-	If Not $oRepDef.supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-
-	$oDestination = $oConnection.Parent.DatabaseDocument.ReportDocuments()
-	If Not IsObj($oDestination) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-	$asSplit = StringSplit($sOutputReport, "/")
-
-	For $i = 1 To $asSplit[0] - 1
-		If Not $oDestination.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
-
-		$oDestination = $oDestination.getByName($asSplit[$i])
-		If Not IsObj($oDestination) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
-	Next
-
-	$sDestReport = $asSplit[$asSplit[0]] ; Last element of Array will be the Output Report name to Create
-
-	If $oDestination.hasByName($sDestReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+	$sDestReport = StringTrimLeft($sOutputReport, StringInStr($sOutputReport, "/", 0, -1))
+	If Not IsString($sDestReport) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 	$aArgs[0] = __LOBase_SetPropertyValue("Name", $sDestReport)
 	$aArgs[1] = __LOBase_SetPropertyValue("ActiveConnection", $oConnection)
 	$aArgs[2] = __LOBase_SetPropertyValue("EmbeddedObject", $oRepDef)
 
-	$oDocDef = $oDestination.createInstanceWithArguments("com.sun.star.sdb.DocumentDefinition", $aArgs)
+	$oDocDef = $oSource.createInstanceWithArguments("com.sun.star.sdb.DocumentDefinition", $aArgs)
 	If Not IsObj($oDocDef) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-	$oDestination.insertbyName($sDestReport, $oDocDef)
-	If Not $oDestination.hasByName($sDestReport) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
+	$oSource.insertByHierarchicalName($sOutputReport, $oDocDef)
+	If Not $oSource.hasByHierarchicalName($sOutputReport) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOBase_ReportCopy
@@ -1375,7 +1349,7 @@ EndFunc   ;==>_LOBase_ReportCopy
 ;                  @Error 3 @Extended 1 Return 0 = Connection called in $oConnection is closed.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Report Documents Object.
 ;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Document URL.
-;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Destination Folder Object.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Report name.
 ;                  @Error 3 @Extended 5 Return 0 = Failed to insert new Report into Base Document.
 ;                  @Error 3 @Extended 6 Return 0 = Failed to open new Report Document.
 ;                  --Success--
@@ -1395,11 +1369,9 @@ Func _LOBase_ReportCreate(ByRef $oConnection, $sReport, $bOpen = False, $bHidden
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local Const $iURLFrameCreate = 8 ; Frame will be created if not found
 	Local $oSource, $oReportDoc, $oDocDef
-	Local $asSplit[0]
 	Local $aArgs[3]
-	Local $sDocURL
+	Local $sDocURL, $sReportName
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -1410,41 +1382,32 @@ Func _LOBase_ReportCreate(ByRef $oConnection, $sReport, $bOpen = False, $bHidden
 	$oSource = $oConnection.Parent.DatabaseDocument.ReportDocuments()
 	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	$sDocURL = $oConnection.Parent.DatabaseDocument.URL()
+	$sDocURL = $oSource.Parent.URL()
 	If Not IsString($sDocURL) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If StringInStr($sReport, "/") And Not $oSource.hasByHierarchicalName(StringLeft($sReport, StringInStr($sReport, "/", 0, -1) - 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If $oSource.hasByHierarchicalName($sReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
-	$asSplit = StringSplit($sReport, "/")
+	$sReportName = StringTrimLeft($sReport, StringInStr($sReport, "/", 0, -1))
+	If Not IsString($sReportName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
-	For $i = 1 To $asSplit[0] - 1
-		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
-		$oSource = $oSource.getByName($asSplit[$i])
-		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
-	Next
-
-	$sReport = $asSplit[$asSplit[0]] ; Last element of Array will be the Report name to Create
-
-	If $oSource.hasByName($sReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-
-	$aArgs[0] = __LOBase_SetPropertyValue("Name", $sReport)
-	$aArgs[1] = __LOBase_SetPropertyValue("Parent", $oConnection.Parent.DatabaseDocument.ReportDocuments())
+	$aArgs[0] = __LOBase_SetPropertyValue("Name", $sReportName)
+	$aArgs[1] = __LOBase_SetPropertyValue("Parent", $oSource)
 	$aArgs[2] = __LOBase_SetPropertyValue("URL", _LOBase_PathConvert($sDocURL, $LOB_PATHCONV_OFFICE_RETURN))
 
 	$oDocDef = $oSource.createInstanceWithArguments("com.sun.star.sdb.DocumentDefinition", $aArgs)
 	If Not IsObj($oDocDef) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-	$oSource.insertbyName($sReport, $oDocDef)
+	$oSource.insertByHierarchicalName($sReport, $oDocDef)
 
-	If Not $oSource.hasByName($sReport) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+	If Not $oSource.hasByHierarchicalName($sReport) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
 	If $bOpen Then
-		If Not $oConnection.Parent.DatabaseDocument.CurrentController.isConnected() Then $oConnection.Parent.DatabaseDocument.CurrentController.connect()
+		If Not $oSource.Parent.CurrentController.isConnected() Then $oSource.Parent.CurrentController.connect()
 
-		$aArgs[0] = __LOBase_SetPropertyValue("ActiveConnection", $oConnection)
-		$aArgs[1] = __LOBase_SetPropertyValue("OpenMode", "openDesign")
-		$aArgs[2] = __LOBase_SetPropertyValue("Hidden", $bHidden)
+		ReDim $aArgs[1]
+		$aArgs[0] = __LOBase_SetPropertyValue("Hidden", $bHidden)
 
-		$oReportDoc = $oSource.loadComponentFromURL($sReport, "_blank", $iURLFrameCreate, $aArgs)
+		$oReportDoc = $oSource.Parent.CurrentController.loadComponentWithArguments($LOB_SUB_COMP_TYPE_REPORT, $sReport, True, $aArgs)
 		If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $oReportDoc)
@@ -1574,13 +1537,11 @@ EndFunc   ;==>_LOBase_ReportData
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
-;                  @Error 1 @Extended 3 Return 0 = Folder or Sub-Folder not found.
-;                  @Error 1 @Extended 4 Return 0 = Name called in $sName not found in Folder.
-;                  @Error 1 @Extended 5 Return 0 = Name called in $sName not a Report.
+;                  @Error 1 @Extended 3 Return 0 = Name called in $sName not found in Folder.
+;                  @Error 1 @Extended 4 Return 0 = Name called in $sName not a Report.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Report Documents Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Destination Folder Object.
-;                  @Error 3 @Extended 3 Return 0 = Failed to delete Report.
+;                  @Error 3 @Extended 2 Return 0 = Failed to delete Report.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Report was successfully deleted.
 ; Author ........: donnyh13
@@ -1595,31 +1556,18 @@ Func _LOBase_ReportDelete(ByRef $oDoc, $sName)
 	#forceref $oCOM_ErrorHandler
 
 	Local $oSource
-	Local $asSplit[0]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oSource = $oDoc.ReportDocuments()
 	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not $oSource.hasByHierarchicalName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not $oSource.getByHierarchicalName($sName).supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-	$asSplit = StringSplit($sName, "/")
+	$oSource.removeByHierarchicalName($sName)
 
-	For $i = 1 To $asSplit[0] - 1
-		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
-		$oSource = $oSource.getByName($asSplit[$i])
-		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-	Next
-
-	$sName = $asSplit[$asSplit[0]] ; Last element of Array will be the Report name to delete
-
-	If Not $oSource.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If Not $oSource.getByName($sName).supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
-	$oSource.removeByName($sName)
-
-	If $oSource.hasByName($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If $oSource.hasByHierarchicalName($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOBase_ReportDelete
@@ -1905,19 +1853,16 @@ EndFunc   ;==>_LOBase_ReportExists
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sInputFolder not a String.
 ;                  @Error 1 @Extended 3 Return 0 = $sOutputFolder not a String.
-;                  @Error 1 @Extended 4 Return 0 = Folder name called in $sInputFolder not found.
-;                  @Error 1 @Extended 5 Return 0 = Requested Folder not found.
-;                  @Error 1 @Extended 6 Return 0 = Folder name called in $sInputFolder not a Folder.
-;                  @Error 1 @Extended 7 Return 0 = Folder name called in $sOutputFolder not found.
-;                  @Error 1 @Extended 8 Return 0 = Folder already exists with called name in Destination.
+;                  @Error 1 @Extended 4 Return 0 = Requested Folder not found.
+;                  @Error 1 @Extended 5 Return 0 = Name called in $sInputFolder not a Folder.
+;                  @Error 1 @Extended 6 Return 0 = Folder already exists with called name in Destination.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.sdb.Reports" Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Report Documents Object.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Source Folder Object.
-;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Folder Object.
-;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Destination Folder Object.
-;                  @Error 3 @Extended 5 Return 0 = Failed to insert copied Folder.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Destination Folder name.
+;                  @Error 3 @Extended 4 Return 0 = Failed to insert copied Folder.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Copied Folder successfully inserted.
 ; Author ........: donnyh13
@@ -1934,10 +1879,9 @@ Func _LOBase_ReportFolderCopy(ByRef $oDoc, $sInputFolder, $sOutputFolder)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $oSource, $oDestination, $oSourceReportFolder, $oFolder
-	Local $asSplit[0]
+	Local $oSource, $oSourceReportFolder, $oFolder
 	Local $aArgs[2]
-	Local $sSourceFolder, $sDestFolder
+	Local $sDestFolder
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sInputFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -1945,48 +1889,24 @@ Func _LOBase_ReportFolderCopy(ByRef $oDoc, $sInputFolder, $sOutputFolder)
 
 	$oSource = $oDoc.ReportDocuments()
 	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not $oSource.hasByHierarchicalName($sInputFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-	$asSplit = StringSplit($sInputFolder, "/")
+	$oSourceReportFolder = $oSource.getByHierarchicalName($sInputFolder)
+	If Not IsObj($oSourceReportFolder) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If Not $oSourceReportFolder.supportsService("com.sun.star.sdb.Reports") Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
-	For $i = 1 To $asSplit[0] - 1
-		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-
-		$oSource = $oSource.getByName($asSplit[$i])
-		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-	Next
-
-	$sSourceFolder = $asSplit[$asSplit[0]] ; Last element of Array will be the Input Report Folder's name to Copy
-
-	If Not $oSource.hasByName($sSourceFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
-	$oSourceReportFolder = $oSource.getByName($sSourceFolder)
-	If Not IsObj($oSourceReportFolder) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-	If Not $oSourceReportFolder.supportsService("com.sun.star.sdb.Reports") Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-
-	$oDestination = $oDoc.ReportDocuments()
-	If Not IsObj($oDestination) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	$asSplit = StringSplit($sOutputFolder, "/")
-
-	For $i = 1 To $asSplit[0] - 1
-		If Not $oDestination.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
-
-		$oDestination = $oDestination.getByName($asSplit[$i])
-		If Not IsObj($oDestination) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
-	Next
-
-	$sDestFolder = $asSplit[$asSplit[0]] ; Last element of Array will be the Output Report Folder name to Create
-
-	If $oDestination.hasByName($sDestFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+	$sDestFolder = StringTrimLeft($sOutputFolder, StringInStr($sOutputFolder, "/", 0, -1))
+	If Not IsString($sDestFolder) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If $oSource.hasByHierarchicalName($sOutputFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$aArgs[0] = __LOBase_SetPropertyValue("Name", $sDestFolder)
 	$aArgs[1] = __LOBase_SetPropertyValue("EmbeddedObject", $oSourceReportFolder)
 
-	$oFolder = $oDestination.createInstanceWithArguments("com.sun.star.sdb.Reports", $aArgs)
+	$oFolder = $oSource.createInstanceWithArguments("com.sun.star.sdb.Reports", $aArgs)
 	If Not IsObj($oFolder) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-	$oDestination.insertbyName($sDestFolder, $oFolder)
-	If Not $oDestination.hasByName($sDestFolder) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+	$oSource.insertByHierarchicalName($sOutputFolder, $oFolder)
+	If Not $oSource.hasByHierarchicalName($sOutputFolder) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOBase_ReportFolderCopy
@@ -2004,14 +1924,13 @@ EndFunc   ;==>_LOBase_ReportFolderCopy
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sFolder not a String.
 ;                  @Error 1 @Extended 3 Return 0 = $bCreateMulti not a Boolean.
-;                  @Error 1 @Extended 4 Return 0 = Folder or Sub-Folder not found.
-;                  @Error 1 @Extended 5 Return 0 = Name called in $sFolder already exists in Folder.
+;                  @Error 1 @Extended 4 Return 0 = Name called in $sFolder already exists in Folder.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create Folder Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Report Documents Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Destination Folder Object.
-;                  @Error 3 @Extended 3 Return 0 = Failed to insert new Folder into Base Document.
+;                  @Error 3 @Extended 2 Return 0 = Failed to insert new Folder into Base Document.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Destination Folder Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully created the Folder(s).
 ; Author ........: donnyh13
@@ -2034,39 +1953,37 @@ Func _LOBase_ReportFolderCreate(ByRef $oDoc, $sFolder, $bCreateMulti = False)
 
 	$oSource = $oDoc.ReportDocuments()
 	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If $oDoc.ReportDocuments.hasByHierarchicalName($sFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-	$asSplit = StringSplit($sFolder, "/")
+	If $bCreateMulti Then
+		$asSplit = StringSplit($sFolder, "/")
 
-	For $i = 1 To $asSplit[0] - 1
-		If Not $bCreateMulti And Not $oSource.hasByName($asSplit[$i]) Then
+		For $i = 1 To $asSplit[0]
+			If Not $oSource.hasByName($asSplit[$i]) Then
+				$oObj = $oSource.createInstance("com.sun.star.sdb.Reports")
+				If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-			Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+				$oSource.insertbyName($asSplit[$i], $oObj)
 
-		ElseIf $bCreateMulti And Not $oSource.hasByName($asSplit[$i]) Then
-			$oObj = $oSource.createInstance("com.sun.star.sdb.Reports")
-			If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+				If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-			$oSource.insertbyName($asSplit[$i], $oObj)
-			If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+				$oSource = $oSource.getByName($asSplit[$i])
+				If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
-			$oSource = $oSource.getByName($asSplit[$i])
-			If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+			Else
+				$oSource = $oSource.getByName($asSplit[$i])
+				If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+			EndIf
+		Next
 
-		Else
-			$oSource = $oSource.getByName($asSplit[$i])
-			If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-		EndIf
-	Next
+	Else
+		$oObj = $oSource.createInstance("com.sun.star.sdb.Reports")
+		If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-	$sFolder = $asSplit[$asSplit[0]] ; Last element of Array will be the Folder name to Create
+		$oSource.insertByHierarchicalName($sFolder, $oObj)
+	EndIf
 
-	If $oSource.hasByName($sFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
-	$oObj = $oSource.createInstance("com.sun.star.sdb.Reports")
-	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-
-	$oSource.insertbyName($sFolder, $oObj)
-	If Not $oSource.hasByName($sFolder) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If Not $oDoc.ReportDocuments.hasByHierarchicalName($sFolder) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOBase_ReportFolderCreate
@@ -2082,13 +1999,11 @@ EndFunc   ;==>_LOBase_ReportFolderCreate
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
-;                  @Error 1 @Extended 3 Return 0 = Folder or Sub-Folder not found.
-;                  @Error 1 @Extended 4 Return 0 = Name called in $sName not found in Folder.
-;                  @Error 1 @Extended 5 Return 0 = Name called in $sName not a Folder.
+;                  @Error 1 @Extended 3 Return 0 = Name called in $sName not found in Folder.
+;                  @Error 1 @Extended 4 Return 0 = Name called in $sName not a Folder.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Report Documents Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Destination Folder Object.
-;                  @Error 3 @Extended 3 Return 0 = Failed to delete Folder.
+;                  @Error 3 @Extended 2 Return 0 = Failed to delete Folder.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Folder was successfully deleted.
 ; Author ........: donnyh13
@@ -2104,31 +2019,18 @@ Func _LOBase_ReportFolderDelete(ByRef $oDoc, $sName)
 	#forceref $oCOM_ErrorHandler
 
 	Local $oSource
-	Local $asSplit[0]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oSource = $oDoc.ReportDocuments()
 	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not $oSource.hasByHierarchicalName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not $oSource.getByHierarchicalName($sName).supportsService("com.sun.star.sdb.Reports") Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-	$asSplit = StringSplit($sName, "/")
+	$oSource.removeByHierarchicalName($sName)
 
-	For $i = 1 To $asSplit[0] - 1
-		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
-		$oSource = $oSource.getByName($asSplit[$i])
-		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-	Next
-
-	$sName = $asSplit[$asSplit[0]] ; Last element of Array will be the Folder name to Delete
-
-	If Not $oSource.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If Not $oSource.getByName($sName).supportsService("com.sun.star.sdb.Reports") Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
-	$oSource.removeByName($sName)
-
-	If $oSource.hasByName($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If $oSource.hasByHierarchicalName($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOBase_ReportFolderDelete
@@ -2258,13 +2160,11 @@ EndFunc   ;==>_LOBase_ReportFolderExists
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sFolder not a String.
 ;                  @Error 1 @Extended 3 Return 0 = $sNewName not a String.
-;                  @Error 1 @Extended 4 Return 0 = Folder or Sub-Folder not found.
+;                  @Error 1 @Extended 4 Return 0 = Folder name called in $sFolder not found in Folder or is not a Folder.
 ;                  @Error 1 @Extended 5 Return 0 = Name called in $sNewName already exists in Folder.
-;                  @Error 1 @Extended 6 Return 0 = Folder name called in $sFolder not found in Folder or is not a Folder.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Report Documents Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Destination Folder Object.
-;                  @Error 3 @Extended 3 Return 0 = Failed to rename folder.
+;                  @Error 3 @Extended 2 Return 0 = Failed to rename folder.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully renamed the Folder
 ; Author ........: donnyh13
@@ -2279,7 +2179,6 @@ Func _LOBase_ReportFolderRename(ByRef $oDoc, $sFolder, $sNewName)
 	#forceref $oCOM_ErrorHandler
 
 	Local $oSource
-	Local $asSplit[0]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -2287,24 +2186,12 @@ Func _LOBase_ReportFolderRename(ByRef $oDoc, $sFolder, $sNewName)
 
 	$oSource = $oDoc.ReportDocuments()
 	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not $oSource.hasByHierarchicalName($sFolder) Or Not $oSource.getByHierarchicalName($sFolder).supportsService("com.sun.star.sdb.Reports") Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If $oSource.hasByHierarchicalName(StringLeft($sFolder, StringInStr($sFolder, "/", 0, -1)) & $sNewName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
-	$asSplit = StringSplit($sFolder, "/")
+	$oSource.getByHierarchicalName($sFolder).rename($sNewName)
 
-	For $i = 1 To $asSplit[0] - 1
-		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-
-		$oSource = $oSource.getByName($asSplit[$i])
-		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-	Next
-
-	$sFolder = $asSplit[$asSplit[0]] ; Last element of Array will be the Folder name to Rename
-
-	If $oSource.hasByName($sNewName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If Not $oSource.hasByName($sFolder) Or Not $oSource.getByName($sFolder).supportsService("com.sun.star.sdb.Reports") Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-
-	$oSource.getByName($sFolder).rename($sNewName)
-
-	If Not $oSource.hasByName($sNewName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If Not $oSource.hasByHierarchicalName(StringLeft($sFolder, StringInStr($sFolder, "/", 0, -1)) & $sNewName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOBase_ReportFolderRename
@@ -3676,14 +3563,12 @@ EndFunc   ;==>_LOBase_ReportIsModified
 ;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
 ;                  @Error 1 @Extended 3 Return 0 = $bDesign not a Boolean.
 ;                  @Error 1 @Extended 4 Return 0 = $bHidden not a Boolean.
-;                  @Error 1 @Extended 5 Return 0 = Folder or Sub-Folder not found.
-;                  @Error 1 @Extended 6 Return 0 = Name called in $sName not found in Folder.
-;                  @Error 1 @Extended 7 Return 0 = Name called in $sName not a Report.
+;                  @Error 1 @Extended 5 Return 0 = Report name called in $sName not found in Folder.
+;                  @Error 1 @Extended 6 Return 0 = Name called in $sName not a Report.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Connection called in $oConnection is closed.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Report Documents Object.
-;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Destination Folder Object.
-;                  @Error 3 @Extended 4 Return 0 = Failed to open Report Document.
+;                  @Error 3 @Extended 3 Return 0 = Failed to open Report Document.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Returning opened Report Document's Object.
 ; Author ........: donnyh13
@@ -3697,10 +3582,8 @@ Func _LOBase_ReportOpen(ByRef $oConnection, $sName, $bDesign = True, $bHidden = 
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local Const $iURLFrameCreate = 8 ; Frame will be created if not found
 	Local $oSource, $oReportDoc
-	Local $asSplit[0]
-	Local $aArgs[3]
+	Local $aArgs[1]
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -3708,32 +3591,18 @@ Func _LOBase_ReportOpen(ByRef $oConnection, $sName, $bDesign = True, $bHidden = 
 	If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If Not $oConnection.Parent.DatabaseDocument.CurrentController.isConnected() Then $oConnection.Parent.DatabaseDocument.CurrentController.connect()
-
 	$oSource = $oConnection.Parent.DatabaseDocument.ReportDocuments()
 	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	$asSplit = StringSplit($sName, "/")
+	If Not $oSource.Parent.CurrentController.isConnected() Then $oSource.Parent.CurrentController.connect()
 
-	For $i = 1 To $asSplit[0] - 1
-		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not $oSource.hasByHierarchicalName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not $oSource.getByHierarchicalName($sName).supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
-		$oSource = $oSource.getByName($asSplit[$i])
-		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-	Next
+	$aArgs[0] = __LOBase_SetPropertyValue("Hidden", $bHidden)
 
-	$sName = $asSplit[$asSplit[0]] ; Last element of Array will be the Report name to Open
-
-	If Not $oSource.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-	If Not $oSource.getByName($sName).supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
-
-	$aArgs[0] = __LOBase_SetPropertyValue("ActiveConnection", $oConnection)
-	$aArgs[1] = __LOBase_SetPropertyValue("OpenMode", ($bDesign) ? ("openDesign") : ("open"))
-	$aArgs[2] = __LOBase_SetPropertyValue("Hidden", $bHidden)
-
-	$oReportDoc = $oSource.loadComponentFromURL($sName, "_blank", $iURLFrameCreate, $aArgs)
-
-	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+	$oReportDoc = $oSource.Parent.CurrentController.loadComponentWithArguments($LOB_SUB_COMP_TYPE_REPORT, $sName, $bDesign, $aArgs)
+	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oReportDoc)
 EndFunc   ;==>_LOBase_ReportOpen
@@ -4023,13 +3892,11 @@ EndFunc   ;==>_LOBase_ReportPageHeader
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sReport not a String.
 ;                  @Error 1 @Extended 3 Return 0 = $sNewName not a String.
-;                  @Error 1 @Extended 4 Return 0 = Folder or Sub-Folder not found.
+;                  @Error 1 @Extended 4 Return 0 = Report name called in $sReport not found in Folder or is not a Report.
 ;                  @Error 1 @Extended 5 Return 0 = Name called in $sNewName already exists in Folder.
-;                  @Error 1 @Extended 6 Return 0 = Report name called in $sReport not found in Folder or is not a Report.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Report Documents Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Destination Folder Object.
-;                  @Error 3 @Extended 3 Return 0 = Failed to rename Report.
+;                  @Error 3 @Extended 2 Return 0 = Failed to rename Report.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully renamed the Report.
 ; Author ........: donnyh13
@@ -4044,7 +3911,6 @@ Func _LOBase_ReportRename(ByRef $oDoc, $sReport, $sNewName)
 	#forceref $oCOM_ErrorHandler
 
 	Local $oSource
-	Local $asSplit[0]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sReport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -4052,24 +3918,12 @@ Func _LOBase_ReportRename(ByRef $oDoc, $sReport, $sNewName)
 
 	$oSource = $oDoc.ReportDocuments()
 	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not $oSource.hasByHierarchicalName($sReport) Or Not $oSource.getByHierarchicalName($sReport).supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If $oSource.hasByHierarchicalName(StringLeft($sReport, StringInStr($sReport, "/", 0, -1)) & $sNewName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
-	$asSplit = StringSplit($sReport, "/")
+	$oSource.getByHierarchicalName($sReport).rename($sNewName)
 
-	For $i = 1 To $asSplit[0] - 1
-		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-
-		$oSource = $oSource.getByName($asSplit[$i])
-		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-	Next
-
-	$sReport = $asSplit[$asSplit[0]] ; Last element of Array will be the Report name to Rename
-
-	If $oSource.hasByName($sNewName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If Not $oSource.hasByName($sReport) Or Not $oSource.getByName($sReport).supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-
-	$oSource.getByName($sReport).rename($sNewName)
-
-	If Not $oSource.hasByName($sNewName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If Not $oSource.hasByHierarchicalName(StringLeft($sReport, StringInStr($sReport, "/", 0, -1)) & $sNewName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOBase_ReportRename

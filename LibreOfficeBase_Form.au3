@@ -252,20 +252,18 @@ EndFunc   ;==>_LOBase_FormConnect
 ;                  @Error 1 @Extended 1 Return 0 = $oConnection not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sInputForm not a String.
 ;                  @Error 1 @Extended 3 Return 0 = $sOutputForm not a String.
-;                  @Error 1 @Extended 4 Return 0 = Folder name called in $sInputForm not found.
-;                  @Error 1 @Extended 5 Return 0 = Requested Form not found.
-;                  @Error 1 @Extended 6 Return 0 = Form name called in $sInputForm not a Form.
-;                  @Error 1 @Extended 7 Return 0 = Folder name called in $sOutputForm not found.
-;                  @Error 1 @Extended 8 Return 0 = Form already exists with called name in Destination.
+;                  @Error 1 @Extended 4 Return 0 = Requested Form not found.
+;                  @Error 1 @Extended 5 Return 0 = Form name called in $sInputForm not a Form.
+;                  @Error 1 @Extended 6 Return 0 = Folder name called in $sOutputForm not found.
+;                  @Error 1 @Extended 7 Return 0 = Form already exists with called name in Destination.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.sdb.DocumentDefinition" Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Connection called in $oConnection is closed.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Form Documents Object.
-;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Source Folder Object.
-;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Form Object.
-;                  @Error 3 @Extended 5 Return 0 = Failed to retrieve Destination Folder Object.
-;                  @Error 3 @Extended 6 Return 0 = Failed to insert copied Form.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Source Form Object.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Destination Form name.
+;                  @Error 3 @Extended 5 Return 0 = Failed to insert copied Form.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Copied Form successfully inserted.
 ; Author ........: donnyh13
@@ -281,10 +279,9 @@ Func _LOBase_FormCopy(ByRef $oConnection, $sInputForm, $sOutputForm)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $oSource, $oDestination, $oFormDef, $oDocDef
-	Local $asSplit[0]
+	Local $oSource, $oFormDef, $oDocDef
 	Local $aArgs[3]
-	Local $sSourceForm, $sDestForm
+	Local $sDestForm
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sInputForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -293,49 +290,26 @@ Func _LOBase_FormCopy(ByRef $oConnection, $sInputForm, $sOutputForm)
 
 	$oSource = $oConnection.Parent.DatabaseDocument.FormDocuments()
 	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If Not $oSource.hasByHierarchicalName($sInputForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-	$asSplit = StringSplit($sInputForm, "/")
+	$oFormDef = $oSource.getByHierarchicalName($sInputForm)
+	If Not IsObj($oFormDef) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If Not $oFormDef.supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If StringInStr($sOutputForm, "/") And Not $oSource.hasByHierarchicalName(StringLeft($sOutputForm, StringInStr($sOutputForm, "/", 0, -1) - 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If $oSource.hasByHierarchicalName($sOutputForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
-	For $i = 1 To $asSplit[0] - 1
-		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-
-		$oSource = $oSource.getByName($asSplit[$i])
-		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-	Next
-
-	$sSourceForm = $asSplit[$asSplit[0]] ; Last element of Array will be the Input Form's name to Copy
-
-	If Not $oSource.hasByName($sSourceForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
-	$oFormDef = $oSource.getByName($sSourceForm)
-	If Not IsObj($oFormDef) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
-	If Not $oFormDef.supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-
-	$oDestination = $oConnection.Parent.DatabaseDocument.FormDocuments()
-	If Not IsObj($oDestination) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-	$asSplit = StringSplit($sOutputForm, "/")
-
-	For $i = 1 To $asSplit[0] - 1
-		If Not $oDestination.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
-
-		$oDestination = $oDestination.getByName($asSplit[$i])
-		If Not IsObj($oDestination) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
-	Next
-
-	$sDestForm = $asSplit[$asSplit[0]] ; Last element of Array will be the Output Form name to Create
-
-	If $oDestination.hasByName($sDestForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+	$sDestForm = StringTrimLeft($sOutputForm, StringInStr($sOutputForm, "/", 0, -1))
+	If Not IsString($sDestForm) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 	$aArgs[0] = __LOBase_SetPropertyValue("Name", $sDestForm)
 	$aArgs[1] = __LOBase_SetPropertyValue("ActiveConnection", $oConnection)
 	$aArgs[2] = __LOBase_SetPropertyValue("EmbeddedObject", $oFormDef)
 
-	$oDocDef = $oDestination.createInstanceWithArguments("com.sun.star.sdb.DocumentDefinition", $aArgs)
+	$oDocDef = $oSource.createInstanceWithArguments("com.sun.star.sdb.DocumentDefinition", $aArgs)
 	If Not IsObj($oDocDef) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-	$oDestination.insertbyName($sDestForm, $oDocDef)
-	If Not $oDestination.hasByName($sDestForm) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
+	$oSource.insertByHierarchicalName($sOutputForm, $oDocDef)
+	If Not $oSource.hasByHierarchicalName($sOutputForm) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOBase_FormCopy
@@ -358,7 +332,7 @@ EndFunc   ;==>_LOBase_FormCopy
 ;                  @Error 1 @Extended 4 Return 0 = $bDesign not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $bHidden not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = Folder or Sub-Folder not found.
-;                  @Error 1 @Extended 7 Return 0 = Name called in $sForm already exists in Folder.
+;                  @Error 1 @Extended 7 Return 0 = Form name called in $sForm already exists in Folder.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create com.sun.star.ServiceManager Object.
 ;                  @Error 2 @Extended 2 Return 0 = Failed to create com.sun.star.frame.Desktop Object.
@@ -367,7 +341,7 @@ EndFunc   ;==>_LOBase_FormCopy
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Connection called in $oConnection is closed.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Form Documents Object.
-;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Destination Folder Object.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Form Name.
 ;                  @Error 3 @Extended 4 Return 0 = Failed to insert new Form into Base Document.
 ;                  @Error 3 @Extended 5 Return 0 = Failed to open new Form Document.
 ;                  --Success--
@@ -385,11 +359,10 @@ Func _LOBase_FormCreate(ByRef $oConnection, $sForm, $bOpen = False, $bDesign = T
 	#forceref $oCOM_ErrorHandler
 
 	Local $oServiceManager, $oDesktop, $oSource, $oFormDoc, $oDocDef
-	Local $asSplit[0]
 	Local Const $iURLFrameCreate = 8 ; frame will be created if not found
 	Local $aArgs[1]
 	Local $iError = 0, $iCount = 0
-	Local $sPath = @TempDir & "AutoIt_Form_Temp_Doc_"
+	Local $sPath = @TempDir & "AutoIt_Form_Temp_Doc_", $sFormName
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -400,19 +373,11 @@ Func _LOBase_FormCreate(ByRef $oConnection, $sForm, $bOpen = False, $bDesign = T
 
 	$oSource = $oConnection.Parent.DatabaseDocument.FormDocuments()
 	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If StringInStr($sForm, "/") And Not $oSource.hasByHierarchicalName(StringLeft($sForm, StringInStr($sForm, "/", 0, -1) - 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If $oSource.hasByHierarchicalName($sForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
-	$asSplit = StringSplit($sForm, "/")
-
-	For $i = 1 To $asSplit[0] - 1
-		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-
-		$oSource = $oSource.getByName($asSplit[$i])
-		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-	Next
-
-	$sForm = $asSplit[$asSplit[0]] ; Last element of Array will be the Form name to Create
-
-	If $oSource.hasByName($sForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+	$sFormName = StringTrimLeft($sForm, StringInStr($sForm, "/", 0, -1))
+	If Not IsString($sFormName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	$aArgs[0] = __LOBase_SetPropertyValue("Hidden", True)
 	If Not IsObj($aArgs[0]) Then $iError = BitOR($iError, 1)
@@ -444,28 +409,26 @@ Func _LOBase_FormCreate(ByRef $oConnection, $sForm, $bOpen = False, $bDesign = T
 
 	ReDim $aArgs[3]
 
-	$aArgs[0] = __LOBase_SetPropertyValue("Name", $sForm)
-	$aArgs[1] = __LOBase_SetPropertyValue("Parent", $oConnection.Parent.DatabaseDocument.FormDocuments())
+	$aArgs[0] = __LOBase_SetPropertyValue("Name", $sFormName)
+	$aArgs[1] = __LOBase_SetPropertyValue("Parent", $oSource)
 	$aArgs[2] = __LOBase_SetPropertyValue("URL", _LOBase_PathConvert($sPath, $LOB_PATHCONV_OFFICE_RETURN))
 
 	$oDocDef = $oSource.createInstanceWithArguments("com.sun.star.sdb.DocumentDefinition", $aArgs)
 	If Not IsObj($oDocDef) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
 
-	$oSource.insertbyName($sForm, $oDocDef)
+	$oSource.insertByHierarchicalName($sForm, $oDocDef)
 
 	FileDelete($sPath) ; Delete the file, as it is no longer needed.
 
-	If Not $oSource.hasByName($sForm) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+	If Not $oSource.hasByHierarchicalName($sForm) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 	If $bOpen Then
-		If Not $oConnection.Parent.DatabaseDocument.CurrentController.isConnected() Then $oConnection.Parent.DatabaseDocument.CurrentController.connect()
+		If Not $oSource.Parent.CurrentController.isConnected() Then $oSource.Parent.CurrentController.connect()
 
-		$aArgs[0] = __LOBase_SetPropertyValue("ActiveConnection", $oConnection)
-		$aArgs[1] = __LOBase_SetPropertyValue("OpenMode", ($bDesign) ? ("openDesign") : ("open"))
-		$aArgs[2] = __LOBase_SetPropertyValue("Hidden", $bHidden)
+		ReDim $aArgs[1]
+		$aArgs[0] = __LOBase_SetPropertyValue("Hidden", $bHidden)
 
-		$oFormDoc = $oSource.loadComponentFromURL($sForm, "_blank", $iURLFrameCreate, $aArgs)
-
+		$oFormDoc = $oSource.Parent.CurrentController.loadComponentWithArguments($LOB_SUB_COMP_TYPE_FORM, $sForm, $bDesign, $aArgs)
 		If Not IsObj($oFormDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $oFormDoc)
@@ -485,13 +448,11 @@ EndFunc   ;==>_LOBase_FormCreate
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
-;                  @Error 1 @Extended 3 Return 0 = Folder or Sub-Folder not found.
-;                  @Error 1 @Extended 4 Return 0 = Name called in $sName not found in Folder.
-;                  @Error 1 @Extended 5 Return 0 = Name called in $sName not a Form.
+;                  @Error 1 @Extended 3 Return 0 = Name called in $sName not found in Folder.
+;                  @Error 1 @Extended 4 Return 0 = Name called in $sName not a Form.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Form Documents Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Destination Folder Object.
-;                  @Error 3 @Extended 3 Return 0 = Failed to delete form.
+;                  @Error 3 @Extended 2 Return 0 = Failed to delete form.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Form was successfully deleted.
 ; Author ........: donnyh13
@@ -506,31 +467,18 @@ Func _LOBase_FormDelete(ByRef $oDoc, $sName)
 	#forceref $oCOM_ErrorHandler
 
 	Local $oSource
-	Local $asSplit[0]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oSource = $oDoc.FormDocuments()
 	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not $oSource.hasByHierarchicalName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not $oSource.getByHierarchicalName($sName).supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-	$asSplit = StringSplit($sName, "/")
+	$oSource.removeByHierarchicalName($sName)
 
-	For $i = 1 To $asSplit[0] - 1
-		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
-		$oSource = $oSource.getByName($asSplit[$i])
-		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-	Next
-
-	$sName = $asSplit[$asSplit[0]] ; Last element of Array will be the Form name to delete
-
-	If Not $oSource.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If Not $oSource.getByName($sName).supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
-	$oSource.removeByName($sName)
-
-	If $oSource.hasByName($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If $oSource.hasByHierarchicalName($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOBase_FormDelete
@@ -701,19 +649,16 @@ EndFunc   ;==>_LOBase_FormExists
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sInputFolder not a String.
 ;                  @Error 1 @Extended 3 Return 0 = $sOutputFolder not a String.
-;                  @Error 1 @Extended 4 Return 0 = Folder name called in $sInputFolder not found.
-;                  @Error 1 @Extended 5 Return 0 = Requested Folder not found.
-;                  @Error 1 @Extended 6 Return 0 = Folder name called in $sInputFolder not a Folder.
-;                  @Error 1 @Extended 7 Return 0 = Folder name called in $sOutputFolder not found.
-;                  @Error 1 @Extended 8 Return 0 = Folder already exists with called name in Destination.
+;                  @Error 1 @Extended 4 Return 0 = Requested Folder not found.
+;                  @Error 1 @Extended 5 Return 0 = Name called in $sInputFolder not a Folder.
+;                  @Error 1 @Extended 6 Return 0 = Folder already exists with called name in Destination.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.sdb.Forms" Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Form Documents Object.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Source Folder Object.
-;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Folder Object.
-;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Destination Folder Object.
-;                  @Error 3 @Extended 5 Return 0 = Failed to insert copied Folder.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Destination Folder Name.
+;                  @Error 3 @Extended 4 Return 0 = Failed to insert copied Folder.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Copied Folder successfully inserted.
 ; Author ........: donnyh13
@@ -730,10 +675,9 @@ Func _LOBase_FormFolderCopy(ByRef $oDoc, $sInputFolder, $sOutputFolder)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $oSource, $oDestination, $oSourceFormFolder, $oFolder
-	Local $asSplit[0]
+	Local $oSource, $oSourceFormFolder, $oFolder
 	Local $aArgs[2]
-	Local $sSourceFolder, $sDestFolder
+	Local $sDestFolder
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sInputFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -741,48 +685,24 @@ Func _LOBase_FormFolderCopy(ByRef $oDoc, $sInputFolder, $sOutputFolder)
 
 	$oSource = $oDoc.FormDocuments()
 	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not $oSource.hasByHierarchicalName($sInputFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-	$asSplit = StringSplit($sInputFolder, "/")
+	$oSourceFormFolder = $oSource.getByHierarchicalName($sInputFolder)
+	If Not IsObj($oSourceFormFolder) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If Not $oSourceFormFolder.supportsService("com.sun.star.sdb.Forms") Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
-	For $i = 1 To $asSplit[0] - 1
-		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-
-		$oSource = $oSource.getByName($asSplit[$i])
-		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-	Next
-
-	$sSourceFolder = $asSplit[$asSplit[0]] ; Last element of Array will be the Input Form Folder's name to Copy
-
-	If Not $oSource.hasByName($sSourceFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
-	$oSourceFormFolder = $oSource.getByName($sSourceFolder)
-	If Not IsObj($oSourceFormFolder) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-	If Not $oSourceFormFolder.supportsService("com.sun.star.sdb.Forms") Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-
-	$oDestination = $oDoc.FormDocuments()
-	If Not IsObj($oDestination) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	$asSplit = StringSplit($sOutputFolder, "/")
-
-	For $i = 1 To $asSplit[0] - 1
-		If Not $oDestination.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
-
-		$oDestination = $oDestination.getByName($asSplit[$i])
-		If Not IsObj($oDestination) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
-	Next
-
-	$sDestFolder = $asSplit[$asSplit[0]] ; Last element of Array will be the Output Form Folder name to Create
-
-	If $oDestination.hasByName($sDestFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+	$sDestFolder = StringTrimLeft($sOutputFolder, StringInStr($sOutputFolder, "/", 0, -1))
+	If Not IsString($sDestFolder) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If $oSource.hasByHierarchicalName($sOutputFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$aArgs[0] = __LOBase_SetPropertyValue("Name", $sDestFolder)
 	$aArgs[1] = __LOBase_SetPropertyValue("EmbeddedObject", $oSourceFormFolder)
 
-	$oFolder = $oDestination.createInstanceWithArguments("com.sun.star.sdb.Forms", $aArgs)
+	$oFolder = $oSource.createInstanceWithArguments("com.sun.star.sdb.Forms", $aArgs)
 	If Not IsObj($oFolder) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-	$oDestination.insertbyName($sDestFolder, $oFolder)
-	If Not $oDestination.hasByName($sDestFolder) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+	$oSource.insertByHierarchicalName($sOutputFolder, $oFolder)
+	If Not $oSource.hasByHierarchicalName($sOutputFolder) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOBase_FormFolderCopy
@@ -800,14 +720,13 @@ EndFunc   ;==>_LOBase_FormFolderCopy
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sFolder not a String.
 ;                  @Error 1 @Extended 3 Return 0 = $bCreateMulti not a Boolean.
-;                  @Error 1 @Extended 4 Return 0 = Folder or Sub-Folder not found.
-;                  @Error 1 @Extended 5 Return 0 = Name called in $sFolder already exists in Folder.
+;                  @Error 1 @Extended 4 Return 0 = Name called in $sFolder already exists in Folder.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create Folder Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Form Documents Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Destination Folder Object.
-;                  @Error 3 @Extended 3 Return 0 = Failed to insert new Folder into Base Document.
+;                  @Error 3 @Extended 2 Return 0 = Failed to insert new Folder into Base Document.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Destination Folder Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully created the Folder(s).
 ; Author ........: donnyh13
@@ -830,40 +749,37 @@ Func _LOBase_FormFolderCreate(ByRef $oDoc, $sFolder, $bCreateMulti = False)
 
 	$oSource = $oDoc.FormDocuments()
 	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If $oDoc.FormDocuments.hasByHierarchicalName($sFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-	$asSplit = StringSplit($sFolder, "/")
+	If $bCreateMulti Then
+		$asSplit = StringSplit($sFolder, "/")
 
-	For $i = 1 To $asSplit[0] - 1
-		If Not $bCreateMulti And Not $oSource.hasByName($asSplit[$i]) Then
+		For $i = 1 To $asSplit[0]
+			If Not $oSource.hasByName($asSplit[$i]) Then
+				$oObj = $oSource.createInstance("com.sun.star.sdb.Forms")
+				If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-			Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+				$oSource.insertbyName($asSplit[$i], $oObj)
 
-		ElseIf $bCreateMulti And Not $oSource.hasByName($asSplit[$i]) Then
-			$oObj = $oSource.createInstance("com.sun.star.sdb.Forms")
-			If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+				If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-			$oSource.insertbyName($asSplit[$i], $oObj)
+				$oSource = $oSource.getByName($asSplit[$i])
+				If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
-			If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+			Else
+				$oSource = $oSource.getByName($asSplit[$i])
+				If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+			EndIf
+		Next
 
-			$oSource = $oSource.getByName($asSplit[$i])
-			If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	Else
+		$oObj = $oSource.createInstance("com.sun.star.sdb.Forms")
+		If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-		Else
-			$oSource = $oSource.getByName($asSplit[$i])
-			If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-		EndIf
-	Next
+		$oSource.insertByHierarchicalName($sFolder, $oObj)
+	EndIf
 
-	$sFolder = $asSplit[$asSplit[0]] ; Last element of Array will be the Folder name to Create
-
-	If $oSource.hasByName($sFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
-	$oObj = $oSource.createInstance("com.sun.star.sdb.Forms")
-	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-
-	$oSource.insertbyName($sFolder, $oObj)
-	If Not $oSource.hasByName($sFolder) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If Not $oDoc.FormDocuments.hasByHierarchicalName($sFolder) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOBase_FormFolderCreate
@@ -879,13 +795,11 @@ EndFunc   ;==>_LOBase_FormFolderCreate
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
-;                  @Error 1 @Extended 3 Return 0 = Folder or Sub-Folder not found.
-;                  @Error 1 @Extended 4 Return 0 = Name called in $sName not found in Folder.
-;                  @Error 1 @Extended 5 Return 0 = Name called in $sName not a Folder.
+;                  @Error 1 @Extended 3 Return 0 = Name called in $sName not found in Folder.
+;                  @Error 1 @Extended 4 Return 0 = Name called in $sName not a Folder.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Form Documents Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Destination Folder Object.
-;                  @Error 3 @Extended 3 Return 0 = Failed to delete Folder.
+;                  @Error 3 @Extended 2 Return 0 = Failed to delete Folder.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Folder was successfully deleted.
 ; Author ........: donnyh13
@@ -901,31 +815,18 @@ Func _LOBase_FormFolderDelete(ByRef $oDoc, $sName)
 	#forceref $oCOM_ErrorHandler
 
 	Local $oSource
-	Local $asSplit[0]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oSource = $oDoc.FormDocuments()
 	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not $oSource.hasByHierarchicalName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not $oSource.getByHierarchicalName($sName).supportsService("com.sun.star.sdb.Forms") Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-	$asSplit = StringSplit($sName, "/")
+	$oSource.removeByHierarchicalName($sName)
 
-	For $i = 1 To $asSplit[0] - 1
-		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
-		$oSource = $oSource.getByName($asSplit[$i])
-		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-	Next
-
-	$sName = $asSplit[$asSplit[0]] ; Last element of Array will be the Folder name to Delete
-
-	If Not $oSource.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If Not $oSource.getByName($sName).supportsService("com.sun.star.sdb.Forms") Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
-	$oSource.removeByName($sName)
-
-	If $oSource.hasByName($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If $oSource.hasByHierarchicalName($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOBase_FormFolderDelete
@@ -1055,13 +956,11 @@ EndFunc   ;==>_LOBase_FormFolderExists
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sFolder not a String.
 ;                  @Error 1 @Extended 3 Return 0 = $sNewName not a String.
-;                  @Error 1 @Extended 4 Return 0 = Folder or Sub-Folder not found.
+;                  @Error 1 @Extended 4 Return 0 = Folder name called in $sFolder not found in Folder or is not a Folder.
 ;                  @Error 1 @Extended 5 Return 0 = Name called in $sNewName already exists in Folder.
-;                  @Error 1 @Extended 6 Return 0 = Folder name called in $sFolder not found in Folder or is not a Folder.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Form Documents Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Destination Folder Object.
-;                  @Error 3 @Extended 3 Return 0 = Failed to rename folder.
+;                  @Error 3 @Extended 2 Return 0 = Failed to rename folder.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully renamed the Folder
 ; Author ........: donnyh13
@@ -1076,7 +975,6 @@ Func _LOBase_FormFolderRename(ByRef $oDoc, $sFolder, $sNewName)
 	#forceref $oCOM_ErrorHandler
 
 	Local $oSource
-	Local $asSplit[0]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -1084,24 +982,12 @@ Func _LOBase_FormFolderRename(ByRef $oDoc, $sFolder, $sNewName)
 
 	$oSource = $oDoc.FormDocuments()
 	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not $oSource.hasByHierarchicalName($sFolder) Or Not $oSource.getByHierarchicalName($sFolder).supportsService("com.sun.star.sdb.Forms") Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If $oSource.hasByHierarchicalName(StringLeft($sFolder, StringInStr($sFolder, "/", 0, -1)) & $sNewName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
-	$asSplit = StringSplit($sFolder, "/")
+	$oSource.getByHierarchicalName($sFolder).rename($sNewName)
 
-	For $i = 1 To $asSplit[0] - 1
-		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-
-		$oSource = $oSource.getByName($asSplit[$i])
-		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-	Next
-
-	$sFolder = $asSplit[$asSplit[0]] ; Last element of Array will be the Folder name to Rename
-
-	If $oSource.hasByName($sNewName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If Not $oSource.hasByName($sFolder) Or Not $oSource.getByName($sFolder).supportsService("com.sun.star.sdb.Forms") Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-
-	$oSource.getByName($sFolder).rename($sNewName)
-
-	If Not $oSource.hasByName($sNewName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If Not $oSource.hasByHierarchicalName(StringLeft($sFolder, StringInStr($sFolder, "/", 0, -1)) & $sNewName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOBase_FormFolderRename
@@ -1366,14 +1252,12 @@ EndFunc   ;==>_LOBase_FormIsModified
 ;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
 ;                  @Error 1 @Extended 3 Return 0 = $bDesign not a Boolean.
 ;                  @Error 1 @Extended 4 Return 0 = $bHidden not a Boolean.
-;                  @Error 1 @Extended 5 Return 0 = Folder or Sub-Folder not found.
-;                  @Error 1 @Extended 6 Return 0 = Name called in $sName not found in Folder.
-;                  @Error 1 @Extended 7 Return 0 = Name called in $sName not a Form.
+;                  @Error 1 @Extended 5 Return 0 = Name called in $sName not found.
+;                  @Error 1 @Extended 6 Return 0 = Name called in $sName not a Form.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Connection called in $oConnection is closed.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Form Documents Object.
-;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Destination Folder Object.
-;                  @Error 3 @Extended 4 Return 0 = Failed to open Form Document.
+;                  @Error 3 @Extended 3 Return 0 = Failed to open Form Document.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Returning opened Form Document's Object.
 ; Author ........: donnyh13
@@ -1387,10 +1271,8 @@ Func _LOBase_FormOpen(ByRef $oConnection, $sName, $bDesign = True, $bHidden = Fa
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local Const $iURLFrameCreate = 8 ; Frame will be created if not found
 	Local $oSource, $oFormDoc
-	Local $asSplit[0]
-	Local $aArgs[3]
+	Local $aArgs[1]
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -1398,32 +1280,18 @@ Func _LOBase_FormOpen(ByRef $oConnection, $sName, $bDesign = True, $bHidden = Fa
 	If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If $oConnection.isClosed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If Not $oConnection.Parent.DatabaseDocument.CurrentController.isConnected() Then $oConnection.Parent.DatabaseDocument.CurrentController.connect()
-
 	$oSource = $oConnection.Parent.DatabaseDocument.FormDocuments()
 	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	$asSplit = StringSplit($sName, "/")
+	If Not $oSource.Parent.CurrentController.isConnected() Then $oSource.Parent.CurrentController.connect()
 
-	For $i = 1 To $asSplit[0] - 1
-		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not $oSource.hasByHierarchicalName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not $oSource.getByHierarchicalName($sName).supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
-		$oSource = $oSource.getByName($asSplit[$i])
-		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-	Next
+	$aArgs[0] = __LOBase_SetPropertyValue("Hidden", $bHidden)
 
-	$sName = $asSplit[$asSplit[0]] ; Last element of Array will be the Form name to Open
-
-	If Not $oSource.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-	If Not $oSource.getByName($sName).supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
-
-	$aArgs[0] = __LOBase_SetPropertyValue("ActiveConnection", $oConnection)
-	$aArgs[1] = __LOBase_SetPropertyValue("OpenMode", ($bDesign) ? ("openDesign") : ("open"))
-	$aArgs[2] = __LOBase_SetPropertyValue("Hidden", $bHidden)
-
-	$oFormDoc = $oSource.loadComponentFromURL($sName, "_blank", $iURLFrameCreate, $aArgs)
-
-	If Not IsObj($oFormDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+	$oFormDoc = $oSource.Parent.CurrentController.loadComponentWithArguments($LOB_SUB_COMP_TYPE_FORM, $sName, $bDesign, $aArgs)
+	If Not IsObj($oFormDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oFormDoc)
 EndFunc   ;==>_LOBase_FormOpen
@@ -1441,13 +1309,11 @@ EndFunc   ;==>_LOBase_FormOpen
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sForm not a String.
 ;                  @Error 1 @Extended 3 Return 0 = $sNewName not a String.
-;                  @Error 1 @Extended 4 Return 0 = Folder or Sub-Folder not found.
+;                  @Error 1 @Extended 4 Return 0 = Form name called in $sForm not found in Folder or is not a Form.
 ;                  @Error 1 @Extended 5 Return 0 = Name called in $sNewName already exists in Folder.
-;                  @Error 1 @Extended 6 Return 0 = Form name called in $sForm not found in Folder or is not a Form.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Form Documents Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Destination Folder Object.
-;                  @Error 3 @Extended 3 Return 0 = Failed to rename form.
+;                  @Error 3 @Extended 2 Return 0 = Failed to rename form.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully renamed the Form.
 ; Author ........: donnyh13
@@ -1462,7 +1328,6 @@ Func _LOBase_FormRename(ByRef $oDoc, $sForm, $sNewName)
 	#forceref $oCOM_ErrorHandler
 
 	Local $oSource
-	Local $asSplit[0]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -1470,24 +1335,12 @@ Func _LOBase_FormRename(ByRef $oDoc, $sForm, $sNewName)
 
 	$oSource = $oDoc.FormDocuments()
 	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not $oSource.hasByHierarchicalName($sForm) Or Not $oSource.getByHierarchicalName($sForm).supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If $oSource.hasByHierarchicalName(StringLeft($sForm, StringInStr($sForm, "/", 0, -1)) & $sNewName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
-	$asSplit = StringSplit($sForm, "/")
+	$oSource.getByHierarchicalName($sForm).rename($sNewName)
 
-	For $i = 1 To $asSplit[0] - 1
-		If Not $oSource.hasByName($asSplit[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-
-		$oSource = $oSource.getByName($asSplit[$i])
-		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-	Next
-
-	$sForm = $asSplit[$asSplit[0]] ; Last element of Array will be the Form name to Rename
-
-	If $oSource.hasByName($sNewName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If Not $oSource.hasByName($sForm) Or Not $oSource.getByName($sForm).supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-
-	$oSource.getByName($sForm).rename($sNewName)
-
-	If Not $oSource.hasByName($sNewName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If Not $oSource.hasByHierarchicalName(StringLeft($sForm, StringInStr($sForm, "/", 0, -1)) & $sNewName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOBase_FormRename

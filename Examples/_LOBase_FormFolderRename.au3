@@ -42,9 +42,22 @@ Func Example()
 	_LOBase_FormFolderCreate($oDoc, "AutoIt_Folder/Folder2/Folder3")
 	If @error Then Return _ERROR($oDoc, "Failed to create a form folder. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
+	; Retrieve an array of Folder names.
+	$asFolders = _LOBase_FormFoldersGetNames($oDoc, True)
+	If @error Then Return _ERROR($oDoc, "Failed to retrieve array of folder names. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	For $i = 0 To @extended - 1
+		$sFolders &= $asFolders[$i] & @CRLF
+	Next
+
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Here is a list of folders contained in the document." & @CRLF & $sFolders & @CRLF & @CRLF & _
+			"Press ok to rename ""Folder3"".")
+
 	; Rename "Folder3" to "Third_Folder".
 	_LOBase_FormFolderRename($oDoc, "AutoIt_Folder/Folder2/Folder3", "Third_Folder")
 	If @error Then Return _ERROR($oDoc, "Failed to create a form folder. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	$sFolders = ""
 
 	; Retrieve an array of Folder names.
 	$asFolders = _LOBase_FormFoldersGetNames($oDoc, True)
