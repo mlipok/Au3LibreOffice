@@ -36,6 +36,8 @@
 ; _LOBase_DocSave
 ; _LOBase_DocSaveAs
 ; _LOBase_DocSaveCopy
+; _LOBase_DocSubComponentsClose
+; _LOBase_DocSubComponentsGetList
 ; _LOBase_DocVisible
 ; ===============================================================================================================================
 
@@ -945,6 +947,110 @@ Func _LOBase_DocSaveCopy(ByRef $oDoc, $sFilePath, $bOverwrite = Null, $sPassword
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $sSavePath)
 EndFunc   ;==>_LOBase_DocSaveCopy
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_DocSubComponentsClose
+; Description ...: Attempt to close all open SubComponent windows.
+; Syntax ........: _LOBase_DocSubComponentsClose(ByRef $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOBase_DocOpen, _LOBase_DocConnect, or _LOBase_DocCreate function.
+; Return values .: Success: Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Document called in $oDoc has not been saved to a location yet.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to attempt to close components.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returning a Boolean whether all SubComponents were closed successfully (True), or if some failed to close (False).
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: This functions attempts to close all open Sub components (Tables, Queries, Forms or Reports [Except Reports in Viewing mode]). This will fail if any of the following is true for any open components: there are unsaved changes, if a dialog is open or if the user is printing from one of the documents.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_DocSubComponentsClose(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $bClosed
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oDoc.hasLocation() Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$bClosed = $oDoc.CurrentController.closeSubComponents()
+	If Not IsBool($bClosed) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $bClosed)
+EndFunc   ;==>_LOBase_DocSubComponentsClose
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_DocSubComponentsGetList
+; Description ...: Retrieve an Array of currently open SubComponents (Tables, Queries, Forms or Reports [Except Reports in Viewing mode]).
+; Syntax ........: _LOBase_DocSubComponentsGetList(ByRef $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOBase_DocOpen, _LOBase_DocConnect, or _LOBase_DocCreate function.
+; Return values .: Success: Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Document called in $oDoc has not been saved to a location yet.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve array of SubComponents.
+;                  @Error 3 @Extended 2 Return 0 = Failed to identify SubComponent type.
+;                  --Success--
+;                  @Error 0 @Extended ? Return Array = Success. Returning a four column Array of currently open SubComponents (Tables, Queries, Forms or Reports [Except Reports in Viewing mode]). @Extended is set to number of results.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The Return is a 4 column Array.
+;                  The First Column is the Component's Object, (Tables, Queries, Forms or Reports [Except Reports in Viewing mode]).
+;                  The Second Column is a Constant identifying the type of the component. See Constants, $LOB_SUB_COMP_TYPE_* as defined in LibreOfficeBase_Constants.au3.
+;                  The Third Column is the Component's name, including the path for Forms and Reports, e.g. "frmForm1" or "Folder1/frmForm1".
+;                  The Fourth Column is a Boolean indicating whether the Component is in Design mode (True) or Viewing mode (False).
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_DocSubComponentsGetList(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $avComponents[0][4], $avSubComponents[0]
+	Local $tPropertiesPair
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oDoc.hasLocation() Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$avSubComponents = $oDoc.CurrentController.SubComponents()
+	If Not IsArray($avSubComponents) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	ReDim $avComponents[UBound($avSubComponents)][4]
+
+	For $i = 0 To UBound($avSubComponents) - 1
+		$avComponents[$i][0] = $avSubComponents[$i]
+
+		$tPropertiesPair = $oDoc.CurrentController.identifySubComponent($avSubComponents[$i])
+		If Not IsObj($tPropertiesPair) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+		$avComponents[$i][1] = $tPropertiesPair.First() ; Component type. ; See identifySubComponent.
+		$avComponents[$i][2] = $tPropertiesPair.Second() ; Component name.
+
+		Switch $avComponents[$i][1]
+			Case $LOB_SUB_COMP_TYPE_TABLE
+				$avComponents[$i][3] = ($avSubComponents[$i].supportsService("com.sun.star.sdb.TableDesign")) ? (True) : (False) ; If True, Table is in Design mode.
+
+			Case $LOB_SUB_COMP_TYPE_QUERY
+				$avComponents[$i][3] = ($avSubComponents[$i].supportsService("com.sun.star.sdb.QueryDesign")) ? (True) : (False) ; If True, Query is in Design mode.
+
+			Case $LOB_SUB_COMP_TYPE_FORM
+				$avComponents[$i][3] = ($avSubComponents[$i].isReadOnly) ? (False) : (True) ; If Document is ReadOnly, Form is open in Viewing Mode. Else in Design mode.
+
+			Case $LOB_SUB_COMP_TYPE_REPORT
+				$avComponents[$i][3] = True ; The only Reports returned in this are Reports opened in Design Mode.
+		EndSwitch
+	Next
+
+	Return SetError($__LO_STATUS_SUCCESS, UBound($avComponents), $avComponents)
+EndFunc   ;==>_LOBase_DocSubComponentsGetList
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_DocVisible

@@ -107,6 +107,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOB_RESULT_ROW_UPDATE_*
 	- $LOB_RESULT_TYPE_*
 	- $LOB_STRIKEOUT_*
+	- $LOB_SUB_COMP_TYPE_*
 	- $LOB_TXT_ALIGN_HORI_*
 	- $LOB_UNDERLINE_*
 	- $LOB_WEIGHT_*
@@ -145,6 +146,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOBase_DocSave
 	- _LOBase_DocSaveAs
 	- _LOBase_DocSaveCopy
+	- _LOBase_DocSubComponentsClose
+	- _LOBase_DocSubComponentsGetList
 	- _LOBase_DocVisible
 
 - Form Functions

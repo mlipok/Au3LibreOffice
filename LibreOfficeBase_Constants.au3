@@ -1,6 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
-;~ #Tidy_Parameters=/sf /reel
+#Tidy_Parameters=/sf /reel
 #include-once
 
 ; #INDEX# =======================================================================================================================
@@ -518,6 +518,13 @@ Global Const _                                                                  
 		$LOB_STRIKEOUT_BOLD = 4, _                                                       ; Strike out the characters with a bold line.
 		$LOB_STRIKEOUT_SLASH = 5, _                                                      ; Strike out the characters with slashes.
 		$LOB_STRIKEOUT_X = 6                                                             ; Strike out the characters with X's.
+
+; Database SubComponent type.
+Global Const _                                                                           ; com.sun.star.sdb.application.DatabaseObject
+		$LOB_SUB_COMP_TYPE_TABLE = 0, _                                                  ; A Database Table.
+		$LOB_SUB_COMP_TYPE_QUERY = 1, _                                                  ; A Database Query.
+		$LOB_SUB_COMP_TYPE_FORM = 2, _                                                   ; A Database Form.
+		$LOB_SUB_COMP_TYPE_REPORT = 3                                                    ; A Database Report.
 
 ; Text Horizontal Alignment
 Global Const _                                                                           ; com.sun.star.style.ParagraphAdjust

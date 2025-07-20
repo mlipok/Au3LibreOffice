@@ -979,7 +979,6 @@ Func _LOBase_QueryUIOpenByName(ByRef $oConnection, $sQuery, $bEdit = False, $bHi
 	#forceref $oCOM_ErrorHandler
 
 	Local $oQueries, $oQueryUI
-	Local Const $__LOB_OBJ_TYPE_QUERY = 1 ; com.sun.star.sdb.application.DatabaseObject
 	Local $aArgs[1]
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
@@ -998,7 +997,7 @@ Func _LOBase_QueryUIOpenByName(ByRef $oConnection, $sQuery, $bEdit = False, $bHi
 
 	$aArgs[0] = __LOBase_SetPropertyValue("Hidden", $bHidden)
 
-	$oQueryUI = $oConnection.Parent.DatabaseDocument.CurrentController.loadComponentWithArguments($__LOB_OBJ_TYPE_QUERY, $sQuery, $bEdit, $aArgs)
+	$oQueryUI = $oConnection.Parent.DatabaseDocument.CurrentController.loadComponentWithArguments($LOB_SUB_COMP_TYPE_QUERY, $sQuery, $bEdit, $aArgs)
 	If Not IsObj($oQueryUI) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oQueryUI)
@@ -1040,7 +1039,6 @@ Func _LOBase_QueryUIOpenByObject(ByRef $oConnection, ByRef $oQuery, $bEdit = Fal
 
 	Local $oQueryUI
 	Local $sQuery
-	Local Const $__LOB_OBJ_TYPE_QUERY = 1 ; com.sun.star.sdb.application.DatabaseObject
 	Local $aArgs[1]
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
@@ -1058,7 +1056,7 @@ Func _LOBase_QueryUIOpenByObject(ByRef $oConnection, ByRef $oQuery, $bEdit = Fal
 
 	$aArgs[0] = __LOBase_SetPropertyValue("Hidden", $bHidden)
 
-	$oQueryUI = $oConnection.Parent.DatabaseDocument.CurrentController.loadComponentWithArguments($__LOB_OBJ_TYPE_QUERY, $sQuery, $bEdit, $aArgs)
+	$oQueryUI = $oConnection.Parent.DatabaseDocument.CurrentController.loadComponentWithArguments($LOB_SUB_COMP_TYPE_QUERY, $sQuery, $bEdit, $aArgs)
 
 	If Not IsObj($oQueryUI) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 

@@ -1742,7 +1742,6 @@ Func _LOBase_TableUIOpenByName(ByRef $oConnection, $sTable, $bEdit = False, $bHi
 	#forceref $oCOM_ErrorHandler
 
 	Local $oTables, $oTableUI
-	Local Const $__LOB_OBJ_TYPE_TABLE = 0 ; com.sun.star.sdb.application.DatabaseObject
 	Local $aArgs[1]
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
@@ -1761,7 +1760,7 @@ Func _LOBase_TableUIOpenByName(ByRef $oConnection, $sTable, $bEdit = False, $bHi
 
 	$aArgs[0] = __LOBase_SetPropertyValue("Hidden", $bHidden)
 
-	$oTableUI = $oConnection.Parent.DatabaseDocument.CurrentController.loadComponentWithArguments($__LOB_OBJ_TYPE_TABLE, $sTable, $bEdit, $aArgs)
+	$oTableUI = $oConnection.Parent.DatabaseDocument.CurrentController.loadComponentWithArguments($LOB_SUB_COMP_TYPE_TABLE, $sTable, $bEdit, $aArgs)
 
 	If Not IsObj($oTableUI) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
@@ -1806,7 +1805,6 @@ Func _LOBase_TableUIOpenByObject(ByRef $oDoc, ByRef $oConnection, ByRef $oTable,
 
 	Local $oTableUI
 	Local $sTable
-	Local Const $__LOB_OBJ_TYPE_TABLE = 0 ; com.sun.star.sdb.application.DatabaseObject
 	Local $aArgs[1]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
@@ -1825,7 +1823,7 @@ Func _LOBase_TableUIOpenByObject(ByRef $oDoc, ByRef $oConnection, ByRef $oTable,
 
 	$aArgs[0] = __LOBase_SetPropertyValue("Hidden", $bHidden)
 
-	$oTableUI = $oDoc.CurrentController.loadComponentWithArguments($__LOB_OBJ_TYPE_TABLE, $sTable, $bEdit, $aArgs)
+	$oTableUI = $oDoc.CurrentController.loadComponentWithArguments($LOB_SUB_COMP_TYPE_TABLE, $sTable, $bEdit, $aArgs)
 	If Not IsObj($oTableUI) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oTableUI)
