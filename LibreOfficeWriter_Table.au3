@@ -693,7 +693,6 @@ Func _LOWriter_TableCreate(ByRef $oDoc, $iRows = 3, $iColumns = 2, $bSplit = Nul
 	If Not IsInt($iColumns) Or ($iColumns < 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oTable = $oDoc.createInstance("com.sun.star.text.TextTable")
-
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oTable.initialize($iRows, $iColumns)
@@ -1056,7 +1055,6 @@ Func _LOWriter_TableGetCellObjByName(ByRef $oTable, $sCellName, $sToCellName = $
 
 	$sCellName = StringStripWS($sCellName, $STR_STRIPALL)
 	$sToCellName = StringStripWS($sToCellName, $STR_STRIPALL)
-
 	If Not __LOWriter_TableHasCellName($oTable, $sCellName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; CellName not contained in Table
 	If Not __LOWriter_TableHasCellName($oTable, $sToCellName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; ToCellName not contained in Table
 
