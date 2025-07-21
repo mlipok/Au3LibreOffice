@@ -881,6 +881,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Made $oDoc Parameter optional for _LOWriter_FontsGetNames.
 - Added count of number of results for _LOWriter_DocConnect, connect-all and partial name search when more than one result is present.
 - Removed _ArrayDisplay from most examples.
+- Added checks to some Form functions whether the Document is ReadOnly, which would occur if the Form Document is opened in Viewing mode.
 
 ### Fixed
 

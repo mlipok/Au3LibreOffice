@@ -123,9 +123,10 @@
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create a "com.sun.star.form.component.Form" object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve parent Document Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to insert new Form.
-;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve new Form Object.
-;                  @Error 3 @Extended 4 Return 0 = Failed to name Form.
+;                  @Error 3 @Extended 2 Return 0 = Parent Document is Read Only.
+;                  @Error 3 @Extended 3 Return 0 = Failed to insert new Form.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve new Form Object.
+;                  @Error 3 @Extended 5 Return 0 = Failed to name Form.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Returning newly created Form's Object.
 ; Author ........: donnyh13
@@ -165,6 +166,8 @@ Func _LOWriter_FormAdd(ByRef $oObj, $sName)
 		Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; wrong type of input item.
 	EndIf
 
+	If $oDoc.IsReadOnly() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
 	$oForm = $oDoc.createInstance("com.sun.star.form.component.Form")
 	If Not IsObj($oForm) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
@@ -173,13 +176,13 @@ Func _LOWriter_FormAdd(ByRef $oObj, $sName)
 	WEnd
 
 	$oInsertObj.insertByName($sTempName, $oForm)
-	If Not $oInsertObj.hasByName($sTempName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If Not $oInsertObj.hasByName($sTempName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	$oForm = $oInsertObj.getByName($sTempName)
-	If Not IsObj($oForm) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If Not IsObj($oForm) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 	$oForm.Name = $sName
-	If ($oForm.Name() <> $sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+	If ($oForm.Name() <> $sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oForm)
 EndFunc   ;==>_LOWriter_FormAdd
@@ -4392,9 +4395,10 @@ EndFunc   ;==>_LOWriter_FormConImageControlGeneral
 ;                  @Error 2 @Extended 3 Return 0 = Failed to create a "com.sun.star.drawing.GroupShape" Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Form parent document Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Control Service name.
-;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Shape Position Structure.
-;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Shape Size Structure.
+;                  @Error 3 @Extended 2 Return 0 = Parent Document is ReadOnly.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Control Service name.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Shape Position Structure.
+;                  @Error 3 @Extended 5 Return 0 = Failed to retrieve Shape Size Structure.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Grouped Control was inserted successfully, returning its object.
 ;                  @Error 0 @Extended 1 Return Object = Success. Control was inserted successfully, returning its object.
@@ -4439,6 +4443,8 @@ Func _LOWriter_FormConInsert(ByRef $oParentForm, $iControl, $iX, $iY, $iWidth, $
 		If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	Until $oDoc.supportsService("com.sun.star.text.TextDocument")
 
+	If $oDoc.IsReadOnly() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
 	$iCount = 0
 
 	Do
@@ -4452,7 +4458,7 @@ Func _LOWriter_FormConInsert(ByRef $oParentForm, $iControl, $iX, $iY, $iWidth, $
 	$sShapeName = "AU3_FORM_SHAPE_" & $iCount
 
 	$sControl = __LOWriter_FormConIdentify(Null, $iControl)
-	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	$oControl = $oDoc.createInstance($sControl)
 	If Not IsObj($oControl) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
@@ -4480,7 +4486,7 @@ Func _LOWriter_FormConInsert(ByRef $oParentForm, $iControl, $iX, $iY, $iWidth, $
 	EndSwitch
 
 	$tSize = $oShape.Size()
-	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
 	$tSize.Width = $iWidth
 	$tSize.Height = $iHeight
@@ -4495,7 +4501,7 @@ Func _LOWriter_FormConInsert(ByRef $oParentForm, $iControl, $iX, $iY, $iWidth, $
 		If Not IsObj($oGroupShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 		$tSize = $oGroupShape.Size()
-		If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+		If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
 		$tSize.Width = $iWidth
 		$tSize.Height = $iHeight
@@ -4508,7 +4514,7 @@ Func _LOWriter_FormConInsert(ByRef $oParentForm, $iControl, $iX, $iY, $iWidth, $
 		$oGroupShape.AnchorType = $LOW_ANCHOR_AT_PARAGRAPH ; Have to set anchor after insertion.
 
 		$tPos = $oGroupShape.Position()
-		If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 		$tPos.X = $iX
 		$tPos.Y = $iY
@@ -4527,7 +4533,7 @@ Func _LOWriter_FormConInsert(ByRef $oParentForm, $iControl, $iX, $iY, $iWidth, $
 
 	; Have to set Position after insertion.
 	$tPos = $oShape.Position()
-	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 	$tPos.X = $iX
 	$tPos.Y = $iY
@@ -13671,9 +13677,11 @@ EndFunc   ;==>_LOWriter_FormConTimeFieldValue
 ;                  @Error 1 @Extended 2 Return 0 = Object called in $oForm not a Form Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve parent Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Forms Object.
-;                  @Error 3 @Extended 3 Return 0 = Failed to modify Form name.
-;                  @Error 3 @Extended 4 Return 0 = Failed to delete form.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve parent Document Object.
+;                  @Error 3 @Extended 3 Return 0 = Parent Document is Read Only.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Forms Object.
+;                  @Error 3 @Extended 5 Return 0 = Failed to modify Form name.
+;                  @Error 3 @Extended 6 Return 0 = Failed to delete form.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Form was successfully deleted.
 ; Author ........: donnyh13
@@ -13687,7 +13695,7 @@ Func _LOWriter_FormDelete(ByRef $oForm)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $oParent
+	Local $oParent, $oDoc
 	Local $sTempName = "AutoIt_FORM_"
 	Local $iCount = 1
 
@@ -13697,9 +13705,18 @@ Func _LOWriter_FormDelete(ByRef $oForm)
 	$oParent = $oForm.getParent()
 	If Not IsObj($oParent) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
+	$oDoc = $oForm ; Identify the parent document.
+
+	Do
+		$oDoc = $oDoc.getParent()
+		If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	Until $oDoc.supportsService("com.sun.star.text.TextDocument")
+
+	If $oDoc.IsReadOnly() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
 	If $oParent.supportsService("com.sun.star.text.TextDocument") Then
 		$oParent = $oParent.DrawPage.Forms()
-		If Not IsObj($oParent) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If Not IsObj($oParent) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 	EndIf
 
 	; Create a Unique name.
@@ -13709,11 +13726,11 @@ Func _LOWriter_FormDelete(ByRef $oForm)
 
 	; Rename the form.
 	$oForm.Name = $sTempName & $iCount
-	If Not ($oForm.Name() = $sTempName & $iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If Not ($oForm.Name() = $sTempName & $iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
 	$oParent.removeByName($sTempName & $iCount)
 
-	If $oParent.hasByName($sTempName & $iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+	If $oParent.hasByName($sTempName & $iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_FormDelete
