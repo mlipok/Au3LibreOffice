@@ -55,6 +55,7 @@
 ; _LOBase_ReportGroupFooter
 ; _LOBase_ReportGroupGetByIndex
 ; _LOBase_ReportGroupHeader
+; _LOBase_ReportGroupPosition
 ; _LOBase_ReportGroupsGetCount
 ; _LOBase_ReportGroupSort
 ; _LOBase_ReportHeader
@@ -3163,6 +3164,81 @@ Func _LOBase_ReportGroupHeader(ByRef $oGroup, $bHeaderOn = Null, $sName = Null, 
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOBase_ReportGroupHeader
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_ReportGroupPosition
+; Description ...: Set or Retrieve the Group's position in the list of Groups.
+; Syntax ........: _LOBase_ReportGroupPosition(ByRef $oGroup[, $iPos = Null])
+; Parameters ....: $oGroup              - [in/out] an object. A Group object returned by a previous _LOBase_ReportGroupAdd, or _LOBase_ReportGroupGetByIndex function.
+;                  $iPos                - [optional] an integer value. Default is Null. The position of the in the list of Groups. 0 Based. See Remarks.
+; Return values .: Success: 1 or Integer
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oGroup not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oGroup not a Group Object.
+;                  @Error 1 @Extended 3 Return 0 = $iPos not an Integer, less than 0 or greater than number of Groups.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Group's Parent Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve count of Groups.
+;                  @Error 3 @Extended 3 Return 0 = Failed to identify Group's current Position.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Group's new Object.
+;                  @Error 3 @Extended 5 Return 0 = Failed to delete old Group.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Group was successfully moved.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current Position as an Integer.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The Group will be moved to the position before that called in $iPos. Thus to move a Group to the end of the list call $iPos with the total count of Groups, i.e., index of the last Group + 1.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current Position.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_ReportGroupPosition(ByRef $oGroup, $iPos = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iCount, $iCurPos
+	Local $oParent, $oNewGroup
+
+	If Not IsObj($oGroup) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oGroup.supportsService("com.sun.star.report.Group") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oParent = $oGroup.Parent()
+	If Not IsObj($oParent) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$iCount = $oParent.Count()
+	If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	For $i = 0 To $iCount - 1
+		If ($oParent.getByIndex($i) = $oGroup) Then
+			$iCurPos = $i
+			ExitLoop
+		EndIf
+
+		Sleep((IsInt($i / $__LOBCONST_SLEEP_DIV) ? (10) : (0)))
+	Next
+
+	If Not IsInt($iCurPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+	If __LOBase_VarsAreNull($iPos) Then Return SetError($__LO_STATUS_SUCCESS, 0, $iCurPos)
+
+	If Not __LOBase_IntIsBetween($iPos, 0, $iCount) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$oParent.insertByIndex($iPos, $oGroup)
+
+	$oNewGroup = $oParent.getByIndex($iPos)
+	If Not IsObj($oNewGroup) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
+	If ($iPos <= $iCurPos) Then $iCurPos += 1 ; If inserting before the current position, increase current position count to match new position.
+	$oParent.removeByIndex($iCurPos)
+
+	If ($iCount <> $oParent.Count()) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+
+	$oGroup = $oNewGroup
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOBase_ReportGroupPosition
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_ReportGroupsGetCount

@@ -268,6 +268,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOBase_ReportGroupFooter
 	- _LOBase_ReportGroupGetByIndex
 	- _LOBase_ReportGroupHeader
+	- _LOBase_ReportGroupPosition
 	- _LOBase_ReportGroupsGetCount
 	- _LOBase_ReportGroupSort
 	- _LOBase_ReportHeader
