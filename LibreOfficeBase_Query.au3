@@ -1057,7 +1057,6 @@ Func _LOBase_QueryUIOpenByObject(ByRef $oConnection, ByRef $oQuery, $bEdit = Fal
 	$aArgs[0] = __LOBase_SetPropertyValue("Hidden", $bHidden)
 
 	$oQueryUI = $oConnection.Parent.DatabaseDocument.CurrentController.loadComponentWithArguments($LOB_SUB_COMP_TYPE_QUERY, $sQuery, $bEdit, $aArgs)
-
 	If Not IsObj($oQueryUI) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oQueryUI)

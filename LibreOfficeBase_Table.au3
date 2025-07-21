@@ -1761,7 +1761,6 @@ Func _LOBase_TableUIOpenByName(ByRef $oConnection, $sTable, $bEdit = False, $bHi
 	$aArgs[0] = __LOBase_SetPropertyValue("Hidden", $bHidden)
 
 	$oTableUI = $oConnection.Parent.DatabaseDocument.CurrentController.loadComponentWithArguments($LOB_SUB_COMP_TYPE_TABLE, $sTable, $bEdit, $aArgs)
-
 	If Not IsObj($oTableUI) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oTableUI)
