@@ -1,5 +1,4 @@
 #include <MsgBoxConstants.au3>
-#include <Array.au3>
 
 #include "..\LibreOfficeCalc.au3"
 
@@ -7,6 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oSheet, $oCell
+	Local $sUndos = ""
 	Local $asUndo[0]
 	Local $iCount = 0
 
@@ -30,9 +30,7 @@ Func Example()
 			If @error Then _ERROR($oDoc, "Failed to set Cell Value. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 			$iCount += 1
-
 		Next
-
 	Next
 
 	; Retrieve an array of available undo action titles.
@@ -42,8 +40,12 @@ Func Example()
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Here is a list of available Undo Actions. Notice each action, ""input"", is listed singly." & @CRLF & _
 			"I will reset the Undo and Redo Actions lists, fill more cells, but this time group all the actions together as one Undo action, and then show the Undo Actions list again.")
 
+	For $sUndo In $asUndo
+		$sUndos &= $sUndo & @CRLF
+	Next
+
 	; Display the available Undo action titles.
-	_ArrayDisplay($asUndo)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The available Undo Actions are:" & @CRLF & $sUndos)
 
 	; Clear the Undo/Redo list.
 	_LOCalc_DocUndoReset($oDoc)
@@ -65,9 +67,7 @@ Func Example()
 			If @error Then _ERROR($oDoc, "Failed to set Cell Value. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 			$iCount += 1
-
 		Next
-
 	Next
 
 	; End the Undo Action Record.
@@ -78,15 +78,20 @@ Func Example()
 	$asUndo = _LOCalc_DocUndoGetAllActionTitles($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve array of undo action titles. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Display the available Undo action titles again, if any.
-	_ArrayDisplay($asUndo)
+	$sUndos = ""
+
+	For $sUndo In $asUndo
+		$sUndos &= $sUndo & @CRLF
+	Next
+
+	; Display the available Undo action titles.
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The available Undo Actions are:" & @CRLF & $sUndos)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

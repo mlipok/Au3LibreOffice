@@ -280,6 +280,7 @@ Func _LOCalc_CommentAreaGradient(ByRef $oComment, $sGradientName = Null, $iType 
 
 	If ($sGradientName <> Null) Then
 		If Not IsString($sGradientName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oAnnotationShape.FillGradientName = $sGradientName
 		$iError = ($oAnnotationShape.FillGradientName() = $sGradientName) ? ($iError) : (BitOR($iError, 1))
 
@@ -296,11 +297,13 @@ Func _LOCalc_CommentAreaGradient(ByRef $oComment, $sGradientName = Null, $iType 
 		EndIf
 
 		If Not __LOCalc_IntIsBetween($iType, $LOC_GRAD_TYPE_LINEAR, $LOC_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$tStyleGradient.Style = $iType
 	EndIf
 
 	If ($iIncrement <> Null) Then
 		If Not __LOCalc_IntIsBetween($iIncrement, 3, 256, "", 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oAnnotationShape.FillGradientStepCount = $iIncrement
 		$tStyleGradient.StepCount = $iIncrement ; Must set both of these in order for it to take effect.
 		$iError = ($oAnnotationShape.FillGradientStepCount() = $iIncrement) ? ($iError) : (BitOR($iError, 4))
@@ -308,26 +311,31 @@ Func _LOCalc_CommentAreaGradient(ByRef $oComment, $sGradientName = Null, $iType 
 
 	If ($iXCenter <> Null) Then
 		If Not __LOCalc_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$tStyleGradient.XOffset = $iXCenter
 	EndIf
 
 	If ($iYCenter <> Null) Then
 		If Not __LOCalc_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$tStyleGradient.YOffset = $iYCenter
 	EndIf
 
 	If ($iAngle <> Null) Then
 		If Not __LOCalc_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$tStyleGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iTransitionStart <> Null) Then
 		If Not __LOCalc_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$tStyleGradient.Border = $iTransitionStart
 	EndIf
 
 	If ($iFromColor <> Null) Then
 		If Not __LOCalc_IntIsBetween($iFromColor, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 		$tStyleGradient.StartColor = $iFromColor
 
 		If __LOCalc_VersionCheck(7.6) Then
@@ -356,6 +364,7 @@ Func _LOCalc_CommentAreaGradient(ByRef $oComment, $sGradientName = Null, $iType 
 
 	If ($iToColor <> Null) Then
 		If Not __LOCalc_IntIsBetween($iToColor, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
 		$tStyleGradient.EndColor = $iToColor
 
 		If __LOCalc_VersionCheck(7.6) Then
@@ -384,11 +393,13 @@ Func _LOCalc_CommentAreaGradient(ByRef $oComment, $sGradientName = Null, $iType 
 
 	If ($iFromIntense <> Null) Then
 		If Not __LOCalc_IntIsBetween($iFromIntense, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+
 		$tStyleGradient.StartIntensity = $iFromIntense
 	EndIf
 
 	If ($iToIntense <> Null) Then
 		If Not __LOCalc_IntIsBetween($iToIntense, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+
 		$tStyleGradient.EndIntensity = $iToIntense
 	EndIf
 
@@ -472,6 +483,7 @@ Func _LOCalc_CommentAreaShadow(ByRef $oComment, $bShadow = Null, $iColor = Null,
 		$iInternalDistance = __LOCalc_CommentAreaShadowModify($oAnnotationShape)
 		$iInternalLocation = @extended
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
 		__LOCalc_ArrayFill($avShadow, $oAnnotationShape.Shadow(), $oAnnotationShape.ShadowColor(), $iInternalDistance, $oAnnotationShape.ShadowTransparence(), _
 				__LOCalc_UnitConvert($oAnnotationShape.ShadowBlur(), $__LOCONST_CONVERT_UM_PT), $iInternalLocation)
 
@@ -480,18 +492,21 @@ Func _LOCalc_CommentAreaShadow(ByRef $oComment, $bShadow = Null, $iColor = Null,
 
 	If ($bShadow <> Null) Then
 		If Not IsBool($bShadow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oAnnotationShape.Shadow = $bShadow
 		$iError = ($oAnnotationShape.Shadow() = $bShadow) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iColor <> Null) Then
 		If Not __LOCalc_IntIsBetween($iColor, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oAnnotationShape.ShadowColor = $iColor
 		$iError = ($oAnnotationShape.ShadowColor() = $iColor) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iDistance <> Null) Then
 		If Not __LOCalc_IntIsBetween($iDistance, 0, $iDistance) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		__LOCalc_CommentAreaShadowModify($oAnnotationShape, Null, $iDistance)
 		If (@error = $__LO_STATUS_PROP_SETTING_ERROR) Then
 			$iError = BitOR($iError, 4)
@@ -504,18 +519,21 @@ Func _LOCalc_CommentAreaShadow(ByRef $oComment, $bShadow = Null, $iColor = Null,
 
 	If ($iTransparency <> Null) Then
 		If Not __LOCalc_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oAnnotationShape.ShadowTransparence = $iTransparency
 		$iError = ($oAnnotationShape.ShadowTransparence = $iTransparency) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iBlur <> Null) Then
 		If Not __LOCalc_IntIsBetween($iBlur, 0, 150) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; 0 - 5292 max Micrometers.
+
 		$oAnnotationShape.ShadowBlur = __LOCalc_UnitConvert($iBlur, $__LOCONST_CONVERT_PT_UM)
 		$iError = ($oAnnotationShape.ShadowBlur() = __LOCalc_UnitConvert($iBlur, $__LOCONST_CONVERT_PT_UM)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($iLocation <> Null) Then
 		If Not __LOCalc_IntIsBetween($iLocation, $LOC_COMMENT_SHADOW_TOP_LEFT, $LOC_COMMENT_SHADOW_BOTTOM_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		__LOCalc_CommentAreaShadowModify($oAnnotationShape, $iLocation)
 		If (@error = $__LO_STATUS_PROP_SETTING_ERROR) Then
 			$iError = BitOR($iError, 32)
@@ -571,6 +589,7 @@ Func _LOCalc_CommentAreaTransparency(ByRef $oComment, $iTransparency = Null)
 	If __LOCalc_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oAnnotationShape.FillTransparence())
 
 	If Not __LOCalc_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	$oAnnotationShape.FillTransparenceGradientName = "" ; Turn off Gradient if it is on, else settings wont be applied.
 	$oAnnotationShape.FillTransparence = $iTransparency
 	$iError = ($oAnnotationShape.FillTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 1))
@@ -667,31 +686,37 @@ Func _LOCalc_CommentAreaTransparencyGradient(ByRef $oDoc, ByRef $oComment, $iTyp
 		EndIf
 
 		If Not __LOCalc_IntIsBetween($iType, $LOC_GRAD_TYPE_LINEAR, $LOC_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$tGradient.Style = $iType
 	EndIf
 
 	If ($iXCenter <> Null) Then
 		If Not __LOCalc_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$tGradient.XOffset = $iXCenter
 	EndIf
 
 	If ($iYCenter <> Null) Then
 		If Not __LOCalc_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$tGradient.YOffset = $iYCenter
 	EndIf
 
 	If ($iAngle <> Null) Then
 		If Not __LOCalc_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$tGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iTransitionStart <> Null) Then
 		If Not __LOCalc_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$tGradient.Border = $iTransitionStart
 	EndIf
 
 	If ($iStart <> Null) Then
 		If Not __LOCalc_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$tGradient.StartColor = __LOCalc_TransparencyGradientConvert($iStart)
 
 		If __LOCalc_VersionCheck(7.6) Then
@@ -718,6 +743,7 @@ Func _LOCalc_CommentAreaTransparencyGradient(ByRef $oDoc, ByRef $oComment, $iTyp
 
 	If ($iEnd <> Null) Then
 		If Not __LOCalc_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 		$tGradient.EndColor = __LOCalc_TransparencyGradientConvert($iEnd)
 
 		If __LOCalc_VersionCheck(7.6) Then
@@ -833,12 +859,14 @@ Func _LOCalc_CommentCallout(ByRef $oComment, $iCalloutStyle = Null, $iSpacing = 
 
 	If ($iCalloutStyle <> Null) Then
 		If Not __LOCalc_IntIsBetween($iCalloutStyle, $LOC_COMMENT_CALLOUT_STYLE_STRAIGHT, $LOC_COMMENT_CALLOUT_STYLE_ANGLED_CONNECTOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oAnnotationShape.CaptionType = $iCalloutStyle
 		$iError = ($oAnnotationShape.CaptionType() = $iCalloutStyle) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iSpacing <> Null) Then
 		If Not __LOCalc_IntIsBetween($iSpacing, 0, 240005) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oAnnotationShape.CaptionGap = $iSpacing
 		$iError = ($oAnnotationShape.CaptionGap() = $iSpacing) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -889,6 +917,7 @@ Func _LOCalc_CommentCallout(ByRef $oComment, $iCalloutStyle = Null, $iSpacing = 
 
 		Else
 			If Not __LOCalc_IntIsBetween($iExtendBy, 0, 240005) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 			$oAnnotationShape.CaptionEscapeAbsolute = $iExtendBy
 			$iError = ($oAnnotationShape.CaptionEscapeAbsolute() = $iExtendBy) ? ($iError) : (BitOR($iError, 8))
 		EndIf
@@ -896,12 +925,14 @@ Func _LOCalc_CommentCallout(ByRef $oComment, $iCalloutStyle = Null, $iSpacing = 
 
 	If ($bOptimal <> Null) Then
 		If Not IsBool($bOptimal) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oAnnotationShape.CaptionIsFitLineLength = $bOptimal
 		$iError = ($oAnnotationShape.CaptionIsFitLineLength() = $bOptimal) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($iLength <> Null) Then
 		If Not __LOCalc_IntIsBetween($iLength, 0, 240005) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 		$oAnnotationShape.CaptionLineLength = $iLength
 		$iError = ($oAnnotationShape.CaptionLineLength() = $iLength) ? ($iError) : (BitOR($iError, 32))
 	EndIf
@@ -1153,7 +1184,6 @@ Func _LOCalc_CommentGetObjByIndex(ByRef $oSheet, $iComment)
 
 	$iCount = $oAnnotations.Count()
 	If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
 	If Not __LOCalc_IntIsBetween($iComment, 0, ($iCount - 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oAnnotation = $oAnnotations.getByIndex($iComment)
@@ -1238,8 +1268,10 @@ Func _LOCalc_CommentLineArrowStyles(ByRef $oComment, $vStartStyle = Null, $iStar
 
 	If ($vStartStyle <> Null) Then
 		If Not IsString($vStartStyle) And Not IsInt($vStartStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		If IsInt($vStartStyle) Then
 			If Not __LOCalc_IntIsBetween($vStartStyle, $LOC_COMMENT_LINE_ARROW_TYPE_NONE, $LOC_COMMENT_LINE_ARROW_TYPE_CF_ZERO_MANY) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 			$sStartStyle = __LOCalc_CommentArrowStyleName($vStartStyle)
 			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -1253,18 +1285,21 @@ Func _LOCalc_CommentLineArrowStyles(ByRef $oComment, $vStartStyle = Null, $iStar
 
 	If ($iStartWidth <> Null) Then
 		If Not __LOCalc_IntIsBetween($iStartWidth, 0, 5004) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oAnnotationShape.LineStartWidth = $iStartWidth
 		$iError = (__LOCalc_IntIsBetween($oAnnotationShape.LineStartWidth(), $iStartWidth - 1, $iStartWidth + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bStartCenter <> Null) Then
 		If Not IsBool($bStartCenter) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oAnnotationShape.LineStartCenter = $bStartCenter
 		$iError = ($oAnnotationShape.LineStartCenter() = $bStartCenter) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bSync <> Null) Then
 		If Not IsBool($bSync) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		If ($bSync = True) Then
 			$oAnnotationShape.LineEndName = $oAnnotationShape.LineStartName()
 			$oAnnotationShape.LineEndWidth = $oAnnotationShape.LineStartWidth()
@@ -1277,8 +1312,10 @@ Func _LOCalc_CommentLineArrowStyles(ByRef $oComment, $vStartStyle = Null, $iStar
 
 	If ($vEndStyle <> Null) Then
 		If Not IsString($vEndStyle) And Not IsInt($vEndStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		If IsInt($vEndStyle) Then
 			If Not __LOCalc_IntIsBetween($vEndStyle, $LOC_COMMENT_LINE_ARROW_TYPE_NONE, $LOC_COMMENT_LINE_ARROW_TYPE_CF_ZERO_MANY) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 			$sEndStyle = __LOCalc_CommentArrowStyleName($vEndStyle)
 			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -1292,12 +1329,14 @@ Func _LOCalc_CommentLineArrowStyles(ByRef $oComment, $vStartStyle = Null, $iStar
 
 	If ($iEndWidth <> Null) Then
 		If Not __LOCalc_IntIsBetween($iEndWidth, 0, 5004) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 		$oAnnotationShape.LineEndWidth = $iEndWidth
 		$iError = (__LOCalc_IntIsBetween($oAnnotationShape.LineEndWidth(), $iEndWidth - 1, $iEndWidth + 1)) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($bEndCenter <> Null) Then
 		If Not IsBool($bEndCenter) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
 		$oAnnotationShape.LineEndCenter = $bEndCenter
 		$iError = ($oAnnotationShape.LineEndCenter() = $bEndCenter) ? ($iError) : (BitOR($iError, 64))
 	EndIf
@@ -1370,15 +1409,12 @@ Func _LOCalc_CommentLineProperties(ByRef $oComment, $vStyle = Null, $iColor = Nu
 	If __LOCalc_VarsAreNull($vStyle, $iColor, $iWidth, $iTransparency, $iCornerStyle, $iCapStyle) Then
 		Switch $oAnnotationShape.LineStyle()
 			Case $__LOC_COMMENT_LINE_STYLE_NONE
-
 				$vReturn = $LOC_COMMENT_LINE_STYLE_NONE
 
 			Case $__LOC_COMMENT_LINE_STYLE_SOLID
-
 				$vReturn = $LOC_COMMENT_LINE_STYLE_CONTINUOUS
 
 			Case $__LOC_COMMENT_LINE_STYLE_DASH
-
 				$vReturn = __LOCalc_CommentLineStyleName(Null, $oAnnotationShape.LineDashName())
 				If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		EndSwitch
@@ -1396,26 +1432,23 @@ Func _LOCalc_CommentLineProperties(ByRef $oComment, $vStyle = Null, $iColor = Nu
 
 			Switch $vStyle
 				Case $LOC_COMMENT_LINE_STYLE_NONE
-
 					$oAnnotationShape.LineStyle = $__LOC_COMMENT_LINE_STYLE_NONE
 					$iError = ($oAnnotationShape.LineStyle() = $__LOC_COMMENT_LINE_STYLE_NONE) ? ($iError) : (BitOR($iError, 1))
 
 				Case $LOC_COMMENT_LINE_STYLE_CONTINUOUS
-
 					$oAnnotationShape.LineStyle = $__LOC_COMMENT_LINE_STYLE_SOLID
 					$iError = ($oAnnotationShape.LineStyle() = $__LOC_COMMENT_LINE_STYLE_SOLID) ? ($iError) : (BitOR($iError, 1))
 
 				Case Else
-
 					$sStyle = __LOCalc_CommentLineStyleName($vStyle)
 					If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
 					$oAnnotationShape.LineStyle = $__LOC_COMMENT_LINE_STYLE_DASH
 					$oAnnotationShape.LineDashName = $sStyle
 					$iError = ($oAnnotationShape.LineDashName() = $sStyle) ? ($iError) : (BitOR($iError, 1))
 			EndSwitch
 
 		Else
-
 			$sStyle = $vStyle
 			$oAnnotationShape.LineDashName = $sStyle
 			$iError = ($oAnnotationShape.LineDashName() = $sStyle) ? ($iError) : (BitOR($iError, 1))
@@ -1424,30 +1457,35 @@ Func _LOCalc_CommentLineProperties(ByRef $oComment, $vStyle = Null, $iColor = Nu
 
 	If ($iColor <> Null) Then
 		If Not __LOCalc_IntIsBetween($iColor, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oAnnotationShape.LineColor = $iColor
 		$iError = ($oAnnotationShape.LineColor() = $iColor) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iWidth <> Null) Then
 		If Not __LOCalc_IntIsBetween($iWidth, 0, 5004) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oAnnotationShape.LineWidth = $iWidth
 		$iError = (__LOCalc_IntIsBetween($oAnnotationShape.LineWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iTransparency <> Null) Then
 		If Not __LOCalc_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oAnnotationShape.LineTransparence = $iTransparency
 		$iError = ($oAnnotationShape.LineTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iCornerStyle <> Null) Then
 		If Not __LOCalc_IntIsBetween($iCornerStyle, $LOC_COMMENT_LINE_JOINT_NONE, $LOC_COMMENT_LINE_JOINT_ROUND, $LOC_COMMENT_LINE_JOINT_MIDDLE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oAnnotationShape.LineJoint = $iCornerStyle
 		$iError = ($oAnnotationShape.LineJoint() = $iCornerStyle) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($iCapStyle <> Null) Then
 		If Not __LOCalc_IntIsBetween($iCapStyle, $LOC_COMMENT_LINE_CAP_FLAT, $LOC_COMMENT_LINE_CAP_SQUARE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oAnnotationShape.LineCap = $iCapStyle
 		$iError = ($oAnnotationShape.LineCap() = $iCapStyle) ? ($iError) : (BitOR($iError, 32))
 	EndIf
@@ -1515,11 +1553,13 @@ Func _LOCalc_CommentPosition(ByRef $oComment, $iX = Null, $iY = Null, $bProtectP
 	If ($iX <> Null) Or ($iY <> Null) Then
 		If ($iX <> Null) Then
 			If Not IsInt($iX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 			$tPos.X = $iX
 		EndIf
 
 		If ($iY <> Null) Then
 			If Not IsInt($iY) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 			$tPos.Y = $iY
 		EndIf
 
@@ -1531,6 +1571,7 @@ Func _LOCalc_CommentPosition(ByRef $oComment, $iX = Null, $iY = Null, $bProtectP
 
 	If ($bProtectPos <> Null) Then
 		If Not IsBool($bProtectPos) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oAnnotationShape.MoveProtect = $bProtectPos
 		$iError = ($oAnnotationShape.MoveProtect() = $bProtectPos) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -1579,6 +1620,7 @@ Func _LOCalc_CommentRotate(ByRef $oComment, $nRotate = Null)
 	If ($nRotate = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, (($oAnnotationShape.RotateAngle()) / 100)) ; Divide by 100 to match L.O. values.
 
 	If Not __LOCalc_NumIsBetween($nRotate, 0, 359.99) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	$oAnnotationShape.RotateAngle = ($nRotate * 100)     ; * 100 to match L.O. Values.
 	If (($oAnnotationShape.RotateAngle() / 100) <> $nRotate) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0)
 
@@ -1731,11 +1773,13 @@ Func _LOCalc_CommentSize(ByRef $oComment, $iWidth = Null, $iHeight = Null, $bPro
 	If ($iWidth <> Null) Or ($iHeight <> Null) Then
 		If ($iWidth <> Null) Then ; Min 51
 			If Not __LOCalc_IntIsBetween($iWidth, 51, $iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 			$tSize.Width = $iWidth
 		EndIf
 
 		If ($iHeight <> Null) Then
 			If Not __LOCalc_IntIsBetween($iHeight, 51, $iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 			$tSize.Height = $iHeight
 		EndIf
 
@@ -1747,6 +1791,7 @@ Func _LOCalc_CommentSize(ByRef $oComment, $iWidth = Null, $iHeight = Null, $bPro
 
 	If ($bProtectSize <> Null) Then
 		If Not IsBool($bProtectSize) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oAnnotationShape.SizeProtect = $bProtectSize
 		$iError = ($oAnnotationShape.SizeProtect() = $bProtectSize) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -1897,6 +1942,7 @@ Func _LOCalc_CommentTextAnchor(ByRef $oComment, $iAnchor = Null, $bFullWidth = N
 
 	If ($iAnchor <> Null) Then
 		If Not __LOCalc_IntIsBetween($iAnchor, $LOC_COMMENT_ANCHOR_TOP_LEFT, $LOC_COMMENT_ANCHOR_BOTTOM_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		Switch $iAnchor
 			Case $LOC_COMMENT_ANCHOR_TOP_LEFT
 				$oAnnotationShape.TextVerticalAdjust = $__LOC_VERT_ALIGN_TOP
@@ -1955,6 +2001,7 @@ Func _LOCalc_CommentTextAnchor(ByRef $oComment, $iAnchor = Null, $bFullWidth = N
 
 	If ($bFullWidth <> Null) Then
 		If Not IsBool($bFullWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		If $bFullWidth Then
 			$oAnnotationShape.TextHorizontalAdjust = $__LOC_HORI_ALIGN_BLOCK
 			$iError = ($oAnnotationShape.TextHorizontalAdjust() = $__LOC_HORI_ALIGN_BLOCK) ? ($iError) : (BitOR($iError, 2))
@@ -2046,48 +2093,56 @@ Func _LOCalc_CommentTextAnimation(ByRef $oComment, $iAnimation = Null, $iDirecti
 
 	If ($iAnimation <> Null) Then
 		If Not __LOCalc_IntIsBetween($iAnimation, $LOC_COMMENT_ANIMATION_KIND_NONE, $LOC_COMMENT_ANIMATION_KIND_SCROLL_IN) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oAnnotationShape.TextAnimationKind = $iAnimation
 		$iError = ($oAnnotationShape.TextAnimationKind() = $iAnimation) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iDirection <> Null) Then
 		If Not __LOCalc_IntIsBetween($iDirection, $LOC_COMMENT_ANIMATION_DIR_LEFT, $LOC_COMMENT_ANIMATION_DIR_DOWN) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oAnnotationShape.TextAnimationDirection = $iDirection
 		$iError = ($oAnnotationShape.TextAnimationDirection() = $iDirection) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bBeginInside <> Null) Then
 		If Not IsBool($bBeginInside) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oAnnotationShape.TextAnimationStartInside = $bBeginInside
 		$iError = ($oAnnotationShape.TextAnimationStartInside() = $bBeginInside) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bVisibleOnExit <> Null) Then
 		If Not IsBool($bVisibleOnExit) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oAnnotationShape.TextAnimationStopInside = $bVisibleOnExit
 		$iError = ($oAnnotationShape.TextAnimationStopInside() = $bVisibleOnExit) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iCycles <> Null) Then
 		If Not __LOCalc_IntIsBetween($iCycles, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oAnnotationShape.TextAnimationCount = $iCycles
 		$iError = ($oAnnotationShape.TextAnimationCount() = $iCycles) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($iPixelIncrement <> Null) Then
 		If Not __LOCalc_IntIsBetween($iPixelIncrement, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oAnnotationShape.TextAnimationAmount = ($iPixelIncrement * -1) ; Pixel Increment set in negative numbers.
 		$iError = ($oAnnotationShape.TextAnimationAmount() = ($iPixelIncrement * -1)) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($iIncrement <> Null) Then
 		If Not __LOCalc_IntIsBetween($iIncrement, 0, 25400) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oAnnotationShape.TextAnimationAmount = $iIncrement
 		$iError = ($oAnnotationShape.TextAnimationAmount() = $iIncrement) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
 	If ($iDelay <> Null) Then
 		If Not __LOCalc_IntIsBetween($iDelay, 0, 30000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 		$oAnnotationShape.TextAnimationDelay = $iDelay
 		$iError = ($oAnnotationShape.TextAnimationDelay() = $iDelay) ? ($iError) : (BitOR($iError, 128))
 	EndIf
@@ -2165,11 +2220,13 @@ Func _LOCalc_CommentTextColumns(ByRef $oDoc, ByRef $oComment, $iColumns = Null, 
 
 	If ($iColumns <> Null) Then
 		If Not __LOCalc_IntIsBetween($iColumns, 1, 16) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oTextColumns.ColumnCount = $iColumns
 	EndIf
 
 	If ($iSpacing <> Null) Then
 		If Not __LOCalc_IntIsBetween($iSpacing, 0, $iSpacing) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oTextColumns.AutomaticDistance = $iSpacing
 	EndIf
 
@@ -2260,18 +2317,21 @@ Func _LOCalc_CommentTextSettings(ByRef $oComment, $bFitWidth = Null, $bFitHeight
 
 	If ($bFitWidth <> Null) Then
 		If Not IsBool($bFitWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$oAnnotationShape.TextAutoGrowWidth = $bFitWidth
 		$iError = ($oAnnotationShape.TextAutoGrowWidth() = $bFitWidth) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bFitHeight <> Null) Then
 		If Not IsBool($bFitHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oAnnotationShape.TextAutoGrowHeight = $bFitHeight
 		$iError = ($oAnnotationShape.TextAutoGrowHeight() = $bFitHeight) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bFitToFrame <> Null) Then
 		If Not IsBool($bFitToFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oAnnotationShape.TextFitToSize = ($bFitToFrame) ? ($__LOC_COMMENT_TEXT_FIT_FRAME_PROP) : ($__LOC_COMMENT_TEXT_FIT_FRAME_AUTO_FIT)
 		If $bFitToFrame Then
 			$iError = ($oAnnotationShape.TextFitToSize() = $__LOC_COMMENT_TEXT_FIT_FRAME_PROP) ? ($iError) : (BitOR($iError, 4))
@@ -2283,6 +2343,7 @@ Func _LOCalc_CommentTextSettings(ByRef $oComment, $bFitWidth = Null, $bFitHeight
 
 	If ($iSpacingAll <> Null) Then
 		If Not __LOCalc_IntIsBetween($iSpacingAll, -100000, 100000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oAnnotationShape.TextLeftDistance = $iSpacingAll
 		$oAnnotationShape.TextRightDistance = $iSpacingAll
 		$oAnnotationShape.TextUpperDistance = $iSpacingAll
@@ -2294,24 +2355,28 @@ Func _LOCalc_CommentTextSettings(ByRef $oComment, $bFitWidth = Null, $bFitHeight
 
 	If ($iLeft <> Null) Then
 		If Not __LOCalc_IntIsBetween($iLeft, -100000, 100000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$oAnnotationShape.TextLeftDistance = $iLeft
 		$iError = ($oAnnotationShape.TextLeftDistance() = $iLeft) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($iRight <> Null) Then
 		If Not __LOCalc_IntIsBetween($iRight, -100000, 100000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oAnnotationShape.TextRightDistance = $iRight
 		$iError = ($oAnnotationShape.TextRightDistance() = $iRight) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($iTop <> Null) Then
 		If Not __LOCalc_IntIsBetween($iTop, -100000, 100000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oAnnotationShape.TextUpperDistance = $iTop
 		$iError = ($oAnnotationShape.TextUpperDistance() = $iTop) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
 	If ($iBottom <> Null) Then
 		If Not __LOCalc_IntIsBetween($iBottom, -100000, 100000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
 		$oAnnotationShape.TextLowerDistance = $iBottom
 		$iError = ($oAnnotationShape.TextLowerDistance() = $iBottom) ? ($iError) : (BitOR($iError, 128))
 	EndIf

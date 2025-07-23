@@ -66,7 +66,6 @@ Func Example()
 		; Set Column's width to optimal.
 		_LOCalc_RangeColumnWidth($oColumn, True)
 		If @error Then _ERROR($oDoc, "Failed to set Cell width to Optimal. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 	Next
 
 	; Create a Search Descriptor, Backwards = False, Search Rows = True, Match Case = False, Search in = Values

@@ -211,7 +211,6 @@ Func _LOCalc_SheetCopy(ByRef $oDoc, ByRef $oSheet, $sNewName = Null, $iPosition 
 	EndIf
 
 	If Not IsString($sNewName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
 	If $oSheets.hasByName($sNewName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	If ($iPosition = Null) Then $iPosition = $oSheets.Count()
@@ -572,7 +571,6 @@ Func _LOCalc_SheetGetObjByName(ByRef $oDoc, $sName)
 
 	$oSheets = $oDoc.Sheets()
 	If Not IsObj($oSheets) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
 	If Not $oSheets.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oSheet = $oSheets.getByName($sName)
@@ -643,7 +641,7 @@ EndFunc   ;==>_LOCalc_SheetGetObjByPosition
 ;                  @Error 3 @Extended 2 Return 0 = Failed to import the Sheet.
 ;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve new Sheet's Object.
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office Version less than 3.5.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office Version less than 3.5.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Successfully imported the requested Sheet, returning the new Sheet's Object.
 ; Author ........: donnyh13
@@ -907,12 +905,14 @@ Func _LOCalc_SheetLinkModify(ByRef $oSheet, $oNewDoc = Null, $sSheetName = Null,
 
 	If ($sSheetName <> Null) Then
 		If Not IsString($sSheetName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
 		If ($oSheet.LinkUrl() = "") Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 		$oSourceDoc = _LOCalc_DocOpen(_LOCalc_PathConvert($oSheet.LinkUrl(), $LOC_PATHCONV_PCPATH_RETURN), True, True)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
 		$bClose = (@extended = 2) ? (True) : (False)
 		If Not $oSourceDoc.Sheets.hasByName($sSheetName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, $oSourceDoc.Close(True))
+
 		If $bClose Then $oSourceDoc.Close(True)
 
 		$oSheet.LinkSheetName = $sSheetName
@@ -933,8 +933,8 @@ Func _LOCalc_SheetLinkModify(ByRef $oSheet, $oNewDoc = Null, $sSheetName = Null,
 			$iError = ($oSheet.LinkMode() = $iLinkMode) ? ($iError) : (BitOR($iError, 4))
 
 		Else
-
 			If ($oSheet.LinkUrl() = "") Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
 			$oSheet.LinkMode = $iLinkMode
 			$iError = ($oSheet.LinkMode() = $iLinkMode) ? ($iError) : (BitOR($iError, 4))
 		EndIf
@@ -986,7 +986,6 @@ Func _LOCalc_SheetMove(ByRef $oDoc, ByRef $oSheet, $iPosition = Null)
 
 	$oSheets = $oDoc.Sheets()
 	If Not IsObj($oSheets) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
 	If Not __LOCalc_IntIsBetween($iPosition, 0, $oSheets.Count()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oSheets.moveByName($sName, $iPosition)
@@ -1039,7 +1038,6 @@ Func _LOCalc_SheetName(ByRef $oDoc, ByRef $oSheet, $sName = Null)
 
 	$oSheets = $oDoc.Sheets()
 	If Not IsObj($oSheets) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
 	If $oSheets.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$oSheet.Name = $sName
@@ -1131,14 +1129,17 @@ Func _LOCalc_SheetPrintColumnsRepeat(ByRef $oSheet, $oRange = Null, $bRepeatColu
 
 	ElseIf ($oRange <> Null) Then
 		If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$tRangeAddr = $oRange.RangeAddress()
 		If Not IsObj($tRangeAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
 		$oSheet.setTitleColumns($tRangeAddr)
 		$iError = (__LOCalc_RangeAddressIsSame($oSheet.getTitleColumns(), $tRangeAddr)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bRepeatColumns <> Null) Then
 		If Not IsBool($bRepeatColumns) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oSheet.PrintTitleColumns = $bRepeatColumns
 		$iError = ($oSheet.PrintTitleColumns() = $bRepeatColumns) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -1186,6 +1187,7 @@ Func _LOCalc_SheetPrintRangeModify(ByRef $oSheet, $aoRange = Null)
 	If ($aoRange = Null) Then
 		$aoRange = $oSheet.getPrintAreas()
 		If Not IsArray($aoRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 		For $i = 0 To UBound($aoRange) - 1
 			$aoRange[$i] = $oSheet.getCellRangeByPosition($aoRange[$i].StartColumn(), $aoRange[$i].StartRow(), $aoRange[$i].EndColumn(), $aoRange[$i].EndRow())
 			If Not IsObj($aoRange[$i]) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
@@ -1198,6 +1200,7 @@ Func _LOCalc_SheetPrintRangeModify(ByRef $oSheet, $aoRange = Null)
 
 	For $i = 0 To UBound($aoRange) - 1
 		If Not IsObj($aoRange[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, $i)
+
 		$aoRange[$i] = $aoRange[$i].RangeAddress()
 		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
 	Next
@@ -1289,14 +1292,17 @@ Func _LOCalc_SheetPrintRowsRepeat(ByRef $oSheet, $oRange = Null, $bRepeatRows = 
 
 	ElseIf ($oRange <> Null) Then
 		If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 		$tRangeAddr = $oRange.RangeAddress()
 		If Not IsObj($tRangeAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
 		$oSheet.setTitleRows($tRangeAddr)
 		$iError = (__LOCalc_RangeAddressIsSame($oSheet.getTitleRows(), $tRangeAddr)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bRepeatRows <> Null) Then
 		If Not IsBool($bRepeatRows) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oSheet.PrintTitleRows = $bRepeatRows
 		$iError = ($oSheet.PrintTitleRows() = $bRepeatRows) ? ($iError) : (BitOR($iError, 2))
 	EndIf

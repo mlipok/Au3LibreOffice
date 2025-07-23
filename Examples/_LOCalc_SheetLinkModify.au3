@@ -125,7 +125,6 @@ Func Example()
 
 	; Delete the file.
 	FileDelete($sPath)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText, $oDoc2 = Null, $sPath = Null)
