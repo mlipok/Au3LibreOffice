@@ -14,7 +14,6 @@
 #include "LibreOfficeCalc_Cursor.au3"
 #include "LibreOfficeCalc_Doc.au3"
 #include "LibreOfficeCalc_Field.au3"
-#include "LibreOfficeCalc_Font.au3"
 #include "LibreOfficeCalc_Page.au3"
 #include "LibreOfficeCalc_Range.au3"
 #include "LibreOfficeCalc_Sheet.au3"

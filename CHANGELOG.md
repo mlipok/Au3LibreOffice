@@ -356,7 +356,6 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- LibreOfficeCalc_Cursor.au3
 	- LibreOfficeCalc_Doc.au3
 	- LibreOfficeCalc_Field.au3
-	- LibreOfficeCalc_Font.au3
 	- LibreOfficeCalc_Helper.au3
 	- LibreOfficeCalc_Internal.au3
 	- LibreOfficeCalc_Page.au3
@@ -617,9 +616,6 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_FieldsGetList
 	- _LOCalc_FieldSheetNameInsert
 	- _LOCalc_FieldTitleInsert
-- Font Query Functions
-	- _LOCalc_FontExists
-	- _LOCalc_FontsGetNames
 - Helper Functions
 	- _LOCalc_ComError_UserFunction
 	- _LOCalc_ConvertColorFromLong
@@ -630,6 +626,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_FilterDescriptorModify
 	- _LOCalc_FilterFieldCreate
 	- _LOCalc_FilterFieldModify
+	- _LOCalc_FontExists
+	- _LOCalc_FontsGetNames
 	- _LOCalc_FormatKeyCreate
 	- _LOCalc_FormatKeyDelete
 	- _LOCalc_FormatKeyExists
@@ -873,16 +871,23 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Modified _LOCalc_DocPrintersAltGetNames @Extended value when retrieving the default printer name, @Extended is now 1, instead of 2.
 - _LOCalc_DocRedoGetAllActionTitles now returns the number of results in @Extended value.
 - _LOCalc_DocUndoGetAllActionTitles now returns the number of results in @Extended value.
-- Removed $oDoc parameter from _LOCalc_FontExists. This will affect the parameters and error return values of the following functions:
+- Made $oDoc parameter for _LOCalc_FontExists optional. This will affect the parameters and error return values of the following functions:
 	- __LOCalc_CellFont
 	- _LOCalc_CellFont
 	- _LOCalc_CellStyleFont
 	- _LOCalc_FontExists
 	- _LOCalc_TextCursorFont
+- Renamed more Functions to be consistent when retrieving arrays of names or objects:
+	- _LOCalc_FormatKeyList-->_LOCalc_FormatKeysGetList
+- Made $oDoc Parameter optional for _LOCalc_FontsGetNames.
+- Added count of number of results for _LOCalc_DocConnect, connect-all and partial name search when more than one result is present.
+- Removed _ArrayDisplay from most examples.
 
 ### Removed
 
 - __LOCalc_VarsAreDefault
+- LibreOfficeCalc_Font file, combined functions into LibreOfficeCalc_Helper.
+- $__LO_STATUS_DOC_ERROR Error Constant and renumber all after errors.
 
 > [!NOTE]
 > **LibreOfficeWriter**

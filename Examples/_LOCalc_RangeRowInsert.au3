@@ -28,9 +28,7 @@ Func Example()
 			If @error Then _ERROR($oDoc, "Failed to set Cell Value. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 			$iCount += 1
-
 		Next
-
 	Next
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now Insert 2 new Rows starting at Row 2.")
@@ -54,7 +52,6 @@ Func Example()
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

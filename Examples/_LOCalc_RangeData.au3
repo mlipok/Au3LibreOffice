@@ -59,10 +59,8 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to data in Cell Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	For $i = 0 To UBound($aavData) - 1
-
 		For $j = 0 To UBound($aavData[$i]) - 1
 			$sData &= "Column " & $j & ": " & ($aavData[$i])[$j] & @CRLF
-
 		Next
 
 		MsgBox($MB_OK + $MB_TOPMOST, Default, "Array $aavData[" & $i & "] contains the following Data:" & @CRLF & $sData)
@@ -74,7 +72,6 @@ Func Example()
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

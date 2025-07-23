@@ -37,7 +37,7 @@ Func Example()
 			"All Padding distance, in Micrometers: " & $avSettings[0] & " This setting will be either Null or an Integer, depending on whether all four distances are equal or not." & @CRLF & _
 			"Top Padding distance, in Micrometers: " & $avSettings[1] & @CRLF & _
 			"Bottom Padding distance, in Micrometers: " & $avSettings[2] & @CRLF & _
-			"Left Padding distance, in Micrometers: " & $avSettings[3] & @CRLF &  _
+			"Left Padding distance, in Micrometers: " & $avSettings[3] & @CRLF & _
 			"Right Padding distance, in Micrometers: " & $avSettings[4] & @CRLF & @CRLF & _
 			"Press Ok, and I will demonstrate setting individual border padding settings.")
 
@@ -65,7 +65,6 @@ Func Example()
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

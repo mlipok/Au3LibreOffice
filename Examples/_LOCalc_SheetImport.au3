@@ -68,7 +68,6 @@ Func Example()
 	; Close the document.
 	_LOCalc_DocClose($oDoc2, False)
 	If @error Then _ERROR($oDoc2, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber, $oDoc2)
-
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText, $oDoc2 = Null)
