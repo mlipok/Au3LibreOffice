@@ -10,7 +10,6 @@
 #include "LibreOfficeCalc_Internal.au3"
 
 ; Other includes for Calc
-#include "LibreOfficeCalc_Font.au3"
 
 ; #INDEX# =======================================================================================================================
 ; Title .........: LibreOffice UDF
@@ -127,7 +126,7 @@ EndFunc   ;==>_LOCalc_CellStyleBackColor
 ;                  @Error 4 @Extended 5 Return 0 = Cannot set Top-Left to Bottom-Right Diagonal Border Color when Top-Left to Bottom-Right Diagonal Border width not set.
 ;                  @Error 4 @Extended 6 Return 0 = Cannot set Bottom-Left to Top-Right Diagonal Border Color when Bottom-Left to Top-Right Diagonal Border width not set.
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
@@ -147,7 +146,6 @@ Func _LOCalc_CellStyleBorderColor(ByRef $oCellStyle, $iTop = Null, $iBottom = Nu
 
 	If Not IsObj($oCellStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oCellStyle.supportsService("com.sun.star.style.CellStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
 	If ($iTop <> Null) And Not __LOCalc_IntIsBetween($iTop, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If ($iBottom <> Null) And Not __LOCalc_IntIsBetween($iBottom, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If ($iLeft <> Null) And Not __LOCalc_IntIsBetween($iLeft, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
@@ -248,7 +246,7 @@ EndFunc   ;==>_LOCalc_CellStyleBorderPadding
 ;                  @Error 4 @Extended 5 Return 0 = Cannot set Top-Left to Bottom-Right Diagonal Border Style when Top-Left to Bottom-Right Diagonal Border width not set.
 ;                  @Error 4 @Extended 6 Return 0 = Cannot set Bottom-Left to Top-Right Diagonal Border Style when Bottom-Left to Top-Right Diagonal Border width not set.
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
@@ -268,7 +266,6 @@ Func _LOCalc_CellStyleBorderStyle(ByRef $oCellStyle, $iTop = Null, $iBottom = Nu
 
 	If Not IsObj($oCellStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oCellStyle.supportsService("com.sun.star.style.CellStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
 	If ($iTop <> Null) And Not __LOCalc_IntIsBetween($iTop, $LOC_BORDERSTYLE_SOLID, $LOC_BORDERSTYLE_DASH_DOT_DOT, "", $LOC_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If ($iBottom <> Null) And Not __LOCalc_IntIsBetween($iBottom, $LOC_BORDERSTYLE_SOLID, $LOC_BORDERSTYLE_DASH_DOT_DOT, "", $LOC_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If ($iLeft <> Null) And Not __LOCalc_IntIsBetween($iLeft, $LOC_BORDERSTYLE_SOLID, $LOC_BORDERSTYLE_DASH_DOT_DOT, "", $LOC_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
@@ -309,7 +306,7 @@ EndFunc   ;==>_LOCalc_CellStyleBorderStyle
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
@@ -329,7 +326,6 @@ Func _LOCalc_CellStyleBorderWidth(ByRef $oCellStyle, $iTop = Null, $iBottom = Nu
 
 	If Not IsObj($oCellStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oCellStyle.supportsService("com.sun.star.style.CellStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
 	If ($iTop <> Null) And Not __LOCalc_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If ($iBottom <> Null) And Not __LOCalc_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If ($iLeft <> Null) And Not __LOCalc_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
@@ -380,7 +376,6 @@ Func _LOCalc_CellStyleCreate(ByRef $oDoc, $sCellStyle)
 
 	$oCellStyles = $oDoc.StyleFamilies().getByName("CellStyles")
 	If Not IsObj($oCellStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
 	If _LOCalc_CellStyleExists($oDoc, $sCellStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oStyle = $oDoc.createInstance("com.sun.star.style.CellStyle")
@@ -444,9 +439,9 @@ Func _LOCalc_CellStyleDelete(ByRef $oDoc, ByRef $oCellStyle, $bForceDelete = Fal
 
 	$oCellStyles = $oDoc.StyleFamilies().getByName("CellStyles")
 	If Not IsObj($oCellStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	$sCellStyle = $oCellStyle.Name()
 	If Not IsString($sCellStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
 	If Not $oCellStyle.isUserDefined() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	If $oCellStyle.isInUse() And Not ($bForceDelete) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; If Style is in use return an error unless force delete is true.
 
@@ -531,6 +526,7 @@ Func _LOCalc_CellStyleExists(ByRef $oDoc, $sCellStyle)
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sCellStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
 	If $oDoc.StyleFamilies.getByName("CellStyles").hasByName($sCellStyle) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, False)
@@ -583,7 +579,6 @@ Func _LOCalc_CellStyleFont(ByRef $oCellStyle, $sFontName = Null, $nFontSize = Nu
 
 	If Not IsObj($oCellStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oCellStyle.supportsService("com.sun.star.style.CellStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
 	If ($sFontName <> Null) And Not _LOCalc_FontExists($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$vReturn = __LOCalc_CellFont($oCellStyle, $sFontName, $nFontSize, $iPosture, $iWeight)
@@ -664,6 +659,7 @@ Func _LOCalc_CellStyleGetObj(ByRef $oDoc, $sCellStyle)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sCellStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not _LOCalc_CellStyleExists($oDoc, $sCellStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 	$oCellStyle = $oDoc.StyleFamilies().getByName("CellStyles").getByName($sCellStyle)
 	If Not IsObj($oCellStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -676,7 +672,7 @@ EndFunc   ;==>_LOCalc_CellStyleGetObj
 ; Syntax ........: _LOCalc_CellStyleNumberFormat(ByRef $oDoc, ByRef $oCellStyle[, $iFormatKey = Null])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $oCellStyle          - [in/out] an object. A Cell Style object returned by a previous _LOCalc_CellStyleCreate, or _LOCalc_CellStyleGetObj function.
-;                  $iFormatKey          - [optional] an integer value. Default is Null. A Format Key from a previous _LOCalc_FormatKeyCreate or _LOCalc_FormatKeyList function.
+;                  $iFormatKey          - [optional] an integer value. Default is Null. A Format Key from a previous _LOCalc_FormatKeyCreate or _LOCalc_FormatKeysGetList function.
 ; Return values .: Success: 1 or Integer.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -696,7 +692,7 @@ EndFunc   ;==>_LOCalc_CellStyleGetObj
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOCalc_CellNumberFormat, _LOCalc_FormatKeyCreate, _LOCalc_FormatKeyList
+; Related .......: _LOCalc_CellNumberFormat, _LOCalc_FormatKeyCreate, _LOCalc_FormatKeysGetList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -741,7 +737,7 @@ EndFunc   ;==>_LOCalc_CellStyleNumberFormat
 ;                  |                               2 = Error setting $sParentStyle
 ;                  |                               4 = Error setting $bHidden
 ;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.0.
+;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 4.0.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 or 3 Element Array with values in order of function parameters. If the Libre Office version is below 4.0, the Array will contain 2 elements because $bHidden is not available.
@@ -777,6 +773,7 @@ Func _LOCalc_CellStyleOrganizer(ByRef $oDoc, ByRef $oCellStyle, $sNewCellStyleNa
 	If ($sNewCellStyleName <> Null) Then
 		If Not IsString($sNewCellStyleName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		If _LOCalc_CellStyleExists($oDoc, $sNewCellStyleName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oCellStyle.Name = $sNewCellStyleName
 		$iError = ($oCellStyle.Name() = $sNewCellStyleName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -784,6 +781,7 @@ Func _LOCalc_CellStyleOrganizer(ByRef $oDoc, ByRef $oCellStyle, $sNewCellStyleNa
 	If ($sParentStyle <> Null) Then
 		If Not IsString($sParentStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		If ($sParentStyle <> "") And Not _LOCalc_CellStyleExists($oDoc, $sParentStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$oCellStyle.ParentStyle = $sParentStyle
 		$iError = ($oCellStyle.ParentStyle() = $sParentStyle) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -791,6 +789,7 @@ Func _LOCalc_CellStyleOrganizer(ByRef $oDoc, ByRef $oCellStyle, $sNewCellStyleNa
 	If ($bHidden <> Null) Then
 		If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		If Not __LOCalc_VersionCheck(4.0) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+
 		$oCellStyle.Hidden = $bHidden
 		$iError = ($oCellStyle.Hidden() = $bHidden) ? ($iError) : (BitOR($iError, 4))
 	EndIf

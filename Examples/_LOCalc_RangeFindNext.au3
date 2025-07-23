@@ -72,7 +72,6 @@ Func Example()
 		If @error Then _ERROR($oDoc, "Failed to perform FindNext for the Cell Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 		If IsObj($oResult) Then
-
 			; Set the Cell Background color to a Random value.
 			_LOCalc_CellBackColor($oResult, Random($LOC_COLOR_BLACK, $LOC_COLOR_WHITE, 1), False)
 			If @error Then _ERROR($oDoc, "Failed to set Cell Background color. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
@@ -83,7 +82,6 @@ Func Example()
 			MsgBox($MB_OK + $MB_TOPMOST, Default, "The Search was successful, but I did not find a Cell containing ""2"".")
 			ExitLoop
 		EndIf
-
 	Until Not IsObj($oResult)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")

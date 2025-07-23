@@ -81,7 +81,6 @@ Func Example()
 		; Set Column's width to optimal.
 		_LOCalc_RangeColumnWidth($oColumn, True)
 		If @error Then _ERROR($oDoc, "Failed to set Cell width to Optimal. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 	Next
 
 	; Create a Search Descriptor, Backwards = True, Search Rows = False, Match Case = True, Search in = Values, Entire Cell and Regular Expressions = False, Wildcards = True.
@@ -99,7 +98,6 @@ Func Example()
 		; Set the Cell Background color to a Random value.
 		_LOCalc_CellBackColor($oResult, Random($LOC_COLOR_BLACK, $LOC_COLOR_WHITE, 1), False)
 		If @error Then _ERROR($oDoc, "Failed to set Cell Background color. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 	EndIf
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now modify the Search descriptor to search in Rows instead of Columns, forward instead of backwards, " & _
@@ -118,7 +116,6 @@ Func Example()
 		; Set the Cell Background color to a Random value.
 		_LOCalc_CellBackColor($oResult, Random($LOC_COLOR_BLACK, $LOC_COLOR_WHITE, 1), False)
 		If @error Then _ERROR($oDoc, "Failed to set Cell Background color. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 	EndIf
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")

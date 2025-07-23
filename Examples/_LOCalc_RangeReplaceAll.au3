@@ -69,11 +69,9 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to perform Replace All for the Cell Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	For $i = 0 To UBound($aoResults) - 1
-
 		; Set the Cell Background color to a Random value.
 		_LOCalc_CellBackColor($aoResults[$i], Random($LOC_COLOR_BLACK, $LOC_COLOR_WHITE, 1), False)
 		If @error Then _ERROR($oDoc, "Failed to set Cell Background color. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 	Next
 
 	; Set the coulmns A to H's width to Optimal.
@@ -85,7 +83,6 @@ Func Example()
 		; Set Column's width to optimal.
 		_LOCalc_RangeColumnWidth($oColumn, True)
 		If @error Then _ERROR($oDoc, "Failed to set Cell width to Optimal. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
 	Next
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
