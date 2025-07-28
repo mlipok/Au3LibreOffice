@@ -1339,11 +1339,11 @@ EndFunc   ;==>_LOWriter_DocExport
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocFindAll
 ; Description ...: Find all matches contained in a document of a Specified Search String.
-; Syntax ........: _LOWriter_DocFindAll(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, ByRef $atFindFormat)
+; Syntax ........: _LOWriter_DocFindAll(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString[, $atFindFormat = Null])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oSrchDescript       - [in/out] an object. A Search Descriptor Object returned from _LOWriter_SearchDescriptorCreate function.
 ;                  $sSearchString       - a string value. A String of text or a regular expression to search for.
-;                  $atFindFormat        - [in/out] an array of structs. An Array of formatting properties created from _LOWriter_FindFormat* functions to search for, call with an empty array to skip. Array will not be modified.
+;                  $atFindFormat        - [optional] an array of dll structs. Default is Null. An Array of Formatting properties to search for, either by value or simply by existence, depending on the current setting of "Value Search".
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1365,7 +1365,7 @@ EndFunc   ;==>_LOWriter_DocExport
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_DocFindAll(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, ByRef $atFindFormat)
+Func _LOWriter_DocFindAll(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, $atFindFormat = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1376,10 +1376,10 @@ Func _LOWriter_DocFindAll(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, ByR
 	If Not IsObj($oSrchDescript) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not $oSrchDescript.supportsService("com.sun.star.util.SearchDescriptor") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsString($sSearchString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If Not IsArray($atFindFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If (UBound($atFindFormat) > 0) And Not IsObj($atFindFormat[0]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If ($atFindFormat <> Null) And Not IsArray($atFindFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($atFindFormat <> Null) And (UBound($atFindFormat) > 0) And Not IsObj($atFindFormat[0]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
-	$oSrchDescript.setSearchAttributes($atFindFormat)
+	If IsArray($atFindFormat) Then $oSrchDescript.setSearchAttributes($atFindFormat)
 	$oSrchDescript.SearchString = $sSearchString
 
 	$oResults = $oDoc.findAll($oSrchDescript)
@@ -1399,12 +1399,12 @@ EndFunc   ;==>_LOWriter_DocFindAll
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocFindAllInRange
 ; Description ...: Find all occurrences of a Search String in a Document in a specific selection.
-; Syntax ........: _LOWriter_DocFindAllInRange(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, ByRef $atFindFormat, ByRef $oRange)
+; Syntax ........: _LOWriter_DocFindAllInRange(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, ByRef $oRange[, $atFindFormat = Null])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oSrchDescript       - [in/out] an object. A Search Descriptor Object returned from _LOWriter_SearchDescriptorCreate function.
 ;                  $sSearchString       - a string value. A String of text or a regular expression to search for.
-;                  $atFindFormat        - [in/out] an array of structs. Set to an empty array to skip. An Array of Formatting properties to search for, either by value or simply by existence, depending on the current setting of "Value Search". Array will not be modified.
 ;                  $oRange              - [in/out] an object. A Range, such as a cursor with Data selected, to perform the search within.
+;                  $atFindFormat        - [optional] an array of dll structs. Default is Null. An Array of Formatting properties to search for, either by value or simply by existence, depending on the current setting of "Value Search".
 ; Return values .: Success: 1 or Array..
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1412,10 +1412,10 @@ EndFunc   ;==>_LOWriter_DocFindAll
 ;                  @Error 1 @Extended 2 Return 0 = $oSrchDescript not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $oSrchDescript not a Search Descriptor Object.
 ;                  @Error 1 @Extended 4 Return 0 = $sSearchString not a String.
-;                  @Error 1 @Extended 5 Return 0 = $atFindFormat not an Array.
-;                  @Error 1 @Extended 6 Return 0 = First element in $atFindFormat not an Object.
-;                  @Error 1 @Extended 7 Return 0 = $oRange not set to Null and not an Object.
-;                  @Error 1 @Extended 8 Return 0 = $oRange has no data selected.
+;                  @Error 1 @Extended 5 Return 0 = $oRange not set to Null and not an Object.
+;                  @Error 1 @Extended 6 Return 0 = $oRange has no data selected.
+;                  @Error 1 @Extended 7 Return 0 = $atFindFormat not an Array.
+;                  @Error 1 @Extended 8 Return 0 = First element in $atFindFormat not an Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Search did not return an Object, something went wrong.
 ;                  --Success--
@@ -1428,7 +1428,7 @@ EndFunc   ;==>_LOWriter_DocFindAll
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_DocFindAllInRange(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, ByRef $atFindFormat, ByRef $oRange)
+Func _LOWriter_DocFindAllInRange(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, ByRef $oRange, $atFindFormat = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1440,13 +1440,12 @@ Func _LOWriter_DocFindAllInRange(ByRef $oDoc, ByRef $oSrchDescript, $sSearchStri
 	If Not IsObj($oSrchDescript) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not $oSrchDescript.supportsService("com.sun.star.util.SearchDescriptor") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsString($sSearchString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If Not IsArray($atFindFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If (UBound($atFindFormat) > 0) And Not IsObj($atFindFormat[0]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($oRange.IsCollapsed()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If ($atFindFormat <> Null) And Not IsArray($atFindFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+	If ($atFindFormat <> Null) And (UBound($atFindFormat) > 0) And Not IsObj($atFindFormat[0]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
-	$oSrchDescript.setSearchAttributes($atFindFormat)
-
-	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
-	If ($oRange.IsCollapsed()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+	If IsArray($atFindFormat) Then $oSrchDescript.setSearchAttributes($atFindFormat)
 
 	$oSrchDescript.SearchString = $sSearchString
 
@@ -1511,11 +1510,11 @@ EndFunc   ;==>_LOWriter_DocFindAllInRange
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocFindNext
 ; Description ...: Find a Search String in a Document once or one at a time.
-; Syntax ........: _LOWriter_DocFindNext(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, ByRef $atFindFormat[, $oRange = Null[, $oLastFind = Null[, $bExhaustive = False]]])
+; Syntax ........: _LOWriter_DocFindNext(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString[, $atFindFormat = Null[, $oRange = Null[, $oLastFind = Null[, $bExhaustive = False]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oSrchDescript       - [in/out] an object. A Search Descriptor Object returned from _LOWriter_SearchDescriptorCreate function.
 ;                  $sSearchString       - a string value. A String of text or a regular expression to search for.
-;                  $atFindFormat        - [in/out] an array of structs. Set to an empty array to skip. An Array of Formatting properties to search for, either by value or simply by existence, depending on the current setting of "Value Search". Array will not be modified.
+;                  $atFindFormat        - [optional] an array of dll structs. Default is Null. Set to Null to skip. An Array of Formatting properties to search for, either by value or simply by existence, depending on the current setting of "Value Search".
 ;                  $oRange              - [optional] an object. Default is Null. A Range, such as a cursor with Data selected, to perform the search within. If Null, the entire document is searched.
 ;                  $oLastFind           - [optional] an object. Default is Null. The last returned Object by a previous call to this function to begin the search from, if set to Null, the search begins at the start of the Document or selection, depending on if a Range is provided.
 ;                  $bExhaustive         - [optional] a boolean value. Default is False. If True, tests whether every result found in a document is contained in the selection or not. See remarks.
@@ -1544,7 +1543,7 @@ EndFunc   ;==>_LOWriter_DocFindAllInRange
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_DocFindNext(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, ByRef $atFindFormat, $oRange = Null, $oLastFind = Null, $bExhaustive = False)
+Func _LOWriter_DocFindNext(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, $atFindFormat = Null, $oRange = Null, $oLastFind = Null, $bExhaustive = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1554,10 +1553,10 @@ Func _LOWriter_DocFindNext(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, By
 	If Not IsObj($oSrchDescript) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not $oSrchDescript.supportsService("com.sun.star.util.SearchDescriptor") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsString($sSearchString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If Not IsArray($atFindFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If (UBound($atFindFormat) > 0) And Not IsObj($atFindFormat[0]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If ($atFindFormat <> Null) And Not IsArray($atFindFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($atFindFormat <> Null) And (UBound($atFindFormat) > 0) And Not IsObj($atFindFormat[0]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
-	$oSrchDescript.setSearchAttributes($atFindFormat)
+	If IsArray($atFindFormat) Then $oSrchDescript.setSearchAttributes($atFindFormat)
 
 	If ($oRange <> Null) And Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
@@ -3962,14 +3961,14 @@ EndFunc   ;==>_LOWriter_DocRedoIsPossible
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocReplaceAll
 ; Description ...: Replace all instances of a search.
-; Syntax ........: _LOWriter_DocReplaceAll(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, $sReplaceString, ByRef $atFindFormat, ByRef $atReplaceFormat)
+; Syntax ........: _LOWriter_DocReplaceAll(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, $sReplaceString[, $atFindFormat = Null[, $atReplaceFormat = Null]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oSrchDescript       - [in/out] an object. A Search Descriptor Object returned from _LOWriter_SearchDescriptorCreate function.
 ;                  $sSearchString       - a string value. A String of text or a Regular Expression to Search for.
 ;                  $sReplaceString      - a string value. A String of text or a Regular Expression to replace any results with.
-;                  $atFindFormat        - [in/out] an array of structs. Set to an empty array[0] to skip. An Array of Formatting properties to search for, either by value or simply by existence, depending on the current setting of "Value Search". Array will not be modified.
-;                  $atReplaceFormat     - [in/out] an array of structs. Set to an empty array[0] to skip. An Array of Formatting property values to replace any results with. Array will not be modified.
-; Return values .: Success: 1
+;                  $atFindFormat        - [optional] an array of dll structs. Default is Null. An Array of Formatting properties to search for, either by value or simply by existence, depending on the current setting of "Value Search".
+;                  $atReplaceFormat     - [optional] an array of dll structs. Default is Null. An Array of Formatting property values to replace any results with.
+; Return values .: Success: Integer
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -3982,15 +3981,16 @@ EndFunc   ;==>_LOWriter_DocRedoIsPossible
 ;                  @Error 1 @Extended 8 Return 0 = First Element of $atFindFormat not an Object.
 ;                  @Error 1 @Extended 9 Return 0 = First Element of $atReplaceFormat not an Object.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return 1 = Success. Search and Replace was successful, @Extended set to number of replacements made.
+;                  @Error 0 @Extended 0 Return Integer = Success. Search and Replace was successful, returning number of replacements made.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:
+; Remarks .......: In order for $atReplaceFormat to be applied to replacements, $bSearchPropValues must be True in the Search descriptor. I'm not sure why.
+;                  Having $bBackwards set to True can cause issues with Find and Replace using formats, perhaps other things as well.
 ; Related .......: _LOWriter_SearchDescriptorCreate, _LOWriter_DocFindAll, _LOWriter_DocFindNext, _LOWriter_DocFindAllInRange, _LOWriter_DocReplaceAllInRange, _LOWriter_FindFormatModifyAlignment, _LOWriter_FindFormatModifyEffects, _LOWriter_FindFormatModifyFont, _LOWriter_FindFormatModifyHyphenation, _LOWriter_FindFormatModifyIndent, _LOWriter_FindFormatModifyOverline, _LOWriter_FindFormatModifyPageBreak, _LOWriter_FindFormatModifyPosition, _LOWriter_FindFormatModifyRotateScaleSpace, _LOWriter_FindFormatModifySpacing, _LOWriter_FindFormatModifyStrikeout, _LOWriter_FindFormatModifyTxtFlowOpt, _LOWriter_FindFormatModifyUnderline.
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_DocReplaceAll(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, $sReplaceString, ByRef $atFindFormat, ByRef $atReplaceFormat)
+Func _LOWriter_DocReplaceAll(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, $sReplaceString, $atFindFormat = Null, $atReplaceFormat = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -4001,36 +4001,34 @@ Func _LOWriter_DocReplaceAll(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, 
 	If Not $oSrchDescript.supportsService("com.sun.star.util.SearchDescriptor") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsString($sSearchString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not IsString($sReplaceString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If Not IsArray($atFindFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-	If Not IsArray($atReplaceFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
-	If (UBound($atFindFormat) > 0) And Not IsObj($atFindFormat[0]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+	If ($atFindFormat <> Null) And Not IsArray($atFindFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If ($atReplaceFormat <> Null) And Not IsArray($atReplaceFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+	If ($atFindFormat <> Null) And (UBound($atFindFormat) > 0) And Not IsObj($atFindFormat[0]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+	If ($atReplaceFormat <> Null) And (UBound($atReplaceFormat) > 0) And Not IsObj($atReplaceFormat[0]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
-	$oSrchDescript.setSearchAttributes($atFindFormat)
-
-	If (UBound($atReplaceFormat) > 0) And Not IsObj($atReplaceFormat[0]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
-
-	$oSrchDescript.setReplaceAttributes($atReplaceFormat)
+	If IsArray($atFindFormat) Then $oSrchDescript.setSearchAttributes($atFindFormat)
+	If IsArray($atReplaceFormat) Then $oSrchDescript.setReplaceAttributes($atReplaceFormat)
 
 	$oSrchDescript.SearchString = $sSearchString
 	$oSrchDescript.ReplaceString = $sReplaceString
 
 	$iReplacements = $oDoc.replaceAll($oSrchDescript)
 
-	Return SetError($__LO_STATUS_SUCCESS, $iReplacements, 1)
+	Return SetError($__LO_STATUS_SUCCESS, 0, $iReplacements)
 EndFunc   ;==>_LOWriter_DocReplaceAll
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocReplaceAllInRange
 ; Description ...: Replace all instances of a search within a selection. See Remarks.
-; Syntax ........: _LOWriter_DocReplaceAllInRange(ByRef $oDoc, ByRef $oSrchDescript, ByRef $oRange, $sSearchString, $sReplaceString, ByRef $atFindFormat, ByRef $atReplaceFormat)
+; Syntax ........: _LOWriter_DocReplaceAllInRange(ByRef $oDoc, ByRef $oSrchDescript, ByRef $oRange, $sSearchString, $sReplaceString[, $atFindFormat = Null[, $atReplaceFormat = Null]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oSrchDescript       - [in/out] an object. A Search Descriptor Object returned from _LOWriter_SearchDescriptorCreate function.
 ;                  $oRange              - [in/out] an object. A Range, such as a cursor with Data selected, to perform the search within.
 ;                  $sSearchString       - a string value. A String of text or a regular expression to search for.
 ;                  $sReplaceString      - a string value. A String of text or a regular expression to replace any results with.
-;                  $atFindFormat        - [in/out] an array of structs. An Array of Formatting properties to search for, either by value or simply by existence, depending on the current setting of "Value Search". Set to an empty array[0] to skip. Array will not be modified.
-;                  $atReplaceFormat     - [in/out] an array of structs. An Array of Formatting property values to replace any results with. Set to an empty array[0] to skip. Array will not be modified. Not Recommended for use with regular expressions, see remarks.
-; Return values .: Success: 1
+;                  $atFindFormat        - [optional] an array of dll structs. Default is Null. An Array of Formatting properties to search for, either by value or simply by existence, depending on the current setting of "Value Search".
+;                  $atReplaceFormat     - [optional] an array of dll structs. Default is Null. An Array of Formatting property values to replace any results with.
+; Return values .: Success: Integer
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -4044,41 +4042,42 @@ EndFunc   ;==>_LOWriter_DocReplaceAll
 ;                  @Error 1 @Extended 9 Return 0 = $atReplaceFormat not an Array.
 ;                  @Error 1 @Extended 10 Return 0 = First Element in $atFindFormat not a Property Object.
 ;                  @Error 1 @Extended 11 Return 0 = First Element in $atReplaceFormat not a Property Object.
-;                  @Error 1 @Extended 12 Return 0 = Search Styles is True, $atFindFormat and $atReplaceFormat arrays are empty, (Thus searching for Paragraph Styles by Name contained in the document) but $sReplaceString is set to a Paragraph Style that does not exist.
+;                  @Error 1 @Extended 12 Return 0 = Paragraph Style Name called in $sReplaceString does not exist.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error creating backup of ViewCursor location and selection.
 ;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.ServiceManager" Object.
 ;                  @Error 2 @Extended 3 Return 0 = Error creating "com.sun.star.frame.DispatchHelper" Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error converting Regular Expression String.
-;                  @Error 3 @Extended 2 Return 0 = Error performing FindAllInRange Function.
-;                  @Error 3 @Extended 3 Return 0 = Error retrieving ViewCursor object.
+;                  @Error 3 @Extended 1 Return 0 = Error Finding all results in Range.
+;                  @Error 3 @Extended 2 Return 0 = Error searching for property values.
+;                  @Error 3 @Extended 3 Return 0 = Error finding temporary property to use.
+;                  @Error 3 @Extended 4 Return 0 = Error retrieving current selection and ViewCursor position.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return 1 = Success. Search and Replace was successful, number of replacements returned in @Extended.
+;                  @Error 0 @Extended 0 Return Integer = Success. Search and Replace was successful, returning number of replacements.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Libre Office does not offer a Function to call to replace only results within a selection, consequently I have had to create my own. This function uses the "FindAllInRange" function, so any errors with Find/Replace formatting causing deletions will cause problems here. As best as I can tell all options for find and replace should be available, Formatting, Paragraph styles etc.
-;                  How I created this function to still accept Regular Expressions is I use Libre's FindAll command, modified by my FindAllInRange function. I then ran into another problem, as my next step was to use AutoIt's RegExpReplace function to perform the replacement, but some replacements don't work as expected. To Fix this I have created two versions of Regular Expression replacement, the first way is only implemented if $atReplaceFormat is skipped using an empty array. I use an ExecutionHelper to execute the Find and replace command, however this method doesn't accept formatting for find and replace. So I developed my second method, which accepts formatting, and uses AutoIt's RegExpReplace function to "Search" the resulting matched Strings and replace it, then I set the new string to that result. However I have had to create a separate function to convert the ReplaceString to be compatible with AutoIt's Regular Expression formatting.
-;                  + A Backslash (\) must be doubled(\\) in order to be literally inserted, at the beginning of the conversion process all double Backslashes are replaced with a specific flag to aid in identifying commented and non-commented keywords (\n, \t, & etc.), after the conversion process the special flag is replaced again with the double Backslashes, this should not cause any issues.
-;                  + \n (new Paragraph) in L.O. RegExp. formatting is replaced with @CR, unless the Backslash is doubled (\\n), then \n becomes literal.
-;                  + \t (Tab) in L.O. format is replaced with @Tab.
-;                  + &(Find Result/BackReference) is replaced with $0 which means insert the entire found string at that position, To insert a regular "&" character, comment it with a Backslash, \&.
-;                  As with LibreOffice, this function should still accept BackReferences ($0-9 or \0-9).
-;                  I have found certain problems with some of the expressions still not working, such as $ (end of paragraph mark) not replacing correctly because Autoit uses @CRLF for its newline endings, and Libre uses @CR for a new paragraph and @LF for a newline.
-; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_SearchDescriptorCreate, _LOWriter_DocFindAll, _LOWriter_DocFindNext, _LOWriter_DocFindAllInRange, _LOWriter_DocReplaceAll, _LOWriter_FindFormatModifyAlignment, _LOWriter_FindFormatModifyEffects, _LOWriter_FindFormatModifyFont, _LOWriter_FindFormatModifyHyphenation, _LOWriter_FindFormatModifyIndent, _LOWriter_FindFormatModifyOverline, _LOWriter_FindFormatModifyPageBreak, _LOWriter_FindFormatModifyPosition, _LOWriter_FindFormatModifyRotateScaleSpace, _LOWriter_FindFormatModifySpacing, _LOWriter_FindFormatModifyStrikeout, _LOWriter_FindFormatModifyTxtFlowOpt, _LOWriter_FindFormatModifyUnderline.
+; Remarks .......: Libre Office does not offer a method to replace only results within a selection, consequently I have had to create my own. This function sometimes uses the "FindAllInRange" function, so any errors with Find/Replace formatting causing deletions will cause problems here. As best as I can tell all options for find and replace should be available, Formatting, Paragraph styles etc.
+;                  If formatting is not being search or applied, I use a dispatch command to Find and Replace. However if formatting is being searched or added, A second method is used, which begins with the "FindAllInRange" function to find all matching results, then temporarily applies a normally unused property to the applicable results (CharFlash or CharShadingValue), and then add that temporary property to the Formatting array to search for, then Replace all results. And finally removing the temporary property value again.
+;                  Replacing Paragraph Styles doesn't work with a dispatch command, so I use the "FindAllInRange" function, and then manually apply the new Paragraph Style.
+;                  In order for $atReplaceFormat to be applied to replacements, $bSearchPropValues must be True in the Search descriptor. I'm not sure why.
+;                  Having $bBackwards set to True can cause issues with Find and Replace using formats, perhaps other things as well.
+; Related .......: _LOWriter_SearchDescriptorCreate, _LOWriter_DocFindAll, _LOWriter_DocFindNext, _LOWriter_DocFindAllInRange, _LOWriter_DocReplaceAll, _LOWriter_FindFormatModifyAlignment, _LOWriter_FindFormatModifyEffects, _LOWriter_FindFormatModifyFont, _LOWriter_FindFormatModifyHyphenation, _LOWriter_FindFormatModifyIndent, _LOWriter_FindFormatModifyOverline, _LOWriter_FindFormatModifyPageBreak, _LOWriter_FindFormatModifyPosition, _LOWriter_FindFormatModifyRotateScaleSpace, _LOWriter_FindFormatModifySpacing, _LOWriter_FindFormatModifyStrikeout, _LOWriter_FindFormatModifyTxtFlowOpt, _LOWriter_FindFormatModifyUnderline.
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_DocReplaceAllInRange(ByRef $oDoc, ByRef $oSrchDescript, ByRef $oRange, $sSearchString, $sReplaceString, ByRef $atFindFormat, ByRef $atReplaceFormat)
+Func _LOWriter_DocReplaceAllInRange(ByRef $oDoc, ByRef $oSrchDescript, ByRef $oRange, $sSearchString, $sReplaceString, $atFindFormat = Null, $atReplaceFormat = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
+	Local Const $__LOW_ALG1_ABSOLUTE = 0, $__LOW_ALG1_REGEXP = 1, $__LOW_ALG1_APPROXIMATE = 2 ; com.sun.star.util.SearchAlgorithms
+	Local Const $__LOW_ALG2_ABSOLUTE = 1, $__LOW_ALG2_REGEXP = 2, $__LOW_ALG2_APPROXIMATE = 3 ; com.sun.star.util.SearchAlgorithms2
+	Local Const $__LOW_SRCH_COMMAND_REPLACE_ALL = 3 ; See srchitem.hxx and https://thebiasplanet.blogspot.com/2022/06/writerunosearchoff.html
+	Local Const $__LOW_TRANSLIT_FLAG_NONE = 0, $__LOW_TRANSLIT_FLAG_IGNORE_CASE = 256 ; com.sun.star.i18n:TransliterationModules
+	Local Const $__LOW_SEARCHFLAG_NORM_WORD_ONLY = 16, $__LOW_SEARCHFLAG_SELECTION = 2048, $__LOW_SEARCHFLAG_LEV_RELAXED = 65536 ; See com,sun,star,util,SearchFlags, srchitem.hxx, https://thebiasplanet.blogspot.com/2022/06/writerunosearchoff.html
 	Local $aoResults[0]
-	Local $atArgs[7]
-	Local Const $LOW_SEARCHFLAG_ABSOLUTE = 1, $LOW_SEARCHFLAG_REGEXP = 2, $LOW_SEARCHFLAG_REPLACE_ALL = 3, $LOW_SEARCHFLAG_SELECTION = 2048
-	Local $oViewCursor, $oViewCursorBackup, $oServiceManager, $oDispatcher
-	Local $iResults
-	Local $bFormat = False
+	Local $atArgs[12], $atFormats[1], $atOrigFormats[1]
+	Local $oServiceManager, $oDispatcher, $oTempSrchDescript, $oResults, $oSelection
+	Local $iResults, $iSrchFlags = $__LOW_SEARCHFLAG_SELECTION, $iTranslitFlags = 0
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oSrchDescript) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -4087,89 +4086,135 @@ Func _LOWriter_DocReplaceAllInRange(ByRef $oDoc, ByRef $oSrchDescript, ByRef $oR
 	If ($oRange.IsCollapsed()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	If Not IsString($sSearchString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 	If Not IsString($sReplaceString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
-	If Not IsArray($atFindFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
-	If Not IsArray($atReplaceFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
-	If (UBound($atFindFormat) > 0) And Not IsObj($atFindFormat[0]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
-	If (UBound($atReplaceFormat) > 0) And Not IsObj($atReplaceFormat[0]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+	If ($atFindFormat <> Null) And Not IsArray($atFindFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+	If ($atReplaceFormat <> Null) And Not IsArray($atReplaceFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+	If ($atFindFormat <> Null) And (UBound($atFindFormat) > 0) And Not IsObj($atFindFormat[0]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+	If ($atReplaceFormat <> Null) And Not (UBound($atReplaceFormat) > 0) And Not IsObj($atReplaceFormat[0]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+	If ($oSrchDescript.SearchStyles() = True) And Not _LOWriter_ParStyleExists($oDoc, $sReplaceString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 
-	If (UBound($atReplaceFormat) > 0) Then $bFormat = True
-
-	; If Find/Replace using a Regular expression is True, and replace formatting is set, convert the regular expressions for my
-	; alternate replacement function to use.
-	If ($oSrchDescript.SearchRegularExpression() = True) And ($bFormat = True) Then __LOWriter_RegExpConvert($sReplaceString)
-	If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	$aoResults = _LOWriter_DocFindAllInRange($oDoc, $oSrchDescript, $sSearchString, $atFindFormat, $oRange)
+	$aoResults = _LOWriter_DocFindAllInRange($oDoc, $oSrchDescript, $sSearchString, $oRange, $atFindFormat)
 	$iResults = @extended
-	If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; Error performing search
+	If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Error performing search
 
-	If ($oSrchDescript.SearchRegularExpression() = True) Then
-		If ($bFormat = True) Then
-			For $i = 0 To $iResults - 1
-				$aoResults[$i].setString(StringRegExpReplace($aoResults[$i].getString(), $sSearchString, $sReplaceString))
-				If ($bFormat = True) Then
-					For $j = 0 To UBound($atReplaceFormat) - 1
-						$aoResults[$i].setPropertyValue($atReplaceFormat[$j].Name(), $atReplaceFormat[$j].Value())
-					Next
-				EndIf
+	If IsArray($atFindFormat) Or IsArray($atReplaceFormat) Then ; Search or replace using formats, use my temporary properties method.
+		$oTempSrchDescript = $oDoc.createSearchDescriptor()
+		If Not IsObj($oTempSrchDescript) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
-			Next
+		With $oTempSrchDescript
+			.SearchBackwards = False
+			.SearchCaseSensitive = False
+			.SearchWords = False
+			.SearchRegularExpression = True
+			.SearchStyles = True
+			.ValueSearch = False
+		EndWith
 
-		Else ; No Replacement formatting, use UNO Execute method instead.
-			$oViewCursor = $oDoc.CurrentController.getViewCursor()
-			If Not IsObj($oViewCursor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		; Use these as Temp values. CharFlash, or CharShadingValue.
+		$atFormats[0] = __LOWriter_SetPropertyValue("CharFlash", True)
+		$atOrigFormats[0] = __LOWriter_SetPropertyValue("CharFlash", False)
 
-			; Backup the ViewCursor location and selection.
-			$oViewCursorBackup = $oDoc.Text.createTextCursorByRange($oViewCursor)
-			If Not IsObj($oViewCursorBackup) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+		$oTempSrchDescript.setSearchAttributes($atFormats)
+		$oTempSrchDescript.SearchString = ".*"
 
-			; Move the View Cursor to the input range.
-			$oViewCursor.gotoRange($oRange, False)
+		$oResults = $oDoc.findAll($oTempSrchDescript)
+		If Not IsObj($oResults) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-			$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
-			If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+		If ($oResults.getCount() > 0) Then ; If CharFlash is present, try to find another unused property.
+			$atFormats[0] = __LOWriter_SetPropertyValue("CharShadingValue", 28)
+			$atOrigFormats[0] = __LOWriter_SetPropertyValue("CharShadingValue", 0)
 
-			$oDispatcher = $oServiceManager.createInstance("com.sun.star.frame.DispatchHelper")
-			If Not IsObj($oDispatcher) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+			$oTempSrchDescript.setSearchAttributes($atFormats)
 
-			$atArgs[0] = __LOWriter_SetPropertyValue("SearchItem.Backward", $oSrchDescript.SearchBackwards())
-			$atArgs[1] = __LOWriter_SetPropertyValue("SearchItem.AlgorithmType", $LOW_SEARCHFLAG_ABSOLUTE)
-			$atArgs[2] = __LOWriter_SetPropertyValue("SearchItem.SearchFlags", $LOW_SEARCHFLAG_SELECTION)
-			$atArgs[3] = __LOWriter_SetPropertyValue("SearchItem.SearchString", $sSearchString)
-			$atArgs[4] = __LOWriter_SetPropertyValue("SearchItem.ReplaceString", $sReplaceString)
-			$atArgs[5] = __LOWriter_SetPropertyValue("SearchItem.Command", $LOW_SEARCHFLAG_REPLACE_ALL)
-			$atArgs[6] = __LOWriter_SetPropertyValue("SearchItem.AlgorithmType2", $LOW_SEARCHFLAG_REGEXP)
-
-			$oDispatcher.executeDispatch($oDoc.CurrentController, ".uno:ExecuteSearch", "", 0, $atArgs)
-
-			; Restore the ViewCursor to its previous location.
-			$oViewCursor.gotoRange($oViewCursorBackup, False)
+			$oResults = $oDoc.findAll($oTempSrchDescript)
+			If Not IsObj($oResults) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		EndIf
 
-	ElseIf ($oSrchDescript.SearchStyles() = True) And ((UBound($atFindFormat) = 0) And (UBound($atReplaceFormat) = 0)) Then ; If Style Search is active and no formatting is set, then search and replace Paragraph style.
-		If Not _LOWriter_ParStyleExists($oDoc, $sReplaceString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If ($oResults.getCount() > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+		$oDoc.getUndoManager.enterUndoContext("Find and Replace")
+
+		For $i = 0 To $iResults - 1
+			$aoResults[$i].setPropertyValue($atFormats[0].Name(), $atFormats[0].Value())
+
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
+		Next
+
+		If IsArray($atFindFormat) Then
+			__LOWriter_FindFormatAddSetting($atFindFormat, $atFormats[0])
+
+		Else
+			$atFindFormat = $atFormats
+		EndIf
+
+		$oSrchDescript.setSearchAttributes($atFindFormat)
+		If IsArray($atReplaceFormat) Then $oSrchDescript.setReplaceAttributes($atReplaceFormat)
+
+		$oSrchDescript.SearchString = $sSearchString
+		$oSrchDescript.ReplaceString = $sReplaceString
+
+		$oDoc.replaceAll($oSrchDescript)
+
+		$oTempSrchDescript.setReplaceAttributes($atOrigFormats)
+		$oTempSrchDescript.ReplaceString = "&"
+		$oTempSrchDescript.ValueSearch = True
+
+		$oDoc.replaceAll($oTempSrchDescript)
+
+		$oDoc.getUndoManager.leaveUndoContext()
+
+		Return SetError($__LO_STATUS_SUCCESS, 0, $iResults)
+
+	ElseIf ($oSrchDescript.SearchStyles() = True) Then ; Paragraph Style replacement (Dispatch doesn't work for these).
+		$oDoc.getUndoManager.enterUndoContext("Replace Style " & $sSearchString)
 
 		For $i = 0 To $iResults - 1
 			$aoResults[$i].ParaStyleName = $sReplaceString
 
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
+		$oDoc.getUndoManager.leaveUndoContext()
 
-	Else
-		For $i = 0 To $iResults - 1
-			$aoResults[$i].setString(StringReplace($aoResults[$i].getString(), $sSearchString, $sReplaceString))
-			If ($bFormat = True) Then
-				For $k = 0 To UBound($atReplaceFormat) - 1
-					$aoResults[$i].setPropertyValue($atReplaceFormat[$k].Name(), $atReplaceFormat[$k].Value())
-				Next
-			EndIf
+		Return SetError($__LO_STATUS_SUCCESS, 1, $iResults)
 
-			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
-		Next
+	Else ; Use Dispatch.
+		; Backup the ViewCursor location and selection.
+		$oSelection = $oDoc.getCurrentSelection()
+		If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
+		; Move the View Cursor to the input range and select it.
+		$oDoc.CurrentController.Select($oRange)
+
+		$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+		If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+		$oDispatcher = $oServiceManager.createInstance("com.sun.star.frame.DispatchHelper")
+		If Not IsObj($oDispatcher) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+
+		$iSrchFlags = (($oSrchDescript.SearchSimilarity() = True) And ($oSrchDescript.SearchSimilarityRelax() = True)) ? (BitOR($iSrchFlags, $__LOW_SEARCHFLAG_LEV_RELAXED)) : ($iSrchFlags)
+		$iSrchFlags = (($oSrchDescript.SearchWords() = True)) ? (BitOR($iSrchFlags, $__LOW_SEARCHFLAG_NORM_WORD_ONLY)) : ($iSrchFlags)
+
+		$iTranslitFlags = ($oSrchDescript.SearchCaseSensitive() = True) ? ($__LOW_TRANSLIT_FLAG_NONE) : ($__LOW_TRANSLIT_FLAG_IGNORE_CASE)
+
+		$atArgs[0] = __LOWriter_SetPropertyValue("SearchItem.AlgorithmType", (($oSrchDescript.SearchSimilarity() = True) ? ($__LOW_ALG1_APPROXIMATE) : (($oSrchDescript.SearchRegularExpression() = True) ? ($__LOW_ALG1_REGEXP) : ($__LOW_ALG1_ABSOLUTE))))
+		$atArgs[1] = __LOWriter_SetPropertyValue("SearchItem.AlgorithmType2", (($oSrchDescript.SearchSimilarity() = True) ? ($__LOW_ALG2_APPROXIMATE) : (($oSrchDescript.SearchRegularExpression() = True) ? ($__LOW_ALG2_REGEXP) : ($__LOW_ALG2_ABSOLUTE))))
+		$atArgs[2] = __LOWriter_SetPropertyValue("SearchItem.Backward", $oSrchDescript.SearchBackwards())
+		$atArgs[3] = __LOWriter_SetPropertyValue("SearchItem.ChangedChars", $oSrchDescript.SearchSimilarityExchange())
+		$atArgs[4] = __LOWriter_SetPropertyValue("SearchItem.Command", $__LOW_SRCH_COMMAND_REPLACE_ALL)
+		$atArgs[5] = __LOWriter_SetPropertyValue("SearchItem.DeletedChars", $oSrchDescript.SearchSimilarityRemove())
+		$atArgs[6] = __LOWriter_SetPropertyValue("SearchItem.InsertedChars", $oSrchDescript.SearchSimilarityAdd())
+		$atArgs[7] = __LOWriter_SetPropertyValue("SearchItem.Pattern", $oSrchDescript.SearchStyles())
+		$atArgs[8] = __LOWriter_SetPropertyValue("SearchItem.ReplaceString", $sReplaceString)
+		$atArgs[9] = __LOWriter_SetPropertyValue("SearchItem.SearchFlags", $iSrchFlags)
+		$atArgs[10] = __LOWriter_SetPropertyValue("SearchItem.SearchString", $sSearchString)
+		$atArgs[11] = __LOWriter_SetPropertyValue("SearchItem.TransliterateFlags", $iTranslitFlags)
+
+		$oDispatcher.executeDispatch($oDoc.CurrentController, ".uno:ExecuteSearch", "", 0, $atArgs)
+
+		; Restore the ViewCursor to its previous location.
+		$oDoc.CurrentController.Select($oSelection)
+
+		Return SetError($__LO_STATUS_SUCCESS, 2, $iResults)
 	EndIf
-
-	Return SetError($__LO_STATUS_SUCCESS, $iResults, 1)
 EndFunc   ;==>_LOWriter_DocReplaceAllInRange
 
 ; #FUNCTION# ====================================================================================================================

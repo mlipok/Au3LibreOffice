@@ -96,7 +96,6 @@
 ; __LOWriter_ParTabStopMod
 ; __LOWriter_ParTabStopsGetList
 ; __LOWriter_ParTxtFlowOpt
-; __LOWriter_RegExpConvert
 ; __LOWriter_SetPropertyValue
 ; __LOWriter_Shape_CreateArrow
 ; __LOWriter_Shape_CreateBasic
@@ -5885,53 +5884,6 @@ Func __LOWriter_ParTxtFlowOpt(ByRef $oObj, $bParSplit, $bKeepTogether, $iParOrph
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_ParTxtFlowOpt
-
-; #INTERNAL_USE_ONLY# ===========================================================================================================
-; Name ..........: __LOWriter_RegExpConvert
-; Description ...: Convert a Libre Office Regular Expression for use in AutoIt RegExpReplace.
-; Syntax ........: __LOWriter_RegExpConvert(ByRef $sRegExpString)
-; Parameters ....: $sRegExpString       - [in/out] a string value. The L.O. Regular Expression string. String will be directly modified.
-; Return values .: Success: 1
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $sRegExpString not a String.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. String was successfully converted.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func __LOWriter_RegExpConvert(ByRef $sRegExpString)
-	Local $iPos1 = 0, $iPos2, $iReplacements
-	Local $sRegExpStringTemp = $sRegExpString, $sBackSlashFlag = "~*#!DH13!#*~"
-	Local $STR_NOCASESENSE = 0
-
-	If Not IsString($sRegExpString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-
-	$sRegExpStringTemp = StringReplace($sRegExpStringTemp, "\\", $sBackSlashFlag) ; Temporarily replace all double backslashes with a personal pattern to replace them later.
-	$iReplacements = @extended ; Capture number of replacements
-
-	Do
-		$iPos1 = StringInStr($sRegExpStringTemp, "&", $STR_NOCASESENSE, 1, $iPos1 + 1) ; test for & found in string, starting at last found position + 1.
-		If ($iPos1 > 0) Then ;  if there is a find, begin testing for backslash.
-			$iPos2 = StringInStr($sRegExpStringTemp, "\", $STR_NOCASESENSE, 1, $iPos1 - 1, 1) ; Test for a backslash, if there is one, then the & is not to be replaced.
-			; If there is no backslash, then replace the & with Autoit's accepted back reference, $0
-			If ($iPos2 = 0) Then $sRegExpStringTemp = StringLeft($sRegExpStringTemp, $iPos1 - 1) & "${0}" & StringMid($sRegExpStringTemp, $iPos1 + 1)
-		EndIf
-	Until $iPos1 = 0
-
-	$sRegExpStringTemp = StringReplace($sRegExpStringTemp, "\n", @CR) ; Replace L.O. keyword for New Par. line for Autoit Carriage return.
-	$sRegExpStringTemp = StringReplace($sRegExpStringTemp, "\t", @TAB) ; Replace L.O. keyword for Tab for Autoit Tab.
-
-	If ($iReplacements > 0) Then $sRegExpStringTemp = StringReplace($sRegExpStringTemp, $sBackSlashFlag, "\\") ; Replace the Flag with literal double Backslashes.
-
-	$sRegExpString = $sRegExpStringTemp ; Update the Replacement String.
-
-	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
-EndFunc   ;==>__LOWriter_RegExpConvert
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_SetPropertyValue
