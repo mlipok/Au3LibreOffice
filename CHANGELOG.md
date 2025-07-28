@@ -887,6 +887,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Added count of number of results for _LOWriter_DocConnect, connect-all and partial name search when more than one result is present.
 - Removed _ArrayDisplay from most examples.
 - Added checks to some Form functions whether the Document is ReadOnly, which would occur if the Form Document is opened in Viewing mode.
+- Modified all DocFind/DocReplace functions to use null to skip the Format Parameters instead of an empty array.
+- Rearranged Parameters in _LOWriter_DocFindAllInRange. $oRange and $atFormat are now in reverse order.
+- Rewrote _LOWriter_DocReplaceAllInRange to work better, and also to eliminate buggy __LOWriter_RegExpConvert function.
+- Made _LOWriter_DocReplaceAll and _LOWriter_DocReplaceAllInRange return the number of replacements made, instead of setting @Extended.
 
 ### Fixed
 
@@ -940,6 +944,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - __LOWriter_NumStyleRetrieve function as it is no longer needed.
 - Remove LibreOfficeWriter_Font file, and merge functions into LibreOfficeWriter_Helper
 - $__LO_STATUS_DOC_ERROR Error Constant and renumber all after errors.
+- __LOWriter_RegExpConvert.
 
 [To Top](#releases)
 
