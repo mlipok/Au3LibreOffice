@@ -27,6 +27,8 @@
 ; _LOWriter_FrameAreaColor
 ; _LOWriter_FrameAreaFillStyle
 ; _LOWriter_FrameAreaGradient
+; _LOWriter_FrameAreaGradientMulticolor
+; _LOWriter_FrameAreaTransparencyGradientMulti
 ; _LOWriter_FrameBorderColor
 ; _LOWriter_FrameBorderPadding
 ; _LOWriter_FrameBorderStyle
@@ -49,6 +51,8 @@
 ; _LOWriter_FrameStyleAreaColor
 ; _LOWriter_FrameStyleAreaFillStyle
 ; _LOWriter_FrameStyleAreaGradient
+; _LOWriter_FrameStyleAreaGradientMulticolor
+; _LOWriter_FrameStyleAreaTransparencyGradientMulti
 ; _LOWriter_FrameStyleBorderColor
 ; _LOWriter_FrameStyleBorderPadding
 ; _LOWriter_FrameStyleBorderStyle
@@ -410,6 +414,220 @@ Func _LOWriter_FrameAreaGradient(ByRef $oDoc, ByRef $oFrame, $sGradientName = Nu
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameAreaGradient
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FrameAreaGradientMulticolor
+; Description ...: Set or Retrieve a Frame's Multicolor Gradient settings. See remarks.
+; Syntax ........: _LOWriter_FrameAreaGradientMulticolor(ByRef $oFrame[, $avColorStops = Null])
+; Parameters ....: $oFrame              - [in/out] an object. A Frame object returned by a previous _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, or _LOWriter_FrameGetObjByCursor function.
+;                  $avColorStops        - [optional] an array of variants. Default is Null. A Two column array of Colors and ColorStop offsets. See remarks.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oFrame not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $avColorStops not an Array, or does not contain two columns.
+;                  @Error 1 @Extended 3 Return 0 = $avColorStops contains less than two rows.
+;                  @Error 1 @Extended 4 Return ? = ColorStop offset not a number, less than 0 or greater than 1.0. Returning problem element index.
+;                  @Error 1 @Extended 5 Return ? = ColorStop color not an Integer, less than 0 or greater than 16777215. Returning problem element index.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create com.sun.star.awt.ColorStop Struct.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve FillGradient Struct.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve ColorStops Array.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve StopColor Struct.
+;                  --Version Related Errors--
+;                  @Error 6 @Extended 1 Return 0 = Current version less than 7.6.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $avColorStops
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended ? Return Array = Success. All optional parameters were set to Null, returning current Array of ColorStops. See remarks. @Extended set to number of ColorStops returned.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Starting with version 7.6 LibreOffice introduced an option to have multiple color stops in a Gradient rather than just a beginning and an ending color, but as of yet, the option is not available in the User Interface. However it has been made available in the API.
+;                  The returned array will contain two columns, the first column will contain the ColorStop offset values, a number between 0 and 1.0. The second column will contain an Integer, the color value, in Long integer format.
+;                  $avColorStops expects an array as described above.
+;                  ColorStop offsets are sorted in ascending order, you can have more than one of the same value. There must be a minimum of two ColorStops. The first and last ColorStop offsets do not need to have an offset value of 0 and 1 respectively.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Related .......: _LOWriter_GradientMulticolorAdd, _LOWriter_GradientMulticolorDelete, _LOWriter_GradientMulticolorModify, _LOWriter_FrameAreaTransparencyGradientMulti
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FrameAreaGradientMulticolor(ByRef $oFrame, $avColorStops = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $tStyleGradient, $tColorStop, $tStopColor
+	Local $iError = 0
+	Local $atColorStops[0]
+	Local $avNewColorStops[0][2]
+	Local Const $__UBOUND_COLUMNS = 2
+
+	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_VersionCheck(7.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+
+	$tStyleGradient = $oFrame.FillGradient()
+	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($avColorStops) Then
+		$atColorStops = $tStyleGradient.ColorStops()
+		If Not IsArray($atColorStops) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+		ReDim $avNewColorStops[UBound($atColorStops)][2]
+
+		For $i = 0 To UBound($atColorStops) - 1
+			$avNewColorStops[$i][0] = $atColorStops[$i].StopOffset()
+			$tStopColor = $atColorStops[$i].StopColor()
+			If Not IsObj($tStopColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+			$avNewColorStops[$i][1] = (BitShift(($tStopColor.Red() * 255), -16) + BitShift(($tStopColor.Green() * 255), -8) + ($tStopColor.Blue() * 255)) ; RGB to Long
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
+		Next
+
+		Return SetError($__LO_STATUS_SUCCESS, UBound($avNewColorStops), $avNewColorStops)
+	EndIf
+
+	If Not IsArray($avColorStops) Or (UBound($avColorStops, $__UBOUND_COLUMNS) <> 2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (UBound($avColorStops) < 2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	ReDim $atColorStops[UBound($avColorStops)]
+
+	For $i = 0 To UBound($avColorStops) - 1
+		$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+		If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+		$tStopColor = $tColorStop.StopColor()
+		If Not IsObj($tStopColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+		If Not __LOWriter_NumIsBetween($avColorStops[$i][0], 0, 1.0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, $i)
+		$tColorStop.StopOffset = $avColorStops[$i][0]
+
+		If Not __LOWriter_IntIsBetween($avColorStops[$i][1], $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
+		$tStopColor.Red = (BitAND(BitShift($avColorStops[$i][1], 16), 0xff) / 255)
+		$tStopColor.Green = (BitAND(BitShift($avColorStops[$i][1], 8), 0xff) / 255)
+		$tStopColor.Blue = (BitAND($avColorStops[$i][1], 0xff) / 255)
+
+		$tColorStop.StopColor = $tStopColor
+
+		$atColorStops[$i] = $tColorStop
+
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
+	Next
+
+	$tStyleGradient.ColorStops = $atColorStops
+	$oFrame.FillGradient = $tStyleGradient
+
+	$iError = (UBound($avColorStops) = UBound($oFrame.FillGradient.ColorStops())) ? ($iError) : (BitOR($iError, 1))
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FrameAreaGradientMulticolor
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FrameAreaTransparencyGradientMulti
+; Description ...: Set or Retrieve a Frame's Multi Transparency Gradient settings. See remarks.
+; Syntax ........: _LOWriter_FrameAreaTransparencyGradientMulti(ByRef $oFrame[, $avColorStops = Null])
+; Parameters ....: $oFrame              - [in/out] an object. A Frame object returned by a previous _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, or _LOWriter_FrameGetObjByCursor function.
+;                  $avColorStops        - [optional] an array of variants. Default is Null. A Two column array of Transparency values and ColorStop offsets. See remarks.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oFrame not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $avColorStops not an Array, or does not contain two columns.
+;                  @Error 1 @Extended 3 Return 0 = $avColorStops contains less than two rows.
+;                  @Error 1 @Extended 4 Return ? = ColorStop offset not a number, less than 0 or greater than 1.0. Returning problem element index.
+;                  @Error 1 @Extended 5 Return ? = ColorStop Transparency value not an Integer, less than 0 or greater than 100. Returning problem element index.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create com.sun.star.awt.ColorStop Struct.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve FillTransparenceGradient Struct.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve ColorStops Array.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve StopColor Struct.
+;                  --Version Related Errors--
+;                  @Error 6 @Extended 1 Return 0 = Current version less than 7.6.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $avColorStops
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended ? Return Array = Success. All optional parameters were set to Null, returning current Array of ColorStops. See remarks. @Extended set to number of ColorStops returned.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Starting with version 7.6 LibreOffice introduced an option to have multiple Transparency stops in a Gradient rather than just a beginning and an ending value, but as of yet, the option is not available in the User Interface. However it has been made available in the API.
+;                  The returned array will contain two columns, the first column will contain the ColorStop offset values, a number between 0 and 1.0. The second column will contain an Integer, the Transparency percentage value between 0 and 100%.
+;                  $avColorStops expects an array as described above.
+;                  ColorStop offsets are sorted in ascending order, you can have more than one of the same value. There must be a minimum of two ColorStops. The first and last ColorStop offsets do not need to have an offset value of 0 and 1 respectively.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Related .......: _LOWriter_TransparencyGradientMultiModify, _LOWriter_TransparencyGradientMultiDelete, _LOWriter_TransparencyGradientMultiAdd, _LOWriter_FrameAreaGradientMulticolor
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FrameAreaTransparencyGradientMulti(ByRef $oFrame, $avColorStops = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $tStyleGradient, $tColorStop, $tStopColor
+	Local $iError = 0
+	Local $atColorStops[0]
+	Local $avNewColorStops[0][2]
+	Local Const $__UBOUND_COLUMNS = 2
+
+	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_VersionCheck(7.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+
+	$tStyleGradient = $oFrame.FillTransparenceGradient()
+	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($avColorStops) Then
+		$atColorStops = $tStyleGradient.ColorStops()
+		If Not IsArray($atColorStops) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+		ReDim $avNewColorStops[UBound($atColorStops)][2]
+
+		For $i = 0 To UBound($atColorStops) - 1
+			$avNewColorStops[$i][0] = $atColorStops[$i].StopOffset()
+			$tStopColor = $atColorStops[$i].StopColor()
+			If Not IsObj($tStopColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+			$avNewColorStops[$i][1] = Int($tStopColor.Red() * 100) ; One value is the same as all.
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
+		Next
+
+		Return SetError($__LO_STATUS_SUCCESS, UBound($avNewColorStops), $avNewColorStops)
+	EndIf
+
+	If Not IsArray($avColorStops) Or (UBound($avColorStops, $__UBOUND_COLUMNS) <> 2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (UBound($avColorStops) < 2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	ReDim $atColorStops[UBound($avColorStops)]
+
+	For $i = 0 To UBound($avColorStops) - 1
+		$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+		If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+		$tStopColor = $tColorStop.StopColor()
+		If Not IsObj($tStopColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+		If Not __LOWriter_NumIsBetween($avColorStops[$i][0], 0, 1.0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, $i)
+		$tColorStop.StopOffset = $avColorStops[$i][0]
+
+		If Not __LOWriter_IntIsBetween($avColorStops[$i][1], 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
+		$tStopColor.Red = ($avColorStops[$i][1] / 100)
+		$tStopColor.Green = ($avColorStops[$i][1] / 100)
+		$tStopColor.Blue = ($avColorStops[$i][1] / 100)
+
+		$tColorStop.StopColor = $tStopColor
+
+		$atColorStops[$i] = $tColorStop
+
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
+	Next
+
+	$tStyleGradient.ColorStops = $atColorStops
+	$oFrame.FillTransparenceGradient = $tStyleGradient
+
+	$iError = (UBound($avColorStops) = UBound($oFrame.FillTransparenceGradient.ColorStops())) ? ($iError) : (BitOR($iError, 1))
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FrameAreaTransparencyGradientMulti
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FrameBorderColor
@@ -2101,6 +2319,224 @@ Func _LOWriter_FrameStyleAreaGradient(ByRef $oDoc, ByRef $oFrameStyle, $sGradien
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameStyleAreaGradient
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FrameStyleAreaGradientMulticolor
+; Description ...: Set or Retrieve a Frame Style's Multicolor Gradient settings. See remarks.
+; Syntax ........: _LOWriter_FrameStyleAreaGradientMulticolor(ByRef $oFrameStyle[, $avColorStops = Null])
+; Parameters ....: $oFrameStyle         - [in/out] an object. A Frame Style object returned by a previous _LOWriter_FrameStyleCreate, or _LOWriter_FrameStyleGetObj function.
+;                  $avColorStops        - [optional] an array of variants. Default is Null. A Two column array of Colors and ColorStop offsets. See remarks.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oFrameStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oFrameStyle not a Frame Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $avColorStops not an Array, or does not contain two columns.
+;                  @Error 1 @Extended 4 Return 0 = $avColorStops contains less than two rows.
+;                  @Error 1 @Extended 5 Return ? = ColorStop offset not a number, less than 0 or greater than 1.0. Returning problem element index.
+;                  @Error 1 @Extended 6 Return ? = ColorStop color not an Integer, less than 0 or greater than 16777215. Returning problem element index.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create com.sun.star.awt.ColorStop Struct.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve FillGradient Struct.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve ColorStops Array.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve StopColor Struct.
+;                  --Version Related Errors--
+;                  @Error 6 @Extended 1 Return 0 = Current version less than 7.6.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $avColorStops
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended ? Return Array = Success. All optional parameters were set to Null, returning current Array of ColorStops. See remarks. @Extended set to number of ColorStops returned.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Starting with version 7.6 LibreOffice introduced an option to have multiple color stops in a Gradient rather than just a beginning and an ending color, but as of yet, the option is not available in the User Interface. However it has been made available in the API.
+;                  The returned array will contain two columns, the first column will contain the ColorStop offset values, a number between 0 and 1.0. The second column will contain an Integer, the color value, in Long integer format.
+;                  $avColorStops expects an array as described above.
+;                  ColorStop offsets are sorted in ascending order, you can have more than one of the same value. There must be a minimum of two ColorStops. The first and last ColorStop offsets do not need to have an offset value of 0 and 1 respectively.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Related .......: _LOWriter_GradientMulticolorAdd, _LOWriter_GradientMulticolorDelete, _LOWriter_GradientMulticolorModify, _LOWriter_FrameStyleAreaTransparencyGradientMulti
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FrameStyleAreaGradientMulticolor(ByRef $oFrameStyle, $avColorStops = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $tStyleGradient, $tColorStop, $tStopColor
+	Local $iError = 0
+	Local $atColorStops[0]
+	Local $avNewColorStops[0][2]
+	Local Const $__UBOUND_COLUMNS = 2
+
+	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_VersionCheck(7.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+
+	$tStyleGradient = $oFrameStyle.FillGradient()
+	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($avColorStops) Then
+		$atColorStops = $tStyleGradient.ColorStops()
+		If Not IsArray($atColorStops) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+		ReDim $avNewColorStops[UBound($atColorStops)][2]
+
+		For $i = 0 To UBound($atColorStops) - 1
+			$avNewColorStops[$i][0] = $atColorStops[$i].StopOffset()
+			$tStopColor = $atColorStops[$i].StopColor()
+			If Not IsObj($tStopColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+			$avNewColorStops[$i][1] = (BitShift(($tStopColor.Red() * 255), -16) + BitShift(($tStopColor.Green() * 255), -8) + ($tStopColor.Blue() * 255)) ; RGB to Long
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
+		Next
+
+		Return SetError($__LO_STATUS_SUCCESS, UBound($avNewColorStops), $avNewColorStops)
+	EndIf
+
+	If Not IsArray($avColorStops) Or (UBound($avColorStops, $__UBOUND_COLUMNS) <> 2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If (UBound($avColorStops) < 2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+	ReDim $atColorStops[UBound($avColorStops)]
+
+	For $i = 0 To UBound($avColorStops) - 1
+		$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+		If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+		$tStopColor = $tColorStop.StopColor()
+		If Not IsObj($tStopColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+		If Not __LOWriter_NumIsBetween($avColorStops[$i][0], 0, 1.0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
+		$tColorStop.StopOffset = $avColorStops[$i][0]
+
+		If Not __LOWriter_IntIsBetween($avColorStops[$i][1], $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
+		$tStopColor.Red = (BitAND(BitShift($avColorStops[$i][1], 16), 0xff) / 255)
+		$tStopColor.Green = (BitAND(BitShift($avColorStops[$i][1], 8), 0xff) / 255)
+		$tStopColor.Blue = (BitAND($avColorStops[$i][1], 0xff) / 255)
+
+		$tColorStop.StopColor = $tStopColor
+
+		$atColorStops[$i] = $tColorStop
+
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
+	Next
+
+	$tStyleGradient.ColorStops = $atColorStops
+	$oFrameStyle.FillGradient = $tStyleGradient
+
+	$iError = (UBound($avColorStops) = UBound($oFrameStyle.FillGradient.ColorStops())) ? ($iError) : (BitOR($iError, 1))
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FrameStyleAreaGradientMulticolor
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FrameStyleAreaTransparencyGradientMulti
+; Description ...: Set or Retrieve a Frame Style's Multi Transparency Gradient settings. See remarks.
+; Syntax ........: _LOWriter_FrameStyleAreaTransparencyGradientMulti(ByRef $oFrameStyle[, $avColorStops = Null])
+; Parameters ....: $oFrameStyle         - [in/out] an object. A Frame Style object returned by a previous _LOWriter_FrameStyleCreate, or _LOWriter_FrameStyleGetObj function.
+;                  $avColorStops        - [optional] an array of variants. Default is Null. A Two column array of Transparency values and ColorStop offsets. See remarks.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oFrameStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oFrameStyle not a Frame Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $avColorStops not an Array, or does not contain two columns.
+;                  @Error 1 @Extended 4 Return 0 = $avColorStops contains less than two rows.
+;                  @Error 1 @Extended 5 Return ? = ColorStop offset not a number, less than 0 or greater than 1.0. Returning problem element index.
+;                  @Error 1 @Extended 6 Return ? = ColorStop color not an Integer, less than 0 or greater than 100. Returning problem element index.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create com.sun.star.awt.ColorStop Struct.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve FillTransparenceGradient Struct.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve ColorStops Array.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve StopColor Struct.
+;                  --Version Related Errors--
+;                  @Error 6 @Extended 1 Return 0 = Current version less than 7.6.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $avColorStops
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended ? Return Array = Success. All optional parameters were set to Null, returning current Array of ColorStops. See remarks. @Extended set to number of ColorStops returned.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Starting with version 7.6 LibreOffice introduced an option to have multiple Transparency stops in a Gradient rather than just a beginning and an ending value, but as of yet, the option is not available in the User Interface. However it has been made available in the API.
+;                  The returned array will contain two columns, the first column will contain the ColorStop offset values, a number between 0 and 1.0. The second column will contain an Integer, the Transparency percentage value between 0 and 100%.
+;                  $avColorStops expects an array as described above.
+;                  ColorStop offsets are sorted in ascending order, you can have more than one of the same value. There must be a minimum of two ColorStops. The first and last ColorStop offsets do not need to have an offset value of 0 and 1 respectively.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Related .......: _LOWriter_TransparencyGradientMultiModify, _LOWriter_TransparencyGradientMultiDelete, _LOWriter_TransparencyGradientMultiAdd, _LOWriter_FrameStyleAreaGradientMulticolor
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FrameStyleAreaTransparencyGradientMulti(ByRef $oFrameStyle, $avColorStops = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $tStyleGradient, $tColorStop, $tStopColor
+	Local $iError = 0
+	Local $atColorStops[0]
+	Local $avNewColorStops[0][2]
+	Local Const $__UBOUND_COLUMNS = 2
+
+	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_VersionCheck(7.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+
+	$tStyleGradient = $oFrameStyle.FillTransparenceGradient()
+	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($avColorStops) Then
+		$atColorStops = $tStyleGradient.ColorStops()
+		If Not IsArray($atColorStops) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+		ReDim $avNewColorStops[UBound($atColorStops)][2]
+
+		For $i = 0 To UBound($atColorStops) - 1
+			$avNewColorStops[$i][0] = $atColorStops[$i].StopOffset()
+			$tStopColor = $atColorStops[$i].StopColor()
+			If Not IsObj($tStopColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+			$avNewColorStops[$i][1] = Int($tStopColor.Red() * 100) ; One value is the same as all.
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
+		Next
+
+		Return SetError($__LO_STATUS_SUCCESS, UBound($avNewColorStops), $avNewColorStops)
+	EndIf
+
+	If Not IsArray($avColorStops) Or (UBound($avColorStops, $__UBOUND_COLUMNS) <> 2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If (UBound($avColorStops) < 2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+	ReDim $atColorStops[UBound($avColorStops)]
+
+	For $i = 0 To UBound($avColorStops) - 1
+		$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+		If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+		$tStopColor = $tColorStop.StopColor()
+		If Not IsObj($tStopColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+		If Not __LOWriter_NumIsBetween($avColorStops[$i][0], 0, 1.0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
+		$tColorStop.StopOffset = $avColorStops[$i][0]
+
+		If Not __LOWriter_IntIsBetween($avColorStops[$i][1], 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
+		$tStopColor.Red = ($avColorStops[$i][1] / 100)
+		$tStopColor.Green = ($avColorStops[$i][1] / 100)
+		$tStopColor.Blue = ($avColorStops[$i][1] / 100)
+
+		$tColorStop.StopColor = $tStopColor
+
+		$atColorStops[$i] = $tColorStop
+
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
+	Next
+
+	$tStyleGradient.ColorStops = $atColorStops
+	$oFrameStyle.FillTransparenceGradient = $tStyleGradient
+
+	$iError = (UBound($avColorStops) = UBound($oFrameStyle.FillTransparenceGradient.ColorStops())) ? ($iError) : (BitOR($iError, 1))
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FrameStyleAreaTransparencyGradientMulti
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FrameStyleBorderColor

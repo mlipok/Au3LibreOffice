@@ -778,6 +778,32 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_FormPropertiesGeneral
 	- _LOWriter_FormsGetCount
 	- _LOWriter_FormsGetList
+- Multicolor Gradient support, adding the following functions:
+	= Helper Functions:
+	- _LOWriter_GradientMulticolorAdd
+	- _LOWriter_GradientMulticolorDelete
+	- _LOWriter_GradientMulticolorModify
+	- _LOWriter_TransparencyGradientMultiAdd
+	- _LOWriter_TransparencyGradientMultiDelete
+	- _LOWriter_TransparencyGradientMultiModify
+	= Frame Functions:
+	- _LOWriter_FrameAreaGradientMulticolor
+	- _LOWriter_FrameAreaTransparencyGradientMulti
+	- _LOWriter_FrameStyleAreaGradientMulticolor
+	- _LOWriter_FrameStyleAreaTransparencyGradientMulti
+	= Image Functions:
+	- _LOWriter_ImageAreaGradientMulticolor
+	- _LOWriter_ImageAreaTransparencyGradientMulti
+	= PageStyle Functions:
+	- _LOWriter_PageStyleAreaGradientMulticolor
+	- _LOWriter_PageStyleAreaTransparencyGradientMulti
+	- _LOWriter_PageStyleFooterAreaGradientMulticolor
+	- _LOWriter_PageStyleFooterAreaTransparencyGradientMulti
+	- _LOWriter_PageStyleHeaderAreaGradientMulticolor
+	- _LOWriter_PageStyleHeaderAreaTransparencyGradientMulti
+	= Shape Functions:
+	- _LOWriter_ShapeAreaGradientMulticolor
+	- _LOWriter_ShapeAreaTransparencyGradientMulti
 
 ### Changed
 
