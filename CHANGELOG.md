@@ -917,6 +917,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Rearranged Parameters in _LOWriter_DocFindAllInRange. $oRange and $atFormat are now in reverse order.
 - Rewrote _LOWriter_DocReplaceAllInRange to work better, and also to eliminate buggy __LOWriter_RegExpConvert function.
 - Made _LOWriter_DocReplaceAll and _LOWriter_DocReplaceAllInRange return the number of replacements made, instead of setting @Extended.
+- Made `_LOWriter_DocFindAll` and `_LOWriter_DocFindAllInRange` always return an Array, instead of "1" when no results were found.
 
 ### Fixed
 

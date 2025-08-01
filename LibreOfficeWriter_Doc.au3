@@ -1356,7 +1356,6 @@ EndFunc   ;==>_LOWriter_DocExport
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Search did not return an Object, something went wrong.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Search was Successful, but found no results.
 ;                  @Error 0 @Extended ? Return Array = Success. Search was Successful, returning 1 dimensional array containing the objects to each match, @Exteneded is set to the number of matches.
 ; Author ........: donnyh13
 ; Modified ......:
@@ -1393,7 +1392,7 @@ Func _LOWriter_DocFindAll(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, $at
 		Next
 	EndIf
 
-	Return (UBound($aoResults) > 0) ? (SetError($__LO_STATUS_SUCCESS, UBound($aoResults), $aoResults)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+	Return SetError($__LO_STATUS_SUCCESS, UBound($aoResults), $aoResults)
 EndFunc   ;==>_LOWriter_DocFindAll
 
 ; #FUNCTION# ====================================================================================================================
@@ -1419,8 +1418,7 @@ EndFunc   ;==>_LOWriter_DocFindAll
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Search did not return an Object, something went wrong.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Search was successful but found no matches.
-;                  @Error 0 @Extended ? Return Array = Success. Search was Successful, returning 1 dimensional array containing the objects to each match, @Extended is set to the number of matches.
+;                  @Error 0 @Extended ? Return Array = Success. Search was Successful, returning 1 dimensional array containing the objects for each match, @Extended is set to the number of matches.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1504,7 +1502,7 @@ Func _LOWriter_DocFindAllInRange(ByRef $oDoc, ByRef $oSrchDescript, $sSearchStri
 		ReDim $aoResults[$iCount]
 	EndIf
 
-	Return (UBound($aoResults) > 0) ? (SetError($__LO_STATUS_SUCCESS, UBound($aoResults), $aoResults)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+	Return SetError($__LO_STATUS_SUCCESS, UBound($aoResults), $aoResults)
 EndFunc   ;==>_LOWriter_DocFindAllInRange
 
 ; #FUNCTION# ====================================================================================================================
