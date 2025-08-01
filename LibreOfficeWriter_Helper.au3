@@ -3038,7 +3038,6 @@ Func _LOWriter_GradientMulticolorAdd(ByRef $avColorStops, $iIndex, $nStopOffset,
 	ReDim $avColorStops[UBound($avColorStops) + 1][2]
 
 	For $iToWrite = (UBound($avColorStops) - 1) To 0 Step -1
-
 		If $iToWrite = $iIndex Then
 			$avColorStops[$iToWrite][0] = $nStopOffset
 			$avColorStops[$iToWrite][1] = $iColor
@@ -3088,7 +3087,6 @@ Func _LOWriter_GradientMulticolorDelete(ByRef $avColorStops, $iIndex)
 	If Not __LOWriter_IntIsBetween($iIndex, 0, UBound($avColorStops) - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	For $iToWrite = 0 To UBound($avColorStops) - 2
-
 		If $iToWrite = $iIndex Then $iToRead += 1
 
 		$avColorStops[$iToWrite][0] = $avColorStops[$iToWrite + $iToRead][0]
@@ -3140,12 +3138,10 @@ Func _LOWriter_GradientMulticolorModify(ByRef $avColorStops, $iIndex, $nStopOffs
 	If Not __LOWriter_IntIsBetween($iColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	For $iToWrite = 0 To UBound($avColorStops) - 1
-
 		If $iToWrite = $iIndex Then
 			$avColorStops[$iToWrite][0] = $nStopOffset
 			$avColorStops[$iToWrite][1] = $iColor
 			ExitLoop
-
 		EndIf
 
 		Sleep((IsInt($iToWrite / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
@@ -3513,7 +3509,6 @@ Func _LOWriter_TransparencyGradientMultiAdd(ByRef $avColorStops, $iIndex, $nStop
 	ReDim $avColorStops[UBound($avColorStops) + 1][2]
 
 	For $iToWrite = (UBound($avColorStops) - 1) To 0 Step -1
-
 		If $iToWrite = $iIndex Then
 			$avColorStops[$iToWrite][0] = $nStopOffset
 			$avColorStops[$iToWrite][1] = $iTransparency
@@ -3563,7 +3558,6 @@ Func _LOWriter_TransparencyGradientMultiDelete(ByRef $avColorStops, $iIndex)
 	If Not __LOWriter_IntIsBetween($iIndex, 0, UBound($avColorStops) - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	For $iToWrite = 0 To UBound($avColorStops) - 2
-
 		If $iToWrite = $iIndex Then $iToRead += 1
 
 		$avColorStops[$iToWrite][0] = $avColorStops[$iToWrite + $iToRead][0]
@@ -3615,12 +3609,10 @@ Func _LOWriter_TransparencyGradientMultiModify(ByRef $avColorStops, $iIndex, $nS
 	If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	For $iToWrite = 0 To UBound($avColorStops) - 1
-
 		If $iToWrite = $iIndex Then
 			$avColorStops[$iToWrite][0] = $nStopOffset
 			$avColorStops[$iToWrite][1] = $iTransparency
 			ExitLoop
-
 		EndIf
 
 		Sleep((IsInt($iToWrite / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))

@@ -481,6 +481,7 @@ Func _LOWriter_PageStyleAreaGradientMulticolor(ByRef $oPageStyle, $avColorStops 
 			$avNewColorStops[$i][0] = $atColorStops[$i].StopOffset()
 			$tStopColor = $atColorStops[$i].StopColor()
 			If Not IsObj($tStopColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
 			$avNewColorStops[$i][1] = (BitShift(($tStopColor.Red() * 255), -16) + BitShift(($tStopColor.Green() * 255), -8) + ($tStopColor.Blue() * 255)) ; RGB to Long
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
@@ -499,11 +500,12 @@ Func _LOWriter_PageStyleAreaGradientMulticolor(ByRef $oPageStyle, $avColorStops 
 
 		$tStopColor = $tColorStop.StopColor()
 		If Not IsObj($tStopColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-
 		If Not __LOWriter_NumIsBetween($avColorStops[$i][0], 0, 1.0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
+
 		$tColorStop.StopOffset = $avColorStops[$i][0]
 
 		If Not __LOWriter_IntIsBetween($avColorStops[$i][1], $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
+
 		$tStopColor.Red = (BitAND(BitShift($avColorStops[$i][1], 16), 0xff) / 255)
 		$tStopColor.Green = (BitAND(BitShift($avColorStops[$i][1], 8), 0xff) / 255)
 		$tStopColor.Blue = (BitAND($avColorStops[$i][1], 0xff) / 255)
@@ -590,6 +592,7 @@ Func _LOWriter_PageStyleAreaTransparencyGradientMulti(ByRef $oPageStyle, $avColo
 			$avNewColorStops[$i][0] = $atColorStops[$i].StopOffset()
 			$tStopColor = $atColorStops[$i].StopColor()
 			If Not IsObj($tStopColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
 			$avNewColorStops[$i][1] = Int($tStopColor.Red() * 100) ; One value is the same as all.
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
@@ -608,11 +611,12 @@ Func _LOWriter_PageStyleAreaTransparencyGradientMulti(ByRef $oPageStyle, $avColo
 
 		$tStopColor = $tColorStop.StopColor()
 		If Not IsObj($tStopColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-
 		If Not __LOWriter_NumIsBetween($avColorStops[$i][0], 0, 1.0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
+
 		$tColorStop.StopOffset = $avColorStops[$i][0]
 
 		If Not __LOWriter_IntIsBetween($avColorStops[$i][1], 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
+
 		$tStopColor.Red = ($avColorStops[$i][1] / 100)
 		$tStopColor.Green = ($avColorStops[$i][1] / 100)
 		$tStopColor.Blue = ($avColorStops[$i][1] / 100)
@@ -1915,6 +1919,7 @@ Func _LOWriter_PageStyleFooterAreaGradientMulticolor(ByRef $oPageStyle, $avColor
 			$avNewColorStops[$i][0] = $atColorStops[$i].StopOffset()
 			$tStopColor = $atColorStops[$i].StopColor()
 			If Not IsObj($tStopColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
 			$avNewColorStops[$i][1] = (BitShift(($tStopColor.Red() * 255), -16) + BitShift(($tStopColor.Green() * 255), -8) + ($tStopColor.Blue() * 255)) ; RGB to Long
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
@@ -1933,11 +1938,12 @@ Func _LOWriter_PageStyleFooterAreaGradientMulticolor(ByRef $oPageStyle, $avColor
 
 		$tStopColor = $tColorStop.StopColor()
 		If Not IsObj($tStopColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-
 		If Not __LOWriter_NumIsBetween($avColorStops[$i][0], 0, 1.0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
+
 		$tColorStop.StopOffset = $avColorStops[$i][0]
 
 		If Not __LOWriter_IntIsBetween($avColorStops[$i][1], $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
+
 		$tStopColor.Red = (BitAND(BitShift($avColorStops[$i][1], 16), 0xff) / 255)
 		$tStopColor.Green = (BitAND(BitShift($avColorStops[$i][1], 8), 0xff) / 255)
 		$tStopColor.Blue = (BitAND($avColorStops[$i][1], 0xff) / 255)
@@ -2024,6 +2030,7 @@ Func _LOWriter_PageStyleFooterAreaTransparencyGradientMulti(ByRef $oPageStyle, $
 			$avNewColorStops[$i][0] = $atColorStops[$i].StopOffset()
 			$tStopColor = $atColorStops[$i].StopColor()
 			If Not IsObj($tStopColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
 			$avNewColorStops[$i][1] = Int($tStopColor.Red() * 100) ; One value is the same as all.
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
@@ -2042,11 +2049,12 @@ Func _LOWriter_PageStyleFooterAreaTransparencyGradientMulti(ByRef $oPageStyle, $
 
 		$tStopColor = $tColorStop.StopColor()
 		If Not IsObj($tStopColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-
 		If Not __LOWriter_NumIsBetween($avColorStops[$i][0], 0, 1.0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
+
 		$tColorStop.StopOffset = $avColorStops[$i][0]
 
 		If Not __LOWriter_IntIsBetween($avColorStops[$i][1], 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
+
 		$tStopColor.Red = ($avColorStops[$i][1] / 100)
 		$tStopColor.Green = ($avColorStops[$i][1] / 100)
 		$tStopColor.Blue = ($avColorStops[$i][1] / 100)
@@ -3433,6 +3441,7 @@ Func _LOWriter_PageStyleHeaderAreaGradientMulticolor(ByRef $oPageStyle, $avColor
 			$avNewColorStops[$i][0] = $atColorStops[$i].StopOffset()
 			$tStopColor = $atColorStops[$i].StopColor()
 			If Not IsObj($tStopColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
 			$avNewColorStops[$i][1] = (BitShift(($tStopColor.Red() * 255), -16) + BitShift(($tStopColor.Green() * 255), -8) + ($tStopColor.Blue() * 255)) ; RGB to Long
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
@@ -3451,11 +3460,12 @@ Func _LOWriter_PageStyleHeaderAreaGradientMulticolor(ByRef $oPageStyle, $avColor
 
 		$tStopColor = $tColorStop.StopColor()
 		If Not IsObj($tStopColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-
 		If Not __LOWriter_NumIsBetween($avColorStops[$i][0], 0, 1.0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
+
 		$tColorStop.StopOffset = $avColorStops[$i][0]
 
 		If Not __LOWriter_IntIsBetween($avColorStops[$i][1], $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
+
 		$tStopColor.Red = (BitAND(BitShift($avColorStops[$i][1], 16), 0xff) / 255)
 		$tStopColor.Green = (BitAND(BitShift($avColorStops[$i][1], 8), 0xff) / 255)
 		$tStopColor.Blue = (BitAND($avColorStops[$i][1], 0xff) / 255)
@@ -3542,6 +3552,7 @@ Func _LOWriter_PageStyleHeaderAreaTransparencyGradientMulti(ByRef $oPageStyle, $
 			$avNewColorStops[$i][0] = $atColorStops[$i].StopOffset()
 			$tStopColor = $atColorStops[$i].StopColor()
 			If Not IsObj($tStopColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
 			$avNewColorStops[$i][1] = Int($tStopColor.Red() * 100) ; One value is the same as all.
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
@@ -3560,11 +3571,12 @@ Func _LOWriter_PageStyleHeaderAreaTransparencyGradientMulti(ByRef $oPageStyle, $
 
 		$tStopColor = $tColorStop.StopColor()
 		If Not IsObj($tStopColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-
 		If Not __LOWriter_NumIsBetween($avColorStops[$i][0], 0, 1.0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
+
 		$tColorStop.StopOffset = $avColorStops[$i][0]
 
 		If Not __LOWriter_IntIsBetween($avColorStops[$i][1], 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
+
 		$tStopColor.Red = ($avColorStops[$i][1] / 100)
 		$tStopColor.Green = ($avColorStops[$i][1] / 100)
 		$tStopColor.Blue = ($avColorStops[$i][1] / 100)
