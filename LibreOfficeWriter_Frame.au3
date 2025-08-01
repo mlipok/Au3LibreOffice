@@ -28,6 +28,8 @@
 ; _LOWriter_FrameAreaFillStyle
 ; _LOWriter_FrameAreaGradient
 ; _LOWriter_FrameAreaGradientMulticolor
+; _LOWriter_FrameAreaTransparency
+; _LOWriter_FrameAreaTransparencyGradient
 ; _LOWriter_FrameAreaTransparencyGradientMulti
 ; _LOWriter_FrameBorderColor
 ; _LOWriter_FrameBorderPadding
@@ -52,6 +54,8 @@
 ; _LOWriter_FrameStyleAreaFillStyle
 ; _LOWriter_FrameStyleAreaGradient
 ; _LOWriter_FrameStyleAreaGradientMulticolor
+; _LOWriter_FrameStyleAreaTransparency
+; _LOWriter_FrameStyleAreaTransparencyGradient
 ; _LOWriter_FrameStyleAreaTransparencyGradientMulti
 ; _LOWriter_FrameStyleBorderColor
 ; _LOWriter_FrameStyleBorderPadding
@@ -69,14 +73,10 @@
 ; _LOWriter_FrameStyleSet
 ; _LOWriter_FrameStylesGetNames
 ; _LOWriter_FrameStyleShadow
-; _LOWriter_FrameStyleTransparency
-; _LOWriter_FrameStyleTransparencyGradient
 ; _LOWriter_FrameStyleTypePosition
 ; _LOWriter_FrameStyleTypeSize
 ; _LOWriter_FrameStyleWrap
 ; _LOWriter_FrameStyleWrapOptions
-; _LOWriter_FrameTransparency
-; _LOWriter_FrameTransparencyGradient
 ; _LOWriter_FrameTypePosition
 ; _LOWriter_FrameTypeSize
 ; _LOWriter_FrameWrap
@@ -523,6 +523,237 @@ Func _LOWriter_FrameAreaGradientMulticolor(ByRef $oFrame, $avColorStops = Null)
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameAreaGradientMulticolor
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FrameAreaTransparency
+; Description ...: Set or retrieve Transparency settings for a Frame.
+; Syntax ........: _LOWriter_FrameAreaTransparency(ByRef $oFrame[, $iTransparency = Null])
+; Parameters ....: $oFrame              - [in/out] an object. A Frame object returned by a previous _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, or _LOWriter_FrameGetObjByCursor function.
+;                  $iTransparency       - [optional] an integer value (0-100). Default is Null. The color transparency. 0% is fully opaque and 100% is fully transparent.
+; Return values .: Success: Integer.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oFrame not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iTransparency not an Integer, less than 0, or greater than 100.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                               1 = Error setting $iTransparency
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current setting for Transparency in integer format.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByCursor, _LOWriter_FrameGetObjByName
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FrameAreaTransparency(ByRef $oFrame, $iTransparency = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+
+	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oFrame.FillTransparence())
+
+	If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oFrame.FillTransparenceGradientName = "" ; Turn off Gradient if it is on, else settings wont be applied.
+	$oFrame.FillTransparence = $iTransparency
+	$iError = ($oFrame.FillTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 1))
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FrameAreaTransparency
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FrameAreaTransparencyGradient
+; Description ...: Set or retrieve the Frame transparency gradient settings.
+; Syntax ........: _LOWriter_FrameAreaTransparencyGradient(ByRef $oDoc, ByRef $oFrame[, $iType = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iTransitionStart = Null[, $iStart = Null[, $iEnd = Null]]]]]]])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oFrame              - [in/out] an object. A Frame object returned by a previous _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, or _LOWriter_FrameGetObjByCursor function.
+;                  $iType               - [optional] an integer value (-1-5). Default is Null. The type of transparency gradient to apply. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_GRAD_TYPE_OFF to turn Transparency Gradient off.
+;                  $iXCenter            - [optional] an integer value (0-100). Default is Null. The horizontal offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
+;                  $iYCenter            - [optional] an integer value (0-100). Default is Null. The vertical offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
+;                  $iAngle              - [optional] an integer value (0-359). Default is Null. The rotation angle for the gradient. Set in degrees. $iType must be other than "Radial".
+;                  $iTransitionStart    - [optional] an integer value (0-100). Default is Null. The amount by which you want to adjust the transparent area of the gradient. Set in percentage.
+;                  $iStart              - [optional] an integer value (0-100). Default is Null. The transparency value for the beginning point of the gradient, where 0% is fully opaque and 100% is fully transparent.
+;                  $iEnd                - [optional] an integer value (0-100). Default is Null. The transparency value for the endpoint of the gradient, where 0% is fully opaque and 100% is fully transparent.
+; Return values .: Success: Integer or Array.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oFrame not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $iType Not an Integer, less than -1, or greater than 5, see constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iXCenter Not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 5 Return 0 = $iYCenter Not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 6 Return 0 = $iAngle Not an Integer, less than 0, or greater than 359.
+;                  @Error 1 @Extended 7 Return 0 = $iTransitionStart Not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 8 Return 0 = $iStart Not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 9 Return 0 = $iEnd Not an Integer, less than 0, or greater than 100.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve ColorStops Array.
+;                  @Error 3 @Extended 3 Return 0 = Error creating Transparency Gradient Name.
+;                  @Error 3 @Extended 4 Return 0 = Error setting Transparency Gradient Name.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                               1 = Error setting $iType
+;                  |                               2 = Error setting $iXCenter
+;                  |                               4 = Error setting $iYCenter
+;                  |                               8 = Error setting $iAngle
+;                  |                               16 = Error setting $iTransitionStart
+;                  |                               32 = Error setting $iStart
+;                  |                               64 = Error setting $iEnd
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
+;                  @Error 0 @Extended 0 Return 2 = Success. Transparency Gradient has been successfully turned off.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByCursor, _LOWriter_FrameGetObjByName
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FrameAreaTransparencyGradient(ByRef $oDoc, ByRef $oFrame, $iType = Null, $iXCenter = Null, $iYCenter = Null, $iAngle = Null, $iTransitionStart = Null, $iStart = Null, $iEnd = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $tGradient, $tColorStop, $tStopColor
+	Local $sTGradName
+	Local $iError = 0
+	Local $aiTransparent[7]
+	Local $atColorStop
+	Local $fValue
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$tGradient = $oFrame.FillTransparenceGradient()
+	If Not IsObj($tGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
+		__LOWriter_ArrayFill($aiTransparent, $tGradient.Style(), $tGradient.XOffset(), $tGradient.YOffset(), _
+				($tGradient.Angle() / 10), $tGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tGradient.StartColor()), _
+				__LOWriter_TransparencyGradientConvert(Null, $tGradient.EndColor())) ; Angle is set in thousands
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $aiTransparent)
+	EndIf
+
+	If ($iType <> Null) Then
+		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
+			$oFrame.FillTransparenceGradientName = ""
+
+			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		EndIf
+
+		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+		$tGradient.Style = $iType
+	EndIf
+
+	If ($iXCenter <> Null) Then
+		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+		$tGradient.XOffset = $iXCenter
+	EndIf
+
+	If ($iYCenter <> Null) Then
+		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
+		$tGradient.YOffset = $iYCenter
+	EndIf
+
+	If ($iAngle <> Null) Then
+		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
+		$tGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
+	EndIf
+
+	If ($iTransitionStart <> Null) Then
+		If Not __LOWriter_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
+		$tGradient.Border = $iTransitionStart
+	EndIf
+
+	If ($iStart <> Null) Then
+		If Not __LOWriter_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
+		$tGradient.StartColor = __LOWriter_TransparencyGradientConvert($iStart)
+
+		If __LOWriter_VersionCheck(7.6) Then
+			$atColorStop = $tGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+			$tColorStop = $atColorStop[0] ; StopOffset 0 is the "Start" Value.
+
+			$tStopColor = $tColorStop.StopColor()
+
+			$fValue = $iStart / 100 ; Value is a decimal percentage value.
+
+			$tStopColor.Red = $fValue
+			$tStopColor.Green = $fValue
+			$tStopColor.Blue = $fValue
+
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[0] = $tColorStop
+
+			$tGradient.ColorStops = $atColorStop
+		EndIf
+	EndIf
+
+	If ($iEnd <> Null) Then
+		If Not __LOWriter_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
+		$tGradient.EndColor = __LOWriter_TransparencyGradientConvert($iEnd)
+
+		If __LOWriter_VersionCheck(7.6) Then
+			$atColorStop = $tGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+			$tColorStop = $atColorStop[UBound($atColorStop) - 1] ; StopOffset 0 is the "End" Value.
+
+			$tStopColor = $tColorStop.StopColor()
+
+			$fValue = $iEnd / 100 ; Value is a decimal percentage value.
+
+			$tStopColor.Red = $fValue
+			$tStopColor.Green = $fValue
+			$tStopColor.Blue = $fValue
+
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[UBound($atColorStop) - 1] = $tColorStop
+
+			$tGradient.ColorStops = $atColorStop
+		EndIf
+	EndIf
+
+	If ($oFrame.FillTransparenceGradientName() = "") Then
+		$sTGradName = __LOWriter_TransparencyGradientNameInsert($oDoc, $tGradient)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+		$oFrame.FillTransparenceGradientName = $sTGradName
+		If ($oFrame.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	EndIf
+
+	$oFrame.FillTransparenceGradient = $tGradient
+
+	$iError = ($iType = Null) ? ($iError) : (($oFrame.FillTransparenceGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 1)))
+	$iError = ($iXCenter = Null) ? ($iError) : (($oFrame.FillTransparenceGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 2)))
+	$iError = ($iYCenter = Null) ? ($iError) : (($oFrame.FillTransparenceGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 4)))
+	$iError = ($iAngle = Null) ? ($iError) : ((($oFrame.FillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 8)))
+	$iError = ($iTransitionStart = Null) ? ($iError) : (($oFrame.FillTransparenceGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 16)))
+	$iError = ($iStart = Null) ? ($iError) : (($oFrame.FillTransparenceGradient.StartColor() = __LOWriter_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 32)))
+	$iError = ($iEnd = Null) ? ($iError) : (($oFrame.FillTransparenceGradient.EndColor() = __LOWriter_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 64)))
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FrameAreaTransparencyGradient
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FrameAreaTransparencyGradientMulti
@@ -2436,6 +2667,241 @@ Func _LOWriter_FrameStyleAreaGradientMulticolor(ByRef $oFrameStyle, $avColorStop
 EndFunc   ;==>_LOWriter_FrameStyleAreaGradientMulticolor
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FrameStyleAreaTransparency
+; Description ...: Modify or retrieve Transparency settings for a Frame style.
+; Syntax ........: _LOWriter_FrameStyleAreaTransparency(ByRef $oFrameStyle[, $iTransparency = Null])
+; Parameters ....: $oFrameStyle         - [in/out] an object. A Frame Style object returned by a previous _LOWriter_FrameStyleCreate, or _LOWriter_FrameStyleGetObj function.
+;                  $iTransparency       - [optional] an integer value (0-100). Default is Null. The color transparency. 0% is fully opaque and 100% is fully transparent.
+; Return values .: Success: Integer.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oFrameStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oFrameStyle not a Frame Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $iTransparency not an Integer, less than 0, or greater than 100.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                               1 = Error setting $iTransparency
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current setting for Transparency in integer format.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FrameStyleAreaTransparency(ByRef $oFrameStyle, $iTransparency = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+
+	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	If __LOWriter_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oFrameStyle.FillTransparence())
+
+	If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$oFrameStyle.FillTransparenceGradientName = "" ; Turn off Gradient if it is on, else settings wont be applied.
+	$oFrameStyle.FillTransparence = $iTransparency
+	$iError = ($oFrameStyle.FillTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 1))
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FrameStyleAreaTransparency
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FrameStyleAreaTransparencyGradient
+; Description ...: Modify or retrieve the Frame Style transparency gradient settings.
+; Syntax ........: _LOWriter_FrameStyleAreaTransparencyGradient(ByRef $oDoc, ByRef $oFrameStyle[, $iType = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iTransitionStart = Null[, $iStart = Null[, $iEnd = Null]]]]]]])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oFrameStyle         - [in/out] an object. A Frame Style object returned by a previous _LOWriter_FrameStyleCreate, or _LOWriter_FrameStyleGetObj function.
+;                  $iType               - [optional] an integer value (-1-5). Default is Null. The type of transparency gradient to apply. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_GRAD_TYPE_OFF to turn Transparency Gradient off.
+;                  $iXCenter            - [optional] an integer value (0-100). Default is Null. The horizontal offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
+;                  $iYCenter            - [optional] an integer value (0-100). Default is Null. The vertical offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
+;                  $iAngle              - [optional] an integer value (0-359). Default is Null. The rotation angle for the gradient. Set in degrees. $iType must be other than "Radial".
+;                  $iTransitionStart    - [optional] an integer value (0-100). Default is Null. The amount by which you want to adjust the transparent area of the gradient. Set in percentage.
+;                  $iStart              - [optional] an integer value (0-100). Default is Null. The transparency value for the beginning point of the gradient, where 0% is fully opaque and 100% is fully transparent.
+;                  $iEnd                - [optional] an integer value (0-100). Default is Null. The transparency value for the endpoint of the gradient, where 0% is fully opaque and 100% is fully transparent.
+; Return values .: Success: Integer or Array.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oFrameStyle not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $oFrameStyle not a Frame Style Object.
+;                  @Error 1 @Extended 4 Return 0 = $iType not an Integer, less than -1, or greater than 5, see constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iXCenter not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 6 Return 0 = $iYCenter not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 7 Return 0 = $iAngle not an Integer, less than 0, or greater than 359.
+;                  @Error 1 @Extended 8 Return 0 = $iTransitionStart not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 9 Return 0 = $iStart not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 10 Return 0 = $iEnd not an Integer, less than 0, or greater than 100.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve ColorStops Array.
+;                  @Error 3 @Extended 3 Return 0 = Error creating Transparency Gradient Name.
+;                  @Error 3 @Extended 4 Return 0 = Error setting Transparency Gradient Name.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                               1 = Error setting $iType
+;                  |                               2 = Error setting $iXCenter
+;                  |                               4 = Error setting $iYCenter
+;                  |                               8 = Error setting $iAngle
+;                  |                               16 = Error setting $iTransitionStart
+;                  |                               32 = Error setting $iStart
+;                  |                               64 = Error setting $iEnd
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
+;                  @Error 0 @Extended 0 Return 2 = Success. Transparency Gradient has been successfully turned off.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FrameStyleAreaTransparencyGradient(ByRef $oDoc, ByRef $oFrameStyle, $iType = Null, $iXCenter = Null, $iYCenter = Null, $iAngle = Null, $iTransitionStart = Null, $iStart = Null, $iEnd = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $tStyleGradient, $tColorStop, $tStopColor
+	Local $iError = 0
+	Local $sTGradName
+	Local $aiTransparent[7]
+	Local $atColorStop
+	Local $fValue
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$tStyleGradient = $oFrameStyle.FillTransparenceGradient()
+	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
+		__LOWriter_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
+				($tStyleGradient.Angle() / 10), $tStyleGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.StartColor()), _
+				__LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.EndColor())) ; Angle is set in thousands
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $aiTransparent)
+	EndIf
+
+	If ($iType <> Null) Then
+		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
+			$oFrameStyle.FillTransparenceGradientName = ""
+
+			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		EndIf
+
+		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+		$tStyleGradient.Style = $iType
+	EndIf
+
+	If ($iXCenter <> Null) Then
+		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
+		$tStyleGradient.XOffset = $iXCenter
+	EndIf
+
+	If ($iYCenter <> Null) Then
+		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
+		$tStyleGradient.YOffset = $iYCenter
+	EndIf
+
+	If ($iAngle <> Null) Then
+		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
+		$tStyleGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
+	EndIf
+
+	If ($iTransitionStart <> Null) Then
+		If Not __LOWriter_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
+		$tStyleGradient.Border = $iTransitionStart
+	EndIf
+
+	If ($iStart <> Null) Then
+		If Not __LOWriter_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
+		$tStyleGradient.StartColor = __LOWriter_TransparencyGradientConvert($iStart)
+
+		If __LOWriter_VersionCheck(7.6) Then
+			$atColorStop = $tStyleGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+			$tColorStop = $atColorStop[0] ; StopOffset 0 is the "Start" Value.
+
+			$tStopColor = $tColorStop.StopColor()
+
+			$fValue = $iStart / 100 ; Value is a decimal percentage value.
+
+			$tStopColor.Red = $fValue
+			$tStopColor.Green = $fValue
+			$tStopColor.Blue = $fValue
+
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[0] = $tColorStop
+
+			$tStyleGradient.ColorStops = $atColorStop
+		EndIf
+	EndIf
+
+	If ($iEnd <> Null) Then
+		If Not __LOWriter_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
+		$tStyleGradient.EndColor = __LOWriter_TransparencyGradientConvert($iEnd)
+
+		If __LOWriter_VersionCheck(7.6) Then
+			$atColorStop = $tStyleGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+			$tColorStop = $atColorStop[UBound($atColorStop) - 1] ; Last StopOffset is the "End" Value.
+
+			$tStopColor = $tColorStop.StopColor()
+
+			$fValue = $iEnd / 100 ; Value is a decimal percentage value.
+
+			$tStopColor.Red = $fValue
+			$tStopColor.Green = $fValue
+			$tStopColor.Blue = $fValue
+
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[UBound($atColorStop) - 1] = $tColorStop
+
+			$tStyleGradient.ColorStops = $atColorStop
+		EndIf
+	EndIf
+
+	If ($oFrameStyle.FillTransparenceGradientName() = "") Then
+		$sTGradName = __LOWriter_TransparencyGradientNameInsert($oDoc, $tStyleGradient)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+		$oFrameStyle.FillTransparenceGradientName = $sTGradName
+		If ($oFrameStyle.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+	EndIf
+
+	$oFrameStyle.FillTransparenceGradient = $tStyleGradient
+
+	$iError = ($iType = Null) ? ($iError) : (($oFrameStyle.FillTransparenceGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 1)))
+	$iError = ($iXCenter = Null) ? ($iError) : (($oFrameStyle.FillTransparenceGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 2)))
+	$iError = ($iYCenter = Null) ? ($iError) : (($oFrameStyle.FillTransparenceGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 4)))
+	$iError = ($iAngle = Null) ? ($iError) : ((($oFrameStyle.FillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 8)))
+	$iError = ($iTransitionStart = Null) ? ($iError) : (($oFrameStyle.FillTransparenceGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 16)))
+	$iError = ($iStart = Null) ? ($iError) : (($oFrameStyle.FillTransparenceGradient.StartColor() = __LOWriter_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 32)))
+	$iError = ($iEnd = Null) ? ($iError) : (($oFrameStyle.FillTransparenceGradient.EndColor() = __LOWriter_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 64)))
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FrameStyleAreaTransparencyGradient
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FrameStyleAreaTransparencyGradientMulti
 ; Description ...: Set or Retrieve a Frame Style's Multi Transparency Gradient settings. See remarks.
 ; Syntax ........: _LOWriter_FrameStyleAreaTransparencyGradientMulti(ByRef $oFrameStyle[, $avColorStops = Null])
@@ -3751,241 +4217,6 @@ Func _LOWriter_FrameStyleShadow(ByRef $oFrameStyle, $iWidth = Null, $iColor = Nu
 EndFunc   ;==>_LOWriter_FrameStyleShadow
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FrameStyleTransparency
-; Description ...: Modify or retrieve Transparency settings for a Frame style.
-; Syntax ........: _LOWriter_FrameStyleTransparency(ByRef $oFrameStyle[, $iTransparency = Null])
-; Parameters ....: $oFrameStyle         - [in/out] an object. A Frame Style object returned by a previous _LOWriter_FrameStyleCreate, or _LOWriter_FrameStyleGetObj function.
-;                  $iTransparency       - [optional] an integer value (0-100). Default is Null. The color transparency. 0% is fully opaque and 100% is fully transparent.
-; Return values .: Success: Integer.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oFrameStyle not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oFrameStyle not a Frame Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iTransparency not an Integer, less than 0, or greater than 100.
-;                  --Property Setting Errors--
-;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                               1 = Error setting $iTransparency
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
-;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current setting for Transparency in integer format.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_FrameStyleTransparency(ByRef $oFrameStyle, $iTransparency = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $iError = 0
-
-	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-	If __LOWriter_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oFrameStyle.FillTransparence())
-
-	If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
-	$oFrameStyle.FillTransparenceGradientName = "" ; Turn off Gradient if it is on, else settings wont be applied.
-	$oFrameStyle.FillTransparence = $iTransparency
-	$iError = ($oFrameStyle.FillTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 1))
-
-	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FrameStyleTransparency
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FrameStyleTransparencyGradient
-; Description ...: Modify or retrieve the Frame Style transparency gradient settings.
-; Syntax ........: _LOWriter_FrameStyleTransparencyGradient(ByRef $oDoc, ByRef $oFrameStyle[, $iType = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iTransitionStart = Null[, $iStart = Null[, $iEnd = Null]]]]]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oFrameStyle         - [in/out] an object. A Frame Style object returned by a previous _LOWriter_FrameStyleCreate, or _LOWriter_FrameStyleGetObj function.
-;                  $iType               - [optional] an integer value (-1-5). Default is Null. The type of transparency gradient to apply. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_GRAD_TYPE_OFF to turn Transparency Gradient off.
-;                  $iXCenter            - [optional] an integer value (0-100). Default is Null. The horizontal offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
-;                  $iYCenter            - [optional] an integer value (0-100). Default is Null. The vertical offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
-;                  $iAngle              - [optional] an integer value (0-359). Default is Null. The rotation angle for the gradient. Set in degrees. $iType must be other than "Radial".
-;                  $iTransitionStart    - [optional] an integer value (0-100). Default is Null. The amount by which you want to adjust the transparent area of the gradient. Set in percentage.
-;                  $iStart              - [optional] an integer value (0-100). Default is Null. The transparency value for the beginning point of the gradient, where 0% is fully opaque and 100% is fully transparent.
-;                  $iEnd                - [optional] an integer value (0-100). Default is Null. The transparency value for the endpoint of the gradient, where 0% is fully opaque and 100% is fully transparent.
-; Return values .: Success: Integer or Array.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oFrameStyle not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $oFrameStyle not a Frame Style Object.
-;                  @Error 1 @Extended 4 Return 0 = $iType not an Integer, less than -1, or greater than 5, see constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 5 Return 0 = $iXCenter not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 6 Return 0 = $iYCenter not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 7 Return 0 = $iAngle not an Integer, less than 0, or greater than 359.
-;                  @Error 1 @Extended 8 Return 0 = $iTransitionStart not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 9 Return 0 = $iStart not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 10 Return 0 = $iEnd not an Integer, less than 0, or greater than 100.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve ColorStops Array.
-;                  @Error 3 @Extended 3 Return 0 = Error creating Transparency Gradient Name.
-;                  @Error 3 @Extended 4 Return 0 = Error setting Transparency Gradient Name.
-;                  --Property Setting Errors--
-;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                               1 = Error setting $iType
-;                  |                               2 = Error setting $iXCenter
-;                  |                               4 = Error setting $iYCenter
-;                  |                               8 = Error setting $iAngle
-;                  |                               16 = Error setting $iTransitionStart
-;                  |                               32 = Error setting $iStart
-;                  |                               64 = Error setting $iEnd
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
-;                  @Error 0 @Extended 0 Return 2 = Success. Transparency Gradient has been successfully turned off.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_FrameStyleTransparencyGradient(ByRef $oDoc, ByRef $oFrameStyle, $iType = Null, $iXCenter = Null, $iYCenter = Null, $iAngle = Null, $iTransitionStart = Null, $iStart = Null, $iEnd = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $tStyleGradient, $tColorStop, $tStopColor
-	Local $iError = 0
-	Local $sTGradName
-	Local $aiTransparent[7]
-	Local $atColorStop
-	Local $fValue
-
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
-	$tStyleGradient = $oFrameStyle.FillTransparenceGradient()
-	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
-		__LOWriter_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
-				($tStyleGradient.Angle() / 10), $tStyleGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.StartColor()), _
-				__LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.EndColor())) ; Angle is set in thousands
-
-		Return SetError($__LO_STATUS_SUCCESS, 1, $aiTransparent)
-	EndIf
-
-	If ($iType <> Null) Then
-		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
-			$oFrameStyle.FillTransparenceGradientName = ""
-
-			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
-		EndIf
-
-		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-
-		$tStyleGradient.Style = $iType
-	EndIf
-
-	If ($iXCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
-		$tStyleGradient.XOffset = $iXCenter
-	EndIf
-
-	If ($iYCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-
-		$tStyleGradient.YOffset = $iYCenter
-	EndIf
-
-	If ($iAngle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
-
-		$tStyleGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
-	EndIf
-
-	If ($iTransitionStart <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
-
-		$tStyleGradient.Border = $iTransitionStart
-	EndIf
-
-	If ($iStart <> Null) Then
-		If Not __LOWriter_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
-
-		$tStyleGradient.StartColor = __LOWriter_TransparencyGradientConvert($iStart)
-
-		If __LOWriter_VersionCheck(7.6) Then
-			$atColorStop = $tStyleGradient.ColorStops()
-			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-			$tColorStop = $atColorStop[0] ; StopOffset 0 is the "Start" Value.
-
-			$tStopColor = $tColorStop.StopColor()
-
-			$fValue = $iStart / 100 ; Value is a decimal percentage value.
-
-			$tStopColor.Red = $fValue
-			$tStopColor.Green = $fValue
-			$tStopColor.Blue = $fValue
-
-			$tColorStop.StopColor = $tStopColor
-
-			$atColorStop[0] = $tColorStop
-
-			$tStyleGradient.ColorStops = $atColorStop
-		EndIf
-	EndIf
-
-	If ($iEnd <> Null) Then
-		If Not __LOWriter_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
-
-		$tStyleGradient.EndColor = __LOWriter_TransparencyGradientConvert($iEnd)
-
-		If __LOWriter_VersionCheck(7.6) Then
-			$atColorStop = $tStyleGradient.ColorStops()
-			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-			$tColorStop = $atColorStop[UBound($atColorStop) - 1] ; Last StopOffset is the "End" Value.
-
-			$tStopColor = $tColorStop.StopColor()
-
-			$fValue = $iEnd / 100 ; Value is a decimal percentage value.
-
-			$tStopColor.Red = $fValue
-			$tStopColor.Green = $fValue
-			$tStopColor.Blue = $fValue
-
-			$tColorStop.StopColor = $tStopColor
-
-			$atColorStop[UBound($atColorStop) - 1] = $tColorStop
-
-			$tStyleGradient.ColorStops = $atColorStop
-		EndIf
-	EndIf
-
-	If ($oFrameStyle.FillTransparenceGradientName() = "") Then
-		$sTGradName = __LOWriter_TransparencyGradientNameInsert($oDoc, $tStyleGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-
-		$oFrameStyle.FillTransparenceGradientName = $sTGradName
-		If ($oFrameStyle.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
-	EndIf
-
-	$oFrameStyle.FillTransparenceGradient = $tStyleGradient
-
-	$iError = ($iType = Null) ? ($iError) : (($oFrameStyle.FillTransparenceGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 1)))
-	$iError = ($iXCenter = Null) ? ($iError) : (($oFrameStyle.FillTransparenceGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 2)))
-	$iError = ($iYCenter = Null) ? ($iError) : (($oFrameStyle.FillTransparenceGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 4)))
-	$iError = ($iAngle = Null) ? ($iError) : ((($oFrameStyle.FillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 8)))
-	$iError = ($iTransitionStart = Null) ? ($iError) : (($oFrameStyle.FillTransparenceGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 16)))
-	$iError = ($iStart = Null) ? ($iError) : (($oFrameStyle.FillTransparenceGradient.StartColor() = __LOWriter_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 32)))
-	$iError = ($iEnd = Null) ? ($iError) : (($oFrameStyle.FillTransparenceGradient.EndColor() = __LOWriter_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 64)))
-
-	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FrameStyleTransparencyGradient
-
-; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FrameStyleTypePosition
 ; Description ...: Set or Retrieve Frame Style Position Settings.
 ; Syntax ........: _LOWriter_FrameStyleTypePosition(ByRef $oFrameStyle[, $iHorAlign = Null[, $iHorPos = Null[, $iHorRelation = Null[, $bMirror = Null[, $iVertAlign = Null[, $iVertPos = Null[, $iVertRelation = Null[, $bKeepInside = Null[, $iAnchorPos = Null]]]]]]]]])
@@ -4593,237 +4824,6 @@ Func _LOWriter_FrameStyleWrapOptions(ByRef $oFrameStyle, $bFirstPar = Null, $bIn
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameStyleWrapOptions
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FrameTransparency
-; Description ...: Set or retrieve Transparency settings for a Frame.
-; Syntax ........: _LOWriter_FrameTransparency(ByRef $oFrame[, $iTransparency = Null])
-; Parameters ....: $oFrame              - [in/out] an object. A Frame object returned by a previous _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, or _LOWriter_FrameGetObjByCursor function.
-;                  $iTransparency       - [optional] an integer value (0-100). Default is Null. The color transparency. 0% is fully opaque and 100% is fully transparent.
-; Return values .: Success: Integer.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oFrame not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iTransparency not an Integer, less than 0, or greater than 100.
-;                  --Property Setting Errors--
-;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                               1 = Error setting $iTransparency
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
-;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current setting for Transparency in integer format.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByCursor, _LOWriter_FrameGetObjByName
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_FrameTransparency(ByRef $oFrame, $iTransparency = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $iError = 0
-
-	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-
-	If __LOWriter_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oFrame.FillTransparence())
-
-	If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-	$oFrame.FillTransparenceGradientName = "" ; Turn off Gradient if it is on, else settings wont be applied.
-	$oFrame.FillTransparence = $iTransparency
-	$iError = ($oFrame.FillTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 1))
-
-	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FrameTransparency
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FrameTransparencyGradient
-; Description ...: Set or retrieve the Frame transparency gradient settings.
-; Syntax ........: _LOWriter_FrameTransparencyGradient(ByRef $oDoc, ByRef $oFrame[, $iType = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iTransitionStart = Null[, $iStart = Null[, $iEnd = Null]]]]]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oFrame              - [in/out] an object. A Frame object returned by a previous _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, or _LOWriter_FrameGetObjByCursor function.
-;                  $iType               - [optional] an integer value (-1-5). Default is Null. The type of transparency gradient to apply. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_GRAD_TYPE_OFF to turn Transparency Gradient off.
-;                  $iXCenter            - [optional] an integer value (0-100). Default is Null. The horizontal offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
-;                  $iYCenter            - [optional] an integer value (0-100). Default is Null. The vertical offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
-;                  $iAngle              - [optional] an integer value (0-359). Default is Null. The rotation angle for the gradient. Set in degrees. $iType must be other than "Radial".
-;                  $iTransitionStart    - [optional] an integer value (0-100). Default is Null. The amount by which you want to adjust the transparent area of the gradient. Set in percentage.
-;                  $iStart              - [optional] an integer value (0-100). Default is Null. The transparency value for the beginning point of the gradient, where 0% is fully opaque and 100% is fully transparent.
-;                  $iEnd                - [optional] an integer value (0-100). Default is Null. The transparency value for the endpoint of the gradient, where 0% is fully opaque and 100% is fully transparent.
-; Return values .: Success: Integer or Array.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oFrame not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $iType Not an Integer, less than -1, or greater than 5, see constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 4 Return 0 = $iXCenter Not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 5 Return 0 = $iYCenter Not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 6 Return 0 = $iAngle Not an Integer, less than 0, or greater than 359.
-;                  @Error 1 @Extended 7 Return 0 = $iTransitionStart Not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 8 Return 0 = $iStart Not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 9 Return 0 = $iEnd Not an Integer, less than 0, or greater than 100.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve ColorStops Array.
-;                  @Error 3 @Extended 3 Return 0 = Error creating Transparency Gradient Name.
-;                  @Error 3 @Extended 4 Return 0 = Error setting Transparency Gradient Name.
-;                  --Property Setting Errors--
-;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                               1 = Error setting $iType
-;                  |                               2 = Error setting $iXCenter
-;                  |                               4 = Error setting $iYCenter
-;                  |                               8 = Error setting $iAngle
-;                  |                               16 = Error setting $iTransitionStart
-;                  |                               32 = Error setting $iStart
-;                  |                               64 = Error setting $iEnd
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
-;                  @Error 0 @Extended 0 Return 2 = Success. Transparency Gradient has been successfully turned off.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByCursor, _LOWriter_FrameGetObjByName
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_FrameTransparencyGradient(ByRef $oDoc, ByRef $oFrame, $iType = Null, $iXCenter = Null, $iYCenter = Null, $iAngle = Null, $iTransitionStart = Null, $iStart = Null, $iEnd = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $tGradient, $tColorStop, $tStopColor
-	Local $sTGradName
-	Local $iError = 0
-	Local $aiTransparent[7]
-	Local $atColorStop
-	Local $fValue
-
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-	$tGradient = $oFrame.FillTransparenceGradient()
-	If Not IsObj($tGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
-		__LOWriter_ArrayFill($aiTransparent, $tGradient.Style(), $tGradient.XOffset(), $tGradient.YOffset(), _
-				($tGradient.Angle() / 10), $tGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tGradient.StartColor()), _
-				__LOWriter_TransparencyGradientConvert(Null, $tGradient.EndColor())) ; Angle is set in thousands
-
-		Return SetError($__LO_STATUS_SUCCESS, 1, $aiTransparent)
-	EndIf
-
-	If ($iType <> Null) Then
-		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
-			$oFrame.FillTransparenceGradientName = ""
-
-			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
-		EndIf
-
-		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
-		$tGradient.Style = $iType
-	EndIf
-
-	If ($iXCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-
-		$tGradient.XOffset = $iXCenter
-	EndIf
-
-	If ($iYCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
-		$tGradient.YOffset = $iYCenter
-	EndIf
-
-	If ($iAngle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-
-		$tGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
-	EndIf
-
-	If ($iTransitionStart <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
-
-		$tGradient.Border = $iTransitionStart
-	EndIf
-
-	If ($iStart <> Null) Then
-		If Not __LOWriter_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
-
-		$tGradient.StartColor = __LOWriter_TransparencyGradientConvert($iStart)
-
-		If __LOWriter_VersionCheck(7.6) Then
-			$atColorStop = $tGradient.ColorStops()
-			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-			$tColorStop = $atColorStop[0] ; StopOffset 0 is the "Start" Value.
-
-			$tStopColor = $tColorStop.StopColor()
-
-			$fValue = $iStart / 100 ; Value is a decimal percentage value.
-
-			$tStopColor.Red = $fValue
-			$tStopColor.Green = $fValue
-			$tStopColor.Blue = $fValue
-
-			$tColorStop.StopColor = $tStopColor
-
-			$atColorStop[0] = $tColorStop
-
-			$tGradient.ColorStops = $atColorStop
-		EndIf
-	EndIf
-
-	If ($iEnd <> Null) Then
-		If Not __LOWriter_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
-
-		$tGradient.EndColor = __LOWriter_TransparencyGradientConvert($iEnd)
-
-		If __LOWriter_VersionCheck(7.6) Then
-			$atColorStop = $tGradient.ColorStops()
-			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-			$tColorStop = $atColorStop[UBound($atColorStop) - 1] ; StopOffset 0 is the "End" Value.
-
-			$tStopColor = $tColorStop.StopColor()
-
-			$fValue = $iEnd / 100 ; Value is a decimal percentage value.
-
-			$tStopColor.Red = $fValue
-			$tStopColor.Green = $fValue
-			$tStopColor.Blue = $fValue
-
-			$tColorStop.StopColor = $tStopColor
-
-			$atColorStop[UBound($atColorStop) - 1] = $tColorStop
-
-			$tGradient.ColorStops = $atColorStop
-		EndIf
-	EndIf
-
-	If ($oFrame.FillTransparenceGradientName() = "") Then
-		$sTGradName = __LOWriter_TransparencyGradientNameInsert($oDoc, $tGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-		$oFrame.FillTransparenceGradientName = $sTGradName
-		If ($oFrame.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-	EndIf
-
-	$oFrame.FillTransparenceGradient = $tGradient
-
-	$iError = ($iType = Null) ? ($iError) : (($oFrame.FillTransparenceGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 1)))
-	$iError = ($iXCenter = Null) ? ($iError) : (($oFrame.FillTransparenceGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 2)))
-	$iError = ($iYCenter = Null) ? ($iError) : (($oFrame.FillTransparenceGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 4)))
-	$iError = ($iAngle = Null) ? ($iError) : ((($oFrame.FillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 8)))
-	$iError = ($iTransitionStart = Null) ? ($iError) : (($oFrame.FillTransparenceGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 16)))
-	$iError = ($iStart = Null) ? ($iError) : (($oFrame.FillTransparenceGradient.StartColor() = __LOWriter_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 32)))
-	$iError = ($iEnd = Null) ? ($iError) : (($oFrame.FillTransparenceGradient.EndColor() = __LOWriter_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 64)))
-
-	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FrameTransparencyGradient
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FrameTypePosition

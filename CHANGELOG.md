@@ -918,6 +918,19 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Rewrote `_LOWriter_DocReplaceAllInRange` to work better, and also to eliminate buggy `__LOWriter_RegExpConvert` function.
 - Made `_LOWriter_DocReplaceAll` and `_LOWriter_DocReplaceAllInRange` return the number of replacements made, instead of setting @Extended.
 - Made `_LOWriter_DocFindAll` and `_LOWriter_DocFindAllInRange` always return an Array, instead of "1" when no results were found.
+- Renamed Transparency functions to be consistent and kept together with other background functions:
+	- `_LOWriter_FrameStyleTransparency` --> `_LOWriter_FrameStyleAreaTransparency`
+	- `_LOWriter_FrameStyleTransparencyGradient` --> `_LOWriter_FrameStyleAreaTransparencyGradient`
+	- `_LOWriter_FrameTransparency` --> `_LOWriter_FrameAreaTransparency`
+	- `_LOWriter_FrameTransparencyGradient` --> `_LOWriter_FrameAreaTransparencyGradient`
+	- `_LOWriter_PageStyleFooterTransparency` --> `_LOWriter_PageStyleFooterAreaTransparency`
+	- `_LOWriter_PageStyleFooterTransparencyGradient` --> `_LOWriter_PageStyleFooterAreaTransparencyGradient`
+	- `_LOWriter_PageStyleHeaderTransparency` --> `_LOWriter_PageStyleHeaderAreaTransparency`
+	- `_LOWriter_PageStyleHeaderTransparencyGradient` --> `_LOWriter_PageStyleHeaderAreaTransparencyGradient`
+	- `_LOWriter_PageStyleTransparency` --> `_LOWriter_PageStyleAreaTransparency`
+	- `_LOWriter_PageStyleTransparencyGradient` --> `_LOWriter_PageStyleAreaTransparencyGradient`
+	- `_LOWriter_ShapeTransparency` --> `_LOWriter_ShapeAreaTransparency`
+	- `_LOWriter_ShapeTransparencyGradient` --> `_LOWriter_ShapeAreaTransparencyGradient`
 
 ### Fixed
 

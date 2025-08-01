@@ -24,6 +24,8 @@
 ; _LOWriter_ShapeAreaFillStyle
 ; _LOWriter_ShapeAreaGradient
 ; _LOWriter_ShapeAreaGradientMulticolor
+; _LOWriter_ShapeAreaTransparency
+; _LOWriter_ShapeAreaTransparencyGradient
 ; _LOWriter_ShapeAreaTransparencyGradientMulti
 ; _LOWriter_ShapeDelete
 ; _LOWriter_ShapeExists
@@ -42,8 +44,6 @@
 ; _LOWriter_ShapeRotateSlant
 ; _LOWriter_ShapesGetNames
 ; _LOWriter_ShapeTextBox
-; _LOWriter_ShapeTransparency
-; _LOWriter_ShapeTransparencyGradient
 ; _LOWriter_ShapeTypePosition
 ; _LOWriter_ShapeTypeSize
 ; _LOWriter_ShapeWrap
@@ -478,6 +478,237 @@ Func _LOWriter_ShapeAreaGradientMulticolor(ByRef $oShape, $avColorStops = Null)
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ShapeAreaGradientMulticolor
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_ShapeAreaTransparency
+; Description ...: Set or retrieve Transparency settings for a Shape.
+; Syntax ........: _LOWriter_ShapeAreaTransparency(ByRef $oShape[, $iTransparency = Null])
+; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by a previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
+;                  $iTransparency       - [optional] an integer value (0-100). Default is Null. The color transparency. 0% is fully opaque and 100% is fully transparent.
+; Return values .: Success: Integer.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iTransparency not an Integer, less than 0 or greater than 100.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                               1 = Error setting $iTransparency
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current setting for Transparency in integer format.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_ShapeInsert, _LOWriter_ShapeGetObjByName
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_ShapeAreaTransparency(ByRef $oShape, $iTransparency = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+
+	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oShape.FillTransparence())
+
+	If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oShape.FillTransparenceGradientName = "" ; Turn of Gradient if it is on, else settings wont be applied.
+	$oShape.FillTransparence = $iTransparency
+	$iError = ($oShape.FillTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 1))
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_ShapeAreaTransparency
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_ShapeAreaTransparencyGradient
+; Description ...: Set or retrieve the Shape transparency gradient settings.
+; Syntax ........: _LOWriter_ShapeAreaTransparencyGradient(ByRef $oDoc, ByRef $oShape[, $iType = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iTransitionStart = Null[, $iStart = Null[, $iEnd = Null]]]]]]])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oShape              - [in/out] an object. A Shape object returned by a previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
+;                  $iType               - [optional] an integer value (-1-5). Default is Null. The type of transparency gradient that you want to apply. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_GRAD_TYPE_OFF to turn Transparency Gradient off.
+;                  $iXCenter            - [optional] an integer value (0-100). Default is Null. The horizontal offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
+;                  $iYCenter            - [optional] an integer value (0-100). Default is Null. The vertical offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
+;                  $iAngle              - [optional] an integer value (0-359). Default is Null. The rotation angle for the gradient. Set in degrees. $iType must be other than "Radial".
+;                  $iTransitionStart    - [optional] an integer value (0-100). Default is Null. The amount by which you want to adjust the transparent area of the gradient. Set in percentage.
+;                  $iStart              - [optional] an integer value (0-100). Default is Null. The transparency value for the beginning point of the gradient, where 0% is fully opaque and 100% is fully transparent.
+;                  $iEnd                - [optional] an integer value (0-100). Default is Null. The transparency value for the endpoint of the gradient, where 0% is fully opaque and 100% is fully transparent.
+; Return values .: Success: Integer or Array.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oShape not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $iType not an Integer, less than -1, or greater than 5, see constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iXCenter not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 5 Return 0 = $iYCenter not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 6 Return 0 = $iAngle not an Integer, less than 0, or greater than 359.
+;                  @Error 1 @Extended 7 Return 0 = $iTransitionStart not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 8 Return 0 = $iStart not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 9 Return 0 = $iEnd not an Integer, less than 0, or greater than 100.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve ColorStops Array.
+;                  @Error 3 @Extended 3 Return 0 = Error creating Transparency Gradient Name.
+;                  @Error 3 @Extended 4 Return 0 = Error setting Transparency Gradient Name.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                               1 = Error setting $iType
+;                  |                               2 = Error setting $iXCenter
+;                  |                               4 = Error setting $iYCenter
+;                  |                               8 = Error setting $iAngle
+;                  |                               16 = Error setting $iTransitionStart
+;                  |                               32 = Error setting $iStart
+;                  |                               64 = Error setting $iEnd
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
+;                  @Error 0 @Extended 0 Return 2 = Success. Transparency Gradient has been successfully turned off.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_ShapeInsert, _LOWriter_ShapeGetObjByName
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_ShapeAreaTransparencyGradient(ByRef $oDoc, ByRef $oShape, $iType = Null, $iXCenter = Null, $iYCenter = Null, $iAngle = Null, $iTransitionStart = Null, $iStart = Null, $iEnd = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $tGradient, $tColorStop, $tStopColor
+	Local $sTGradName
+	Local $iError = 0
+	Local $aiTransparent[7]
+	Local $atColorStop[0]
+	Local $fValue
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$tGradient = $oShape.FillTransparenceGradient()
+	If Not IsObj($tGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
+		__LOWriter_ArrayFill($aiTransparent, $tGradient.Style(), $tGradient.XOffset(), $tGradient.YOffset(), _
+				($tGradient.Angle() / 10), $tGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tGradient.StartColor()), _
+				__LOWriter_TransparencyGradientConvert(Null, $tGradient.EndColor())) ; Angle is set in thousands
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $aiTransparent)
+	EndIf
+
+	If ($iType <> Null) Then
+		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
+			$oShape.FillTransparenceGradientName = ""
+
+			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		EndIf
+
+		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+		$tGradient.Style = $iType
+	EndIf
+
+	If ($iXCenter <> Null) Then
+		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+		$tGradient.XOffset = $iXCenter
+	EndIf
+
+	If ($iYCenter <> Null) Then
+		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
+		$tGradient.YOffset = $iYCenter
+	EndIf
+
+	If ($iAngle <> Null) Then
+		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
+		$tGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
+	EndIf
+
+	If ($iTransitionStart <> Null) Then
+		If Not __LOWriter_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
+		$tGradient.Border = $iTransitionStart
+	EndIf
+
+	If ($iStart <> Null) Then
+		If Not __LOWriter_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
+		$tGradient.StartColor = __LOWriter_TransparencyGradientConvert($iStart)
+
+		If __LOWriter_VersionCheck(7.6) Then
+			$atColorStop = $tGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+			$tColorStop = $atColorStop[0] ; StopOffset 0 is the "Start" Value.
+
+			$tStopColor = $tColorStop.StopColor()
+
+			$fValue = $iStart / 100 ; Value is a decimal percentage value.
+
+			$tStopColor.Red = $fValue
+			$tStopColor.Green = $fValue
+			$tStopColor.Blue = $fValue
+
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[0] = $tColorStop
+
+			$tGradient.ColorStops = $atColorStop
+		EndIf
+	EndIf
+
+	If ($iEnd <> Null) Then
+		If Not __LOWriter_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
+		$tGradient.EndColor = __LOWriter_TransparencyGradientConvert($iEnd)
+
+		If __LOWriter_VersionCheck(7.6) Then
+			$atColorStop = $tGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+			$tColorStop = $atColorStop[UBound($atColorStop) - 1] ; StopOffset 0 is the "End" Value.
+
+			$tStopColor = $tColorStop.StopColor()
+
+			$fValue = $iEnd / 100 ; Value is a decimal percentage value.
+
+			$tStopColor.Red = $fValue
+			$tStopColor.Green = $fValue
+			$tStopColor.Blue = $fValue
+
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[UBound($atColorStop) - 1] = $tColorStop
+
+			$tGradient.ColorStops = $atColorStop
+		EndIf
+	EndIf
+
+	If ($oShape.FillTransparenceGradientName() = "") Then
+		$sTGradName = __LOWriter_TransparencyGradientNameInsert($oDoc, $tGradient)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+		$oShape.FillTransparenceGradientName = $sTGradName
+		If ($oShape.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+	EndIf
+
+	$oShape.FillTransparenceGradient = $tGradient
+
+	$iError = ($iType = Null) ? ($iError) : (($oShape.FillTransparenceGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 1)))
+	$iError = ($iXCenter = Null) ? ($iError) : (($oShape.FillTransparenceGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 2)))
+	$iError = ($iYCenter = Null) ? ($iError) : (($oShape.FillTransparenceGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 4)))
+	$iError = ($iAngle = Null) ? ($iError) : ((($oShape.FillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 8)))
+	$iError = ($iTransitionStart = Null) ? ($iError) : (($oShape.FillTransparenceGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 16)))
+	$iError = ($iStart = Null) ? ($iError) : (($oShape.FillTransparenceGradient.StartColor() = __LOWriter_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 32)))
+	$iError = ($iEnd = Null) ? ($iError) : (($oShape.FillTransparenceGradient.EndColor() = __LOWriter_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 64)))
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_ShapeAreaTransparencyGradient
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ShapeAreaTransparencyGradientMulti
@@ -2580,237 +2811,6 @@ Func _LOWriter_ShapeTextBox(ByRef $oShape, $bTextBox = Null, $sContent = Null)
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ShapeTextBox
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_ShapeTransparency
-; Description ...: Set or retrieve Transparency settings for a Shape.
-; Syntax ........: _LOWriter_ShapeTransparency(ByRef $oShape[, $iTransparency = Null])
-; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by a previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
-;                  $iTransparency       - [optional] an integer value (0-100). Default is Null. The color transparency. 0% is fully opaque and 100% is fully transparent.
-; Return values .: Success: Integer.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iTransparency not an Integer, less than 0 or greater than 100.
-;                  --Property Setting Errors--
-;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                               1 = Error setting $iTransparency
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
-;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current setting for Transparency in integer format.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_ShapeInsert, _LOWriter_ShapeGetObjByName
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_ShapeTransparency(ByRef $oShape, $iTransparency = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $iError = 0
-
-	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-
-	If __LOWriter_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oShape.FillTransparence())
-
-	If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-	$oShape.FillTransparenceGradientName = "" ; Turn of Gradient if it is on, else settings wont be applied.
-	$oShape.FillTransparence = $iTransparency
-	$iError = ($oShape.FillTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 1))
-
-	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_ShapeTransparency
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_ShapeTransparencyGradient
-; Description ...: Set or retrieve the Shape transparency gradient settings.
-; Syntax ........: _LOWriter_ShapeTransparencyGradient(ByRef $oDoc, ByRef $oShape[, $iType = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iTransitionStart = Null[, $iStart = Null[, $iEnd = Null]]]]]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oShape              - [in/out] an object. A Shape object returned by a previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
-;                  $iType               - [optional] an integer value (-1-5). Default is Null. The type of transparency gradient that you want to apply. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_GRAD_TYPE_OFF to turn Transparency Gradient off.
-;                  $iXCenter            - [optional] an integer value (0-100). Default is Null. The horizontal offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
-;                  $iYCenter            - [optional] an integer value (0-100). Default is Null. The vertical offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
-;                  $iAngle              - [optional] an integer value (0-359). Default is Null. The rotation angle for the gradient. Set in degrees. $iType must be other than "Radial".
-;                  $iTransitionStart    - [optional] an integer value (0-100). Default is Null. The amount by which you want to adjust the transparent area of the gradient. Set in percentage.
-;                  $iStart              - [optional] an integer value (0-100). Default is Null. The transparency value for the beginning point of the gradient, where 0% is fully opaque and 100% is fully transparent.
-;                  $iEnd                - [optional] an integer value (0-100). Default is Null. The transparency value for the endpoint of the gradient, where 0% is fully opaque and 100% is fully transparent.
-; Return values .: Success: Integer or Array.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oShape not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $iType not an Integer, less than -1, or greater than 5, see constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 4 Return 0 = $iXCenter not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 5 Return 0 = $iYCenter not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 6 Return 0 = $iAngle not an Integer, less than 0, or greater than 359.
-;                  @Error 1 @Extended 7 Return 0 = $iTransitionStart not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 8 Return 0 = $iStart not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 9 Return 0 = $iEnd not an Integer, less than 0, or greater than 100.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve ColorStops Array.
-;                  @Error 3 @Extended 3 Return 0 = Error creating Transparency Gradient Name.
-;                  @Error 3 @Extended 4 Return 0 = Error setting Transparency Gradient Name.
-;                  --Property Setting Errors--
-;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                               1 = Error setting $iType
-;                  |                               2 = Error setting $iXCenter
-;                  |                               4 = Error setting $iYCenter
-;                  |                               8 = Error setting $iAngle
-;                  |                               16 = Error setting $iTransitionStart
-;                  |                               32 = Error setting $iStart
-;                  |                               64 = Error setting $iEnd
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
-;                  @Error 0 @Extended 0 Return 2 = Success. Transparency Gradient has been successfully turned off.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_ShapeInsert, _LOWriter_ShapeGetObjByName
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_ShapeTransparencyGradient(ByRef $oDoc, ByRef $oShape, $iType = Null, $iXCenter = Null, $iYCenter = Null, $iAngle = Null, $iTransitionStart = Null, $iStart = Null, $iEnd = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $tGradient, $tColorStop, $tStopColor
-	Local $sTGradName
-	Local $iError = 0
-	Local $aiTransparent[7]
-	Local $atColorStop[0]
-	Local $fValue
-
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-	$tGradient = $oShape.FillTransparenceGradient()
-	If Not IsObj($tGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
-		__LOWriter_ArrayFill($aiTransparent, $tGradient.Style(), $tGradient.XOffset(), $tGradient.YOffset(), _
-				($tGradient.Angle() / 10), $tGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tGradient.StartColor()), _
-				__LOWriter_TransparencyGradientConvert(Null, $tGradient.EndColor())) ; Angle is set in thousands
-
-		Return SetError($__LO_STATUS_SUCCESS, 1, $aiTransparent)
-	EndIf
-
-	If ($iType <> Null) Then
-		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
-			$oShape.FillTransparenceGradientName = ""
-
-			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
-		EndIf
-
-		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
-		$tGradient.Style = $iType
-	EndIf
-
-	If ($iXCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-
-		$tGradient.XOffset = $iXCenter
-	EndIf
-
-	If ($iYCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
-		$tGradient.YOffset = $iYCenter
-	EndIf
-
-	If ($iAngle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-
-		$tGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
-	EndIf
-
-	If ($iTransitionStart <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
-
-		$tGradient.Border = $iTransitionStart
-	EndIf
-
-	If ($iStart <> Null) Then
-		If Not __LOWriter_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
-
-		$tGradient.StartColor = __LOWriter_TransparencyGradientConvert($iStart)
-
-		If __LOWriter_VersionCheck(7.6) Then
-			$atColorStop = $tGradient.ColorStops()
-			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-			$tColorStop = $atColorStop[0] ; StopOffset 0 is the "Start" Value.
-
-			$tStopColor = $tColorStop.StopColor()
-
-			$fValue = $iStart / 100 ; Value is a decimal percentage value.
-
-			$tStopColor.Red = $fValue
-			$tStopColor.Green = $fValue
-			$tStopColor.Blue = $fValue
-
-			$tColorStop.StopColor = $tStopColor
-
-			$atColorStop[0] = $tColorStop
-
-			$tGradient.ColorStops = $atColorStop
-		EndIf
-	EndIf
-
-	If ($iEnd <> Null) Then
-		If Not __LOWriter_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
-
-		$tGradient.EndColor = __LOWriter_TransparencyGradientConvert($iEnd)
-
-		If __LOWriter_VersionCheck(7.6) Then
-			$atColorStop = $tGradient.ColorStops()
-			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-			$tColorStop = $atColorStop[UBound($atColorStop) - 1] ; StopOffset 0 is the "End" Value.
-
-			$tStopColor = $tColorStop.StopColor()
-
-			$fValue = $iEnd / 100 ; Value is a decimal percentage value.
-
-			$tStopColor.Red = $fValue
-			$tStopColor.Green = $fValue
-			$tStopColor.Blue = $fValue
-
-			$tColorStop.StopColor = $tStopColor
-
-			$atColorStop[UBound($atColorStop) - 1] = $tColorStop
-
-			$tGradient.ColorStops = $atColorStop
-		EndIf
-	EndIf
-
-	If ($oShape.FillTransparenceGradientName() = "") Then
-		$sTGradName = __LOWriter_TransparencyGradientNameInsert($oDoc, $tGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-
-		$oShape.FillTransparenceGradientName = $sTGradName
-		If ($oShape.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
-	EndIf
-
-	$oShape.FillTransparenceGradient = $tGradient
-
-	$iError = ($iType = Null) ? ($iError) : (($oShape.FillTransparenceGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 1)))
-	$iError = ($iXCenter = Null) ? ($iError) : (($oShape.FillTransparenceGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 2)))
-	$iError = ($iYCenter = Null) ? ($iError) : (($oShape.FillTransparenceGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 4)))
-	$iError = ($iAngle = Null) ? ($iError) : ((($oShape.FillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 8)))
-	$iError = ($iTransitionStart = Null) ? ($iError) : (($oShape.FillTransparenceGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 16)))
-	$iError = ($iStart = Null) ? ($iError) : (($oShape.FillTransparenceGradient.StartColor() = __LOWriter_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 32)))
-	$iError = ($iEnd = Null) ? ($iError) : (($oShape.FillTransparenceGradient.EndColor() = __LOWriter_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 64)))
-
-	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_ShapeTransparencyGradient
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ShapeTypePosition

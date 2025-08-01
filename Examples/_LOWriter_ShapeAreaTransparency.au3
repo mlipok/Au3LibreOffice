@@ -25,11 +25,11 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to set Shape settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Modify the Shape Transparency settings to 55% transparent
-	_LOWriter_ShapeTransparency($oShape, 55)
+	_LOWriter_ShapeAreaTransparency($oShape, 55)
 	If @error Then _ERROR($oDoc, "Failed to set Shape settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current Shape Transparency. Return will be an Integer.
-	$iTransparency = _LOWriter_ShapeTransparency($oShape)
+	$iTransparency = _LOWriter_ShapeAreaTransparency($oShape)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Shape settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Shape's current Transparency percentage is: " & $iTransparency)

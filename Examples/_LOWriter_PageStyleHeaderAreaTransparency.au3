@@ -6,8 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oPageStyle
-	Local $sStops = ""
-	Local $avStops
+	Local $iPageStyleSettings
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
@@ -25,30 +24,15 @@ Func Example()
 	_LOWriter_PageStyleHeaderAreaColor($oPageStyle, $LOW_COLOR_RED, False)
 	If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Set Page style Header Transparency Gradient settings to: Gradient Type = $LOW_GRAD_TYPE_ELLIPTICAL, XCenter to 75%, YCenter to 45%, Angle to 180 degrees
-	; Border to 16%, Start transparency to 10%, End Transparency to 62%
-	_LOWriter_PageStyleHeaderAreaTransparencyGradient($oDoc, $oPageStyle, $LOW_GRAD_TYPE_ELLIPTICAL, 75, 45, 180, 16, 10, 62)
+	; Set Page style Header Transparency settings to 55% transparent
+	_LOWriter_PageStyleHeaderAreaTransparency($oPageStyle, 55)
 	If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Retrieve an array of Transparency Multi Gradient ColorStops.
-	$avStops = _LOWriter_PageStyleHeaderAreaTransparencyGradientMulti($oPageStyle)
-	If @error Then _ERROR($oDoc, "Failed to retrieve Transparency Multi Gradient settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Retrieve the current settings. Return will be an integer.
+	$iPageStyleSettings = _LOWriter_PageStyleHeaderAreaTransparency($oPageStyle)
+	If @error Then _ERROR($oDoc, "Failed to retrieve the Page style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	For $i = 0 To UBound($avStops) - 1
-		$sStops &= "ColorStop offset: " & $avStops[$i][0] & " | " & @TAB & "ColorStop Transparency percentage: " & $avStops[$i][1] & @CRLF
-	Next
-
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Page Style's Header Transparency Gradient ColorStops are as follows: " & @CRLF & _
-			$sStops & @CRLF & @CRLF & _
-			"Press ok to add a new ColorStop.")
-
-	; Add a new ColorStop in the middle.
-	_LOWriter_TransparencyGradientMultiAdd($avStops, 1, 0.5, 76)
-	If @error Then _ERROR($oDoc, "Failed to add a ColorStop. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
-	; Apply the new ColorStops.
-	_LOWriter_PageStyleHeaderAreaTransparencyGradientMulti($oPageStyle, $avStops)
-	If @error Then _ERROR($oDoc, "Failed to modify Transparency Multi Gradient settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Page Style's current Header Transparency percentage is: " & $iPageStyleSettings)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

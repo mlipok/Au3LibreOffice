@@ -26,11 +26,11 @@ Func Example()
 
 	; Modify the Shape Transparency Gradient settings to: Gradient Type = $LOW_GRAD_TYPE_ELLIPTICAL, XCenter to 75%, YCenter to 45%, Angle to 180 degrees
 	; Border to 16%, Start transparency to 10%, End Transparency to 62%
-	_LOWriter_ShapeTransparencyGradient($oDoc, $oShape, $LOW_GRAD_TYPE_ELLIPTICAL, 75, 45, 180, 16, 10, 62)
+	_LOWriter_ShapeAreaTransparencyGradient($oDoc, $oShape, $LOW_GRAD_TYPE_ELLIPTICAL, 75, 45, 180, 16, 10, 62)
 	If @error Then _ERROR($oDoc, "Failed to set Shape settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current Shape settings. Return will be an array in order of function parameters.
-	$avSettings = _LOWriter_ShapeTransparencyGradient($oDoc, $oShape)
+	$avSettings = _LOWriter_ShapeAreaTransparencyGradient($oDoc, $oShape)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Shape settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Shape's Transparency Gradient settings are as follows: " & @CRLF & _

@@ -1,7 +1,7 @@
 #include <MsgBoxConstants.au3>
 
 #include "..\LibreOfficeWriter.au3"
-;~ modify
+
 Example()
 
 Func Example()
@@ -27,7 +27,7 @@ Func Example()
 
 	; Modify the Shape Transparency Gradient settings to: Gradient Type = $LOW_GRAD_TYPE_RADIAL, XCenter to 50%, YCenter to 50%, Angle to 0 degrees
 	; Border to 0%, Start transparency to 100%, End Transparency to 0%
-	_LOWriter_ShapeTransparencyGradient($oDoc, $oShape, $LOW_GRAD_TYPE_RADIAL, 50, 50, 0, 0, 100, 0)
+	_LOWriter_ShapeAreaTransparencyGradient($oDoc, $oShape, $LOW_GRAD_TYPE_RADIAL, 50, 50, 0, 0, 100, 0)
 	If @error Then _ERROR($oDoc, "Failed to set Shape settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve an array of Transparency Multi Gradient ColorStops.

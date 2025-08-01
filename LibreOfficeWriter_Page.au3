@@ -28,6 +28,8 @@
 ; _LOWriter_PageStyleAreaFillStyle
 ; _LOWriter_PageStyleAreaGradient
 ; _LOWriter_PageStyleAreaGradientMulticolor
+; _LOWriter_PageStyleAreaTransparency
+; _LOWriter_PageStyleAreaTransparencyGradient
 ; _LOWriter_PageStyleAreaTransparencyGradientMulti
 ; _LOWriter_PageStyleBorderColor
 ; _LOWriter_PageStyleBorderPadding
@@ -44,14 +46,14 @@
 ; _LOWriter_PageStyleFooterAreaFillStyle
 ; _LOWriter_PageStyleFooterAreaGradient
 ; _LOWriter_PageStyleFooterAreaGradientMulticolor
+; _LOWriter_PageStyleFooterAreaTransparency
+; _LOWriter_PageStyleFooterAreaTransparencyGradient
 ; _LOWriter_PageStyleFooterAreaTransparencyGradientMulti
 ; _LOWriter_PageStyleFooterBorderColor
 ; _LOWriter_PageStyleFooterBorderPadding
 ; _LOWriter_PageStyleFooterBorderStyle
 ; _LOWriter_PageStyleFooterBorderWidth
 ; _LOWriter_PageStyleFooterShadow
-; _LOWriter_PageStyleFooterTransparency
-; _LOWriter_PageStyleFooterTransparencyGradient
 ; _LOWriter_PageStyleFootnoteArea
 ; _LOWriter_PageStyleFootnoteLine
 ; _LOWriter_PageStyleGetObj
@@ -60,14 +62,14 @@
 ; _LOWriter_PageStyleHeaderAreaFillStyle
 ; _LOWriter_PageStyleHeaderAreaGradient
 ; _LOWriter_PageStyleHeaderAreaGradientMulticolor
+; _LOWriter_PageStyleHeaderAreaTransparency
+; _LOWriter_PageStyleHeaderAreaTransparencyGradient
 ; _LOWriter_PageStyleHeaderAreaTransparencyGradientMulti
 ; _LOWriter_PageStyleHeaderBorderColor
 ; _LOWriter_PageStyleHeaderBorderPadding
 ; _LOWriter_PageStyleHeaderBorderStyle
 ; _LOWriter_PageStyleHeaderBorderWidth
 ; _LOWriter_PageStyleHeaderShadow
-; _LOWriter_PageStyleHeaderTransparency
-; _LOWriter_PageStyleHeaderTransparencyGradient
 ; _LOWriter_PageStyleLayout
 ; _LOWriter_PageStyleMargins
 ; _LOWriter_PageStyleOrganizer
@@ -75,8 +77,6 @@
 ; _LOWriter_PageStyleSet
 ; _LOWriter_PageStylesGetNames
 ; _LOWriter_PageStyleShadow
-; _LOWriter_PageStyleTransparency
-; _LOWriter_PageStyleTransparencyGradient
 ; ===============================================================================================================================
 
 ; #FUNCTION# ====================================================================================================================
@@ -524,6 +524,241 @@ Func _LOWriter_PageStyleAreaGradientMulticolor(ByRef $oPageStyle, $avColorStops 
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_PageStyleAreaGradientMulticolor
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_PageStyleAreaTransparency
+; Description ...: Modify or retrieve Transparency settings for a page style.
+; Syntax ........: _LOWriter_PageStyleAreaTransparency(ByRef $oPageStyle[, $iTransparency = Null])
+; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
+;                  $iTransparency       - [optional] an integer value (0-100). Default is Null. The color transparency. 0% is fully opaque and 100% is fully transparent.
+; Return values .: Success: Integer.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $iTransparency not an Integer, less than 0, or greater than 100.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                               1 = Error setting $iTransparency
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current setting for Transparency as an integer.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_PageStyleAreaTransparency(ByRef $oPageStyle, $iTransparency = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+
+	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	If __LOWriter_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oPageStyle.FillTransparence())
+
+	If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$oPageStyle.FillTransparenceGradientName = ""
+	$oPageStyle.FillTransparence = $iTransparency
+	$iError = ($oPageStyle.FillTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 1))
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_PageStyleAreaTransparency
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_PageStyleAreaTransparencyGradient
+; Description ...: Modify or retrieve the transparency gradient settings.
+; Syntax ........: _LOWriter_PageStyleAreaTransparencyGradient(ByRef $oDoc, ByRef $oPageStyle[, $iType = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iTransitionStart = Null[, $iStart = Null[, $iEnd = Null]]]]]]])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
+;                  $iType               - [optional] an integer value (-1-5). Default is Null. The type of transparency gradient to apply. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_GRAD_TYPE_OFF to turn Transparency Gradient off.
+;                  $iXCenter            - [optional] an integer value (0-100). Default is Null. The horizontal offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
+;                  $iYCenter            - [optional] an integer value (0-100). Default is Null. The vertical offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
+;                  $iAngle              - [optional] an integer value (0-359). Default is Null. The rotation angle for the gradient. Set in degrees. $iType must be other than "Radial".
+;                  $iTransitionStart    - [optional] an integer value (0-100). Default is Null. The amount by which you want to adjust the transparent area of the gradient. Set in percentage.
+;                  $iStart              - [optional] an integer value (0-100). Default is Null. The transparency value for the beginning point of the gradient, where 0% is fully opaque and 100% is fully transparent.
+;                  $iEnd                - [optional] an integer value (0-100). Default is Null. The transparency value for the endpoint of the gradient, where 0% is fully opaque and 100% is fully transparent.
+; Return values .: Success: Integer or Array.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 4 Return 0 = $iType not an Integer, less than -1, or greater than 5, see constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iXCenter not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 6 Return 0 = $iYCenter not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 7 Return 0 = $iAngle not an Integer, less than 0, or greater than 359.
+;                  @Error 1 @Extended 8 Return 0 = $iTransitionStart not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 9 Return 0 = $iStart not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 10 Return 0 = $iEnd not an Integer, less than 0, or greater than 100.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve ColorStops Array.
+;                  @Error 3 @Extended 3 Return 0 = Error creating Transparency Gradient Name.
+;                  @Error 3 @Extended 4 Return 0 = Error setting Transparency Gradient Name.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                               1 = Error setting $iType
+;                  |                               2 = Error setting $iXCenter
+;                  |                               4 = Error setting $iYCenter
+;                  |                               8 = Error setting $iAngle
+;                  |                               16 = Error setting $iTransitionStart
+;                  |                               32 = Error setting $iStart
+;                  |                               64 = Error setting $iEnd
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
+;                  @Error 0 @Extended 0 Return 2 = Success. Transparency Gradient has been successfully turned off.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_PageStyleAreaTransparencyGradient(ByRef $oDoc, ByRef $oPageStyle, $iType = Null, $iXCenter = Null, $iYCenter = Null, $iAngle = Null, $iTransitionStart = Null, $iStart = Null, $iEnd = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $tStyleGradient, $tColorStop, $tStopColor
+	Local $sTGradName
+	Local $iError = 0
+	Local $aiTransparent[7]
+	Local $atColorStop
+	Local $fValue
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$tStyleGradient = $oPageStyle.FillTransparenceGradient()
+	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
+		__LOWriter_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
+				($tStyleGradient.Angle() / 10), $tStyleGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.StartColor()), _
+				__LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.EndColor())) ; Angle is set in thousands
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $aiTransparent)
+	EndIf
+
+	If ($iType <> Null) Then
+		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
+			$oPageStyle.FillTransparenceGradientName = ""
+
+			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		EndIf
+
+		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+		$tStyleGradient.Style = $iType
+	EndIf
+
+	If ($iXCenter <> Null) Then
+		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
+		$tStyleGradient.XOffset = $iXCenter
+	EndIf
+
+	If ($iYCenter <> Null) Then
+		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
+		$tStyleGradient.YOffset = $iYCenter
+	EndIf
+
+	If ($iAngle <> Null) Then
+		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
+		$tStyleGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
+	EndIf
+
+	If ($iTransitionStart <> Null) Then
+		If Not __LOWriter_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
+		$tStyleGradient.Border = $iTransitionStart
+	EndIf
+
+	If ($iStart <> Null) Then
+		If Not __LOWriter_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
+		$tStyleGradient.StartColor = __LOWriter_TransparencyGradientConvert($iStart)
+
+		If __LOWriter_VersionCheck(7.6) Then
+			$atColorStop = $tStyleGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+			$tColorStop = $atColorStop[0] ; StopOffset 0 is the "Start" Value.
+
+			$tStopColor = $tColorStop.StopColor()
+
+			$fValue = $iStart / 100 ; Value is a decimal percentage value.
+
+			$tStopColor.Red = $fValue
+			$tStopColor.Green = $fValue
+			$tStopColor.Blue = $fValue
+
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[0] = $tColorStop
+
+			$tStyleGradient.ColorStops = $atColorStop
+		EndIf
+	EndIf
+
+	If ($iEnd <> Null) Then
+		If Not __LOWriter_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
+		$tStyleGradient.EndColor = __LOWriter_TransparencyGradientConvert($iEnd)
+
+		If __LOWriter_VersionCheck(7.6) Then
+			$atColorStop = $tStyleGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+			$tColorStop = $atColorStop[UBound($atColorStop) - 1] ; StopOffset 0 is the "End" Value.
+
+			$tStopColor = $tColorStop.StopColor()
+
+			$fValue = $iEnd / 100 ; Value is a decimal percentage value.
+
+			$tStopColor.Red = $fValue
+			$tStopColor.Green = $fValue
+			$tStopColor.Blue = $fValue
+
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[UBound($atColorStop) - 1] = $tColorStop
+
+			$tStyleGradient.ColorStops = $atColorStop
+		EndIf
+	EndIf
+
+	If ($oPageStyle.FillTransparenceGradientName() = "") Then
+		$sTGradName = __LOWriter_TransparencyGradientNameInsert($oDoc, $tStyleGradient)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+		$oPageStyle.FillTransparenceGradientName = $sTGradName
+		If ($oPageStyle.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+	EndIf
+
+	$oPageStyle.FillTransparenceGradient = $tStyleGradient
+
+	$iError = ($iType = Null) ? ($iError) : (($oPageStyle.FillTransparenceGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 1)))
+	$iError = ($iXCenter = Null) ? ($iError) : (($oPageStyle.FillTransparenceGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 2)))
+	$iError = ($iYCenter = Null) ? ($iError) : (($oPageStyle.FillTransparenceGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 4)))
+	$iError = ($iAngle = Null) ? ($iError) : ((($oPageStyle.FillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 8)))
+	$iError = ($iTransitionStart = Null) ? ($iError) : (($oPageStyle.FillTransparenceGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 16)))
+	$iError = ($iStart = Null) ? ($iError) : (($oPageStyle.FillTransparenceGradient.StartColor() = __LOWriter_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 32)))
+	$iError = ($iEnd = Null) ? ($iError) : (($oPageStyle.FillTransparenceGradient.EndColor() = __LOWriter_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 64)))
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_PageStyleAreaTransparencyGradient
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_PageStyleAreaTransparencyGradientMulti
@@ -1964,6 +2199,246 @@ Func _LOWriter_PageStyleFooterAreaGradientMulticolor(ByRef $oPageStyle, $avColor
 EndFunc   ;==>_LOWriter_PageStyleFooterAreaGradientMulticolor
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_PageStyleFooterAreaTransparency
+; Description ...: Modify or retrieve Transparency settings for a page style Footer.
+; Syntax ........: _LOWriter_PageStyleFooterAreaTransparency(ByRef $oPageStyle[, $iTransparency = Null])
+; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
+;                  $iTransparency       - [optional] an integer value (0-100). Default is Null. The color transparency percentage. 0% is fully opaque and 100% is fully transparent.
+; Return values .: Success: Integer.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $iTransparency not an Integer, less than 0, or greater than 100.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                               1 = Error setting $iTransparency
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current setting for Transparency in integer format.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_PageStyleFooterAreaTransparency(ByRef $oPageStyle, $iTransparency = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+
+	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If ($oPageStyle.FooterIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oPageStyle.FooterFillTransparence())
+
+	If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$oPageStyle.FooterFillTransparenceGradientName = ""
+	$oPageStyle.FooterFillTransparence = $iTransparency
+	$iError = ($oPageStyle.FooterFillTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 1))
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_PageStyleFooterAreaTransparency
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_PageStyleFooterAreaTransparencyGradient
+; Description ...: Modify or retrieve the Page Style Footer transparency gradient settings.
+; Syntax ........: _LOWriter_PageStyleFooterAreaTransparencyGradient(ByRef $oDoc, ByRef $oPageStyle[, $iType = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iTransitionStart = Null[, $iStart = Null[, $iEnd = Null]]]]]]])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
+;                  $iType               - [optional] an integer value (-1-5). Default is Null. The type of transparency gradient that you want to apply. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_GRAD_TYPE_OFF to turn Transparency Gradient off.
+;                  $iXCenter            - [optional] an integer value (0-100). Default is Null. The horizontal offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
+;                  $iYCenter            - [optional] an integer value (0-100). Default is Null. The vertical offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
+;                  $iAngle              - [optional] an integer value (0-359). Default is Null. The rotation angle for the gradient. Set in degrees. $iType must be other than "Radial".
+;                  $iTransitionStart    - [optional] an integer value (0-100). Default is Null. The amount by which you want to adjust the transparent area of the gradient. Set in percentage.
+;                  $iStart              - [optional] an integer value (0-100). Default is Null. The transparency value for the beginning point of the gradient, where 0% is fully opaque and 100% is fully transparent.
+;                  $iEnd                - [optional] an integer value (0-100). Default is Null. The transparency value for the endpoint of the gradient, where 0% is fully opaque and 100% is fully transparent.
+; Return values .: Success: Integer or Array.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 4 Return 0 = $iType Not an Integer, less than -1, or greater than 5, see constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iXCenter Not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 6 Return 0 = $iYCenter Not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 7 Return 0 = $iAngle Not an Integer, less than 0, or greater than 359.
+;                  @Error 1 @Extended 8 Return 0 = $iTransitionStart Not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 9 Return 0 = $iStart Not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 10 Return 0 = $iEnd Not an Integer, less than 0, or greater than 100.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving "FillTransparenceGradient" Object.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve ColorStops Array.
+;                  @Error 3 @Extended 4 Return 0 = Error creating Transparency Gradient Name.
+;                  @Error 3 @Extended 5 Return 0 = Error setting Transparency Gradient Name.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                               1 = Error setting $iType
+;                  |                               2 = Error setting $iXCenter
+;                  |                               4 = Error setting $iYCenter
+;                  |                               8 = Error setting $iAngle
+;                  |                               16 = Error setting $iTransitionStart
+;                  |                               32 = Error setting $iStart
+;                  |                               64 = Error setting $iEnd
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
+;                  @Error 0 @Extended 0 Return 2 = Success. Transparency Gradient has been successfully turned off.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_PageStyleFooterAreaTransparencyGradient(ByRef $oDoc, ByRef $oPageStyle, $iType = Null, $iXCenter = Null, $iYCenter = Null, $iAngle = Null, $iTransitionStart = Null, $iStart = Null, $iEnd = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $tStyleGradient, $tColorStop, $tStopColor
+	Local $sTGradName
+	Local $iError = 0
+	Local $aiTransparent[7]
+	Local $atColorStop
+	Local $fValue
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($oPageStyle.FooterIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$tStyleGradient = $oPageStyle.FooterFillTransparenceGradient()
+	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
+		__LOWriter_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
+				($tStyleGradient.Angle() / 10), $tStyleGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.StartColor()), _
+				__LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.EndColor())) ; Angle is set in thousands
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $aiTransparent)
+	EndIf
+
+	If ($iType <> Null) Then
+		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
+			$oPageStyle.FooterFillTransparenceGradientName = ""
+
+			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		EndIf
+
+		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+		$tStyleGradient.Style = $iType
+	EndIf
+
+	If ($iXCenter <> Null) Then
+		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
+		$tStyleGradient.XOffset = $iXCenter
+	EndIf
+
+	If ($iYCenter <> Null) Then
+		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
+		$tStyleGradient.YOffset = $iYCenter
+	EndIf
+
+	If ($iAngle <> Null) Then
+		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
+		$tStyleGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
+	EndIf
+
+	If ($iTransitionStart <> Null) Then
+		If Not __LOWriter_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
+		$tStyleGradient.Border = $iTransitionStart
+	EndIf
+
+	If ($iStart <> Null) Then
+		If Not __LOWriter_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
+		$tStyleGradient.StartColor = __LOWriter_TransparencyGradientConvert($iStart)
+
+		If __LOWriter_VersionCheck(7.6) Then
+			$atColorStop = $tStyleGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+			$tColorStop = $atColorStop[0] ; StopOffset 0 is the "Start" Value.
+
+			$tStopColor = $tColorStop.StopColor()
+
+			$fValue = $iStart / 100 ; Value is a decimal percentage value.
+
+			$tStopColor.Red = $fValue
+			$tStopColor.Green = $fValue
+			$tStopColor.Blue = $fValue
+
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[0] = $tColorStop
+
+			$tStyleGradient.ColorStops = $atColorStop
+		EndIf
+	EndIf
+
+	If ($iEnd <> Null) Then
+		If Not __LOWriter_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
+		$tStyleGradient.EndColor = __LOWriter_TransparencyGradientConvert($iEnd)
+
+		If __LOWriter_VersionCheck(7.6) Then
+			$atColorStop = $tStyleGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+			$tColorStop = $atColorStop[UBound($atColorStop) - 1] ; StopOffset 0 is the "End" Value.
+
+			$tStopColor = $tColorStop.StopColor()
+
+			$fValue = $iEnd / 100 ; Value is a decimal percentage value.
+
+			$tStopColor.Red = $fValue
+			$tStopColor.Green = $fValue
+			$tStopColor.Blue = $fValue
+
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[UBound($atColorStop) - 1] = $tColorStop
+
+			$tStyleGradient.ColorStops = $atColorStop
+		EndIf
+	EndIf
+
+	If ($oPageStyle.FooterFillTransparenceGradientName() = "") Then
+		$sTGradName = __LOWriter_TransparencyGradientNameInsert($oDoc, $tStyleGradient)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
+		$oPageStyle.FooterFillTransparenceGradientName = $sTGradName
+		If ($oPageStyle.FooterFillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+	EndIf
+
+	$oPageStyle.FooterFillTransparenceGradient = $tStyleGradient
+
+	$iError = ($iType = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 1)))
+	$iError = ($iXCenter = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 2)))
+	$iError = ($iYCenter = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 4)))
+	$iError = ($iAngle = Null) ? ($iError) : ((($oPageStyle.FooterFillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 8)))
+	$iError = ($iTransitionStart = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 16)))
+	$iError = ($iStart = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.StartColor() = __LOWriter_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 32)))
+	$iError = ($iEnd = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.EndColor() = __LOWriter_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 64)))
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_PageStyleFooterAreaTransparencyGradient
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_PageStyleFooterAreaTransparencyGradientMulti
 ; Description ...: Set or Retrieve a Page Style's Footer Multi Transparency Gradient settings. See remarks.
 ; Syntax ........: _LOWriter_PageStyleFooterAreaTransparencyGradientMulti(ByRef $oPageStyle[, $avColorStops = Null])
@@ -2439,246 +2914,6 @@ Func _LOWriter_PageStyleFooterShadow(ByRef $oPageStyle, $iWidth = Null, $iColor 
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_PageStyleFooterShadow
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_PageStyleFooterTransparency
-; Description ...: Modify or retrieve Transparency settings for a page style Footer.
-; Syntax ........: _LOWriter_PageStyleFooterTransparency(ByRef $oPageStyle[, $iTransparency = Null])
-; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $iTransparency       - [optional] an integer value (0-100). Default is Null. The color transparency percentage. 0% is fully opaque and 100% is fully transparent.
-; Return values .: Success: Integer.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iTransparency not an Integer, less than 0, or greater than 100.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
-;                  --Property Setting Errors--
-;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                               1 = Error setting $iTransparency
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
-;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current setting for Transparency in integer format.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_PageStyleFooterTransparency(ByRef $oPageStyle, $iTransparency = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $iError = 0
-
-	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If ($oPageStyle.FooterIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	If __LOWriter_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oPageStyle.FooterFillTransparence())
-
-	If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
-	$oPageStyle.FooterFillTransparenceGradientName = ""
-	$oPageStyle.FooterFillTransparence = $iTransparency
-	$iError = ($oPageStyle.FooterFillTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 1))
-
-	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_PageStyleFooterTransparency
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_PageStyleFooterTransparencyGradient
-; Description ...: Modify or retrieve the Page Style Footer transparency gradient settings.
-; Syntax ........: _LOWriter_PageStyleFooterTransparencyGradient(ByRef $oDoc, ByRef $oPageStyle[, $iType = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iTransitionStart = Null[, $iStart = Null[, $iEnd = Null]]]]]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $iType               - [optional] an integer value (-1-5). Default is Null. The type of transparency gradient that you want to apply. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_GRAD_TYPE_OFF to turn Transparency Gradient off.
-;                  $iXCenter            - [optional] an integer value (0-100). Default is Null. The horizontal offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
-;                  $iYCenter            - [optional] an integer value (0-100). Default is Null. The vertical offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
-;                  $iAngle              - [optional] an integer value (0-359). Default is Null. The rotation angle for the gradient. Set in degrees. $iType must be other than "Radial".
-;                  $iTransitionStart    - [optional] an integer value (0-100). Default is Null. The amount by which you want to adjust the transparent area of the gradient. Set in percentage.
-;                  $iStart              - [optional] an integer value (0-100). Default is Null. The transparency value for the beginning point of the gradient, where 0% is fully opaque and 100% is fully transparent.
-;                  $iEnd                - [optional] an integer value (0-100). Default is Null. The transparency value for the endpoint of the gradient, where 0% is fully opaque and 100% is fully transparent.
-; Return values .: Success: Integer or Array.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 4 Return 0 = $iType Not an Integer, less than -1, or greater than 5, see constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 5 Return 0 = $iXCenter Not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 6 Return 0 = $iYCenter Not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 7 Return 0 = $iAngle Not an Integer, less than 0, or greater than 359.
-;                  @Error 1 @Extended 8 Return 0 = $iTransitionStart Not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 9 Return 0 = $iStart Not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 10 Return 0 = $iEnd Not an Integer, less than 0, or greater than 100.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
-;                  @Error 3 @Extended 2 Return 0 = Error retrieving "FillTransparenceGradient" Object.
-;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve ColorStops Array.
-;                  @Error 3 @Extended 4 Return 0 = Error creating Transparency Gradient Name.
-;                  @Error 3 @Extended 5 Return 0 = Error setting Transparency Gradient Name.
-;                  --Property Setting Errors--
-;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                               1 = Error setting $iType
-;                  |                               2 = Error setting $iXCenter
-;                  |                               4 = Error setting $iYCenter
-;                  |                               8 = Error setting $iAngle
-;                  |                               16 = Error setting $iTransitionStart
-;                  |                               32 = Error setting $iStart
-;                  |                               64 = Error setting $iEnd
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
-;                  @Error 0 @Extended 0 Return 2 = Success. Transparency Gradient has been successfully turned off.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_PageStyleFooterTransparencyGradient(ByRef $oDoc, ByRef $oPageStyle, $iType = Null, $iXCenter = Null, $iYCenter = Null, $iAngle = Null, $iTransitionStart = Null, $iStart = Null, $iEnd = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $tStyleGradient, $tColorStop, $tStopColor
-	Local $sTGradName
-	Local $iError = 0
-	Local $aiTransparent[7]
-	Local $atColorStop
-	Local $fValue
-
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If ($oPageStyle.FooterIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	$tStyleGradient = $oPageStyle.FooterFillTransparenceGradient()
-	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
-		__LOWriter_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
-				($tStyleGradient.Angle() / 10), $tStyleGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.StartColor()), _
-				__LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.EndColor())) ; Angle is set in thousands
-
-		Return SetError($__LO_STATUS_SUCCESS, 1, $aiTransparent)
-	EndIf
-
-	If ($iType <> Null) Then
-		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
-			$oPageStyle.FooterFillTransparenceGradientName = ""
-
-			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
-		EndIf
-
-		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-
-		$tStyleGradient.Style = $iType
-	EndIf
-
-	If ($iXCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
-		$tStyleGradient.XOffset = $iXCenter
-	EndIf
-
-	If ($iYCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-
-		$tStyleGradient.YOffset = $iYCenter
-	EndIf
-
-	If ($iAngle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
-
-		$tStyleGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
-	EndIf
-
-	If ($iTransitionStart <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
-
-		$tStyleGradient.Border = $iTransitionStart
-	EndIf
-
-	If ($iStart <> Null) Then
-		If Not __LOWriter_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
-
-		$tStyleGradient.StartColor = __LOWriter_TransparencyGradientConvert($iStart)
-
-		If __LOWriter_VersionCheck(7.6) Then
-			$atColorStop = $tStyleGradient.ColorStops()
-			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-
-			$tColorStop = $atColorStop[0] ; StopOffset 0 is the "Start" Value.
-
-			$tStopColor = $tColorStop.StopColor()
-
-			$fValue = $iStart / 100 ; Value is a decimal percentage value.
-
-			$tStopColor.Red = $fValue
-			$tStopColor.Green = $fValue
-			$tStopColor.Blue = $fValue
-
-			$tColorStop.StopColor = $tStopColor
-
-			$atColorStop[0] = $tColorStop
-
-			$tStyleGradient.ColorStops = $atColorStop
-		EndIf
-	EndIf
-
-	If ($iEnd <> Null) Then
-		If Not __LOWriter_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
-
-		$tStyleGradient.EndColor = __LOWriter_TransparencyGradientConvert($iEnd)
-
-		If __LOWriter_VersionCheck(7.6) Then
-			$atColorStop = $tStyleGradient.ColorStops()
-			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-
-			$tColorStop = $atColorStop[UBound($atColorStop) - 1] ; StopOffset 0 is the "End" Value.
-
-			$tStopColor = $tColorStop.StopColor()
-
-			$fValue = $iEnd / 100 ; Value is a decimal percentage value.
-
-			$tStopColor.Red = $fValue
-			$tStopColor.Green = $fValue
-			$tStopColor.Blue = $fValue
-
-			$tColorStop.StopColor = $tStopColor
-
-			$atColorStop[UBound($atColorStop) - 1] = $tColorStop
-
-			$tStyleGradient.ColorStops = $atColorStop
-		EndIf
-	EndIf
-
-	If ($oPageStyle.FooterFillTransparenceGradientName() = "") Then
-		$sTGradName = __LOWriter_TransparencyGradientNameInsert($oDoc, $tStyleGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
-
-		$oPageStyle.FooterFillTransparenceGradientName = $sTGradName
-		If ($oPageStyle.FooterFillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
-	EndIf
-
-	$oPageStyle.FooterFillTransparenceGradient = $tStyleGradient
-
-	$iError = ($iType = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 1)))
-	$iError = ($iXCenter = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 2)))
-	$iError = ($iYCenter = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 4)))
-	$iError = ($iAngle = Null) ? ($iError) : ((($oPageStyle.FooterFillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 8)))
-	$iError = ($iTransitionStart = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 16)))
-	$iError = ($iStart = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.StartColor() = __LOWriter_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 32)))
-	$iError = ($iEnd = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.EndColor() = __LOWriter_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 64)))
-
-	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_PageStyleFooterTransparencyGradient
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_PageStyleFootnoteArea
@@ -3486,6 +3721,246 @@ Func _LOWriter_PageStyleHeaderAreaGradientMulticolor(ByRef $oPageStyle, $avColor
 EndFunc   ;==>_LOWriter_PageStyleHeaderAreaGradientMulticolor
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_PageStyleHeaderAreaTransparency
+; Description ...: Modify or retrieve Transparency settings for a page style Header.
+; Syntax ........: _LOWriter_PageStyleHeaderAreaTransparency(ByRef $oPageStyle[, $iTransparency = Null])
+; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
+;                  $iTransparency       - [optional] an integer value (0-100). Default is Null. The color transparency. 0% is fully opaque and 100% is fully transparent.
+; Return values .: Success: Integer.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $iTransparency not an Integer, less than 0, or greater than 100.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                               1 = Error setting $iTransparency
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current setting for Transparency in integer format.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_PageStyleHeaderAreaTransparency(ByRef $oPageStyle, $iTransparency = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+
+	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If ($oPageStyle.HeaderIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oPageStyle.HeaderFillTransparence())
+
+	If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$oPageStyle.HeaderFillTransparenceGradientName = ""
+	$oPageStyle.HeaderFillTransparence = $iTransparency
+	$iError = ($oPageStyle.HeaderFillTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 1))
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_PageStyleHeaderAreaTransparency
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_PageStyleHeaderAreaTransparencyGradient
+; Description ...: Modify or retrieve the Page Style Header transparency gradient settings.
+; Syntax ........: _LOWriter_PageStyleHeaderAreaTransparencyGradient(ByRef $oDoc, ByRef $oPageStyle[, $iType = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iTransitionStart = Null[, $iStart = Null[, $iEnd = Null]]]]]]])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
+;                  $iType               - [optional] an integer value (-1-5). Default is Null. The type of transparency gradient to apply. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_GRAD_TYPE_OFF to turn Transparency Gradient off.
+;                  $iXCenter            - [optional] an integer value (0-100). Default is Null. The horizontal offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
+;                  $iYCenter            - [optional] an integer value (0-100). Default is Null. The vertical offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
+;                  $iAngle              - [optional] an integer value (0-359). Default is Null. The rotation angle for the gradient. Set in degrees. $iType must be other than "Radial".
+;                  $iTransitionStart    - [optional] an integer value (0-100). Default is Null. The amount by which to adjust the transparent area of the gradient. Set in percentage.
+;                  $iStart              - [optional] an integer value (0-100). Default is Null. The transparency value for the beginning point of the gradient, where 0% is fully opaque and 100% is fully transparent.
+;                  $iEnd                - [optional] an integer value (0-100). Default is Null. The transparency value for the endpoint of the gradient, where 0% is fully opaque and 100% is fully transparent.
+; Return values .: Success: Integer or Array.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 4 Return 0 = $iType not an Integer, less than -1, or greater than 5, see constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iXCenter not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 6 Return 0 = $iYCenter not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 7 Return 0 = $iAngle not an Integer, less than 0, or greater than 359.
+;                  @Error 1 @Extended 8 Return 0 = $iTransitionStart not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 9 Return 0 = $iStart not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 10 Return 0 = $iEnd not an Integer, less than 0, or greater than 100.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving "FillTransparenceGradient" Object.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve ColorStops Array.
+;                  @Error 3 @Extended 4 Return 0 = Error creating Transparency Gradient Name.
+;                  @Error 3 @Extended 5 Return 0 = Error setting Transparency Gradient Name.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                               1 = Error setting $iType
+;                  |                               2 = Error setting $iXCenter
+;                  |                               4 = Error setting $iYCenter
+;                  |                               8 = Error setting $iAngle
+;                  |                               16 = Error setting $iTransitionStart
+;                  |                               32 = Error setting $iStart
+;                  |                               64 = Error setting $iEnd
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
+;                  @Error 0 @Extended 0 Return 2 = Success. Transparency Gradient has been successfully turned off.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_PageStyleHeaderAreaTransparencyGradient(ByRef $oDoc, ByRef $oPageStyle, $iType = Null, $iXCenter = Null, $iYCenter = Null, $iAngle = Null, $iTransitionStart = Null, $iStart = Null, $iEnd = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $tStyleGradient, $tColorStop, $tStopColor
+	Local $sTGradName
+	Local $iError = 0
+	Local $aiTransparent[7]
+	Local $atColorStop
+	Local $fValue
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($oPageStyle.HeaderIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$tStyleGradient = $oPageStyle.HeaderFillTransparenceGradient()
+	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
+		__LOWriter_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
+				($tStyleGradient.Angle() / 10), $tStyleGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.StartColor()), _
+				__LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.EndColor())) ; Angle is set in thousands
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $aiTransparent)
+	EndIf
+
+	If ($iType <> Null) Then
+		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
+			$oPageStyle.HeaderFillTransparenceGradientName = ""
+
+			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		EndIf
+
+		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+		$tStyleGradient.Style = $iType
+	EndIf
+
+	If ($iXCenter <> Null) Then
+		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
+		$tStyleGradient.XOffset = $iXCenter
+	EndIf
+
+	If ($iYCenter <> Null) Then
+		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
+		$tStyleGradient.YOffset = $iYCenter
+	EndIf
+
+	If ($iAngle <> Null) Then
+		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
+		$tStyleGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
+	EndIf
+
+	If ($iTransitionStart <> Null) Then
+		If Not __LOWriter_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
+		$tStyleGradient.Border = $iTransitionStart
+	EndIf
+
+	If ($iStart <> Null) Then
+		If Not __LOWriter_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
+		$tStyleGradient.StartColor = __LOWriter_TransparencyGradientConvert($iStart)
+
+		If __LOWriter_VersionCheck(7.6) Then
+			$atColorStop = $tStyleGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+			$tColorStop = $atColorStop[0] ; StopOffset 0 is the "Start" Value.
+
+			$tStopColor = $tColorStop.StopColor()
+
+			$fValue = $iStart / 100 ; Value is a decimal percentage value.
+
+			$tStopColor.Red = $fValue
+			$tStopColor.Green = $fValue
+			$tStopColor.Blue = $fValue
+
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[0] = $tColorStop
+
+			$tStyleGradient.ColorStops = $atColorStop
+		EndIf
+	EndIf
+
+	If ($iEnd <> Null) Then
+		If Not __LOWriter_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
+		$tStyleGradient.EndColor = __LOWriter_TransparencyGradientConvert($iEnd)
+
+		If __LOWriter_VersionCheck(7.6) Then
+			$atColorStop = $tStyleGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+			$tColorStop = $atColorStop[UBound($atColorStop) - 1] ; StopOffset 0 is the "End" Value.
+
+			$tStopColor = $tColorStop.StopColor()
+
+			$fValue = $iEnd / 100 ; Value is a decimal percentage value.
+
+			$tStopColor.Red = $fValue
+			$tStopColor.Green = $fValue
+			$tStopColor.Blue = $fValue
+
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[UBound($atColorStop) - 1] = $tColorStop
+
+			$tStyleGradient.ColorStops = $atColorStop
+		EndIf
+	EndIf
+
+	If ($oPageStyle.HeaderFillTransparenceGradientName() = "") Then
+		$sTGradName = __LOWriter_TransparencyGradientNameInsert($oDoc, $tStyleGradient)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
+		$oPageStyle.HeaderFillTransparenceGradientName = $sTGradName
+		If ($oPageStyle.HeaderFillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+	EndIf
+
+	$oPageStyle.HeaderFillTransparenceGradient = $tStyleGradient
+
+	$iError = ($iType = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 1)))
+	$iError = ($iXCenter = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 2)))
+	$iError = ($iYCenter = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 4)))
+	$iError = ($iAngle = Null) ? ($iError) : ((($oPageStyle.HeaderFillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 8)))
+	$iError = ($iTransitionStart = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 16)))
+	$iError = ($iStart = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.StartColor() = __LOWriter_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 32)))
+	$iError = ($iEnd = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.EndColor() = __LOWriter_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 64)))
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_PageStyleHeaderAreaTransparencyGradient
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_PageStyleHeaderAreaTransparencyGradientMulti
 ; Description ...: Set or Retrieve a Page Style's Header Multi Transparency Gradient settings. See remarks.
 ; Syntax ........: _LOWriter_PageStyleHeaderAreaTransparencyGradientMulti(ByRef $oPageStyle[, $avColorStops = Null])
@@ -3961,246 +4436,6 @@ Func _LOWriter_PageStyleHeaderShadow(ByRef $oPageStyle, $iWidth = Null, $iColor 
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_PageStyleHeaderShadow
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_PageStyleHeaderTransparency
-; Description ...: Modify or retrieve Transparency settings for a page style Header.
-; Syntax ........: _LOWriter_PageStyleHeaderTransparency(ByRef $oPageStyle[, $iTransparency = Null])
-; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $iTransparency       - [optional] an integer value (0-100). Default is Null. The color transparency. 0% is fully opaque and 100% is fully transparent.
-; Return values .: Success: Integer.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iTransparency not an Integer, less than 0, or greater than 100.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
-;                  --Property Setting Errors--
-;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                               1 = Error setting $iTransparency
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
-;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current setting for Transparency in integer format.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_PageStyleHeaderTransparency(ByRef $oPageStyle, $iTransparency = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $iError = 0
-
-	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If ($oPageStyle.HeaderIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	If __LOWriter_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oPageStyle.HeaderFillTransparence())
-
-	If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
-	$oPageStyle.HeaderFillTransparenceGradientName = ""
-	$oPageStyle.HeaderFillTransparence = $iTransparency
-	$iError = ($oPageStyle.HeaderFillTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 1))
-
-	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_PageStyleHeaderTransparency
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_PageStyleHeaderTransparencyGradient
-; Description ...: Modify or retrieve the Page Style Header transparency gradient settings.
-; Syntax ........: _LOWriter_PageStyleHeaderTransparencyGradient(ByRef $oDoc, ByRef $oPageStyle[, $iType = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iTransitionStart = Null[, $iStart = Null[, $iEnd = Null]]]]]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $iType               - [optional] an integer value (-1-5). Default is Null. The type of transparency gradient to apply. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_GRAD_TYPE_OFF to turn Transparency Gradient off.
-;                  $iXCenter            - [optional] an integer value (0-100). Default is Null. The horizontal offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
-;                  $iYCenter            - [optional] an integer value (0-100). Default is Null. The vertical offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
-;                  $iAngle              - [optional] an integer value (0-359). Default is Null. The rotation angle for the gradient. Set in degrees. $iType must be other than "Radial".
-;                  $iTransitionStart    - [optional] an integer value (0-100). Default is Null. The amount by which to adjust the transparent area of the gradient. Set in percentage.
-;                  $iStart              - [optional] an integer value (0-100). Default is Null. The transparency value for the beginning point of the gradient, where 0% is fully opaque and 100% is fully transparent.
-;                  $iEnd                - [optional] an integer value (0-100). Default is Null. The transparency value for the endpoint of the gradient, where 0% is fully opaque and 100% is fully transparent.
-; Return values .: Success: Integer or Array.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 4 Return 0 = $iType not an Integer, less than -1, or greater than 5, see constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 5 Return 0 = $iXCenter not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 6 Return 0 = $iYCenter not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 7 Return 0 = $iAngle not an Integer, less than 0, or greater than 359.
-;                  @Error 1 @Extended 8 Return 0 = $iTransitionStart not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 9 Return 0 = $iStart not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 10 Return 0 = $iEnd not an Integer, less than 0, or greater than 100.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
-;                  @Error 3 @Extended 2 Return 0 = Error retrieving "FillTransparenceGradient" Object.
-;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve ColorStops Array.
-;                  @Error 3 @Extended 4 Return 0 = Error creating Transparency Gradient Name.
-;                  @Error 3 @Extended 5 Return 0 = Error setting Transparency Gradient Name.
-;                  --Property Setting Errors--
-;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                               1 = Error setting $iType
-;                  |                               2 = Error setting $iXCenter
-;                  |                               4 = Error setting $iYCenter
-;                  |                               8 = Error setting $iAngle
-;                  |                               16 = Error setting $iTransitionStart
-;                  |                               32 = Error setting $iStart
-;                  |                               64 = Error setting $iEnd
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
-;                  @Error 0 @Extended 0 Return 2 = Success. Transparency Gradient has been successfully turned off.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_PageStyleHeaderTransparencyGradient(ByRef $oDoc, ByRef $oPageStyle, $iType = Null, $iXCenter = Null, $iYCenter = Null, $iAngle = Null, $iTransitionStart = Null, $iStart = Null, $iEnd = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $tStyleGradient, $tColorStop, $tStopColor
-	Local $sTGradName
-	Local $iError = 0
-	Local $aiTransparent[7]
-	Local $atColorStop
-	Local $fValue
-
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If ($oPageStyle.HeaderIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	$tStyleGradient = $oPageStyle.HeaderFillTransparenceGradient()
-	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
-		__LOWriter_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
-				($tStyleGradient.Angle() / 10), $tStyleGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.StartColor()), _
-				__LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.EndColor())) ; Angle is set in thousands
-
-		Return SetError($__LO_STATUS_SUCCESS, 1, $aiTransparent)
-	EndIf
-
-	If ($iType <> Null) Then
-		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
-			$oPageStyle.HeaderFillTransparenceGradientName = ""
-
-			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
-		EndIf
-
-		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-
-		$tStyleGradient.Style = $iType
-	EndIf
-
-	If ($iXCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
-		$tStyleGradient.XOffset = $iXCenter
-	EndIf
-
-	If ($iYCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-
-		$tStyleGradient.YOffset = $iYCenter
-	EndIf
-
-	If ($iAngle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
-
-		$tStyleGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
-	EndIf
-
-	If ($iTransitionStart <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
-
-		$tStyleGradient.Border = $iTransitionStart
-	EndIf
-
-	If ($iStart <> Null) Then
-		If Not __LOWriter_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
-
-		$tStyleGradient.StartColor = __LOWriter_TransparencyGradientConvert($iStart)
-
-		If __LOWriter_VersionCheck(7.6) Then
-			$atColorStop = $tStyleGradient.ColorStops()
-			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-
-			$tColorStop = $atColorStop[0] ; StopOffset 0 is the "Start" Value.
-
-			$tStopColor = $tColorStop.StopColor()
-
-			$fValue = $iStart / 100 ; Value is a decimal percentage value.
-
-			$tStopColor.Red = $fValue
-			$tStopColor.Green = $fValue
-			$tStopColor.Blue = $fValue
-
-			$tColorStop.StopColor = $tStopColor
-
-			$atColorStop[0] = $tColorStop
-
-			$tStyleGradient.ColorStops = $atColorStop
-		EndIf
-	EndIf
-
-	If ($iEnd <> Null) Then
-		If Not __LOWriter_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
-
-		$tStyleGradient.EndColor = __LOWriter_TransparencyGradientConvert($iEnd)
-
-		If __LOWriter_VersionCheck(7.6) Then
-			$atColorStop = $tStyleGradient.ColorStops()
-			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-
-			$tColorStop = $atColorStop[UBound($atColorStop) - 1] ; StopOffset 0 is the "End" Value.
-
-			$tStopColor = $tColorStop.StopColor()
-
-			$fValue = $iEnd / 100 ; Value is a decimal percentage value.
-
-			$tStopColor.Red = $fValue
-			$tStopColor.Green = $fValue
-			$tStopColor.Blue = $fValue
-
-			$tColorStop.StopColor = $tStopColor
-
-			$atColorStop[UBound($atColorStop) - 1] = $tColorStop
-
-			$tStyleGradient.ColorStops = $atColorStop
-		EndIf
-	EndIf
-
-	If ($oPageStyle.HeaderFillTransparenceGradientName() = "") Then
-		$sTGradName = __LOWriter_TransparencyGradientNameInsert($oDoc, $tStyleGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
-
-		$oPageStyle.HeaderFillTransparenceGradientName = $sTGradName
-		If ($oPageStyle.HeaderFillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
-	EndIf
-
-	$oPageStyle.HeaderFillTransparenceGradient = $tStyleGradient
-
-	$iError = ($iType = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 1)))
-	$iError = ($iXCenter = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 2)))
-	$iError = ($iYCenter = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 4)))
-	$iError = ($iAngle = Null) ? ($iError) : ((($oPageStyle.HeaderFillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 8)))
-	$iError = ($iTransitionStart = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 16)))
-	$iError = ($iStart = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.StartColor() = __LOWriter_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 32)))
-	$iError = ($iEnd = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.EndColor() = __LOWriter_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 64)))
-
-	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_PageStyleHeaderTransparencyGradient
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_PageStyleLayout
@@ -4824,238 +5059,3 @@ Func _LOWriter_PageStyleShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = Null
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_PageStyleShadow
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_PageStyleTransparency
-; Description ...: Modify or retrieve Transparency settings for a page style.
-; Syntax ........: _LOWriter_PageStyleTransparency(ByRef $oPageStyle[, $iTransparency = Null])
-; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $iTransparency       - [optional] an integer value (0-100). Default is Null. The color transparency. 0% is fully opaque and 100% is fully transparent.
-; Return values .: Success: Integer.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iTransparency not an Integer, less than 0, or greater than 100.
-;                  --Property Setting Errors--
-;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                               1 = Error setting $iTransparency
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
-;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current setting for Transparency as an integer.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_PageStyleTransparency(ByRef $oPageStyle, $iTransparency = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $iError = 0
-
-	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-	If __LOWriter_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oPageStyle.FillTransparence())
-
-	If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
-	$oPageStyle.FillTransparenceGradientName = ""
-	$oPageStyle.FillTransparence = $iTransparency
-	$iError = ($oPageStyle.FillTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 1))
-
-	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_PageStyleTransparency
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_PageStyleTransparencyGradient
-; Description ...: Modify or retrieve the transparency gradient settings.
-; Syntax ........: _LOWriter_PageStyleTransparencyGradient(ByRef $oDoc, ByRef $oPageStyle[, $iType = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iTransitionStart = Null[, $iStart = Null[, $iEnd = Null]]]]]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $iType               - [optional] an integer value (-1-5). Default is Null. The type of transparency gradient to apply. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_GRAD_TYPE_OFF to turn Transparency Gradient off.
-;                  $iXCenter            - [optional] an integer value (0-100). Default is Null. The horizontal offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
-;                  $iYCenter            - [optional] an integer value (0-100). Default is Null. The vertical offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
-;                  $iAngle              - [optional] an integer value (0-359). Default is Null. The rotation angle for the gradient. Set in degrees. $iType must be other than "Radial".
-;                  $iTransitionStart    - [optional] an integer value (0-100). Default is Null. The amount by which you want to adjust the transparent area of the gradient. Set in percentage.
-;                  $iStart              - [optional] an integer value (0-100). Default is Null. The transparency value for the beginning point of the gradient, where 0% is fully opaque and 100% is fully transparent.
-;                  $iEnd                - [optional] an integer value (0-100). Default is Null. The transparency value for the endpoint of the gradient, where 0% is fully opaque and 100% is fully transparent.
-; Return values .: Success: Integer or Array.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 4 Return 0 = $iType not an Integer, less than -1, or greater than 5, see constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 5 Return 0 = $iXCenter not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 6 Return 0 = $iYCenter not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 7 Return 0 = $iAngle not an Integer, less than 0, or greater than 359.
-;                  @Error 1 @Extended 8 Return 0 = $iTransitionStart not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 9 Return 0 = $iStart not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 10 Return 0 = $iEnd not an Integer, less than 0, or greater than 100.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve ColorStops Array.
-;                  @Error 3 @Extended 3 Return 0 = Error creating Transparency Gradient Name.
-;                  @Error 3 @Extended 4 Return 0 = Error setting Transparency Gradient Name.
-;                  --Property Setting Errors--
-;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                               1 = Error setting $iType
-;                  |                               2 = Error setting $iXCenter
-;                  |                               4 = Error setting $iYCenter
-;                  |                               8 = Error setting $iAngle
-;                  |                               16 = Error setting $iTransitionStart
-;                  |                               32 = Error setting $iStart
-;                  |                               64 = Error setting $iEnd
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
-;                  @Error 0 @Extended 0 Return 2 = Success. Transparency Gradient has been successfully turned off.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_PageStyleTransparencyGradient(ByRef $oDoc, ByRef $oPageStyle, $iType = Null, $iXCenter = Null, $iYCenter = Null, $iAngle = Null, $iTransitionStart = Null, $iStart = Null, $iEnd = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $tStyleGradient, $tColorStop, $tStopColor
-	Local $sTGradName
-	Local $iError = 0
-	Local $aiTransparent[7]
-	Local $atColorStop
-	Local $fValue
-
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
-	$tStyleGradient = $oPageStyle.FillTransparenceGradient()
-	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
-		__LOWriter_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
-				($tStyleGradient.Angle() / 10), $tStyleGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.StartColor()), _
-				__LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.EndColor())) ; Angle is set in thousands
-
-		Return SetError($__LO_STATUS_SUCCESS, 1, $aiTransparent)
-	EndIf
-
-	If ($iType <> Null) Then
-		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
-			$oPageStyle.FillTransparenceGradientName = ""
-
-			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
-		EndIf
-
-		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-
-		$tStyleGradient.Style = $iType
-	EndIf
-
-	If ($iXCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
-		$tStyleGradient.XOffset = $iXCenter
-	EndIf
-
-	If ($iYCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-
-		$tStyleGradient.YOffset = $iYCenter
-	EndIf
-
-	If ($iAngle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
-
-		$tStyleGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
-	EndIf
-
-	If ($iTransitionStart <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
-
-		$tStyleGradient.Border = $iTransitionStart
-	EndIf
-
-	If ($iStart <> Null) Then
-		If Not __LOWriter_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
-
-		$tStyleGradient.StartColor = __LOWriter_TransparencyGradientConvert($iStart)
-
-		If __LOWriter_VersionCheck(7.6) Then
-			$atColorStop = $tStyleGradient.ColorStops()
-			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-			$tColorStop = $atColorStop[0] ; StopOffset 0 is the "Start" Value.
-
-			$tStopColor = $tColorStop.StopColor()
-
-			$fValue = $iStart / 100 ; Value is a decimal percentage value.
-
-			$tStopColor.Red = $fValue
-			$tStopColor.Green = $fValue
-			$tStopColor.Blue = $fValue
-
-			$tColorStop.StopColor = $tStopColor
-
-			$atColorStop[0] = $tColorStop
-
-			$tStyleGradient.ColorStops = $atColorStop
-		EndIf
-	EndIf
-
-	If ($iEnd <> Null) Then
-		If Not __LOWriter_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
-
-		$tStyleGradient.EndColor = __LOWriter_TransparencyGradientConvert($iEnd)
-
-		If __LOWriter_VersionCheck(7.6) Then
-			$atColorStop = $tStyleGradient.ColorStops()
-			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-			$tColorStop = $atColorStop[UBound($atColorStop) - 1] ; StopOffset 0 is the "End" Value.
-
-			$tStopColor = $tColorStop.StopColor()
-
-			$fValue = $iEnd / 100 ; Value is a decimal percentage value.
-
-			$tStopColor.Red = $fValue
-			$tStopColor.Green = $fValue
-			$tStopColor.Blue = $fValue
-
-			$tColorStop.StopColor = $tStopColor
-
-			$atColorStop[UBound($atColorStop) - 1] = $tColorStop
-
-			$tStyleGradient.ColorStops = $atColorStop
-		EndIf
-	EndIf
-
-	If ($oPageStyle.FillTransparenceGradientName() = "") Then
-		$sTGradName = __LOWriter_TransparencyGradientNameInsert($oDoc, $tStyleGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-
-		$oPageStyle.FillTransparenceGradientName = $sTGradName
-		If ($oPageStyle.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
-	EndIf
-
-	$oPageStyle.FillTransparenceGradient = $tStyleGradient
-
-	$iError = ($iType = Null) ? ($iError) : (($oPageStyle.FillTransparenceGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 1)))
-	$iError = ($iXCenter = Null) ? ($iError) : (($oPageStyle.FillTransparenceGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 2)))
-	$iError = ($iYCenter = Null) ? ($iError) : (($oPageStyle.FillTransparenceGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 4)))
-	$iError = ($iAngle = Null) ? ($iError) : ((($oPageStyle.FillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 8)))
-	$iError = ($iTransitionStart = Null) ? ($iError) : (($oPageStyle.FillTransparenceGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 16)))
-	$iError = ($iStart = Null) ? ($iError) : (($oPageStyle.FillTransparenceGradient.StartColor() = __LOWriter_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 32)))
-	$iError = ($iEnd = Null) ? ($iError) : (($oPageStyle.FillTransparenceGradient.EndColor() = __LOWriter_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 64)))
-
-	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_PageStyleTransparencyGradient
