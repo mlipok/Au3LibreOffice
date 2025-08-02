@@ -224,9 +224,11 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_CommentAreaColor
 	- _LOCalc_CommentAreaFillStyle
 	- _LOCalc_CommentAreaGradient
+	- _LOCalc_CommentAreaGradientMulticolor
 	- _LOCalc_CommentAreaShadow
 	- _LOCalc_CommentAreaTransparency
 	- _LOCalc_CommentAreaTransparencyGradient
+	- _LOCalc_CommentAreaTransparencyGradientMulti
 	- _LOCalc_CommentCallout
 	- _LOCalc_CommentCreateTextCursor
 	- _LOCalc_CommentDelete
@@ -347,12 +349,18 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_FormatKeyGetStandard
 	- _LOCalc_FormatKeyGetString
 	- _LOCalc_FormatKeyList
+	- _LOCalc_GradientMulticolorAdd
+	- _LOCalc_GradientMulticolorDelete
+	- _LOCalc_GradientMulticolorModify
 	- _LOCalc_PathConvert
 	- _LOCalc_SearchDescriptorCreate
 	- _LOCalc_SearchDescriptorModify
 	- _LOCalc_SearchDescriptorSimilarityModify
 	- _LOCalc_SortFieldCreate
 	- _LOCalc_SortFieldModify
+	- _LOCalc_TransparencyGradientMultiAdd
+	- _LOCalc_TransparencyGradientMultiDelete
+	- _LOCalc_TransparencyGradientMultiModify
 	- _LOCalc_VersionGet
 - Internal Functions
 	- __LOCalc_AddTo1DArray
