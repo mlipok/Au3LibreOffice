@@ -208,10 +208,10 @@ Func _LOWriter_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $i
 
 			Return SetError($__LO_STATUS_SUCCESS, 2, $aiReturn)
 
-		Case IsInt($iHSB) ; Long TO HSB
-			$nRed = (Mod(($iHSB / 65536), 256)) / 255
-			$nGreen = (Mod(($iHSB / 256), 256)) / 255
-			$nBlue = (Mod($iHSB, 256)) / 255
+		Case IsInt($iHSB) ; Long to HSB
+			$nRed = (Mod(($iHSB / 65536), 256) / 255)
+			$nGreen = (Mod(($iHSB / 256), 256) / 255)
+			$nBlue = (Mod($iHSB, 256) / 255)
 
 			; get Max RGB Value
 			$nResult = ($nRed > $nGreen) ? ($nRed) : ($nGreen)
@@ -1939,7 +1939,7 @@ Func _LOWriter_FindFormatModifyRotateScaleSpace(ByRef $atFormat, $iRotation = Nu
 		Else
 			If Not __LOWriter_IntIsBetween($iRotation, 0, 0, "", "90:270") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-			$iRotation = ($iRotation > 0) ? ($iRotation * 10) : ($iRotation) ; Rotation set in hundredths (90 deg = 900 etc), so times by 10.
+			$iRotation = Int($iRotation * 10) ; Rotation set in hundredths (90 deg = 900 etc), so times by 10.
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharRotation", $iRotation))
 		EndIf
 	EndIf

@@ -1096,7 +1096,7 @@ Func __LOWriter_CharRotateScale(ByRef $oObj, $iRotation, $iScaleWidth, $bRotateF
 
 	If __LOWriter_VarsAreNull($iRotation, $iScaleWidth, $bRotateFitLine) Then
 		; rotation set in hundredths (90 deg = 900 etc)so divide by 10.
-		__LOWriter_ArrayFill($avRotation, ($oObj.CharRotation() / 10), $oObj.CharScaleWidth())
+		__LOWriter_ArrayFill($avRotation, Int($oObj.CharRotation() / 10), $oObj.CharScaleWidth())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avRotation)
 	EndIf
@@ -1104,7 +1104,7 @@ Func __LOWriter_CharRotateScale(ByRef $oObj, $iRotation, $iScaleWidth, $bRotateF
 	If ($iRotation <> Null) Then
 		If Not __LOWriter_IntIsBetween($iRotation, 0, 0, "", "90:270") Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-		$iRotation = ($iRotation > 0) ? ($iRotation * 10) : ($iRotation) ; Rotation set in hundredths (90 deg = 900 etc)so times by 10.
+		$iRotation = Int($iRotation * 10) ; Rotation set in hundredths (90 deg = 900 etc)so times by 10.
 		$oObj.CharRotation = $iRotation
 		$iError = ($oObj.CharRotation() = $iRotation) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -3591,29 +3591,29 @@ Func __LOWriter_ImageGetSuggestedSize($oGraphic, $oPageStyle)
 
 	; Retrieve the Current Page Style's height minus top/bottom margins
 	$iMaxH = Int($oPageStyle.Height() - $oPageStyle.LeftMargin() - $oPageStyle.RightMargin())
-	If ($iMaxH = 0) Then $iMaxH = 9.5 * 2540 ; If error or is equal to 0, then set to 9.5 Inches in Micrometers
+	If ($iMaxH = 0) Then $iMaxH = 24130 ; If error or is equal to 0, then set to 9.5 Inches in Micrometers
 
 	; Retrieve the Current Page Style's width minus left/right margins
 	$iMaxW = Int($oPageStyle.Width() - $oPageStyle.TopMargin() - $oPageStyle.BottomMargin())
-	If ($iMaxW = 0) Then $iMaxW = 6.75 * 2540 ; If error or is equal to 0, then set to 6.75 Inches in Micrometers.
+	If ($iMaxW = 0) Then $iMaxW = 17145 ; If error or is equal to 0, then set to 6.75 Inches in Micrometers.
 
 	$oSize = $oGraphic.Size100thMM()
 
 	If ($oSize.Height = 0) Or ($oSize.Width = 0) Then
 		; 2540 Micrometers per Inch, 1440 TWIPS per inch
-		$oSize.Height = $oGraphic.SizePixel.Height * 2540 * _WinAPI_TwipsPerPixelY() / 1440
-		$oSize.Width = $oGraphic.SizePixel.Width * 2540 * _WinAPI_TwipsPerPixelX() / 1440
+		$oSize.Height = Int($oGraphic.SizePixel.Height * 2540 * _WinAPI_TwipsPerPixelY() / 1440)
+		$oSize.Width = Int($oGraphic.SizePixel.Width * 2540 * _WinAPI_TwipsPerPixelX() / 1440)
 	EndIf
 
 	If ($oSize.Height = 0) Or ($oSize.Width = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If ($oSize.Width() > $iMaxW) Then
-		$oSize.Height = $oSize.Height * $iMaxW / $oSize.Width()
+		$oSize.Height = Int($oSize.Height * $iMaxW / $oSize.Width())
 		$oSize.Width = $iMaxW
 	EndIf
 
 	If ($oSize.Height() > $iMaxH) Then
-		$oSize.Width = $oSize.Width() * $iMaxH / $oSize.Height
+		$oSize.Width = Int($oSize.Width() * $iMaxH / $oSize.Height)
 		$oSize.Height = $iMaxH
 	EndIf
 
@@ -4377,7 +4377,7 @@ Func __LOWriter_ObjRelativeSize(ByRef $oDoc, ByRef $oObj, $bRelativeWidth = Fals
 		$iPageWidth = $iPageWidth - $oPageStyle.RightMargin()
 		$iPageWidth = $iPageWidth - $oPageStyle.LeftMargin() ; Minus off both margins.
 
-		$iObjWidth = $iPageWidth * ($oObj.RelativeWidth() / 100) ; Times Page width minus margins by relative width percentage.
+		$iObjWidth = Int($iPageWidth * ($oObj.RelativeWidth() / 100)) ; Times Page width minus margins by relative width percentage.
 
 		$oObj.Width = $iObjWidth
 	EndIf
@@ -4387,7 +4387,7 @@ Func __LOWriter_ObjRelativeSize(ByRef $oDoc, ByRef $oObj, $bRelativeWidth = Fals
 		$iPageHeight = $iPageHeight - $oPageStyle.TopMargin()
 		$iPageHeight = $iPageHeight - $oPageStyle.BottomMargin() ; Minus off both margins.
 
-		$iObjHeight = $iPageHeight * ($oObj.RelativeHeight() / 100) ; Times Page Height minus margins by relative Height percentage.
+		$iObjHeight = Int($iPageHeight * ($oObj.RelativeHeight() / 100)) ; Times Page Height minus margins by relative Height percentage.
 
 		$oObj.Height = $iObjHeight
 	EndIf

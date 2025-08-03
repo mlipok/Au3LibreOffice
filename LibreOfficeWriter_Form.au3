@@ -8276,7 +8276,7 @@ Func _LOWriter_FormConTableConCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $
 
 	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $bEnabled, $iDefaultState, $iWidth, $iStyle, $iAlign, $bWordBreak, $bTriState, $sAddInfo, $sHelpText, $sHelpURL) Then
 		__LOWriter_ArrayFill($avControl, $oCheckBox.Name(), $oCheckBox.Label(), $oCheckBox.WritingMode(), $oCheckBox.Enabled(), _
-				$oCheckBox.DefaultState(), ($oCheckBox.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				$oCheckBox.DefaultState(), Int($oCheckBox.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
 				$oCheckBox.VisualEffect(), $oCheckBox.Align(), $oCheckBox.MultiLine(), $oCheckBox.TriState(), _
 				$oCheckBox.Tag(), $oCheckBox.HelpText(), $oCheckBox.HelpURL())
 
@@ -8809,7 +8809,7 @@ Func _LOWriter_FormConTableConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $
 	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $iMaxLen, $bEnabled, $bReadOnly, $iMouseScroll, $iWidth, $asList, $sDefaultTxt, $iAlign, $iLines, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
 		__LOWriter_ArrayFill($avControl, $oComboBox.Name(), $oComboBox.Label(), $oComboBox.WritingMode(), $oComboBox.MaxTextLen(), _
 				$oComboBox.Enabled(), $oComboBox.ReadOnly(), $oComboBox.MouseWheelBehavior(), _
-				($oComboBox.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				Int($oComboBox.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
 				$oComboBox.StringItemList(), $oComboBox.DefaultText(), _
 				$oComboBox.Align(), $oComboBox.LineCount(), $oComboBox.HideInactiveSelection(), _
 				$oComboBox.Tag(), $oComboBox.HelpText(), _
@@ -9169,7 +9169,7 @@ Func _LOWriter_FormConTableConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName
 				$oCurrencyField.ValueMin(), $oCurrencyField.ValueMax(), $oCurrencyField.ValueStep(), $oCurrencyField.DefaultValue(), _
 				$oCurrencyField.DecimalAccuracy(), $oCurrencyField.ShowThousandsSeparator(), $oCurrencyField.CurrencySymbol(), _
 				$oCurrencyField.PrependCurrencySymbol(), $oCurrencyField.Spin(), $oCurrencyField.Repeat(), $oCurrencyField.RepeatDelay(), _
-				($oCurrencyField.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				Int($oCurrencyField.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
 				$oCurrencyField.Align(), $oCurrencyField.HideInactiveSelection(), $oCurrencyField.Tag(), _
 				$oCurrencyField.HelpText(), $oCurrencyField.HelpURL())
 
@@ -9629,7 +9629,7 @@ Func _LOWriter_FormConTableConDateFieldGeneral(ByRef $oDateField, $sName = Null,
 		__LOWriter_ArrayFill($avControl, $oDateField.Name(), $oDateField.Label(), $oDateField.WritingMode(), $oDateField.StrictFormat(), _
 				$oDateField.Enabled(), $oDateField.ReadOnly(), $oDateField.MouseWheelBehavior(), _
 				$tCurMin, $tCurMax, $oDateField.DateFormat(), $tCurDefault, $oDateField.Spin(), _
-				$oDateField.Repeat(), $oDateField.RepeatDelay(), ($oDateField.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				$oDateField.Repeat(), $oDateField.RepeatDelay(), Int($oDateField.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
 				$oDateField.Align(), _
 				$oDateField.Dropdown(), _
 				$oDateField.HideInactiveSelection(), $oDateField.Tag(), $oDateField.HelpText(), $oDateField.HelpURL())
@@ -10063,7 +10063,7 @@ Func _LOWriter_FormConTableConFormattedFieldGeneral(ByRef $oFormatField, $sName 
 				$oFormatField.Enabled(), $oFormatField.ReadOnly(), _
 				$oFormatField.MouseWheelBehavior(), $oFormatField.EffectiveMin(), _
 				$oFormatField.EffectiveMax(), $oFormatField.EffectiveDefault(), $oFormatField.FormatKey(), $oFormatField.Spin(), _
-				$oFormatField.Repeat(), $oFormatField.RepeatDelay(), ($oFormatField.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				$oFormatField.Repeat(), $oFormatField.RepeatDelay(), Int($oFormatField.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
 				$oFormatField.Align(), _
 				$oFormatField.HideInactiveSelection(), $oFormatField.Tag(), $oFormatField.HelpText(), $oFormatField.HelpURL())
 
@@ -10743,7 +10743,7 @@ Func _LOWriter_FormConTableConListBoxGeneral(ByRef $oListBox, $sName = Null, $sL
 
 	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $bEnabled, $bReadOnly, $iMouseScroll, $iWidth, $asList, $iAlign, $iLines, $aiDefaultSel, $sAddInfo, $sHelpText, $sHelpURL) Then
 		__LOWriter_ArrayFill($avControl, $oListBox.Name(), $oListBox.Label(), $oListBox.WritingMode(), $oListBox.Enabled(), _
-				$oListBox.ReadOnly(), $oListBox.MouseWheelBehavior(), ($oListBox.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				$oListBox.ReadOnly(), $oListBox.MouseWheelBehavior(), Int($oListBox.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
 				$oListBox.StringItemList(), $oListBox.Align(), $oListBox.LineCount(), _
 				$oListBox.DefaultSelection(), $oListBox.Tag(), $oListBox.HelpText(), $oListBox.HelpURL())
 
@@ -11086,7 +11086,7 @@ Func _LOWriter_FormConTableConNumericFieldGeneral(ByRef $oNumericField, $sName =
 				$oNumericField.MouseWheelBehavior(), $oNumericField.ValueMin(), _
 				$oNumericField.ValueMax(), $oNumericField.ValueStep(), $oNumericField.DefaultValue(), $oNumericField.DecimalAccuracy(), _
 				$oNumericField.ShowThousandsSeparator(), $oNumericField.Spin(), $oNumericField.Repeat(), $oNumericField.RepeatDelay(), _
-				($oNumericField.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				Int($oNumericField.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
 				$oNumericField.Align(), $oNumericField.HideInactiveSelection(), $oNumericField.Tag(), _
 				$oNumericField.HelpText(), $oNumericField.HelpURL())
 
@@ -11496,7 +11496,7 @@ Func _LOWriter_FormConTableConPatternFieldGeneral(ByRef $oPatternField, $sName =
 		__LOWriter_ArrayFill($avControl, $oPatternField.Name(), $oPatternField.Label(), $oPatternField.WritingMode(), _
 				$oPatternField.MaxTextLen(), $oPatternField.EditMask(), $oPatternField.LiteralMask(), $oPatternField.StrictFormat(), _
 				$oPatternField.Enabled(), $oPatternField.ReadOnly(), _
-				$oPatternField.MouseWheelBehavior(), ($oPatternField.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				$oPatternField.MouseWheelBehavior(), Int($oPatternField.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
 				$oPatternField.DefaultText(), _
 				$oPatternField.Align(), $oPatternField.HideInactiveSelection(), $oPatternField.Tag(), _
 				$oPatternField.HelpText(), $oPatternField.HelpURL())
@@ -11852,7 +11852,7 @@ Func _LOWriter_FormConTableConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $sL
 	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $iMaxLen, $bEnabled, $bReadOnly, $iWidth, $sDefaultTxt, $iAlign, $bMultiLine, $bEndWithLF, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
 		__LOWriter_ArrayFill($avControl, $oTextBox.Name(), $oTextBox.Label(), $oTextBox.WritingMode(), $oTextBox.MaxTextLen(), _
 				$oTextBox.Enabled(), $oTextBox.ReadOnly(), _
-				($oTextBox.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				Int($oTextBox.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
 				$oTextBox.DefaultText(), $oTextBox.Align(), $oTextBox.MultiLine(), _
 				(($oTextBox.LineEndFormat() = $__LOW_FORM_CONTROL_LINE_END_LF) ? (True) : (False)), _ ; Line Ending format
 				$oTextBox.HideInactiveSelection(), $oTextBox.Tag(), $oTextBox.HelpText(), $oTextBox.HelpURL())
@@ -12232,9 +12232,8 @@ Func _LOWriter_FormConTableConTimeFieldGeneral(ByRef $oTimeField, $sName = Null,
 		__LOWriter_ArrayFill($avControl, $oTimeField.Name(), $oTimeField.Label(), $oTimeField.WritingMode(), $oTimeField.StrictFormat(), _
 				$oTimeField.Enabled(), $oTimeField.ReadOnly(), $oTimeField.MouseWheelBehavior(), _
 				$tCurMin, $tCurMax, $oTimeField.TimeFormat(), $tCurDefault, $oTimeField.Spin(), _
-				$oTimeField.Repeat(), $oTimeField.RepeatDelay(), ($oTimeField.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
-				$oTimeField.Align(), _
-				$oTimeField.HideInactiveSelection(), $oTimeField.Tag(), $oTimeField.HelpText(), $oTimeField.HelpURL())
+				$oTimeField.Repeat(), $oTimeField.RepeatDelay(), Int($oTimeField.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				$oTimeField.Align(), $oTimeField.HideInactiveSelection(), $oTimeField.Tag(), $oTimeField.HelpText(), $oTimeField.HelpURL())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf

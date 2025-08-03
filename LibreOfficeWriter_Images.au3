@@ -244,7 +244,7 @@ Func _LOWriter_ImageAreaGradient(ByRef $oDoc, ByRef $oImage, $sGradientName = Nu
 	If __LOWriter_VarsAreNull($sGradientName, $iType, $iIncrement, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iFromColor, $iToColor, _
 			$iFromIntense, $iToIntense) Then
 		__LOWriter_ArrayFill($avGradient, $oImage.FillGradientName(), $tStyleGradient.Style(), _
-				$oImage.FillGradientStepCount(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), ($tStyleGradient.Angle() / 10), _
+				$oImage.FillGradientStepCount(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), Int($tStyleGradient.Angle() / 10), _
 				$tStyleGradient.Border(), $tStyleGradient.StartColor(), $tStyleGradient.EndColor(), $tStyleGradient.StartIntensity(), _
 				$tStyleGradient.EndIntensity()) ; Angle is set in thousands
 
@@ -296,7 +296,7 @@ Func _LOWriter_ImageAreaGradient(ByRef $oDoc, ByRef $oImage, $sGradientName = Nu
 	If ($iAngle <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
-		$tStyleGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
+		$tStyleGradient.Angle = Int($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iTransitionStart <> Null) Then
@@ -381,7 +381,7 @@ Func _LOWriter_ImageAreaGradient(ByRef $oDoc, ByRef $oImage, $sGradientName = Nu
 	$iError = ($iType = Null) ? ($iError) : (($oImage.FillGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 2)))
 	$iError = ($iXCenter = Null) ? ($iError) : (($oImage.FillGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 8)))
 	$iError = ($iYCenter = Null) ? ($iError) : (($oImage.FillGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 16)))
-	$iError = ($iAngle = Null) ? ($iError) : ((($oImage.FillGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 32)))
+	$iError = ($iAngle = Null) ? ($iError) : ((Int($oImage.FillGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 32)))
 	$iError = ($iTransitionStart = Null) ? ($iError) : (($oImage.FillGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 64)))
 	$iError = ($iFromColor = Null) ? ($iError) : (($oImage.FillGradient.StartColor() = $iFromColor) ? ($iError) : (BitOR($iError, 128)))
 	$iError = ($iToColor = Null) ? ($iError) : (($oImage.FillGradient.EndColor() = $iToColor) ? ($iError) : (BitOR($iError, 256)))
@@ -457,7 +457,7 @@ Func _LOWriter_ImageAreaGradientMulticolor(ByRef $oImage, $avColorStops = Null)
 			$tStopColor = $atColorStops[$i].StopColor()
 			If Not IsObj($tStopColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
-			$avNewColorStops[$i][1] = (BitShift(($tStopColor.Red() * 255), -16) + BitShift(($tStopColor.Green() * 255), -8) + ($tStopColor.Blue() * 255)) ; RGB to Long
+			$avNewColorStops[$i][1] = Int(BitShift(($tStopColor.Red() * 255), -16) + BitShift(($tStopColor.Green() * 255), -8) + ($tStopColor.Blue() * 255)) ; RGB to Long
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
 
@@ -614,7 +614,7 @@ Func _LOWriter_ImageAreaTransparencyGradient(ByRef $oDoc, ByRef $oImage, $iType 
 
 	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
 		__LOWriter_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
-				($tStyleGradient.Angle() / 10), $tStyleGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.StartColor()), _
+				Int($tStyleGradient.Angle() / 10), $tStyleGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.StartColor()), _
 				__LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.EndColor())) ; Angle is set in thousands
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiTransparent)
@@ -647,7 +647,7 @@ Func _LOWriter_ImageAreaTransparencyGradient(ByRef $oDoc, ByRef $oImage, $iType 
 	If ($iAngle <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
-		$tStyleGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
+		$tStyleGradient.Angle = Int($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iTransitionStart <> Null) Then
@@ -723,7 +723,7 @@ Func _LOWriter_ImageAreaTransparencyGradient(ByRef $oDoc, ByRef $oImage, $iType 
 	$iError = ($iType = Null) ? ($iError) : (($oImage.FillTransparenceGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 1)))
 	$iError = ($iXCenter = Null) ? ($iError) : (($oImage.FillTransparenceGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 2)))
 	$iError = ($iYCenter = Null) ? ($iError) : (($oImage.FillTransparenceGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 4)))
-	$iError = ($iAngle = Null) ? ($iError) : ((($oImage.FillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 8)))
+	$iError = ($iAngle = Null) ? ($iError) : ((Int($oImage.FillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 8)))
 	$iError = ($iTransitionStart = Null) ? ($iError) : (($oImage.FillTransparenceGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 16)))
 	$iError = ($iStart = Null) ? ($iError) : (($oImage.FillTransparenceGradient.StartColor() = __LOWriter_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 32)))
 	$iError = ($iEnd = Null) ? ($iError) : (($oImage.FillTransparenceGradient.EndColor() = __LOWriter_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 64)))
@@ -1705,7 +1705,7 @@ Func _LOWriter_ImageModify(ByRef $oImage, $bFlipVert = Null, $bFlipHoriOnRight =
 
 	If __LOWriter_VarsAreNull($bFlipVert, $bFlipHoriOnRight, $bFlipHoriOnLeft, $nAngle) Then
 		__LOWriter_ArrayFill($avImage, $oImage.VertMirrored(), $oImage.HoriMirroredOnEvenPages(), $oImage.HoriMirroredOnOddPages(), _
-				($oImage.GraphicRotation()) / 10) ;/10 to match L.O. values.
+				($oImage.GraphicRotation()) / 10) ; /10 to match L.O. values.
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avImage)
 	EndIf
