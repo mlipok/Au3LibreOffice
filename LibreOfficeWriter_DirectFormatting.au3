@@ -717,12 +717,9 @@ EndFunc   ;==>_LOWriter_DirFrmtCharSpacing
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.ServiceManager" Object.
 ;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.frame.DispatchHelper" Object.
-;                  @Error 2 @Extended 3 Return 0 = Failed to create a cursor at the position of the View cursor.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to determine $oSelection's cursor type.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve document's Viewcursor.
-;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Text Object for the Viewcursor.
-;                  @Error 3 @Extended 4 Return 0 = Error retrieving Text Object for creating a ViewCursor Backup.
+;                  @Error 3 @Extended 2 Return 0 = Failed to backup Viewcursor's position.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Direct Formatting was successfully cleared.
 ; Author ........: donnyh13
@@ -737,7 +734,7 @@ Func _LOWriter_DirFrmtClear(ByRef $oDoc, ByRef $oSelection)
 	#forceref $oCOM_ErrorHandler
 
 	Local $aArray[0]
-	Local $oServiceManager, $oDispatcher, $oText, $oViewCursor, $oViewCursorBackup
+	Local $oServiceManager, $oDispatcher, $oBackupSelection
 	Local $iCursorType
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
@@ -756,24 +753,16 @@ Func _LOWriter_DirFrmtClear(ByRef $oDoc, ByRef $oSelection)
 
 	Switch $iCursorType
 		Case $LOW_CURTYPE_TEXT_CURSOR, $LOW_CURTYPE_PARAGRAPH, $LOW_CURTYPE_TEXT_PORTION
-			; Retrieve the ViewCursor.
-			$oViewCursor = $oDoc.CurrentController.getViewCursor()
-			If Not IsObj($oViewCursor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+			; Backup the ViewCursor location and selection.
+			$oBackupSelection = $oDoc.getCurrentSelection()
+			If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-			; Create a Text cursor at the current ViewCursor position to move the Viewcursor back to.
-			$oText = __LOWriter_CursorGetText($oDoc, $oViewCursor)
-			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-			If Not IsObj($oText) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
-
-			$oViewCursorBackup = $oText.createTextCursorByRange($oViewCursor)
-			If Not IsObj($oViewCursorBackup) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
-
-			$oViewCursor.gotoRange($oSelection, False)
+			$oDoc.CurrentController.Select($oSelection)
 
 			$oDispatcher.executeDispatch($oDoc.CurrentController(), ".uno:ResetAttributes", "", 0, $aArray)
 
 			; Restore the ViewCursor to its previous location.
-			$oViewCursor.gotoRange($oViewCursorBackup, False)
+			$oDoc.CurrentController.Select($oBackupSelection)
 
 		Case $LOW_CURTYPE_VIEW_CURSOR
 			$oDispatcher.executeDispatch($oDoc.CurrentController(), ".uno:ResetAttributes", "", 0, $aArray)

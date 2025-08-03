@@ -98,7 +98,7 @@
 ; _LOWriter_DocZoom
 ; ===============================================================================================================================
 
-; #FUNCTION# ====================================================================================================================
+;~ ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocBookmarkDelete
 ; Description ...: Delete a Bookmark.
 ; Syntax ........: _LOWriter_DocBookmarkDelete(ByRef $oDoc, ByRef $oBookmark)
@@ -638,13 +638,11 @@ EndFunc   ;==>_LOWriter_DocConnect
 ;                  @Error 1 @Extended 2 Return 0 = $oTable not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $sDelimiter not a String.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to create a backup of the ViewCursor's current location.
-;                  @Error 2 @Extended 2 Return 0 = Failed to create a Text Cursor in the first cell.
-;                  @Error 2 @Extended 3 Return 0 = Failed to create "com.sun.star.ServiceManager" Object.
-;                  @Error 2 @Extended 4 Return 0 = Failed to create "com.sun.star.frame.DispatchHelper" Object.
+;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.ServiceManager" Object.
+;                  @Error 2 @Extended 2 Return 0 = Failed to create "com.sun.star.frame.DispatchHelper" Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve array of CellNames.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve ViewCursor object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to create a backup of the ViewCursor's current location.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Table was successfully converted to text.
 ; Author ........: donnyh13
@@ -661,7 +659,7 @@ Func _LOWriter_DocConvertTableToText(ByRef $oDoc, ByRef $oTable, $sDelimiter = @
 
 	Local $aArgs[1]
 	Local $asCellNames
-	Local $oServiceManager, $oDispatcher, $oCellTextCursor, $oViewCursor, $oViewCursorBackup
+	Local $oServiceManager, $oDispatcher, $oSelection
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -672,33 +670,23 @@ Func _LOWriter_DocConvertTableToText(ByRef $oDoc, ByRef $oTable, $sDelimiter = @
 	$asCellNames = $oTable.getCellNames()
 	If Not IsArray($asCellNames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	; Retrieve the ViewCursor.
-	$oViewCursor = $oDoc.CurrentController.getViewCursor()
-	If Not IsObj($oViewCursor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	; Backup the ViewCursor location and selection.
+	$oSelection = $oDoc.getCurrentSelection()
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	; Create a Text cursor at the current ViewCursor position to move the Viewcursor back to.
-	$oViewCursorBackup = _LOWriter_DocCreateTextCursor($oDoc, False, True)
-	If Not IsObj($oViewCursorBackup) Then
-		$oViewCursorBackup = _LOWriter_DocCreateTextCursor($oDoc, False) ; If That Failed, create a Backup Cursor at the beginning of the document.
-		If Not IsObj($oViewCursorBackup) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-	EndIf
-
-	; Retrieve the first cell  in the table and create a text cursor in it to move the ViewCursor to.
-	$oCellTextCursor = $oTable.getCellByName($asCellNames[0]).Text.createTextCursor()
-	If Not IsObj($oCellTextCursor) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
-
-	$oViewCursor.gotoRange($oCellTextCursor, False)
+	; Select the Table.
+	$oDoc.CurrentController.Select($oTable)
 
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
-	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oDispatcher = $oServiceManager.createInstance("com.sun.star.frame.DispatchHelper")
-	If Not IsObj($oDispatcher) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+	If Not IsObj($oDispatcher) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	$oDispatcher.executeDispatch($oDoc.CurrentController(), ".uno:ConvertTableToText", "", 0, $aArgs)
 
 	; Restore the ViewCursor to its previous location.
-	$oViewCursor.gotoRange($oViewCursorBackup, False)
+	$oDoc.CurrentController.Select($oSelection)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_DocConvertTableToText
@@ -708,7 +696,7 @@ EndFunc   ;==>_LOWriter_DocConvertTableToText
 ; Description ...: Convert some selected text into a Table.
 ; Syntax ........: _LOWriter_DocConvertTextToTable(ByRef $oDoc, ByRef $oCursor[, $sDelimiter = @TAB[, $bHeader = False[, $iRepeatHeaderLines = 0[, $bBorder = False[, $bDontSplitTable = False]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions. Default is Null. See Remarks.
+;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions. See Remarks.
 ;                  $sDelimiter          - [optional] a string value. Default is @TAB. A character to the text into each column by, such as a Tab etc.
 ;                  $bHeader             - [optional] a boolean value. Default is False. If True, Formats the first row of the new table as a heading.
 ;                  $iRepeatHeaderLines  - [optional] an integer value. Default is 0. If greater than 0, then Repeats the first n rows as a header.
@@ -729,12 +717,12 @@ EndFunc   ;==>_LOWriter_DocConvertTableToText
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.ServiceManager" Object.
 ;                  @Error 2 @Extended 2 Return 0 = Failed to create "com.sun.star.frame.DispatchHelper" Object.
-;                  @Error 2 @Extended 3 Return 0 = Failed to create a backup of the ViewCursor's current location.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve TextTables Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to $oCursor's cursor type.
-;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve ViewCursor object.
-;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve new Table's Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve array of Table names.
+;                  @Error 3 @Extended 3 Return 0 = Failed to identify $oCursor's cursor type.
+;                  @Error 3 @Extended 4 Return 0 = Failed to backup ViewCursor's position.
+;                  @Error 3 @Extended 5 Return 0 = Failed to retrieve new Table's Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Text was successfully converted to a Table, returning the new Table's Object.
 ; Author ........: donnyh13
@@ -750,7 +738,7 @@ Func _LOWriter_DocConvertTextToTable(ByRef $oDoc, ByRef $oCursor, $sDelimiter = 
 
 	Local $asTables[0]
 	Local $atArgs[5]
-	Local $oServiceManager, $oDispatcher, $oViewCursor, $oViewCursorBackup, $oTables, $oTable
+	Local $oServiceManager, $oDispatcher, $oTables, $oTable, $oSelection
 	Local $iCursorType
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
@@ -764,15 +752,12 @@ Func _LOWriter_DocConvertTextToTable(ByRef $oDoc, ByRef $oCursor, $sDelimiter = 
 	$oTables = $oDoc.TextTables()
 	If Not IsObj($oTables) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	ReDim $asTables[$oTables.getCount()]
 	; Store all current Table Names.
-	For $i = 0 To $oTables.getCount() - 1
-		$asTables[$i] = $oTables.getByIndex($i).Name()
-		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))     ; Sleep every x cycles.
-	Next
+	$asTables = $oTables.getElementNames()
+	If Not IsArray($asTables) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$iCursorType = __LOWriter_Internal_CursorGetType($oCursor)
-	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	If ($iCursorType = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 	; If Cursor has no data selected, return error.
@@ -790,21 +775,17 @@ Func _LOWriter_DocConvertTextToTable(ByRef $oDoc, ByRef $oCursor, $sDelimiter = 
 	$atArgs[3] = __LOWriter_SetPropertyValue("WithBorder", $bBorder)
 	$atArgs[4] = __LOWriter_SetPropertyValue("DontSplitTable", $bDontSplitTable)
 
-	If ($iCursorType = $LOW_CURTYPE_TEXT_CURSOR) Then
-		; Retrieve the ViewCursor.
-		$oViewCursor = $oDoc.CurrentController.getViewCursor()
-		If Not IsObj($oViewCursor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If ($iCursorType = $LOW_CURTYPE_TEXT_CURSOR) Or ($iCursorType = $LOW_CURTYPE_PARAGRAPH) Then
+		; Backup the ViewCursor location and selection.
+		$oSelection = $oDoc.getCurrentSelection()
+		If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
-		; Create a Text cursor at the current ViewCursor position to move the Viewcursor back to.
-		$oViewCursorBackup = _LOWriter_DocCreateTextCursor($oDoc, False, True)
-		If Not IsObj($oViewCursorBackup) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
-
-		$oViewCursor.gotoRange($oCursor, False)
+		$oDoc.CurrentController.Select($oCursor)
 
 		$oDispatcher.executeDispatch($oDoc.CurrentController(), ".uno:ConvertTextToTable", "", 0, $atArgs)
 
 		; Restore the ViewCursor to its previous location.
-		$oViewCursor.gotoRange($oViewCursorBackup, False)
+		$oDoc.CurrentController.Select($oSelection)
 
 	Else
 		$oDispatcher.executeDispatch($oDoc.CurrentController(), ".uno:ConvertTextToTable", "", 0, $atArgs)
@@ -825,7 +806,7 @@ Func _LOWriter_DocConvertTextToTable(ByRef $oDoc, ByRef $oCursor, $sDelimiter = 
 		EndIf
 	Next
 
-	Return (IsObj($oTable)) ? (SetError($__LO_STATUS_SUCCESS, 0, $oTable)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0))
+	Return (IsObj($oTable)) ? (SetError($__LO_STATUS_SUCCESS, 0, $oTable)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0))
 EndFunc   ;==>_LOWriter_DocConvertTextToTable
 
 ; #FUNCTION# ====================================================================================================================
