@@ -1355,13 +1355,13 @@ Func __LOCalc_CellTextOrient(ByRef $oObj, $iRotate, $iReference, $bVerticalStack
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0
-	Local Const $iIsNotStacked = 0, $iIsStacked = 3
+	Local Const $__iIsNotStacked = 0, $__iIsStacked = 3
 	Local $avOrient[4]
 
 	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	If __LOCalc_VarsAreNull($iRotate, $iReference, $bVerticalStack, $bAsianLayout) Then
-		__LOCalc_ArrayFill($avOrient, ($oObj.RotateAngle() / 100), $oObj.RotateReference(), (($oObj.Orientation() = $iIsStacked) ? (True) : (False)), $oObj.AsianVerticalMode())
+		__LOCalc_ArrayFill($avOrient, Int($oObj.RotateAngle() / 100), $oObj.RotateReference(), (($oObj.Orientation() = $__iIsStacked) ? (True) : (False)), $oObj.AsianVerticalMode())
 		; Rotate Angle is in 100ths of degrees.
 		; When Vertical Stack is True, Orientation is set to 3, when false, it is set to 0.
 
@@ -1371,8 +1371,8 @@ Func __LOCalc_CellTextOrient(ByRef $oObj, $iRotate, $iReference, $bVerticalStack
 	If ($iRotate <> Null) Then
 		If Not __LOCalc_IntIsBetween($iRotate, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-		$oObj.RotateAngle = ($iRotate * 100) ; Rotate Angle is in 100ths of degrees.
-		$iError = ($oObj.RotateAngle = ($iRotate * 100)) ? ($iError) : (BitOR($iError, 1))
+		$oObj.RotateAngle = Int($iRotate * 100) ; Rotate Angle is in 100ths of degrees.
+		$iError = ($oObj.RotateAngle = Int($iRotate * 100)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iReference <> Null) Then
@@ -1388,12 +1388,12 @@ Func __LOCalc_CellTextOrient(ByRef $oObj, $iRotate, $iReference, $bVerticalStack
 		; According to Libre Office IDL Vertical Stack (Orientation set to 3) is only taken into account when RotateAngle is set to 0.
 		If ($bVerticalStack = True) Then
 			$oObj.RotateAngle = 0
-			$oObj.Orientation = $iIsStacked
-			$iError = ($oObj.Orientation() = $iIsStacked) ? ($iError) : (BitOR($iError, 4))
+			$oObj.Orientation = $__iIsStacked
+			$iError = ($oObj.Orientation() = $__iIsStacked) ? ($iError) : (BitOR($iError, 4))
 
 		Else
-			$oObj.Orientation = $iIsNotStacked
-			$iError = ($oObj.Orientation() = $iIsNotStacked) ? ($iError) : (BitOR($iError, 4))
+			$oObj.Orientation = $__iIsNotStacked
+			$iError = ($oObj.Orientation() = $__iIsNotStacked) ? ($iError) : (BitOR($iError, 4))
 		EndIf
 	EndIf
 

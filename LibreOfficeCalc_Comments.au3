@@ -271,7 +271,7 @@ Func _LOCalc_CommentAreaGradient(ByRef $oComment, $sGradientName = Null, $iType 
 
 	If __LOCalc_VarsAreNull($sGradientName, $iType, $iIncrement, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iFromColor, $iToColor, $iFromIntense, $iToIntense) Then
 		__LOCalc_ArrayFill($avGradient, $oAnnotationShape.FillGradientName(), $tStyleGradient.Style(), _
-				$oAnnotationShape.FillGradientStepCount(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), ($tStyleGradient.Angle() / 10), _
+				$oAnnotationShape.FillGradientStepCount(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), Int($tStyleGradient.Angle() / 10), _
 				$tStyleGradient.Border(), $tStyleGradient.StartColor(), $tStyleGradient.EndColor(), $tStyleGradient.StartIntensity(), _
 				$tStyleGradient.EndIntensity()) ; Angle is set in thousands
 
@@ -326,7 +326,7 @@ Func _LOCalc_CommentAreaGradient(ByRef $oComment, $sGradientName = Null, $iType 
 	If ($iAngle <> Null) Then
 		If Not __LOCalc_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
-		$tStyleGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
+		$tStyleGradient.Angle = Int($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iTransitionStart <> Null) Then
@@ -408,15 +408,15 @@ Func _LOCalc_CommentAreaGradient(ByRef $oComment, $sGradientName = Null, $iType 
 	$oAnnotationShape.FillGradient = $tStyleGradient
 
 	; Error checking
-	$iError = ($iType = Null) ? $iError : ($oAnnotationShape.FillGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 2))
-	$iError = ($iXCenter = Null) ? $iError : ($oAnnotationShape.FillGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 8))
-	$iError = ($iYCenter = Null) ? $iError : ($oAnnotationShape.FillGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 16))
-	$iError = ($iAngle = Null) ? $iError : (($oAnnotationShape.FillGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 32))
-	$iError = ($iTransitionStart = Null) ? $iError : ($oAnnotationShape.FillGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 64))
-	$iError = ($iFromColor = Null) ? $iError : ($oAnnotationShape.FillGradient.StartColor() = $iFromColor) ? ($iError) : (BitOR($iError, 128))
-	$iError = ($iToColor = Null) ? $iError : ($oAnnotationShape.FillGradient.EndColor() = $iToColor) ? ($iError) : (BitOR($iError, 256))
-	$iError = ($iFromIntense = Null) ? $iError : ($oAnnotationShape.FillGradient.StartIntensity() = $iFromIntense) ? ($iError) : (BitOR($iError, 512))
-	$iError = ($iToIntense = Null) ? $iError : ($oAnnotationShape.FillGradient.EndIntensity() = $iToIntense) ? ($iError) : (BitOR($iError, 1024))
+	$iError = ($iType = Null) ? ($iError) : (($oAnnotationShape.FillGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 2)))
+	$iError = ($iXCenter = Null) ? ($iError) : (($oAnnotationShape.FillGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 8)))
+	$iError = ($iYCenter = Null) ? ($iError) : (($oAnnotationShape.FillGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 16)))
+	$iError = ($iAngle = Null) ? ($iError) : ((Int($oAnnotationShape.FillGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 32)))
+	$iError = ($iTransitionStart = Null) ? ($iError) : (($oAnnotationShape.FillGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 64)))
+	$iError = ($iFromColor = Null) ? ($iError) : (($oAnnotationShape.FillGradient.StartColor() = $iFromColor) ? ($iError) : (BitOR($iError, 128)))
+	$iError = ($iToColor = Null) ? ($iError) : (($oAnnotationShape.FillGradient.EndColor() = $iToColor) ? ($iError) : (BitOR($iError, 256)))
+	$iError = ($iFromIntense = Null) ? ($iError) : (($oAnnotationShape.FillGradient.StartIntensity() = $iFromIntense) ? ($iError) : (BitOR($iError, 512)))
+	$iError = ($iToIntense = Null) ? ($iError) : (($oAnnotationShape.FillGradient.EndIntensity() = $iToIntense) ? ($iError) : (BitOR($iError, 1024)))
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOCalc_CommentAreaGradient
@@ -492,7 +492,7 @@ Func _LOCalc_CommentAreaGradientMulticolor(ByRef $oComment, $avColorStops = Null
 			$tStopColor = $atColorStops[$i].StopColor()
 			If Not IsObj($tStopColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
-			$avNewColorStops[$i][1] = (BitShift(($tStopColor.Red() * 255), -16) + BitShift(($tStopColor.Green() * 255), -8) + ($tStopColor.Blue() * 255)) ; RGB to Long
+			$avNewColorStops[$i][1] = Int(BitShift(($tStopColor.Red() * 255), -16) + BitShift(($tStopColor.Green() * 255), -8) + ($tStopColor.Blue() * 255)) ; RGB to Long
 			Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
 
@@ -788,7 +788,7 @@ Func _LOCalc_CommentAreaTransparencyGradient(ByRef $oDoc, ByRef $oComment, $iTyp
 
 	If __LOCalc_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
 		__LOCalc_ArrayFill($aiTransparent, $tGradient.Style(), $tGradient.XOffset(), $tGradient.YOffset(), _
-				($tGradient.Angle() / 10), $tGradient.Border(), __LOCalc_TransparencyGradientConvert(Null, $tGradient.StartColor()), _
+				Int($tGradient.Angle() / 10), $tGradient.Border(), __LOCalc_TransparencyGradientConvert(Null, $tGradient.StartColor()), _
 				__LOCalc_TransparencyGradientConvert(Null, $tGradient.EndColor())) ; Angle is set in thousands
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiTransparent)
@@ -821,7 +821,7 @@ Func _LOCalc_CommentAreaTransparencyGradient(ByRef $oDoc, ByRef $oComment, $iTyp
 	If ($iAngle <> Null) Then
 		If Not __LOCalc_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
-		$tGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
+		$tGradient.Angle = Int($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iTransitionStart <> Null) Then
@@ -897,7 +897,7 @@ Func _LOCalc_CommentAreaTransparencyGradient(ByRef $oDoc, ByRef $oComment, $iTyp
 	$iError = ($iType = Null) ? ($iError) : (($oAnnotationShape.FillTransparenceGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 1)))
 	$iError = ($iXCenter = Null) ? ($iError) : (($oAnnotationShape.FillTransparenceGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 2)))
 	$iError = ($iYCenter = Null) ? ($iError) : (($oAnnotationShape.FillTransparenceGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 4)))
-	$iError = ($iAngle = Null) ? ($iError) : ((($oAnnotationShape.FillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 8)))
+	$iError = ($iAngle = Null) ? ($iError) : ((Int($oAnnotationShape.FillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 8)))
 	$iError = ($iTransitionStart = Null) ? ($iError) : (($oAnnotationShape.FillTransparenceGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 16)))
 	$iError = ($iStart = Null) ? ($iError) : (($oAnnotationShape.FillTransparenceGradient.StartColor() = __LOCalc_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 32)))
 	$iError = ($iEnd = Null) ? ($iError) : (($oAnnotationShape.FillTransparenceGradient.EndColor() = __LOCalc_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 64)))
