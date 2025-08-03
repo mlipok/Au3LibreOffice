@@ -181,9 +181,9 @@ Func _LOBase_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $iCM
 			Return SetError($__LO_STATUS_SUCCESS, 2, $aiReturn)
 
 		Case IsInt($iHSB) ; Long TO HSB
-			$nRed = (Mod(($iHSB / 65536), 256)) / 255
-			$nGreen = (Mod(($iHSB / 256), 256)) / 255
-			$nBlue = (Mod($iHSB, 256)) / 255
+			$nRed = (Mod(($iHSB / 65536), 256) / 255)
+			$nGreen = (Mod(($iHSB / 256), 256) / 255)
+			$nBlue = (Mod($iHSB, 256) / 255)
 
 			; get Max RGB Value
 			$nResult = ($nRed > $nGreen) ? ($nRed) : ($nGreen)
