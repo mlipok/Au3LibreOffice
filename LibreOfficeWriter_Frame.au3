@@ -265,8 +265,7 @@ Func _LOWriter_FrameAreaGradient(ByRef $oDoc, ByRef $oFrame, $sGradientName = Nu
 	$tStyleGradient = $oFrame.FillGradient()
 	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sGradientName, $iType, $iIncrement, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iFromColor, $iToColor, _
-			$iFromIntense, $iToIntense) Then
+	If __LOWriter_VarsAreNull($sGradientName, $iType, $iIncrement, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iFromColor, $iToColor, $iFromIntense, $iToIntense) Then
 		__LOWriter_ArrayFill($avGradient, $oFrame.FillGradientName(), $tStyleGradient.Style(), _
 				$oFrame.FillGradientStepCount(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), Int($tStyleGradient.Angle() / 10), _
 				$tStyleGradient.Border(), $tStyleGradient.StartColor(), $tStyleGradient.EndColor(), $tStyleGradient.StartIntensity(), _
@@ -2405,8 +2404,7 @@ Func _LOWriter_FrameStyleAreaGradient(ByRef $oDoc, ByRef $oFrameStyle, $sGradien
 	$tStyleGradient = $oFrameStyle.FillGradient()
 	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sGradientName, $iType, $iIncrement, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iFromColor, $iToColor, _
-			$iFromIntense, $iToIntense) Then
+	If __LOWriter_VarsAreNull($sGradientName, $iType, $iIncrement, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iFromColor, $iToColor, $iFromIntense, $iToIntense) Then
 		__LOWriter_ArrayFill($avGradient, $oFrameStyle.FillGradientName(), $tStyleGradient.Style(), _
 				$oFrameStyle.FillGradientStepCount(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), Int($tStyleGradient.Angle() / 10), _
 				$tStyleGradient.Border(), $tStyleGradient.StartColor(), $tStyleGradient.EndColor(), $tStyleGradient.StartIntensity(), _
@@ -4339,8 +4337,7 @@ Func _LOWriter_FrameStyleTypePosition(ByRef $oFrameStyle, $iHorAlign = Null, $iH
 	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOWriter_VarsAreNull($iHorAlign, $iHorPos, $iHorRelation, $bMirror, $iVertAlign, $iVertPos, $iVertRelation, $bKeepInside, _
-			$iAnchorPos) Then
+	If __LOWriter_VarsAreNull($iHorAlign, $iHorPos, $iHorRelation, $bMirror, $iVertAlign, $iVertPos, $iVertRelation, $bKeepInside, $iAnchorPos) Then
 		__LOWriter_ArrayFill($avPosition, $oFrameStyle.HoriOrient(), $oFrameStyle.HoriOrientPosition(), $oFrameStyle.HoriOrientRelation(), _
 				$oFrameStyle.PageToggle(), $oFrameStyle.VertOrient(), $oFrameStyle.VertOrientPosition(), $oFrameStyle.VertOrientRelation(), _
 				$oFrameStyle.IsFollowingTextFlow(), $oFrameStyle.AnchorType())
@@ -4545,8 +4542,7 @@ Func _LOWriter_FrameStyleTypeSize(ByRef $oDoc, ByRef $oFrameStyle, $iWidth = Nul
 	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-	If __LOWriter_VarsAreNull($iWidth, $iRelativeWidth, $iWidthRelativeTo, $bAutoWidth, $iHeight, $iRelativeHeight, $iHeightRelativeTo, _
-			$bAutoHeight, $bKeepRatio) Then
+	If __LOWriter_VarsAreNull($iWidth, $iRelativeWidth, $iWidthRelativeTo, $bAutoWidth, $iHeight, $iRelativeHeight, $iHeightRelativeTo, $bAutoHeight, $bKeepRatio) Then
 		If __LOWriter_VersionCheck(4.3) Then
 			__LOWriter_ArrayFill($avSize, $oFrameStyle.Width(), $oFrameStyle.RelativeWidth(), $oFrameStyle.RelativeWidthRelation(), _
 					($oFrameStyle.WidthType() = $iCONST_AutoHW_ON) ? (True) : (False), $oFrameStyle.Height(), $oFrameStyle.RelativeHeight(), _
@@ -4946,8 +4942,7 @@ Func _LOWriter_FrameTypePosition(ByRef $oFrame, $iHorAlign = Null, $iHorPos = Nu
 
 	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($iHorAlign, $iHorPos, $iHorRelation, $bMirror, $iVertAlign, $iVertPos, $iVertRelation, $bKeepInside, _
-			$iAnchorPos) Then
+	If __LOWriter_VarsAreNull($iHorAlign, $iHorPos, $iHorRelation, $bMirror, $iVertAlign, $iVertPos, $iVertRelation, $bKeepInside, $iAnchorPos) Then
 		__LOWriter_ArrayFill($avPosition, $oFrame.HoriOrient(), $oFrame.HoriOrientPosition(), $oFrame.HoriOrientRelation(), _
 				$oFrame.PageToggle(), $oFrame.VertOrient(), $oFrame.VertOrientPosition(), $oFrame.VertOrientRelation(), _
 				$oFrame.IsFollowingTextFlow(), $oFrame.AnchorType())
@@ -5149,8 +5144,7 @@ Func _LOWriter_FrameTypeSize(ByRef $oDoc, ByRef $oFrame, $iWidth = Null, $iRelat
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOWriter_VarsAreNull($iWidth, $iRelativeWidth, $iWidthRelativeTo, $bAutoWidth, $iHeight, $iRelativeHeight, $iHeightRelativeTo, _
-			$bAutoHeight, $bKeepRatio) Then
+	If __LOWriter_VarsAreNull($iWidth, $iRelativeWidth, $iWidthRelativeTo, $bAutoWidth, $iHeight, $iRelativeHeight, $iHeightRelativeTo, $bAutoHeight, $bKeepRatio) Then
 		If __LOWriter_VersionCheck(4.3) Then
 			__LOWriter_ArrayFill($avSize, $oFrame.Width(), $oFrame.RelativeWidth(), $oFrame.RelativeWidthRelation(), _
 					($oFrame.WidthType() = $iCONST_AutoHW_ON) ? (True) : (False), $oFrame.Height(), $oFrame.RelativeHeight(), _

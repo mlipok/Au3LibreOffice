@@ -241,8 +241,7 @@ Func _LOWriter_ImageAreaGradient(ByRef $oDoc, ByRef $oImage, $sGradientName = Nu
 	$tStyleGradient = $oImage.FillGradient()
 	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sGradientName, $iType, $iIncrement, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iFromColor, $iToColor, _
-			$iFromIntense, $iToIntense) Then
+	If __LOWriter_VarsAreNull($sGradientName, $iType, $iIncrement, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iFromColor, $iToColor, $iFromIntense, $iToIntense) Then
 		__LOWriter_ArrayFill($avGradient, $oImage.FillGradientName(), $tStyleGradient.Style(), _
 				$oImage.FillGradientStepCount(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), Int($tStyleGradient.Angle() / 10), _
 				$tStyleGradient.Border(), $tStyleGradient.StartColor(), $tStyleGradient.EndColor(), $tStyleGradient.StartIntensity(), _
@@ -2335,8 +2334,7 @@ Func _LOWriter_ImageTypePosition(ByRef $oImage, $iHorAlign = Null, $iHorPos = Nu
 
 	If Not IsObj($oImage) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($iHorAlign, $iHorPos, $iHorRelation, $bMirror, $iVertAlign, $iVertPos, $iVertRelation, $bKeepInside, _
-			$iAnchorPos) Then
+	If __LOWriter_VarsAreNull($iHorAlign, $iHorPos, $iHorRelation, $bMirror, $iVertAlign, $iVertPos, $iVertRelation, $bKeepInside, $iAnchorPos) Then
 		__LOWriter_ArrayFill($avPosition, $oImage.HoriOrient(), $oImage.HoriOrientPosition(), $oImage.HoriOrientRelation(), _
 				$oImage.PageToggle(), $oImage.VertOrient(), $oImage.VertOrientPosition(), $oImage.VertOrientRelation(), _
 				$oImage.IsFollowingTextFlow(), $oImage.AnchorType())
