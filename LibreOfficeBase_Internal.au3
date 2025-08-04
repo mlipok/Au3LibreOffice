@@ -844,13 +844,13 @@ EndFunc   ;==>__LOBase_SetPropertyValue
 ; Description ...: For converting measurement units.
 ; Syntax ........: __LOBase_UnitConvert($nValue, $iReturnType)
 ; Parameters ....: $nValue              - a general number value. The Number to be converted.
-;                  $iReturnType         - a Integer value. Determines conversion type. See Constants, $__LOCONST_CONVERT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iReturnType         - a Integer value. Determines conversion type. See Constants, $__LOCONST_CONVERT_* as defined in LibreOffice_Constants.au3.
 ; Return values .: Success: Integer or Number.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $nValue is not a Number.
 ;                  @Error 1 @Extended 2 Return 0 = $iReturnType is not a Integer.
-;                  @Error 1 @Extended 3 Return 0 = $iReturnType does not match constants, See Constants, $__LOCONST_CONVERT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $iReturnType does not match constants, See Constants, $__LOCONST_CONVERT_* as defined in LibreOffice_Constants.au3.
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return Number = Returns Number converted from TWIPS to Centimeters.
 ;                  @Error 0 @Extended 2 Return Number = Returns Number converted from TWIPS to Inches.
