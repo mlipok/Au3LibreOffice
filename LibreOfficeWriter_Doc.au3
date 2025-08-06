@@ -2375,11 +2375,9 @@ Func _LOWriter_DocGetPath(ByRef $oDoc, $bReturnLibreURL = False)
 	If Not IsBool($bReturnLibreURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not $oDoc.hasLocation() Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-	If ($bReturnLibreURL = True) Then
-		$sPath = $oDoc.URL()
+	$sPath = $oDoc.URL()
 
-	Else
-		$sPath = $oDoc.URL()
+	If Not $bReturnLibreURL Then
 		$sPath = _LOWriter_PathConvert($sPath, $LOW_PATHCONV_PCPATH_RETURN)
 		If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	EndIf
