@@ -4395,7 +4395,7 @@ EndFunc   ;==>_LOWriter_DocSelectionGet
 ; Name ..........: _LOWriter_DocSelectionSet
 ; Description ...: Set the current selection for the Document.
 ; Syntax ........: _LOWriter_DocSelectionSet(ByRef $oDoc, ByRef $oObj)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oObj                - [in/out] an object. A selectable object. A Text Cursor with text selected, A ViewCursor with Text Selected, a Table Cursor with cells selected, a Shape or Frame Object, etc.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
