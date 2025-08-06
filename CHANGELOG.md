@@ -563,6 +563,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Several Cell or Cell range functions that should support Column/Rows would not work with them.
 - LibreOfficeCalc_Sheet.au3 was missing an Include file.
 - Fix _LOCalc_DocViewWindowSettings, return values in wrong order. Thanks to user JALucena. <https://www.autoitscript.com/forum/topic/210514-libreoffice-udf-help-and-support/page/2/#findComment-1543326>
+- `_LOCalc_DocCreate` not finding a blank open document to connect to, if available, due to reversed logical operator, and non-existent method.
 
 ### Changed
 

@@ -436,7 +436,7 @@ Func _LOCalc_DocCreate($bForceNew = True, $bHidden = False)
 		While $oEnumDoc.hasMoreElements()
 			$oDoc = $oEnumDoc.nextElement()
 			If $oDoc.supportsService($sServiceName) _
-					And Not ($oDoc.hasLocation() And $oDoc.isReadOnly()) And ($oDoc.WordCount() = 0) Then
+					And Not ($oDoc.hasLocation() And Not $oDoc.isReadOnly()) And Not ($oDoc.isModified() = 0) Then
 				$oDoc.CurrentController.Frame.ContainerWindow.Visible = ($bHidden) ? (False) : (True) ; opposite value of $bHidden.
 				$iError = ($oDoc.CurrentController.Frame.isHidden() = $bHidden) ? ($iError) : (BitOR($iError, 1))
 
