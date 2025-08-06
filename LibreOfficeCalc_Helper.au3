@@ -1630,14 +1630,14 @@ EndFunc   ;==>_LOCalc_GradientMulticolorModify
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOCalc_PathConvert($sFilePath, $iReturnMode = $LOC_PATHCONV_AUTO_RETURN)
-	Local Const $STR_STRIPLEADING = 1
+	Local Const $__STR_STRIPLEADING = 1
 	Local $asURLReplace[9][2] = [["%", "%25"], [" ", "%20"], ["\", "/"], [";", "%3B"], ["#", "%23"], ["^", "%5E"], ["{", "%7B"], ["}", "%7D"], ["`", "%60"]]
 	Local $iPathSearch, $iFileSearch, $iPartialPCPath, $iPartialFilePath
 
 	If Not IsString($sFilePath) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not __LOCalc_IntIsBetween($iReturnMode, $LOC_PATHCONV_AUTO_RETURN, $LOC_PATHCONV_PCPATH_RETURN) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	$sFilePath = StringStripWS($sFilePath, $STR_STRIPLEADING)
+	$sFilePath = StringStripWS($sFilePath, $__STR_STRIPLEADING)
 
 	$iPathSearch = StringRegExp($sFilePath, "[A-Z]\:\\") ; Search For a Computer Path, as in C:\ etc.
 	$iPartialPCPath = StringInStr($sFilePath, "\") ; Search for partial computer Path containing a backslash.

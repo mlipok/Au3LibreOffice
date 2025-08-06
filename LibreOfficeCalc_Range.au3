@@ -2214,7 +2214,7 @@ Func _LOCalc_RangeNamedAdd(ByRef $oObj, $vRange, $sName, $iOptions = $LOC_NAMED_
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local Const $__LOC_STR_STRIPLEADING = 1, $__LOC_STR_STRIPTRAILING = 2
+	Local Const $__STR_STRIPLEADING = 1, $__STR_STRIPTRAILING = 2
 	Local $oNamedRanges, $oNamedRange
 	Local $sRange
 	Local $tCellAddr
@@ -2223,7 +2223,7 @@ Func _LOCalc_RangeNamedAdd(ByRef $oObj, $vRange, $sName, $iOptions = $LOC_NAMED_
 	If Not IsObj($vRange) And Not IsString($vRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-	$sName = StringStripWS($sName, ($__LOC_STR_STRIPLEADING + $__LOC_STR_STRIPTRAILING))
+	$sName = StringStripWS($sName, ($__STR_STRIPLEADING + $__STR_STRIPTRAILING))
 	If StringRegExp($sName, "[^a-zA-Z0-9_]") Or StringRegExp($sName, "^[^a-zA-Z_]") Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not __LOCalc_IntIsBetween($iOptions, $LOC_NAMED_RANGE_OPT_NONE, 15) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; 15 = all flags added together.
 	If IsString($vRange) And Not IsObj($oRefCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
@@ -2586,7 +2586,7 @@ Func _LOCalc_RangeNamedModify(ByRef $oDoc, ByRef $oNamedRange, $vRange = Null, $
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local Const $__LOC_STR_STRIPLEADING = 1, $__LOC_STR_STRIPTRAILING = 2
+	Local Const $__STR_STRIPLEADING = 1, $__STR_STRIPTRAILING = 2
 	Local $avNamedRange[4]
 	Local $oObj
 	Local $iError = 0
@@ -2628,7 +2628,7 @@ Func _LOCalc_RangeNamedModify(ByRef $oDoc, ByRef $oNamedRange, $vRange = Null, $
 	If ($sName <> Null) Then
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-		$sName = StringStripWS($sName, ($__LOC_STR_STRIPLEADING + $__LOC_STR_STRIPTRAILING))
+		$sName = StringStripWS($sName, ($__STR_STRIPLEADING + $__STR_STRIPTRAILING))
 		If StringRegExp($sName, "[^a-zA-Z0-9_]") Or StringRegExp($sName, "^[^a-zA-Z_]") Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oObj = __LOCalc_NamedRangeGetScopeObj($oDoc, $oNamedRange.Name(), $oNamedRange.TokenIndex(), $oNamedRange.Content())

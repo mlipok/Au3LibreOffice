@@ -271,7 +271,7 @@ Func _LOCalc_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iCount = 0
-	Local Const $STR_STRIPLEADING = 1
+	Local Const $__STR_STRIPLEADING = 1
 	Local $aoConnectAll[1], $aoPartNameSearch[1]
 	Local $oEnumDoc, $oDoc, $oServiceManager, $oDesktop
 	Local $sServiceName = "com.sun.star.sheet.SpreadsheetDocument"
@@ -314,7 +314,7 @@ Func _LOCalc_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 		Return SetError($__LO_STATUS_SUCCESS, $iCount, $aoConnectAll)
 	EndIf
 
-	$sFile = StringStripWS($sFile, $STR_STRIPLEADING)
+	$sFile = StringStripWS($sFile, $__STR_STRIPLEADING)
 	If StringInStr($sFile, "\") Then $sFile = _LOCalc_PathConvert($sFile, $LOC_PATHCONV_OFFICE_RETURN) ; Convert to L.O File path.
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
@@ -1117,7 +1117,7 @@ Func _LOCalc_DocPrint(ByRef $oDoc, $iCopies = 1, $bCollate = True, $vPages = "AL
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local Const $STR_STRIPLEADING = 1, $STR_STRIPTRAILING = 2, $STR_STRIPALL = 8
+	Local Const $__STR_STRIPLEADING = 1, $__STR_STRIPTRAILING = 2, $__STR_STRIPALL = 8
 	Local $avPrintOpt[4], $asSetPrinterOpt[1]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
@@ -1125,7 +1125,7 @@ Func _LOCalc_DocPrint(ByRef $oDoc, $iCopies = 1, $bCollate = True, $vPages = "AL
 	If Not IsBool($bCollate) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsInt($vPages) And Not IsString($vPages) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-	$vPages = (IsString($vPages)) ? (StringStripWS($vPages, $STR_STRIPALL)) : ($vPages)
+	$vPages = (IsString($vPages)) ? (StringStripWS($vPages, $__STR_STRIPALL)) : ($vPages)
 	If IsString($vPages) And Not ($vPages = "ALL") Then
 		If StringRegExp($vPages, "[[:alpha:]]|[\.]") Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	EndIf
@@ -1133,10 +1133,10 @@ Func _LOCalc_DocPrint(ByRef $oDoc, $iCopies = 1, $bCollate = True, $vPages = "AL
 	If Not __LOCalc_IntIsBetween($iDuplexMode, $LOC_DUPLEX_OFF, $LOC_DUPLEX_SHORT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 	If Not IsString($sPrinter) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
-	$sPrinter = StringStripWS(StringStripWS($sPrinter, $STR_STRIPTRAILING), $STR_STRIPLEADING)
+	$sPrinter = StringStripWS(StringStripWS($sPrinter, $__STR_STRIPTRAILING), $__STR_STRIPLEADING)
 	If Not IsString($sFilePathName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
-	$sFilePathName = StringStripWS(StringStripWS($sFilePathName, $STR_STRIPTRAILING), $STR_STRIPLEADING)
+	$sFilePathName = StringStripWS(StringStripWS($sFilePathName, $__STR_STRIPTRAILING), $__STR_STRIPLEADING)
 	If $sPrinter <> "" Then
 		$asSetPrinterOpt[0] = __LOCalc_SetPropertyValue("Name", $sPrinter)
 		If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0)
