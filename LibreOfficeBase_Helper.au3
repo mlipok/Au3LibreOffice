@@ -308,7 +308,7 @@ EndFunc   ;==>_LOBase_ConvertColorFromLong
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOBase_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $vVal4 = Null) ; RGB = Int, CMYK = Int, HSB = String, Hex = String.
-	Local Const $STR_STRIPALL = 8
+	Local Const $__STR_STRIPALL = 8
 	Local $iRed, $iGreen, $iBlue, $iLong, $iHue, $iSaturation, $iBrightness
 	Local $dHex
 	Local $nMaxRGB, $nMinRGB, $nChroma, $nHuePre, $nCyan, $nMagenta, $nYellow, $nBlack
@@ -319,7 +319,7 @@ Func _LOBase_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $vV
 		Case 1 ; Hex
 			If Not IsString($vVal1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; not a string
 
-			$vVal1 = StringStripWS($vVal1, $STR_STRIPALL)
+			$vVal1 = StringStripWS($vVal1, $__STR_STRIPALL)
 			$dHex = $vVal1
 
 			; From Hex to RGB
@@ -352,9 +352,9 @@ Func _LOBase_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $vV
 
 			ElseIf IsString($vVal1) And IsString($vVal2) And IsString($vVal3) Then ; Hue Saturation and Brightness (HSB)
 				; HSB to RGB
-				$vVal1 = StringStripWS($vVal1, $STR_STRIPALL)
-				$vVal2 = StringStripWS($vVal2, $STR_STRIPALL)
-				$vVal3 = StringStripWS($vVal3, $STR_STRIPALL) ; Strip WS so I can check string length in HSB conversion.
+				$vVal1 = StringStripWS($vVal1, $__STR_STRIPALL)
+				$vVal2 = StringStripWS($vVal2, $__STR_STRIPALL)
+				$vVal3 = StringStripWS($vVal3, $__STR_STRIPALL) ; Strip WS so I can check string length in HSB conversion.
 
 				$iHue = Number($vVal1)
 				If (StringLen($vVal1)) <> (StringLen($iHue)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; String contained more than just digits
@@ -1637,14 +1637,14 @@ EndFunc   ;==>_LOBase_FormatKeysGetList
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOBase_PathConvert($sFilePath, $iReturnMode = $LOB_PATHCONV_AUTO_RETURN)
-	Local Const $STR_STRIPLEADING = 1
+	Local Const $__STR_STRIPLEADING = 1
 	Local $asURLReplace[9][2] = [["%", "%25"], [" ", "%20"], ["\", "/"], [";", "%3B"], ["#", "%23"], ["^", "%5E"], ["{", "%7B"], ["}", "%7D"], ["`", "%60"]]
 	Local $iPathSearch, $iFileSearch, $iPartialPCPath, $iPartialFilePath
 
 	If Not IsString($sFilePath) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not __LOBase_IntIsBetween($iReturnMode, $LOB_PATHCONV_AUTO_RETURN, $LOB_PATHCONV_PCPATH_RETURN) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	$sFilePath = StringStripWS($sFilePath, $STR_STRIPLEADING)
+	$sFilePath = StringStripWS($sFilePath, $__STR_STRIPLEADING)
 
 	$iPathSearch = StringRegExp($sFilePath, "[A-Z]\:\\") ; Search For a Computer Path, as in C:\ etc.
 	$iPartialPCPath = StringInStr($sFilePath, "\") ; Search for partial computer Path containing a backslash.

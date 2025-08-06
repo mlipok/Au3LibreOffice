@@ -172,7 +172,7 @@ Func _LOBase_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iCount = 0
-	Local Const $STR_STRIPLEADING = 1
+	Local Const $__STR_STRIPLEADING = 1
 	Local $aoConnectAll[1], $aoPartNameSearch[1]
 	Local $oEnumDoc, $oDoc, $oServiceManager, $oDesktop
 	Local $sServiceName = "com.sun.star.sdb.OfficeDatabaseDocument"
@@ -215,7 +215,7 @@ Func _LOBase_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 		Return SetError($__LO_STATUS_SUCCESS, $iCount, $aoConnectAll)
 	EndIf
 
-	$sFile = StringStripWS($sFile, $STR_STRIPLEADING)
+	$sFile = StringStripWS($sFile, $__STR_STRIPLEADING)
 	If StringInStr($sFile, "\") Then $sFile = _LOBase_PathConvert($sFile, $LOB_PATHCONV_OFFICE_RETURN) ; Convert to L.O File path.
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
