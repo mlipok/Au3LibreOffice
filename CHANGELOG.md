@@ -977,6 +977,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_FieldDateTimeModify
 	- _LOWriter_FieldFileNameModify
 - Add missing parameter to VarsAreNull in `_LOWriter_DocFormSettings`.
+- `_LOWriter_DocCreate` not finding a blank open document to connect to, if available, due to reversed logical operator.
 
 ### Removed
 
