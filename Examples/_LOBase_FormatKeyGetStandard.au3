@@ -42,7 +42,7 @@ Func Example()
 	$oReportDoc = _LOBase_ReportCreate($oConnection, "rptAutoIt_Report", True)
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to create a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Query the standard Format Key for the Format Key type of $LOW_FORMAT_KEYS_DURATION
+	; Query the standard Format Key for the Format Key type of $LOB_FORMAT_KEYS_DURATION
 	$iFormatKey = _LOBase_FormatKeyGetStandard($oReportDoc, $LOB_FORMAT_KEYS_DURATION)
 	If @error Then _ERROR($oDoc, $oReportDoc, "Failed to retrieve the standard format key. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 

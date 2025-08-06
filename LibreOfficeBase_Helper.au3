@@ -872,15 +872,15 @@ EndFunc   ;==>_LOBase_DateStructModify
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $sFontName not a String.
 ;                  @Error 1 @Extended 2 Return 0 = Font called in $sFontName not found.
-;                  @Error 1 @Extended 3 Return 0 = $iWeight not an Integer, less than 0 or greater than 200. See Constants $LOB_WEIGHT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 4 Return 0 = $iSlant not an Integer, less than 0 or greater than 5. See Constants $LOB_POSTURE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $iWeight not an Integer, less than 0 or greater than 200. See Constants $LOB_WEIGHT_* as defined in LibreOfficeBase_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iSlant not an Integer, less than 0 or greater than 5. See Constants $LOB_POSTURE_* as defined in LibreOfficeBase_Constants.au3.
 ;                  @Error 1 @Extended 5 Return 0 = $nSize not a number.
 ;                  @Error 1 @Extended 6 Return 0 = $iColor not an Integer, less than -1 or greater than 16777215.
-;                  @Error 1 @Extended 7 Return 0 = $iUnderlineStyle not an Integer, less than 0 or greater than 18. See Constants $LOB_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 7 Return 0 = $iUnderlineStyle not an Integer, less than 0 or greater than 18. See Constants $LOB_UNDERLINE_* as defined in LibreOfficeBase_Constants.au3.
 ;                  @Error 1 @Extended 8 Return 0 = $iUnderlineColor not an Integer, less than -1 or greater than 16777215.
-;                  @Error 1 @Extended 9 Return 0 = $iStrikelineStyle not an Integer, less than 0 or greater than 6. See Constants $LOB_STRIKEOUT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 9 Return 0 = $iStrikelineStyle not an Integer, less than 0 or greater than 6. See Constants $LOB_STRIKEOUT_* as defined in LibreOfficeBase_Constants.au3.
 ;                  @Error 1 @Extended 10 Return 0 = $bIndividualWords not a Boolean.
-;                  @Error 1 @Extended 11 Return 0 = $iRelief not an Integer, less than 0 or greater than 2. See Constants $LOB_RELIEF_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 11 Return 0 = $iRelief not an Integer, less than 0 or greater than 2. See Constants $LOB_RELIEF_* as defined in LibreOfficeBase_Constants.au3.
 ;                  @Error 1 @Extended 12 Return 0 = $iCase not an Integer, less than 0 or greater than 4. See Constants, $LOB_CASEMAP_* as defined in LibreOfficeBase_Constants.au3.
 ;                  @Error 1 @Extended 13 Return 0 = $bHidden not a Boolean.
 ;                  @Error 1 @Extended 14 Return 0 = $bOutline not a Boolean.
@@ -940,15 +940,15 @@ EndFunc   ;==>_LOBase_FontDescCreate
 ; Syntax ........: _LOBase_FontDescEdit(ByRef $mFontDesc[, $sFontName = Null[, $iWeight = Null[, $iSlant = Null[, $nSize = Null[, $iColor = Null[, $iUnderlineStyle = Null[, $iUnderlineColor = Null[, $iStrikelineStyle = Null[, $bIndividualWords = Null[, $iRelief = Null[, $iCase = Null[, $bHidden = Null[, $bOutline = Null[, $bShadow = Null]]]]]]]]]]]]]])
 ; Parameters ....: $mFontDesc           - [in/out] a map. A Font descriptor Map as returned from a _LOBase_FontDescCreate, or control property return function.
 ;                  $sFontName           - [optional] a string value. Default is Null. The Font name.
-;                  $iWeight             - [optional] an integer value (0-200). Default is Null. The Font weight. See Constants $LOB_WEIGHT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iSlant              - [optional] an integer value (0-5). Default is Null. The Font italic setting. See Constants $LOB_POSTURE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iWeight             - [optional] an integer value (0-200). Default is Null. The Font weight. See Constants $LOB_WEIGHT_* as defined in LibreOfficeBase_Constants.au3.
+;                  $iSlant              - [optional] an integer value (0-5). Default is Null. The Font italic setting. See Constants $LOB_POSTURE_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $nSize               - [optional] a general number value. Default is Null. The Font size.
-;                  $iColor              - [optional] an integer value (-1-16777215). Default is Null. The Font Color in Long Integer format, can be a custom value, or one of the constants, $LOB_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOB_COLOR_OFF(-1) for Auto color.
-;                  $iUnderlineStyle     - [optional] an integer value (0-18). Default is Null. The Font underline Style. See Constants $LOB_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iColor              - [optional] an integer value (-1-16777215). Default is Null. The Font Color in Long Integer format, can be a custom value, or one of the constants, $LOB_COLOR_* as defined in LibreOfficeBase_Constants.au3. Set to $LOB_COLOR_OFF(-1) for Auto color.
+;                  $iUnderlineStyle     - [optional] an integer value (0-18). Default is Null. The Font underline Style. See Constants $LOB_UNDERLINE_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $iUnderlineColor     - [optional] an integer value (-1-16777215). Default is Null.
-;                  $iStrikelineStyle    - [optional] an integer value (0-6). Default is Null. The Strikeout line style. See Constants $LOB_STRIKEOUT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iStrikelineStyle    - [optional] an integer value (0-6). Default is Null. The Strikeout line style. See Constants $LOB_STRIKEOUT_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $bIndividualWords    - [optional] a boolean value. Default is Null. If True, only individual words are underlined.
-;                  $iRelief             - [optional] an integer value (0-2). Default is Null. The Font relief style. See Constants $LOB_RELIEF_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iRelief             - [optional] an integer value (0-2). Default is Null. The Font relief style. See Constants $LOB_RELIEF_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $iCase               - [optional] an integer value (0-4). Default is Null. The Character Case Style. See Constants, $LOB_CASEMAP_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $bHidden             - [optional] a boolean value. Default is Null. If True, the Characters are hidden.
 ;                  $bOutline            - [optional] a boolean value. Default is False. If True, the characters have an outline around the outside.
@@ -959,15 +959,15 @@ EndFunc   ;==>_LOBase_FontDescCreate
 ;                  @Error 1 @Extended 1 Return 0 = $mFontDesc not a Map.
 ;                  @Error 1 @Extended 2 Return 0 = $sFontName not a String.
 ;                  @Error 1 @Extended 3 Return 0 = Font called in $sFontName not found.
-;                  @Error 1 @Extended 4 Return 0 = $iWeight not an Integer, less than 0 or greater than 200. See Constants $LOB_WEIGHT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 5 Return 0 = $iSlant not an Integer, less than 0 or greater than 5. See Constants $LOB_POSTURE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iWeight not an Integer, less than 0 or greater than 200. See Constants $LOB_WEIGHT_* as defined in LibreOfficeBase_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iSlant not an Integer, less than 0 or greater than 5. See Constants $LOB_POSTURE_* as defined in LibreOfficeBase_Constants.au3.
 ;                  @Error 1 @Extended 6 Return 0 = $nSize not a number.
 ;                  @Error 1 @Extended 7 Return 0 = $iColor not an Integer, less than -1 or greater than 16777215.
-;                  @Error 1 @Extended 8 Return 0 = $iUnderlineStyle not an Integer, less than 0 or greater than 18. See Constants $LOB_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 8 Return 0 = $iUnderlineStyle not an Integer, less than 0 or greater than 18. See Constants $LOB_UNDERLINE_* as defined in LibreOfficeBase_Constants.au3.
 ;                  @Error 1 @Extended 9 Return 0 = $iUnderlineColor not an Integer, less than -1 or greater than 16777215.
-;                  @Error 1 @Extended 10 Return 0 = $iStrikelineStyle not an Integer, less than 0 or greater than 6. See Constants $LOB_STRIKEOUT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 10 Return 0 = $iStrikelineStyle not an Integer, less than 0 or greater than 6. See Constants $LOB_STRIKEOUT_* as defined in LibreOfficeBase_Constants.au3.
 ;                  @Error 1 @Extended 11 Return 0 = $bIndividualWords not a Boolean.
-;                  @Error 1 @Extended 12 Return 0 = $iRelief not an Integer, less than 0 or greater than 2. See Constants $LOB_RELIEF_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 12 Return 0 = $iRelief not an Integer, less than 0 or greater than 2. See Constants $LOB_RELIEF_* as defined in LibreOfficeBase_Constants.au3.
 ;                  @Error 1 @Extended 13 Return 0 = $iCase not an Integer, less than 0 or greater than 4. See Constants, $LOB_CASEMAP_* as defined in LibreOfficeBase_Constants.au3.
 ;                  @Error 1 @Extended 14 Return 0 = $bHidden not a Boolean.
 ;                  @Error 1 @Extended 15 Return 0 = $bOutline not a Boolean.
@@ -1360,7 +1360,7 @@ EndFunc   ;==>_LOBase_FormatKeyDelete
 ; Syntax ........: _LOBase_FormatKeyExists(ByRef $oObj, $iFormatKey[, $iFormatType = $LOB_FORMAT_KEYS_ALL])
 ; Parameters ....: $oObj                - [in/out] an object. A Connection or Document object returned by a previous _LOBase_DatabaseConnectionGet, _LOBase_ReportConnect, or _LOBase_ReportOpen function.
 ;                  $iFormatKey          - an integer value. The Format Key to look for.
-;                  $iFormatType         - [optional] an integer value (0-15881). Default is $LOB_FORMAT_KEYS_ALL. The Format Key type to search in. Values can be BitOr'd together. See Constants, $LOB_FORMAT_KEYS_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iFormatType         - [optional] an integer value (0-15881). Default is $LOB_FORMAT_KEYS_ALL. The Format Key type to search in. Values can be BitOr'd together. See Constants, $LOB_FORMAT_KEYS_* as defined in LibreOfficeBase_Constants.au3.
 ; Return values .: Success: Boolean
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1423,13 +1423,13 @@ EndFunc   ;==>_LOBase_FormatKeyExists
 ; Description ...: Retrieve the Standard Format for a specific Format Key Type.
 ; Syntax ........: _LOBase_FormatKeyGetStandard(ByRef $oObj, $iFormatKeyType)
 ; Parameters ....: $oObj                - [in/out] an object. A Connection or Document object returned by a previous _LOBase_DatabaseConnectionGet, _LOBase_ReportConnect, or _LOBase_ReportOpen function.
-;                  $iFormatKeyType      - an integer value (1-8196). The Format Key type to retrieve the standard Format for. See Constants $LOB_FORMAT_KEYS_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iFormatKeyType      - an integer value (1-8196). The Format Key type to retrieve the standard Format for. See Constants $LOB_FORMAT_KEYS_* as defined in LibreOfficeBase_Constants.au3.
 ; Return values .: Success: Integer
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oObj not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = Object called in $oObj not a Connection Object and not a Report document opened in Design mode.
-;                  @Error 1 @Extended 3 Return 0 = $iFormatKeyType not an Integer, less than 1 or greater than 8196. See Constants $LOB_FORMAT_KEYS_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $iFormatKeyType not an Integer, less than 1 or greater than 8196. See Constants $LOB_FORMAT_KEYS_* as defined in LibreOfficeBase_Constants.au3.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create a "com.sun.star.lang.Locale" Struct.
 ;                  --Processing Errors--
@@ -1532,7 +1532,7 @@ EndFunc   ;==>_LOBase_FormatKeyGetString
 ; Parameters ....: $oObj                - [in/out] an object. A Connection or Document object returned by a previous _LOBase_DatabaseConnectionGet, _LOBase_ReportConnect, or _LOBase_ReportOpen function.
 ;                  $bIsUser             - [optional] a boolean value. Default is False. If True, Adds a third column to the return Array with a boolean, whether each Key is user-created or not.
 ;                  $bUserOnly           - [optional] a boolean value. Default is False. If True, only user-created Format Keys are returned.
-;                  $iFormatKeyType      - [optional] an integer value (0-15881). Default is $LOB_FORMAT_KEYS_ALL. The Format Key type to retrieve an array of. Values can be BitOr'd together. See Constants, $LOB_FORMAT_KEYS_* as defined in LibreOfficeWriter_Constants.au3..
+;                  $iFormatKeyType      - [optional] an integer value (0-15881). Default is $LOB_FORMAT_KEYS_ALL. The Format Key type to retrieve an array of. Values can be BitOr'd together. See Constants, $LOB_FORMAT_KEYS_* as defined in LibreOfficeBase_Constants.au3..
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1619,12 +1619,12 @@ EndFunc   ;==>_LOBase_FormatKeysGetList
 ; Description ...: Converts the input path to or from a LibreOffice URL notation path.
 ; Syntax ........: _LOBase_PathConvert($sFilePath[, $iReturnMode = $LOB_PATHCONV_AUTO_RETURN])
 ; Parameters ....: $sFilePath           - a string value. Full path to convert in String format.
-;                  $iReturnMode         - [optional] an integer value (0-2). Default is $__g_iAutoReturn. The type of path format to return. See Constants, $LOB_PATHCONV_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iReturnMode         - [optional] an integer value (0-2). Default is $__g_iAutoReturn. The type of path format to return. See Constants, $LOB_PATHCONV_* as defined in LibreOfficeBase_Constants.au3.
 ; Return values .: Success: String.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $sFilePath is not a string
-;                  @Error 1 @Extended 2 Return 0 = $iReturnMode not a Integer, less than 0, or greater than 2, see constants, $LOB_PATHCONV_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 2 Return 0 = $iReturnMode not a Integer, less than 0, or greater than 2, see constants, $LOB_PATHCONV_* as defined in LibreOfficeBase_Constants.au3.
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return String = Returning converted File Path from Libre Office URL.
 ;                  @Error 0 @Extended 2 Return String = Returning converted path from File Path to Libre Office URL.
