@@ -1349,7 +1349,7 @@ EndFunc   ;==>_LOCalc_DocRedo
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully cleared all Redo Actions.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: This will silently fail if there are any _LOWriter_DocUndoActionBegin still active.
+; Remarks .......: This will silently fail if there are any _LOCalc_DocUndoActionBegin still active.
 ; Related .......: _LOCalc_DocUndoClear, _LOCalc_DocUndoReset
 ; Link ..........:
 ; Example .......: Yes
@@ -1935,7 +1935,7 @@ EndFunc   ;==>_LOCalc_DocUndoActionEnd
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully cleared all Undo and Redo Actions.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: This will silently fail if there are any _LOWriter_DocUndoActionBegin still active.
+; Remarks .......: This will silently fail if there are any _LOCalc_DocUndoActionBegin still active.
 ; Related .......: _LOCalc_DocRedoClear, _LOCalc_DocUndoReset
 ; Link ..........:
 ; Example .......: Yes
