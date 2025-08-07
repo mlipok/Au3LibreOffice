@@ -49,10 +49,10 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to convert to HSB color value from Long color format integer. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The conversion results are as follows: " & @CRLF & _
-			"Long->RGB = " & "R, " & $aiRGB[0] & "; G, " & $aiRGB[1] & "; B, " & $aiRGB[2] & " Should be: R, 191; G, 0; B, 65" & @CRLF & _
-			"Long->Hex = " & $sHex & " Should be bf0041" & @CRLF & _
-			"Long->CMYK = " & "C, " & $aiCMYK[0] & "; M " & $aiCMYK[1] & "; Y " & $aiCMYK[2] & "; K " & $aiCMYK[3] & " Should be: C, 0; M, 100; Y, 66; K, 25." & @CRLF & _
-			"Long->HSB = " & "H, " & $aiHSB[0] & "; S " & $aiHSB[1] & "; B " & $aiHSB[2] & " Should be: H, 340; S, 100; B, 75")
+			"Long->RGB = " & "R, " & $aiRGB[0] & "; G, " & $aiRGB[1] & "; B, " & $aiRGB[2] & @CRLF & " Should be: R, 191; G, 0; B, 65" & @CRLF & @CRLF & _
+			"Long->Hex = " & $sHex & @CRLF & " Should be bf0041" & @CRLF & @CRLF & _
+			"Long->CMYK = " & "C, " & $aiCMYK[0] & "; M " & $aiCMYK[1] & "; Y " & $aiCMYK[2] & "; K " & $aiCMYK[3] & @CRLF & " Should be: C, 0; M, 100; Y, 66; K, 25." & @CRLF & @CRLF & _
+			"Long->HSB = " & "H, " & $aiHSB[0] & "; S " & $aiHSB[1] & "; B " & $aiHSB[2] & @CRLF & " Should be: H, 340; S, 100; B, 75")
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
