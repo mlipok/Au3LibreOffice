@@ -6,7 +6,7 @@
 Example()
 
 Func Example()
-	Local $oDoc, $oViewCursor, $oTable, $oCell
+	Local $oDoc
 	Local $asFonts
 
 	; Create a New, visible, Blank Libre Office Document.
