@@ -685,7 +685,6 @@ EndFunc   ;==>_LOCalc_CommentAreaShadow
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -744,6 +743,8 @@ EndFunc   ;==>_LOCalc_CommentAreaTransparency
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Annotation Shape Object.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving Color Stop Array for "From" color
 ;                  @Error 3 @Extended 3 Return 0 = Error retrieving Color Stop Array for "To" color
+;                  @Error 3 @Extended 4 Return 0 = Error creating Transparency Gradient name.
+;                  @Error 3 @Extended 5 Return 0 = Error setting Transparency Gradient name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iType
@@ -864,7 +865,7 @@ Func _LOCalc_CommentAreaTransparencyGradient(ByRef $oDoc, ByRef $oComment, $iTyp
 
 		If __LOCalc_VersionCheck(7.6) Then
 			$atColorStop = $tGradient.ColorStops()
-			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 			$tColorStop = $atColorStop[UBound($atColorStop) - 1] ; StopOffset 0 is the "End" Value.
 
@@ -886,10 +887,10 @@ Func _LOCalc_CommentAreaTransparencyGradient(ByRef $oDoc, ByRef $oComment, $iTyp
 
 	If ($oAnnotationShape.FillTransparenceGradientName() = "") Then
 		$sTGradName = __LOCalc_TransparencyGradientNameInsert($oDoc, $tGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 		$oAnnotationShape.FillTransparenceGradientName = $sTGradName
-		If ($oAnnotationShape.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If ($oAnnotationShape.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 	EndIf
 
 	$oAnnotationShape.FillTransparenceGradient = $tGradient
