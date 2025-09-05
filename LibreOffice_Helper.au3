@@ -144,7 +144,6 @@ Func _LO_InitializePortable($sOfficePortablePath)
 	If Not IsString($sOfficePortablePath) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$sOfficePortablePath = StringRegExpReplace($sOfficePortablePath, "^\s+|\s+$", "") ; Strip beginning and ending spaces.
-
 	If ($sOfficePortablePath <> "") And Not FileExists($sOfficePortablePath & "\App") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Make sure we're starting from the right folder.
 
 	If ($sOfficePortablePath = "") Then
@@ -160,6 +159,7 @@ Func _LO_InitializePortable($sOfficePortablePath)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	Else
+
 		Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	EndIf
 

@@ -51,6 +51,7 @@ Func __LO_DeleteTempReg($asRegKeys = Null)
 
 	If ($asRegKeys <> Null) Then
 		If Not IsArray($asRegKeys) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 		$asStaticKeys = $asRegKeys
 
 		Return SetError($__LO_STATUS_SUCCESS, 0, 1)
@@ -261,12 +262,12 @@ Func __LO_SetPortableServiceManager($sPortableLO_Path = Null)
 		Else
 			$sStaticPortablePath = $sPortableLO_Path
 			__LO_ServiceManager(Default, False) ; Clear any stored ServiceManager, and set Boolean for Portable to False.
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf
 	EndIf
 
 	If ($sStaticPortablePath = "") Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
 	If Not FileExists($sStaticPortablePath) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; Check to make sure the stored path to the LO File is still good.
 
 	$asRegKeys[$__eReg_LocalServer32][$__eReg_Value] = $sStaticPortablePath & " --nodefault --nologo"
@@ -281,6 +282,7 @@ Func __LO_SetPortableServiceManager($sPortableLO_Path = Null)
 		__LO_DeleteTempReg($asRegKeysMain) ; Set array of main Temp keys to delete.
 		If ($iError > 0) Then ; If there was an error writing the Reg Keys, delete any that were written and return.
 			__LO_DeleteTempReg()
+
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 		EndIf
 
@@ -295,6 +297,7 @@ Func __LO_SetPortableServiceManager($sPortableLO_Path = Null)
 			If (@error = 0) Then OnAutoItExitUnRegister("__LO_DeleteTempReg")
 			$bTempReg = False
 		EndIf
+
 		Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	EndIf
 
@@ -315,6 +318,7 @@ Func __LO_SetPortableServiceManager($sPortableLO_Path = Null)
 			$bTempReg = False
 		EndIf
 		TCPShutdown()
+
 		Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 	EndIf
 
@@ -334,6 +338,7 @@ Func __LO_SetPortableServiceManager($sPortableLO_Path = Null)
 			If (@error = 0) Then OnAutoItExitUnRegister("__LO_DeleteTempReg")
 			$bTempReg = False
 		EndIf
+
 		Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 	EndIf
 
@@ -345,6 +350,7 @@ Func __LO_SetPortableServiceManager($sPortableLO_Path = Null)
 			If (@error = 0) Then OnAutoItExitUnRegister("__LO_DeleteTempReg")
 			$bTempReg = False
 		EndIf
+
 		Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 	EndIf
 
@@ -356,6 +362,7 @@ Func __LO_SetPortableServiceManager($sPortableLO_Path = Null)
 			If (@error = 0) Then OnAutoItExitUnRegister("__LO_DeleteTempReg")
 			$bTempReg = False
 		EndIf
+
 		Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
 	EndIf
 
@@ -366,6 +373,7 @@ Func __LO_SetPortableServiceManager($sPortableLO_Path = Null)
 			If (@error = 0) Then OnAutoItExitUnRegister("__LO_DeleteTempReg")
 			$bTempReg = False
 		EndIf
+
 		Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0)
 	EndIf
 
