@@ -5,6 +5,7 @@
 
 ; Main LibreOffice Includes
 #include "LibreOffice_Constants.au3"
+#include "LibreOffice_Internal.au3"
 
 ; Common includes for Writer
 #include "LibreOfficeWriter_Constants.au3"
@@ -13988,7 +13989,7 @@ Func _LOWriter_FormPropertiesData(ByRef $oForm, $sSource = Null, $iContentType =
 	If ($sSource <> Null) Then
 		If Not IsString($sSource) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-		$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+		$oServiceManager = __LO_ServiceManager()
 		If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 		$oDBaseContext = $oServiceManager.createInstance("com.sun.star.sdb.DatabaseContext")
