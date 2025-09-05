@@ -5,6 +5,7 @@
 
 ; Main LibreOffice Includes
 #include "LibreOffice_Constants.au3"
+#include "LibreOffice_Helper.au3"
 
 ; Common includes for Writer
 #include "LibreOfficeWriter_Constants.au3"
@@ -524,7 +525,7 @@ Func _LOWriter_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False
 	If Not IsBool($bConnectCurrent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bConnectAll) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	$oServiceManager = __LO_ServiceManager()
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
@@ -689,7 +690,7 @@ Func _LOWriter_DocConvertTableToText(ByRef $oDoc, ByRef $oTable, $sDelimiter = @
 
 	$oViewCursor.gotoRange($oCellTextCursor, False)
 
-	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	$oServiceManager = __LO_ServiceManager()
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 	$oDispatcher = $oServiceManager.createInstance("com.sun.star.frame.DispatchHelper")
@@ -778,7 +779,7 @@ Func _LOWriter_DocConvertTextToTable(ByRef $oDoc, ByRef $oCursor, $sDelimiter = 
 	; If Cursor has no data selected, return error.
 	If $oCursor.isCollapsed() Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
-	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	$oServiceManager = __LO_ServiceManager()
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oDispatcher = $oServiceManager.createInstance("com.sun.star.frame.DispatchHelper")
@@ -870,7 +871,7 @@ Func _LOWriter_DocCreate($bForceNew = True, $bHidden = False)
 	If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$aArgs[0] = __LOWriter_SetPropertyValue("Hidden", $bHidden)
-	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	$oServiceManager = __LO_ServiceManager()
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
@@ -1228,7 +1229,7 @@ Func _LOWriter_DocExecuteDispatch(ByRef $oDoc, $sDispatch)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sDispatch) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	$oServiceManager = __LO_ServiceManager()
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oDispatcher = $oServiceManager.createInstance("com.sun.star.frame.DispatchHelper")
@@ -2982,7 +2983,7 @@ Func _LOWriter_DocOpen($sFilePath, $bConnectIfOpen = True, $bHidden = Null, $bRe
 	If @error Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bConnectIfOpen) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	$oServiceManager = __LO_ServiceManager()
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
@@ -3346,7 +3347,7 @@ Func _LOWriter_DocPrintersGetNames($bDefaultOnly = False)
 	If Not __LOWriter_VersionCheck(4.1) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 	If Not IsBool($bDefaultOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	$oServiceManager = __LO_ServiceManager()
 	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oPrintServer = $oServiceManager.createInstance("com.sun.star.awt.PrinterServer")
@@ -4127,7 +4128,7 @@ Func _LOWriter_DocReplaceAllInRange(ByRef $oDoc, ByRef $oSrchDescript, ByRef $oR
 			; Move the View Cursor to the input range.
 			$oViewCursor.gotoRange($oRange, False)
 
-			$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+			$oServiceManager = __LO_ServiceManager()
 			If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$oDispatcher = $oServiceManager.createInstance("com.sun.star.frame.DispatchHelper")
@@ -4804,7 +4805,7 @@ Func _LOWriter_DocZoom(ByRef $oDoc, $iZoom = Null)
 
 	If ($iZoom = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.CurrentController.ViewSettings.ZoomValue())
 
-	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	$oServiceManager = __LO_ServiceManager()
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oDispatcher = $oServiceManager.createInstance("com.sun.star.frame.DispatchHelper")

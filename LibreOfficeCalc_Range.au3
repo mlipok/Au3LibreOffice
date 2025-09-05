@@ -5,6 +5,7 @@
 
 ; Main LibreOffice Includes
 #include "LibreOffice_Constants.au3"
+#include "LibreOffice_Internal.au3"
 
 ; Common includes for Calc
 #include "LibreOfficeCalc_Internal.au3"
@@ -5475,7 +5476,7 @@ Func _LOCalc_RangeSortAlt(ByRef $oDoc, ByRef $oRange, ByRef $tSortField, $bSortC
 
 	$oDoc.CurrentController.Select($oRange)
 
-	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	$oServiceManager = __LO_ServiceManager()
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 15, 0)
 
 	$oDispatcher = $oServiceManager.createInstance("com.sun.star.frame.DispatchHelper")

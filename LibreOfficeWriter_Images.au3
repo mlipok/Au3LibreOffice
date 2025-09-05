@@ -5,6 +5,7 @@
 
 ; Main LibreOffice Includes
 #include "LibreOffice_Constants.au3"
+#include "LibreOffice_Internal.au3"
 
 ; Common includes for Writer
 #include "LibreOfficeWriter_Constants.au3"
@@ -1409,7 +1410,7 @@ Func _LOWriter_ImageInsert(ByRef $oDoc, $sImage, ByRef $oCursor, $iAnchorType = 
 	$oImage = $oDoc.createInstance("com.sun.star.text.TextGraphicObject")
 	If Not IsObj($oImage) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	$oServiceManager = __LO_ServiceManager()
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	$oProvider = $oServiceManager.createInstance("com.sun.star.graphic.GraphicProvider")
