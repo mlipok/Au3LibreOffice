@@ -31,7 +31,8 @@ Distributed under the MIT License. See the [LICENSE](LICENSE) for more informati
 
 ## Notes
 
-- This UDF currently works **only** with the **INSTALLED** version of LibreOffice. The **Portable** version will **Not work**.
+- ~~This UDF currently works **only** with the **INSTALLED** version of LibreOffice. The **Portable** version will **Not work**.~~
+- The ability to Automate LibreOffice Portable (and OpenOffice) has been added, and *Should* work correctly. It currently adds some temporary Registry entries however. See `_LO_InitializePortable`.
 - For those using AutoIt versions **older** than ***3.3.16.1,*** some functions use Maps, which will **Not** be recognized as proper syntax in the older AutoIt versions.
 - LibreOffice uses Micrometers for sizing internally, all functions in this UDF, unless otherwise stated, use Micrometers. A converter has been created for converting to/from Inches, Centimeters, Printer’s Points, and Millimeters to/from Micrometers, for all sizing needs. _ConvertFromMicrometer_, and _ConvertToMicrometer_. For Writer (LOWriter), Calc (LOCalc) or Base (LOBase).
 - LibreOffice uses the Long color format for all color settings, A converter has also been created for converting from/to Hex; (R)ed, (G)reen, (Blue); (H)ue, (S)aturation, and (B)rightness; and (C)yan, (M)agenta, (Y)ellow, Blac(K); to/from long color format. _ConvertColorFromLong, and _ConvertColorToLong. For Writer (LOWriter), Calc (LOCalc) or Base (LOBase).
