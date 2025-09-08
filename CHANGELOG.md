@@ -33,8 +33,17 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 - Central Constants File
 	- LibreOffice_Constants.au3
+	- LibreOffice_Helper.au3
+		- _LO_ComError_UserFunction
+		- _LO_InitializePortable
+	- LibreOffice_Internal.au3
+		- __LO_DeleteTempReg
+		- __LO_InternalComErrorHandler
+		- __LO_ServiceManager
+		- __LO_SetPortableServiceManager
 - Central UDF File for all components (@mLipok)
 	- LibreOffice.au3
+- Support for LibreOffice Portable usage. See `_LO_InitializePortable`.
 
 ### Changed
 
@@ -42,6 +51,33 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Attempted to standardize `$__LO_STATUS_INIT_ERROR` and `$__LO_STATUS_PROCESSING_ERROR` usage throughout functions.
 - Removed Error returns listed in Function Headers that no longer existed.
 - Added missing error values and corrected wrong error values listed in the headers.
+- All calls to ObjCreate to create a com.sun.star.ServiceManager Object are routed through an internal Function which stores a reference to the Object rather than creating a new instance each time, this also allows the ability to automate Portable LO. Affected Functions are (and any functions using these functions):
+	- _LOCalc_RangeSortAlt
+	- __LOCalc_CreateStruct
+	- _LOCalc_DocConnect
+	- _LOCalc_DocCreate
+	- _LOCalc_DocOpen
+	- _LOCalc_DocPrintersGetNames
+	- _LOCalc_FontExists
+	- _LOCalc_FontsGetNames
+	- _LOCalc_VersionGet
+	- __LOWriter_CreateStruct
+	- __LOWriter_NumStyleInitiateDocument
+	- _LOWriter_DirFrmtClear
+	- _LOWriter_DocConnect
+	- _LOWriter_DocConvertTableToText
+	- _LOWriter_DocConvertTextToTable
+	- _LOWriter_DocCreate
+	- _LOWriter_DocExecuteDispatch
+	- _LOWriter_DocOpen
+	- _LOWriter_DocPrintersGetNames
+	- _LOWriter_DocReplaceAllInRange
+	- _LOWriter_DocZoom
+	- _LOWriter_FontExists
+	- _LOWriter_FontsGetNames
+	- _LOWriter_FormPropertiesData
+	- _LOWriter_ImageInsert
+	- _LOWriter_VersionGet
 
 ### Fixed
 
@@ -53,6 +89,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Double spaces from Headers.
 - Tabs from headers, replaced with spaces.
 - Manual line breaks from headers.
+- Removed Error returns listed in Function Headers that no longer existed.
 
 > [!NOTE]
 > **LibreOfficeCalc**
