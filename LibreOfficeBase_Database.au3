@@ -1,8 +1,11 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
-;~ #Tidy_Parameters=/sf /reel
+#Tidy_Parameters=/sf /reel
 #include-once
+
+; Main LibreOffice Includes
 #include "LibreOffice_Constants.au3"
+#include "LibreOffice_Internal.au3"
 
 ; Common includes for Base
 #include "LibreOfficeBase_Internal.au3"
@@ -194,7 +197,7 @@ Func _LOBase_DatabaseConnectionGet(ByRef $oDBase, $sUser = "", $sPass = "", $bPr
 
 	If $bPrivate Then
 		If $bPromptUser Then
-			$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+			$oServiceManager = __LO_ServiceManager()
 			If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 			$oHandler = $oServiceManager.createInstance("com.sun.star.task.InteractionHandler")
@@ -208,7 +211,7 @@ Func _LOBase_DatabaseConnectionGet(ByRef $oDBase, $sUser = "", $sPass = "", $bPr
 
 	Else
 		If $bPromptUser Then
-			$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+			$oServiceManager = __LO_ServiceManager()
 			If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 			$oHandler = $oServiceManager.createInstance("com.sun.star.task.InteractionHandler")
@@ -301,7 +304,7 @@ Func _LOBase_DatabaseGetObjByDoc(ByRef $oDoc)
 	If Not IsString($sURL) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	If ($sURL = "") Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	$oServiceManager = __LO_ServiceManager()
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oDBaseContext = $oServiceManager.createInstance("com.sun.star.sdb.DatabaseContext")
@@ -350,7 +353,7 @@ Func _LOBase_DatabaseGetObjByURL($sURL)
 	If StringInStr($sFileURL, "\") Then $sFileURL = _LOBase_PathConvert($sFileURL, $LOB_PATHCONV_OFFICE_RETURN)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	$oServiceManager = __LO_ServiceManager()
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oDBaseContext = $oServiceManager.createInstance("com.sun.star.sdb.DatabaseContext")
@@ -717,7 +720,7 @@ Func _LOBase_DatabaseRegisteredAdd(ByRef $oDBase, $sName)
 	If Not IsObj($oDBase) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	$oServiceManager = __LO_ServiceManager()
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oDBaseContext = $oServiceManager.createInstance("com.sun.star.sdb.DatabaseContext")
@@ -762,7 +765,7 @@ Func _LOBase_DatabaseRegisteredExists($sName)
 
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	$oServiceManager = __LO_ServiceManager()
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oDBaseContext = $oServiceManager.createInstance("com.sun.star.sdb.DatabaseContext")
@@ -802,7 +805,7 @@ Func _LOBase_DatabaseRegisteredGetNames()
 	Local $oServiceManager, $oDBaseContext
 	Local $asNames[0]
 
-	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	$oServiceManager = __LO_ServiceManager()
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oDBaseContext = $oServiceManager.createInstance("com.sun.star.sdb.DatabaseContext")
@@ -846,7 +849,7 @@ Func _LOBase_DatabaseRegisteredRemoveByName($sName)
 
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	$oServiceManager = __LO_ServiceManager()
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oDBaseContext = $oServiceManager.createInstance("com.sun.star.sdb.DatabaseContext")

@@ -1,8 +1,11 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
-;~ #Tidy_Parameters=/sf /reel
+#Tidy_Parameters=/sf /reel
 #include-once
+
+; Main LibreOffice Includes
 #include "LibreOffice_Constants.au3"
+#include "LibreOffice_Internal.au3"
 
 ; Common includes for Base
 #include "LibreOfficeBase_Internal.au3"
@@ -137,7 +140,7 @@ Func _LOBase_FormConnect($bConnectCurrent = True)
 
 	If Not IsBool($bConnectCurrent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	$oServiceManager = __LO_ServiceManager()
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
@@ -314,7 +317,7 @@ Func _LOBase_FormCreate(ByRef $oConnection, $sForm, $bOpen = False, $bDesign = T
 	$aArgs[0] = __LOBase_SetPropertyValue("Hidden", True)
 	If Not IsObj($aArgs[0]) Then $iError = BitOR($iError, 1)
 
-	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	$oServiceManager = __LO_ServiceManager()
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")

@@ -13,7 +13,7 @@ Func Example()
 	$oCOM_Error = ObjEvent("AutoIt.Error", "__LOBase_InternalComErrorHandler")
 	#forceref $oCOM_Error
 
-	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	$oServiceManager = __LO_ServiceManager()
 	If Not IsObj($oServiceManager) Then _ERROR("Error creating Service Manager Object" & " On Line: " & @ScriptLineNumber)
 
 	; Assign my function to a variable to pass to the ComError User Error.
