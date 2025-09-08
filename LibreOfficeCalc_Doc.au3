@@ -5,6 +5,7 @@
 
 ; Main LibreOffice Includes
 #include "LibreOffice_Constants.au3"
+#include "LibreOffice_Internal.au3"
 
 ; Common includes for Calc
 #include "LibreOfficeCalc_Internal.au3"
@@ -280,7 +281,7 @@ Func _LOCalc_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 	If Not IsBool($bConnectCurrent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bConnectAll) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	$oServiceManager = __LO_ServiceManager()
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
@@ -422,7 +423,7 @@ Func _LOCalc_DocCreate($bForceNew = True, $bHidden = False)
 	If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$aArgs[0] = __LOCalc_SetPropertyValue("Hidden", $bHidden)
-	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	$oServiceManager = __LO_ServiceManager()
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
@@ -913,7 +914,7 @@ Func _LOCalc_DocOpen($sFilePath, $bConnectIfOpen = True, $bHidden = Null, $bRead
 	If @error Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bConnectIfOpen) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	$oServiceManager = __LO_ServiceManager()
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
@@ -1278,7 +1279,7 @@ Func _LOCalc_DocPrintersGetNames($bDefaultOnly = False)
 	If Not __LOCalc_VersionCheck(4.1) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 	If Not IsBool($bDefaultOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	$oServiceManager = __LO_ServiceManager()
 	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oPrintServer = $oServiceManager.createInstance("com.sun.star.awt.PrinterServer")
