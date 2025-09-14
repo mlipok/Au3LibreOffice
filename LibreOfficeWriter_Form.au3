@@ -13797,7 +13797,7 @@ EndFunc   ;==>_LOWriter_FormGetObjByIndex
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FormParent
 ; Description ...: Set or Retrieve a Form's parent, i.e. set a form as Sub-Form, or a Sub-Form as a top-level form.
-; Syntax ........:  _LOWriter_FormParent(ByRef $oForm[, $oParent = Null])
+; Syntax ........: _LOWriter_FormParent(ByRef $oForm[, $oParent = Null])
 ; Parameters ....: $oForm               - [in/out] an object. A Form Object returned from a previous _LOWriter_FormsGetList, or _LOWriter_FormAdd function.
 ;                  $oParent             - [optional] an object. Default is Null. A Document or Form object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function, or _LOWriter_FormsGetList, or _LOWriter_FormAdd function.
 ; Return values .: Success: 1 or Object

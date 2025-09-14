@@ -5328,7 +5328,7 @@ EndFunc   ;==>_LOWriter_FieldShowVarInsert
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldShowVarModify
-; Description ...:Set or Retrieve a Show Variable Field's settings.
+; Description ...: Set or Retrieve a Show Variable Field's settings.
 ; Syntax ........: _LOWriter_FieldShowVarModify(ByRef $oDoc, ByRef $oShowVarField[, $sSetVarName = Null[, $iNumFormatKey = Null[, $bShowName = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oShowVarField       - [in/out] an object. A Show Variable field Object from a previous _LOWriter_FieldShowVarInsert, or _LOWriter_FieldsGetList function.

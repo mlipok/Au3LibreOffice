@@ -2278,50 +2278,50 @@ EndFunc   ;==>_LOWriter_ImageTransparency
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  $iHorRelation has varying acceptable values, depending on the current Anchor position and also the current $iHorAlign setting. The Following is a list of acceptable values per anchor position.
-;                   $LOW_ANCHOR_AT_PARAGRAPH(0) Accepts the following $iHorRelation Values:
-;                     $LOW_RELATIVE_PARAGRAPH (0),
-;                     $LOW_RELATIVE_PARAGRAPH_TEXT (1),
-;                     $LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
-;                     $LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
-;                     $LOW_RELATIVE_PARAGRAPH_LEFT (5),
-;                     $LOW_RELATIVE_PARAGRAPH_RIGHT (6),
-;                     $LOW_RELATIVE_PAGE (7),
-;                     $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;                   $LOW_ANCHOR_AS_CHARACTER(1) Accepts No $iHorRelation Values.
-;                   $LOW_ANCHOR_AT_PAGE(2) Accepts the following $iHorRelation Values:
-;                     $LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
-;                     $LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
-;                     $LOW_RELATIVE_PAGE (7),
-;                     $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;                   $LOW_ANCHOR_AT_CHARACTER(4) Accepts the following $iHorRelation Values:
-;                     $LOW_RELATIVE_PARAGRAPH (0),
-;                     $LOW_RELATIVE_PARAGRAPH_TEXT (1),
-;                     $LOW_RELATIVE_CHARACTER (2),
-;                     $LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
-;                     $LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
-;                     $LOW_RELATIVE_PARAGRAPH_LEFT (5),
-;                     $LOW_RELATIVE_PARAGRAPH_RIGHT (6),
-;                     $LOW_RELATIVE_PAGE (7),
-;                     $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;                  # $LOW_ANCHOR_AT_PARAGRAPH(0) Accepts the following $iHorRelation Values:
+;                  - $LOW_RELATIVE_PARAGRAPH (0),
+;                  - $LOW_RELATIVE_PARAGRAPH_TEXT (1),
+;                  - $LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
+;                  - $LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
+;                  - $LOW_RELATIVE_PARAGRAPH_LEFT (5),
+;                  - $LOW_RELATIVE_PARAGRAPH_RIGHT (6),
+;                  - $LOW_RELATIVE_PAGE (7),
+;                  - $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;                  # $LOW_ANCHOR_AS_CHARACTER(1) Accepts No $iHorRelation Values.
+;                  # $LOW_ANCHOR_AT_PAGE(2) Accepts the following $iHorRelation Values:
+;                  - $LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
+;                  - $LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
+;                  - $LOW_RELATIVE_PAGE (7),
+;                  - $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;                  # $LOW_ANCHOR_AT_CHARACTER(4) Accepts the following $iHorRelation Values:
+;                  - $LOW_RELATIVE_PARAGRAPH (0),
+;                  - $LOW_RELATIVE_PARAGRAPH_TEXT (1),
+;                  - $LOW_RELATIVE_CHARACTER (2),
+;                  - $LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
+;                  - $LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
+;                  - $LOW_RELATIVE_PARAGRAPH_LEFT (5),
+;                  - $LOW_RELATIVE_PARAGRAPH_RIGHT (6),
+;                  - $LOW_RELATIVE_PAGE (7),
+;                  - $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
 ;                  $iVertRelation has varying acceptable values, depending on the current Anchor position. The Following is a list of acceptable values per anchor position.
-;                   $LOW_ANCHOR_AT_PARAGRAPH(0) Accepts the following $iVertRelation Values:
-;                     $LOW_RELATIVE_PARAGRAPH (0)[The Same as "Margin" in L.O. UI],
-;                     $LOW_RELATIVE_PAGE (7),
-;                     $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;                   $LOW_ANCHOR_AS_CHARACTER(1) Accepts the following $iVertRelation Values:
-;                     $LOW_RELATIVE_ROW(-1),
-;                     $LOW_RELATIVE_PARAGRAPH (0)[The Same as "Baseline" in L.O. UI],
-;                     $LOW_RELATIVE_CHARACTER (2),
-;                   $LOW_ANCHOR_AT_PAGE(2) Accepts the following $iVertRelation Values:
-;                     $LOW_RELATIVE_PAGE (7),
-;                     $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;                   $LOW_ANCHOR_AT_CHARACTER(4) Accepts the following $iVertRelation Values:
-;                     $LOW_RELATIVE_PARAGRAPH (0)[The same as "Margin" in L.O. UI],
-;                     $LOW_RELATIVE_PARAGRAPH_TEXT (1),
-;                     $LOW_RELATIVE_CHARACTER (2),
-;                     $LOW_RELATIVE_PAGE (7),
-;                     $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;                     $LOW_RELATIVE_TEXT_LINE (9)[The same as "Line of Text" in L.O. UI]
+;                  # $LOW_ANCHOR_AT_PARAGRAPH(0) Accepts the following $iVertRelation Values:
+;                  - $LOW_RELATIVE_PARAGRAPH (0)[The Same as "Margin" in L.O. UI],
+;                  - $LOW_RELATIVE_PAGE (7),
+;                  - $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;                  # $LOW_ANCHOR_AS_CHARACTER(1) Accepts the following $iVertRelation Values:
+;                  - $LOW_RELATIVE_ROW(-1),
+;                  - $LOW_RELATIVE_PARAGRAPH (0)[The Same as "Baseline" in L.O. UI],
+;                  - $LOW_RELATIVE_CHARACTER (2),
+;                  # $LOW_ANCHOR_AT_PAGE(2) Accepts the following $iVertRelation Values:
+;                  - $LOW_RELATIVE_PAGE (7),
+;                  - $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;                  # $LOW_ANCHOR_AT_CHARACTER(4) Accepts the following $iVertRelation Values:
+;                  - $LOW_RELATIVE_PARAGRAPH (0)[The same as "Margin" in L.O. UI],
+;                  - $LOW_RELATIVE_PARAGRAPH_TEXT (1),
+;                  - $LOW_RELATIVE_CHARACTER (2),
+;                  - $LOW_RELATIVE_PAGE (7),
+;                  - $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;                  - $LOW_RELATIVE_TEXT_LINE (9)[The same as "Line of Text" in L.O. UI]
 ; Related .......: _LOWriter_ImageInsert, _LOWriter_ImageGetObjByName, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes

@@ -1165,37 +1165,37 @@ EndFunc   ;==>_LOWriter_DocDescription
 ; Modified ......:
 ; Remarks .......: A Dispatch is essentially a simulation of the user performing an action, such as pressing Ctrl+A to select all, etc.
 ;                  Dispatch Commands:
-;                    uno:FullScreen -- Toggles full screen mode.
-;                    uno:ChangeCaseToLower -- Changes all selected text to lower case. Text must be selected with the ViewCursor.
-;                    uno:ChangeCaseToUpper -- Changes all selected text to upper case. Text must be selected with the ViewCursor.
-;                    uno:ChangeCaseRotateCase -- Cycles the Case (Title Case, Sentence case, UPPERCASE, lowercase). Text must be selected with the ViewCursor.
-;                    uno:ChangeCaseToSentenceCase -- Changes the sentence to Sentence case where the Viewcursor is currently positioned or has selected.
-;                    uno:ChangeCaseToTitleCase -- Changes the selected text to Title case. Text must be selected with the ViewCursor.
-;                    uno:ChangeCaseToToggleCase -- Toggles the selected text's case (A becomes a, b becomes B, etc.).Text must be selected with the ViewCursor.
-;                    uno:UpdateAll -- Causes all non fixed Fields, Links, Indexes, Charts etc., to be updated.
-;                    uno:UpdateFields -- Causes all Fields to be updated.
-;                    uno:UpdateAllIndexes -- Causes all Indexes to be updated.
-;                    uno:UpdateAllLinks -- Causes all Links to be updated.
-;                    uno:UpdateCharts -- Causes all Charts to be updated.
-;                    uno:Repaginate -- Update Page Formatting.
-;                    uno:ResetAttributes -- Removes all direct formatting from the selected text. Text must be selected with the ViewCursor.
-;                    uno:SwBackspace -- Simulates pressing the Backspace key.
-;                    uno:Delete -- Simulates pressing the Delete key.
-;                    uno:Paste -- Pastes the data out of the clipboard. Simulating Ctrl+V.
-;                    uno:PasteUnformatted -- Pastes the data out of the clipboard unformatted.
-;                    uno:PasteSpecial -- Simulates pasting with Ctrl+Shift+V, opens a dialog for selecting paste format.
-;                    uno:Copy -- Simulates Ctrl+C, copies selected data to the clipboard. Text must be selected with the ViewCursor.
-;                    uno:Cut -- Simulates Ctrl+X, cuts selected data, placing it into the clipboard. Text must be selected with the ViewCursor.
-;                    uno:SelectAll -- Simulates Ctrl+A being pressed at the ViewCursor location.
-;                    uno:Zoom50Percent -- Set the zoom level to 50%.
-;                    uno:Zoom75Percent -- Set the zoom level to 75%.
-;                    uno:Zoom100Percent -- Set the zoom level to 100%.
-;                    uno:Zoom150Percent -- Set the zoom level to 150%.
-;                    uno:Zoom200Percent -- Set the zoom level to 200%.
-;                    uno:ZoomMinus -- Decreases the zoom value to the next increment down.
-;                    uno:ZoomPlus -- Increases the zoom value to the next increment up.
-;                    uno:ZoomPageWidth -- Set zoom to fit page width.
-;                    uno:ZoomPage -- Set zoom to fit page.
+;                  - uno:FullScreen -- Toggles full screen mode.
+;                  - uno:ChangeCaseToLower -- Changes all selected text to lower case. Text must be selected with the ViewCursor.
+;                  - uno:ChangeCaseToUpper -- Changes all selected text to upper case. Text must be selected with the ViewCursor.
+;                  - uno:ChangeCaseRotateCase -- Cycles the Case (Title Case, Sentence case, UPPERCASE, lowercase). Text must be selected with the ViewCursor.
+;                  - uno:ChangeCaseToSentenceCase -- Changes the sentence to Sentence case where the Viewcursor is currently positioned or has selected.
+;                  - uno:ChangeCaseToTitleCase -- Changes the selected text to Title case. Text must be selected with the ViewCursor.
+;                  - uno:ChangeCaseToToggleCase -- Toggles the selected text's case (A becomes a, b becomes B, etc.).Text must be selected with the ViewCursor.
+;                  - uno:UpdateAll -- Causes all non fixed Fields, Links, Indexes, Charts etc., to be updated.
+;                  - uno:UpdateFields -- Causes all Fields to be updated.
+;                  - uno:UpdateAllIndexes -- Causes all Indexes to be updated.
+;                  - uno:UpdateAllLinks -- Causes all Links to be updated.
+;                  - uno:UpdateCharts -- Causes all Charts to be updated.
+;                  - uno:Repaginate -- Update Page Formatting.
+;                  - uno:ResetAttributes -- Removes all direct formatting from the selected text. Text must be selected with the ViewCursor.
+;                  - uno:SwBackspace -- Simulates pressing the Backspace key.
+;                  - uno:Delete -- Simulates pressing the Delete key.
+;                  - uno:Paste -- Pastes the data out of the clipboard. Simulating Ctrl+V.
+;                  - uno:PasteUnformatted -- Pastes the data out of the clipboard unformatted.
+;                  - uno:PasteSpecial -- Simulates pasting with Ctrl+Shift+V, opens a dialog for selecting paste format.
+;                  - uno:Copy -- Simulates Ctrl+C, copies selected data to the clipboard. Text must be selected with the ViewCursor.
+;                  - uno:Cut -- Simulates Ctrl+X, cuts selected data, placing it into the clipboard. Text must be selected with the ViewCursor.
+;                  - uno:SelectAll -- Simulates Ctrl+A being pressed at the ViewCursor location.
+;                  - uno:Zoom50Percent -- Set the zoom level to 50%.
+;                  - uno:Zoom75Percent -- Set the zoom level to 75%.
+;                  - uno:Zoom100Percent -- Set the zoom level to 100%.
+;                  - uno:Zoom150Percent -- Set the zoom level to 150%.
+;                  - uno:Zoom200Percent -- Set the zoom level to 200%.
+;                  - uno:ZoomMinus -- Decreases the zoom value to the next increment down.
+;                  - uno:ZoomPlus -- Increases the zoom value to the next increment up.
+;                  - uno:ZoomPageWidth -- Set zoom to fit page width.
+;                  - uno:ZoomPage -- Set zoom to fit page.
 ; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_CursorMove
 ; Link ..........:
 ; Example .......: Yes
@@ -1913,11 +1913,11 @@ EndFunc   ;==>_LOWriter_DocFormSettings
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Setting $bResetUserData to True resets several attributes at once, as follows:
-;                   + Author is set to $sNewAuthor parameter, ($sNewAuthor MUST be set to a string).
-;                   + CreationDate is set to the current date and time;
-;                   + ModifiedBy is cleared, ModificationDate is cleared;
-;                   + PrintedBy is cleared; PrintDate is cleared;
-;                   + EditingDuration is cleared; EditingCycles is set to 1.
+;                  - Author is set to $sNewAuthor parameter, ($sNewAuthor MUST be set to a string).
+;                  - CreationDate is set to the current date and time;
+;                  - ModifiedBy is cleared, ModificationDate is cleared;
+;                  - PrintedBy is cleared; PrintDate is cleared;
+;                  - EditingDuration is cleared; EditingCycles is set to 1.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -2277,7 +2277,7 @@ EndFunc   ;==>_LOWriter_DocGenPropTemplate
 ;                  @Error 0 @Extended 0 Return Array = Success. A 1 dimension, 0 based, 9 row Array of integers, in the order described in remarks.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:Returns a 1 dimension array with the following counts in this order: Page count; Line Count; Paragraph Count; Word Count; Character Count; NonWhiteSpace Character Count; Table Count; Image Count; Object Count.
+; Remarks .......: Returns a 1 dimension array with the following counts in this order: Page count; Line Count; Paragraph Count; Word Count; Character Count; NonWhiteSpace Character Count; Table Count; Image Count; Object Count.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -3152,7 +3152,7 @@ EndFunc   ;==>_LOWriter_DocPosAndSize
 ; Remarks .......: Based on OOoCalc UDF Print function by GMK.
 ;                  $vPages range can be called as entered in the user interface, as follows: "1-4,10" to print the pages 1 to 4 and 10. Default is "ALL". Must be in String format to accept more than just a single page number. e.g. This will work: "1-6,12,27" This will not 1-6,12,27. This will work: "7", This will also: 7.
 ;                  Setting $bWait to True is highly recommended. Otherwise following actions (as e.g. closing the Document) can fail.
-; Related .......:_LOWriter_DocPrintersAltGetNames, _LOWriter_DocPrintersGetNames, _LOWriter_DocPrintSizeSettings, _LOWriter_DocPrintPageSettings, _LOWriter_DocPrintMiscSettings, _LOWriter_DocPrintIncludedSettings
+; Related .......: _LOWriter_DocPrintersAltGetNames, _LOWriter_DocPrintersGetNames, _LOWriter_DocPrintSizeSettings, _LOWriter_DocPrintPageSettings, _LOWriter_DocPrintMiscSettings, _LOWriter_DocPrintIncludedSettings
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================

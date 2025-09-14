@@ -4262,67 +4262,67 @@ EndFunc   ;==>_LOWriter_FrameStyleShadow
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  $iHorRelation has varying acceptable values, depending on the current Anchor position and also the current $iHorAlign setting.
 ;                  The Following is a list of acceptable values per anchor position.
-;                   $LOW_ANCHOR_AT_PARAGRAPH(0) Accepts the following $iHorRelation Values:
-;                     $LOW_RELATIVE_PARAGRAPH (0),
-;                     $LOW_RELATIVE_PARAGRAPH_TEXT (1),
-;                     $LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
-;                     $LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
-;                     $LOW_RELATIVE_PARAGRAPH_LEFT (5),
-;                     $LOW_RELATIVE_PARAGRAPH_RIGHT (6),
-;                     $LOW_RELATIVE_PAGE (7),
-;                     $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;                   $LOW_ANCHOR_AS_CHARACTER(1) Accepts No $iHorRelation Values.
-;                   $LOW_ANCHOR_AT_PAGE(2) Accepts the following $iHorRelation Values:
-;                     $LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
-;                     $LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
-;                     $LOW_RELATIVE_PAGE (7),
-;                     $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;                   $LOW_ANCHOR_AT_CHARACTER(4) Accepts the following $iHorRelation Values:
-;                     $LOW_RELATIVE_PARAGRAPH (0),
-;                     $LOW_RELATIVE_PARAGRAPH_TEXT (1),
-;                     $LOW_RELATIVE_CHARACTER (2),
-;                     $LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
-;                     $LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
-;                     $LOW_RELATIVE_PARAGRAPH_LEFT (5),
-;                     $LOW_RELATIVE_PARAGRAPH_RIGHT (6),
-;                     $LOW_RELATIVE_PAGE (7),
-;                     $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;                  # $LOW_ANCHOR_AT_PARAGRAPH(0) Accepts the following $iHorRelation Values:
+;                  - $LOW_RELATIVE_PARAGRAPH (0),
+;                  - $LOW_RELATIVE_PARAGRAPH_TEXT (1),
+;                  - $LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
+;                  - $LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
+;                  - $LOW_RELATIVE_PARAGRAPH_LEFT (5),
+;                  - $LOW_RELATIVE_PARAGRAPH_RIGHT (6),
+;                  - $LOW_RELATIVE_PAGE (7),
+;                  - $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;                  # $LOW_ANCHOR_AS_CHARACTER(1) Accepts No $iHorRelation Values.
+;                  # $LOW_ANCHOR_AT_PAGE(2) Accepts the following $iHorRelation Values:
+;                  - $LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
+;                  - $LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
+;                  - $LOW_RELATIVE_PAGE (7),
+;                  - $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;                  # $LOW_ANCHOR_AT_CHARACTER(4) Accepts the following $iHorRelation Values:
+;                  - $LOW_RELATIVE_PARAGRAPH (0),
+;                  - $LOW_RELATIVE_PARAGRAPH_TEXT (1),
+;                  - $LOW_RELATIVE_CHARACTER (2),
+;                  - $LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
+;                  - $LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
+;                  - $LOW_RELATIVE_PARAGRAPH_LEFT (5),
+;                  - $LOW_RELATIVE_PARAGRAPH_RIGHT (6),
+;                  - $LOW_RELATIVE_PAGE (7),
+;                  - $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
 ;                  $iVertRelation has varying acceptable values, depending on the current Anchor position. The Following is a list of acceptable values per anchor position.
-;                   $LOW_ANCHOR_AT_PARAGRAPH(0) Accepts the following $iVertRelation Values:
-;                     $LOW_RELATIVE_PARAGRAPH (0)[The Same as "Margin" in L.O. UI],
-;                     $LOW_RELATIVE_PAGE (7),
-;                     $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;                   $LOW_ANCHOR_AS_CHARACTER(1) Accepts the following $iVertRelation Values:
-;                     $LOW_RELATIVE_ROW(-1),
-;                     $LOW_RELATIVE_PARAGRAPH (0)[The Same as "Baseline" in L.O. UI],
-;                     $LOW_RELATIVE_CHARACTER (2),
-;                   $LOW_ANCHOR_AT_PAGE(2) Accepts the following $iVertRelation Values:
-;                     $LOW_RELATIVE_PAGE (7),
-;                     $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;                   $LOW_ANCHOR_AT_CHARACTER(4) Accepts the following $iVertRelation Values:
-;                     $LOW_RELATIVE_PARAGRAPH (0)[The same as "Margin" in L.O. UI],
-;                     $LOW_RELATIVE_PARAGRAPH_TEXT (1),
-;                     $LOW_RELATIVE_CHARACTER (2),
-;                     $LOW_RELATIVE_PAGE (7),
-;                     $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;                     $LOW_RELATIVE_TEXT_LINE (9)[The same as "Line of Text" in L.O. UI]
+;                  # $LOW_ANCHOR_AT_PARAGRAPH(0) Accepts the following $iVertRelation Values:
+;                  - $LOW_RELATIVE_PARAGRAPH (0)[The Same as "Margin" in L.O. UI],
+;                  - $LOW_RELATIVE_PAGE (7),
+;                  - $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;                  # $LOW_ANCHOR_AS_CHARACTER(1) Accepts the following $iVertRelation Values:
+;                  - $LOW_RELATIVE_ROW(-1),
+;                  - $LOW_RELATIVE_PARAGRAPH (0)[The Same as "Baseline" in L.O. UI],
+;                  - $LOW_RELATIVE_CHARACTER (2),
+;                  # $LOW_ANCHOR_AT_PAGE(2) Accepts the following $iVertRelation Values:
+;                  - $LOW_RELATIVE_PAGE (7),
+;                  - $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;                  # $LOW_ANCHOR_AT_CHARACTER(4) Accepts the following $iVertRelation Values:
+;                  - $LOW_RELATIVE_PARAGRAPH (0)[The same as "Margin" in L.O. UI],
+;                  - $LOW_RELATIVE_PARAGRAPH_TEXT (1),
+;                  - $LOW_RELATIVE_CHARACTER (2),
+;                  - $LOW_RELATIVE_PAGE (7),
+;                  - $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;                  - $LOW_RELATIVE_TEXT_LINE (9)[The same as "Line of Text" in L.O. UI]
 ;                  The behavior of each Relation constant is described below.
-;                     $LOW_RELATIVE_ROW(-1), This option will position the frame considering the height of the row where the anchor is placed.
-;                     $LOW_RELATIVE_PARAGRAPH (0), [For Horizontal Relation:] the frame is positioned considering the whole width available for the paragraph, including indent spaces.
-;                     $LOW_RELATIVE_PARAGRAPH [For Vertical Relation:] {$LOW_RELATIVE_PARAGRAPH is Also called "Margin" or "Baseline" in L.O. UI], Depending on the anchoring type, the frame is positioned considering the space between the top margin and the character ("To character" anchoring) or bottom edge of the paragraph ("To paragraph" anchoring) where the anchor is placed. Or will position the frame considering the text baseline over which all characters are placed. ("As Character" anchoring.)
-;                     $LOW_RELATIVE_PARAGRAPH_TEXT (1), [For Horizontal Relation:] the frame is positioned considering the whole width available for text in the paragraph, excluding indent spaces.
-;                     $LOW_RELATIVE_PARAGRAPH_TEXT [For Vertical relation:] the frame is positioned considering the height of the paragraph where the anchor is placed.
-;                     $LOW_RELATIVE_CHARACTER (2), [For Horizontal Relation:] the frame is positioned considering the horizontal space used by the character.
-;                     $LOW_RELATIVE_CHARACTER [For Vertical relation:] the frame is positioned considering the vertical space used by the character.
-;                     $LOW_RELATIVE_PAGE_LEFT (3),[For Horizontal Relation:], the frame is positioned considering the space available between the left page border and the left paragraph border. [Same as Left Page Border in L.O. UI]
-;                     $LOW_RELATIVE_PAGE_RIGHT (4),[For Horizontal Relation:], the frame is positioned considering the space available between the Right page border and the right paragraph border. [Same as Right Page Border in L.O. UI]
-;                     $LOW_RELATIVE_PARAGRAPH_LEFT (5),[For Horizontal Relation:] the frame is positioned considering the width of the indent space available to the left of the paragraph.
-;                     $LOW_RELATIVE_PARAGRAPH_RIGHT (6),[For Horizontal Relation:], the frame is positioned considering the width of the indent space available to the right of the paragraph.
-;                     $LOW_RELATIVE_PAGE (7),[For Horizontal Relation:], the frame is positioned considering the whole width of the page, from the left to the right page borders.
-;                     $LOW_RELATIVE_PAGE [For Vertical relation:], the frame is positioned considering the full page height, from top to bottom page borders.
-;                     $LOW_RELATIVE_PAGE_PRINT (8),[For Horizontal Relation:], [Same as Page Text Area in L.O. UI] the frame is positioned considering the whole width available for text in the page, from the left to the right page margins.
-;                     $LOW_RELATIVE_PAGE_PRINT [For Vertical relation:], the frame is positioned considering the full height available for text, from top to bottom margins.
-;                     $LOW_RELATIVE_TEXT_LINE (9),[For Vertical relation:], the frame is positioned considering the height of the line of text where the anchor is placed.
+;                  - $LOW_RELATIVE_ROW(-1), This option will position the frame considering the height of the row where the anchor is placed.
+;                  - $LOW_RELATIVE_PARAGRAPH (0), [For Horizontal Relation:] the frame is positioned considering the whole width available for the paragraph, including indent spaces.
+;                  - $LOW_RELATIVE_PARAGRAPH [For Vertical Relation:] {$LOW_RELATIVE_PARAGRAPH is Also called "Margin" or "Baseline" in L.O. UI], Depending on the anchoring type, the frame is positioned considering the space between the top margin and the character ("To character" anchoring) or bottom edge of the paragraph ("To paragraph" anchoring) where the anchor is placed. Or will position the frame considering the text baseline over which all characters are placed. ("As Character" anchoring.)
+;                  - $LOW_RELATIVE_PARAGRAPH_TEXT (1), [For Horizontal Relation:] the frame is positioned considering the whole width available for text in the paragraph, excluding indent spaces.
+;                  - $LOW_RELATIVE_PARAGRAPH_TEXT [For Vertical relation:] the frame is positioned considering the height of the paragraph where the anchor is placed.
+;                  - $LOW_RELATIVE_CHARACTER (2), [For Horizontal Relation:] the frame is positioned considering the horizontal space used by the character.
+;                  - $LOW_RELATIVE_CHARACTER [For Vertical relation:] the frame is positioned considering the vertical space used by the character.
+;                  - $LOW_RELATIVE_PAGE_LEFT (3),[For Horizontal Relation:], the frame is positioned considering the space available between the left page border and the left paragraph border. [Same as Left Page Border in L.O. UI]
+;                  - $LOW_RELATIVE_PAGE_RIGHT (4),[For Horizontal Relation:], the frame is positioned considering the space available between the Right page border and the right paragraph border. [Same as Right Page Border in L.O. UI]
+;                  - $LOW_RELATIVE_PARAGRAPH_LEFT (5),[For Horizontal Relation:] the frame is positioned considering the width of the indent space available to the left of the paragraph.
+;                  - $LOW_RELATIVE_PARAGRAPH_RIGHT (6),[For Horizontal Relation:], the frame is positioned considering the width of the indent space available to the right of the paragraph.
+;                  - $LOW_RELATIVE_PAGE (7),[For Horizontal Relation:], the frame is positioned considering the whole width of the page, from the left to the right page borders.
+;                  - $LOW_RELATIVE_PAGE [For Vertical relation:], the frame is positioned considering the full page height, from top to bottom page borders.
+;                  - $LOW_RELATIVE_PAGE_PRINT (8),[For Horizontal Relation:], [Same as Page Text Area in L.O. UI] the frame is positioned considering the whole width available for text in the page, from the left to the right page margins.
+;                  - $LOW_RELATIVE_PAGE_PRINT [For Vertical relation:], the frame is positioned considering the full height available for text, from top to bottom margins.
+;                  - $LOW_RELATIVE_TEXT_LINE (9),[For Vertical relation:], the frame is positioned considering the height of the line of text where the anchor is placed.
 ; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
@@ -4868,67 +4868,67 @@ EndFunc   ;==>_LOWriter_FrameStyleWrapOptions
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  $iHorRelation has varying acceptable values, depending on the current Anchor position and also the current $iHorAlign setting.
 ;                  The Following is a list of acceptable values per anchor position.
-;                   $LOW_ANCHOR_AT_PARAGRAPH(0) Accepts the following $iHorRelation Values:
-;                     $LOW_RELATIVE_PARAGRAPH (0),
-;                     $LOW_RELATIVE_PARAGRAPH_TEXT (1),
-;                     $LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
-;                     $LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
-;                     $LOW_RELATIVE_PARAGRAPH_LEFT (5),
-;                     $LOW_RELATIVE_PARAGRAPH_RIGHT (6),
-;                     $LOW_RELATIVE_PAGE (7),
-;                     $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;                   $LOW_ANCHOR_AS_CHARACTER(1) Accepts No $iHorRelation Values.
-;                   $LOW_ANCHOR_AT_PAGE(2) Accepts the following $iHorRelation Values:
-;                     $LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
-;                     $LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
-;                     $LOW_RELATIVE_PAGE (7),
-;                     $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;                   $LOW_ANCHOR_AT_CHARACTER(4) Accepts the following $iHorRelation Values:
-;                     $LOW_RELATIVE_PARAGRAPH (0),
-;                     $LOW_RELATIVE_PARAGRAPH_TEXT (1),
-;                     $LOW_RELATIVE_CHARACTER (2),
-;                     $LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
-;                     $LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
-;                     $LOW_RELATIVE_PARAGRAPH_LEFT (5),
-;                     $LOW_RELATIVE_PARAGRAPH_RIGHT (6),
-;                     $LOW_RELATIVE_PAGE (7),
-;                     $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;                  # $LOW_ANCHOR_AT_PARAGRAPH(0) Accepts the following $iHorRelation Values:
+;                  - $LOW_RELATIVE_PARAGRAPH (0),
+;                  - $LOW_RELATIVE_PARAGRAPH_TEXT (1),
+;                  - $LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
+;                  - $LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
+;                  - $LOW_RELATIVE_PARAGRAPH_LEFT (5),
+;                  - $LOW_RELATIVE_PARAGRAPH_RIGHT (6),
+;                  - $LOW_RELATIVE_PAGE (7),
+;                  - $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;                  # $LOW_ANCHOR_AS_CHARACTER(1) Accepts No $iHorRelation Values.
+;                  # $LOW_ANCHOR_AT_PAGE(2) Accepts the following $iHorRelation Values:
+;                  - $LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
+;                  - $LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
+;                  - $LOW_RELATIVE_PAGE (7),
+;                  - $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;                  # $LOW_ANCHOR_AT_CHARACTER(4) Accepts the following $iHorRelation Values:
+;                  - $LOW_RELATIVE_PARAGRAPH (0),
+;                  - $LOW_RELATIVE_PARAGRAPH_TEXT (1),
+;                  - $LOW_RELATIVE_CHARACTER (2),
+;                  - $LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
+;                  - $LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
+;                  - $LOW_RELATIVE_PARAGRAPH_LEFT (5),
+;                  - $LOW_RELATIVE_PARAGRAPH_RIGHT (6),
+;                  - $LOW_RELATIVE_PAGE (7),
+;                  - $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
 ;                  $iVertRelation has varying acceptable values, depending on the current Anchor position. The Following is a list of acceptable values per anchor position.
-;                   $LOW_ANCHOR_AT_PARAGRAPH(0) Accepts the following $iVertRelation Values:
-;                     $LOW_RELATIVE_PARAGRAPH (0)[The Same as "Margin" in L.O. UI],
-;                     $LOW_RELATIVE_PAGE (7),
-;                     $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;                   $LOW_ANCHOR_AS_CHARACTER(1) Accepts the following $iVertRelation Values:
-;                     $LOW_RELATIVE_ROW(-1),
-;                     $LOW_RELATIVE_PARAGRAPH (0)[The Same as "Baseline" in L.O. UI],
-;                     $LOW_RELATIVE_CHARACTER (2),
-;                   $LOW_ANCHOR_AT_PAGE(2) Accepts the following $iVertRelation Values:
-;                     $LOW_RELATIVE_PAGE (7),
-;                     $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;                   $LOW_ANCHOR_AT_CHARACTER(4) Accepts the following $iVertRelation Values:
-;                     $LOW_RELATIVE_PARAGRAPH (0)[The same as "Margin" in L.O. UI],
-;                     $LOW_RELATIVE_PARAGRAPH_TEXT (1),
-;                     $LOW_RELATIVE_CHARACTER (2),
-;                     $LOW_RELATIVE_PAGE (7),
-;                     $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;                     $LOW_RELATIVE_TEXT_LINE (9)[The same as "Line of Text" in L.O. UI]
+;                  # $LOW_ANCHOR_AT_PARAGRAPH(0) Accepts the following $iVertRelation Values:
+;                  - $LOW_RELATIVE_PARAGRAPH (0)[The Same as "Margin" in L.O. UI],
+;                  - $LOW_RELATIVE_PAGE (7),
+;                  - $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;                  # $LOW_ANCHOR_AS_CHARACTER(1) Accepts the following $iVertRelation Values:
+;                  - $LOW_RELATIVE_ROW(-1),
+;                  - $LOW_RELATIVE_PARAGRAPH (0)[The Same as "Baseline" in L.O. UI],
+;                  - $LOW_RELATIVE_CHARACTER (2),
+;                  # $LOW_ANCHOR_AT_PAGE(2) Accepts the following $iVertRelation Values:
+;                  - $LOW_RELATIVE_PAGE (7),
+;                  - $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;                  # $LOW_ANCHOR_AT_CHARACTER(4) Accepts the following $iVertRelation Values:
+;                  - $LOW_RELATIVE_PARAGRAPH (0)[The same as "Margin" in L.O. UI],
+;                  - $LOW_RELATIVE_PARAGRAPH_TEXT (1),
+;                  - $LOW_RELATIVE_CHARACTER (2),
+;                  - $LOW_RELATIVE_PAGE (7),
+;                  - $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;                  - $LOW_RELATIVE_TEXT_LINE (9)[The same as "Line of Text" in L.O. UI]
 ;                  The behavior of each Relation constant is described below.
-;                     $LOW_RELATIVE_ROW(-1), This option will position the frame considering the height of the row where the anchor is placed.
-;                     $LOW_RELATIVE_PARAGRAPH (0), [For Horizontal Relation:] the frame is positioned considering the whole width available for the paragraph, including indent spaces.
-;                     $LOW_RELATIVE_PARAGRAPH [For Vertical Relation:] {$LOW_RELATIVE_PARAGRAPH is Also called "Margin" or "Baseline" in L.O. UI], Depending on the anchoring type, the frame is positioned considering the space between the top margin and the character ("To character" anchoring) or bottom edge of the paragraph ("To paragraph" anchoring) where the anchor is placed. Or will position the frame considering the text baseline over which all characters are placed. ("As Character" anchoring.)
-;                     $LOW_RELATIVE_PARAGRAPH_TEXT (1), [For Horizontal Relation:] the frame is positioned considering the whole width available for text in the paragraph, excluding indent spaces.
-;                     $LOW_RELATIVE_PARAGRAPH_TEXT [For Vertical relation:] the frame is positioned considering the height of the paragraph where the anchor is placed.
-;                     $LOW_RELATIVE_CHARACTER (2), [For Horizontal Relation:] the frame is positioned considering the horizontal space used by the character.
-;                     $LOW_RELATIVE_CHARACTER [For Vertical relation:] the frame is positioned considering the vertical space used by the character.
-;                     $LOW_RELATIVE_PAGE_LEFT (3),[For Horizontal Relation:], the frame is positioned considering the space available between the left page border and the left paragraph border. [Same as Left Page Border in L.O. UI]
-;                     $LOW_RELATIVE_PAGE_RIGHT (4),[For Horizontal Relation:], the frame is positioned considering the space available between the Right page border and the right paragraph border. [Same as Right Page Border in L.O. UI]
-;                     $LOW_RELATIVE_PARAGRAPH_LEFT (5),[For Horizontal Relation:] the frame is positioned considering the width of the indent space available to the left of the paragraph.
-;                     $LOW_RELATIVE_PARAGRAPH_RIGHT (6),[For Horizontal Relation:], the frame is positioned considering the width of the indent space available to the right of the paragraph.
-;                     $LOW_RELATIVE_PAGE (7),[For Horizontal Relation:], the frame is positioned considering the whole width of the page, from the left to the right page borders.
-;                     $LOW_RELATIVE_PAGE [For Vertical relation:], the frame is positioned considering the full page height, from top to bottom page borders.
-;                     $LOW_RELATIVE_PAGE_PRINT (8),[For Horizontal Relation:], [Same as Page Text Area in L.O. UI] the frame is positioned considering the whole width available for text in the page, from the left to the right page margins.
-;                     $LOW_RELATIVE_PAGE_PRINT [For Vertical relation:], the frame is positioned considering the full height available for text, from top to bottom margins.
-;                     $LOW_RELATIVE_TEXT_LINE (9),[For Vertical relation:], the frame is positioned considering the height of the line of text where the anchor is placed.
+;                  - $LOW_RELATIVE_ROW(-1), This option will position the frame considering the height of the row where the anchor is placed.
+;                  - $LOW_RELATIVE_PARAGRAPH (0), [For Horizontal Relation:] the frame is positioned considering the whole width available for the paragraph, including indent spaces.
+;                  - $LOW_RELATIVE_PARAGRAPH [For Vertical Relation:] {$LOW_RELATIVE_PARAGRAPH is Also called "Margin" or "Baseline" in L.O. UI], Depending on the anchoring type, the frame is positioned considering the space between the top margin and the character ("To character" anchoring) or bottom edge of the paragraph ("To paragraph" anchoring) where the anchor is placed. Or will position the frame considering the text baseline over which all characters are placed. ("As Character" anchoring.)
+;                  - $LOW_RELATIVE_PARAGRAPH_TEXT (1), [For Horizontal Relation:] the frame is positioned considering the whole width available for text in the paragraph, excluding indent spaces.
+;                  - $LOW_RELATIVE_PARAGRAPH_TEXT [For Vertical relation:] the frame is positioned considering the height of the paragraph where the anchor is placed.
+;                  - $LOW_RELATIVE_CHARACTER (2), [For Horizontal Relation:] the frame is positioned considering the horizontal space used by the character.
+;                  - $LOW_RELATIVE_CHARACTER [For Vertical relation:] the frame is positioned considering the vertical space used by the character.
+;                  - $LOW_RELATIVE_PAGE_LEFT (3),[For Horizontal Relation:], the frame is positioned considering the space available between the left page border and the left paragraph border. [Same as Left Page Border in L.O. UI]
+;                  - $LOW_RELATIVE_PAGE_RIGHT (4),[For Horizontal Relation:], the frame is positioned considering the space available between the Right page border and the right paragraph border. [Same as Right Page Border in L.O. UI]
+;                  - $LOW_RELATIVE_PARAGRAPH_LEFT (5),[For Horizontal Relation:] the frame is positioned considering the width of the indent space available to the left of the paragraph.
+;                  - $LOW_RELATIVE_PARAGRAPH_RIGHT (6),[For Horizontal Relation:], the frame is positioned considering the width of the indent space available to the right of the paragraph.
+;                  - $LOW_RELATIVE_PAGE (7),[For Horizontal Relation:], the frame is positioned considering the whole width of the page, from the left to the right page borders.
+;                  - $LOW_RELATIVE_PAGE [For Vertical relation:], the frame is positioned considering the full page height, from top to bottom page borders.
+;                  - $LOW_RELATIVE_PAGE_PRINT (8),[For Horizontal Relation:], [Same as Page Text Area in L.O. UI] the frame is positioned considering the whole width available for text in the page, from the left to the right page margins.
+;                  - $LOW_RELATIVE_PAGE_PRINT [For Vertical relation:], the frame is positioned considering the full height available for text, from top to bottom margins.
+;                  - $LOW_RELATIVE_TEXT_LINE (9),[For Vertical relation:], the frame is positioned considering the height of the line of text where the anchor is placed.
 ; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByCursor, _LOWriter_FrameGetObjByName
 ; Link ..........:
 ; Example .......: Yes
