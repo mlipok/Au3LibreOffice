@@ -25,7 +25,6 @@
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; __LOWriter_AddTo1DArray
-; __LOWriter_AddTo2DArray
 ; __LOWriter_AnyAreDefault
 ; __LOWriter_ArrayFill
 ; __LOWriter_Border
@@ -120,7 +119,6 @@
 ; __LOWriter_TransparencyGradientConvert
 ; __LOWriter_TransparencyGradientNameInsert
 ; __LOWriter_UnitConvert
-; __LOWriter_VarsAreDefault
 ; __LOWriter_VarsAreNull
 ; __LOWriter_VersionCheck
 ; __LOWriter_ViewCursorMove
@@ -169,52 +167,6 @@ Func __LOWriter_AddTo1DArray(ByRef $aArray, $vData, $bCountInFirst = False)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>__LOWriter_AddTo1DArray
-
-; #INTERNAL_USE_ONLY# ===========================================================================================================
-; Name ..........: __LOWriter_AddTo2DArray
-; Description ...: Add data to a 2 Dimensional array.
-; Syntax ........: __LOWriter_AddTo2DArray(ByRef $aArray, $vDataCol1, $vDataCol2[, $bCountInFirst = False])
-; Parameters ....: $aArray              - [in/out] an array of unknowns. The Array to directly add data to. Array will be directly modified.
-;                  $vDataCol1           - a variant value. The Data to add to the first column of the Array.
-;                  $vDataCol2           - a variant value. The Data to add to the Second column of the Array.
-;                  $bCountInFirst       - [optional] a boolean value. Default is False. If True the first element of the array is a count of contained elements.
-; Return values .: Success: 1
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $aArray not an Array
-;                  @Error 1 @Extended 2 Return 0 = $bCountinFirst not a Boolean.
-;                  @Error 1 @Extended 3 Return 0 = $aArray does not contain two columns.
-;                  @Error 1 @Extended 4 Return 0 = $aArray[0][0] contains non integer data or is not empty, and $bCountInFirst is set to True.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Array item was successfully added.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func __LOWriter_AddTo2DArray(ByRef $aArray, $vDataCol1, $vDataCol2, $bCountInFirst = False)
-	Local Const $UBOUND_COLUMNS = 2
-
-	If Not IsArray($aArray) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsBool($bCountInFirst) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If UBound($aArray, $UBOUND_COLUMNS) <> 2 Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; Too many or too few  columns
-
-	If $bCountInFirst And (UBound($aArray) = 0) Then
-		ReDim $aArray[1][2]
-		$aArray[0][0] = 0
-	EndIf
-
-	If $bCountInFirst And (($aArray[0][0] <> "") And Not IsInt($aArray[0][0])) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-
-	ReDim $aArray[UBound($aArray) + 1][2]
-	$aArray[UBound($aArray) - 1][0] = $vDataCol1
-	$aArray[UBound($aArray) - 1][1] = $vDataCol2
-	If $bCountInFirst Then $aArray[0][0] += 1
-
-	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
-EndFunc   ;==>__LOWriter_AddTo2DArray
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_AnyAreDefault
@@ -9071,38 +9023,6 @@ Func __LOWriter_UnitConvert($nValue, $iReturnType)
 			Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	EndSwitch
 EndFunc   ;==>__LOWriter_UnitConvert
-
-; #INTERNAL_USE_ONLY# ===========================================================================================================
-; Name ..........: __LOWriter_VarsAreDefault
-; Description ...: Tests whether all input parameters are equal to Default keyword.
-; Syntax ........: __LOWriter_VarsAreDefault($vVar1[, $vVar2 = Default[, $vVar3 = Default[, $vVar4 = Default[, $vVar5 = Default[, $vVar6 = Default[, $vVar7 = Default[, $vVar8 = Default]]]]]]])
-; Parameters ....: $vVar1               - a variant value.
-;                  $vVar2               - [optional] a variant value. Default is Default.
-;                  $vVar3               - [optional] a variant value. Default is Default.
-;                  $vVar4               - [optional] a variant value. Default is Default.
-;                  $vVar5               - [optional] a variant value. Default is Default.
-;                  $vVar6               - [optional] a variant value. Default is Default.
-;                  $vVar7               - [optional] a variant value. Default is Default.
-;                  $vVar8               - [optional] a variant value. Default is Default.
-; Return values .: Success: Boolean
-;                  Failure: False
-;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = If All parameters are Equal to Default, True is returned. Else False.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func __LOWriter_VarsAreDefault($vVar1, $vVar2 = Default, $vVar3 = Default, $vVar4 = Default, $vVar5 = Default, $vVar6 = Default, $vVar7 = Default, $vVar8 = Default)
-	Local $bAllDefault1, $bAllDefault2
-
-	$bAllDefault1 = (($vVar1 = Default) And ($vVar2 = Default) And ($vVar3 = Default) And ($vVar4 = Default)) ? (True) : (False)
-	$bAllDefault2 = (($vVar5 = Default) And ($vVar6 = Default) And ($vVar7 = Default) And ($vVar8 = Default)) ? (True) : (False)
-
-	Return SetError($__LO_STATUS_SUCCESS, 0, ($bAllDefault1 And $bAllDefault2) ? (True) : (False))
-EndFunc   ;==>__LOWriter_VarsAreDefault
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_VarsAreNull

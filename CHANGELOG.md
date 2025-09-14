@@ -838,7 +838,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 		- _LOWriter_PageStyleFooterAreaTransparencyGradientMulti
 		- _LOWriter_PageStyleHeaderAreaGradientMulticolor
 		- _LOWriter_PageStyleHeaderAreaTransparencyGradientMulti
-	4. Shape Functions:
+	5. Shape Functions:
 		- _LOWriter_ShapeAreaGradientMulticolor
 		- _LOWriter_ShapeAreaTransparencyGradientMulti
 
@@ -1023,6 +1023,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Remove `LibreOfficeWriter_Font` file, and merge functions into `LibreOfficeWriter_Helper`
 - `$__LO_STATUS_DOC_ERROR` Error Constant and renumber all after errors.
 - __LOWriter_RegExpConvert.
+- __LOWriter_AddTo2DArray.
+- __LOWriter_VarsAreDefault
 
 [To Top](#releases)
 
