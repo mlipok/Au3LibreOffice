@@ -67,15 +67,15 @@
 ; Remarks .......: The first parameter passed to the User function will always be the COM Error object. See below.
 ;                  Every COM Error will be passed to that function. The user can then read the following properties. (As Found in the COM Reference section in AutoIt Help File.) Using the first parameter in the UserFunction.
 ;                  For Example MyFunc($oMyError)
-;                    $oMyError.number The Windows HRESULT value from a COM call
-;                    $oMyError.windescription The FormatWinError() text derived from .number
-;                    $oMyError.source Name of the Object generating the error (contents from ExcepInfo.source)
-;                    $oMyError.description Source Object's description of the error (contents from ExcepInfo.description)
-;                    $oMyError.helpfile Source Object's help file for the error (contents from ExcepInfo.helpfile)
-;                    $oMyError.helpcontext Source Object's help file context id number (contents from ExcepInfo.helpcontext)
-;                    $oMyError.lastdllerror The number returned from GetLastError()
-;                    $oMyError.scriptline The script line on which the error was generated
-;                    NOTE: Not all properties will necessarily contain data, some will be blank.
+;                  - $oMyError.number The Windows HRESULT value from a COM call
+;                  - $oMyError.windescription The FormatWinError() text derived from .number
+;                  - $oMyError.source Name of the Object generating the error (contents from ExcepInfo.source)
+;                  - $oMyError.description Source Object's description of the error (contents from ExcepInfo.description)
+;                  - $oMyError.helpfile Source Object's help file for the error (contents from ExcepInfo.helpfile)
+;                  - $oMyError.helpcontext Source Object's help file context id number (contents from ExcepInfo.helpcontext)
+;                  - $oMyError.lastdllerror The number returned from GetLastError()
+;                  - $oMyError.scriptline The script line on which the error was generated
+;                  - NOTE: Not all properties will necessarily contain data, some will be blank.
 ;                  If MsgBox or ConsoleWrite functions are passed to this function, the error details will be displayed using that function automatically.
 ;                  If called with Default keyword, the current UserFunction, if set, will be returned.
 ;                  If called with Null keyword, the currently set UserFunction is cleared and only the internal ComErrorHandler will be called for COM Errors.
