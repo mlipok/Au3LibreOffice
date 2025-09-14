@@ -664,7 +664,7 @@ Func _LOCalc_DocGetPath(ByRef $oDoc, $bReturnLibreURL = False)
 	If Not IsBool($bReturnLibreURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not $oDoc.hasLocation() Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-		$sPath = $oDoc.URL()
+	$sPath = $oDoc.URL()
 
 	If Not $bReturnLibreURL Then
 		$sPath = _LOCalc_PathConvert($sPath, $LOC_PATHCONV_PCPATH_RETURN)
