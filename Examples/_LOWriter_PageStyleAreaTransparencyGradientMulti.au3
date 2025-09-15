@@ -23,7 +23,7 @@ Func Example()
 
 	; Set Page style Transparency Gradient settings to: Gradient Type = $LOW_GRAD_TYPE_ELLIPTICAL, XCenter to 75%, YCenter to 45%, Angle to 180 degrees
 	; Border to 16%, Start transparency to 10%, End Transparency to 62%
-	_LOWriter_PageStyleTransparencyGradient($oDoc, $oPageStyle, $LOW_GRAD_TYPE_ELLIPTICAL, 75, 45, 180, 16, 10, 62)
+	_LOWriter_PageStyleAreaTransparencyGradient($oDoc, $oPageStyle, $LOW_GRAD_TYPE_ELLIPTICAL, 75, 45, 180, 16, 10, 62)
 	If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve an array of Transparency Multi Gradient ColorStops.
