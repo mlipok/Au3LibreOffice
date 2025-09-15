@@ -112,7 +112,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Constants
 	- $LOB_ALIGN_VERT_*
 	- $LOB_CASEMAP_*
-	- $LOB_COLOR_*
+	- ~~$LOB_COLOR_*~~
 	- $LOB_DATA_SET_TYPE_*
 	- $LOB_DATA_TYPE_*
 	- $LOB_DBASE_BEST_ROW_SCOPE_*
@@ -120,7 +120,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOB_DBASE_RESULT_SET_CONCURRENCY_*
 	- $LOB_DBASE_TRANSACTION_ISOLATION_*
 	- $LOB_FORMAT_KEYS_*
-	- $LOB_PATHCONV_*
+	- ~~$LOB_PATHCONV_*~~
 	- $LOB_POSTURE_*
 	- $LOB_RELIEF_*
 	- $LOB_REP_CON_IMG_BTN_SCALE_*
@@ -210,10 +210,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 - Helper functions
 	- _LOBase_ComError_UserFunction
-	- _LOBase_ConvertFromMicrometer
-	- _LOBase_ConvertToMicrometer
-	- _LOBase_ConvertColorFromLong
-	- _LOBase_ConvertColorToLong
+	- ~~_LOBase_ConvertFromMicrometer~~
+	- ~~_LOBase_ConvertToMicrometer~~
+	- ~~_LOBase_ConvertColorFromLong~~
+	- ~~_LOBase_ConvertColorToLong~~
 	- _LOBase_DateStructCreate
 	- _LOBase_DateStructModify
 	- _LOBase_FontDescCreate
@@ -226,24 +226,24 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOBase_FormatKeyGetStandard
 	- _LOBase_FormatKeyGetString
 	- _LOBase_FormatKeyList
-	- _LOBase_PathConvert
-	- _LOBase_VersionGet
+	- ~~_LOBase_PathConvert~~
+	- ~~_LOBase_VersionGet~~
 
 - Internal functions
-	- __LOBase_AddTo1DArray
-	- __LOBase_ArrayFill
+	- ~~__LOBase_AddTo1DArray~~
+	- ~~__LOBase_ArrayFill~~
 	- __LOBase_ColTransferProps
 	- __LOBase_ColTypeName
 	- __LOBase_CreateStruct
 	- __LOBase_DatabaseMetaGetQuery
 	- __LOBase_InternalComErrorHandler
-	- __LOBase_IntIsBetween
+	- ~~__LOBase_IntIsBetween~~
 	- __LOBase_ReportConIdentify
 	- __LOBase_ReportConSetGetFontDesc
-	- __LOBase_SetPropertyValue
-	- __LOBase_UnitConvert
-	- __LOBase_VarsAreNull
-	- __LOBase_VersionCheck
+	- ~~__LOBase_SetPropertyValue~~
+	- ~~__LOBase_UnitConvert~~
+	- ~~__LOBase_VarsAreNull~~
+	- ~~__LOBase_VersionCheck~~
 
 - Query functions
 	- _LOBase_QueriesGetCount
