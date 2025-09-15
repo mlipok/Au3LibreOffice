@@ -33,14 +33,33 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 - Central Constants File
 	- LibreOffice_Constants.au3
+		- $__LOCONST_SLEEP_DIV
+		- $LO_PATHCONV_*
+		- $__LO_STATUS_*
+		- $__LOCONST_CONVERT_*
 	- LibreOffice_Helper.au3
 		- _LO_ComError_UserFunction
+		- _LO_ConvertColorFromLong
+		- _LO_ConvertColorToLong
+		- _LO_ConvertFromMicrometer
+		- _LO_ConvertToMicrometer
 		- _LO_InitializePortable
+		- _LO_PathConvert
+		- _LO_VersionGet
 	- LibreOffice_Internal.au3
+		- __LO_AddTo1DArray
+		- __LO_ArrayFill
+		- __LO_CreateStruct
 		- __LO_DeleteTempReg
 		- __LO_InternalComErrorHandler
+		- __LO_IntIsBetween
+		- __LO_NumIsBetween
 		- __LO_ServiceManager
 		- __LO_SetPortableServiceManager
+		- __LO_SetPropertyValue
+		- __LO_UnitConvert
+		- __LO_VarsAreNull
+		- __LO_VersionCheck
 - Central UDF File for all components (@mLipok)
 	- LibreOffice.au3
 - Support for LibreOffice Portable usage. See `_LO_InitializePortable`.

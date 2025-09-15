@@ -15,6 +15,18 @@
 
 #Tidy_ILC_Pos=50
 
+; Sleep Divisor $__LOCONST_SLEEP_DIV
+; In applicable functions this is used for adjusting how frequent a sleep occurs in loops.
+; For any number above 0 the number of times a loop has completed is divided by $__LOCONST_SLEEP_DIV. If you find some functions cause momentary freeze ups, a recommended value is 15.
+; Set to 0 for no pause in a loop.
+Global Const $__LOCONST_SLEEP_DIV = 0
+
+; Path Convert Constants.
+Global Const _
+		$LO_PATHCONV_AUTO_RETURN = 0, _          ; Automatically returns the opposite of the input path, determined by StringInStr search for either "File:///"(L.O.Office URL) or "[A-Z]:\" (Windows File Path).
+		$LO_PATHCONV_OFFICE_RETURN = 1, _        ; Returns L.O. Office URL, even if the input is already in that format.
+		$LO_PATHCONV_PCPATH_RETURN = 2           ; Returns Windows File Path, even if the input is already in that format.
+
 ; Error Codes
 Global Enum _
 		$__LO_STATUS_SUCCESS, _                  ; 0 Function finished successfully.
