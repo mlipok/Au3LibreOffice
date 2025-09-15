@@ -275,7 +275,7 @@ EndFunc   ;==>_LOWriter_FormConCheckBoxData
 ;                  $iStyle              - [optional] an integer value (1-2). Default is Null. The display style of the checkbox. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bWordBreak          - [optional] a boolean value. Default is Null. If True, line breaks are allowed to be used.
 ;                  $sGraphics           - [optional] a string value. Default is Null. The path to an Image file.
 ;                  $iGraphicAlign       - [optional] an integer value (0-12). Default is Null. The Alignment of the Image. See Constants $LOW_FORM_CON_IMG_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
@@ -517,7 +517,7 @@ Func _LOWriter_FormConCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLabel =
 		$oCheckBox.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 
 		$oCheckBox.Control.BackgroundColor = $iBackColor
 		$iError = ($oCheckBox.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 16384))
@@ -773,9 +773,9 @@ EndFunc   ;==>_LOWriter_FormConComboBoxData
 ;                  $sDefaultTxt         - [optional] a string value. Default is Null. The default text of the combo Box.
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bDropdown           - [optional] a boolean value. Default is Null. If True, the Combo Box will behave like a dropdown.
 ;                  $iLines              - [optional] an integer value. Default is Null. If $bDropdown is True, $iLines specifies how many lines are shown in the dropdown list.
 ;                  $bAutoFill           - [optional] a boolean value. Default is Null. If True, the Autofill function is enabled.
@@ -1040,7 +1040,7 @@ Func _LOWriter_FormConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLabelFi
 		$oComboBox.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
 
 		$oComboBox.Control.BackgroundColor = $iBackColor
 		$iError = ($oComboBox.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 32768))
@@ -1060,7 +1060,7 @@ Func _LOWriter_FormConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLabelFi
 		$oComboBox.Control.setPropertyToDefault("BorderColor")
 
 	ElseIf ($iBorderColor <> Null) Then
-		If Not __LO_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
+		If Not __LO_IntIsBetween($iBorderColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
 
 		$oComboBox.Control.BorderColor = $iBorderColor
 		$iError = ($oComboBox.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 131072))
@@ -1295,9 +1295,9 @@ EndFunc   ;==>_LOWriter_FormConCurrencyFieldData
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
 ;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
@@ -1671,7 +1671,7 @@ Func _LOWriter_FormConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = Null,
 		$oCurrencyField.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 29, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 29, 0)
 
 		$oCurrencyField.Control.BackgroundColor = $iBackColor
 		$iError = ($oCurrencyField.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 33554432))
@@ -1691,7 +1691,7 @@ Func _LOWriter_FormConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = Null,
 		$oCurrencyField.Control.setPropertyToDefault("BorderColor")
 
 	ElseIf ($iBorderColor <> Null) Then
-		If Not __LO_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 31, 0)
+		If Not __LO_IntIsBetween($iBorderColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 31, 0)
 
 		$oCurrencyField.Control.BorderColor = $iBorderColor
 		$iError = ($oCurrencyField.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 134217728))
@@ -1890,9 +1890,9 @@ EndFunc   ;==>_LOWriter_FormConDateFieldData
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bDropdown           - [optional] a boolean value. Default is Null. If True, the field will behave as a dropdown control.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
@@ -2277,7 +2277,7 @@ Func _LOWriter_FormConDateFieldGeneral(ByRef $oDateField, $sName = Null, $oLabel
 		$oDateField.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 25, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 25, 0)
 
 		$oDateField.Control.BackgroundColor = $iBackColor
 		$iError = ($oDateField.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 2097152))
@@ -2297,7 +2297,7 @@ Func _LOWriter_FormConDateFieldGeneral(ByRef $oDateField, $sName = Null, $oLabel
 		$oDateField.Control.setPropertyToDefault("BorderColor")
 
 	ElseIf ($iBorderColor <> Null) Then
-		If Not __LO_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
+		If Not __LO_IntIsBetween($iBorderColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
 
 		$oDateField.Control.BorderColor = $iBorderColor
 		$iError = ($oDateField.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 8388608))
@@ -2490,9 +2490,9 @@ EndFunc   ;==>_LOWriter_FormConDelete
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
 ;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
@@ -2702,7 +2702,7 @@ Func _LOWriter_FormConFileSelFieldGeneral(ByRef $oFileSel, $sName = Null, $iTxtD
 		$oFileSel.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 
 		$oFileSel.Control.BackgroundColor = $iBackColor
 		$iError = ($oFileSel.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 4096))
@@ -2722,7 +2722,7 @@ Func _LOWriter_FormConFileSelFieldGeneral(ByRef $oFileSel, $sName = Null, $iTxtD
 		$oFileSel.Control.setPropertyToDefault("BorderColor")
 
 	ElseIf ($iBorderColor <> Null) Then
-		If Not __LO_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+		If Not __LO_IntIsBetween($iBorderColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 
 		$oFileSel.Control.BorderColor = $iBorderColor
 		$iError = ($oFileSel.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 16384))
@@ -2944,9 +2944,9 @@ EndFunc   ;==>_LOWriter_FormConFormattedFieldData
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
 ;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
@@ -3280,7 +3280,7 @@ Func _LOWriter_FormConFormattedFieldGeneral(ByRef $oFormatField, $sName = Null, 
 		$oFormatField.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
 
 		$oFormatField.Control.BackgroundColor = $iBackColor
 		$iError = ($oFormatField.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 2097152))
@@ -3300,7 +3300,7 @@ Func _LOWriter_FormConFormattedFieldGeneral(ByRef $oFormatField, $sName = Null, 
 		$oFormatField.Control.setPropertyToDefault("BorderColor")
 
 	ElseIf ($iBorderColor <> Null) Then
-		If Not __LO_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 28, 0)
+		If Not __LO_IntIsBetween($iBorderColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 28, 0)
 
 		$oFormatField.Control.BorderColor = $iBorderColor
 		$iError = ($oFormatField.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 8388608))
@@ -3649,9 +3649,9 @@ EndFunc   ;==>_LOWriter_FormConGroupBoxGeneral
 ;                  $bPrintable          - [optional] a boolean value. Default is Null. If True, the control will be displayed when printed.
 ;                  $bTabStop            - [optional] a boolean value. Default is Null. If True, the control can be selected with the Tab key.
 ;                  $iTabOrder           - [optional] an integer value (0-2147483647). Default is Null. The order the control is focused by the Tab key.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iAction             - [optional] an integer value (0-12). Default is Null. The action that occurs when the button is pushed. See Constants $LOW_FORM_CON_PUSH_CMD_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $sURL                - [optional] a string value. Default is Null. The URL or Document path to open.
 ;                  $sFrame              - [optional] a string value. Default is Null. The frame to open the URL in. See Constants, $LOW_FRAME_TARGET_* as defined in LibreOfficeWriter_Constants.au3.
@@ -3876,7 +3876,7 @@ Func _LOWriter_FormConImageButtonGeneral(ByRef $oImageButton, $sName = Null, $iT
 		$oImageButton.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
 		$oImageButton.Control.BackgroundColor = $iBackColor
 		$iError = ($oImageButton.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 128))
@@ -3896,7 +3896,7 @@ Func _LOWriter_FormConImageButtonGeneral(ByRef $oImageButton, $sName = Null, $iT
 		$oImageButton.Control.setPropertyToDefault("BorderColor")
 
 	ElseIf ($iBorderColor <> Null) Then
-		If Not __LO_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LO_IntIsBetween($iBorderColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 
 		$oImageButton.Control.BorderColor = $iBorderColor
 		$iError = ($oImageButton.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 512))
@@ -4107,9 +4107,9 @@ EndFunc   ;==>_LOWriter_FormConImageControlData
 ;                  $bPrintable          - [optional] a boolean value. Default is Null. If True, the control will be displayed when printed.
 ;                  $bTabStop            - [optional] a boolean value. Default is Null. If True, the control can be selected with the Tab key.
 ;                  $iTabOrder           - [optional] an integer value (0-2147483647). Default is Null. The order the control is focused by the Tab key.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $sGraphics           - [optional] a string value. Default is Null. The path to an Image file.
 ;                  $iScale              - [optional] an integer value (0-2). Default is Null. How to scale the image to fit the button. See Constants $LOW_FORM_CON_IMG_BTN_SCALE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
@@ -4289,7 +4289,7 @@ Func _LOWriter_FormConImageControlGeneral(ByRef $oImageControl, $sName = Null, $
 		$oImageControl.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 
 		$oImageControl.Control.BackgroundColor = $iBackColor
 		$iError = ($oImageControl.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 512))
@@ -4309,7 +4309,7 @@ Func _LOWriter_FormConImageControlGeneral(ByRef $oImageControl, $sName = Null, $
 		$oImageControl.Control.setPropertyToDefault("BorderColor")
 
 	ElseIf ($iBorderColor <> Null) Then
-		If Not __LO_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
+		If Not __LO_IntIsBetween($iBorderColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 
 		$oImageControl.Control.BorderColor = $iBorderColor
 		$iError = ($oImageControl.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 2048))
@@ -4559,9 +4559,9 @@ EndFunc   ;==>_LOWriter_FormConInsert
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bWordBreak          - [optional] a boolean value. Default is Null. If True, line breaks are allowed to be used.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
 ;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
@@ -4734,7 +4734,7 @@ Func _LOWriter_FormConLabelGeneral(ByRef $oLabel, $sName = Null, $sLabel = Null,
 		$oLabel.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 
 		$oLabel.Control.BackgroundColor = $iBackColor
 		$iError = ($oLabel.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 512))
@@ -4754,7 +4754,7 @@ Func _LOWriter_FormConLabelGeneral(ByRef $oLabel, $sName = Null, $sLabel = Null,
 		$oLabel.Control.setPropertyToDefault("BorderColor")
 
 	ElseIf ($iBorderColor <> Null) Then
-		If Not __LO_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		If Not __LO_IntIsBetween($iBorderColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 
 		$oLabel.Control.BorderColor = $iBorderColor
 		$iError = ($oLabel.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 2048))
@@ -4923,9 +4923,9 @@ EndFunc   ;==>_LOWriter_FormConListBoxData
 ;                  $asList              - [optional] an array of strings. Default is Null. An array of List entries. See remarks.
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bDropdown           - [optional] a boolean value. Default is Null. If True, the List Box will behave like a dropdown.
 ;                  $iLines              - [optional] an integer value (-2147483648-2147483647). Default is Null. If $bDropdown is True, $iLines specifies how many lines are shown in the dropdown list.
 ;                  $bMultiSel           - [optional] a boolean value. Default is Null. If True, more than one selection can be made in a list box.
@@ -5169,7 +5169,7 @@ Func _LOWriter_FormConListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabelFiel
 		$oListBox.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 
 		$oListBox.Control.BackgroundColor = $iBackColor
 		$iError = ($oListBox.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 8192))
@@ -5189,7 +5189,7 @@ Func _LOWriter_FormConListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabelFiel
 		$oListBox.Control.setPropertyToDefault("BorderColor")
 
 	ElseIf ($iBorderColor <> Null) Then
-		If Not __LO_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
+		If Not __LO_IntIsBetween($iBorderColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
 
 		$oListBox.Control.BorderColor = $iBorderColor
 		$iError = ($oListBox.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 32768))
@@ -5406,7 +5406,7 @@ EndFunc   ;==>_LOWriter_FormConListBoxSelection
 ;                  $iTabOrder           - [optional] an integer value (0-2147483647). Default is Null. The order the control is focused by the Tab key.
 ;                  $iDelay              - [optional] an integer value (0-2147483647). Default is Null. The delay between button repeats, set in milliseconds.
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
 ;                  $bSmallIcon          - [optional] a boolean value. Default is Null. If True, small Icon sizing is used.
 ;                  $bShowPos            - [optional] a boolean value. Default is Null. If True, positioning items are shown.
@@ -5581,7 +5581,7 @@ Func _LOWriter_FormConNavBarGeneral(ByRef $oNavBar, $sName = Null, $iTxtDir = Nu
 		$oNavBar.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 
 		$oNavBar.Control.BackgroundColor = $iBackColor
 		$iError = ($oNavBar.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 256))
@@ -5774,9 +5774,9 @@ EndFunc   ;==>_LOWriter_FormConNumericFieldData
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
 ;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
@@ -6130,7 +6130,7 @@ Func _LOWriter_FormConNumericFieldGeneral(ByRef $oNumericField, $sName = Null, $
 		$oNumericField.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
 
 		$oNumericField.Control.BackgroundColor = $iBackColor
 		$iError = ($oNumericField.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 8388608))
@@ -6150,7 +6150,7 @@ Func _LOWriter_FormConNumericFieldGeneral(ByRef $oNumericField, $sName = Null, $
 		$oNumericField.Control.setPropertyToDefault("BorderColor")
 
 	ElseIf ($iBorderColor <> Null) Then
-		If Not __LO_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 29, 0)
+		If Not __LO_IntIsBetween($iBorderColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 29, 0)
 
 		$oNumericField.Control.BorderColor = $iBorderColor
 		$iError = ($oNumericField.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 33554432))
@@ -6344,7 +6344,7 @@ EndFunc   ;==>_LOWriter_FormConOptionButtonData
 ;                  $iStyle              - [optional] an integer value (1-2). Default is Null. The display style of the Option button. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bWordBreak          - [optional] a boolean value. Default is Null. If True, line breaks are allowed to be used.
 ;                  $sGraphics           - [optional] a string value. Default is Null. The path to an Image file.
 ;                  $iGraphicAlign       - [optional] an integer value (0-12). Default is Null. The Alignment of the Image. See Constants $LOW_FORM_CON_IMG_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
@@ -6596,7 +6596,7 @@ Func _LOWriter_FormConOptionButtonGeneral(ByRef $oOptionButton, $sName = Null, $
 		$oOptionButton.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 
 		$oOptionButton.Control.BackgroundColor = $iBackColor
 		$iError = ($oOptionButton.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 32768))
@@ -6835,9 +6835,9 @@ EndFunc   ;==>_LOWriter_FormConPatternFieldData
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
 ;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
@@ -7124,7 +7124,7 @@ Func _LOWriter_FormConPatternFieldGeneral(ByRef $oPatternField, $sName = Null, $
 		$oPatternField.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
 
 		$oPatternField.Control.BackgroundColor = $iBackColor
 		$iError = ($oPatternField.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 262144))
@@ -7144,7 +7144,7 @@ Func _LOWriter_FormConPatternFieldGeneral(ByRef $oPatternField, $sName = Null, $
 		$oPatternField.Control.setPropertyToDefault("BorderColor")
 
 	ElseIf ($iBorderColor <> Null) Then
-		If Not __LO_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 24, 0)
+		If Not __LO_IntIsBetween($iBorderColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 24, 0)
 
 		$oPatternField.Control.BorderColor = $iBorderColor
 		$iError = ($oPatternField.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 1048576))
@@ -7364,7 +7364,7 @@ EndFunc   ;==>_LOWriter_FormConPosition
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bWordBreak          - [optional] a boolean value. Default is Null. If True, line breaks are allowed to be used.
 ;                  $iAction             - [optional] an integer value (0-12). Default is Null. The action that occurs when the button is pushed. See Constants $LOW_FORM_CON_PUSH_CMD_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $sURL                - [optional] a string value. Default is Null. The URL or Document path to open.
@@ -7702,7 +7702,7 @@ Func _LOWriter_FormConPushButtonGeneral(ByRef $oPushButton, $sName = Null, $sLab
 		$oPushButton.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 
 		$oPushButton.Control.BackgroundColor = $iBackColor
 		$iError = ($oPushButton.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 65536))
@@ -10298,9 +10298,9 @@ EndFunc   ;==>_LOWriter_FormConTableConFormattedFieldGeneral
 ;                  $iTabOrder           - [optional] an integer value (0-2147483647). Default is Null. The order the control is focused by the Tab key.
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $nRowHeight          - [optional] a general number value (-21474836.48-21474836.48). Default is Null. The Row height, set in Micrometers.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bNavBar             - [optional] a boolean value. Default is Null. If True, the Navigation Bar is displayed on the lower border of the Table control.
 ;                  $bRecordMarker       - [optional] a boolean value. Default is Null. If True, a record marker is displayed.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
@@ -10477,7 +10477,7 @@ Func _LOWriter_FormConTableConGeneral(ByRef $oTableCon, $sName = Null, $iTxtDir 
 		$oTableCon.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 
 		$oTableCon.Control.BackgroundColor = $iBackColor
 		$iError = ($oTableCon.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 512))
@@ -10497,7 +10497,7 @@ Func _LOWriter_FormConTableConGeneral(ByRef $oTableCon, $sName = Null, $iTxtDir 
 		$oTableCon.Control.setPropertyToDefault("BorderColor")
 
 	ElseIf ($iBorderColor <> Null) Then
-		If Not __LO_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		If Not __LO_IntIsBetween($iBorderColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 
 		$oTableCon.Control.setPropertyValue("BorderColor", $iBorderColor)
 		$iError = ($oTableCon.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 2048))
@@ -12615,9 +12615,9 @@ EndFunc   ;==>_LOWriter_FormConTextBoxData
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iTextType           - [optional] an integer value (0-2). Default is Null. The text type. See Constants $LOW_FORM_CON_TXT_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bEndWithLF          - [optional] a boolean value. Default is Null. If True, the line ends will be a Line-Feed type, else a Carriage-Return plus a Line-Feed.
 ;                  $iScrollbars         - [optional] an integer value (0-3). Default is Null. The Scrollbars to use, if any. See Constants $LOW_FORM_CON_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
@@ -12873,7 +12873,7 @@ Func _LOWriter_FormConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabelFiel
 		$oTextBox.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 
 		$oTextBox.Control.BackgroundColor = $iBackColor
 		$iError = ($oTextBox.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 16384))
@@ -12893,7 +12893,7 @@ Func _LOWriter_FormConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabelFiel
 		$oTextBox.Control.setPropertyToDefault("BorderColor")
 
 	ElseIf ($iBorderColor <> Null) Then
-		If Not __LO_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
+		If Not __LO_IntIsBetween($iBorderColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
 
 		$oTextBox.Control.BorderColor = $iBorderColor
 		$iError = ($oTextBox.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 65536))
@@ -13118,9 +13118,9 @@ EndFunc   ;==>_LOWriter_FormConTimeFieldData
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
 ;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
@@ -13514,7 +13514,7 @@ Func _LOWriter_FormConTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oLabel
 		$oTimeField.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 25, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 25, 0)
 
 		$oTimeField.Control.BackgroundColor = $iBackColor
 		$iError = ($oTimeField.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 2097152))
@@ -13534,7 +13534,7 @@ Func _LOWriter_FormConTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oLabel
 		$oTimeField.Control.setPropertyToDefault("BorderColor")
 
 	ElseIf ($iBorderColor <> Null) Then
-		If Not __LO_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
+		If Not __LO_IntIsBetween($iBorderColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
 
 		$oTimeField.Control.BorderColor = $iBorderColor
 		$iError = ($oTimeField.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 8388608))

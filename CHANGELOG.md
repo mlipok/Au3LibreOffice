@@ -34,6 +34,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Central Constants File
 	- LibreOffice_Constants.au3
 		- $__LOCONST_SLEEP_DIV
+		- $LO_COLOR_*
 		- $LO_PATHCONV_*
 		- $__LO_STATUS_*
 		- $__LOCONST_CONVERT_*

@@ -44,7 +44,7 @@
 ; Description ...: Set and Retrieve the Background color of a Cell or Cell Range.
 ; Syntax ........: _LOWriter_CellBackColor(ByRef $oCell[, $iBackColor = Null[, $bBackTransparent = Null]])
 ; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned by a previous _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition function.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. Specify the Cell background color as a Long Integer. See Remarks. Set to $LOW_COLOR_OFF(-1) to disable Background color. Can also be one of the constants $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. Specify the Cell background color as a Long Integer. See Remarks. Set to $LO_COLOR_OFF(-1) to disable Background color. Can also be one of the constants $LO_COLOR_* as defined in LibreOffice_Constants.au3
 ;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -83,10 +83,10 @@ Func _LOWriter_CellBackColor(ByRef $oCell, $iBackColor = Null, $bBackTransparent
 	EndIf
 
 	If ($iBackColor <> Null) Then
-		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 		$oCell.BackColor = $iBackColor
-		If ($iBackColor = $LOW_COLOR_OFF) Then $oCell.BackTransparent = True
+		If ($iBackColor = $LO_COLOR_OFF) Then $oCell.BackTransparent = True
 		$iError = ($oCell.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1)) ; Error setting color.
 	EndIf
 
@@ -105,10 +105,10 @@ EndFunc   ;==>_LOWriter_CellBackColor
 ; Description ...: Set the Cell or Cell Range Border Line Color. Libre Office Version 3.4 and Up.
 ; Syntax ........: _LOWriter_CellBorderColor(ByRef $oCell[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
 ; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned by a previous _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition function.
-;                  $iTop                - [optional] an integer value (0-16777215). Default is Null. Sets the Top Border Line Color of the Cell in Long Color code format. A custom value or one of the constants $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBottom             - [optional] an integer value (0-16777215). Default is Null. Sets the Bottom Border Line Color of the Cell in Long Color code format. A custom value or one of the constants $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iLeft               - [optional] an integer value (0-16777215). Default is Null. Sets the Left Border Line Color of the Cell in Long Color code format. A custom value or one of the constants $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. Sets the Right Border Line Color of the Cell in Long Color code format. A custom value or one of the constants $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iTop                - [optional] an integer value (0-16777215). Default is Null. Sets the Top Border Line Color of the Cell in Long Color code format. A custom value or one of the constants $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBottom             - [optional] an integer value (0-16777215). Default is Null. Sets the Bottom Border Line Color of the Cell in Long Color code format. A custom value or one of the constants $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iLeft               - [optional] an integer value (0-16777215). Default is Null. Sets the Left Border Line Color of the Cell in Long Color code format. A custom value or one of the constants $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. Sets the Right Border Line Color of the Cell in Long Color code format. A custom value or one of the constants $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -145,10 +145,10 @@ Func _LOWriter_CellBorderColor(ByRef $oCell, $iTop = Null, $iBottom = Null, $iLe
 	Local $vReturn
 
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If ($iTop <> Null) And Not __LO_IntIsBetween($iTop, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If ($iBottom <> Null) And Not __LO_IntIsBetween($iBottom, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If ($iLeft <> Null) And Not __LO_IntIsBetween($iLeft, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If ($iRight <> Null) And Not __LO_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iTop <> Null) And Not __LO_IntIsBetween($iTop, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If ($iBottom <> Null) And Not __LO_IntIsBetween($iBottom, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iLeft <> Null) And Not __LO_IntIsBetween($iLeft, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iRight <> Null) And Not __LO_IntIsBetween($iRight, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$vReturn = __LOWriter_Border($oCell, False, False, True, $iTop, $iBottom, $iLeft, $iRight)
 

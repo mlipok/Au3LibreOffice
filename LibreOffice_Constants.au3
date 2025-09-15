@@ -21,6 +21,28 @@
 ; Set to 0 for no pause in a loop.
 Global Const $__LOCONST_SLEEP_DIV = 0
 
+; Color in Long Color Format
+Global Const _
+		$LO_COLOR_OFF = -1, _                                  ; Turn Color off, or to automatic mode.
+		$LO_COLOR_BLACK = 0, _                                 ; Black color.
+		$LO_COLOR_GREEN = 43315, _                             ; Green color.
+		$LO_COLOR_TEAL = 1410150, _                            ; Teal color.
+		$LO_COLOR_BLUE = 2777241, _                            ; Blue color.
+		$LO_COLOR_DKGRAY = 3355443, _                          ; Dark Gray color.
+		$LO_COLOR_INDIGO = 5582989, _                          ; Indigo color.
+		$LO_COLOR_PURPLE = 8388736, _                          ; Purple color.
+		$LO_COLOR_GRAY = 8421504, _                            ; Gray color.
+		$LO_COLOR_LIME = 8508442, _                            ; Lime color.
+		$LO_COLOR_BROWN = 9127187, _                           ; Brown color.
+		$LO_COLOR_LGRAY = 11711154, _                          ; Light Gray color.
+		$LO_COLOR_MAGENTA = 12517441, _                        ; Magenta color.
+		$LO_COLOR_RED = 16711680, _                            ; Red color.
+		$LO_COLOR_BRICK = 16728064, _                          ; Brick color.
+		$LO_COLOR_ORANGE = 16744448, _                         ; Orange color.
+		$LO_COLOR_GOLD = 16760576, _                           ; Gold color.
+		$LO_COLOR_YELLOW = 16776960, _                         ; Yellow color.
+		$LO_COLOR_WHITE = 16777215                             ; White color.
+
 ; Path Convert Constants.
 Global Const _
 		$LO_PATHCONV_AUTO_RETURN = 0, _          ; Automatically returns the opposite of the input path, determined by StringInStr search for either "File:///"(L.O.Office URL) or "[A-Z]:\" (Windows File Path).

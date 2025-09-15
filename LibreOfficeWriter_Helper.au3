@@ -858,9 +858,9 @@ EndFunc   ;==>_LOWriter_FindFormatModifyEffects
 ;                  $iFontSize           - [optional] an integer value. Default is Null. The Font size to search for.
 ;                  $iFontWeight         - [optional] an integer value(0,50-200). Default is Null. The Font weight to search for. See Constants, $LOW_WEIGHT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iFontPosture        - [optional] an integer value (0-5). Default is Null. The Font Posture(Italic etc.,) See Constants, $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iFontColor          - [optional] an integer value (-1-16777215). Default is Null. The Font Color in Long Integer format, Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iFontColor          - [optional] an integer value (-1-16777215). Default is Null. The Font Color in Long Integer format, Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iTransparency       - [optional] an integer value (0-100). Default is Null. The percentage of Transparency. 0 is visible, 100 is invisible. Seems to require a color entered in $iFontColor before transparency can be searched for. Libre Office 7.0 and Up.
-;                  $iHighlight          - [optional] an integer value (-1-16777215). Default is Null. The Highlight color to search for, in Long Integer format, Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iHighlight          - [optional] an integer value (-1-16777215). Default is Null. The Highlight color to search for, in Long Integer format, Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -944,7 +944,7 @@ Func _LOWriter_FindFormatModifyFont(ByRef $atFormat, $sFontName = Null, $iFontSi
 			__LOWriter_FindFormatDeleteSetting($atFormat, "CharColor")
 
 		Else
-			If Not __LO_IntIsBetween($iFontColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+			If Not __LO_IntIsBetween($iFontColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 			__LOWriter_FindFormatAddSetting($atFormat, __LO_SetPropertyValue("CharColor", $iFontColor))
 		EndIf
@@ -968,7 +968,7 @@ Func _LOWriter_FindFormatModifyFont(ByRef $atFormat, $sFontName = Null, $iFontSi
 			If __LO_VersionCheck(4.2) Then __LOWriter_FindFormatDeleteSetting($atFormat, "CharHighlight")
 
 		Else
-			If Not __LO_IntIsBetween($iHighlight, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+			If Not __LO_IntIsBetween($iHighlight, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 			; CharHighlight; same as CharBackColor---Libre seems to use back color for highlighting.
 			__LOWriter_FindFormatAddSetting($atFormat, __LO_SetPropertyValue("CharBackColor", $iHighlight))
@@ -1167,7 +1167,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyIndent
 ;                  $iOverLineStyle      - [optional] an integer value (0-18). Default is Null. The style of the Overline line, see constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3. See remarks. Overline style must be set before any of the other parameters can be searched for.
 ;                  $bWordOnly           - [optional] a boolean value. Default is Null. If true, white spaces are not Overlined. See remarks.
 ;                  $bOLHasColor         - [optional] a boolean value. Default is Null. If True, the Overline is colored, must be set to true in order to set the Overline color.
-;                  $iOLColor            - [optional] an integer value (-1-16777215). Default is Null. The color of the Overline, set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iOLColor            - [optional] an integer value (-1-16777215). Default is Null. The color of the Overline, set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1232,7 +1232,7 @@ Func _LOWriter_FindFormatModifyOverline(ByRef $atFormat, $iOverLineStyle = Null,
 			__LOWriter_FindFormatDeleteSetting($atFormat, "CharOverlineColor")
 
 		Else
-			If Not __LO_IntIsBetween($iOLColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+			If Not __LO_IntIsBetween($iOLColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 			__LOWriter_FindFormatAddSetting($atFormat, __LO_SetPropertyValue("CharOverlineColor", $iOLColor))
 		EndIf
@@ -1787,7 +1787,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyTxtFlowOpt
 ;                  $iUnderLineStyle     - [optional] an integer value (0-18). Default is Null. The line style of the Underline, see constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3. Underline style must be set before any of the other parameters can be searched for.
 ;                  $bWordOnly           - [optional] a boolean value. Default is Null. If true, white spaces are not underlined. See remarks.
 ;                  $bULHasColor         - [optional] a boolean value. Default is Null. If True, the underline is colored, must be set to true in order to set the underline color.
-;                  $iULColor            - [optional] an integer value (-1-16777215). Default is Null. The color of the underline, set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.. $LOW_COLOR_OFF(-1) is automatic color mode.
+;                  $iULColor            - [optional] an integer value (-1-16777215). Default is Null. The color of the underline, set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.. $LO_COLOR_OFF(-1) is automatic color mode.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1851,7 +1851,7 @@ Func _LOWriter_FindFormatModifyUnderline(ByRef $atFormat, $iUnderlineStyle = Nul
 			__LOWriter_FindFormatDeleteSetting($atFormat, "CharUnderlineColor")
 
 		Else
-			If Not __LO_IntIsBetween($iULColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+			If Not __LO_IntIsBetween($iULColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 			__LOWriter_FindFormatAddSetting($atFormat, __LO_SetPropertyValue("CharUnderlineColor", $iULColor))
 		EndIf
@@ -1863,14 +1863,14 @@ EndFunc   ;==>_LOWriter_FindFormatModifyUnderline
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FontDescCreate
 ; Description ...: Create a Font Descriptor Map.
-; Syntax ........: _LOWriter_FontDescCreate([$sFontName = ""[, $iWeight = $LOW_WEIGHT_DONT_KNOW[, $iSlant = $LOW_POSTURE_DONTKNOW[, $nSize = 0[, $iColor = $LOW_COLOR_OFF[, $iUnderlineStyle = $LOW_UNDERLINE_DONT_KNOW[, $iUnderlineColor = $LOW_COLOR_OFF[, $iStrikelineStyle = $LOW_STRIKEOUT_DONT_KNOW[, $bIndividualWords = False[, $iRelief = $LOW_RELIEF_NONE]]]]]]]]]])
+; Syntax ........: _LOWriter_FontDescCreate([$sFontName = ""[, $iWeight = $LOW_WEIGHT_DONT_KNOW[, $iSlant = $LOW_POSTURE_DONTKNOW[, $nSize = 0[, $iColor = $LO_COLOR_OFF[, $iUnderlineStyle = $LOW_UNDERLINE_DONT_KNOW[, $iUnderlineColor = $LO_COLOR_OFF[, $iStrikelineStyle = $LOW_STRIKEOUT_DONT_KNOW[, $bIndividualWords = False[, $iRelief = $LOW_RELIEF_NONE]]]]]]]]]])
 ; Parameters ....: $sFontName           - [optional] a string value. Default is "". The Font name.
 ;                  $iWeight             - [optional] an integer value (0-200). Default is $LOW_WEIGHT_DONT_KNOW. The Font weight. See Constants $LOW_WEIGHT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iSlant              - [optional] an integer value (0-5). Default is $LOW_POSTURE_DONTKNOW. The Font italic setting. See Constants $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $nSize               - [optional] a general number value. Default is 0. The Font size.
-;                  $iColor              - [optional] an integer value (-1-16777215). Default is $LOW_COLOR_OFF. The Font Color in Long Integer format, can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for Auto color.
+;                  $iColor              - [optional] an integer value (-1-16777215). Default is $LO_COLOR_OFF. The Font Color in Long Integer format, can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for Auto color.
 ;                  $iUnderlineStyle     - [optional] an integer value (0-18). Default is $LOW_UNDERLINE_DONT_KNOW. The Font underline Style. See Constants $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iUnderlineColor     - [optional] an integer value (-1-16777215). Default is $LOW_COLOR_OFF. The Font Underline color in Long Integer format, can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for Auto color.
+;                  $iUnderlineColor     - [optional] an integer value (-1-16777215). Default is $LO_COLOR_OFF. The Font Underline color in Long Integer format, can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for Auto color.
 ;                  $iStrikelineStyle    - [optional] an integer value (0-6). Default is $LOW_STRIKEOUT_DONT_KNOW. The Strikeout line style. See Constants $LOW_STRIKEOUT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bIndividualWords    - [optional] a boolean value. Default is False. If True, only individual words are underlined.
 ;                  $iRelief             - [optional] an integer value (0-2). Default is $LOW_RELIEF_NONE. The Font relief style. See Constants $LOW_RELIEF_* as defined in LibreOfficeWriter_Constants.au3.
@@ -1897,7 +1897,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyUnderline
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FontDescCreate($sFontName = "", $iWeight = $LOW_WEIGHT_DONT_KNOW, $iSlant = $LOW_POSTURE_DONTKNOW, $nSize = 0, $iColor = $LOW_COLOR_OFF, $iUnderlineStyle = $LOW_UNDERLINE_DONT_KNOW, $iUnderlineColor = $LOW_COLOR_OFF, $iStrikelineStyle = $LOW_STRIKEOUT_DONT_KNOW, $bIndividualWords = False, $iRelief = $LOW_RELIEF_NONE)
+Func _LOWriter_FontDescCreate($sFontName = "", $iWeight = $LOW_WEIGHT_DONT_KNOW, $iSlant = $LOW_POSTURE_DONTKNOW, $nSize = 0, $iColor = $LO_COLOR_OFF, $iUnderlineStyle = $LOW_UNDERLINE_DONT_KNOW, $iUnderlineColor = $LO_COLOR_OFF, $iStrikelineStyle = $LOW_STRIKEOUT_DONT_KNOW, $bIndividualWords = False, $iRelief = $LOW_RELIEF_NONE)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1908,9 +1908,9 @@ Func _LOWriter_FontDescCreate($sFontName = "", $iWeight = $LOW_WEIGHT_DONT_KNOW,
 	If Not __LO_IntIsBetween($iWeight, $LOW_WEIGHT_DONT_KNOW, $LOW_WEIGHT_BLACK) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not __LO_IntIsBetween($iSlant, $LOW_POSTURE_NONE, $LOW_POSTURE_REV_ITALIC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not IsNumber($nSize) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If Not __LO_IntIsBetween($iColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not __LO_IntIsBetween($iColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 	If Not __LO_IntIsBetween($iUnderlineStyle, $LOW_UNDERLINE_NONE, $LOW_UNDERLINE_BOLD_WAVE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
-	If Not __LO_IntIsBetween($iUnderlineColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+	If Not __LO_IntIsBetween($iUnderlineColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 	If Not __LO_IntIsBetween($iStrikelineStyle, $LOW_STRIKEOUT_NONE, $LOW_STRIKEOUT_X) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 	If Not IsBool($bIndividualWords) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 	If Not __LO_IntIsBetween($iRelief, $LOW_RELIEF_NONE, $LOW_RELIEF_ENGRAVED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
@@ -1938,7 +1938,7 @@ EndFunc   ;==>_LOWriter_FontDescCreate
 ;                  $iWeight             - [optional] an integer value (0-200). Default is Null. The Font weight. See Constants $LOW_WEIGHT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iSlant              - [optional] an integer value (0-5). Default is Null. The Font italic setting. See Constants $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $nSize               - [optional] a general number value. Default is Null. The Font size.
-;                  $iColor              - [optional] an integer value (-1-16777215). Default is Null. The Font Color in Long Integer format, can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for Auto color.
+;                  $iColor              - [optional] an integer value (-1-16777215). Default is Null. The Font Color in Long Integer format, can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for Auto color.
 ;                  $iUnderlineStyle     - [optional] an integer value (0-18). Default is Null. The Font underline Style. See Constants $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iUnderlineColor     - [optional] an integer value (-1-16777215). Default is Null.
 ;                  $iStrikelineStyle    - [optional] an integer value (0-6). Default is Null. The Strikeout line style. See Constants $LOW_STRIKEOUT_* as defined in LibreOfficeWriter_Constants.au3.
@@ -2011,7 +2011,7 @@ Func _LOWriter_FontDescEdit(ByRef $mFontDesc, $sFontName = Null, $iWeight = Null
 	EndIf
 
 	If ($iColor <> Null) Then
-		If Not __LO_IntIsBetween($iColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LO_IntIsBetween($iColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$mFontDesc.CharColor = $iColor
 	EndIf
@@ -2023,7 +2023,7 @@ Func _LOWriter_FontDescEdit(ByRef $mFontDesc, $sFontName = Null, $iWeight = Null
 	EndIf
 
 	If ($iUnderlineColor <> Null) Then
-		If Not __LO_IntIsBetween($iUnderlineColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LO_IntIsBetween($iUnderlineColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 		$mFontDesc.CharUnderlineColor = $iUnderlineColor
 	EndIf
@@ -2531,7 +2531,7 @@ EndFunc   ;==>_LOWriter_FormatKeysGetList
 ; Parameters ....: $avColorStops        - [in/out] an array of variants. A two column array of ColorStops. Array will be directly modified.
 ;                  $iIndex              - an integer value. The array index to insert the color stop. 0 Based. Call the last element index plus 1 to insert at the end.
 ;                  $nStopOffset         - a general number value (0-1.0). The ColorStop offset value.
-;                  $iColor              - an integer value (0-16777215). The ColorStop color. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iColor              - an integer value (0-16777215). The ColorStop color. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2559,7 +2559,7 @@ Func _LOWriter_GradientMulticolorAdd(ByRef $avColorStops, $iIndex, $nStopOffset,
 	If (UBound($avColorStops, $__UBOUND_COLUMNS) <> 2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not __LO_IntIsBetween($iIndex, 0, UBound($avColorStops)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not __LO_NumIsBetween($nStopOffset, 0, 1.0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If Not __LO_IntIsBetween($iColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not __LO_IntIsBetween($iColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	ReDim $avColorStops[UBound($avColorStops) + 1][2]
 
@@ -2633,7 +2633,7 @@ EndFunc   ;==>_LOWriter_GradientMulticolorDelete
 ; Parameters ....: $avColorStops        - [in/out] an array of variants. A two column array of ColorStops. Array will be directly modified.
 ;                  $iIndex              - an integer value. The array index to modify. 0 Based.
 ;                  $nStopOffset         - a general number value (0-1.0). The ColorStop offset value.
-;                  $iColor              - an integer value (0-16777215). The ColorStop color. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iColor              - an integer value (0-16777215). The ColorStop color. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2661,7 +2661,7 @@ Func _LOWriter_GradientMulticolorModify(ByRef $avColorStops, $iIndex, $nStopOffs
 	If (UBound($avColorStops, $__UBOUND_COLUMNS) <> 2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not __LO_IntIsBetween($iIndex, 0, UBound($avColorStops) - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not __LO_NumIsBetween($nStopOffset, 0, 1.0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If Not __LO_IntIsBetween($iColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not __LO_IntIsBetween($iColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	For $iToWrite = 0 To UBound($avColorStops) - 1
 		If $iToWrite = $iIndex Then

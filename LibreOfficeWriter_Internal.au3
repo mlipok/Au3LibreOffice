@@ -636,9 +636,9 @@ EndFunc   ;==>__LOWriter_CharFont
 ; Description ...: Set or retrieve the font color, transparency and highlighting values.
 ; Syntax ........: __LOWriter_CharFontColor(ByRef $oObj, $iFontColor, $iTransparency, $iHighlight)
 ; Parameters ....: $oObj                - [in/out] an object. An Object that supports "com.sun.star.text.Paragraph" Or "com.sun.star.text.TextPortion" services, such as a Cursor with data selected or paragraph section.
-;                  $iFontColor          - an integer value (-1-16777215). The desired font Color value in Long Integer format, can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for Auto color.
+;                  $iFontColor          - an integer value (-1-16777215). The desired font Color value in Long Integer format, can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for Auto color.
 ;                  $iTransparency       - an integer value (0-100). Transparency percentage. 0 is visible, 100 is invisible. Available for Libre Office 7.0 and up.
-;                  $iHighlight          - an integer value (-1-16777215). The highlight Color value in Long Integer format, can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for No color.
+;                  $iHighlight          - an integer value (-1-16777215). The highlight Color value in Long Integer format, can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for No color.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -686,7 +686,7 @@ Func __LOWriter_CharFontColor(ByRef $oObj, $iFontColor, $iTransparency, $iHighli
 	EndIf
 
 	If ($iFontColor <> Null) Then
-		If Not __LO_IntIsBetween($iFontColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LO_IntIsBetween($iFontColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		If __LO_VersionCheck(7.0) Then
 			$iOldTransparency = $oObj.CharTransparence()
@@ -708,7 +708,7 @@ Func __LOWriter_CharFontColor(ByRef $oObj, $iFontColor, $iTransparency, $iHighli
 	EndIf
 
 	If ($iHighlight <> Null) Then
-		If Not __LO_IntIsBetween($iHighlight, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iHighlight, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		; CharHighlight; same as CharBackColor---Libre seems to use back color for highlighting however, so using that for setting.
 		;~ 		If Not __LO_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 2, 0)
@@ -729,7 +729,7 @@ EndFunc   ;==>__LOWriter_CharFontColor
 ;                  $bWordOnly           - a boolean value. If true, white spaces are not Overlined.
 ;                  $iOverLineStyle      - an integer value (0-18). The line style of the Overline, see constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
 ;                  $bOLHasColor         - a boolean value. If True, the Overline is colored, must be set to true in order to set the Overline color.
-;                  $iOLColor            - an integer value (-1-16777215). The color of the Overline, set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for automatic color mode.
+;                  $iOLColor            - an integer value (-1-16777215). The color of the Overline, set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for automatic color mode.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -794,7 +794,7 @@ Func __LOWriter_CharOverLine(ByRef $oObj, $bWordOnly, $iOverLineStyle, $bOLHasCo
 	EndIf
 
 	If ($iOLColor <> Null) Then
-		If Not __LO_IntIsBetween($iOLColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LO_IntIsBetween($iOLColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$oObj.CharOverlineColor = $iOLColor
 		$iError = ($oObj.CharOverlineColor() = $iOLColor) ? ($iError) : (BitOR($iError, 8))
@@ -980,7 +980,7 @@ EndFunc   ;==>__LOWriter_CharRotateScale
 ; Syntax ........: __LOWriter_CharShadow(ByRef $oObj, $iWidth, $iColor, $bTransparent, $iLocation)
 ; Parameters ....: $oObj                - [in/out] an object. An Object that supports "com.sun.star.text.Paragraph" Or "com.sun.star.text.TextPortion" services, such as a Cursor with data selected or paragraph section.
 ;                  $iWidth              - an integer value. The Shadow width, set in Micrometers.
-;                  $iColor              - an integer value (0-16777215). The Shadow color. See Remarks. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iColor              - an integer value (0-16777215). The Shadow color. See Remarks. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bTransparent        - a boolean value. If True, the shadow is transparent.
 ;                  $iLocation           - an integer value (0-4). Location of the shadow compared to the characters. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
@@ -1038,7 +1038,7 @@ Func __LOWriter_CharShadow(ByRef $oObj, $iWidth, $iColor, $bTransparent, $iLocat
 	EndIf
 
 	If ($iColor <> Null) Then
-		If Not __LO_IntIsBetween($iColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$tShdwFrmt.Color = $iColor
 	EndIf
@@ -1258,7 +1258,7 @@ EndFunc   ;==>__LOWriter_CharStyleNameToggle
 ;                  $bWordOnly           - [optional] a boolean value. Default is Null. If true, white spaces are not underlined.
 ;                  $iUnderLineStyle     - [optional] an integer value (0-18). Default is Null. The line style of the Underline, see constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bULHasColor         - [optional] a boolean value. Default is Null. If True, the underline is colored, must be set to true in order to set the underline color.
-;                  $iULColor            - [optional] an integer value (-1-16777215). Default is Null. The color of the underline, set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for automatic color mode.
+;                  $iULColor            - [optional] an integer value (-1-16777215). Default is Null. The color of the underline, set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for automatic color mode.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1321,7 +1321,7 @@ Func __LOWriter_CharUnderLine(ByRef $oObj, $bWordOnly, $iUnderLineStyle, $bULHas
 	EndIf
 
 	If ($iULColor <> Null) Then
-		If Not __LO_IntIsBetween($iULColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LO_IntIsBetween($iULColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$oObj.CharUnderlineColor = $iULColor
 		$iError = ($oObj.CharUnderlineColor() = $iULColor) ? ($iError) : (BitOR($iError, 8))
@@ -1354,7 +1354,7 @@ Func __LOWriter_ColorRemoveAlpha($iColor)
 
 	If Not IsInt($iColor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, $iColor)
 
-	If __LO_IntIsBetween($iColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_SUCCESS, 0, $iColor) ; If Color value is not greater than White(16777215) or less than -1, then there is no alpha to remove.
+	If __LO_IntIsBetween($iColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_SUCCESS, 0, $iColor) ; If Color value is not greater than White(16777215) or less than -1, then there is no alpha to remove.
 
 	; Obtain individual color values.
 	$iRed = BitAND(BitShift($iColor, 16), 0xff)
@@ -2695,7 +2695,7 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 				.YOffset = 0
 				.Angle = 900
 				.Border = 75
-				.StartColor = $LOW_COLOR_WHITE
+				.StartColor = $LO_COLOR_WHITE
 				.EndColor = 14540253
 				.StartIntensity = 100
 				.EndIntensity = 100
@@ -2791,7 +2791,7 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 				.YOffset = 0
 				.Angle = 0
 				.Border = 0
-				.StartColor = $LOW_COLOR_BLACK
+				.StartColor = $LO_COLOR_BLACK
 				.EndColor = 2777241
 				.StartIntensity = 100
 				.EndIntensity = 100
@@ -2815,7 +2815,7 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 				.YOffset = 50
 				.Angle = 0
 				.Border = 0
-				.StartColor = $LOW_COLOR_BLACK
+				.StartColor = $LO_COLOR_BLACK
 				.EndColor = 7512015
 				.StartIntensity = 100
 				.EndIntensity = 100
@@ -2888,7 +2888,7 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 				.Angle = 0
 				.Border = 15
 				.StartColor = 1209890
-				.EndColor = $LOW_COLOR_WHITE
+				.EndColor = $LO_COLOR_WHITE
 				.StartIntensity = 100
 				.EndIntensity = 100
 
@@ -2959,7 +2959,7 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 				.YOffset = 50
 				.Angle = 450
 				.Border = 0
-				.StartColor = $LOW_COLOR_BLACK
+				.StartColor = $LO_COLOR_BLACK
 				.EndColor = 9250846
 				.StartIntensity = 100
 				.EndIntensity = 100
@@ -2983,8 +2983,8 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 				.YOffset = 100
 				.Angle = 0
 				.Border = 0
-				.StartColor = $LOW_COLOR_WHITE
-				.EndColor = $LOW_COLOR_WHITE
+				.StartColor = $LO_COLOR_WHITE
+				.EndColor = $LO_COLOR_WHITE
 				.StartIntensity = 100
 				.EndIntensity = 100
 
@@ -4234,7 +4234,7 @@ EndFunc   ;==>__LOWriter_ParAlignment
 ; Description ...: Set or Retrieve background color settings.
 ; Syntax ........: __LOWriter_ParBackColor(ByRef $oObj, $iBackColor, $bBackTransparent)
 ; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
-;                  $iBackColor          - an integer value (-1-16777215). The background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for "None".
+;                  $iBackColor          - an integer value (-1-16777215). The background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for "None".
 ;                  $bBackTransparent    - a boolean value. If True, the background color is transparent
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -4273,7 +4273,7 @@ Func __LOWriter_ParBackColor(ByRef $oObj, $iBackColor, $bBackTransparent)
 	EndIf
 
 	If ($iBackColor <> Null) Then
-		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		$oObj.ParaBackColor = $iBackColor
 		$iError = ($oObj.ParaBackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1))
@@ -4869,7 +4869,7 @@ EndFunc   ;==>__LOWriter_ParPageBreak
 ; Syntax ........: __LOWriter_ParShadow(ByRef $oObj, $iWidth, $iColor, $bTransparent, $iLocation)
 ; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
 ;                  $iWidth              - an integer value. The shadow width in Micrometers.
-;                  $iColor              - an integer value (0-16777215). The shadow color, set in Long Integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iColor              - an integer value (0-16777215). The shadow color, set in Long Integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bTransparent        - a boolean value. If True, the shadow is transparent.
 ;                  $iLocation           - an integer value (0-4). The location of the shadow compared to the paragraph. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
@@ -4927,7 +4927,7 @@ Func __LOWriter_ParShadow(ByRef $oObj, $iWidth, $iColor, $bTransparent, $iLocati
 	EndIf
 
 	If ($iColor <> Null) Then
-		If Not __LO_IntIsBetween($iColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$tShdwFrmt.Color = $iColor
 	EndIf
@@ -5807,7 +5807,7 @@ Func __LOWriter_Shape_CreateBasic($oDoc, $iWidth, $iHeight, $iShapeType)
 
 	Switch $iShapeType
 		Case $LOW_SHAPE_TYPE_BASIC_ARC
-			$oShape.FillColor = $LOW_COLOR_OFF
+			$oShape.FillColor = $LO_COLOR_OFF
 
 			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Elliptical arc ")
 			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -6242,7 +6242,7 @@ Func __LOWriter_Shape_CreateLine($oDoc, $iWidth, $iHeight, $iShapeType)
 			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Bézier curve ")
 			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-			$oShape.FillColor = $LOW_COLOR_OFF
+			$oShape.FillColor = $LO_COLOR_OFF
 
 		Case $LOW_SHAPE_TYPE_LINE_CURVE_FILLED
 			$oShape = $oDoc.createInstance("com.sun.star.drawing.ClosedBezierShape")
@@ -6375,7 +6375,7 @@ Func __LOWriter_Shape_CreateLine($oDoc, $iWidth, $iHeight, $iShapeType)
 			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Polygon 4 corners ")
 			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-			$oShape.FillColor = $LOW_COLOR_OFF
+			$oShape.FillColor = $LO_COLOR_OFF
 
 		Case $LOW_SHAPE_TYPE_LINE_POLYGON_45_FILLED
 			$oShape = $oDoc.createInstance("com.sun.star.drawing.PolyPolygonShape")
@@ -6617,27 +6617,27 @@ Func __LOWriter_Shape_CreateSymbol($oDoc, $iWidth, $iHeight, $iShapeType)
 
 		Case $LOW_SHAPE_TYPE_SYMBOL_BRACE_DOUBLE
 			$tProp.Value = "brace-pair"
-			$oShape.FillColor = $LOW_COLOR_OFF
+			$oShape.FillColor = $LO_COLOR_OFF
 
 		Case $LOW_SHAPE_TYPE_SYMBOL_BRACE_LEFT
 			$tProp.Value = "left-brace"
-			$oShape.FillColor = $LOW_COLOR_OFF
+			$oShape.FillColor = $LO_COLOR_OFF
 
 		Case $LOW_SHAPE_TYPE_SYMBOL_BRACE_RIGHT
 			$tProp.Value = "right-brace"
-			$oShape.FillColor = $LOW_COLOR_OFF
+			$oShape.FillColor = $LO_COLOR_OFF
 
 		Case $LOW_SHAPE_TYPE_SYMBOL_BRACKET_DOUBLE
 			$tProp.Value = "bracket-pair"
-			$oShape.FillColor = $LOW_COLOR_OFF
+			$oShape.FillColor = $LO_COLOR_OFF
 
 		Case $LOW_SHAPE_TYPE_SYMBOL_BRACKET_LEFT
 			$tProp.Value = "left-bracket"
-			$oShape.FillColor = $LOW_COLOR_OFF
+			$oShape.FillColor = $LO_COLOR_OFF
 
 		Case $LOW_SHAPE_TYPE_SYMBOL_BRACKET_RIGHT
 			$tProp.Value = "right-bracket"
-			$oShape.FillColor = $LOW_COLOR_OFF
+			$oShape.FillColor = $LO_COLOR_OFF
 
 		Case $LOW_SHAPE_TYPE_SYMBOL_CLOUD
 			;~ Custom Shape Geometry Type = "non-primitive" ???? Try "cloud"
