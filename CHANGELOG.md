@@ -369,10 +369,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_FieldTitleInsert
 - Helper Functions
 	- _LOCalc_ComError_UserFunction
-	- _LOCalc_ConvertColorFromLong
-	- _LOCalc_ConvertColorToLong
-	- _LOCalc_ConvertFromMicrometer
-	- _LOCalc_ConvertToMicrometer
+	- ~~_LOCalc_ConvertColorFromLong~~
+	- ~~_LOCalc_ConvertColorToLong~~
+	- ~~_LOCalc_ConvertFromMicrometer~~
+	- ~~_LOCalc_ConvertToMicrometer~~
 	- _LOCalc_FilterDescriptorCreate
 	- _LOCalc_FilterDescriptorModify
 	- _LOCalc_FilterFieldCreate
@@ -388,7 +388,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_GradientMulticolorAdd
 	- _LOCalc_GradientMulticolorDelete
 	- _LOCalc_GradientMulticolorModify
-	- _LOCalc_PathConvert
+	- ~~_LOCalc_PathConvert~~
 	- _LOCalc_SearchDescriptorCreate
 	- _LOCalc_SearchDescriptorModify
 	- _LOCalc_SearchDescriptorSimilarityModify
@@ -397,10 +397,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_TransparencyGradientMultiAdd
 	- _LOCalc_TransparencyGradientMultiDelete
 	- _LOCalc_TransparencyGradientMultiModify
-	- _LOCalc_VersionGet
+	- ~~_LOCalc_VersionGet~~
 - Internal Functions
-	- __LOCalc_AddTo1DArray
-	- __LOCalc_ArrayFill
+	- ~~__LOCalc_AddTo1DArray~~
+	- ~~__LOCalc_ArrayFill~~
 	- __LOCalc_CellAddressIsSame
 	- __LOCalc_CellBackColor
 	- __LOCalc_CellBorder
@@ -424,7 +424,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- __LOCalc_CommentArrowStyleName
 	- __LOCalc_CommentGetObjByCell
 	- __LOCalc_CommentLineStyleName
-	- __LOCalc_CreateStruct
+	- ~~__LOCalc_CreateStruct~~
 	- __LOCalc_FieldGetObj
 	- __LOCalc_FieldTypeServices
 	- __LOCalc_FilterNameGet
@@ -432,21 +432,21 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- __LOCalc_GradientPresets
 	- __LOCalc_Internal_CursorGetType
 	- __LOCalc_InternalComErrorHandler
-	- __LOCalc_IntIsBetween
+	- ~~__LOCalc_IntIsBetween~~
 	- __LOCalc_NamedRangeGetScopeObj
-	- __LOCalc_NumIsBetween
+	- ~~__LOCalc_NumIsBetween~~
 	- __LOCalc_PageStyleBorder
 	- __LOCalc_PageStyleFooterBorder
 	- __LOCalc_PageStyleHeaderBorder
 	- __LOCalc_RangeAddressIsSame
-	- __LOCalc_SetPropertyValue
+	- ~~__LOCalc_SetPropertyValue~~
 	- __LOCalc_SheetCursorMove
 	- __LOCalc_TextCursorMove
 	- __LOCalc_TransparencyGradientConvert
 	- __LOCalc_TransparencyGradientNameInsert
-	- __LOCalc_UnitConvert
-	- __LOCalc_VarsAreNull
-	- __LOCalc_VersionCheck
+	- ~~__LOCalc_UnitConvert~~
+	- ~~__LOCalc_VarsAreNull~~
+	- ~~__LOCalc_VersionCheck~~
 - Page Style Functions and Examples
 	- _LOCalc_PageStyleAreaColor
 	- _LOCalc_PageStyleBorderColor
@@ -526,7 +526,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOC_CELL_INSERT_MODE_*
 	- $LOC_CELL_ROTATE_REF_*
 	- $LOC_CELL_TYPE_*
-	- $LOC_COLOR_*
+	- ~~$LOC_COLOR_*~~
 	- $LOC_COMMENT_ANCHOR_*
 	- $LOC_COMMENT_ANIMATION_DIR_*
 	- $LOC_COMMENT_ANIMATION_KIND_*
@@ -558,7 +558,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOC_PAGE_LAYOUT_*
 	- $LOC_PAPER_HEIGHT_*
 	- $LOC_PAPER_WIDTH_*
-	- $LOC_PATHCONV_*
+	- ~~$LOC_PATHCONV_*~~
 	- $LOC_PIVOT_TBL_FIELD_BASE_*
 	- $LOC_PIVOT_TBL_FIELD_DISP_*
 	- $LOC_PIVOT_TBL_FIELD_TYPE_*
