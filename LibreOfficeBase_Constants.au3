@@ -43,28 +43,6 @@ Global Const _                                                                  
 		$LOB_COL_TXT_ALIGN_CENTER = 1, _                                                 ; The Column's Text is aligned in the center.
 		$LOB_COL_TXT_ALIGN_RIGHT = 2                                                     ; The Column's Text is aligned to the Right.
 
-; Color in Long Color Format
-Global Const _
-		$LOB_COLOR_OFF = -1, _                                                           ; Turn Color off, or to automatic mode.
-		$LOB_COLOR_BLACK = 0, _                                                          ; Black color.
-		$LOB_COLOR_GREEN = 43315, _                                                      ; Green color.
-		$LOB_COLOR_TEAL = 1410150, _                                                     ; Teal color.
-		$LOB_COLOR_BLUE = 2777241, _                                                     ; Blue color.
-		$LOB_COLOR_DKGRAY = 3355443, _                                                   ; Dark Gray color.
-		$LOB_COLOR_INDIGO = 5582989, _                                                   ; Indigo color.
-		$LOB_COLOR_PURPLE = 8388736, _                                                   ; Purple color.
-		$LOB_COLOR_GRAY = 8421504, _                                                     ; Gray color.
-		$LOB_COLOR_LIME = 8508442, _                                                     ; Lime color.
-		$LOB_COLOR_BROWN = 9127187, _                                                    ; Brown color.
-		$LOB_COLOR_LGRAY = 11711154, _                                                   ; Light Gray color.
-		$LOB_COLOR_MAGENTA = 12517441, _                                                 ; Magenta color.
-		$LOB_COLOR_RED = 16711680, _                                                     ; Red color.
-		$LOB_COLOR_BRICK = 16728064, _                                                   ; Brick color.
-		$LOB_COLOR_ORANGE = 16744448, _                                                  ; Orange color.
-		$LOB_COLOR_GOLD = 16760576, _                                                    ; Gold color.
-		$LOB_COLOR_YELLOW = 16776960, _                                                  ; Yellow color.
-		$LOB_COLOR_WHITE = 16777215                                                      ; White color.
-
 ; Prepared Statement Input Type Commands.
 Global Enum _
 		$LOB_DATA_SET_TYPE_NULL, _                                                       ; Sets the content of the column to NULL.
@@ -313,12 +291,6 @@ Global Const _                                                                  
 		$LOB_FORMAT_KEYS_UNDEFINED = 2048, _                                             ; Returns Is used as a return value if no format exists.
 		$LOB_FORMAT_KEYS_EMPTY = 4096, _                                                 ; Returns Empty Number formats (?)
 		$LOB_FORMAT_KEYS_DURATION = 8196                                                 ; Returns Duration number formats.
-
-; Path Convert Constants.
-Global Const _
-		$LOB_PATHCONV_AUTO_RETURN = 0, _                                                 ; Automatically returns the opposite of the input path, determined by StringInStr search for either "File:///"(L.O.Office URL) or "[A-Z]:\" (Windows File Path).
-		$LOB_PATHCONV_OFFICE_RETURN = 1, _                                               ; Returns L.O. Office URL, even if the input is already in that format.
-		$LOB_PATHCONV_PCPATH_RETURN = 2                                                  ; Returns Windows File Path, even if the input is already in that format.
 
 ; Posture/Italic
 Global Const _                                                                           ; com.sun.star.awt.FontSlant

@@ -5,6 +5,7 @@
 
 ; Main LibreOffice Includes
 #include "LibreOffice_Constants.au3"
+#include "LibreOffice_Helper.au3"
 #include "LibreOffice_Internal.au3"
 
 ; Common includes for Base
@@ -98,8 +99,8 @@ Func _LOBase_SQLResultColumnMetaDataQuery(ByRef $oResult, $iColumn, $iQuery)
 
 	$iCount = $oResult.Columns.Count()
 	If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-	If Not __LOBase_IntIsBetween($iColumn, 1, $iCount) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not __LOBase_IntIsBetween($iQuery, $LOB_RESULT_METADATA_QUERY_GET_CATALOG_NAME, $LOB_RESULT_METADATA_QUERY_IS_WRITABLE_DEFINITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not __LO_IntIsBetween($iColumn, 1, $iCount) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iQuery, $LOB_RESULT_METADATA_QUERY_GET_CATALOG_NAME, $LOB_RESULT_METADATA_QUERY_IS_WRITABLE_DEFINITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	Switch $iQuery
 		Case $LOB_RESULT_METADATA_QUERY_GET_CATALOG_NAME, $LOB_RESULT_METADATA_QUERY_GET_SCHEMA_NAME, $LOB_RESULT_METADATA_QUERY_GET_TABLE_NAME, $LOB_RESULT_METADATA_QUERY_GET_LABEL, _
@@ -236,7 +237,7 @@ Func _LOBase_SQLResultCursorMove(ByRef $oResult, $iMove, $iNumber = Null)
 
 	If Not IsObj($oResult) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oResult.supportsService("com.sun.star.sdb.ResultSet") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOBase_IntIsBetween($iMove, $LOB_RESULT_CURSOR_MOVE_BEFORE_FIRST, $LOB_RESULT_CURSOR_MOVE_RELATIVE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iMove, $LOB_RESULT_CURSOR_MOVE_BEFORE_FIRST, $LOB_RESULT_CURSOR_MOVE_RELATIVE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	Switch $iMove
 		Case $LOB_RESULT_CURSOR_MOVE_BEFORE_FIRST, $LOB_RESULT_CURSOR_MOVE_AFTER_LAST
@@ -295,7 +296,7 @@ Func _LOBase_SQLResultCursorQuery(ByRef $oResult, $iQuery)
 
 	If Not IsObj($oResult) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oResult.supportsService("com.sun.star.sdb.ResultSet") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOBase_IntIsBetween($iQuery, $LOB_RESULT_CURSOR_QUERY_IS_BEFORE_FIRST, $LOB_RESULT_CURSOR_QUERY_GET_ROW) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iQuery, $LOB_RESULT_CURSOR_QUERY_IS_BEFORE_FIRST, $LOB_RESULT_CURSOR_QUERY_GET_ROW) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	Switch $iQuery
 		Case $LOB_RESULT_CURSOR_QUERY_IS_BEFORE_FIRST, $LOB_RESULT_CURSOR_QUERY_IS_FIRST, $LOB_RESULT_CURSOR_QUERY_IS_LAST, $LOB_RESULT_CURSOR_QUERY_IS_AFTER_LAST
@@ -355,8 +356,8 @@ Func _LOBase_SQLResultRowModify(ByRef $oResult, $iModify, $iColumn, $vValue)
 
 	If Not IsObj($oResult) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oResult.supportsService("com.sun.star.sdb.ResultSet") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOBase_IntIsBetween($iModify, $LOB_RESULT_ROW_MOD_NULL, $LOB_RESULT_ROW_MOD_TIMESTAMP) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not __LOBase_IntIsBetween($iColumn, 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not __LO_IntIsBetween($iModify, $LOB_RESULT_ROW_MOD_NULL, $LOB_RESULT_ROW_MOD_TIMESTAMP) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iColumn, 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	Switch $iModify
 		Case $LOB_RESULT_ROW_MOD_NULL
@@ -400,7 +401,7 @@ Func _LOBase_SQLResultRowModify(ByRef $oResult, $iModify, $iColumn, $vValue)
 		Case $LOB_RESULT_ROW_MOD_DATE
 			If Not IsObj($vValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
-			$tDateTime = __LOBase_CreateStruct("com.sun.star.util.Date")
+			$tDateTime = __LO_CreateStruct("com.sun.star.util.Date")
 			If Not IsObj($tDateTime) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 			$tDateTime.Year = $vValue.Year()
@@ -412,14 +413,14 @@ Func _LOBase_SQLResultRowModify(ByRef $oResult, $iModify, $iColumn, $vValue)
 		Case $LOB_RESULT_ROW_MOD_TIME
 			If Not IsObj($vValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
-			$tDateTime = __LOBase_CreateStruct("com.sun.star.util.Time")
+			$tDateTime = __LO_CreateStruct("com.sun.star.util.Time")
 			If Not IsObj($tDateTime) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$tDateTime.Hours = $vValue.Hours()
 			$tDateTime.Minutes = $vValue.Minutes()
 			$tDateTime.Seconds = $vValue.Seconds()
 			$tDateTime.NanoSeconds = $vValue.NanoSeconds()
-			If __LOBase_VersionCheck(4.1) Then $tDateTime.IsUTC = $vValue.IsUTC()
+			If __LO_VersionCheck(4.1) Then $tDateTime.IsUTC = $vValue.IsUTC()
 
 			$oResult.updateTime($iColumn, $tDateTime)
 
@@ -481,7 +482,7 @@ Func _LOBase_SQLResultRowQuery(ByRef $oResult, $iQuery)
 
 	If Not IsObj($oResult) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oResult.supportsService("com.sun.star.sdb.ResultSet") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOBase_IntIsBetween($iQuery, $LOB_RESULT_ROW_QUERY_IS_ROW_INSERTED, $LOB_RESULT_ROW_QUERY_IS_ROW_DELETED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iQuery, $LOB_RESULT_ROW_QUERY_IS_ROW_INSERTED, $LOB_RESULT_ROW_QUERY_IS_ROW_DELETED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$bReturn = Execute("$oResult." & $asQuery[$iQuery] & "()")
 	If Not IsBool($bReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -542,8 +543,8 @@ Func _LOBase_SQLResultRowRead(ByRef $oResult, $iRead, $iColumn)
 
 	If Not IsObj($oResult) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oResult.supportsService("com.sun.star.sdb.ResultSet") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOBase_IntIsBetween($iRead, $LOB_RESULT_ROW_READ_STRING, $LOB_RESULT_ROW_READ_WAS_NULL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not __LOBase_IntIsBetween($iColumn, 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not __LO_IntIsBetween($iRead, $LOB_RESULT_ROW_READ_STRING, $LOB_RESULT_ROW_READ_WAS_NULL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iColumn, 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	Switch $iRead
 		Case $LOB_RESULT_ROW_READ_WAS_NULL
@@ -553,7 +554,7 @@ Func _LOBase_SQLResultRowRead(ByRef $oResult, $iRead, $iColumn)
 			$vReturn = Execute("$oResult." & $asRead[$iRead] & "(" & $iColumn & ")")
 			If Not IsObj($vReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-			$tDateTime = __LOBase_CreateStruct("com.sun.star.util.DateTime")
+			$tDateTime = __LO_CreateStruct("com.sun.star.util.DateTime")
 			If Not IsObj($tDateTime) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 			$tDateTime.Year = $vReturn.Year()
@@ -566,14 +567,14 @@ Func _LOBase_SQLResultRowRead(ByRef $oResult, $iRead, $iColumn)
 			$vReturn = Execute("$oResult." & $asRead[$iRead] & "(" & $iColumn & ")")
 			If Not IsObj($vReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-			$tDateTime = __LOBase_CreateStruct("com.sun.star.util.DateTime")
+			$tDateTime = __LO_CreateStruct("com.sun.star.util.DateTime")
 			If Not IsObj($tDateTime) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 			$tDateTime.Hours = $vReturn.Hours()
 			$tDateTime.Minutes = $vReturn.Minutes()
 			$tDateTime.Seconds = $vReturn.Seconds()
 			$tDateTime.NanoSeconds = $vReturn.NanoSeconds()
-			If __LOBase_VersionCheck(4.1) Then $tDateTime.IsUTC = $vReturn.IsUTC()
+			If __LO_VersionCheck(4.1) Then $tDateTime.IsUTC = $vReturn.IsUTC()
 
 			$vReturn = $tDateTime
 
@@ -652,7 +653,7 @@ Func _LOBase_SQLResultRowUpdate(ByRef $oResult, $iUpdate)
 
 	If Not IsObj($oResult) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oResult.supportsService("com.sun.star.sdb.ResultSet") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOBase_IntIsBetween($iUpdate, $LOB_RESULT_ROW_UPDATE_INSERT, $LOB_RESULT_ROW_UPDATE_MOVE_TO_CURRENT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iUpdate, $LOB_RESULT_ROW_UPDATE_INSERT, $LOB_RESULT_ROW_UPDATE_MOVE_TO_CURRENT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	Execute("$oResult." & $asUpdate[$iUpdate] & "()")
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -868,14 +869,14 @@ Func _LOBase_SQLStatementPreparedSetData(ByRef $oStatement, $iCommand = Null, $i
 	If Not IsObj($oStatement) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not ($oStatement.supportsService("com.sun.star.sdbc.Statement") Or $oStatement.supportsService("com.sun.star.sdbc.PreparedStatement")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOBase_VarsAreNull($iCommand, $iSetType, $vValue) Then
+	If __LO_VarsAreNull($iCommand, $iSetType, $vValue) Then
 		$oStatement.clearParameters()
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, 1)
 	EndIf
 
-	If Not __LOBase_IntIsBetween($iCommand, 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not __LOBase_IntIsBetween($iSetType, $LOB_DATA_SET_TYPE_NULL, $LOB_DATA_SET_TYPE_OBJECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not __LO_IntIsBetween($iCommand, 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iSetType, $LOB_DATA_SET_TYPE_NULL, $LOB_DATA_SET_TYPE_OBJECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	Switch $iSetType
 		Case $LOB_DATA_SET_TYPE_NULL
@@ -929,7 +930,7 @@ Func _LOBase_SQLStatementPreparedSetData(ByRef $oStatement, $iCommand = Null, $i
 		Case $LOB_DATA_SET_TYPE_DATE
 			If Not IsObj($vValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
-			$tDateTime = __LOBase_CreateStruct("com.sun.star.util.Date")
+			$tDateTime = __LO_CreateStruct("com.sun.star.util.Date")
 			If Not IsObj($tDateTime) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 			$tDateTime.Year = $vValue.Year()
@@ -941,14 +942,14 @@ Func _LOBase_SQLStatementPreparedSetData(ByRef $oStatement, $iCommand = Null, $i
 		Case $LOB_DATA_SET_TYPE_TIME
 			If Not IsObj($vValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
-			$tDateTime = __LOBase_CreateStruct("com.sun.star.util.Time")
+			$tDateTime = __LO_CreateStruct("com.sun.star.util.Time")
 			If Not IsObj($tDateTime) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$tDateTime.Hours = $vValue.Hours()
 			$tDateTime.Minutes = $vValue.Minutes()
 			$tDateTime.Seconds = $vValue.Seconds()
 			$tDateTime.NanoSeconds = $vValue.NanoSeconds()
-			If __LOBase_VersionCheck(4.1) Then $tDateTime.IsUTC = $vValue.IsUTC()
+			If __LO_VersionCheck(4.1) Then $tDateTime.IsUTC = $vValue.IsUTC()
 
 			$oStatement.setTime($iCommand, $tDateTime)
 

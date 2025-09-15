@@ -5,6 +5,7 @@
 
 ; Main LibreOffice Includes
 #include "LibreOffice_Constants.au3"
+#include "LibreOffice_Helper.au3"
 #include "LibreOffice_Internal.au3"
 
 ; Common includes for Base
@@ -106,7 +107,7 @@ Func _LOBase_TableAdd(ByRef $oConnection, $sName, $sColName, $iColType = $LOB_DA
 	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsString($sColName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If Not __LOBase_IntIsBetween($iColType, $LOB_DATA_TYPE_LONGNVARCHAR, $LOB_DATA_TYPE_TIMESTAMP_WITH_TIMEZONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not __LO_IntIsBetween($iColType, $LOB_DATA_TYPE_LONGNVARCHAR, $LOB_DATA_TYPE_TIMESTAMP_WITH_TIMEZONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	If Not IsString($sColTypeName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 	If Not IsString($sColDesc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
@@ -230,7 +231,7 @@ Func _LOBase_TableColAdd(ByRef $oTable, $sName, $iType, $sTypeName = "", $sDescr
 
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOBase_IntIsBetween($iType, $LOB_DATA_TYPE_LONGNVARCHAR, $LOB_DATA_TYPE_TIMESTAMP_WITH_TIMEZONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iType, $LOB_DATA_TYPE_LONGNVARCHAR, $LOB_DATA_TYPE_TIMESTAMP_WITH_TIMEZONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsString($sTypeName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not IsString($sDescription) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
@@ -344,12 +345,12 @@ Func _LOBase_TableColDefinition(ByRef $oTable, ByRef $oColumn, $sName = Null, $i
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOBase_VarsAreNull($sName, $iType, $sTypeName, $sDescription) Then
+	If __LO_VarsAreNull($sName, $iType, $sTypeName, $sDescription) Then
 		If $oColumn.supportsService("com.sun.star.sdbcx.KeyColumn") Then ; Key Column
-			__LOBase_ArrayFill($asSettings, $oColumn.Name(), $oColumn.Type(), $oColumn.TypeName())
+			__LO_ArrayFill($asSettings, $oColumn.Name(), $oColumn.Type(), $oColumn.TypeName())
 
 		Else
-			__LOBase_ArrayFill($asSettings, $oColumn.Name(), $oColumn.Type(), $oColumn.TypeName(), $oColumn.HelpText())
+			__LO_ArrayFill($asSettings, $oColumn.Name(), $oColumn.Type(), $oColumn.TypeName(), $oColumn.HelpText())
 		EndIf
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $asSettings)
@@ -366,7 +367,7 @@ Func _LOBase_TableColDefinition(ByRef $oTable, ByRef $oColumn, $sName = Null, $i
 		$iError = ($oColumn.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
-	If Not __LOBase_VarsAreNull($iType, $sTypeName, $sDescription) Then
+	If Not __LO_VarsAreNull($iType, $sTypeName, $sDescription) Then
 		$oNewCol = $oTable.Columns.createDataDescriptor()
 		If Not IsObj($oNewCol) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
@@ -374,7 +375,7 @@ Func _LOBase_TableColDefinition(ByRef $oTable, ByRef $oColumn, $sName = Null, $i
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		If ($iType <> Null) Then
-			If Not __LOBase_IntIsBetween($iType, $LOB_DATA_TYPE_LONGNVARCHAR, $LOB_DATA_TYPE_TIMESTAMP_WITH_TIMEZONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+			If Not __LO_IntIsBetween($iType, $LOB_DATA_TYPE_LONGNVARCHAR, $LOB_DATA_TYPE_TIMESTAMP_WITH_TIMEZONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 			$oNewCol.Type = $iType
 			If ($sTypeName = Null) Then $sTypeName = __LOBase_ColTypeName($iType)
@@ -488,7 +489,7 @@ Func _LOBase_TableColGetObjByIndex(ByRef $oTable, $iIndex)
 
 	$oColumns = $oTable.getColumns()
 	If Not IsObj($oColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-	If Not __LOBase_IntIsBetween($iIndex, 0, $oColumns.Count() - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LO_IntIsBetween($iIndex, 0, $oColumns.Count() - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oColumn = $oColumns.getByIndex($iIndex)
 	If Not IsObj($oColumn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
@@ -612,8 +613,8 @@ Func _LOBase_TableColProperties(ByRef $oConnection, ByRef $oTable, ByRef $oColum
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsObj($oColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-	If __LOBase_VarsAreNull($iLength, $sDefaultVal, $bRequired, $iDecimalPlace, $bAutoValue, $iFormat, $iAlign) Then
-		__LOBase_ArrayFill($asSettings, $oColumn.Precision(), $oColumn.ControlDefault(), _
+	If __LO_VarsAreNull($iLength, $sDefaultVal, $bRequired, $iDecimalPlace, $bAutoValue, $iFormat, $iAlign) Then
+		__LO_ArrayFill($asSettings, $oColumn.Precision(), $oColumn.ControlDefault(), _
 				($oColumn.IsNullable() = $__LOB_IS_REQUIRED_YES) ? (True) : (False), _
 				$oColumn.Scale(), $oColumn.IsAutoIncrement(), $oColumn.FormatKey(), $oColumn.Align())
 
@@ -650,7 +651,7 @@ Func _LOBase_TableColProperties(ByRef $oConnection, ByRef $oTable, ByRef $oColum
 	EndIf
 
 	If ($iDecimalPlace <> Null) Then
-		If Not __LOBase_IntIsBetween($iDecimalPlace, 0, 32767) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LO_IntIsBetween($iDecimalPlace, 0, 32767) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 		$oNewCol.Scale = $iDecimalPlace
 		$bAlter = True
@@ -682,7 +683,7 @@ Func _LOBase_TableColProperties(ByRef $oConnection, ByRef $oTable, ByRef $oColum
 	EndIf
 
 	If ($iAlign <> Null) Then
-		If Not __LOBase_IntIsBetween($iAlign, $LOB_COL_TXT_ALIGN_LEFT, $LOB_COL_TXT_ALIGN_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LO_IntIsBetween($iAlign, $LOB_COL_TXT_ALIGN_LEFT, $LOB_COL_TXT_ALIGN_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 
 		$oColumn.Align = $iAlign
 		$iError = ($oColumn.Align() = $iAlign) ? ($iError) : (BitOR($iError, 64))
@@ -910,7 +911,7 @@ Func _LOBase_TableGetObjByIndex(ByRef $oConnection, $iTable)
 
 	$oTables = $oConnection.getTables()
 	If Not IsObj($oTables) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-	If Not __LOBase_IntIsBetween($iTable, 0, $oTables.Count() - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iTable, 0, $oTables.Count() - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oTable = $oTables.getByIndex($iTable)
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
@@ -1220,8 +1221,8 @@ Func _LOBase_TableIndexModify(ByRef $oTable, $sName, $avColumns = Null, $bIsUniq
 		Sleep((IsInt($i / $__LOBCONST_SLEEP_DIV)) ? (10) : (0))
 	Next
 
-	If __LOBase_VarsAreNull($avColumns, $bIsUnique) Then
-		__LOBase_ArrayFill($avSettings, $avCurrentColumns, $oIndex.IsUnique())
+	If __LO_VarsAreNull($avColumns, $bIsUnique) Then
+		__LO_ArrayFill($avSettings, $avCurrentColumns, $oIndex.IsUnique())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avSettings)
 	EndIf
@@ -1761,7 +1762,7 @@ Func _LOBase_TableUIOpenByName(ByRef $oConnection, $sTable, $bEdit = False, $bHi
 	If Not $oConnection.Parent.DatabaseDocument.CurrentController.isConnected() Then $oConnection.Parent.DatabaseDocument.CurrentController.connect()
 	If Not $oConnection.Parent.DatabaseDocument.CurrentController.isConnected() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
-	$aArgs[0] = __LOBase_SetPropertyValue("Hidden", $bHidden)
+	$aArgs[0] = __LO_SetPropertyValue("Hidden", $bHidden)
 
 	$oTableUI = $oConnection.Parent.DatabaseDocument.CurrentController.loadComponentWithArguments($LOB_SUB_COMP_TYPE_TABLE, $sTable, $bEdit, $aArgs)
 	If Not IsObj($oTableUI) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
@@ -1823,7 +1824,7 @@ Func _LOBase_TableUIOpenByObject(ByRef $oDoc, ByRef $oConnection, ByRef $oTable,
 	If Not $oDoc.CurrentController.isConnected() Then $oDoc.CurrentController.connect()
 	If Not $oDoc.CurrentController.isConnected() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
-	$aArgs[0] = __LOBase_SetPropertyValue("Hidden", $bHidden)
+	$aArgs[0] = __LO_SetPropertyValue("Hidden", $bHidden)
 
 	$oTableUI = $oDoc.CurrentController.loadComponentWithArguments($LOB_SUB_COMP_TYPE_TABLE, $sTable, $bEdit, $aArgs)
 	If Not IsObj($oTableUI) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)

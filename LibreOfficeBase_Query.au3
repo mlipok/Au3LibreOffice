@@ -5,6 +5,7 @@
 
 ; Main LibreOffice Includes
 #include "LibreOffice_Constants.au3"
+#include "LibreOffice_Helper.au3"
 #include "LibreOffice_Internal.au3"
 
 ; Common includes for Base
@@ -412,7 +413,7 @@ Func _LOBase_QueryFieldGetObjByIndex(ByRef $oQuery, $iField)
 
 	$oColumns = $oQuery.Columns()
 	If Not IsObj($oColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-	If Not __LOBase_IntIsBetween($iField, 0, $oColumns.Count() - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LO_IntIsBetween($iField, 0, $oColumns.Count() - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oColumn = $oColumns.getByIndex($iField)
 	If Not IsObj($oColumn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
@@ -502,8 +503,8 @@ Func _LOBase_QueryFieldModify(ByRef $oField, $sAlias = Null, $bVisible = Null, $
 
 	If Not IsObj($oField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If __LOBase_VarsAreNull($sAlias, $bVisible, $sRealName) Then
-		__LOBase_ArrayFill($avSettings, $oField.Name(), $oField.Hidden(), $oField.RealName())
+	If __LO_VarsAreNull($sAlias, $bVisible, $sRealName) Then
+		__LO_ArrayFill($avSettings, $oField.Name(), $oField.Hidden(), $oField.RealName())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avSettings)
 	EndIf
@@ -630,7 +631,7 @@ Func _LOBase_QueryGetObjByIndex(ByRef $oConnection, $iQuery)
 
 	$oQueries = $oConnection.Queries()
 	If Not IsObj($oQueries) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-	If Not __LOBase_IntIsBetween($iQuery, 0, $oQueries.Count() - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iQuery, 0, $oQueries.Count() - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oQuery = $oQueries.getByIndex($iQuery)
 	If Not IsObj($oQuery) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
@@ -998,7 +999,7 @@ Func _LOBase_QueryUIOpenByName(ByRef $oConnection, $sQuery, $bEdit = False, $bHi
 	If Not $oConnection.Parent.DatabaseDocument.CurrentController.isConnected() Then $oConnection.Parent.DatabaseDocument.CurrentController.connect()
 	If Not $oConnection.Parent.DatabaseDocument.CurrentController.isConnected() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
-	$aArgs[0] = __LOBase_SetPropertyValue("Hidden", $bHidden)
+	$aArgs[0] = __LO_SetPropertyValue("Hidden", $bHidden)
 
 	$oQueryUI = $oConnection.Parent.DatabaseDocument.CurrentController.loadComponentWithArguments($LOB_SUB_COMP_TYPE_QUERY, $sQuery, $bEdit, $aArgs)
 	If Not IsObj($oQueryUI) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
@@ -1057,7 +1058,7 @@ Func _LOBase_QueryUIOpenByObject(ByRef $oConnection, ByRef $oQuery, $bEdit = Fal
 	If Not $oConnection.Parent.DatabaseDocument.CurrentController.isConnected() Then $oConnection.Parent.DatabaseDocument.CurrentController.connect()
 	If Not $oConnection.Parent.DatabaseDocument.CurrentController.isConnected() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
-	$aArgs[0] = __LOBase_SetPropertyValue("Hidden", $bHidden)
+	$aArgs[0] = __LO_SetPropertyValue("Hidden", $bHidden)
 
 	$oQueryUI = $oConnection.Parent.DatabaseDocument.CurrentController.loadComponentWithArguments($LOB_SUB_COMP_TYPE_QUERY, $sQuery, $bEdit, $aArgs)
 	If Not IsObj($oQueryUI) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)

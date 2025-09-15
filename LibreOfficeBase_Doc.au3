@@ -5,6 +5,7 @@
 
 ; Main LibreOffice Includes
 #include "LibreOffice_Constants.au3"
+#include "LibreOffice_Helper.au3"
 #include "LibreOffice_Internal.au3"
 
 ; Common includes for Base
@@ -92,7 +93,7 @@ Func _LOBase_DocClose(ByRef $oDoc, $bSaveChanges = True, $sSaveName = "", $bDeli
 	If ($bSaveChanges = True) Then
 		If $oDoc.hasLocation() Then
 			$oDoc.store()
-			$sDocPath = _LOBase_PathConvert($oDoc.getURL(), $LOB_PATHCONV_PCPATH_RETURN)
+			$sDocPath = _LO_PathConvert($oDoc.getURL(), $LO_PATHCONV_PCPATH_RETURN)
 			$oDoc.Close($bDeliverOwnership)
 
 			Return SetError($__LO_STATUS_SUCCESS, 2, $sDocPath)
@@ -108,16 +109,16 @@ Func _LOBase_DocClose(ByRef $oDoc, $bSaveChanges = True, $sSaveName = "", $bDeli
 			$sSaveName = StringStripWS($sSaveName, $__STR_STRIPLEADING + $__STR_STRIPTRAILING)
 			If Not StringRegExp($sSaveName, "\Q.odb\E[ ]*$") Then $sSaveName &= ".odb"
 
-			$sSavePath = _LOBase_PathConvert($sSavePath & $sSaveName, 1)
+			$sSavePath = _LO_PathConvert($sSavePath & $sSaveName, 1)
 			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
-			$aArgs[0] = __LOBase_SetPropertyValue("FilterName", "StarOffice XML (Base)")
+			$aArgs[0] = __LO_SetPropertyValue("FilterName", "StarOffice XML (Base)")
 			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 			$oDoc.storeAsURL($sSavePath, $aArgs)
 			$oDoc.Close($bDeliverOwnership)
 
-			Return SetError($__LO_STATUS_SUCCESS, 1, _LOBase_PathConvert($sSavePath, $LOB_PATHCONV_PCPATH_RETURN))
+			Return SetError($__LO_STATUS_SUCCESS, 1, _LO_PathConvert($sSavePath, $LO_PATHCONV_PCPATH_RETURN))
 		EndIf
 	EndIf
 
@@ -207,7 +208,7 @@ Func _LOBase_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 				ReDim $aoConnectAll[$iCount + 1][3]
 				$aoConnectAll[$iCount][0] = $oDoc
 				$aoConnectAll[$iCount][1] = $oDoc.Title()
-				$aoConnectAll[$iCount][2] = _LOBase_PathConvert($oDoc.getURL(), $LOB_PATHCONV_PCPATH_RETURN)
+				$aoConnectAll[$iCount][2] = _LO_PathConvert($oDoc.getURL(), $LO_PATHCONV_PCPATH_RETURN)
 				$iCount += 1
 			EndIf
 			Sleep(10)
@@ -217,7 +218,7 @@ Func _LOBase_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 	EndIf
 
 	$sFile = StringStripWS($sFile, $__STR_STRIPLEADING)
-	If StringInStr($sFile, "\") Then $sFile = _LOBase_PathConvert($sFile, $LOB_PATHCONV_OFFICE_RETURN) ; Convert to L.O File path.
+	If StringInStr($sFile, "\") Then $sFile = _LO_PathConvert($sFile, $LO_PATHCONV_OFFICE_RETURN) ; Convert to L.O File path.
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	If StringInStr($sFile, "file:///") Then ; URL/Path and Name search
@@ -250,7 +251,7 @@ Func _LOBase_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 					ReDim $aoPartNameSearch[$iCount + 1][3]
 					$aoPartNameSearch[$iCount][0] = $oDoc
 					$aoPartNameSearch[$iCount][1] = $oDoc.Title
-					$aoPartNameSearch[$iCount][2] = _LOBase_PathConvert($oDoc.getURL, $LOB_PATHCONV_PCPATH_RETURN)
+					$aoPartNameSearch[$iCount][2] = _LO_PathConvert($oDoc.getURL, $LO_PATHCONV_PCPATH_RETURN)
 					$iCount += 1
 				EndIf
 
@@ -259,7 +260,7 @@ Func _LOBase_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 					ReDim $aoPartNameSearch[$iCount + 1][3]
 					$aoPartNameSearch[$iCount][0] = $oDoc
 					$aoPartNameSearch[$iCount][1] = $oDoc.Title
-					$aoPartNameSearch[$iCount][2] = _LOBase_PathConvert($oDoc.getURL, $LOB_PATHCONV_PCPATH_RETURN)
+					$aoPartNameSearch[$iCount][2] = _LO_PathConvert($oDoc.getURL, $LO_PATHCONV_PCPATH_RETURN)
 					$iCount += 1
 				EndIf
 			EndIf
@@ -330,7 +331,7 @@ Func _LOBase_DocCreate($bForceNew = True, $bHidden = False, $bWizard = False)
 	If Not IsBool($bWizard) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If $bWizard And $bHidden Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-	$aArgs[0] = __LOBase_SetPropertyValue("Hidden", $bHidden)
+	$aArgs[0] = __LO_SetPropertyValue("Hidden", $bHidden)
 	$oServiceManager = __LO_ServiceManager()
 	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
@@ -483,7 +484,7 @@ EndFunc   ;==>_LOBase_DocGetName
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOBase_PathConvert
+; Related .......: _LO_PathConvert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -500,7 +501,7 @@ Func _LOBase_DocGetPath(ByRef $oDoc, $bReturnLibreURL = False)
 	$sPath = $oDoc.URL()
 
 	If Not $bReturnLibreURL Then
-		$sPath = _LOBase_PathConvert($sPath, $LOB_PATHCONV_PCPATH_RETURN)
+		$sPath = _LO_PathConvert($sPath, $LO_PATHCONV_PCPATH_RETURN)
 		If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	EndIf
 
@@ -713,7 +714,7 @@ Func _LOBase_DocOpen($sFilePath, $bConnectIfOpen = True, $bHidden = Null, $bRead
 
 	If Not IsString($sFilePath) Or Not FileExists($sFilePath) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	$sFileURL = _LOBase_PathConvert($sFilePath, $LOB_PATHCONV_OFFICE_RETURN)
+	$sFileURL = _LO_PathConvert($sFilePath, $LO_PATHCONV_OFFICE_RETURN)
 	If @error Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bConnectIfOpen) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
@@ -723,37 +724,37 @@ Func _LOBase_DocOpen($sFilePath, $bConnectIfOpen = True, $bHidden = Null, $bRead
 	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
 	If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-	If Not __LOBase_VarsAreNull($bHidden, $bReadOnly, $sPassword, $bLoadAsTemplate) Then
+	If Not __LO_VarsAreNull($bHidden, $bReadOnly, $sPassword, $bLoadAsTemplate) Then
 		If ($bHidden <> Null) Then
 			If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-			$vProperty = __LOBase_SetPropertyValue("Hidden", $bHidden)
+			$vProperty = __LO_SetPropertyValue("Hidden", $bHidden)
 			If @error Then $iError = BitOR($iError, 1)
-			If Not BitAND($iError, 1) Then __LOBase_AddTo1DArray($aoProperties, $vProperty)
+			If Not BitAND($iError, 1) Then __LO_AddTo1DArray($aoProperties, $vProperty)
 		EndIf
 
 		If ($bReadOnly <> Null) Then
 			If Not IsBool($bReadOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
-			$vProperty = __LOBase_SetPropertyValue("ReadOnly", $bReadOnly)
+			$vProperty = __LO_SetPropertyValue("ReadOnly", $bReadOnly)
 			If @error Then $iError = BitOR($iError, 2)
-			If Not BitAND($iError, 2) Then __LOBase_AddTo1DArray($aoProperties, $vProperty)
+			If Not BitAND($iError, 2) Then __LO_AddTo1DArray($aoProperties, $vProperty)
 		EndIf
 
 		If ($sPassword <> Null) Then
 			If Not IsString($sPassword) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
-			$vProperty = __LOBase_SetPropertyValue("Password", $sPassword)
+			$vProperty = __LO_SetPropertyValue("Password", $sPassword)
 			If @error Then $iError = BitOR($iError, 4)
-			If Not BitAND($iError, 4) Then __LOBase_AddTo1DArray($aoProperties, $vProperty)
+			If Not BitAND($iError, 4) Then __LO_AddTo1DArray($aoProperties, $vProperty)
 		EndIf
 
 		If ($bLoadAsTemplate <> Null) Then
 			If Not IsBool($bLoadAsTemplate) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
-			$vProperty = __LOBase_SetPropertyValue("AsTemplate", $bLoadAsTemplate)
+			$vProperty = __LO_SetPropertyValue("AsTemplate", $bLoadAsTemplate)
 			If @error Then $iError = BitOR($iError, 8)
-			If Not BitAND($iError, 8) Then __LOBase_AddTo1DArray($aoProperties, $vProperty)
+			If Not BitAND($iError, 8) Then __LO_AddTo1DArray($aoProperties, $vProperty)
 		EndIf
 	EndIf
 
@@ -845,17 +846,17 @@ Func _LOBase_DocSaveAs(ByRef $oDoc, $sFilePath, $bOverwrite = Null, $sPassword =
 	$sFilePath = StringStripWS($sFilePath, $__STR_STRIPLEADING + $__STR_STRIPTRAILING)
 	If Not StringRegExp($sFilePath, "\Q.odb\E[ ]*$") Then $sFilePath &= ".odb"
 
-	$sFilePath = _LOBase_PathConvert($sFilePath, $LOB_PATHCONV_OFFICE_RETURN)
+	$sFilePath = _LO_PathConvert($sFilePath, $LO_PATHCONV_OFFICE_RETURN)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	$aProperties[0] = __LOBase_SetPropertyValue("FilterName", "StarOffice XML (Base)")
+	$aProperties[0] = __LO_SetPropertyValue("FilterName", "StarOffice XML (Base)")
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	If ($bOverwrite <> Null) Then
 		If Not IsBool($bOverwrite) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		ReDim $aProperties[UBound($aProperties) + 1]
-		$aProperties[UBound($aProperties) - 1] = __LOBase_SetPropertyValue("Overwrite", $bOverwrite)
+		$aProperties[UBound($aProperties) - 1] = __LO_SetPropertyValue("Overwrite", $bOverwrite)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 	EndIf
 
@@ -863,13 +864,13 @@ Func _LOBase_DocSaveAs(ByRef $oDoc, $sFilePath, $bOverwrite = Null, $sPassword =
 		If Not IsString($sPassword) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		ReDim $aProperties[UBound($aProperties) + 1]
-		$aProperties[UBound($aProperties) - 1] = __LOBase_SetPropertyValue("Password", $sPassword)
+		$aProperties[UBound($aProperties) - 1] = __LO_SetPropertyValue("Password", $sPassword)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 	EndIf
 
 	$oDoc.storeAsURL($sFilePath, $aProperties)
 
-	$sSavePath = _LOBase_PathConvert($sFilePath, $LOB_PATHCONV_PCPATH_RETURN)
+	$sSavePath = _LO_PathConvert($sFilePath, $LO_PATHCONV_PCPATH_RETURN)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $sSavePath)
@@ -917,17 +918,17 @@ Func _LOBase_DocSaveCopy(ByRef $oDoc, $sFilePath, $bOverwrite = Null, $sPassword
 	If Not IsString($sFilePath) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($oDoc.DataSource.URL() = "") Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	$sFilePath = _LOBase_PathConvert($sFilePath, $LOB_PATHCONV_OFFICE_RETURN)
+	$sFilePath = _LO_PathConvert($sFilePath, $LO_PATHCONV_OFFICE_RETURN)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	$aProperties[0] = __LOBase_SetPropertyValue("FilterName", "StarOffice XML (Base)")
+	$aProperties[0] = __LO_SetPropertyValue("FilterName", "StarOffice XML (Base)")
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	If ($bOverwrite <> Null) Then
 		If Not IsBool($bOverwrite) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		ReDim $aProperties[UBound($aProperties) + 1]
-		$aProperties[UBound($aProperties) - 1] = __LOBase_SetPropertyValue("Overwrite", $bOverwrite)
+		$aProperties[UBound($aProperties) - 1] = __LO_SetPropertyValue("Overwrite", $bOverwrite)
 		If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0)
 	EndIf
 
@@ -935,13 +936,13 @@ Func _LOBase_DocSaveCopy(ByRef $oDoc, $sFilePath, $bOverwrite = Null, $sPassword
 		If Not IsString($sPassword) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		ReDim $aProperties[UBound($aProperties) + 1]
-		$aProperties[UBound($aProperties) - 1] = __LOBase_SetPropertyValue("Password", $sPassword)
+		$aProperties[UBound($aProperties) - 1] = __LO_SetPropertyValue("Password", $sPassword)
 		If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 2, 0)
 	EndIf
 
 	$oDoc.storeToURL($sFilePath, $aProperties)
 
-	$sSavePath = _LOBase_PathConvert($sFilePath, $LOB_PATHCONV_PCPATH_RETURN)
+	$sSavePath = _LO_PathConvert($sFilePath, $LO_PATHCONV_PCPATH_RETURN)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $sSavePath)

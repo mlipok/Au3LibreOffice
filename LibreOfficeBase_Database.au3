@@ -5,6 +5,7 @@
 
 ; Main LibreOffice Includes
 #include "LibreOffice_Constants.au3"
+#include "LibreOffice_Helper.au3"
 #include "LibreOffice_Internal.au3"
 
 ; Common includes for Base
@@ -350,7 +351,7 @@ Func _LOBase_DatabaseGetObjByURL($sURL)
 
 	If Not IsString($sURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If StringInStr($sFileURL, "\") Then $sFileURL = _LOBase_PathConvert($sFileURL, $LOB_PATHCONV_OFFICE_RETURN)
+	If StringInStr($sFileURL, "\") Then $sFileURL = _LO_PathConvert($sFileURL, $LO_PATHCONV_OFFICE_RETURN)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oServiceManager = __LO_ServiceManager()
@@ -483,7 +484,7 @@ Func _LOBase_DatabaseMetaDataQuery(ByRef $oConnection, $iQuery, $vParam1 = Null,
 
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOBase_IntIsBetween($iQuery, $LOB_DBASE_META_ALL_PROCEDURES_ARE_CALLABLE, $LOB_DBASE_META_USES_LOCAL_FILES) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iQuery, $LOB_DBASE_META_ALL_PROCEDURES_ARE_CALLABLE, $LOB_DBASE_META_USES_LOCAL_FILES) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$sCall = __LOBase_DatabaseMetaGetQuery($iQuery)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -549,27 +550,27 @@ Func _LOBase_DatabaseMetaDataQuery(ByRef $oConnection, $iQuery, $vParam1 = Null,
 				$LOB_DBASE_META_OWN_INSERTS_ARE_VISIBLE, $LOB_DBASE_META_OWN_UPDATES_ARE_VISIBLE, $LOB_DBASE_META_SUPPORTS_RESULT_SET_TYPE, _
 				$LOB_DBASE_META_UPDATES_ARE_DETECTED
 
-			If Not __LOBase_IntIsBetween($vParam1, $LOB_RESULT_TYPE_FORWARD_ONLY, $LOB_RESULT_TYPE_SCROLL_SENSITIVE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+			If Not __LO_IntIsBetween($vParam1, $LOB_RESULT_TYPE_FORWARD_ONLY, $LOB_RESULT_TYPE_SCROLL_SENSITIVE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 			$vReturn = Execute("$oConnection.MetaData" & $sCall & "(" & $vParam1 & ")")
 			If Not IsBool($vReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		Case $LOB_DBASE_META_SUPPORTS_CONVERT
-			If Not __LOBase_IntIsBetween($vParam1, $LOB_DATA_TYPE_LONGNVARCHAR, $LOB_DATA_TYPE_TIMESTAMP_WITH_TIMEZONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-			If Not __LOBase_IntIsBetween($vParam2, $LOB_DATA_TYPE_LONGNVARCHAR, $LOB_DATA_TYPE_TIMESTAMP_WITH_TIMEZONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+			If Not __LO_IntIsBetween($vParam1, $LOB_DATA_TYPE_LONGNVARCHAR, $LOB_DATA_TYPE_TIMESTAMP_WITH_TIMEZONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+			If Not __LO_IntIsBetween($vParam2, $LOB_DATA_TYPE_LONGNVARCHAR, $LOB_DATA_TYPE_TIMESTAMP_WITH_TIMEZONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 			$vReturn = Execute("$oConnection.MetaData" & $sCall & "(" & $vParam1 & ", " & $vParam2 & ")")
 			If Not IsBool($vReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		Case $LOB_DBASE_META_SUPPORTS_RESULT_SET_CONCURRENCY
-			If Not __LOBase_IntIsBetween($vParam1, $LOB_RESULT_TYPE_FORWARD_ONLY, $LOB_RESULT_TYPE_SCROLL_SENSITIVE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-			If Not __LOBase_IntIsBetween($vParam2, $LOB_DBASE_RESULT_SET_CONCURRENCY_READ_ONLY, $LOB_DBASE_RESULT_SET_CONCURRENCY_UPDATABLE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+			If Not __LO_IntIsBetween($vParam1, $LOB_RESULT_TYPE_FORWARD_ONLY, $LOB_RESULT_TYPE_SCROLL_SENSITIVE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+			If Not __LO_IntIsBetween($vParam2, $LOB_DBASE_RESULT_SET_CONCURRENCY_READ_ONLY, $LOB_DBASE_RESULT_SET_CONCURRENCY_UPDATABLE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 			$vReturn = Execute("$oConnection.MetaData" & $sCall & "(" & $vParam1 & ", " & $vParam2 & ")")
 			If Not IsBool($vReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		Case $LOB_DBASE_META_SUPPORTS_TRANSACTION_ISOLATION_LEVEL
-			If Not __LOBase_IntIsBetween($vParam1, $LOB_DBASE_TRANSACTION_ISOLATION_NONE, $LOB_DBASE_TRANSACTION_ISOLATION_SERIALIZED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+			If Not __LO_IntIsBetween($vParam1, $LOB_DBASE_TRANSACTION_ISOLATION_NONE, $LOB_DBASE_TRANSACTION_ISOLATION_SERIALIZED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 			$vReturn = Execute("$oConnection.MetaData" & $sCall & "(" & $vParam1 & ")")
 			If Not IsBool($vReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
@@ -606,7 +607,7 @@ Func _LOBase_DatabaseMetaDataQuery(ByRef $oConnection, $iQuery, $vParam1 = Null,
 			If Not IsString($vParam1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 			If Not IsString($vParam2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 			If Not IsString($vParam3) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
-			If Not __LOBase_IntIsBetween($vParam4, $LOB_DATA_TYPE_OBJECT, $LOB_DATA_TYPE_STRUCT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+			If Not __LO_IntIsBetween($vParam4, $LOB_DATA_TYPE_OBJECT, $LOB_DATA_TYPE_STRUCT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 
 			$vReturn = Execute("$oConnection.MetaData" & $sCall & "(" & $vParam1 & ", " & $vParam2 & ", " & $vParam3 & ", " & $vParam4 & ")")
 			If Not IsObj($vReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
@@ -615,7 +616,7 @@ Func _LOBase_DatabaseMetaDataQuery(ByRef $oConnection, $iQuery, $vParam1 = Null,
 			If Not IsString($vParam1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 			If Not IsString($vParam2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 			If Not IsString($vParam3) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
-			If Not __LOBase_IntIsBetween($vParam4, $LOB_DBASE_BEST_ROW_SCOPE_TEMPORARY, $LOB_DBASE_BEST_ROW_SCOPE_SESSION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
+			If Not __LO_IntIsBetween($vParam4, $LOB_DBASE_BEST_ROW_SCOPE_TEMPORARY, $LOB_DBASE_BEST_ROW_SCOPE_SESSION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 			If Not IsBool($vParam5) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 
 			$vReturn = Execute("$oConnection.MetaData" & $sCall & "(" & $vParam1 & ", " & $vParam2 & ", " & $vParam3 & ", " & $vParam4 & ", " & $vParam5 & ")")
@@ -679,7 +680,7 @@ Func _LOBase_DatabaseName(ByRef $oDBase)
 	$sName = $oDBase.DatabaseDocument.DataSource.Name()
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If StringInStr($sName, "/") Then $sName = _LOBase_PathConvert($sName, $LOB_PATHCONV_PCPATH_RETURN)
+	If StringInStr($sName, "/") Then $sName = _LO_PathConvert($sName, $LO_PATHCONV_PCPATH_RETURN)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $sName)

@@ -5,6 +5,7 @@
 
 ; Main LibreOffice Includes
 #include "LibreOffice_Constants.au3"
+#include "LibreOffice_Helper.au3"
 #include "LibreOffice_Internal.au3"
 
 ; Common includes for Base
@@ -236,9 +237,9 @@ Func _LOBase_FormCopy(ByRef $oConnection, $sInputForm, $sOutputForm)
 	$sDestForm = StringTrimLeft($sOutputForm, StringInStr($sOutputForm, "/", 0, -1))
 	If Not IsString($sDestForm) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
-	$aArgs[0] = __LOBase_SetPropertyValue("Name", $sDestForm)
-	$aArgs[1] = __LOBase_SetPropertyValue("ActiveConnection", $oConnection)
-	$aArgs[2] = __LOBase_SetPropertyValue("EmbeddedObject", $oFormDef)
+	$aArgs[0] = __LO_SetPropertyValue("Name", $sDestForm)
+	$aArgs[1] = __LO_SetPropertyValue("ActiveConnection", $oConnection)
+	$aArgs[2] = __LO_SetPropertyValue("EmbeddedObject", $oFormDef)
 
 	$oDocDef = $oSource.createInstanceWithArguments("com.sun.star.sdb.DocumentDefinition", $aArgs)
 	If Not IsObj($oDocDef) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
@@ -314,7 +315,7 @@ Func _LOBase_FormCreate(ByRef $oConnection, $sForm, $bOpen = False, $bDesign = T
 	$sFormName = StringTrimLeft($sForm, StringInStr($sForm, "/", 0, -1))
 	If Not IsString($sFormName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
-	$aArgs[0] = __LOBase_SetPropertyValue("Hidden", True)
+	$aArgs[0] = __LO_SetPropertyValue("Hidden", True)
 	If Not IsObj($aArgs[0]) Then $iError = BitOR($iError, 1)
 
 	$oServiceManager = __LO_ServiceManager()
@@ -336,17 +337,17 @@ Func _LOBase_FormCreate(ByRef $oConnection, $sForm, $bOpen = False, $bDesign = T
 		Sleep((IsInt($iCount / $__LOBCONST_SLEEP_DIV)) ? (10) : (0))
 	WEnd
 
-	$aArgs[0] = __LOBase_SetPropertyValue("FilterName", "writer8")
+	$aArgs[0] = __LO_SetPropertyValue("FilterName", "writer8")
 
 	$sPath &= $iCount & ".odt"
-	$oFormDoc.StoreAsUrl(_LOBase_PathConvert($sPath, $LOB_PATHCONV_OFFICE_RETURN), $aArgs)
+	$oFormDoc.StoreAsUrl(_LO_PathConvert($sPath, $LO_PATHCONV_OFFICE_RETURN), $aArgs)
 	$oFormDoc.close(True)
 
 	ReDim $aArgs[3]
 
-	$aArgs[0] = __LOBase_SetPropertyValue("Name", $sFormName)
-	$aArgs[1] = __LOBase_SetPropertyValue("Parent", $oSource)
-	$aArgs[2] = __LOBase_SetPropertyValue("URL", _LOBase_PathConvert($sPath, $LOB_PATHCONV_OFFICE_RETURN))
+	$aArgs[0] = __LO_SetPropertyValue("Name", $sFormName)
+	$aArgs[1] = __LO_SetPropertyValue("Parent", $oSource)
+	$aArgs[2] = __LO_SetPropertyValue("URL", _LO_PathConvert($sPath, $LO_PATHCONV_OFFICE_RETURN))
 
 	$oDocDef = $oSource.createInstanceWithArguments("com.sun.star.sdb.DocumentDefinition", $aArgs)
 	If Not IsObj($oDocDef) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
@@ -361,7 +362,7 @@ Func _LOBase_FormCreate(ByRef $oConnection, $sForm, $bOpen = False, $bDesign = T
 		If Not $oSource.Parent.CurrentController.isConnected() Then $oSource.Parent.CurrentController.connect()
 
 		ReDim $aArgs[1]
-		$aArgs[0] = __LOBase_SetPropertyValue("Hidden", $bHidden)
+		$aArgs[0] = __LO_SetPropertyValue("Hidden", $bHidden)
 
 		$oFormDoc = $oSource.Parent.CurrentController.loadComponentWithArguments($LOB_SUB_COMP_TYPE_FORM, $sForm, $bDesign, $aArgs)
 		If Not IsObj($oFormDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
@@ -630,8 +631,8 @@ Func _LOBase_FormFolderCopy(ByRef $oDoc, $sInputFolder, $sOutputFolder)
 	If Not IsString($sDestFolder) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	If $oSource.hasByHierarchicalName($sOutputFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
-	$aArgs[0] = __LOBase_SetPropertyValue("Name", $sDestFolder)
-	$aArgs[1] = __LOBase_SetPropertyValue("EmbeddedObject", $oSourceFormFolder)
+	$aArgs[0] = __LO_SetPropertyValue("Name", $sDestFolder)
+	$aArgs[1] = __LO_SetPropertyValue("EmbeddedObject", $oSourceFormFolder)
 
 	$oFolder = $oSource.createInstanceWithArguments("com.sun.star.sdb.Forms", $aArgs)
 	If Not IsObj($oFolder) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
@@ -1223,7 +1224,7 @@ Func _LOBase_FormOpen(ByRef $oConnection, $sName, $bDesign = True, $bHidden = Fa
 	If Not $oSource.hasByHierarchicalName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	If Not $oSource.getByHierarchicalName($sName).supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
-	$aArgs[0] = __LOBase_SetPropertyValue("Hidden", $bHidden)
+	$aArgs[0] = __LO_SetPropertyValue("Hidden", $bHidden)
 
 	$oFormDoc = $oSource.Parent.CurrentController.loadComponentWithArguments($LOB_SUB_COMP_TYPE_FORM, $sName, $bDesign, $aArgs)
 	If Not IsObj($oFormDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)

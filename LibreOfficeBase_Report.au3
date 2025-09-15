@@ -5,6 +5,7 @@
 
 ; Main LibreOffice Includes
 #include "LibreOffice_Constants.au3"
+#include "LibreOffice_Helper.au3"
 #include "LibreOffice_Internal.au3"
 
 ; Common includes for Base
@@ -217,7 +218,7 @@ Func _LOBase_ReportConFormattedFieldData(ByRef $oFormatField, $sDataField = Null
 	If (__LOBase_ReportConIdentify($oFormatField) <> $LOB_REP_CON_TYPE_FORMATTED_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOBase_VarsAreNull($sDataField) Then
+	If __LO_VarsAreNull($sDataField) Then
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $oFormatField.DataField())
 	EndIf
@@ -239,7 +240,7 @@ EndFunc   ;==>_LOBase_ReportConFormattedFieldData
 ;                  $sCondPrint          - [optional] a string value. Default is Null. The conditional print expression, prefixed by "rpt:".
 ;                  $bPrintRep           - [optional] a boolean value. Default is Null. If True, repeated values will be printed.
 ;                  $bPrintRepOnGroup    - [optional] a boolean value. Default is Null. If True, repeated values will be printed on group change.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOB_COLOR_* as defined in LibreOfficeBase_Constants.au3. Set to $LOB_COLOR_OFF to set Background color to default / Background Transparent = True.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
 ;                  $mFont               - [optional] a map. Default is Null. A Font descriptor Map returned by a previous _LOBase_FontDescCreate or _LOBase_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOB_TXT_ALIGN_HORI_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOB_ALIGN_VERT_* as defined in LibreOfficeBase_Constants.au3.
@@ -281,7 +282,7 @@ EndFunc   ;==>_LOBase_ReportConFormattedFieldData
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  I could not find a property to set the TextDirection or Visible settings.
-;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
+;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LO_COLOR_OFF to set Background Transparent to True.
 ; Related .......: _LOBase_FormatKeyCreate, _LOBase_FormatKeysGetList, _LOBase_ReportConFormattedFieldData
 ; Link ..........:
 ; Example .......: Yes
@@ -298,8 +299,8 @@ Func _LOBase_ReportConFormattedFieldGeneral(ByRef $oFormatField, $sName = Null, 
 	If (__LOBase_ReportConIdentify($oFormatField) <> $LOB_REP_CON_TYPE_FORMATTED_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOBase_VarsAreNull($sName, $sCondPrint, $bPrintRep, $bPrintRepOnGroup, $iBackColor, $mFont, $iAlign, $iVertAlign, $iFormat) Then
-		__LOBase_ArrayFill($avControl, $oFormatField.Name(), $oFormatField.ConditionalPrintExpression(), $oFormatField.PrintRepeatedValues(), _
+	If __LO_VarsAreNull($sName, $sCondPrint, $bPrintRep, $bPrintRepOnGroup, $iBackColor, $mFont, $iAlign, $iVertAlign, $iFormat) Then
+		__LO_ArrayFill($avControl, $oFormatField.Name(), $oFormatField.ConditionalPrintExpression(), $oFormatField.PrintRepeatedValues(), _
 				$oFormatField.PrintWhenGroupChange(), _
 				$oFormatField.ControlBackground(), __LOBase_ReportConSetGetFontDesc($oFormatField), $oFormatField.ParaAdjust(), _
 				$oFormatField.VerticalAlign(), $oFormatField.FormatKey())
@@ -336,7 +337,7 @@ Func _LOBase_ReportConFormattedFieldGeneral(ByRef $oFormatField, $sName = Null, 
 	EndIf
 
 	If ($iBackColor <> Null) Then
-		If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$oFormatField.ControlBackground = $iBackColor
 		$iError = ($oFormatField.ControlBackground() = $iBackColor) ? ($iError) : (BitOR($iError, 16))
@@ -350,14 +351,14 @@ Func _LOBase_ReportConFormattedFieldGeneral(ByRef $oFormatField, $sName = Null, 
 	EndIf
 
 	If ($iAlign <> Null) Then
-		If Not __LOBase_IntIsBetween($iAlign, $LOB_TXT_ALIGN_HORI_LEFT, $LOB_TXT_ALIGN_HORI_CENTER) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LO_IntIsBetween($iAlign, $LOB_TXT_ALIGN_HORI_LEFT, $LOB_TXT_ALIGN_HORI_CENTER) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 		$oFormatField.ParaAdjust = $iAlign
 		$iError = ($oFormatField.ParaAdjust() = $iAlign) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
 	If ($iVertAlign <> Null) Then
-		If Not __LOBase_IntIsBetween($iVertAlign, $LOB_ALIGN_VERT_TOP, $LOB_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		If Not __LO_IntIsBetween($iVertAlign, $LOB_ALIGN_VERT_TOP, $LOB_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
 		$oFormatField.VerticalAlign = $iVertAlign
 		$iError = ($oFormatField.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 128))
@@ -424,7 +425,7 @@ Func _LOBase_ReportConImageConData(ByRef $oImageControl, $sDataField = Null)
 	If (__LOBase_ReportConIdentify($oImageControl) <> $LOB_REP_CON_TYPE_IMAGE_CONTROL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOBase_VarsAreNull($sDataField) Then
+	If __LO_VarsAreNull($sDataField) Then
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $oImageControl.DataField())
 	EndIf
@@ -447,7 +448,7 @@ EndFunc   ;==>_LOBase_ReportConImageConData
 ;                  $sCondPrint          - [optional] a string value. Default is Null. The conditional print expression, prefixed by "rpt:".
 ;                  $bPrintRep           - [optional] a boolean value. Default is Null. If True, repeated values will be printed.
 ;                  $bPrintRepOnGroup    - [optional] a boolean value. Default is Null. If True, repeated values will be printed on group change.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOB_COLOR_* as defined in LibreOfficeBase_Constants.au3. Set to $LOB_COLOR_OFF to set Background color to default / Background Transparent = True.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOB_ALIGN_VERT_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $sGraphics           - [optional] a string value. Default is Null. The path to an Image file.
 ;                  $iScale              - [optional] an integer value (0-2). Default is Null. How to scale the image to fit the button. See Constants $LOB_REP_CON_IMG_BTN_SCALE_* as defined in LibreOfficeBase_Constants.au3.
@@ -486,8 +487,8 @@ EndFunc   ;==>_LOBase_ReportConImageConData
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  I could not find a property to set the TextDirection or Visible settings.
-;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
-; Related .......: _LOBase_ReportConImageConData, _LOBase_ConvertColorToLong, _LOBase_ConvertColorFromLong
+;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LO_COLOR_OFF to set Background Transparent to True.
+; Related .......: _LOBase_ReportConImageConData, _LO_ConvertColorToLong, _LO_ConvertColorFromLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -502,10 +503,10 @@ Func _LOBase_ReportConImageConGeneral(ByRef $oImageControl, $sName = Null, $bPre
 	If (__LOBase_ReportConIdentify($oImageControl) <> $LOB_REP_CON_TYPE_IMAGE_CONTROL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOBase_VarsAreNull($sName, $bPreserveAsLink, $sCondPrint, $bPrintRep, $bPrintRepOnGroup, $iBackColor, $iVertAlign, $sGraphics, $iScale) Then
-		__LOBase_ArrayFill($avControl, $oImageControl.Name(), $oImageControl.PreserveIRI(), $oImageControl.ConditionalPrintExpression(), $oImageControl.PrintRepeatedValues(), _
+	If __LO_VarsAreNull($sName, $bPreserveAsLink, $sCondPrint, $bPrintRep, $bPrintRepOnGroup, $iBackColor, $iVertAlign, $sGraphics, $iScale) Then
+		__LO_ArrayFill($avControl, $oImageControl.Name(), $oImageControl.PreserveIRI(), $oImageControl.ConditionalPrintExpression(), $oImageControl.PrintRepeatedValues(), _
 				$oImageControl.PrintWhenGroupChange(), $oImageControl.ControlBackground(), $oImageControl.VerticalAlign(), _
-				_LOBase_PathConvert($oImageControl.ImageURL(), $LOB_PATHCONV_PCPATH_RETURN), $oImageControl.ScaleMode())
+				_LO_PathConvert($oImageControl.ImageURL(), $LO_PATHCONV_PCPATH_RETURN), $oImageControl.ScaleMode())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
@@ -546,14 +547,14 @@ Func _LOBase_ReportConImageConGeneral(ByRef $oImageControl, $sName = Null, $bPre
 	EndIf
 
 	If ($iBackColor <> Null) Then
-		If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 		$oImageControl.ControlBackground = $iBackColor
 		$iError = ($oImageControl.ControlBackground() = $iBackColor) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($iVertAlign <> Null) Then
-		If Not __LOBase_IntIsBetween($iVertAlign, $LOB_ALIGN_VERT_TOP, $LOB_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LO_IntIsBetween($iVertAlign, $LOB_ALIGN_VERT_TOP, $LOB_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 		$oImageControl.VerticalAlign = $iVertAlign
 		$iError = ($oImageControl.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 64))
@@ -562,12 +563,12 @@ Func _LOBase_ReportConImageConGeneral(ByRef $oImageControl, $sName = Null, $bPre
 	If ($sGraphics <> Null) Then
 		If Not IsString($sGraphics) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
-		$oImageControl.ImageURL = _LOBase_PathConvert($sGraphics, $LOB_PATHCONV_OFFICE_RETURN)
-		$iError = ($oImageControl.ImageURL() = _LOBase_PathConvert($sGraphics, $LOB_PATHCONV_OFFICE_RETURN)) ? ($iError) : (BitOR($iError, 128))
+		$oImageControl.ImageURL = _LO_PathConvert($sGraphics, $LO_PATHCONV_OFFICE_RETURN)
+		$iError = ($oImageControl.ImageURL() = _LO_PathConvert($sGraphics, $LO_PATHCONV_OFFICE_RETURN)) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
 	If ($iScale <> Null) Then
-		If Not __LOBase_IntIsBetween($iScale, $LOB_REP_CON_IMG_BTN_SCALE_NONE, $LOB_REP_CON_IMG_BTN_SCALE_FIT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		If Not __LO_IntIsBetween($iScale, $LOB_REP_CON_IMG_BTN_SCALE_NONE, $LOB_REP_CON_IMG_BTN_SCALE_FIT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 
 		$oImageControl.ScaleMode = $iScale
 		$iError = ($oImageControl.ScaleMode() = $iScale) ? ($iError) : (BitOR($iError, 256))
@@ -616,7 +617,7 @@ EndFunc   ;==>_LOBase_ReportConImageConGeneral
 ;                  A Page number field has either field:["Page " & PageNumber() & " of " & PageCount()] [A Page of pages field]; or field:["Page " & PageNumber()] [A Page field].
 ;                  See further note in FormattedFieldGeneral function.
 ;                  A Horizontal or Vertical line is a Fixed line with either Horizontal or Vertical property set using LOBase_ReportConLineGeneral function.
-; Related .......: _LOBase_ReportConsGetList, _LOBase_ReportConDelete, _LOBase_ConvertToMicrometer, _LOBase_ConvertFromMicrometer
+; Related .......: _LOBase_ReportConsGetList, _LOBase_ReportConDelete, _LO_ConvertToMicrometer, _LO_ConvertFromMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -631,7 +632,7 @@ Func _LOBase_ReportConInsert(ByRef $oSection, $iControl, $iX, $iY, $iWidth, $iHe
 
 	If Not IsObj($oSection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oSection.supportsService("com.sun.star.report.Section") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOBase_IntIsBetween($iControl, $LOB_REP_CON_TYPE_CHART, $LOB_REP_CON_TYPE_TEXT_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iControl, $LOB_REP_CON_TYPE_CHART, $LOB_REP_CON_TYPE_TEXT_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsInt($iX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not IsInt($iY) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	If Not IsInt($iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
@@ -694,7 +695,7 @@ EndFunc   ;==>_LOBase_ReportConInsert
 ;                  $sCondPrint          - [optional] a string value. Default is Null. The conditional print expression, prefixed by "rpt:".
 ;                  $bPrintRep           - [optional] a boolean value. Default is Null. If True, repeated values will be printed.
 ;                  $bPrintRepOnGroup    - [optional] a boolean value. Default is Null. If True, repeated values will be printed on group change.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOB_COLOR_* as defined in LibreOfficeBase_Constants.au3. Set to $LOB_COLOR_OFF to set Background color to default / Background Transparent = True.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
 ;                  $mFont               - [optional] a map. Default is Null. A Font descriptor Map returned by a previous _LOBase_FontDescCreate or _LOBase_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOB_TXT_ALIGN_HORI_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOB_ALIGN_VERT_* as defined in LibreOfficeBase_Constants.au3.
@@ -733,7 +734,7 @@ EndFunc   ;==>_LOBase_ReportConInsert
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  I could not find a property to set the TextDirection or Visible settings.
-;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
+;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LO_COLOR_OFF to set Background Transparent to True.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -749,8 +750,8 @@ Func _LOBase_ReportConLabelGeneral(ByRef $oLabel, $sName = Null, $sLabel = Null,
 	If (__LOBase_ReportConIdentify($oLabel) <> $LOB_REP_CON_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOBase_VarsAreNull($sName, $sLabel, $sCondPrint, $bPrintRep, $bPrintRepOnGroup, $iBackColor, $mFont, $iAlign, $iVertAlign) Then
-		__LOBase_ArrayFill($avControl, $oLabel.Name(), $oLabel.Label(), $oLabel.ConditionalPrintExpression(), $oLabel.PrintRepeatedValues(), _
+	If __LO_VarsAreNull($sName, $sLabel, $sCondPrint, $bPrintRep, $bPrintRepOnGroup, $iBackColor, $mFont, $iAlign, $iVertAlign) Then
+		__LO_ArrayFill($avControl, $oLabel.Name(), $oLabel.Label(), $oLabel.ConditionalPrintExpression(), $oLabel.PrintRepeatedValues(), _
 				$oLabel.PrintWhenGroupChange(), $oLabel.ControlBackground(), __LOBase_ReportConSetGetFontDesc($oLabel), $oLabel.ParaAdjust(), _
 				$oLabel.VerticalAlign())
 
@@ -793,7 +794,7 @@ Func _LOBase_ReportConLabelGeneral(ByRef $oLabel, $sName = Null, $sLabel = Null,
 	EndIf
 
 	If ($iBackColor <> Null) Then
-		If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 		$oLabel.ControlBackground = $iBackColor
 		$iError = ($oLabel.ControlBackground() = $iBackColor) ? ($iError) : (BitOR($iError, 32))
@@ -807,14 +808,14 @@ Func _LOBase_ReportConLabelGeneral(ByRef $oLabel, $sName = Null, $sLabel = Null,
 	EndIf
 
 	If ($iAlign <> Null) Then
-		If Not __LOBase_IntIsBetween($iAlign, $LOB_TXT_ALIGN_HORI_LEFT, $LOB_TXT_ALIGN_HORI_CENTER) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		If Not __LO_IntIsBetween($iAlign, $LOB_TXT_ALIGN_HORI_LEFT, $LOB_TXT_ALIGN_HORI_CENTER) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
 		$oLabel.ParaAdjust = $iAlign
 		$iError = ($oLabel.ParaAdjust() = $iAlign) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
 	If ($iVertAlign <> Null) Then
-		If Not __LOBase_IntIsBetween($iVertAlign, $LOB_ALIGN_VERT_TOP, $LOB_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		If Not __LO_IntIsBetween($iVertAlign, $LOB_ALIGN_VERT_TOP, $LOB_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 
 		$oLabel.VerticalAlign = $iVertAlign
 		$iError = ($oLabel.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 256))
@@ -869,8 +870,8 @@ Func _LOBase_ReportConLineGeneral(ByRef $oLine, $sName = Null, $iVertAlign = Nul
 	If (__LOBase_ReportConIdentify($oLine) <> $LOB_REP_CON_TYPE_LINE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOBase_VarsAreNull($sName, $iVertAlign, $iOrient) Then
-		__LOBase_ArrayFill($avControl, $oLine.Name(), $oLine.VerticalAlign(), $oLine.Orientation())
+	If __LO_VarsAreNull($sName, $iVertAlign, $iOrient) Then
+		__LO_ArrayFill($avControl, $oLine.Name(), $oLine.VerticalAlign(), $oLine.Orientation())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
@@ -883,14 +884,14 @@ Func _LOBase_ReportConLineGeneral(ByRef $oLine, $sName = Null, $iVertAlign = Nul
 	EndIf
 
 	If ($iVertAlign <> Null) Then
-		If Not __LOBase_IntIsBetween($iVertAlign, $LOB_ALIGN_VERT_TOP, $LOB_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LO_IntIsBetween($iVertAlign, $LOB_ALIGN_VERT_TOP, $LOB_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		$oLine.VerticalAlign = $iVertAlign
 		$iError = ($oLine.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iOrient <> Null) Then
-		If Not __LOBase_IntIsBetween($iOrient, $LOB_REP_CON_LINE_HORI, $LOB_REP_CON_LINE_VERT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iOrient, $LOB_REP_CON_LINE_HORI, $LOB_REP_CON_LINE_VERT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oLine.Orientation = $iOrient
 		$iError = ($oLine.Orientation() = $iOrient) ? ($iError) : (BitOR($iError, 4))
@@ -1012,7 +1013,7 @@ EndFunc   ;==>_LOBase_ReportConnect
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOBase_ConvertFromMicrometer, _LOBase_ConvertToMicrometer, _LOBase_ReportConSize
+; Related .......: _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOBase_ReportConSize
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1029,8 +1030,8 @@ Func _LOBase_ReportConPosition(ByRef $oControl, $iX = Null, $iY = Null)
 	$tPos = $oControl.Position()
 	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOBase_VarsAreNull($iX, $iY) Then
-		__LOBase_ArrayFill($avPosition, $tPos.X(), $tPos.Y())
+	If __LO_VarsAreNull($iX, $iY) Then
+		__LO_ArrayFill($avPosition, $tPos.X(), $tPos.Y())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avPosition)
 	EndIf
@@ -1049,8 +1050,8 @@ Func _LOBase_ReportConPosition(ByRef $oControl, $iX = Null, $iY = Null)
 
 	$oControl.Position = $tPos
 
-	$iError = ($iX = Null) ? ($iError) : ((__LOBase_IntIsBetween($oControl.Position.X(), $iX - 1, $iX + 1)) ? ($iError) : (BitOR($iError, 1)))
-	$iError = ($iY = Null) ? ($iError) : ((__LOBase_IntIsBetween($oControl.Position.Y(), $iY - 1, $iY + 1)) ? ($iError) : (BitOR($iError, 2)))
+	$iError = ($iX = Null) ? ($iError) : ((__LO_IntIsBetween($oControl.Position.X(), $iX - 1, $iX + 1)) ? ($iError) : (BitOR($iError, 1)))
+	$iError = ($iY = Null) ? ($iError) : ((__LO_IntIsBetween($oControl.Position.Y(), $iY - 1, $iY + 1)) ? ($iError) : (BitOR($iError, 2)))
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOBase_ReportConPosition
@@ -1089,7 +1090,7 @@ Func _LOBase_ReportConsGetList(ByRef $oSection, $iType = $LOB_REP_CON_TYPE_ALL)
 
 	If Not IsObj($oSection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oSection.supportsService("com.sun.star.report.Section") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOBase_IntIsBetween($iType, $LOB_REP_CON_TYPE_CHART, $LOB_REP_CON_TYPE_ALL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iType, $LOB_REP_CON_TYPE_CHART, $LOB_REP_CON_TYPE_ALL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	ReDim $aoControls[$oSection.Count()][2]
 
@@ -1143,7 +1144,7 @@ EndFunc   ;==>_LOBase_ReportConsGetList
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOBase_ConvertFromMicrometer, _LOBase_ConvertToMicrometer, _LOBase_ReportConPosition
+; Related .......: _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOBase_ReportConPosition
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1160,29 +1161,29 @@ Func _LOBase_ReportConSize(ByRef $oControl, $iWidth = Null, $iHeight = Null, $bA
 	$tSize = $oControl.Size()
 	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOBase_VarsAreNull($iWidth, $iHeight, $bAutoGrow) Then
-		__LOBase_ArrayFill($avSize, $tSize.Width(), $tSize.Height(), $oControl.AutoGrow())
+	If __LO_VarsAreNull($iWidth, $iHeight, $bAutoGrow) Then
+		__LO_ArrayFill($avSize, $tSize.Width(), $tSize.Height(), $oControl.AutoGrow())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avSize)
 	EndIf
 
 	If ($iWidth <> Null) Or ($iHeight <> Null) Then
 		If ($iWidth <> Null) Then ; Min 51
-			If Not __LOBase_IntIsBetween($iWidth, 51) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+			If Not __LO_IntIsBetween($iWidth, 51) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 			$tSize.Width = $iWidth
 		EndIf
 
 		If ($iHeight <> Null) Then
-			If Not __LOBase_IntIsBetween($iHeight, 51) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+			If Not __LO_IntIsBetween($iHeight, 51) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 			$tSize.Height = $iHeight
 		EndIf
 
 		$oControl.Size = $tSize
 
-		$iError = ($iWidth = Null) ? ($iError) : ((__LOBase_IntIsBetween($oControl.Size.Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
-		$iError = ($iHeight = Null) ? ($iError) : ((__LOBase_IntIsBetween($oControl.Size.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 2)))
+		$iError = ($iWidth = Null) ? ($iError) : ((__LO_IntIsBetween($oControl.Size.Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
+		$iError = ($iHeight = Null) ? ($iError) : ((__LO_IntIsBetween($oControl.Size.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 2)))
 	EndIf
 
 	If ($bAutoGrow <> Null) Then
@@ -1257,9 +1258,9 @@ Func _LOBase_ReportCopy(ByRef $oConnection, $sInputReport, $sOutputReport)
 	$sDestReport = StringTrimLeft($sOutputReport, StringInStr($sOutputReport, "/", 0, -1))
 	If Not IsString($sDestReport) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
-	$aArgs[0] = __LOBase_SetPropertyValue("Name", $sDestReport)
-	$aArgs[1] = __LOBase_SetPropertyValue("ActiveConnection", $oConnection)
-	$aArgs[2] = __LOBase_SetPropertyValue("EmbeddedObject", $oRepDef)
+	$aArgs[0] = __LO_SetPropertyValue("Name", $sDestReport)
+	$aArgs[1] = __LO_SetPropertyValue("ActiveConnection", $oConnection)
+	$aArgs[2] = __LO_SetPropertyValue("EmbeddedObject", $oRepDef)
 
 	$oDocDef = $oSource.createInstanceWithArguments("com.sun.star.sdb.DocumentDefinition", $aArgs)
 	If Not IsObj($oDocDef) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
@@ -1334,9 +1335,9 @@ Func _LOBase_ReportCreate(ByRef $oConnection, $sReport, $bOpen = False, $bHidden
 	$sReportName = StringTrimLeft($sReport, StringInStr($sReport, "/", 0, -1))
 	If Not IsString($sReportName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
-	$aArgs[0] = __LOBase_SetPropertyValue("Name", $sReportName)
-	$aArgs[1] = __LOBase_SetPropertyValue("Parent", $oSource)
-	$aArgs[2] = __LOBase_SetPropertyValue("URL", _LOBase_PathConvert($sDocURL, $LOB_PATHCONV_OFFICE_RETURN))
+	$aArgs[0] = __LO_SetPropertyValue("Name", $sReportName)
+	$aArgs[1] = __LO_SetPropertyValue("Parent", $oSource)
+	$aArgs[2] = __LO_SetPropertyValue("URL", _LO_PathConvert($sDocURL, $LO_PATHCONV_OFFICE_RETURN))
 
 	$oDocDef = $oSource.createInstanceWithArguments("com.sun.star.sdb.DocumentDefinition", $aArgs)
 	If Not IsObj($oDocDef) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
@@ -1349,7 +1350,7 @@ Func _LOBase_ReportCreate(ByRef $oConnection, $sReport, $bOpen = False, $bHidden
 		If Not $oSource.Parent.CurrentController.isConnected() Then $oSource.Parent.CurrentController.connect()
 
 		ReDim $aArgs[1]
-		$aArgs[0] = __LOBase_SetPropertyValue("Hidden", $bHidden)
+		$aArgs[0] = __LO_SetPropertyValue("Hidden", $bHidden)
 
 		$oReportDoc = $oSource.Parent.CurrentController.loadComponentWithArguments($LOB_SUB_COMP_TYPE_REPORT, $sReport, True, $aArgs)
 		If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
@@ -1415,8 +1416,8 @@ Func _LOBase_ReportData(ByRef $oReportDoc, $iContentType = Null, $sContent = Nul
 	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOBase_VarsAreNull($iContentType, $sContent, $bAnalyzeSQL, $sFilter, $iReportOutput, $bSuppress) Then
-		__LOBase_ArrayFill($avReport, $oReportDoc.CommandType(), $oReportDoc.Command(), $oReportDoc.EscapeProcessing(), $oReportDoc.Filter(), _
+	If __LO_VarsAreNull($iContentType, $sContent, $bAnalyzeSQL, $sFilter, $iReportOutput, $bSuppress) Then
+		__LO_ArrayFill($avReport, $oReportDoc.CommandType(), $oReportDoc.Command(), $oReportDoc.EscapeProcessing(), $oReportDoc.Filter(), _
 				($oReportDoc.MimeType() = $__LOB_REP_OUTPUT_TEXT_DOC) ? ($LOB_REP_OUTPUT_TYPE_TEXT) : (($oReportDoc.MimeType() = $__LOB_REP_OUTPUT_SPREADSHEET_DOC) ? ($LOB_REP_OUTPUT_TYPE_SPREADSHEET) : ($LOB_REP_OUTPUT_TYPE_UNKNOWN)), _
 				($oReportDoc.CurrentController.Mode() = "normal") ? (False) : (True))
 
@@ -1424,7 +1425,7 @@ Func _LOBase_ReportData(ByRef $oReportDoc, $iContentType = Null, $sContent = Nul
 	EndIf
 
 	If ($iContentType <> Null) Then
-		If Not __LOBase_IntIsBetween($iContentType, $LOB_REP_CONTENT_TYPE_TABLE, $LOB_REP_CONTENT_TYPE_SQL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		If Not __LO_IntIsBetween($iContentType, $LOB_REP_CONTENT_TYPE_TABLE, $LOB_REP_CONTENT_TYPE_SQL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		If ($bSuppress = True) Then $oReportDoc.CurrentController.Mode = "remote"
 		$oReportDoc.CommandType = $iContentType
@@ -1454,7 +1455,7 @@ Func _LOBase_ReportData(ByRef $oReportDoc, $iContentType = Null, $sContent = Nul
 	EndIf
 
 	If ($iReportOutput <> Null) Then
-		If Not __LOBase_IntIsBetween($iReportOutput, $LOB_REP_OUTPUT_TYPE_TEXT, $LOB_REP_OUTPUT_TYPE_SPREADSHEET) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LO_IntIsBetween($iReportOutput, $LOB_REP_OUTPUT_TYPE_TEXT, $LOB_REP_OUTPUT_TYPE_SPREADSHEET) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$oReportDoc.MimeType = ($iReportOutput = $LOB_REP_OUTPUT_TYPE_TEXT) ? ($__LOB_REP_OUTPUT_TEXT_DOC) : ($__LOB_REP_OUTPUT_SPREADSHEET_DOC)
 		$iError = ($oReportDoc.MimeType() = ($iReportOutput = $LOB_REP_OUTPUT_TYPE_TEXT) ? ($__LOB_REP_OUTPUT_TEXT_DOC) : ($__LOB_REP_OUTPUT_SPREADSHEET_DOC)) ? ($iError) : (BitOR($iError, 16))
@@ -1527,7 +1528,7 @@ EndFunc   ;==>_LOBase_ReportDelete
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
 ;                  $iHeight             - [optional] an integer value (1753-??). Default is Null. The height of the Section, in Micrometers. See remarks.
 ;                  $sCondPrint          - [optional] a string value. Default is Null. The Conditional Print Statement.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOB_COLOR_* as defined in LibreOfficeBase_Constants.au3. Set to $LOB_COLOR_OFF to set Background color to default / Background Transparent = True.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1555,10 +1556,10 @@ EndFunc   ;==>_LOBase_ReportDelete
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The minimum height of a Section is 1753 uM (Micrometers), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
-;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
+;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LO_COLOR_OFF to set Background Transparent to True.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOBase_ReportPageFooter, _LOBase_ReportPageHeader, _LOBase_ReportFooter, _LOBase_ReportHeader, _LOBase_ReportGroupFooter, _LOBase_ReportGroupHeader, _LOBase_ConvertColorFromLong, _LOBase_ConvertColorToLong, _LOBase_ConvertToMicrometer, _LOBase_ConvertFromMicrometer
+; Related .......: _LOBase_ReportPageFooter, _LOBase_ReportPageHeader, _LOBase_ReportFooter, _LOBase_ReportHeader, _LOBase_ReportGroupFooter, _LOBase_ReportGroupHeader, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_ConvertToMicrometer, _LO_ConvertFromMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1572,8 +1573,8 @@ Func _LOBase_ReportDetail(ByRef $oReportDoc, $sName = Null, $iForceNewPage = Nul
 	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOBase_VarsAreNull($sName, $iForceNewPage, $bKeepTogether, $bVisible, $iHeight, $sCondPrint, $iBackColor) Then
-		__LOBase_ArrayFill($avProps, $oReportDoc.Detail.Name(), $oReportDoc.Detail.ForceNewPage(), $oReportDoc.Detail.KeepTogether(), $oReportDoc.Detail.Visible(), _
+	If __LO_VarsAreNull($sName, $iForceNewPage, $bKeepTogether, $bVisible, $iHeight, $sCondPrint, $iBackColor) Then
+		__LO_ArrayFill($avProps, $oReportDoc.Detail.Name(), $oReportDoc.Detail.ForceNewPage(), $oReportDoc.Detail.KeepTogether(), $oReportDoc.Detail.Visible(), _
 				$oReportDoc.Detail.Height(), $oReportDoc.Detail.ConditionalPrintExpression(), $oReportDoc.Detail.BackColor())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avProps)
@@ -1587,7 +1588,7 @@ Func _LOBase_ReportDetail(ByRef $oReportDoc, $sName = Null, $iForceNewPage = Nul
 	EndIf
 
 	If ($iForceNewPage <> Null) Then
-		If Not __LOBase_IntIsBetween($iForceNewPage, $LOB_REP_FORCE_PAGE_NONE, $LOB_REP_FORCE_PAGE_BEFORE_AFTER_SECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LO_IntIsBetween($iForceNewPage, $LOB_REP_FORCE_PAGE_NONE, $LOB_REP_FORCE_PAGE_BEFORE_AFTER_SECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		$oReportDoc.Detail.ForceNewPage = $iForceNewPage
 		$iError = ($oReportDoc.Detail.ForceNewPage() = $iForceNewPage) ? ($iError) : (BitOR($iError, 2))
@@ -1608,10 +1609,10 @@ Func _LOBase_ReportDetail(ByRef $oReportDoc, $sName = Null, $iForceNewPage = Nul
 	EndIf
 
 	If ($iHeight <> Null) Then
-		If Not __LOBase_IntIsBetween($iHeight, 1753) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LO_IntIsBetween($iHeight, 1753) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$oReportDoc.Detail.Height = $iHeight
-		$iError = (__LOBase_IntIsBetween($oReportDoc.Detail.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 16))
+		$iError = (__LO_IntIsBetween($oReportDoc.Detail.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($sCondPrint <> Null) Then
@@ -1622,7 +1623,7 @@ Func _LOBase_ReportDetail(ByRef $oReportDoc, $sName = Null, $iForceNewPage = Nul
 	EndIf
 
 	If ($iBackColor <> Null) Then
-		If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 		$oReportDoc.Detail.BackColor = $iBackColor
 		$iError = ($oReportDoc.Detail.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 64))
@@ -1843,8 +1844,8 @@ Func _LOBase_ReportFolderCopy(ByRef $oDoc, $sInputFolder, $sOutputFolder)
 	If Not IsString($sDestFolder) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	If $oSource.hasByHierarchicalName($sOutputFolder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
-	$aArgs[0] = __LOBase_SetPropertyValue("Name", $sDestFolder)
-	$aArgs[1] = __LOBase_SetPropertyValue("EmbeddedObject", $oSourceReportFolder)
+	$aArgs[0] = __LO_SetPropertyValue("Name", $sDestFolder)
+	$aArgs[1] = __LO_SetPropertyValue("EmbeddedObject", $oSourceReportFolder)
 
 	$oFolder = $oSource.createInstanceWithArguments("com.sun.star.sdb.Reports", $aArgs)
 	If Not IsObj($oFolder) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
@@ -2370,7 +2371,7 @@ EndFunc   ;==>_LOBase_ReportFoldersGetNames
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
 ;                  $iHeight             - [optional] an integer value (1753-??). Default is Null. The height of the Section, in Micrometers. See remarks.
 ;                  $sCondPrint          - [optional] a string value. Default is Null. The Conditional Print Statement.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOB_COLOR_* as defined in LibreOfficeBase_Constants.au3. Set to $LOB_COLOR_OFF to set Background color to default / Background Transparent = True.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2401,10 +2402,10 @@ EndFunc   ;==>_LOBase_ReportFoldersGetNames
 ; Modified ......:
 ; Remarks .......: The Report Footer must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Footer is disabled, the return values will be Null, except for the Boolean value of $bEnabled.
 ;                  The minimum height of a Section is 1753 uM (Micrometers), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
-;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
+;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LO_COLOR_OFF to set Background Transparent to True.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOBase_ReportPageFooter, _LOBase_ReportPageHeader, _LOBase_ReportHeader, _LOBase_ReportDetail, _LOBase_ReportGroupFooter, _LOBase_ReportGroupHeader, _LOBase_ConvertColorFromLong, _LOBase_ConvertColorToLong, _LOBase_ConvertToMicrometer, _LOBase_ConvertFromMicrometer
+; Related .......: _LOBase_ReportPageFooter, _LOBase_ReportPageHeader, _LOBase_ReportHeader, _LOBase_ReportDetail, _LOBase_ReportGroupFooter, _LOBase_ReportGroupHeader, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_ConvertToMicrometer, _LO_ConvertFromMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2418,14 +2419,14 @@ Func _LOBase_ReportFooter(ByRef $oReportDoc, $bEnabled = Null, $sName = Null, $i
 	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOBase_VarsAreNull($bEnabled, $sName, $iForceNewPage, $bKeepTogether, $bVisible, $iHeight, $sCondPrint, $iBackColor) Then
+	If __LO_VarsAreNull($bEnabled, $sName, $iForceNewPage, $bKeepTogether, $bVisible, $iHeight, $sCondPrint, $iBackColor) Then
 		If $oReportDoc.ReportFooterOn() Then
-			__LOBase_ArrayFill($avProps, $oReportDoc.ReportFooterOn(), $oReportDoc.ReportFooter.Name(), $oReportDoc.ReportFooter.ForceNewPage(), _
+			__LO_ArrayFill($avProps, $oReportDoc.ReportFooterOn(), $oReportDoc.ReportFooter.Name(), $oReportDoc.ReportFooter.ForceNewPage(), _
 					$oReportDoc.ReportFooter.KeepTogether(), $oReportDoc.ReportFooter.Visible(), $oReportDoc.ReportFooter.Height(), _
 					$oReportDoc.ReportFooter.ConditionalPrintExpression(), $oReportDoc.ReportFooter.BackColor())
 
 		Else ; Page Footer is off.
-			__LOBase_ArrayFill($avProps, $oReportDoc.ReportFooterOn(), Null, Null, Null, Null, Null, Null, Null)
+			__LO_ArrayFill($avProps, $oReportDoc.ReportFooterOn(), Null, Null, Null, Null, Null, Null, Null)
 		EndIf
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avProps)
@@ -2452,7 +2453,7 @@ Func _LOBase_ReportFooter(ByRef $oReportDoc, $bEnabled = Null, $sName = Null, $i
 
 	If ($iForceNewPage <> Null) Then
 		If $oReportDoc.ReportFooterOn() Then
-			If Not __LOBase_IntIsBetween($iForceNewPage, $LOB_REP_FORCE_PAGE_NONE, $LOB_REP_FORCE_PAGE_BEFORE_AFTER_SECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+			If Not __LO_IntIsBetween($iForceNewPage, $LOB_REP_FORCE_PAGE_NONE, $LOB_REP_FORCE_PAGE_BEFORE_AFTER_SECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 			$oReportDoc.ReportFooter.ForceNewPage = $iForceNewPage
 			$iError = ($oReportDoc.ReportFooter.ForceNewPage() = $iForceNewPage) ? ($iError) : (BitOR($iError, 4))
@@ -2488,10 +2489,10 @@ Func _LOBase_ReportFooter(ByRef $oReportDoc, $bEnabled = Null, $sName = Null, $i
 
 	If ($iHeight <> Null) Then
 		If $oReportDoc.ReportFooterOn() Then
-			If Not __LOBase_IntIsBetween($iHeight, 1753) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+			If Not __LO_IntIsBetween($iHeight, 1753) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 			$oReportDoc.ReportFooter.Height = $iHeight
-			$iError = (__LOBase_IntIsBetween($oReportDoc.ReportFooter.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 32))
+			$iError = (__LO_IntIsBetween($oReportDoc.ReportFooter.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 32))
 
 		Else
 			$iError = BitOR($iError, 32) ; Can't set ReportFooter Values if Footer is off.
@@ -2512,7 +2513,7 @@ Func _LOBase_ReportFooter(ByRef $oReportDoc, $bEnabled = Null, $sName = Null, $i
 
 	If ($iBackColor <> Null) Then
 		If $oReportDoc.ReportFooterOn() Then
-			If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+			If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
 			$oReportDoc.ReportFooter.BackColor = $iBackColor
 			$iError = ($oReportDoc.ReportFooter.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 128))
@@ -2573,8 +2574,8 @@ Func _LOBase_ReportGeneral(ByRef $oReportDoc, $sName = Null, $iPageHeader = Null
 	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOBase_VarsAreNull($sName, $iPageHeader, $iPageFooter, $bAutoGrow, $bPrintRep) Then
-		__LOBase_ArrayFill($avReport, $oReportDoc.Name(), $oReportDoc.PageHeaderOption(), $oReportDoc.PageFooterOption(), $oReportDoc.AutoGrow(), $oReportDoc.PrintRepeatedValues())
+	If __LO_VarsAreNull($sName, $iPageHeader, $iPageFooter, $bAutoGrow, $bPrintRep) Then
+		__LO_ArrayFill($avReport, $oReportDoc.Name(), $oReportDoc.PageHeaderOption(), $oReportDoc.PageFooterOption(), $oReportDoc.AutoGrow(), $oReportDoc.PrintRepeatedValues())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avReport)
 	EndIf
@@ -2587,14 +2588,14 @@ Func _LOBase_ReportGeneral(ByRef $oReportDoc, $sName = Null, $iPageHeader = Null
 	EndIf
 
 	If ($iPageHeader <> Null) Then
-		If Not __LOBase_IntIsBetween($iPageHeader, $LOB_REP_PAGE_PRINT_OPT_ALL_PAGES, $LOB_REP_PAGE_PRINT_OPT_NOT_WITH_REP_HEADER_FOOTER) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LO_IntIsBetween($iPageHeader, $LOB_REP_PAGE_PRINT_OPT_ALL_PAGES, $LOB_REP_PAGE_PRINT_OPT_NOT_WITH_REP_HEADER_FOOTER) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		$oReportDoc.PageHeaderOption = $iPageHeader
 		$iError = ($oReportDoc.PageHeaderOption() = $iPageHeader) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iPageFooter <> Null) Then
-		If Not __LOBase_IntIsBetween($iPageFooter, $LOB_REP_PAGE_PRINT_OPT_ALL_PAGES, $LOB_REP_PAGE_PRINT_OPT_NOT_WITH_REP_HEADER_FOOTER) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iPageFooter, $LOB_REP_PAGE_PRINT_OPT_ALL_PAGES, $LOB_REP_PAGE_PRINT_OPT_NOT_WITH_REP_HEADER_FOOTER) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oReportDoc.PageFooterOption = $iPageFooter
 		$iError = ($oReportDoc.PageFooterOption() = $iPageFooter) ? ($iError) : (BitOR($iError, 4))
@@ -2653,7 +2654,7 @@ Func _LOBase_ReportGroupAdd(ByRef $oReportDoc, $iPosition = Null)
 
 	If ($iPosition = Null) Then $iPosition = $oReportDoc.Groups.Count()
 
-	If Not __LOBase_IntIsBetween($iPosition, 0, $oReportDoc.Groups.Count()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iPosition, 0, $oReportDoc.Groups.Count()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oGroup = $oReportDoc.Groups.createGroup()
 	If Not IsObj($oGroup) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
@@ -2700,7 +2701,7 @@ Func _LOBase_ReportGroupDeleteByIndex(ByRef $oReportDoc, $iGroup)
 
 	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOBase_IntIsBetween($iGroup, 0, $oReportDoc.Groups.Count() - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iGroup, 0, $oReportDoc.Groups.Count() - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$iCount = $oReportDoc.Groups.Count()
 	If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -2778,7 +2779,7 @@ EndFunc   ;==>_LOBase_ReportGroupDeleteByObj
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
 ;                  $iHeight             - [optional] an integer value (1753-??). Default is Null. The height of the Section, in Micrometers. See remarks.
 ;                  $sCondPrint          - [optional] a string value. Default is Null. The Conditional Print Statement.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOB_COLOR_* as defined in LibreOfficeBase_Constants.au3. Set to $LOB_COLOR_OFF to set Background color to default / Background Transparent = True.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2811,10 +2812,10 @@ EndFunc   ;==>_LOBase_ReportGroupDeleteByObj
 ; Modified ......:
 ; Remarks .......: The Group Footer must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Footer is disabled, the return values will be Null, except for the Boolean value of $bFooterOn.
 ;                  The minimum height of a Section is 1753 uM (Micrometers), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
-;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
+;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LO_COLOR_OFF to set Background Transparent to True.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOBase_ReportPageFooter, _LOBase_ReportPageHeader, _LOBase_ReportFooter, _LOBase_ReportHeader, _LOBase_ReportDetail, _LOBase_ReportGroupHeader, _LOBase_ConvertColorFromLong, _LOBase_ConvertColorToLong, _LOBase_ConvertToMicrometer, _LOBase_ConvertFromMicrometer
+; Related .......: _LOBase_ReportPageFooter, _LOBase_ReportPageHeader, _LOBase_ReportFooter, _LOBase_ReportHeader, _LOBase_ReportDetail, _LOBase_ReportGroupHeader, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_ConvertToMicrometer, _LO_ConvertFromMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2828,14 +2829,14 @@ Func _LOBase_ReportGroupFooter(ByRef $oGroup, $bFooterOn = Null, $sName = Null, 
 	If Not IsObj($oGroup) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oGroup.supportsService("com.sun.star.report.Group") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOBase_VarsAreNull($bFooterOn, $sName, $iForceNewPage, $bKeepTogether, $bRepeatSec, $bVisible, $iHeight, $sCondPrint, $iBackColor) Then
+	If __LO_VarsAreNull($bFooterOn, $sName, $iForceNewPage, $bKeepTogether, $bRepeatSec, $bVisible, $iHeight, $sCondPrint, $iBackColor) Then
 		If $oGroup.FooterOn() Then
-			__LOBase_ArrayFill($avProps, $oGroup.FooterOn(), $oGroup.Footer.Name(), $oGroup.Footer.ForceNewPage(), $oGroup.Footer.KeepTogether(), _
+			__LO_ArrayFill($avProps, $oGroup.FooterOn(), $oGroup.Footer.Name(), $oGroup.Footer.ForceNewPage(), $oGroup.Footer.KeepTogether(), _
 					$oGroup.Footer.RepeatSection(), $oGroup.Footer.Visible(), $oGroup.Footer.Height(), $oGroup.Footer.ConditionalPrintExpression(), _
 					$oGroup.Footer.BackColor())
 
 		Else ; Page Footer is off.
-			__LOBase_ArrayFill($avProps, $oGroup.FooterOn(), Null, Null, Null, Null, Null, Null, Null, Null)
+			__LO_ArrayFill($avProps, $oGroup.FooterOn(), Null, Null, Null, Null, Null, Null, Null, Null)
 		EndIf
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avProps)
@@ -2862,7 +2863,7 @@ Func _LOBase_ReportGroupFooter(ByRef $oGroup, $bFooterOn = Null, $sName = Null, 
 
 	If ($iForceNewPage <> Null) Then
 		If $oGroup.FooterOn() Then
-			If Not __LOBase_IntIsBetween($iForceNewPage, $LOB_REP_FORCE_PAGE_NONE, $LOB_REP_FORCE_PAGE_BEFORE_AFTER_SECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+			If Not __LO_IntIsBetween($iForceNewPage, $LOB_REP_FORCE_PAGE_NONE, $LOB_REP_FORCE_PAGE_BEFORE_AFTER_SECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 			$oGroup.Footer.ForceNewPage = $iForceNewPage
 			$iError = ($oGroup.Footer.ForceNewPage() = $iForceNewPage) ? ($iError) : (BitOR($iError, 4))
@@ -2910,7 +2911,7 @@ Func _LOBase_ReportGroupFooter(ByRef $oGroup, $bFooterOn = Null, $sName = Null, 
 
 	If ($iHeight <> Null) Then
 		If $oGroup.FooterOn() Then
-			If Not __LOBase_IntIsBetween($iHeight, 1753) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+			If Not __LO_IntIsBetween($iHeight, 1753) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 			$oGroup.Footer.Height = $iHeight
 			$iError = ($oGroup.Footer.Height() = $iHeight) ? ($iError) : (BitOR($iError, 64))
@@ -2934,7 +2935,7 @@ Func _LOBase_ReportGroupFooter(ByRef $oGroup, $bFooterOn = Null, $sName = Null, 
 
 	If ($iBackColor <> Null) Then
 		If $oGroup.FooterOn() Then
-			If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+			If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 
 			$oGroup.Footer.BackColor = $iBackColor
 			$iError = ($oGroup.Footer.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 256))
@@ -2978,7 +2979,7 @@ Func _LOBase_ReportGroupGetByIndex(ByRef $oReportDoc, $iReport)
 
 	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOBase_IntIsBetween($iReport, 0, $oReportDoc.Groups.Count() - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iReport, 0, $oReportDoc.Groups.Count() - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oGroup = $oReportDoc.Groups.getByIndex($iReport)
 	If Not IsObj($oGroup) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -2999,7 +3000,7 @@ EndFunc   ;==>_LOBase_ReportGroupGetByIndex
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
 ;                  $iHeight             - [optional] an integer value (1753-??). Default is Null. The height of the Section, in Micrometers. See remarks.
 ;                  $sCondPrint          - [optional] a string value. Default is Null. The Conditional Print Statement.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOB_COLOR_* as defined in LibreOfficeBase_Constants.au3. Set to $LOB_COLOR_OFF to set Background color to default / Background Transparent = True.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -3032,10 +3033,10 @@ EndFunc   ;==>_LOBase_ReportGroupGetByIndex
 ; Modified ......:
 ; Remarks .......: The Group Header must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Header is disabled, the return values will be Null, except for the Boolean value of $bHeaderOn.
 ;                  The minimum height of a Section is 1753 uM (Micrometers), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
-;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
+;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LO_COLOR_OFF to set Background Transparent to True.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOBase_ReportPageFooter, _LOBase_ReportPageHeader, _LOBase_ReportFooter, _LOBase_ReportHeader, _LOBase_ReportDetail, _LOBase_ReportGroupFooter, _LOBase_ConvertColorFromLong, _LOBase_ConvertColorToLong, _LOBase_ConvertToMicrometer, _LOBase_ConvertFromMicrometer
+; Related .......: _LOBase_ReportPageFooter, _LOBase_ReportPageHeader, _LOBase_ReportFooter, _LOBase_ReportHeader, _LOBase_ReportDetail, _LOBase_ReportGroupFooter, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_ConvertToMicrometer, _LO_ConvertFromMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3049,14 +3050,14 @@ Func _LOBase_ReportGroupHeader(ByRef $oGroup, $bHeaderOn = Null, $sName = Null, 
 	If Not IsObj($oGroup) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oGroup.supportsService("com.sun.star.report.Group") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOBase_VarsAreNull($bHeaderOn, $sName, $iForceNewPage, $bKeepTogether, $bRepeatSec, $bVisible, $iHeight, $sCondPrint, $iBackColor) Then
+	If __LO_VarsAreNull($bHeaderOn, $sName, $iForceNewPage, $bKeepTogether, $bRepeatSec, $bVisible, $iHeight, $sCondPrint, $iBackColor) Then
 		If $oGroup.HeaderOn() Then
-			__LOBase_ArrayFill($avProps, $oGroup.HeaderOn(), $oGroup.Header.Name(), $oGroup.Header.ForceNewPage(), $oGroup.Header.KeepTogether(), _
+			__LO_ArrayFill($avProps, $oGroup.HeaderOn(), $oGroup.Header.Name(), $oGroup.Header.ForceNewPage(), $oGroup.Header.KeepTogether(), _
 					$oGroup.Header.RepeatSection(), $oGroup.Header.Visible(), $oGroup.Header.Height(), $oGroup.Header.ConditionalPrintExpression(), _
 					$oGroup.Header.BackColor())
 
 		Else ; Page Header is off.
-			__LOBase_ArrayFill($avProps, $oGroup.HeaderOn(), Null, Null, Null, Null, Null, Null, Null, Null)
+			__LO_ArrayFill($avProps, $oGroup.HeaderOn(), Null, Null, Null, Null, Null, Null, Null, Null)
 		EndIf
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avProps)
@@ -3083,7 +3084,7 @@ Func _LOBase_ReportGroupHeader(ByRef $oGroup, $bHeaderOn = Null, $sName = Null, 
 
 	If ($iForceNewPage <> Null) Then
 		If $oGroup.HeaderOn() Then
-			If Not __LOBase_IntIsBetween($iForceNewPage, $LOB_REP_FORCE_PAGE_NONE, $LOB_REP_FORCE_PAGE_BEFORE_AFTER_SECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+			If Not __LO_IntIsBetween($iForceNewPage, $LOB_REP_FORCE_PAGE_NONE, $LOB_REP_FORCE_PAGE_BEFORE_AFTER_SECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 			$oGroup.Header.ForceNewPage = $iForceNewPage
 			$iError = ($oGroup.Header.ForceNewPage() = $iForceNewPage) ? ($iError) : (BitOR($iError, 4))
@@ -3131,7 +3132,7 @@ Func _LOBase_ReportGroupHeader(ByRef $oGroup, $bHeaderOn = Null, $sName = Null, 
 
 	If ($iHeight <> Null) Then
 		If $oGroup.HeaderOn() Then
-			If Not __LOBase_IntIsBetween($iHeight, 1753) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+			If Not __LO_IntIsBetween($iHeight, 1753) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 			$oGroup.Header.Height = $iHeight
 			$iError = ($oGroup.Header.Height() = $iHeight) ? ($iError) : (BitOR($iError, 64))
@@ -3155,7 +3156,7 @@ Func _LOBase_ReportGroupHeader(ByRef $oGroup, $bHeaderOn = Null, $sName = Null, 
 
 	If ($iBackColor <> Null) Then
 		If $oGroup.HeaderOn() Then
-			If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+			If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 
 			$oGroup.Header.BackColor = $iBackColor
 			$iError = ($oGroup.Header.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 256))
@@ -3224,9 +3225,9 @@ Func _LOBase_ReportGroupPosition(ByRef $oGroup, $iPos = Null)
 
 	If Not IsInt($iCurPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
-	If __LOBase_VarsAreNull($iPos) Then Return SetError($__LO_STATUS_SUCCESS, 0, $iCurPos)
+	If __LO_VarsAreNull($iPos) Then Return SetError($__LO_STATUS_SUCCESS, 0, $iCurPos)
 
-	If Not __LOBase_IntIsBetween($iPos, 0, $iCount) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iPos, 0, $iCount) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oParent.insertByIndex($iPos, $oGroup)
 
@@ -3329,8 +3330,8 @@ Func _LOBase_ReportGroupSort(ByRef $oGroup, $sField = Null, $bSortAsc = Null, $i
 	If Not IsObj($oGroup) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oGroup.supportsService("com.sun.star.report.Group") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOBase_VarsAreNull($sField, $bSortAsc, $iGroupOn, $iGroupInt, $iKeepTogether) Then
-		__LOBase_ArrayFill($avProps, $oGroup.Expression(), $oGroup.SortAscending(), $oGroup.GroupOn(), $oGroup.GroupInterval(), $oGroup.KeepTogether())
+	If __LO_VarsAreNull($sField, $bSortAsc, $iGroupOn, $iGroupInt, $iKeepTogether) Then
+		__LO_ArrayFill($avProps, $oGroup.Expression(), $oGroup.SortAscending(), $oGroup.GroupOn(), $oGroup.GroupInterval(), $oGroup.KeepTogether())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avProps)
 	EndIf
@@ -3350,21 +3351,21 @@ Func _LOBase_ReportGroupSort(ByRef $oGroup, $sField = Null, $bSortAsc = Null, $i
 	EndIf
 
 	If ($iGroupOn <> Null) Then
-		If Not __LOBase_IntIsBetween($iGroupOn, $LOB_REP_GROUP_ON_DEFAULT, $LOB_REP_GROUP_ON_INTERVAL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iGroupOn, $LOB_REP_GROUP_ON_DEFAULT, $LOB_REP_GROUP_ON_INTERVAL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oGroup.GroupOn = $iGroupOn
 		$iError = ($oGroup.GroupOn() = $iGroupOn) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iGroupInt <> Null) Then
-		If Not __LOBase_IntIsBetween($iGroupInt, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iGroupInt, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oGroup.GroupInterval = $iGroupInt
 		$iError = ($oGroup.GroupInterval() = $iGroupInt) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iKeepTogether <> Null) Then
-		If Not __LOBase_IntIsBetween($iKeepTogether, $LOB_REP_KEEP_TOG_NO, $LOB_REP_KEEP_TOG_WITH_FIRST_DETAIL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LO_IntIsBetween($iKeepTogether, $LOB_REP_KEEP_TOG_NO, $LOB_REP_KEEP_TOG_WITH_FIRST_DETAIL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$oGroup.KeepTogether = $iKeepTogether
 		$iError = ($oGroup.KeepTogether() = $iKeepTogether) ? ($iError) : (BitOR($iError, 16))
@@ -3385,7 +3386,7 @@ EndFunc   ;==>_LOBase_ReportGroupSort
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
 ;                  $iHeight             - [optional] an integer value (1753-??). Default is Null. The height of the Section, in Micrometers. See remarks.
 ;                  $sCondPrint          - [optional] a string value. Default is Null. The Conditional Print Statement.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOB_COLOR_* as defined in LibreOfficeBase_Constants.au3. Set to $LOB_COLOR_OFF to set Background color to default / Background Transparent = True.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -3416,10 +3417,10 @@ EndFunc   ;==>_LOBase_ReportGroupSort
 ; Modified ......:
 ; Remarks .......: The Report Header must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Header is disabled, the return values will be Null, except for the Boolean value of $bEnabled.
 ;                  The minimum height of a Section is 1753 uM (Micrometers), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
-;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
+;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LO_COLOR_OFF to set Background Transparent to True.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOBase_ReportPageFooter, _LOBase_ReportPageHeader, _LOBase_ReportFooter, _LOBase_ReportDetail, _LOBase_ReportGroupFooter, _LOBase_ReportGroupHeader, _LOBase_ConvertColorFromLong, _LOBase_ConvertColorToLong, _LOBase_ConvertToMicrometer, _LOBase_ConvertFromMicrometer
+; Related .......: _LOBase_ReportPageFooter, _LOBase_ReportPageHeader, _LOBase_ReportFooter, _LOBase_ReportDetail, _LOBase_ReportGroupFooter, _LOBase_ReportGroupHeader, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_ConvertToMicrometer, _LO_ConvertFromMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3433,14 +3434,14 @@ Func _LOBase_ReportHeader(ByRef $oReportDoc, $bEnabled = Null, $sName = Null, $i
 	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOBase_VarsAreNull($bEnabled, $sName, $iForceNewPage, $bKeepTogether, $bVisible, $iHeight, $sCondPrint, $iBackColor) Then
+	If __LO_VarsAreNull($bEnabled, $sName, $iForceNewPage, $bKeepTogether, $bVisible, $iHeight, $sCondPrint, $iBackColor) Then
 		If $oReportDoc.ReportHeaderOn() Then
-			__LOBase_ArrayFill($avProps, $oReportDoc.ReportHeaderOn(), $oReportDoc.ReportHeader.Name(), $oReportDoc.ReportHeader.ForceNewPage(), _
+			__LO_ArrayFill($avProps, $oReportDoc.ReportHeaderOn(), $oReportDoc.ReportHeader.Name(), $oReportDoc.ReportHeader.ForceNewPage(), _
 					$oReportDoc.ReportHeader.KeepTogether(), $oReportDoc.ReportHeader.Visible(), $oReportDoc.ReportHeader.Height(), _
 					$oReportDoc.ReportHeader.ConditionalPrintExpression(), $oReportDoc.ReportHeader.BackColor())
 
 		Else ; Page Header is off.
-			__LOBase_ArrayFill($avProps, $oReportDoc.ReportHeaderOn(), Null, Null, Null, Null, Null, Null, Null)
+			__LO_ArrayFill($avProps, $oReportDoc.ReportHeaderOn(), Null, Null, Null, Null, Null, Null, Null)
 		EndIf
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avProps)
@@ -3467,7 +3468,7 @@ Func _LOBase_ReportHeader(ByRef $oReportDoc, $bEnabled = Null, $sName = Null, $i
 
 	If ($iForceNewPage <> Null) Then
 		If $oReportDoc.ReportHeaderOn() Then
-			If Not __LOBase_IntIsBetween($iForceNewPage, $LOB_REP_FORCE_PAGE_NONE, $LOB_REP_FORCE_PAGE_BEFORE_AFTER_SECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+			If Not __LO_IntIsBetween($iForceNewPage, $LOB_REP_FORCE_PAGE_NONE, $LOB_REP_FORCE_PAGE_BEFORE_AFTER_SECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 			$oReportDoc.ReportHeader.ForceNewPage = $iForceNewPage
 			$iError = ($oReportDoc.ReportHeader.ForceNewPage() = $iForceNewPage) ? ($iError) : (BitOR($iError, 4))
@@ -3503,10 +3504,10 @@ Func _LOBase_ReportHeader(ByRef $oReportDoc, $bEnabled = Null, $sName = Null, $i
 
 	If ($iHeight <> Null) Then
 		If $oReportDoc.ReportHeaderOn() Then
-			If Not __LOBase_IntIsBetween($iHeight, 1753) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+			If Not __LO_IntIsBetween($iHeight, 1753) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 			$oReportDoc.ReportHeader.Height = $iHeight
-			$iError = (__LOBase_IntIsBetween($oReportDoc.ReportHeader.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 32))
+			$iError = (__LO_IntIsBetween($oReportDoc.ReportHeader.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 32))
 
 		Else
 			$iError = BitOR($iError, 32) ; Can't set ReportHeader Values if Header is off.
@@ -3527,7 +3528,7 @@ Func _LOBase_ReportHeader(ByRef $oReportDoc, $bEnabled = Null, $sName = Null, $i
 
 	If ($iBackColor <> Null) Then
 		If $oReportDoc.ReportHeaderOn() Then
-			If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+			If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
 			$oReportDoc.ReportHeader.BackColor = $iBackColor
 			$iError = ($oReportDoc.ReportHeader.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 128))
@@ -3618,7 +3619,7 @@ Func _LOBase_ReportOpen(ByRef $oConnection, $sName, $bDesign = True, $bHidden = 
 	If Not $oSource.hasByHierarchicalName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	If Not $oSource.getByHierarchicalName($sName).supportsService("com.sun.star.ucb.Content") Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
-	$aArgs[0] = __LOBase_SetPropertyValue("Hidden", $bHidden)
+	$aArgs[0] = __LO_SetPropertyValue("Hidden", $bHidden)
 
 	$oReportDoc = $oSource.Parent.CurrentController.loadComponentWithArguments($LOB_SUB_COMP_TYPE_REPORT, $sName, $bDesign, $aArgs)
 	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
@@ -3636,7 +3637,7 @@ EndFunc   ;==>_LOBase_ReportOpen
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
 ;                  $iHeight             - [optional] an integer value. Default is Null. (1753-??). Default is Null. The height of the Section, in Micrometers. See remarks.
 ;                  $sCondPrint          - [optional] a string value. Default is Null. The Conditional Print Statement.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOB_COLOR_* as defined in LibreOfficeBase_Constants.au3. Set to $LOB_COLOR_OFF to set Background color to default / Background Transparent = True.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -3663,10 +3664,10 @@ EndFunc   ;==>_LOBase_ReportOpen
 ; Modified ......:
 ; Remarks .......: The Page Header must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Footer is disabled, the return values will be Null, except for the Boolean value of $bEnabled.
 ;                  The minimum height of a Section is 1753 uM (Micrometers), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
-;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
+;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LO_COLOR_OFF to set Background Transparent to True.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOBase_ReportPageHeader, _LOBase_ReportFooter, _LOBase_ReportHeader, _LOBase_ReportDetail, _LOBase_ReportGroupFooter, _LOBase_ReportGroupHeader, _LOBase_ConvertColorFromLong, _LOBase_ConvertColorToLong, _LOBase_ConvertToMicrometer, _LOBase_ConvertFromMicrometer
+; Related .......: _LOBase_ReportPageHeader, _LOBase_ReportFooter, _LOBase_ReportHeader, _LOBase_ReportDetail, _LOBase_ReportGroupFooter, _LOBase_ReportGroupHeader, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_ConvertToMicrometer, _LO_ConvertFromMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3680,13 +3681,13 @@ Func _LOBase_ReportPageFooter(ByRef $oReportDoc, $bEnabled = Null, $sName = Null
 	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOBase_VarsAreNull($bEnabled, $sName, $bVisible, $iHeight, $sCondPrint, $iBackColor) Then
+	If __LO_VarsAreNull($bEnabled, $sName, $bVisible, $iHeight, $sCondPrint, $iBackColor) Then
 		If $oReportDoc.PageFooterOn() Then
-			__LOBase_ArrayFill($avProps, $oReportDoc.PageFooterOn(), $oReportDoc.PageFooter.Name(), $oReportDoc.PageFooter.Visible(), $oReportDoc.PageFooter.Height(), _
+			__LO_ArrayFill($avProps, $oReportDoc.PageFooterOn(), $oReportDoc.PageFooter.Name(), $oReportDoc.PageFooter.Visible(), $oReportDoc.PageFooter.Height(), _
 					$oReportDoc.PageFooter.ConditionalPrintExpression(), $oReportDoc.PageFooter.BackColor())
 
 		Else ; Page Footer is off.
-			__LOBase_ArrayFill($avProps, $oReportDoc.PageFooterOn(), Null, Null, Null, Null, Null)
+			__LO_ArrayFill($avProps, $oReportDoc.PageFooterOn(), Null, Null, Null, Null, Null)
 		EndIf
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avProps)
@@ -3725,10 +3726,10 @@ Func _LOBase_ReportPageFooter(ByRef $oReportDoc, $bEnabled = Null, $sName = Null
 
 	If ($iHeight <> Null) Then
 		If $oReportDoc.PageFooterOn() Then
-			If Not __LOBase_IntIsBetween($iHeight, 1753) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+			If Not __LO_IntIsBetween($iHeight, 1753) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 			$oReportDoc.PageFooter.Height = $iHeight
-			$iError = (__LOBase_IntIsBetween($oReportDoc.PageFooter.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 8))
+			$iError = (__LO_IntIsBetween($oReportDoc.PageFooter.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 8))
 
 		Else
 			$iError = BitOR($iError, 8) ; Can't set PageFooter Values if Footer is off.
@@ -3749,7 +3750,7 @@ Func _LOBase_ReportPageFooter(ByRef $oReportDoc, $bEnabled = Null, $sName = Null
 
 	If ($iBackColor <> Null) Then
 		If $oReportDoc.PageFooterOn() Then
-			If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+			If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 			$oReportDoc.PageFooter.BackColor = $iBackColor
 			$iError = ($oReportDoc.PageFooter.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 32))
@@ -3772,7 +3773,7 @@ EndFunc   ;==>_LOBase_ReportPageFooter
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
 ;                  $iHeight             - [optional] an integer value. Default is Null. (1753-??). Default is Null. The height of the Section, in Micrometers. See remarks.
 ;                  $sCondPrint          - [optional] a string value. Default is Null. The Conditional Print Statement.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOB_COLOR_* as defined in LibreOfficeBase_Constants.au3. Set to $LOB_COLOR_OFF to set Background color to default / Background Transparent = True.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -3799,10 +3800,10 @@ EndFunc   ;==>_LOBase_ReportPageFooter
 ; Modified ......:
 ; Remarks .......: The Page Header must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Header is disabled, the return values will be Null, except for the Boolean value of $bEnabled.
 ;                  The minimum height of a Section is 1753 uM (Micrometers), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
-;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LOB_COLOR_OFF to set Background Transparent to True.
+;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LO_COLOR_OFF to set Background Transparent to True.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOBase_ReportPageFooter, _LOBase_ReportFooter, _LOBase_ReportHeader, _LOBase_ReportDetail, _LOBase_ReportGroupFooter, _LOBase_ReportGroupHeader, _LOBase_ConvertColorFromLong, _LOBase_ConvertColorToLong, _LOBase_ConvertToMicrometer, _LOBase_ConvertFromMicrometer
+; Related .......: _LOBase_ReportPageFooter, _LOBase_ReportFooter, _LOBase_ReportHeader, _LOBase_ReportDetail, _LOBase_ReportGroupFooter, _LOBase_ReportGroupHeader, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_ConvertToMicrometer, _LO_ConvertFromMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3816,13 +3817,13 @@ Func _LOBase_ReportPageHeader(ByRef $oReportDoc, $bEnabled = Null, $sName = Null
 	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOBase_VarsAreNull($bEnabled, $sName, $bVisible, $iHeight, $sCondPrint, $iBackColor) Then
+	If __LO_VarsAreNull($bEnabled, $sName, $bVisible, $iHeight, $sCondPrint, $iBackColor) Then
 		If $oReportDoc.PageHeaderOn() Then
-			__LOBase_ArrayFill($avProps, $oReportDoc.PageHeaderOn(), $oReportDoc.PageHeader.Name(), $oReportDoc.PageHeader.Visible(), $oReportDoc.PageHeader.Height(), _
+			__LO_ArrayFill($avProps, $oReportDoc.PageHeaderOn(), $oReportDoc.PageHeader.Name(), $oReportDoc.PageHeader.Visible(), $oReportDoc.PageHeader.Height(), _
 					$oReportDoc.PageHeader.ConditionalPrintExpression(), $oReportDoc.PageHeader.BackColor())
 
 		Else ; Page Header is off.
-			__LOBase_ArrayFill($avProps, $oReportDoc.PageHeaderOn(), Null, Null, Null, Null, Null)
+			__LO_ArrayFill($avProps, $oReportDoc.PageHeaderOn(), Null, Null, Null, Null, Null)
 		EndIf
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avProps)
@@ -3861,10 +3862,10 @@ Func _LOBase_ReportPageHeader(ByRef $oReportDoc, $bEnabled = Null, $sName = Null
 
 	If ($iHeight <> Null) Then
 		If $oReportDoc.PageHeaderOn() Then
-			If Not __LOBase_IntIsBetween($iHeight, 1753) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+			If Not __LO_IntIsBetween($iHeight, 1753) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 			$oReportDoc.PageHeader.Height = $iHeight
-			$iError = (__LOBase_IntIsBetween($oReportDoc.PageHeader.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 8))
+			$iError = (__LO_IntIsBetween($oReportDoc.PageHeader.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 8))
 
 		Else
 			$iError = BitOR($iError, 8) ; Can't set PageHeader Values if Header is off.
@@ -3885,7 +3886,7 @@ Func _LOBase_ReportPageHeader(ByRef $oReportDoc, $bEnabled = Null, $sName = Null
 
 	If ($iBackColor <> Null) Then
 		If $oReportDoc.PageHeaderOn() Then
-			If Not __LOBase_IntIsBetween($iBackColor, $LOB_COLOR_OFF, $LOB_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+			If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 			$oReportDoc.PageHeader.BackColor = $iBackColor
 			$iError = ($oReportDoc.PageHeader.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 32))
@@ -4033,7 +4034,7 @@ Func _LOBase_ReportSectionGetObj(ByRef $oReportDoc, $iSection)
 
 	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOBase_IntIsBetween($iSection, $LOB_REP_SECTION_TYPE_DETAIL, $LOB_REP_SECTION_TYPE_REPORT_HEADER) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iSection, $LOB_REP_SECTION_TYPE_DETAIL, $LOB_REP_SECTION_TYPE_REPORT_HEADER) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	Switch $iSection
 		Case $LOB_REP_SECTION_TYPE_DETAIL

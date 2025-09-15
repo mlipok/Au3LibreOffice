@@ -376,6 +376,26 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 ### Removed
 
 - $__LO_STATUS_DOC_ERROR Error Constant and renumber all after errors.
+- Centralized some internal functions. Thus removing the following individual Functions:
+	- __LOBase_ArrayFill
+	- __LOBase_AddTo1DArray
+	- __LOBase_CreateStruct
+	- __LOBase_IntIsBetween
+	- __LOBase_NumIsBetween
+	- __LOBase_SetPropertyValue
+	- __LOBase_UnitConvert
+	- __LOBase_VarsAreNull
+	- __LOBase_VersionCheck
+- Centralized some Helper functions. Thus removing the following individual Functions:
+	- _LOBase_ConvertColorFromLong
+	- _LOBase_ConvertColorToLong
+	- _LOBase_ConvertFromMicrometer
+	- _LOBase_ConvertToMicrometer
+	- _LOBase_PathConvert
+	- _LOBase_VersionGet
+- Centralized some Constants. Thus removing the following individual Constants:
+	- $LOB_PATHCONV_*
+	- $LOB_COLOR_*
 
 > [!NOTE]
 > **LibreOfficeCalc**
