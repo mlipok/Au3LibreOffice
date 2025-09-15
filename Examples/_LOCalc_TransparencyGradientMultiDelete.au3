@@ -26,7 +26,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to add a comment. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set the comment's background color.
-	_LOCalc_CommentAreaColor($oComment, $LOC_COLOR_INDIGO)
+	_LOCalc_CommentAreaColor($oComment, $LO_COLOR_INDIGO)
 	If @error Then _ERROR($oDoc, "Failed to set comment's Background color. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Make the comment always visible
