@@ -55,7 +55,7 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to modify the Group. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Modify the settings for the Group Header.
-	_LOBase_ReportGroupHeader($oGroup, True, "AutoIt_Group", $LOB_REP_FORCE_PAGE_AFTER_SECTION, False, True, True, 2576, Null, $LOB_COLOR_BRICK)
+	_LOBase_ReportGroupHeader($oGroup, True, "AutoIt_Group", $LOB_REP_FORCE_PAGE_AFTER_SECTION, False, True, True, 2576, Null, $LO_COLOR_BRICK)
 	If @error Then _ERROR($oDoc, $oReportDoc, "Failed to modify Group's property values. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings for the Section. Return will be an Array in order of function parameters.

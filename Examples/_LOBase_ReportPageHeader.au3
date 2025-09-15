@@ -43,7 +43,7 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to create a Report Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Modify the settings for the Section.
-	_LOBase_ReportPageHeader($oReportDoc, True, "AutoIt_Section", True, 4500, Null, $LOB_COLOR_TEAL)
+	_LOBase_ReportPageHeader($oReportDoc, True, "AutoIt_Section", True, 4500, Null, $LO_COLOR_TEAL)
 	If @error Then _ERROR($oDoc, $oReportDoc, "Failed to modify Section's property values. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings for the Section. Return will be an Array in order of function parameters.

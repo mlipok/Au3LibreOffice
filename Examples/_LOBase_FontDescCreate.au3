@@ -55,7 +55,7 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to modify Control properties. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a Font Descriptor.
-	$mFont = _LOBase_FontDescCreate("Times New Roman", $LOB_WEIGHT_BOLD, $LOB_POSTURE_ITALIC, 18, $LOB_COLOR_BRICK, $LOB_UNDERLINE_BOLD, $LOB_COLOR_GREEN, $LOB_STRIKEOUT_NONE, True, $LOB_RELIEF_NONE)
+	$mFont = _LOBase_FontDescCreate("Times New Roman", $LOB_WEIGHT_BOLD, $LOB_POSTURE_ITALIC, 18, $LO_COLOR_BRICK, $LOB_UNDERLINE_BOLD, $LO_COLOR_GREEN, $LOB_STRIKEOUT_NONE, True, $LOB_RELIEF_NONE)
 	If @error Then _ERROR($oDoc, $oReportDoc, "Failed to create a Font Descriptor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Modify the Control's General properties.

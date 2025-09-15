@@ -55,7 +55,7 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to insert a Control. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Modify the Control's General properties.
-	_LOBase_ReportConImageConGeneral($oControl, "Renamed_AutoIt_Control", True, 'rpt:COUNT(1;1)=VALUE("2")', True, True, $LOB_COLOR_GRAY, $LOB_ALIGN_VERT_BOTTOM, @ScriptDir & "\Extras\Plain.png", $LOB_REP_CON_IMG_BTN_SCALE_KEEP_ASPECT)
+	_LOBase_ReportConImageConGeneral($oControl, "Renamed_AutoIt_Control", True, 'rpt:COUNT(1;1)=VALUE("2")', True, True, $LO_COLOR_GRAY, $LOB_ALIGN_VERT_BOTTOM, @ScriptDir & "\Extras\Plain.png", $LOB_REP_CON_IMG_BTN_SCALE_KEEP_ASPECT)
 	If @error Then _ERROR($oDoc, $oReportDoc, "Failed to modify the Control's properties. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings for the control. Return will be an Array in order of function parameters.
