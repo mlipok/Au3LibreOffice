@@ -103,7 +103,7 @@
 ;                  Border Width must be set first to be able to set Border Style and Color.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtCharBorderWidth, _LOWriter_DirFrmtCharBorderStyle, _LOWriter_DirFrmtCharBorderPadding
+; Related .......: _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtCharBorderWidth, _LOWriter_DirFrmtCharBorderStyle, _LOWriter_DirFrmtCharBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -113,7 +113,7 @@ Func _LOWriter_DirFrmtCharBorderColor(ByRef $oSelection, $iTop = Null, $iBottom 
 
 	Local $vReturn
 
-	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not __LO_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
@@ -122,13 +122,13 @@ Func _LOWriter_DirFrmtCharBorderColor(ByRef $oSelection, $iTop = Null, $iBottom 
 		$oSelection.setPropertyToDefault("CharBottomBorder") ; Resetting one truly resets all, but just to be sure, reset all.
 		$oSelection.setPropertyToDefault("CharLeftBorder")
 		$oSelection.setPropertyToDefault("CharRightBorder")
-		If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LO_IntIsBetween($iTop, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LO_IntIsBetween($iBottom, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LO_IntIsBetween($iLeft, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LO_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_CharBorder($oSelection, False, False, True, $iTop, $iBottom, $iLeft, $iRight)
 
@@ -176,7 +176,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderColor
 ;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtCharBorderWidth, _LOWriter_DirFrmtCharBorderStyle, _LOWriter_DirFrmtCharBorderColor
+; Related .......: _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtCharBorderWidth, _LOWriter_DirFrmtCharBorderStyle, _LOWriter_DirFrmtCharBorderColor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -186,14 +186,14 @@ Func _LOWriter_DirFrmtCharBorderPadding(ByRef $oSelection, $iAll = Null, $iTop =
 
 	Local $vReturn
 
-	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not __LO_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If $bClearDirFrmt Then
 		; Resetting any one of these settings causes all to reset; reset the "All" setting for quickness.
 		$oSelection.setPropertyToDefault("CharBorderDistance")
-		If __LOWriter_VarsAreNull($iAll, $iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($iAll, $iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_CharBorderPadding($oSelection, $iAll, $iTop, $iBottom, $iLeft, $iRight)
@@ -252,7 +252,7 @@ Func _LOWriter_DirFrmtCharBorderStyle(ByRef $oSelection, $iTop = Null, $iBottom 
 
 	Local $vReturn
 
-	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not __LO_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
@@ -261,13 +261,13 @@ Func _LOWriter_DirFrmtCharBorderStyle(ByRef $oSelection, $iTop = Null, $iBottom 
 		$oSelection.setPropertyToDefault("CharBottomBorder") ; Resetting one truly resets all, but just to be sure, reset all.
 		$oSelection.setPropertyToDefault("CharLeftBorder")
 		$oSelection.setPropertyToDefault("CharRightBorder")
-		If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LO_IntIsBetween($iTop, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LO_IntIsBetween($iBottom, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LO_IntIsBetween($iLeft, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LO_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_CharBorder($oSelection, False, True, False, $iTop, $iBottom, $iLeft, $iRight)
 
@@ -310,7 +310,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderStyle
 ;                  To "Turn Off" Borders, set them to 0
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtCharBorderStyle, _LOWriter_DirFrmtCharBorderColor, _LOWriter_DirFrmtCharBorderPadding
+; Related .......: _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtCharBorderStyle, _LOWriter_DirFrmtCharBorderColor, _LOWriter_DirFrmtCharBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -320,7 +320,7 @@ Func _LOWriter_DirFrmtCharBorderWidth(ByRef $oSelection, $iTop = Null, $iBottom 
 
 	Local $vReturn
 
-	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not __LO_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
@@ -329,13 +329,13 @@ Func _LOWriter_DirFrmtCharBorderWidth(ByRef $oSelection, $iTop = Null, $iBottom 
 		$oSelection.setPropertyToDefault("CharBottomBorder") ; Resetting one truly resets all, but just to be sure, reset all.
 		$oSelection.setPropertyToDefault("CharLeftBorder")
 		$oSelection.setPropertyToDefault("CharRightBorder")
-		If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LO_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LO_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LO_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LO_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_CharBorder($oSelection, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
 
@@ -420,7 +420,7 @@ Func _LOWriter_DirFrmtCharEffect(ByRef $oSelection, $iRelief = Null, $iCase = Nu
 			$bShadow = Null
 		EndIf
 
-		If __LOWriter_VarsAreNull($iRelief, $iCase, $bHidden, $bOutline, $bShadow) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($iRelief, $iCase, $bHidden, $bOutline, $bShadow) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_CharEffect($oSelection, $iRelief, $iCase, $bHidden, $bOutline, $bShadow)
@@ -485,7 +485,7 @@ Func _LOWriter_DirFrmtCharPosition(ByRef $oSelection, $bAutoSuper = Null, $iSupe
 
 	If $bClearDirFrmt Then
 		$oSelection.setPropertyToDefault("CharEscapement")
-		If __LOWriter_VarsAreNull($bAutoSuper, $iSuperScript, $bAutoSub, $iSubScript, $iRelativeSize) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($bAutoSuper, $iSuperScript, $bAutoSub, $iSubScript, $iRelativeSize) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_CharPosition($oSelection, $bAutoSuper, $iSuperScript, $bAutoSub, $iSubScript, $iRelativeSize)
@@ -555,12 +555,12 @@ Func _LOWriter_DirFrmtCharRotateScale(ByRef $oSelection, $iRotation = Null, $iSc
 			$bRotateFitLine = Null
 		EndIf
 
-		If __LOWriter_VarsAreNull($iRotation, $iScaleWidth, $bRotateFitLine) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($iRotation, $iScaleWidth, $bRotateFitLine) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
-	If __LOWriter_VarsAreNull($iRotation, $iScaleWidth, $bRotateFitLine) Then
+	If __LO_VarsAreNull($iRotation, $iScaleWidth, $bRotateFitLine) Then
 		$vReturn = __LOWriter_CharRotateScale($oSelection, $iRotation, $iScaleWidth, $bRotateFitLine)
-		__LOWriter_AddTo1DArray($vReturn, $oSelection.CharRotationIsFitToLine())
+		__LO_AddTo1DArray($vReturn, $oSelection.CharRotationIsFitToLine())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $vReturn)
 	EndIf
@@ -613,7 +613,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharRotateScale
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  LibreOffice may adjust the set width +/- 1 Micrometer after setting.
 ;                  Color is set in Long Integer format.
-; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Related .......: _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -623,13 +623,13 @@ Func _LOWriter_DirFrmtCharShadow(ByRef $oSelection, $iWidth = Null, $iColor = Nu
 
 	Local $vReturn
 
-	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not __LO_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If $bClearDirFrmt Then
 		$oSelection.setPropertyToDefault("CharShadowFormat")
-		If __LOWriter_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_CharShadow($oSelection, $iWidth, $iColor, $bTransparent, $iLocation)
@@ -671,7 +671,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharShadow
 ;                  The acceptable values are from -2 Pt to 928.8 Pt. the figures can be directly converted easily, however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative Micrometers internally from 928.9 up to 1000 Pt (Max setting).
 ;                  For example, 928.8Pt is the last correct value, which equals 32766 uM (Micrometers), after this LibreOffice reports the following: ;928.9 Pt = -32766 uM; 929 Pt = -32763 uM; 929.1 = -32759; 1000 pt = -30258.
 ;                  Attempting to set Libre's kerning value to anything over 32768 uM causes a COM exception, and attempting to set the kerning to any of these negative numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the max settable kerning is -2.0 Pt to 928.8 Pt.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Related .......: _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -694,7 +694,7 @@ Func _LOWriter_DirFrmtCharSpacing(ByRef $oSelection, $bAutoKerning = Null, $nKer
 			$oSelection.setPropertyToDefault("CharKerning")
 			$nKerning = Null
 		EndIf
-		If __LOWriter_VarsAreNull($bAutoKerning, $nKerning) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($bAutoKerning, $nKerning) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_CharSpacing($oSelection, $bAutoKerning, $nKerning)
@@ -845,7 +845,7 @@ Func _LOWriter_DirFrmtFont(ByRef $oSelection, $sFontName = Null, $nFontSize = Nu
 			$iWeight = Null
 		EndIf
 
-		If __LOWriter_VarsAreNull($sFontName, $nFontSize, $iPosture, $iWeight) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($sFontName, $nFontSize, $iPosture, $iWeight) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	If ($sFontName <> Null) And Not _LOWriter_FontExists($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
@@ -892,7 +892,7 @@ EndFunc   ;==>_LOWriter_DirFrmtFont
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call a Parameter with Default keyword to clear direct formatting for that setting. Font Color and Transparency reset at the same time as the other, e.g., if you reset Font Color, it will reset Transparency.
-; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Related .......: _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -912,19 +912,19 @@ Func _LOWriter_DirFrmtFontColor(ByRef $oSelection, $iFontColor = Null, $iTranspa
 		EndIf
 
 		If ($iTransparency = Default) Then
-			If Not __LOWriter_VersionCheck(7.0) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+			If Not __LO_VersionCheck(7.0) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 
 			$oSelection.setPropertyToDefault("CharTransparence")
 			$iTransparency = Null
 		EndIf
 
 		If ($iHighlight = Default) Then
-			If __LOWriter_VersionCheck(4.2) Then $oSelection.setPropertyToDefault("CharHighlight")
+			If __LO_VersionCheck(4.2) Then $oSelection.setPropertyToDefault("CharHighlight")
 			$oSelection.setPropertyToDefault("CharBackColor") ; Both may be used? not sure. Both do the same thing, so reset both to make sure.
 			$iHighlight = Null
 		EndIf
 
-		If __LOWriter_VarsAreNull($iFontColor, $iTransparency, $iHighlight) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($iFontColor, $iTransparency, $iHighlight) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_CharFontColor($oSelection, $iFontColor, $iTransparency, $iHighlight)
@@ -962,7 +962,7 @@ Func _LOWriter_DirFrmtGetCurStyles(ByRef $oSelection)
 	If Not $oSelection.supportsService("com.sun.star.style.ParagraphProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not $oSelection.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-	__LOWriter_ArrayFill($asStyles, __LOWriter_ParStyleNameToggle($oSelection.ParaStyleName(), True), _
+	__LO_ArrayFill($asStyles, __LOWriter_ParStyleNameToggle($oSelection.ParaStyleName(), True), _
 			__LOWriter_CharStyleNameToggle($oSelection.CharStyleName(), True), _
 			__LOWriter_PageStyleNameToggle($oSelection.PageStyleName(), True), _
 			$oSelection.NumberingStyleName())
@@ -1007,7 +1007,7 @@ EndFunc   ;==>_LOWriter_DirFrmtGetCurStyles
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call a Parameter with Default keyword to clear direct formatting for that setting. Overline style, Color and $bHasColor all reset together.
 ;                  $bOLHasColor must be set to true in order to set the underline color.
-; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Related .......: _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1041,7 +1041,7 @@ Func _LOWriter_DirFrmtOverLine(ByRef $oSelection, $bWordOnly = Null, $iOverLineS
 			$iOLColor = Null
 		EndIf
 
-		If __LOWriter_VarsAreNull($bWordOnly, $iOverLineStyle, $bOLHasColor, $iOLColor) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($bWordOnly, $iOverLineStyle, $bOLHasColor, $iOLColor) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_CharOverLine($oSelection, $bWordOnly, $iOverLineStyle, $bOLHasColor, $iOLColor)
@@ -1137,7 +1137,7 @@ Func _LOWriter_DirFrmtParAlignment(ByRef $oSelection, $iHorAlign = Null, $iVertA
 			$iTxtDirection = Null
 		EndIf
 
-		If __LOWriter_VarsAreNull($iHorAlign, $iVertAlign, $iLastLineAlign, $bExpandSingleWord, $bSnapToGrid, $iTxtDirection) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($iHorAlign, $iVertAlign, $iLastLineAlign, $bExpandSingleWord, $bSnapToGrid, $iTxtDirection) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_ParAlignment($oSelection, $iHorAlign, $iVertAlign, $iLastLineAlign, $bExpandSingleWord, $bSnapToGrid, $iTxtDirection)
@@ -1175,7 +1175,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParAlignment
 ;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Related .......: _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1190,7 +1190,7 @@ Func _LOWriter_DirFrmtParBackColor(ByRef $oSelection, $iBackColor = Null, $bBack
 
 	If $bClearDirFrmt Then
 		$oSelection.setPropertyToDefault("ParaBackColor")
-		If __LOWriter_VarsAreNull($iBackColor, $bBackTransparent) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($iBackColor, $bBackTransparent) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_ParBackColor($oSelection, $iBackColor, $bBackTransparent)
@@ -1239,7 +1239,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParBackColor
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Border Width must be set first to be able to set Border Style and Color.
-; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtParBorderWidth, _LOWriter_DirFrmtParBorderStyle, _LOWriter_DirFrmtParBorderPadding
+; Related .......: _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtParBorderWidth, _LOWriter_DirFrmtParBorderStyle, _LOWriter_DirFrmtParBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1258,13 +1258,13 @@ Func _LOWriter_DirFrmtParBorderColor(ByRef $oSelection, $iTop = Null, $iBottom =
 		$oSelection.setPropertyToDefault("LeftBorder")
 		$oSelection.setPropertyToDefault("RightBorder")
 
-		If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LO_IntIsBetween($iTop, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LO_IntIsBetween($iBottom, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LO_IntIsBetween($iLeft, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LO_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_Border($oSelection, False, False, True, $iTop, $iBottom, $iLeft, $iRight)
 
@@ -1310,7 +1310,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderColor
 ;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtParBorderWidth, _LOWriter_DirFrmtParBorderStyle, _LOWriter_DirFrmtParBorderColor
+; Related .......: _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtParBorderWidth, _LOWriter_DirFrmtParBorderStyle, _LOWriter_DirFrmtParBorderColor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1325,7 +1325,7 @@ Func _LOWriter_DirFrmtParBorderPadding(ByRef $oSelection, $iAll = Null, $iTop = 
 
 	If $bClearDirFrmt Then
 		$oSelection.setPropertyToDefault("BorderDistance")
-		If __LOWriter_VarsAreNull($iAll, $iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($iAll, $iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_ParBorderPadding($oSelection, $iAll, $iTop, $iBottom, $iLeft, $iRight)
@@ -1393,13 +1393,13 @@ Func _LOWriter_DirFrmtParBorderStyle(ByRef $oSelection, $iTop = Null, $iBottom =
 		$oSelection.setPropertyToDefault("LeftBorder")
 		$oSelection.setPropertyToDefault("RightBorder")
 
-		If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LO_IntIsBetween($iTop, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LO_IntIsBetween($iBottom, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LO_IntIsBetween($iLeft, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LO_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_Border($oSelection, False, True, False, $iTop, $iBottom, $iLeft, $iRight)
 
@@ -1446,7 +1446,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderStyle
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call $bConnectBorder Parameter with Default keyword to clear direct formatting for that setting.
 ;                  To "Turn Off" Borders, set them to 0
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtParBorderStyle, _LOWriter_DirFrmtParBorderColor, _LOWriter_DirFrmtParBorderPadding
+; Related .......: _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtParBorderStyle, _LOWriter_DirFrmtParBorderColor, _LOWriter_DirFrmtParBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1465,28 +1465,28 @@ Func _LOWriter_DirFrmtParBorderWidth(ByRef $oSelection, $iTop = Null, $iBottom =
 		$oSelection.setPropertyToDefault("LeftBorder")
 		$oSelection.setPropertyToDefault("RightBorder")
 
-		If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight, $bConnectBorder) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($iTop, $iBottom, $iLeft, $iRight, $bConnectBorder) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	If ($bConnectBorder = Default) Then
 		$oSelection.setPropertyToDefault("ParaIsConnectBorder")
 		$bConnectBorder = Null
-		If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight, $bConnectBorder) Then Return SetError($__LO_STATUS_SUCCESS, 0, 3)
+		If __LO_VarsAreNull($iTop, $iBottom, $iLeft, $iRight, $bConnectBorder) Then Return SetError($__LO_STATUS_SUCCESS, 0, 3)
 	EndIf
 
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LO_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LO_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LO_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LO_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 	If ($bConnectBorder <> Null) And Not IsBool($bConnectBorder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
-	If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight, $bConnectBorder) Then
+	If __LO_VarsAreNull($iTop, $iBottom, $iLeft, $iRight, $bConnectBorder) Then
 		$vReturn = __LOWriter_Border($oSelection, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
-		__LOWriter_AddTo1DArray($vReturn, $oSelection.ParaIsConnectBorder())
+		__LO_AddTo1DArray($vReturn, $oSelection.ParaIsConnectBorder())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $vReturn)
 
-	ElseIf Not __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then
+	ElseIf Not __LO_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then
 		$vReturn = __LOWriter_Border($oSelection, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
 
 		If @error Then Return SetError(@error, @extended, $vReturn)
@@ -1542,7 +1542,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderWidth
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Set $iNumChars, $iLines, $iSpcTxt to 0 to disable DropCaps.
 ;                  I am unable to find a way to set Drop Caps character style to "None" as is available in the User Interface. When it is set to "None" Libre returns a blank string ("") but setting it to a blank string throws a COM error/Exception, even when attempting to set it to Libre's own return value without any in-between variables, in case I was mistaken as to it being a blank string, but this still caused a COM error. So consequently, you cannot set Character Style to "None", but you can still disable Drop Caps as noted above.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Related .......: _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1558,7 +1558,7 @@ Func _LOWriter_DirFrmtParDropCaps(ByRef $oDoc, ByRef $oSelection, $iNumChar = Nu
 
 	If $bClearDirFrmt Then
 		$oSelection.setPropertyToDefault("DropCapFormat")
-		If __LOWriter_VarsAreNull($iNumChar, $iLines, $iSpcTxt, $bWholeWord, $sCharStyle) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($iNumChar, $iLines, $iSpcTxt, $bWholeWord, $sCharStyle) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	If ($sCharStyle <> Null) And Not _LOWriter_CharStyleExists($oDoc, $sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
@@ -1625,7 +1625,7 @@ Func _LOWriter_DirFrmtParHyphenation(ByRef $oSelection, $bAutoHyphen = Null, $bH
 
 	If $bClearDirFrmt Then
 		$oSelection.setPropertyToDefault("ParaIsHyphenation") ; Resetting one resets all.
-		If __LOWriter_VarsAreNull($bAutoHyphen, $bHyphenNoCaps, $iMaxHyphens, $iMinLeadingChar, $iMinTrailingChar) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($bAutoHyphen, $bHyphenNoCaps, $iMaxHyphens, $iMinLeadingChar, $iMinTrailingChar) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_ParHyphenation($oSelection, $bAutoHyphen, $bHyphenNoCaps, $iMaxHyphens, $iMinLeadingChar, $iMinTrailingChar)
@@ -1670,7 +1670,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParHyphenation
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  $iFirstLine Indent cannot be set if $bAutoFirstLine is set to True.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Related .......: _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1688,7 +1688,7 @@ Func _LOWriter_DirFrmtParIndent(ByRef $oSelection, $iBeforeTxt = Null, $iAfterTx
 		$oSelection.setPropertyToDefault("ParaRightMargin")
 		$oSelection.setPropertyToDefault("ParaFirstLineIndent")
 		$oSelection.setPropertyToDefault("ParaIsAutoFirstLineIndent")
-		If __LOWriter_VarsAreNull($iBeforeTxt, $iAfterTxt, $iFirstLine, $bAutoFirstLine) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($iBeforeTxt, $iAfterTxt, $iFirstLine, $bAutoFirstLine) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_ParIndent($oSelection, $iBeforeTxt, $iAfterTxt, $iFirstLine, $bAutoFirstLine)
@@ -1772,7 +1772,7 @@ Func _LOWriter_DirFrmtParOutLineAndList(ByRef $oDoc, ByRef $oSelection, $iOutlin
 			$iLineCountVal = Null
 		EndIf
 
-		If __LOWriter_VarsAreNull($iOutline, $sNumStyle, $bParLineCount, $iLineCountVal) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($iOutline, $sNumStyle, $bParLineCount, $iLineCountVal) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	If ($sNumStyle <> Null) And ($sNumStyle <> "") And Not _LOWriter_NumStyleExists($oDoc, $sNumStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
@@ -1842,7 +1842,7 @@ Func _LOWriter_DirFrmtParPageBreak(ByRef $oDoc, ByRef $oSelection, $iBreakType =
 		$oSelection.setPropertyToDefault("PageDescName")
 		$oSelection.setPropertyToDefault("PageNumberOffset")
 
-		If __LOWriter_VarsAreNull($iBreakType, $iPgNumOffSet, $sPageStyle) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($iBreakType, $iPgNumOffSet, $sPageStyle) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	If ($sPageStyle <> Null) And Not _LOWriter_PageStyleExists($oDoc, $sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
@@ -1892,7 +1892,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParPageBreak
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  LibreOffice may change the shadow width +/- a Micrometer.
-; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Related .......: _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1907,7 +1907,7 @@ Func _LOWriter_DirFrmtParShadow(ByRef $oSelection, $iWidth = Null, $iColor = Nul
 
 	If $bClearDirFrmt Then
 		$oSelection.setPropertyToDefault("ParaShadowFormat")
-		If __LOWriter_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_ParShadow($oSelection, $iWidth, $iColor, $bTransparent, $iLocation)
@@ -1968,7 +1968,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParShadow
 ;                  The settings in LibreOffice, (Single,1.15, 1.5, Double,) Use the Proportional mode, and are just varying percentages. e.g Single = 100, 1.15 = 115%, 1.5 = 150%, Double = 200%.
 ;                  $iLineSpcHeight depends on the $iLineSpcMode used, see constants for accepted Input values.
 ;                  $iAbovePar, $iBelowPar, $iLineSpcHeight may change +/- 1 Micrometer once set.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Related .......: _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1993,7 +1993,7 @@ Func _LOWriter_DirFrmtParSpace(ByRef $oSelection, $iAbovePar = Null, $iBelowPar 
 		EndIf
 
 		If ($bAddSpace = Default) Then
-			If Not __LOWriter_VersionCheck(3.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+			If Not __LO_VersionCheck(3.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 
 			$oSelection.setPropertyToDefault("ParaContextMargin")
 			$bAddSpace = Null
@@ -2014,7 +2014,7 @@ Func _LOWriter_DirFrmtParSpace(ByRef $oSelection, $iAbovePar = Null, $iBelowPar 
 			$bPageLineSpc = Null
 		EndIf
 
-		If __LOWriter_VarsAreNull($iAbovePar, $iBelowPar, $bAddSpace, $iLineSpcMode, $iLineSpcHeight, $bPageLineSpc) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($iAbovePar, $iBelowPar, $bAddSpace, $iLineSpcMode, $iLineSpcHeight, $bPageLineSpc) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_ParSpace($oSelection, $iAbovePar, $iBelowPar, $bAddSpace, $iLineSpcMode, $iLineSpcHeight, $bPageLineSpc)
@@ -2064,7 +2064,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParSpace
 ;                  $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32. The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can also enter a custom ASC value. See ASC AutoIt Function and "ASCII Character Codes" in the AutoIt help file.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  $iNewTabStop position is still returned even though some settings weren't successfully set, the new TabStop was still created.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtParTabStopDelete, _LOWriter_DirFrmtParTabStopMod, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Related .......: _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOWriter_DirFrmtParTabStopDelete, _LOWriter_DirFrmtParTabStopMod, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2171,7 +2171,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopDelete
 ;                  $iPosition once set can vary +/- 1 uM. To ensure you can identify the tabstop to modify it again, This function returns the new TabStop position in @Extended when $iPosition is set, return value will be set to 2. See Return Values.
 ;                  Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to accidentally overwrite an already existing TabStop.
 ;                  $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32. The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can also enter a custom ASC value. See ASC AutoIt Func. and "ASCII Character Codes" in the AutoIt help file.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtParTabStopCreate, _LOWriter_DirFrmtParTabStopDelete, _LOWriter_DirFrmtParTabStopsGetList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Related .......: _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOWriter_DirFrmtParTabStopCreate, _LOWriter_DirFrmtParTabStopDelete, _LOWriter_DirFrmtParTabStopsGetList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2300,7 +2300,7 @@ Func _LOWriter_DirFrmtParTxtFlowOpt(ByRef $oSelection, $bParSplit = Null, $bKeep
 			$iParWidows = Null
 		EndIf
 
-		If __LOWriter_VarsAreNull($bParSplit, $bKeepTogether, $iParOrphans, $iParWidows) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($bParSplit, $bKeepTogether, $iParOrphans, $iParWidows) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_ParTxtFlowOpt($oSelection, $bParSplit, $bKeepTogether, $iParOrphans, $iParWidows)
@@ -2371,7 +2371,7 @@ Func _LOWriter_DirFrmtStrikeOut(ByRef $oSelection, $bWordOnly = Null, $bStrikeOu
 			$iStrikeLineStyle = Null
 		EndIf
 
-		If __LOWriter_VarsAreNull($bWordOnly, $bStrikeOut, $iStrikeLineStyle) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($bWordOnly, $bStrikeOut, $iStrikeLineStyle) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_CharStrikeOut($oSelection, $bWordOnly, $bStrikeOut, $iStrikeLineStyle)
@@ -2416,7 +2416,7 @@ EndFunc   ;==>_LOWriter_DirFrmtStrikeOut
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call a Parameter with Default keyword to clear direct formatting for that setting. Underline style, Color and $bHasColor all reset together.
 ;                  $bULHasColor must be set to true in order to set the underline color.
-; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Related .......: _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2450,7 +2450,7 @@ Func _LOWriter_DirFrmtUnderLine(ByRef $oSelection, $bWordOnly = Null, $iUnderLin
 			$iULColor = Null
 		EndIf
 
-		If __LOWriter_VarsAreNull($bWordOnly, $iUnderLineStyle, $bULHasColor, $iULColor) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($bWordOnly, $iUnderLineStyle, $bULHasColor, $iULColor) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_CharUnderLine($oSelection, $bWordOnly, $iUnderLineStyle, $bULHasColor, $iULColor)

@@ -84,7 +84,7 @@
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Certain Error values are passed from the internal border setting function.
-; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_CharStyleBorderWidth, _LOWriter_CharStyleBorderStyle, _LOWriter_CharStyleBorderPadding
+; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LOWriter_CharStyleBorderWidth, _LOWriter_CharStyleBorderStyle, _LOWriter_CharStyleBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -94,13 +94,13 @@ Func _LOWriter_CharStyleBorderColor(ByRef $oCharStyle, $iTop = Null, $iBottom = 
 
 	Local $vReturn
 
-	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not __LO_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LO_IntIsBetween($iTop, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LO_IntIsBetween($iBottom, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LO_IntIsBetween($iLeft, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LO_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_CharBorder($oCharStyle, False, False, True, $iTop, $iBottom, $iLeft, $iRight)
 
@@ -144,7 +144,7 @@ EndFunc   ;==>_LOWriter_CharStyleBorderColor
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  All distance values are set in Micrometers. Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_CharStyleBorderWidth, _LOWriter_CharStyleBorderStyle, _LOWriter_CharStyleBorderColor
+; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOWriter_CharStyleBorderWidth, _LOWriter_CharStyleBorderStyle, _LOWriter_CharStyleBorderColor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -154,7 +154,7 @@ Func _LOWriter_CharStyleBorderPadding(ByRef $oCharStyle, $iAll = Null, $iTop = N
 
 	Local $vReturn
 
-	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not __LO_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
@@ -210,13 +210,13 @@ Func _LOWriter_CharStyleBorderStyle(ByRef $oCharStyle, $iTop = Null, $iBottom = 
 
 	Local $vReturn
 
-	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not __LO_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LO_IntIsBetween($iTop, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LO_IntIsBetween($iBottom, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LO_IntIsBetween($iLeft, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LO_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_CharBorder($oCharStyle, False, True, False, $iTop, $iBottom, $iLeft, $iRight)
 
@@ -256,7 +256,7 @@ EndFunc   ;==>_LOWriter_CharStyleBorderStyle
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Certain Error values are passed from the internal border setting function.
-; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_CharStyleBorderColor, _LOWriter_CharStyleBorderStyle, _LOWriter_CharStyleBorderPadding
+; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOWriter_CharStyleBorderColor, _LOWriter_CharStyleBorderStyle, _LOWriter_CharStyleBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -266,13 +266,13 @@ Func _LOWriter_CharStyleBorderWidth(ByRef $oCharStyle, $iTop = Null, $iBottom = 
 
 	Local $vReturn
 
-	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not __LO_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LO_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LO_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LO_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LO_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_CharBorder($oCharStyle, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
 
@@ -566,7 +566,7 @@ EndFunc   ;==>_LOWriter_CharStyleFont
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
+; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LO_ConvertColorFromLong, _LO_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -672,12 +672,12 @@ Func _LOWriter_CharStyleOrganizer(ByRef $oDoc, ByRef $oCharStyle, $sNewCharStyle
 	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-	If __LOWriter_VarsAreNull($sNewCharStyleName, $sParentStyle, $bHidden) Then
-		If __LOWriter_VersionCheck(4.0) Then
-			__LOWriter_ArrayFill($avOrganizer, $oCharStyle.Name(), __LOWriter_CharStyleNameToggle($oCharStyle.ParentStyle(), True), $oCharStyle.Hidden())
+	If __LO_VarsAreNull($sNewCharStyleName, $sParentStyle, $bHidden) Then
+		If __LO_VersionCheck(4.0) Then
+			__LO_ArrayFill($avOrganizer, $oCharStyle.Name(), __LOWriter_CharStyleNameToggle($oCharStyle.ParentStyle(), True), $oCharStyle.Hidden())
 
 		Else
-			__LOWriter_ArrayFill($avOrganizer, $oCharStyle.Name(), __LOWriter_CharStyleNameToggle($oCharStyle.ParentStyle(), True))
+			__LO_ArrayFill($avOrganizer, $oCharStyle.Name(), __LOWriter_CharStyleNameToggle($oCharStyle.ParentStyle(), True))
 		EndIf
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avOrganizer)
@@ -705,7 +705,7 @@ Func _LOWriter_CharStyleOrganizer(ByRef $oDoc, ByRef $oCharStyle, $sNewCharStyle
 
 	If ($bHidden <> Null) Then
 		If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
-		If Not __LOWriter_VersionCheck(4.0) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+		If Not __LO_VersionCheck(4.0) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 
 		$oCharStyle.Hidden = $bHidden
 		$iError = ($oCharStyle.Hidden() = $bHidden) ? ($iError) : (BitOR($iError, 4))
@@ -748,7 +748,7 @@ EndFunc   ;==>_LOWriter_CharStyleOrganizer
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  $bOLHasColor must be set to true in order to set the Overline color.
-; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
+; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LO_ConvertColorFromLong, _LO_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1025,7 +1025,7 @@ EndFunc   ;==>_LOWriter_CharStylesGetNames
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  LibreOffice may adjust the set width +/- 1 Micrometer after setting.
 ;                  Color is set in Long Integer format.
-; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1035,7 +1035,7 @@ Func _LOWriter_CharStyleShadow(ByRef $oCharStyle, $iWidth = Null, $iColor = Null
 
 	Local $vReturn
 
-	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not __LO_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
@@ -1074,7 +1074,7 @@ EndFunc   ;==>_LOWriter_CharStyleShadow
 ;                  The acceptable values are from -2 Pt to 928.8 Pt. The figures can be directly converted easily, however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative Micrometers internally from 928.9 up to 1000 Pt (Max setting).
 ;                  For example, 928.8Pt is the last correct value, which equals 32766 uM (Micrometers), after this LibreOffice reports the following: ;928.9 Pt = -32766 uM; 929 Pt = -32763 uM; 929.1 = -32759; 1000 pt = -30258.
 ;                  Attempting to set Libre's kerning value to anything over 32768 uM causes a COM exception, and attempting to set the kerning to any of these negative numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the max settable kerning is -2.0 Pt to 928.8 Pt.
-; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1173,7 +1173,7 @@ EndFunc   ;==>_LOWriter_CharStyleStrikeOut
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  $bULHasColor must be set to true in order to set the underline color.
-; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
+; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LO_ConvertColorFromLong, _LO_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================

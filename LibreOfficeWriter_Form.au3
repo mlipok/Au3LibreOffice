@@ -232,8 +232,8 @@ Func _LOWriter_FormConCheckBoxData(ByRef $oCheckBox, $sDataField = Null, $bInput
 	If (__LOWriter_FormConIdentify($oCheckBox) <> $LOW_FORM_CON_TYPE_CHECK_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
-		__LOWriter_ArrayFill($avControl, $oCheckBox.Control.DataField(), $oCheckBox.Control.InputRequired())
+	If __LO_VarsAreNull($sDataField, $bInputRequired) Then
+		__LO_ArrayFill($avControl, $oCheckBox.Control.DataField(), $oCheckBox.Control.InputRequired())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
@@ -361,8 +361,8 @@ Func _LOWriter_FormConCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLabel =
 	If ( __LOWriter_FormConIdentify($oCheckBox) <> $LOW_FORM_CON_TYPE_CHECK_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sName, $sLabel, $oLabelField, $iTxtDir, $bEnabled, $bVisible, $bPrintable, $bTabStop, $iTabOrder, $iDefaultState, $mFont, $iStyle, $iAlign, $iVertAlign, $iBackColor, $bWordBreak, $sGraphics, $iGraphicAlign, $bTriState, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oCheckBox.Control.Name(), $oCheckBox.Control.Label(), __LOWriter_FormConGetObj($oCheckBox.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oCheckBox.Control.WritingMode(), _
+	If __LO_VarsAreNull($sName, $sLabel, $oLabelField, $iTxtDir, $bEnabled, $bVisible, $bPrintable, $bTabStop, $iTabOrder, $iDefaultState, $mFont, $iStyle, $iAlign, $iVertAlign, $iBackColor, $bWordBreak, $sGraphics, $iGraphicAlign, $bTriState, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LO_ArrayFill($avControl, $oCheckBox.Control.Name(), $oCheckBox.Control.Label(), __LOWriter_FormConGetObj($oCheckBox.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oCheckBox.Control.WritingMode(), _
 				$oCheckBox.Control.Enabled(), $oCheckBox.Control.EnableVisible(), $oCheckBox.Control.Printable(), $oCheckBox.Control.Tabstop(), $oCheckBox.Control.TabIndex(), _
 				$oCheckBox.Control.DefaultState(), __LOWriter_FormConSetGetFontDesc($oCheckBox), $oCheckBox.Control.VisualEffect(), $oCheckBox.Control.Align(), $oCheckBox.Control.VerticalAlign(), _
 				$oCheckBox.Control.BackgroundColor(), $oCheckBox.Control.MultiLine(), $oCheckBox.Control.Graphic(), $oCheckBox.Control.ImagePosition(), $oCheckBox.Control.TriState(), _
@@ -406,7 +406,7 @@ Func _LOWriter_FormConCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLabel =
 		$oCheckBox.Control.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$oCheckBox.Control.WritingMode = $iTxtDir
 		$iError = ($oCheckBox.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 8))
@@ -456,7 +456,7 @@ Func _LOWriter_FormConCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLabel =
 		$iError = BitOR($iError, 256) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LO_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 
 		$oCheckBox.Control.TabIndex = $iTabOrder
 		$iError = ($oCheckBox.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 256))
@@ -466,7 +466,7 @@ Func _LOWriter_FormConCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLabel =
 		$iError = BitOR($iError, 512) ; Can't Default DefaultState.
 
 	ElseIf ($iDefaultState <> Null) Then
-		If Not __LOWriter_IntIsBetween($iDefaultState, $LOW_FORM_CON_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CON_CHKBX_STATE_NOT_DEFINED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+		If Not __LO_IntIsBetween($iDefaultState, $LOW_FORM_CON_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CON_CHKBX_STATE_NOT_DEFINED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 
 		$oCheckBox.Control.DefaultState = $iDefaultState
 		$iError = ($oCheckBox.Control.DefaultState() = $iDefaultState) ? ($iError) : (BitOR($iError, 512))
@@ -486,7 +486,7 @@ Func _LOWriter_FormConCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLabel =
 		$oCheckBox.Control.setPropertyToDefault("VisualEffect")
 
 	ElseIf ($iStyle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iStyle, $LOW_FORM_CON_BORDER_3D, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
+		If Not __LO_IntIsBetween($iStyle, $LOW_FORM_CON_BORDER_3D, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 
 		$oCheckBox.Control.VisualEffect = $iStyle
 		$iError = ($oCheckBox.Control.VisualEffect() = $iStyle) ? ($iError) : (BitOR($iError, 2048))
@@ -496,7 +496,7 @@ Func _LOWriter_FormConCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLabel =
 		$oCheckBox.Control.setPropertyToDefault("Align")
 
 	ElseIf ($iAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
+		If Not __LO_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 
 		$oCheckBox.Control.Align = $iAlign
 		$iError = ($oCheckBox.Control.Align() = $iAlign) ? ($iError) : (BitOR($iError, 4096))
@@ -506,7 +506,7 @@ Func _LOWriter_FormConCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLabel =
 		$oCheckBox.Control.setPropertyToDefault("VerticalAlign")
 
 	ElseIf ($iVertAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+		If Not __LO_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 
 		$oCheckBox.Control.VerticalAlign = $iVertAlign
 		$iError = ($oCheckBox.Control.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 8192))
@@ -516,7 +516,7 @@ Func _LOWriter_FormConCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLabel =
 		$oCheckBox.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 
 		$oCheckBox.Control.BackgroundColor = $iBackColor
 		$iError = ($oCheckBox.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 16384))
@@ -539,15 +539,15 @@ Func _LOWriter_FormConCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLabel =
 	ElseIf ($sGraphics <> Null) Then
 		If Not IsString($sGraphics) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
 
-		$oCheckBox.Control.ImageURL = _LOWriter_PathConvert($sGraphics, $LOW_PATHCONV_OFFICE_RETURN)
-		$iError = ($oCheckBox.Control.ImageURL() = _LOWriter_PathConvert($sGraphics, $LOW_PATHCONV_OFFICE_RETURN)) ? ($iError) : (BitOR($iError, 65536))
+		$oCheckBox.Control.ImageURL = _LO_PathConvert($sGraphics, $LO_PATHCONV_OFFICE_RETURN)
+		$iError = ($oCheckBox.Control.ImageURL() = _LO_PathConvert($sGraphics, $LO_PATHCONV_OFFICE_RETURN)) ? ($iError) : (BitOR($iError, 65536))
 	EndIf
 
 	If ($iGraphicAlign = Default) Then
 		$oCheckBox.Control.setPropertyToDefault("ImagePosition")
 
 	ElseIf ($iGraphicAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iGraphicAlign, $LOW_FORM_CON_IMG_ALIGN_LEFT_TOP, $LOW_FORM_CON_IMG_ALIGN_CENTERED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
+		If Not __LO_IntIsBetween($iGraphicAlign, $LOW_FORM_CON_IMG_ALIGN_LEFT_TOP, $LOW_FORM_CON_IMG_ALIGN_CENTERED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 
 		$oCheckBox.Control.ImagePosition = $iGraphicAlign
 		$iError = ($oCheckBox.Control.ImagePosition() = $iGraphicAlign) ? ($iError) : (BitOR($iError, 131072))
@@ -635,7 +635,7 @@ Func _LOWriter_FormConCheckBoxState(ByRef $oCheckBox, $iState = Null)
 	If (__LOWriter_FormConIdentify($oCheckBox) <> $LOW_FORM_CON_TYPE_CHECK_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($iState) Then
+	If __LO_VarsAreNull($iState) Then
 		$iCurState = $oCheckBox.Control.State()
 		If Not IsInt($iCurState) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -646,7 +646,7 @@ Func _LOWriter_FormConCheckBoxState(ByRef $oCheckBox, $iState = Null)
 		$oCheckBox.Control.setPropertyToDefault("State")
 
 	Else
-		If Not __LOWriter_IntIsBetween($iState, $LOW_FORM_CON_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CON_CHKBX_STATE_NOT_DEFINED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		If Not __LO_IntIsBetween($iState, $LOW_FORM_CON_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CON_CHKBX_STATE_NOT_DEFINED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oCheckBox.Control.State = $iState
 		$iError = ($oCheckBox.Control.State() = $iState) ? ($iError) : (BitOR($iError, 1))
@@ -707,8 +707,8 @@ Func _LOWriter_FormConComboBoxData(ByRef $oComboBox, $sDataField = Null, $bEmpty
 	If (__LOWriter_FormConIdentify($oComboBox) <> $LOW_FORM_CON_TYPE_COMBO_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $iType, $sListContent) Then
-		__LOWriter_ArrayFill($avControl, $oComboBox.Control.DataField(), $oComboBox.Control.ConvertEmptyToNull(), $oComboBox.Control.InputRequired(), _
+	If __LO_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $iType, $sListContent) Then
+		__LO_ArrayFill($avControl, $oComboBox.Control.DataField(), $oComboBox.Control.ConvertEmptyToNull(), $oComboBox.Control.InputRequired(), _
 				$oComboBox.Control.ListSourceType(), $oComboBox.Control.ListSource())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
@@ -736,7 +736,7 @@ Func _LOWriter_FormConComboBoxData(ByRef $oComboBox, $sDataField = Null, $bEmpty
 	EndIf
 
 	If ($iType <> Null) Then
-		If Not __LOWriter_IntIsBetween($iType, $LOW_FORM_CON_SOURCE_TYPE_TABLE, $LOW_FORM_CON_SOURCE_TYPE_TABLE_FIELDS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iType, $LOW_FORM_CON_SOURCE_TYPE_TABLE, $LOW_FORM_CON_SOURCE_TYPE_TABLE_FIELDS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oComboBox.Control.ListSourceType = $iType
 		$iError = ($oComboBox.Control.ListSourceType() = $iType) ? ($iError) : (BitOR($iError, 8))
@@ -868,8 +868,8 @@ Func _LOWriter_FormConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLabelFi
 	If (__LOWriter_FormConIdentify($oComboBox) <> $LOW_FORM_CON_TYPE_COMBO_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $iMaxLen, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $asList, $sDefaultTxt, $mFont, $iAlign, $iBackColor, $iBorder, $iBorderColor, $bDropdown, $iLines, $bAutoFill, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oComboBox.Control.Name(), __LOWriter_FormConGetObj($oComboBox.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oComboBox.Control.WritingMode(), $oComboBox.Control.MaxTextLen(), _
+	If __LO_VarsAreNull($sName, $oLabelField, $iTxtDir, $iMaxLen, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $asList, $sDefaultTxt, $mFont, $iAlign, $iBackColor, $iBorder, $iBorderColor, $bDropdown, $iLines, $bAutoFill, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LO_ArrayFill($avControl, $oComboBox.Control.Name(), __LOWriter_FormConGetObj($oComboBox.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oComboBox.Control.WritingMode(), $oComboBox.Control.MaxTextLen(), _
 				$oComboBox.Control.Enabled(), $oComboBox.Control.EnableVisible(), $oComboBox.Control.ReadOnly(), $oComboBox.Control.Printable(), $oComboBox.Control.MouseWheelBehavior(), _
 				$oComboBox.Control.Tabstop(), $oComboBox.Control.TabIndex(), $oComboBox.Control.StringItemList(), $oComboBox.Control.DefaultText(), __LOWriter_FormConSetGetFontDesc($oComboBox), _
 				$oComboBox.Control.Align(), $oComboBox.Control.BackgroundColor(), $oComboBox.Control.Border(), $oComboBox.Control.BorderColor(), $oComboBox.Control.Dropdown(), _
@@ -904,7 +904,7 @@ Func _LOWriter_FormConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLabelFi
 		$oComboBox.Control.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oComboBox.Control.WritingMode = $iTxtDir
 		$iError = ($oComboBox.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
@@ -914,7 +914,7 @@ Func _LOWriter_FormConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLabelFi
 		$oComboBox.Control.setPropertyToDefault("MaxTextLen")
 
 	ElseIf ($iMaxLen <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMaxLen, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LO_IntIsBetween($iMaxLen, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$oComboBox.Control.MaxTextLen = $iMaxLen
 		$iError = ($oComboBox.Control.MaxTextLen() = $iMaxLen) ? ($iError) : (BitOR($iError, 8))
@@ -964,7 +964,7 @@ Func _LOWriter_FormConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLabelFi
 		$oComboBox.Control.setPropertyToDefault("MouseWheelBehavior")
 
 	ElseIf ($iMouseScroll <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LO_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 
 		$oComboBox.Control.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oComboBox.Control.MouseWheelBehavior = $iMouseScroll) ? ($iError) : (BitOR($iError, 256))
@@ -984,7 +984,7 @@ Func _LOWriter_FormConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLabelFi
 		$iError = BitOR($iError, 1024) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		If Not __LO_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 
 		$oComboBox.Control.TabIndex = $iTabOrder
 		$iError = ($oComboBox.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 1024))
@@ -1029,7 +1029,7 @@ Func _LOWriter_FormConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLabelFi
 		$oComboBox.Control.setPropertyToDefault("Align")
 
 	ElseIf ($iAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
+		If Not __LO_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 
 		$oComboBox.Control.Align = $iAlign
 		$iError = ($oComboBox.Control.Align() = $iAlign) ? ($iError) : (BitOR($iError, 16384))
@@ -1039,7 +1039,7 @@ Func _LOWriter_FormConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLabelFi
 		$oComboBox.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
 
 		$oComboBox.Control.BackgroundColor = $iBackColor
 		$iError = ($oComboBox.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 32768))
@@ -1049,7 +1049,7 @@ Func _LOWriter_FormConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLabelFi
 		$oComboBox.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
+		If Not __LO_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 
 		$oComboBox.Control.Border = $iBorder
 		$iError = ($oComboBox.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 65536))
@@ -1059,7 +1059,7 @@ Func _LOWriter_FormConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLabelFi
 		$oComboBox.Control.setPropertyToDefault("BorderColor")
 
 	ElseIf ($iBorderColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
+		If Not __LO_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
 
 		$oComboBox.Control.BorderColor = $iBorderColor
 		$iError = ($oComboBox.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 131072))
@@ -1079,7 +1079,7 @@ Func _LOWriter_FormConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLabelFi
 		$oComboBox.Control.setPropertyToDefault("LineCount")
 
 	ElseIf ($iLines <> Null) Then
-		If Not __LOWriter_IntIsBetween($iLines, -2147483648, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 24, 0)
+		If Not __LO_IntIsBetween($iLines, -2147483648, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 24, 0)
 
 		$oComboBox.Control.LineCount = $iLines
 		$iError = ($oComboBox.Control.LineCount = $iLines) ? ($iError) : (BitOR($iError, 524288))
@@ -1178,7 +1178,7 @@ Func _LOWriter_FormConComboBoxValue(ByRef $oComboBox, $sValue = Null)
 	If (__LOWriter_FormConIdentify($oComboBox) <> $LOW_FORM_CON_TYPE_COMBO_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sValue) Then
+	If __LO_VarsAreNull($sValue) Then
 		$sCurValue = $oComboBox.Control.CurrentValue()
 		If Not IsString($sCurValue) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -1241,8 +1241,8 @@ Func _LOWriter_FormConCurrencyFieldData(ByRef $oCurrencyField, $sDataField = Nul
 	If (__LOWriter_FormConIdentify($oCurrencyField) <> $LOW_FORM_CON_TYPE_CURRENCY_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
-		__LOWriter_ArrayFill($avControl, $oCurrencyField.Control.DataField(), $oCurrencyField.Control.InputRequired())
+	If __LO_VarsAreNull($sDataField, $bInputRequired) Then
+		__LO_ArrayFill($avControl, $oCurrencyField.Control.DataField(), $oCurrencyField.Control.InputRequired())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
@@ -1401,8 +1401,8 @@ Func _LOWriter_FormConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = Null,
 	If (__LOWriter_FormConIdentify($oCurrencyField) <> $LOW_FORM_CON_TYPE_CURRENCY_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $bStrict, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $nMin, $nMax, $iIncr, $nDefault, $iDecimal, $bThousandsSep, $sCurrSymbol, $bPrefix, $bSpin, $bRepeat, $iDelay, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oCurrencyField.Control.Name(), __LOWriter_FormConGetObj($oCurrencyField.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oCurrencyField.Control.WritingMode(), _
+	If __LO_VarsAreNull($sName, $oLabelField, $iTxtDir, $bStrict, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $nMin, $nMax, $iIncr, $nDefault, $iDecimal, $bThousandsSep, $sCurrSymbol, $bPrefix, $bSpin, $bRepeat, $iDelay, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LO_ArrayFill($avControl, $oCurrencyField.Control.Name(), __LOWriter_FormConGetObj($oCurrencyField.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oCurrencyField.Control.WritingMode(), _
 				$oCurrencyField.Control.StrictFormat(), $oCurrencyField.Control.Enabled(), $oCurrencyField.Control.EnableVisible(), $oCurrencyField.Control.ReadOnly(), _
 				$oCurrencyField.Control.Printable(), $oCurrencyField.Control.MouseWheelBehavior(), $oCurrencyField.Control.Tabstop(), $oCurrencyField.Control.TabIndex(), _
 				$oCurrencyField.Control.ValueMin(), $oCurrencyField.Control.ValueMax(), $oCurrencyField.Control.ValueStep(), $oCurrencyField.Control.DefaultValue(), _
@@ -1440,7 +1440,7 @@ Func _LOWriter_FormConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = Null,
 		$oCurrencyField.Control.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oCurrencyField.Control.WritingMode = $iTxtDir
 		$iError = ($oCurrencyField.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
@@ -1500,7 +1500,7 @@ Func _LOWriter_FormConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = Null,
 		$oCurrencyField.Control.setPropertyToDefault("MouseWheelBehavior")
 
 	ElseIf ($iMouseScroll <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LO_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 
 		$oCurrencyField.Control.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oCurrencyField.Control.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 256))
@@ -1520,7 +1520,7 @@ Func _LOWriter_FormConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = Null,
 		$iError = BitOR($iError, 1024) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		If Not __LO_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 
 		$oCurrencyField.Control.TabIndex = $iTabOrder
 		$iError = ($oCurrencyField.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 1024))
@@ -1570,7 +1570,7 @@ Func _LOWriter_FormConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = Null,
 		$oCurrencyField.Control.setPropertyToDefault("DecimalAccuracy")
 
 	ElseIf ($iDecimal <> Null) Then
-		If Not __LOWriter_IntIsBetween($iDecimal, 0, 20) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
+		If Not __LO_IntIsBetween($iDecimal, 0, 20) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 
 		$oCurrencyField.Control.DecimalAccuracy = $iDecimal
 		$iError = ($oCurrencyField.Control.DecimalAccuracy() = $iDecimal) ? ($iError) : (BitOR($iError, 32768))
@@ -1630,7 +1630,7 @@ Func _LOWriter_FormConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = Null,
 		$oCurrencyField.Control.setPropertyToDefault("RepeatDelay")
 
 	ElseIf ($iDelay <> Null) Then
-		If Not __LOWriter_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 25, 0)
+		If Not __LO_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 25, 0)
 
 		$oCurrencyField.Control.RepeatDelay = $iDelay
 		$iError = ($oCurrencyField.Control.RepeatDelay() = $iDelay) ? ($iError) : (BitOR($iError, 2097152))
@@ -1650,7 +1650,7 @@ Func _LOWriter_FormConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = Null,
 		$oCurrencyField.Control.setPropertyToDefault("Align")
 
 	ElseIf ($iAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
+		If Not __LO_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
 
 		$oCurrencyField.Control.Align = $iAlign
 		$iError = ($oCurrencyField.Control.Align() = $iAlign) ? ($iError) : (BitOR($iError, 8388608))
@@ -1660,7 +1660,7 @@ Func _LOWriter_FormConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = Null,
 		$oCurrencyField.Control.setPropertyToDefault("VerticalAlign")
 
 	ElseIf ($iVertAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 28, 0)
+		If Not __LO_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 28, 0)
 
 		$oCurrencyField.Control.VerticalAlign = $iVertAlign
 		$iError = ($oCurrencyField.Control.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 16777216))
@@ -1670,7 +1670,7 @@ Func _LOWriter_FormConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = Null,
 		$oCurrencyField.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 29, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 29, 0)
 
 		$oCurrencyField.Control.BackgroundColor = $iBackColor
 		$iError = ($oCurrencyField.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 33554432))
@@ -1680,7 +1680,7 @@ Func _LOWriter_FormConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = Null,
 		$oCurrencyField.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 30, 0)
+		If Not __LO_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 30, 0)
 
 		$oCurrencyField.Control.Border = $iBorder
 		$iError = ($oCurrencyField.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 67108864))
@@ -1690,7 +1690,7 @@ Func _LOWriter_FormConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = Null,
 		$oCurrencyField.Control.setPropertyToDefault("BorderColor")
 
 	ElseIf ($iBorderColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 31, 0)
+		If Not __LO_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 31, 0)
 
 		$oCurrencyField.Control.BorderColor = $iBorderColor
 		$iError = ($oCurrencyField.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 134217728))
@@ -1778,7 +1778,7 @@ Func _LOWriter_FormConCurrencyFieldValue(ByRef $oCurrencyField, $nValue = Null)
 	If (__LOWriter_FormConIdentify($oCurrencyField) <> $LOW_FORM_CON_TYPE_CURRENCY_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($nValue) Then
+	If __LO_VarsAreNull($nValue) Then
 		$nCurVal = $oCurrencyField.Control.Value() ; Value is Null when not set.
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $nCurVal)
@@ -1840,8 +1840,8 @@ Func _LOWriter_FormConDateFieldData(ByRef $oDateField, $sDataField = Null, $bInp
 	If (__LOWriter_FormConIdentify($oDateField) <> $LOW_FORM_CON_TYPE_DATE_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
-		__LOWriter_ArrayFill($avControl, $oDateField.Control.DataField(), $oDateField.Control.InputRequired())
+	If __LO_VarsAreNull($sDataField, $bInputRequired) Then
+		__LO_ArrayFill($avControl, $oDateField.Control.DataField(), $oDateField.Control.InputRequired())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
@@ -1996,11 +1996,11 @@ Func _LOWriter_FormConDateFieldGeneral(ByRef $oDateField, $sName = Null, $oLabel
 	If (__LOWriter_FormConIdentify($oDateField) <> $LOW_FORM_CON_TYPE_DATE_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $bStrict, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $tDateMin, $tDateMax, $iFormat, $tDateDefault, $bSpin, $bRepeat, $iDelay, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bDropdown, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
+	If __LO_VarsAreNull($sName, $oLabelField, $iTxtDir, $bStrict, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $tDateMin, $tDateMax, $iFormat, $tDateDefault, $bSpin, $bRepeat, $iDelay, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bDropdown, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
 		$tDate = $oDateField.Control.DateMin()
 		If Not IsObj($tDate) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-		$tCurMin = __LOWriter_CreateStruct("com.sun.star.util.DateTime")
+		$tCurMin = __LO_CreateStruct("com.sun.star.util.DateTime")
 		If Not IsObj($tCurMin) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 		$tCurMin.Year = $tDate.Year()
@@ -2010,7 +2010,7 @@ Func _LOWriter_FormConDateFieldGeneral(ByRef $oDateField, $sName = Null, $oLabel
 		$tDate = $oDateField.Control.DateMax()
 		If Not IsObj($tDate) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
-		$tCurMax = __LOWriter_CreateStruct("com.sun.star.util.DateTime")
+		$tCurMax = __LO_CreateStruct("com.sun.star.util.DateTime")
 		If Not IsObj($tCurMax) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 		$tCurMax.Year = $tDate.Year()
@@ -2019,7 +2019,7 @@ Func _LOWriter_FormConDateFieldGeneral(ByRef $oDateField, $sName = Null, $oLabel
 
 		$tDate = $oDateField.Control.DefaultDate() ; Default date is Null when not set.
 		If IsObj($tDate) Then
-			$tCurDefault = __LOWriter_CreateStruct("com.sun.star.util.DateTime")
+			$tCurDefault = __LO_CreateStruct("com.sun.star.util.DateTime")
 			If Not IsObj($tCurDefault) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 			$tCurDefault.Year = $tDate.Year()
@@ -2030,7 +2030,7 @@ Func _LOWriter_FormConDateFieldGeneral(ByRef $oDateField, $sName = Null, $oLabel
 			$tCurDefault = $tDate
 		EndIf
 
-		__LOWriter_ArrayFill($avControl, $oDateField.Control.Name(), __LOWriter_FormConGetObj($oDateField.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oDateField.Control.WritingMode(), $oDateField.Control.StrictFormat(), _
+		__LO_ArrayFill($avControl, $oDateField.Control.Name(), __LOWriter_FormConGetObj($oDateField.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oDateField.Control.WritingMode(), $oDateField.Control.StrictFormat(), _
 				$oDateField.Control.Enabled(), $oDateField.Control.EnableVisible(), $oDateField.Control.ReadOnly(), $oDateField.Control.Printable(), $oDateField.Control.MouseWheelBehavior(), _
 				$oDateField.Control.Tabstop(), $oDateField.Control.TabIndex(), $tCurMin, $tCurMax, $oDateField.Control.DateFormat(), $tCurDefault, $oDateField.Control.Spin(), _
 				$oDateField.Control.Repeat(), $oDateField.Control.RepeatDelay(), __LOWriter_FormConSetGetFontDesc($oDateField), $oDateField.Control.Align(), $oDateField.Control.VerticalAlign(), _
@@ -2065,7 +2065,7 @@ Func _LOWriter_FormConDateFieldGeneral(ByRef $oDateField, $sName = Null, $oLabel
 		$oDateField.Control.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oDateField.Control.WritingMode = $iTxtDir
 		$iError = ($oDateField.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
@@ -2125,7 +2125,7 @@ Func _LOWriter_FormConDateFieldGeneral(ByRef $oDateField, $sName = Null, $oLabel
 		$oDateField.Control.setPropertyToDefault("MouseWheelBehavior")
 
 	ElseIf ($iMouseScroll <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LO_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 
 		$oDateField.Control.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oDateField.Control.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 256))
@@ -2145,7 +2145,7 @@ Func _LOWriter_FormConDateFieldGeneral(ByRef $oDateField, $sName = Null, $oLabel
 		$iError = BitOR($iError, 1024) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		If Not __LO_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 
 		$oDateField.Control.TabIndex = $iTabOrder
 		$iError = ($oDateField.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 1024))
@@ -2157,7 +2157,7 @@ Func _LOWriter_FormConDateFieldGeneral(ByRef $oDateField, $sName = Null, $oLabel
 	ElseIf ($tDateMin <> Null) Then
 		If Not IsObj($tDateMin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 
-		$tDate = __LOWriter_CreateStruct("com.sun.star.util.Date")
+		$tDate = __LO_CreateStruct("com.sun.star.util.Date")
 		If Not IsObj($tDate) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 		$tDate.Year = $tDateMin.Year()
@@ -2174,7 +2174,7 @@ Func _LOWriter_FormConDateFieldGeneral(ByRef $oDateField, $sName = Null, $oLabel
 	ElseIf ($tDateMax <> Null) Then
 		If Not IsObj($tDateMax) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 
-		$tDate = __LOWriter_CreateStruct("com.sun.star.util.Date")
+		$tDate = __LO_CreateStruct("com.sun.star.util.Date")
 		If Not IsObj($tDate) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 		$tDate.Year = $tDateMax.Year()
@@ -2189,7 +2189,7 @@ Func _LOWriter_FormConDateFieldGeneral(ByRef $oDateField, $sName = Null, $oLabel
 		$oDateField.Control.setPropertyToDefault("DateFormat")
 
 	ElseIf ($iFormat <> Null) Then
-		If Not __LOWriter_IntIsBetween($iFormat, $LOW_FORM_CON_DATE_FRMT_SYSTEM_SHORT, $LOW_FORM_CON_DATE_FRMT_SHORT_YYYY_MM_DD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+		If Not __LO_IntIsBetween($iFormat, $LOW_FORM_CON_DATE_FRMT_SYSTEM_SHORT, $LOW_FORM_CON_DATE_FRMT_SHORT_YYYY_MM_DD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 
 		$oDateField.Control.DateFormat = $iFormat
 		$iError = ($oDateField.Control.DateFormat() = $iFormat) ? ($iError) : (BitOR($iError, 8192))
@@ -2201,7 +2201,7 @@ Func _LOWriter_FormConDateFieldGeneral(ByRef $oDateField, $sName = Null, $oLabel
 	ElseIf ($tDateDefault <> Null) Then
 		If Not IsObj($tDateDefault) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 
-		$tDate = __LOWriter_CreateStruct("com.sun.star.util.Date")
+		$tDate = __LO_CreateStruct("com.sun.star.util.Date")
 		If Not IsObj($tDate) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 		$tDate.Year = $tDateDefault.Year()
@@ -2236,7 +2236,7 @@ Func _LOWriter_FormConDateFieldGeneral(ByRef $oDateField, $sName = Null, $oLabel
 		$oDateField.Control.setPropertyToDefault("RepeatDelay")
 
 	ElseIf ($iDelay <> Null) Then
-		If Not __LOWriter_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
+		If Not __LO_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 
 		$oDateField.Control.RepeatDelay = $iDelay
 		$iError = ($oDateField.Control.RepeatDelay() = $iDelay) ? ($iError) : (BitOR($iError, 131072))
@@ -2256,7 +2256,7 @@ Func _LOWriter_FormConDateFieldGeneral(ByRef $oDateField, $sName = Null, $oLabel
 		$oDateField.Control.setPropertyToDefault("Align")
 
 	ElseIf ($iAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
+		If Not __LO_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
 
 		$oDateField.Control.Align = $iAlign
 		$iError = ($oDateField.Control.Align() = $iAlign) ? ($iError) : (BitOR($iError, 524288))
@@ -2266,7 +2266,7 @@ Func _LOWriter_FormConDateFieldGeneral(ByRef $oDateField, $sName = Null, $oLabel
 		$oDateField.Control.setPropertyToDefault("VerticalAlign")
 
 	ElseIf ($iVertAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 24, 0)
+		If Not __LO_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 24, 0)
 
 		$oDateField.Control.VerticalAlign = $iVertAlign
 		$iError = ($oDateField.Control.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 1048576))
@@ -2276,7 +2276,7 @@ Func _LOWriter_FormConDateFieldGeneral(ByRef $oDateField, $sName = Null, $oLabel
 		$oDateField.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 25, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 25, 0)
 
 		$oDateField.Control.BackgroundColor = $iBackColor
 		$iError = ($oDateField.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 2097152))
@@ -2286,7 +2286,7 @@ Func _LOWriter_FormConDateFieldGeneral(ByRef $oDateField, $sName = Null, $oLabel
 		$oDateField.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
+		If Not __LO_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
 
 		$oDateField.Control.Border = $iBorder
 		$iError = ($oDateField.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 4194304))
@@ -2296,7 +2296,7 @@ Func _LOWriter_FormConDateFieldGeneral(ByRef $oDateField, $sName = Null, $oLabel
 		$oDateField.Control.setPropertyToDefault("BorderColor")
 
 	ElseIf ($iBorderColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
+		If Not __LO_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
 
 		$oDateField.Control.BorderColor = $iBorderColor
 		$iError = ($oDateField.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 8388608))
@@ -2397,10 +2397,10 @@ Func _LOWriter_FormConDateFieldValue(ByRef $oDateField, $tDateValue = Null)
 	If (__LOWriter_FormConIdentify($oDateField) <> $LOW_FORM_CON_TYPE_DATE_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($tDateValue) Then
+	If __LO_VarsAreNull($tDateValue) Then
 		$tDate = $oDateField.Control.Date() ; Date is Null when not set.
 		If IsObj($tDate) Then
-			$tCurDate = __LOWriter_CreateStruct("com.sun.star.util.DateTime")
+			$tCurDate = __LO_CreateStruct("com.sun.star.util.DateTime")
 			If Not IsObj($tCurDate) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 			$tCurDate.Year = $tDate.Year()
@@ -2420,7 +2420,7 @@ Func _LOWriter_FormConDateFieldValue(ByRef $oDateField, $tDateValue = Null)
 	Else
 		If Not IsObj($tDateValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-		$tDate = __LOWriter_CreateStruct("com.sun.star.util.Date")
+		$tDate = __LO_CreateStruct("com.sun.star.util.Date")
 		If Not IsObj($tDate) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 		$tDate.Year = $tDateValue.Year()
@@ -2568,8 +2568,8 @@ Func _LOWriter_FormConFileSelFieldGeneral(ByRef $oFileSel, $sName = Null, $iTxtD
 	If (__LOWriter_FormConIdentify($oFileSel) <> $LOW_FORM_CON_TYPE_FILE_SELECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sName, $iTxtDir, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $bTabStop, $iTabOrder, $sDefaultTxt, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oFileSel.Control.Name(), $oFileSel.Control.WritingMode(), $oFileSel.Control.Enabled(), $oFileSel.Control.EnableVisible(), _
+	If __LO_VarsAreNull($sName, $iTxtDir, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $bTabStop, $iTabOrder, $sDefaultTxt, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LO_ArrayFill($avControl, $oFileSel.Control.Name(), $oFileSel.Control.WritingMode(), $oFileSel.Control.Enabled(), $oFileSel.Control.EnableVisible(), _
 				$oFileSel.Control.ReadOnly(), $oFileSel.Control.Printable(), $oFileSel.Control.Tabstop(), $oFileSel.Control.TabIndex(), $oFileSel.Control.DefaultText(), _
 				__LOWriter_FormConSetGetFontDesc($oFileSel), $oFileSel.Control.Align(), $oFileSel.Control.VerticalAlign(), $oFileSel.Control.BackgroundColor(), $oFileSel.Control.Border(), _
 				$oFileSel.Control.BorderColor(), $oFileSel.Control.HideInactiveSelection(), $oFileSel.Control.Tag(), $oFileSel.Control.HelpText(), $oFileSel.Control.HelpURL())
@@ -2591,7 +2591,7 @@ Func _LOWriter_FormConFileSelFieldGeneral(ByRef $oFileSel, $sName = Null, $iTxtD
 		$oFileSel.Control.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		$oFileSel.Control.WritingMode = $iTxtDir
 		$iError = ($oFileSel.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 2))
@@ -2651,7 +2651,7 @@ Func _LOWriter_FormConFileSelFieldGeneral(ByRef $oFileSel, $sName = Null, $iTxtD
 		$iError = BitOR($iError, 128) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		If Not __LO_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
 		$oFileSel.Control.TabIndex = $iTabOrder
 		$iError = ($oFileSel.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 128))
@@ -2681,7 +2681,7 @@ Func _LOWriter_FormConFileSelFieldGeneral(ByRef $oFileSel, $sName = Null, $iTxtD
 		$oFileSel.Control.setPropertyToDefault("Align")
 
 	ElseIf ($iAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+		If Not __LO_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 
 		$oFileSel.Control.Align = $iAlign
 		$iError = ($oFileSel.Control.Align() = $iAlign) ? ($iError) : (BitOR($iError, 1024))
@@ -2691,7 +2691,7 @@ Func _LOWriter_FormConFileSelFieldGeneral(ByRef $oFileSel, $sName = Null, $iTxtD
 		$oFileSel.Control.setPropertyToDefault("VerticalAlign")
 
 	ElseIf ($iVertAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		If Not __LO_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 
 		$oFileSel.Control.VerticalAlign = $iVertAlign
 		$iError = ($oFileSel.Control.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 2048))
@@ -2701,7 +2701,7 @@ Func _LOWriter_FormConFileSelFieldGeneral(ByRef $oFileSel, $sName = Null, $iTxtD
 		$oFileSel.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 
 		$oFileSel.Control.BackgroundColor = $iBackColor
 		$iError = ($oFileSel.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 4096))
@@ -2711,7 +2711,7 @@ Func _LOWriter_FormConFileSelFieldGeneral(ByRef $oFileSel, $sName = Null, $iTxtD
 		$oFileSel.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
+		If Not __LO_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 
 		$oFileSel.Control.Border = $iBorder
 		$iError = ($oFileSel.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 8192))
@@ -2721,7 +2721,7 @@ Func _LOWriter_FormConFileSelFieldGeneral(ByRef $oFileSel, $sName = Null, $iTxtD
 		$oFileSel.Control.setPropertyToDefault("BorderColor")
 
 	ElseIf ($iBorderColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+		If Not __LO_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 
 		$oFileSel.Control.BorderColor = $iBorderColor
 		$iError = ($oFileSel.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 16384))
@@ -2810,7 +2810,7 @@ Func _LOWriter_FormConFileSelFieldValue(ByRef $oFileSel, $sValue = Null)
 	If (__LOWriter_FormConIdentify($oFileSel) <> $LOW_FORM_CON_TYPE_FILE_SELECTION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sValue) Then
+	If __LO_VarsAreNull($sValue) Then
 		$sCurValue = $oFileSel.Control.Text()
 		If Not IsString($sCurValue) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -2879,8 +2879,8 @@ Func _LOWriter_FormConFormattedFieldData(ByRef $oFormatField, $sDataField = Null
 	If (__LOWriter_FormConIdentify($oFormatField) <> $LOW_FORM_CON_TYPE_FORMATTED_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $bFilter) Then
-		__LOWriter_ArrayFill($avControl, $oFormatField.Control.DataField(), $oFormatField.Control.ConvertEmptyToNull(), $oFormatField.Control.InputRequired(), _
+	If __LO_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $bFilter) Then
+		__LO_ArrayFill($avControl, $oFormatField.Control.DataField(), $oFormatField.Control.ConvertEmptyToNull(), $oFormatField.Control.InputRequired(), _
 				$oFormatField.Control.UseFilterValueProposal())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
@@ -3043,8 +3043,8 @@ Func _LOWriter_FormConFormattedFieldGeneral(ByRef $oFormatField, $sName = Null, 
 	If (__LOWriter_FormConIdentify($oFormatField) <> $LOW_FORM_CON_TYPE_FORMATTED_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $iMaxLen, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $nMin, $nMax, $nDefault, $iFormat, $bSpin, $bRepeat, $iDelay, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oFormatField.Control.Name(), __LOWriter_FormConGetObj($oFormatField.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oFormatField.Control.WritingMode(), $oFormatField.Control.MaxTextLen(), _
+	If __LO_VarsAreNull($sName, $oLabelField, $iTxtDir, $iMaxLen, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $nMin, $nMax, $nDefault, $iFormat, $bSpin, $bRepeat, $iDelay, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LO_ArrayFill($avControl, $oFormatField.Control.Name(), __LOWriter_FormConGetObj($oFormatField.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oFormatField.Control.WritingMode(), $oFormatField.Control.MaxTextLen(), _
 				$oFormatField.Control.Enabled(), $oFormatField.Control.EnableVisible(), $oFormatField.Control.ReadOnly(), $oFormatField.Control.Printable(), _
 				$oFormatField.Control.MouseWheelBehavior(), $oFormatField.Control.Tabstop(), $oFormatField.Control.TabIndex(), $oFormatField.Control.EffectiveMin(), _
 				$oFormatField.Control.EffectiveMax(), $oFormatField.Control.EffectiveDefault(), $oFormatField.Control.FormatKey(), $oFormatField.Control.Spin(), _
@@ -3080,7 +3080,7 @@ Func _LOWriter_FormConFormattedFieldGeneral(ByRef $oFormatField, $sName = Null, 
 		$oFormatField.Control.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oFormatField.Control.WritingMode = $iTxtDir
 		$iError = ($oFormatField.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
@@ -3090,7 +3090,7 @@ Func _LOWriter_FormConFormattedFieldGeneral(ByRef $oFormatField, $sName = Null, 
 		$oFormatField.Control.setPropertyToDefault("MaxTextLen")
 
 	ElseIf ($iMaxLen <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMaxLen, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LO_IntIsBetween($iMaxLen, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$oFormatField.Control.MaxTextLen = $iMaxLen
 		$iError = ($oFormatField.Control.MaxTextLen = $iMaxLen) ? ($iError) : (BitOR($iError, 8))
@@ -3140,7 +3140,7 @@ Func _LOWriter_FormConFormattedFieldGeneral(ByRef $oFormatField, $sName = Null, 
 		$oFormatField.Control.setPropertyToDefault("MouseWheelBehavior")
 
 	ElseIf ($iMouseScroll <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LO_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 
 		$oFormatField.Control.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oFormatField.Control.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 256))
@@ -3160,7 +3160,7 @@ Func _LOWriter_FormConFormattedFieldGeneral(ByRef $oFormatField, $sName = Null, 
 		$iError = BitOR($iError, 1024) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		If Not __LO_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 
 		$oFormatField.Control.TabIndex = $iTabOrder
 		$iError = ($oFormatField.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 1024))
@@ -3239,7 +3239,7 @@ Func _LOWriter_FormConFormattedFieldGeneral(ByRef $oFormatField, $sName = Null, 
 		$oFormatField.Control.setPropertyToDefault("RepeatDelay")
 
 	ElseIf ($iDelay <> Null) Then
-		If Not __LOWriter_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
+		If Not __LO_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
 
 		$oFormatField.Control.RepeatDelay = $iDelay
 		$iError = ($oFormatField.Control.RepeatDelay() = $iDelay) ? ($iError) : (BitOR($iError, 131072))
@@ -3259,7 +3259,7 @@ Func _LOWriter_FormConFormattedFieldGeneral(ByRef $oFormatField, $sName = Null, 
 		$oFormatField.Control.setPropertyToDefault("Align")
 
 	ElseIf ($iAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 24, 0)
+		If Not __LO_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 24, 0)
 
 		$oFormatField.Control.Align = $iAlign
 		$iError = ($oFormatField.Control.Align() = $iAlign) ? ($iError) : (BitOR($iError, 524288))
@@ -3269,7 +3269,7 @@ Func _LOWriter_FormConFormattedFieldGeneral(ByRef $oFormatField, $sName = Null, 
 		$oFormatField.Control.setPropertyToDefault("VerticalAlign")
 
 	ElseIf ($iVertAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 25, 0)
+		If Not __LO_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 25, 0)
 
 		$oFormatField.Control.VerticalAlign = $iVertAlign
 		$iError = ($oFormatField.Control.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 1048576))
@@ -3279,7 +3279,7 @@ Func _LOWriter_FormConFormattedFieldGeneral(ByRef $oFormatField, $sName = Null, 
 		$oFormatField.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
 
 		$oFormatField.Control.BackgroundColor = $iBackColor
 		$iError = ($oFormatField.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 2097152))
@@ -3289,7 +3289,7 @@ Func _LOWriter_FormConFormattedFieldGeneral(ByRef $oFormatField, $sName = Null, 
 		$oFormatField.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
+		If Not __LO_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
 
 		$oFormatField.Control.Border = $iBorder
 		$iError = ($oFormatField.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 4194304))
@@ -3299,7 +3299,7 @@ Func _LOWriter_FormConFormattedFieldGeneral(ByRef $oFormatField, $sName = Null, 
 		$oFormatField.Control.setPropertyToDefault("BorderColor")
 
 	ElseIf ($iBorderColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 28, 0)
+		If Not __LO_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 28, 0)
 
 		$oFormatField.Control.BorderColor = $iBorderColor
 		$iError = ($oFormatField.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 8388608))
@@ -3387,7 +3387,7 @@ Func _LOWriter_FormConFormattedFieldValue(ByRef $oFormatField, $nValue = Null)
 	If (__LOWriter_FormConIdentify($oFormatField) <> $LOW_FORM_CON_TYPE_FORMATTED_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($nValue) Then
+	If __LO_VarsAreNull($nValue) Then
 		$iCurValue = $oFormatField.Control.EffectiveValue()
 		If Not IsNumber($iCurValue) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -3525,8 +3525,8 @@ Func _LOWriter_FormConGroupBoxGeneral(ByRef $oGroupBox, $sName = Null, $sLabel =
 	If (__LOWriter_FormConIdentify($oGroupBox) <> $LOW_FORM_CON_TYPE_GROUP_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $bEnabled, $bVisible, $bPrintable, $mFont, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oGroupBox.Control.Name(), $oGroupBox.Control.Label(), $oGroupBox.Control.WritingMode(), $oGroupBox.Control.Enabled(), _
+	If __LO_VarsAreNull($sName, $sLabel, $iTxtDir, $bEnabled, $bVisible, $bPrintable, $mFont, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LO_ArrayFill($avControl, $oGroupBox.Control.Name(), $oGroupBox.Control.Label(), $oGroupBox.Control.WritingMode(), $oGroupBox.Control.Enabled(), _
 				$oGroupBox.Control.EnableVisible(), $oGroupBox.Control.Printable(), __LOWriter_FormConSetGetFontDesc($oGroupBox), $oGroupBox.Control.Tag(), _
 				$oGroupBox.Control.HelpText(), $oGroupBox.Control.HelpURL())
 
@@ -3557,7 +3557,7 @@ Func _LOWriter_FormConGroupBoxGeneral(ByRef $oGroupBox, $sName = Null, $sLabel =
 		$oGroupBox.Control.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oGroupBox.Control.WritingMode = $iTxtDir
 		$iError = ($oGroupBox.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
@@ -3792,8 +3792,8 @@ Func _LOWriter_FormConImageButtonGeneral(ByRef $oImageButton, $sName = Null, $iT
 			EndIf
 	EndSwitch
 
-	If __LOWriter_VarsAreNull($sName, $iTxtDir, $bEnabled, $bVisible, $bPrintable, $bTabStop, $iTabOrder, $iBackColor, $iBorder, $iBorderColor, $iAction, $sURL, $sFrame, $sGraphics, $iScale, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oImageButton.Control.Name(), $oImageButton.Control.WritingMode(), $oImageButton.Control.Enabled(), $oImageButton.Control.EnableVisible(), _
+	If __LO_VarsAreNull($sName, $iTxtDir, $bEnabled, $bVisible, $bPrintable, $bTabStop, $iTabOrder, $iBackColor, $iBorder, $iBorderColor, $iAction, $sURL, $sFrame, $sGraphics, $iScale, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LO_ArrayFill($avControl, $oImageButton.Control.Name(), $oImageButton.Control.WritingMode(), $oImageButton.Control.Enabled(), $oImageButton.Control.EnableVisible(), _
 				$oImageButton.Control.Printable(), $oImageButton.Control.Tabstop(), $oImageButton.Control.TabIndex(), $oImageButton.Control.BackgroundColor(), _
 				$oImageButton.Control.Border(), $oImageButton.Control.BorderColor(), $iBtnAction, $oImageButton.Control.TargetURL(), $oImageButton.Control.TargetFrame(), _
 				$oImageButton.Control.Graphic(), $oImageButton.Control.ScaleMode(), $oImageButton.Control.Tag(), $oImageButton.Control.HelpText(), $oImageButton.Control.HelpURL())
@@ -3815,7 +3815,7 @@ Func _LOWriter_FormConImageButtonGeneral(ByRef $oImageButton, $sName = Null, $iT
 		$oImageButton.Control.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		$oImageButton.Control.WritingMode = $iTxtDir
 		$iError = ($oImageButton.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 2))
@@ -3865,7 +3865,7 @@ Func _LOWriter_FormConImageButtonGeneral(ByRef $oImageButton, $sName = Null, $iT
 		$iError = BitOR($iError, 64) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LO_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 		$oImageButton.Control.TabIndex = $iTabOrder
 		$iError = ($oImageButton.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 64))
@@ -3875,7 +3875,7 @@ Func _LOWriter_FormConImageButtonGeneral(ByRef $oImageButton, $sName = Null, $iT
 		$oImageButton.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
 		$oImageButton.Control.BackgroundColor = $iBackColor
 		$iError = ($oImageButton.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 128))
@@ -3885,7 +3885,7 @@ Func _LOWriter_FormConImageButtonGeneral(ByRef $oImageButton, $sName = Null, $iT
 		$oImageButton.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		If Not __LO_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 
 		$oImageButton.Control.Border = $iBorder
 		$iError = ($oImageButton.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 256))
@@ -3895,7 +3895,7 @@ Func _LOWriter_FormConImageButtonGeneral(ByRef $oImageButton, $sName = Null, $iT
 		$oImageButton.Control.setPropertyToDefault("BorderColor")
 
 	ElseIf ($iBorderColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LO_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 
 		$oImageButton.Control.BorderColor = $iBorderColor
 		$iError = ($oImageButton.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 512))
@@ -3917,7 +3917,7 @@ Func _LOWriter_FormConImageButtonGeneral(ByRef $oImageButton, $sName = Null, $iT
 		EndSwitch
 
 	ElseIf ($iAction <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAction, $LOW_FORM_CON_PUSH_CMD_NONE, $LOW_FORM_CON_PUSH_CMD_REFRESH_FORM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+		If Not __LO_IntIsBetween($iAction, $LOW_FORM_CON_PUSH_CMD_NONE, $LOW_FORM_CON_PUSH_CMD_REFRESH_FORM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 
 		Switch $iAction
 			Case $LOW_FORM_CON_PUSH_CMD_NONE
@@ -3979,15 +3979,15 @@ Func _LOWriter_FormConImageButtonGeneral(ByRef $oImageButton, $sName = Null, $iT
 	ElseIf ($sGraphics <> Null) Then
 		If Not IsString($sGraphics) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 
-		$oImageButton.Control.ImageURL = _LOWriter_PathConvert($sGraphics, $LOW_PATHCONV_OFFICE_RETURN)
-		$iError = ($oImageButton.Control.ImageURL() = _LOWriter_PathConvert($sGraphics, $LOW_PATHCONV_OFFICE_RETURN)) ? ($iError) : (BitOR($iError, 8192))
+		$oImageButton.Control.ImageURL = _LO_PathConvert($sGraphics, $LO_PATHCONV_OFFICE_RETURN)
+		$iError = ($oImageButton.Control.ImageURL() = _LO_PathConvert($sGraphics, $LO_PATHCONV_OFFICE_RETURN)) ? ($iError) : (BitOR($iError, 8192))
 	EndIf
 
 	If ($iScale = Default) Then
 		$oImageButton.Control.setPropertyToDefault("ScaleMode")
 
 	ElseIf ($iScale <> Null) Then
-		If Not __LOWriter_IntIsBetween($iScale, $LOW_FORM_CON_IMG_BTN_SCALE_NONE, $LOW_FORM_CON_IMG_BTN_SCALE_FIT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
+		If Not __LO_IntIsBetween($iScale, $LOW_FORM_CON_IMG_BTN_SCALE_NONE, $LOW_FORM_CON_IMG_BTN_SCALE_FIT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 
 		$oImageButton.Control.ScaleMode = $iScale
 		$iError = ($oImageButton.Control.ScaleMode() = $iScale) ? ($iError) : (BitOR($iError, 16384))
@@ -4069,8 +4069,8 @@ Func _LOWriter_FormConImageControlData(ByRef $oImageControl, $sDataField = Null,
 	If (__LOWriter_FormConIdentify($oImageControl) <> $LOW_FORM_CON_TYPE_IMAGE_CONTROL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
-		__LOWriter_ArrayFill($avControl, $oImageControl.Control.DataField(), $oImageControl.Control.InputRequired())
+	If __LO_VarsAreNull($sDataField, $bInputRequired) Then
+		__LO_ArrayFill($avControl, $oImageControl.Control.DataField(), $oImageControl.Control.InputRequired())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
@@ -4184,8 +4184,8 @@ Func _LOWriter_FormConImageControlGeneral(ByRef $oImageControl, $sName = Null, $
 	If (__LOWriter_FormConIdentify($oImageControl) <> $LOW_FORM_CON_TYPE_IMAGE_CONTROL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $bTabStop, $iTabOrder, $iBackColor, $iBorder, $iBorderColor, $sGraphics, $iScale, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oImageControl.Control.Name(), __LOWriter_FormConGetObj($oImageControl.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oImageControl.Control.WritingMode(), $oImageControl.Control.Enabled(), _
+	If __LO_VarsAreNull($sName, $oLabelField, $iTxtDir, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $bTabStop, $iTabOrder, $iBackColor, $iBorder, $iBorderColor, $sGraphics, $iScale, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LO_ArrayFill($avControl, $oImageControl.Control.Name(), __LOWriter_FormConGetObj($oImageControl.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oImageControl.Control.WritingMode(), $oImageControl.Control.Enabled(), _
 				$oImageControl.Control.EnableVisible(), $oImageControl.Control.ReadOnly(), $oImageControl.Control.Printable(), $oImageControl.Control.Tabstop(), _
 				$oImageControl.Control.TabIndex(), $oImageControl.Control.BackgroundColor(), $oImageControl.Control.Border(), $oImageControl.Control.BorderColor(), _
 				$oImageControl.Control.Graphic(), $oImageControl.Control.ScaleMode(), $oImageControl.Control.Tag(), $oImageControl.Control.HelpText(), $oImageControl.Control.HelpURL())
@@ -4218,7 +4218,7 @@ Func _LOWriter_FormConImageControlGeneral(ByRef $oImageControl, $sName = Null, $
 		$oImageControl.Control.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oImageControl.Control.WritingMode = $iTxtDir
 		$iError = ($oImageControl.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
@@ -4278,7 +4278,7 @@ Func _LOWriter_FormConImageControlGeneral(ByRef $oImageControl, $sName = Null, $
 		$iError = BitOR($iError, 256) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LO_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 
 		$oImageControl.Control.TabIndex = $iTabOrder
 		$iError = ($oImageControl.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 256))
@@ -4288,7 +4288,7 @@ Func _LOWriter_FormConImageControlGeneral(ByRef $oImageControl, $sName = Null, $
 		$oImageControl.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 
 		$oImageControl.Control.BackgroundColor = $iBackColor
 		$iError = ($oImageControl.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 512))
@@ -4298,7 +4298,7 @@ Func _LOWriter_FormConImageControlGeneral(ByRef $oImageControl, $sName = Null, $
 		$oImageControl.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		If Not __LO_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 
 		$oImageControl.Control.Border = $iBorder
 		$iError = ($oImageControl.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 1024))
@@ -4308,7 +4308,7 @@ Func _LOWriter_FormConImageControlGeneral(ByRef $oImageControl, $sName = Null, $
 		$oImageControl.Control.setPropertyToDefault("BorderColor")
 
 	ElseIf ($iBorderColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
+		If Not __LO_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 
 		$oImageControl.Control.BorderColor = $iBorderColor
 		$iError = ($oImageControl.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 2048))
@@ -4321,15 +4321,15 @@ Func _LOWriter_FormConImageControlGeneral(ByRef $oImageControl, $sName = Null, $
 	ElseIf ($sGraphics <> Null) Then
 		If Not IsString($sGraphics) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 
-		$oImageControl.Control.ImageURL = _LOWriter_PathConvert($sGraphics, $LOW_PATHCONV_OFFICE_RETURN)
-		$iError = ($oImageControl.Control.ImageURL() = _LOWriter_PathConvert($sGraphics, $LOW_PATHCONV_OFFICE_RETURN)) ? ($iError) : (BitOR($iError, 4096))
+		$oImageControl.Control.ImageURL = _LO_PathConvert($sGraphics, $LO_PATHCONV_OFFICE_RETURN)
+		$iError = ($oImageControl.Control.ImageURL() = _LO_PathConvert($sGraphics, $LO_PATHCONV_OFFICE_RETURN)) ? ($iError) : (BitOR($iError, 4096))
 	EndIf
 
 	If ($iScale = Default) Then
 		$oImageControl.Control.setPropertyToDefault("ScaleMode")
 
 	ElseIf ($iScale <> Null) Then
-		If Not __LOWriter_IntIsBetween($iScale, $LOW_FORM_CON_IMG_BTN_SCALE_NONE, $LOW_FORM_CON_IMG_BTN_SCALE_FIT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+		If Not __LO_IntIsBetween($iScale, $LOW_FORM_CON_IMG_BTN_SCALE_NONE, $LOW_FORM_CON_IMG_BTN_SCALE_FIT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 
 		$oImageControl.Control.ScaleMode = $iScale
 		$iError = ($oImageControl.Control.ScaleMode() = $iScale) ? ($iError) : (BitOR($iError, 8192))
@@ -4407,7 +4407,7 @@ EndFunc   ;==>_LOWriter_FormConImageControlGeneral
 ; Modified ......:
 ; Remarks .......: When inserting a Grouped Control, a Group box will be automatically created and inserted into it.
 ;                  I have not found a reliable and working way to add controls to a Group of Controls.
-; Related .......: _LOWriter_FormConsGetList, _LOWriter_FormConDelete, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_FormConsGetList, _LOWriter_FormConDelete, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4422,7 +4422,7 @@ Func _LOWriter_FormConInsert(ByRef $oParentForm, $iControl, $iX, $iY, $iWidth, $
 
 	If Not IsObj($oParentForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oParentForm.supportsService("com.sun.star.form.component.Form") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOWriter_IntIsBetween($iControl, $LOW_FORM_CON_TYPE_CHECK_BOX, $LOW_FORM_CON_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iControl, $LOW_FORM_CON_TYPE_CHECK_BOX, $LOW_FORM_CON_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsInt($iX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not IsInt($iY) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	If Not IsInt($iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
@@ -4631,8 +4631,8 @@ Func _LOWriter_FormConLabelGeneral(ByRef $oLabel, $sName = Null, $sLabel = Null,
 	If (__LOWriter_FormConIdentify($oLabel) <> $LOW_FORM_CON_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $bEnabled, $bVisible, $bPrintable, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bWordBreak, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oLabel.Control.Name(), $oLabel.Control.Label(), $oLabel.Control.WritingMode(), $oLabel.Control.Enabled(), $oLabel.Control.EnableVisible(), _
+	If __LO_VarsAreNull($sName, $sLabel, $iTxtDir, $bEnabled, $bVisible, $bPrintable, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bWordBreak, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LO_ArrayFill($avControl, $oLabel.Control.Name(), $oLabel.Control.Label(), $oLabel.Control.WritingMode(), $oLabel.Control.Enabled(), $oLabel.Control.EnableVisible(), _
 				$oLabel.Control.Printable(), __LOWriter_FormConSetGetFontDesc($oLabel), $oLabel.Control.Align(), $oLabel.Control.VerticalAlign(), $oLabel.Control.BackgroundColor(), _
 				$oLabel.Control.Border(), $oLabel.Control.BorderColor(), $oLabel.Control.MultiLine(), $oLabel.Control.Tag(), $oLabel.Control.HelpText(), $oLabel.Control.HelpURL())
 
@@ -4663,7 +4663,7 @@ Func _LOWriter_FormConLabelGeneral(ByRef $oLabel, $sName = Null, $sLabel = Null,
 		$oLabel.Control.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oLabel.Control.WritingMode = $iTxtDir
 		$iError = ($oLabel.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
@@ -4713,7 +4713,7 @@ Func _LOWriter_FormConLabelGeneral(ByRef $oLabel, $sName = Null, $sLabel = Null,
 		$oLabel.Control.setPropertyToDefault("Align")
 
 	ElseIf ($iAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		If Not __LO_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
 		$oLabel.Control.Align = $iAlign
 		$iError = ($oLabel.Control.Align() = $iAlign) ? ($iError) : (BitOR($iError, 128))
@@ -4723,7 +4723,7 @@ Func _LOWriter_FormConLabelGeneral(ByRef $oLabel, $sName = Null, $sLabel = Null,
 		$oLabel.Control.setPropertyToDefault("VerticalAlign")
 
 	ElseIf ($iVertAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		If Not __LO_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 
 		$oLabel.Control.VerticalAlign = $iVertAlign
 		$iError = ($oLabel.Control.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 256))
@@ -4733,7 +4733,7 @@ Func _LOWriter_FormConLabelGeneral(ByRef $oLabel, $sName = Null, $sLabel = Null,
 		$oLabel.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 
 		$oLabel.Control.BackgroundColor = $iBackColor
 		$iError = ($oLabel.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 512))
@@ -4743,7 +4743,7 @@ Func _LOWriter_FormConLabelGeneral(ByRef $oLabel, $sName = Null, $sLabel = Null,
 		$oLabel.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+		If Not __LO_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 
 		$oLabel.Control.Border = $iBorder
 		$iError = ($oLabel.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 1024))
@@ -4753,7 +4753,7 @@ Func _LOWriter_FormConLabelGeneral(ByRef $oLabel, $sName = Null, $sLabel = Null,
 		$oLabel.Control.setPropertyToDefault("BorderColor")
 
 	ElseIf ($iBorderColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		If Not __LO_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 
 		$oLabel.Control.BorderColor = $iBorderColor
 		$iError = ($oLabel.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 2048))
@@ -4858,8 +4858,8 @@ Func _LOWriter_FormConListBoxData(ByRef $oListBox, $sDataField = Null, $bInputRe
 	If (__LOWriter_FormConIdentify($oListBox) <> $LOW_FORM_CON_TYPE_LIST_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sDataField, $bInputRequired, $iType, $asListContent, $iBoundField) Then
-		__LOWriter_ArrayFill($avControl, $oListBox.Control.DataField(), $oListBox.Control.InputRequired(), $oListBox.Control.ListSourceType(), _
+	If __LO_VarsAreNull($sDataField, $bInputRequired, $iType, $asListContent, $iBoundField) Then
+		__LO_ArrayFill($avControl, $oListBox.Control.DataField(), $oListBox.Control.InputRequired(), $oListBox.Control.ListSourceType(), _
 				$oListBox.Control.ListSource(), $oListBox.Control.BoundColumn())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
@@ -4880,7 +4880,7 @@ Func _LOWriter_FormConListBoxData(ByRef $oListBox, $sDataField = Null, $bInputRe
 	EndIf
 
 	If ($iType <> Null) Then
-		If Not __LOWriter_IntIsBetween($iType, $LOW_FORM_CON_SOURCE_TYPE_VALUE_LIST, $LOW_FORM_CON_SOURCE_TYPE_TABLE_FIELDS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iType, $LOW_FORM_CON_SOURCE_TYPE_VALUE_LIST, $LOW_FORM_CON_SOURCE_TYPE_TABLE_FIELDS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oListBox.Control.ListSourceType = $iType
 		$iError = ($oListBox.Control.ListSourceType() = $iType) ? ($iError) : (BitOR($iError, 4))
@@ -4895,7 +4895,7 @@ Func _LOWriter_FormConListBoxData(ByRef $oListBox, $sDataField = Null, $bInputRe
 	EndIf
 
 	If ($iBoundField <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBoundField, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LO_IntIsBetween($iBoundField, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 		$oListBox.Control.BoundColumn = $iBoundField
 		$iError = ($oListBox.Control.BoundColumn() = $iBoundField) ? ($iError) : (BitOR($iError, 16))
@@ -5018,8 +5018,8 @@ Func _LOWriter_FormConListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabelFiel
 	If (__LOWriter_FormConIdentify($oListBox) <> $LOW_FORM_CON_TYPE_LIST_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $asList, $mFont, $iAlign, $iBackColor, $iBorder, $iBorderColor, $bDropdown, $iLines, $bMultiSel, $aiDefaultSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oListBox.Control.Name(), __LOWriter_FormConGetObj($oListBox.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oListBox.Control.WritingMode(), $oListBox.Control.Enabled(), _
+	If __LO_VarsAreNull($sName, $oLabelField, $iTxtDir, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $asList, $mFont, $iAlign, $iBackColor, $iBorder, $iBorderColor, $bDropdown, $iLines, $bMultiSel, $aiDefaultSel, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LO_ArrayFill($avControl, $oListBox.Control.Name(), __LOWriter_FormConGetObj($oListBox.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oListBox.Control.WritingMode(), $oListBox.Control.Enabled(), _
 				$oListBox.Control.EnableVisible(), $oListBox.Control.ReadOnly(), $oListBox.Control.Printable(), $oListBox.Control.MouseWheelBehavior(), $oListBox.Control.Tabstop(), _
 				$oListBox.Control.TabIndex(), $oListBox.Control.StringItemList(), __LOWriter_FormConSetGetFontDesc($oListBox), $oListBox.Control.Align(), $oListBox.Control.BackgroundColor(), _
 				$oListBox.Control.Border(), $oListBox.Control.BorderColor(), $oListBox.Control.Dropdown(), $oListBox.Control.LineCount(), $oListBox.Control.MultiSelection(), _
@@ -5053,7 +5053,7 @@ Func _LOWriter_FormConListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabelFiel
 		$oListBox.Control.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oListBox.Control.WritingMode = $iTxtDir
 		$iError = ($oListBox.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
@@ -5103,7 +5103,7 @@ Func _LOWriter_FormConListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabelFiel
 		$oListBox.Control.setPropertyToDefault("MouseWheelBehavior")
 
 	ElseIf ($iMouseScroll <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		If Not __LO_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 
 		$oListBox.Control.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oListBox.Control.MouseWheelBehavior = $iMouseScroll) ? ($iError) : (BitOR($iError, 128))
@@ -5123,7 +5123,7 @@ Func _LOWriter_FormConListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabelFiel
 		$iError = BitOR($iError, 512) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+		If Not __LO_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 
 		$oListBox.Control.TabIndex = $iTabOrder
 		$iError = ($oListBox.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 512))
@@ -5158,7 +5158,7 @@ Func _LOWriter_FormConListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabelFiel
 		$oListBox.Control.setPropertyToDefault("Align")
 
 	ElseIf ($iAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+		If Not __LO_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 
 		$oListBox.Control.Align = $iAlign
 		$iError = ($oListBox.Control.Align() = $iAlign) ? ($iError) : (BitOR($iError, 4096))
@@ -5168,7 +5168,7 @@ Func _LOWriter_FormConListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabelFiel
 		$oListBox.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 
 		$oListBox.Control.BackgroundColor = $iBackColor
 		$iError = ($oListBox.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 8192))
@@ -5178,7 +5178,7 @@ Func _LOWriter_FormConListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabelFiel
 		$oListBox.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
+		If Not __LO_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 
 		$oListBox.Control.Border = $iBorder
 		$iError = ($oListBox.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 16384))
@@ -5188,7 +5188,7 @@ Func _LOWriter_FormConListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabelFiel
 		$oListBox.Control.setPropertyToDefault("BorderColor")
 
 	ElseIf ($iBorderColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
+		If Not __LO_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
 
 		$oListBox.Control.BorderColor = $iBorderColor
 		$iError = ($oListBox.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 32768))
@@ -5208,7 +5208,7 @@ Func _LOWriter_FormConListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabelFiel
 		$oListBox.Control.setPropertyToDefault("LineCount")
 
 	ElseIf ($iLines <> Null) Then
-		If Not __LOWriter_IntIsBetween($iLines, -2147483648, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
+		If Not __LO_IntIsBetween($iLines, -2147483648, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
 
 		$oListBox.Control.LineCount = $iLines
 		$iError = ($oListBox.Control.LineCount = $iLines) ? ($iError) : (BitOR($iError, 131072))
@@ -5357,7 +5357,7 @@ Func _LOWriter_FormConListBoxSelection(ByRef $oListBox, $aiSelection = Null, $bR
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	If Not IsBool($bReturnValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-	If __LOWriter_VarsAreNull($aiSelection) Then
+	If __LO_VarsAreNull($aiSelection) Then
 		If $bReturnValue Then
 			$avCurSel = $oListBox.Control.SelectedValues()
 			If Not IsArray($avCurSel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
@@ -5380,7 +5380,7 @@ Func _LOWriter_FormConListBoxSelection(ByRef $oListBox, $aiSelection = Null, $bR
 
 		For $i = 0 To UBound($aiSelection) - 1
 			If Not IsInt($aiSelection[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
-			If Not __LOWriter_IntIsBetween($aiSelection[$i], 0, $oListBox.Control.ItemCount()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
+			If Not __LO_IntIsBetween($aiSelection[$i], 0, $oListBox.Control.ItemCount()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
 
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 		Next
@@ -5486,8 +5486,8 @@ Func _LOWriter_FormConNavBarGeneral(ByRef $oNavBar, $sName = Null, $iTxtDir = Nu
 	If (__LOWriter_FormConIdentify($oNavBar) <> $LOW_FORM_CON_TYPE_NAV_BAR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sName, $iTxtDir, $bEnabled, $bVisible, $bTabStop, $iTabOrder, $iDelay, $mFont, $iBackColor, $iBorder, $bSmallIcon, $bShowPos, $bShowNav, $bShowActing, $bShowFiltering, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oNavBar.Control.Name(), $oNavBar.Control.WritingMode(), $oNavBar.Control.Enabled(), $oNavBar.Control.EnableVisible(), _
+	If __LO_VarsAreNull($sName, $iTxtDir, $bEnabled, $bVisible, $bTabStop, $iTabOrder, $iDelay, $mFont, $iBackColor, $iBorder, $bSmallIcon, $bShowPos, $bShowNav, $bShowActing, $bShowFiltering, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LO_ArrayFill($avControl, $oNavBar.Control.Name(), $oNavBar.Control.WritingMode(), $oNavBar.Control.Enabled(), $oNavBar.Control.EnableVisible(), _
 				$oNavBar.Control.Tabstop(), $oNavBar.Control.TabIndex(), $oNavBar.Control.RepeatDelay(), __LOWriter_FormConSetGetFontDesc($oNavBar), $oNavBar.Control.BackgroundColor(), _
 				$oNavBar.Control.Border(), (($oNavBar.Control.IconSize() = $__LOW_FORM_CONTROL_ICON_SMALL) ? (True) : (False)), _ ; Icon size.
 				$oNavBar.Control.ShowPosition(), $oNavBar.Control.ShowNavigation(), $oNavBar.Control.ShowRecordActions(), $oNavBar.Control.ShowFilterSort(), _
@@ -5510,7 +5510,7 @@ Func _LOWriter_FormConNavBarGeneral(ByRef $oNavBar, $sName = Null, $iTxtDir = Nu
 		$oNavBar.Control.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		$oNavBar.Control.WritingMode = $iTxtDir
 		$iError = ($oNavBar.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 2))
@@ -5550,7 +5550,7 @@ Func _LOWriter_FormConNavBarGeneral(ByRef $oNavBar, $sName = Null, $iTxtDir = Nu
 		$iError = BitOR($iError, 32) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LO_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 		$oNavBar.Control.TabIndex = $iTabOrder
 		$iError = ($oNavBar.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 32))
@@ -5560,7 +5560,7 @@ Func _LOWriter_FormConNavBarGeneral(ByRef $oNavBar, $sName = Null, $iTxtDir = Nu
 		$oNavBar.Control.setPropertyToDefault("RepeatDelay")
 
 	ElseIf ($iDelay <> Null) Then
-		If Not __LOWriter_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LO_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 		$oNavBar.Control.RepeatDelay = $iDelay
 		$iError = ($oNavBar.Control.RepeatDelay() = $iDelay) ? ($iError) : (BitOR($iError, 64))
@@ -5580,7 +5580,7 @@ Func _LOWriter_FormConNavBarGeneral(ByRef $oNavBar, $sName = Null, $iTxtDir = Nu
 		$oNavBar.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 
 		$oNavBar.Control.BackgroundColor = $iBackColor
 		$iError = ($oNavBar.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 256))
@@ -5590,7 +5590,7 @@ Func _LOWriter_FormConNavBarGeneral(ByRef $oNavBar, $sName = Null, $iTxtDir = Nu
 		$oNavBar.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LO_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 
 		$oNavBar.Control.Border = $iBorder
 		$iError = ($oNavBar.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 512))
@@ -5722,8 +5722,8 @@ Func _LOWriter_FormConNumericFieldData(ByRef $oNumericField, $sDataField = Null,
 	If (__LOWriter_FormConIdentify($oNumericField) <> $LOW_FORM_CON_TYPE_NUMERIC_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
-		__LOWriter_ArrayFill($avControl, $oNumericField.Control.DataField(), $oNumericField.Control.InputRequired())
+	If __LO_VarsAreNull($sDataField, $bInputRequired) Then
+		__LO_ArrayFill($avControl, $oNumericField.Control.DataField(), $oNumericField.Control.InputRequired())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
@@ -5881,8 +5881,8 @@ Func _LOWriter_FormConNumericFieldGeneral(ByRef $oNumericField, $sName = Null, $
 	If (__LOWriter_FormConIdentify($oNumericField) <> $LOW_FORM_CON_TYPE_NUMERIC_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $bStrict, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $nMin, $nMax, $iIncr, $nDefault, $iDecimal, $bThousandsSep, $bSpin, $bRepeat, $iDelay, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oNumericField.Control.Name(), __LOWriter_FormConGetObj($oNumericField.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oNumericField.Control.WritingMode(), $oNumericField.Control.StrictFormat(), _
+	If __LO_VarsAreNull($sName, $oLabelField, $iTxtDir, $bStrict, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $nMin, $nMax, $iIncr, $nDefault, $iDecimal, $bThousandsSep, $bSpin, $bRepeat, $iDelay, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LO_ArrayFill($avControl, $oNumericField.Control.Name(), __LOWriter_FormConGetObj($oNumericField.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oNumericField.Control.WritingMode(), $oNumericField.Control.StrictFormat(), _
 				$oNumericField.Control.Enabled(), $oNumericField.Control.EnableVisible(), $oNumericField.Control.ReadOnly(), $oNumericField.Control.Printable(), _
 				$oNumericField.Control.MouseWheelBehavior(), $oNumericField.Control.Tabstop(), $oNumericField.Control.TabIndex(), $oNumericField.Control.ValueMin(), _
 				$oNumericField.Control.ValueMax(), $oNumericField.Control.ValueStep(), $oNumericField.Control.DefaultValue(), $oNumericField.Control.DecimalAccuracy(), _
@@ -5919,7 +5919,7 @@ Func _LOWriter_FormConNumericFieldGeneral(ByRef $oNumericField, $sName = Null, $
 		$oNumericField.Control.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oNumericField.Control.WritingMode = $iTxtDir
 		$iError = ($oNumericField.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
@@ -5979,7 +5979,7 @@ Func _LOWriter_FormConNumericFieldGeneral(ByRef $oNumericField, $sName = Null, $
 		$oNumericField.Control.setPropertyToDefault("MouseWheelBehavior")
 
 	ElseIf ($iMouseScroll <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LO_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 
 		$oNumericField.Control.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oNumericField.Control.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 256))
@@ -5999,7 +5999,7 @@ Func _LOWriter_FormConNumericFieldGeneral(ByRef $oNumericField, $sName = Null, $
 		$iError = BitOR($iError, 1024) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		If Not __LO_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 
 		$oNumericField.Control.TabIndex = $iTabOrder
 		$iError = ($oNumericField.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 1024))
@@ -6049,7 +6049,7 @@ Func _LOWriter_FormConNumericFieldGeneral(ByRef $oNumericField, $sName = Null, $
 		$oNumericField.Control.setPropertyToDefault("DecimalAccuracy")
 
 	ElseIf ($iDecimal <> Null) Then
-		If Not __LOWriter_IntIsBetween($iDecimal, 0, 20) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
+		If Not __LO_IntIsBetween($iDecimal, 0, 20) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 
 		$oNumericField.Control.DecimalAccuracy = $iDecimal
 		$iError = ($oNumericField.Control.DecimalAccuracy() = $iDecimal) ? ($iError) : (BitOR($iError, 32768))
@@ -6089,7 +6089,7 @@ Func _LOWriter_FormConNumericFieldGeneral(ByRef $oNumericField, $sName = Null, $
 		$oNumericField.Control.setPropertyToDefault("RepeatDelay")
 
 	ElseIf ($iDelay <> Null) Then
-		If Not __LOWriter_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
+		If Not __LO_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
 
 		$oNumericField.Control.RepeatDelay = $iDelay
 		$iError = ($oNumericField.Control.RepeatDelay() = $iDelay) ? ($iError) : (BitOR($iError, 524288))
@@ -6109,7 +6109,7 @@ Func _LOWriter_FormConNumericFieldGeneral(ByRef $oNumericField, $sName = Null, $
 		$oNumericField.Control.setPropertyToDefault("Align")
 
 	ElseIf ($iAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 25, 0)
+		If Not __LO_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 25, 0)
 
 		$oNumericField.Control.Align = $iAlign
 		$iError = ($oNumericField.Control.Align() = $iAlign) ? ($iError) : (BitOR($iError, 2097152))
@@ -6119,7 +6119,7 @@ Func _LOWriter_FormConNumericFieldGeneral(ByRef $oNumericField, $sName = Null, $
 		$oNumericField.Control.setPropertyToDefault("VerticalAlign")
 
 	ElseIf ($iVertAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
+		If Not __LO_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
 
 		$oNumericField.Control.VerticalAlign = $iVertAlign
 		$iError = ($oNumericField.Control.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 4194304))
@@ -6129,7 +6129,7 @@ Func _LOWriter_FormConNumericFieldGeneral(ByRef $oNumericField, $sName = Null, $
 		$oNumericField.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
 
 		$oNumericField.Control.BackgroundColor = $iBackColor
 		$iError = ($oNumericField.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 8388608))
@@ -6139,7 +6139,7 @@ Func _LOWriter_FormConNumericFieldGeneral(ByRef $oNumericField, $sName = Null, $
 		$oNumericField.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 28, 0)
+		If Not __LO_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 28, 0)
 
 		$oNumericField.Control.Border = $iBorder
 		$iError = ($oNumericField.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 16777216))
@@ -6149,7 +6149,7 @@ Func _LOWriter_FormConNumericFieldGeneral(ByRef $oNumericField, $sName = Null, $
 		$oNumericField.Control.setPropertyToDefault("BorderColor")
 
 	ElseIf ($iBorderColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 29, 0)
+		If Not __LO_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 29, 0)
 
 		$oNumericField.Control.BorderColor = $iBorderColor
 		$iError = ($oNumericField.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 33554432))
@@ -6237,7 +6237,7 @@ Func _LOWriter_FormConNumericFieldValue(ByRef $oNumericField, $nValue = Null)
 	If (__LOWriter_FormConIdentify($oNumericField) <> $LOW_FORM_CON_TYPE_NUMERIC_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($nValue) Then
+	If __LO_VarsAreNull($nValue) Then
 		$nCurVal = $oNumericField.Control.Value() ; Value is Null when not set.
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $nCurVal)
@@ -6300,8 +6300,8 @@ Func _LOWriter_FormConOptionButtonData(ByRef $oOptionButton, $sDataField = Null,
 	If (__LOWriter_FormConIdentify($oOptionButton) <> $LOW_FORM_CON_TYPE_OPTION_BUTTON) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
-		__LOWriter_ArrayFill($avControl, $oOptionButton.Control.DataField(), $oOptionButton.Control.InputRequired())
+	If __LO_VarsAreNull($sDataField, $bInputRequired) Then
+		__LO_ArrayFill($avControl, $oOptionButton.Control.DataField(), $oOptionButton.Control.InputRequired())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
@@ -6429,8 +6429,8 @@ Func _LOWriter_FormConOptionButtonGeneral(ByRef $oOptionButton, $sName = Null, $
 	If (__LOWriter_FormConIdentify($oOptionButton) <> $LOW_FORM_CON_TYPE_OPTION_BUTTON) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sName, $sLabel, $oLabelField, $iTxtDir, $sGroupName, $bEnabled, $bVisible, $bPrintable, $bTabStop, $iTabOrder, $iDefaultState, $mFont, $iStyle, $iAlign, $iVertAlign, $iBackColor, $bWordBreak, $sGraphics, $iGraphicAlign, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oOptionButton.Control.Name(), $oOptionButton.Control.Label(), __LOWriter_FormConGetObj($oOptionButton.Control.LabelControl(), $LOW_FORM_CON_TYPE_GROUP_BOX), $oOptionButton.Control.WritingMode(), _
+	If __LO_VarsAreNull($sName, $sLabel, $oLabelField, $iTxtDir, $sGroupName, $bEnabled, $bVisible, $bPrintable, $bTabStop, $iTabOrder, $iDefaultState, $mFont, $iStyle, $iAlign, $iVertAlign, $iBackColor, $bWordBreak, $sGraphics, $iGraphicAlign, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LO_ArrayFill($avControl, $oOptionButton.Control.Name(), $oOptionButton.Control.Label(), __LOWriter_FormConGetObj($oOptionButton.Control.LabelControl(), $LOW_FORM_CON_TYPE_GROUP_BOX), $oOptionButton.Control.WritingMode(), _
 				$oOptionButton.Control.GroupName(), $oOptionButton.Control.Enabled(), $oOptionButton.Control.EnableVisible(), $oOptionButton.Control.Printable(), _
 				$oOptionButton.Control.Tabstop(), $oOptionButton.Control.TabIndex(), $oOptionButton.Control.DefaultState(), __LOWriter_FormConSetGetFontDesc($oOptionButton), _
 				$oOptionButton.Control.VisualEffect(), $oOptionButton.Control.Align(), $oOptionButton.Control.VerticalAlign(), $oOptionButton.Control.BackgroundColor(), _
@@ -6475,7 +6475,7 @@ Func _LOWriter_FormConOptionButtonGeneral(ByRef $oOptionButton, $sName = Null, $
 		$oOptionButton.Control.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$oOptionButton.Control.WritingMode = $iTxtDir
 		$iError = ($oOptionButton.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 8))
@@ -6535,7 +6535,7 @@ Func _LOWriter_FormConOptionButtonGeneral(ByRef $oOptionButton, $sName = Null, $
 		$iError = BitOR($iError, 512) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+		If Not __LO_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 
 		$oOptionButton.Control.TabIndex = $iTabOrder
 		$iError = ($oOptionButton.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 512))
@@ -6545,7 +6545,7 @@ Func _LOWriter_FormConOptionButtonGeneral(ByRef $oOptionButton, $sName = Null, $
 		$iError = BitOR($iError, 1024) ; Can't Default DefaultState.
 
 	ElseIf ($iDefaultState <> Null) Then
-		If Not __LOWriter_IntIsBetween($iDefaultState, $LOW_FORM_CON_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CON_CHKBX_STATE_SELECTED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		If Not __LO_IntIsBetween($iDefaultState, $LOW_FORM_CON_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CON_CHKBX_STATE_SELECTED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 
 		$oOptionButton.Control.DefaultState = $iDefaultState
 		$iError = ($oOptionButton.Control.DefaultState() = $iDefaultState) ? ($iError) : (BitOR($iError, 1024))
@@ -6565,7 +6565,7 @@ Func _LOWriter_FormConOptionButtonGeneral(ByRef $oOptionButton, $sName = Null, $
 		$oOptionButton.Control.setPropertyToDefault("VisualEffect")
 
 	ElseIf ($iStyle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iStyle, $LOW_FORM_CON_BORDER_3D, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
+		If Not __LO_IntIsBetween($iStyle, $LOW_FORM_CON_BORDER_3D, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 
 		$oOptionButton.Control.VisualEffect = $iStyle
 		$iError = ($oOptionButton.Control.VisualEffect() = $iStyle) ? ($iError) : (BitOR($iError, 4096))
@@ -6575,7 +6575,7 @@ Func _LOWriter_FormConOptionButtonGeneral(ByRef $oOptionButton, $sName = Null, $
 		$oOptionButton.Control.setPropertyToDefault("Align")
 
 	ElseIf ($iAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+		If Not __LO_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 
 		$oOptionButton.Control.Align = $iAlign
 		$iError = ($oOptionButton.Control.Align() = $iAlign) ? ($iError) : (BitOR($iError, 8192))
@@ -6585,7 +6585,7 @@ Func _LOWriter_FormConOptionButtonGeneral(ByRef $oOptionButton, $sName = Null, $
 		$oOptionButton.Control.setPropertyToDefault("VerticalAlign")
 
 	ElseIf ($iVertAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
+		If Not __LO_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 
 		$oOptionButton.Control.VerticalAlign = $iVertAlign
 		$iError = ($oOptionButton.Control.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 16384))
@@ -6595,7 +6595,7 @@ Func _LOWriter_FormConOptionButtonGeneral(ByRef $oOptionButton, $sName = Null, $
 		$oOptionButton.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 
 		$oOptionButton.Control.BackgroundColor = $iBackColor
 		$iError = ($oOptionButton.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 32768))
@@ -6618,15 +6618,15 @@ Func _LOWriter_FormConOptionButtonGeneral(ByRef $oOptionButton, $sName = Null, $
 	ElseIf ($sGraphics <> Null) Then
 		If Not IsString($sGraphics) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 
-		$oOptionButton.Control.ImageURL = _LOWriter_PathConvert($sGraphics, $LOW_PATHCONV_OFFICE_RETURN)
-		$iError = ($oOptionButton.Control.ImageURL() = _LOWriter_PathConvert($sGraphics, $LOW_PATHCONV_OFFICE_RETURN)) ? ($iError) : (BitOR($iError, 131072))
+		$oOptionButton.Control.ImageURL = _LO_PathConvert($sGraphics, $LO_PATHCONV_OFFICE_RETURN)
+		$iError = ($oOptionButton.Control.ImageURL() = _LO_PathConvert($sGraphics, $LO_PATHCONV_OFFICE_RETURN)) ? ($iError) : (BitOR($iError, 131072))
 	EndIf
 
 	If ($iGraphicAlign = Default) Then
 		$oOptionButton.Control.setPropertyToDefault("ImagePosition")
 
 	ElseIf ($iGraphicAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iGraphicAlign, $LOW_FORM_CON_IMG_ALIGN_LEFT_TOP, $LOW_FORM_CON_IMG_ALIGN_CENTERED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
+		If Not __LO_IntIsBetween($iGraphicAlign, $LOW_FORM_CON_IMG_ALIGN_LEFT_TOP, $LOW_FORM_CON_IMG_ALIGN_CENTERED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
 
 		$oOptionButton.Control.ImagePosition = $iGraphicAlign
 		$iError = ($oOptionButton.Control.ImagePosition() = $iGraphicAlign) ? ($iError) : (BitOR($iError, 262144))
@@ -6704,7 +6704,7 @@ Func _LOWriter_FormConOptionButtonState(ByRef $oOptionButton, $iState = Null)
 	If (__LOWriter_FormConIdentify($oOptionButton) <> $LOW_FORM_CON_TYPE_OPTION_BUTTON) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($iState) Then
+	If __LO_VarsAreNull($iState) Then
 		$iCurState = $oOptionButton.Control.State()
 		If Not IsInt($iCurState) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -6715,7 +6715,7 @@ Func _LOWriter_FormConOptionButtonState(ByRef $oOptionButton, $iState = Null)
 		$oOptionButton.Control.setPropertyToDefault("State")
 
 	Else
-		If Not __LOWriter_IntIsBetween($iState, $LOW_FORM_CON_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CON_CHKBX_STATE_SELECTED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		If Not __LO_IntIsBetween($iState, $LOW_FORM_CON_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CON_CHKBX_STATE_SELECTED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oOptionButton.Control.State = $iState
 		$iError = ($oOptionButton.Control.State() = $iState) ? ($iError) : (BitOR($iError, 1))
@@ -6773,8 +6773,8 @@ Func _LOWriter_FormConPatternFieldData(ByRef $oPatternField, $sDataField = Null,
 	If (__LOWriter_FormConIdentify($oPatternField) <> $LOW_FORM_CON_TYPE_PATTERN_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $bFilter) Then
-		__LOWriter_ArrayFill($avControl, $oPatternField.Control.DataField(), $oPatternField.Control.ConvertEmptyToNull(), $oPatternField.Control.InputRequired(), _
+	If __LO_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $bFilter) Then
+		__LO_ArrayFill($avControl, $oPatternField.Control.DataField(), $oPatternField.Control.ConvertEmptyToNull(), $oPatternField.Control.InputRequired(), _
 				$oPatternField.Control.UseFilterValueProposal())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
@@ -6926,8 +6926,8 @@ Func _LOWriter_FormConPatternFieldGeneral(ByRef $oPatternField, $sName = Null, $
 	If (__LOWriter_FormConIdentify($oPatternField) <> $LOW_FORM_CON_TYPE_PATTERN_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $iMaxLen, $sEditMask, $sLiteralMask, $bStrict, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $sDefaultTxt, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oPatternField.Control.Name(), __LOWriter_FormConGetObj($oPatternField.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oPatternField.Control.WritingMode(), _
+	If __LO_VarsAreNull($sName, $oLabelField, $iTxtDir, $iMaxLen, $sEditMask, $sLiteralMask, $bStrict, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $sDefaultTxt, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LO_ArrayFill($avControl, $oPatternField.Control.Name(), __LOWriter_FormConGetObj($oPatternField.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oPatternField.Control.WritingMode(), _
 				$oPatternField.Control.MaxTextLen(), $oPatternField.Control.EditMask(), $oPatternField.Control.LiteralMask(), $oPatternField.Control.StrictFormat(), _
 				$oPatternField.Control.Enabled(), $oPatternField.Control.EnableVisible(), $oPatternField.Control.ReadOnly(), $oPatternField.Control.Printable(), _
 				$oPatternField.Control.MouseWheelBehavior(), $oPatternField.Control.Tabstop(), $oPatternField.Control.TabIndex(), $oPatternField.Control.DefaultText(), _
@@ -6963,7 +6963,7 @@ Func _LOWriter_FormConPatternFieldGeneral(ByRef $oPatternField, $sName = Null, $
 		$oPatternField.Control.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oPatternField.Control.WritingMode = $iTxtDir
 		$iError = ($oPatternField.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
@@ -6973,7 +6973,7 @@ Func _LOWriter_FormConPatternFieldGeneral(ByRef $oPatternField, $sName = Null, $
 		$oPatternField.Control.setPropertyToDefault("MaxTextLen")
 
 	ElseIf ($iMaxLen <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMaxLen, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LO_IntIsBetween($iMaxLen, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$oPatternField.Control.MaxTextLen = $iMaxLen
 		$iError = ($oPatternField.Control.MaxTextLen = $iMaxLen) ? ($iError) : (BitOR($iError, 8))
@@ -7053,7 +7053,7 @@ Func _LOWriter_FormConPatternFieldGeneral(ByRef $oPatternField, $sName = Null, $
 		$oPatternField.Control.setPropertyToDefault("MouseWheelBehavior")
 
 	ElseIf ($iMouseScroll <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
+		If Not __LO_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 
 		$oPatternField.Control.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oPatternField.Control.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 2048))
@@ -7073,7 +7073,7 @@ Func _LOWriter_FormConPatternFieldGeneral(ByRef $oPatternField, $sName = Null, $
 		$iError = BitOR($iError, 8192) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+		If Not __LO_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 
 		$oPatternField.Control.TabIndex = $iTabOrder
 		$iError = ($oPatternField.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 8192))
@@ -7103,7 +7103,7 @@ Func _LOWriter_FormConPatternFieldGeneral(ByRef $oPatternField, $sName = Null, $
 		$oPatternField.Control.setPropertyToDefault("Align")
 
 	ElseIf ($iAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
+		If Not __LO_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
 
 		$oPatternField.Control.Align = $iAlign
 		$iError = ($oPatternField.Control.Align() = $iAlign) ? ($iError) : (BitOR($iError, 65536))
@@ -7113,7 +7113,7 @@ Func _LOWriter_FormConPatternFieldGeneral(ByRef $oPatternField, $sName = Null, $
 		$oPatternField.Control.setPropertyToDefault("VerticalAlign")
 
 	ElseIf ($iVertAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
+		If Not __LO_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 
 		$oPatternField.Control.VerticalAlign = $iVertAlign
 		$iError = ($oPatternField.Control.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 131072))
@@ -7123,7 +7123,7 @@ Func _LOWriter_FormConPatternFieldGeneral(ByRef $oPatternField, $sName = Null, $
 		$oPatternField.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
 
 		$oPatternField.Control.BackgroundColor = $iBackColor
 		$iError = ($oPatternField.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 262144))
@@ -7133,7 +7133,7 @@ Func _LOWriter_FormConPatternFieldGeneral(ByRef $oPatternField, $sName = Null, $
 		$oPatternField.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
+		If Not __LO_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
 
 		$oPatternField.Control.Border = $iBorder
 		$iError = ($oPatternField.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 524288))
@@ -7143,7 +7143,7 @@ Func _LOWriter_FormConPatternFieldGeneral(ByRef $oPatternField, $sName = Null, $
 		$oPatternField.Control.setPropertyToDefault("BorderColor")
 
 	ElseIf ($iBorderColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 24, 0)
+		If Not __LO_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 24, 0)
 
 		$oPatternField.Control.BorderColor = $iBorderColor
 		$iError = ($oPatternField.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 1048576))
@@ -7232,7 +7232,7 @@ Func _LOWriter_FormConPatternFieldValue(ByRef $oPatternField, $sValue = Null)
 	If (__LOWriter_FormConIdentify($oPatternField) <> $LOW_FORM_CON_TYPE_PATTERN_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sValue) Then
+	If __LO_VarsAreNull($sValue) Then
 		$sCurValue = $oPatternField.Control.Text()
 		If Not IsString($sCurValue) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -7283,7 +7283,7 @@ EndFunc   ;==>_LOWriter_FormConPatternFieldValue
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_FormConSize
+; Related .......: _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOWriter_FormConSize
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -7300,8 +7300,8 @@ Func _LOWriter_FormConPosition(ByRef $oControl, $iX = Null, $iY = Null, $iAnchor
 	$tPos = $oControl.Position()
 	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($iX, $iY, $iAnchor, $bProtectPos) Then
-		__LOWriter_ArrayFill($avPosition, $tPos.X(), $tPos.Y(), $oControl.AnchorType(), $oControl.MoveProtect())
+	If __LO_VarsAreNull($iX, $iY, $iAnchor, $bProtectPos) Then
+		__LO_ArrayFill($avPosition, $tPos.X(), $tPos.Y(), $oControl.AnchorType(), $oControl.MoveProtect())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avPosition)
 	EndIf
@@ -7321,12 +7321,12 @@ Func _LOWriter_FormConPosition(ByRef $oControl, $iX = Null, $iY = Null, $iAnchor
 
 		$oControl.Position = $tPos
 
-		$iError = ($iX = Null) ? ($iError) : ((__LOWriter_IntIsBetween($oControl.Position.X(), $iX - 1, $iX + 1)) ? ($iError) : (BitOR($iError, 1)))
-		$iError = ($iY = Null) ? ($iError) : ((__LOWriter_IntIsBetween($oControl.Position.Y(), $iY - 1, $iY + 1)) ? ($iError) : (BitOR($iError, 2)))
+		$iError = ($iX = Null) ? ($iError) : ((__LO_IntIsBetween($oControl.Position.X(), $iX - 1, $iX + 1)) ? ($iError) : (BitOR($iError, 1)))
+		$iError = ($iY = Null) ? ($iError) : ((__LO_IntIsBetween($oControl.Position.Y(), $iY - 1, $iY + 1)) ? ($iError) : (BitOR($iError, 2)))
 	EndIf
 
 	If ($iAnchor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAnchor, $LOW_ANCHOR_AT_PARAGRAPH, $LOW_ANCHOR_AT_CHARACTER) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LO_IntIsBetween($iAnchor, $LOW_ANCHOR_AT_PARAGRAPH, $LOW_ANCHOR_AT_CHARACTER) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		$oControl.AnchorType = $iAnchor
 		$iError = ($oControl.AnchorType() = $iAnchor) ? ($iError) : (BitOR($iError, 4))
@@ -7525,8 +7525,8 @@ Func _LOWriter_FormConPushButtonGeneral(ByRef $oPushButton, $sName = Null, $sLab
 			EndIf
 	EndSwitch
 
-	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $bEnabled, $bVisible, $bPrintable, $bTabStop, $iTabOrder, $bRepeat, $iDelay, $bTakeFocus, $bToggle, $iDefaultState, $mFont, $iAlign, $iVertAlign, $iBackColor, $bWordBreak, $iAction, $sURL, $sFrame, $bDefault, $sGraphics, $iGraphicAlign, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oPushButton.Control.Name(), $oPushButton.Control.Label(), $oPushButton.Control.WritingMode(), $oPushButton.Control.Enabled(), _
+	If __LO_VarsAreNull($sName, $sLabel, $iTxtDir, $bEnabled, $bVisible, $bPrintable, $bTabStop, $iTabOrder, $bRepeat, $iDelay, $bTakeFocus, $bToggle, $iDefaultState, $mFont, $iAlign, $iVertAlign, $iBackColor, $bWordBreak, $iAction, $sURL, $sFrame, $bDefault, $sGraphics, $iGraphicAlign, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LO_ArrayFill($avControl, $oPushButton.Control.Name(), $oPushButton.Control.Label(), $oPushButton.Control.WritingMode(), $oPushButton.Control.Enabled(), _
 				$oPushButton.Control.EnableVisible(), $oPushButton.Control.Printable(), $oPushButton.Control.Tabstop(), $oPushButton.Control.TabIndex(), _
 				$oPushButton.Control.Repeat(), $oPushButton.Control.RepeatDelay(), $oPushButton.Control.FocusOnClick(), $oPushButton.Control.Toggle(), _
 				$oPushButton.Control.DefaultState(), __LOWriter_FormConSetGetFontDesc($oPushButton), $oPushButton.Control.Align(), $oPushButton.Control.VerticalAlign(), _
@@ -7561,7 +7561,7 @@ Func _LOWriter_FormConPushButtonGeneral(ByRef $oPushButton, $sName = Null, $sLab
 		$oPushButton.Control.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oPushButton.Control.WritingMode = $iTxtDir
 		$iError = ($oPushButton.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
@@ -7611,7 +7611,7 @@ Func _LOWriter_FormConPushButtonGeneral(ByRef $oPushButton, $sName = Null, $sLab
 		$iError = BitOR($iError, 128) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		If Not __LO_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
 		$oPushButton.Control.TabIndex = $iTabOrder
 		$iError = ($oPushButton.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 128))
@@ -7631,7 +7631,7 @@ Func _LOWriter_FormConPushButtonGeneral(ByRef $oPushButton, $sName = Null, $sLab
 		$oPushButton.Control.setPropertyToDefault("RepeatDelay")
 
 	ElseIf ($iDelay <> Null) Then
-		If Not __LOWriter_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LO_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 
 		$oPushButton.Control.RepeatDelay = $iDelay
 		$iError = ($oPushButton.Control.RepeatDelay() = $iDelay) ? ($iError) : (BitOR($iError, 512))
@@ -7661,7 +7661,7 @@ Func _LOWriter_FormConPushButtonGeneral(ByRef $oPushButton, $sName = Null, $sLab
 		$iError = BitOR($iError, 4096) ; Can't Default DefaultState.
 
 	ElseIf ($iDefaultState <> Null) Then
-		If Not __LOWriter_IntIsBetween($iDefaultState, $LOW_FORM_CON_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CON_CHKBX_STATE_SELECTED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
+		If Not __LO_IntIsBetween($iDefaultState, $LOW_FORM_CON_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CON_CHKBX_STATE_SELECTED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 
 		$oPushButton.Control.DefaultState = $iDefaultState
 		$iError = ($oPushButton.Control.DefaultState() = $iDefaultState) ? ($iError) : (BitOR($iError, 4096))
@@ -7681,7 +7681,7 @@ Func _LOWriter_FormConPushButtonGeneral(ByRef $oPushButton, $sName = Null, $sLab
 		$oPushButton.Control.setPropertyToDefault("Align")
 
 	ElseIf ($iAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+		If Not __LO_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 
 		$oPushButton.Control.Align = $iAlign
 		$iError = ($oPushButton.Control.Align() = $iAlign) ? ($iError) : (BitOR($iError, 16384))
@@ -7691,7 +7691,7 @@ Func _LOWriter_FormConPushButtonGeneral(ByRef $oPushButton, $sName = Null, $sLab
 		$oPushButton.Control.setPropertyToDefault("VerticalAlign")
 
 	ElseIf ($iVertAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
+		If Not __LO_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 
 		$oPushButton.Control.VerticalAlign = $iVertAlign
 		$iError = ($oPushButton.Control.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 32768))
@@ -7701,7 +7701,7 @@ Func _LOWriter_FormConPushButtonGeneral(ByRef $oPushButton, $sName = Null, $sLab
 		$oPushButton.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 
 		$oPushButton.Control.BackgroundColor = $iBackColor
 		$iError = ($oPushButton.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 65536))
@@ -7733,7 +7733,7 @@ Func _LOWriter_FormConPushButtonGeneral(ByRef $oPushButton, $sName = Null, $sLab
 		EndSwitch
 
 	ElseIf ($iAction <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAction, $LOW_FORM_CON_PUSH_CMD_NONE, $LOW_FORM_CON_PUSH_CMD_REFRESH_FORM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
+		If Not __LO_IntIsBetween($iAction, $LOW_FORM_CON_PUSH_CMD_NONE, $LOW_FORM_CON_PUSH_CMD_REFRESH_FORM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 
 		Switch $iAction
 			Case $LOW_FORM_CON_PUSH_CMD_NONE
@@ -7805,15 +7805,15 @@ Func _LOWriter_FormConPushButtonGeneral(ByRef $oPushButton, $sName = Null, $sLab
 	ElseIf ($sGraphics <> Null) Then
 		If Not IsString($sGraphics) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
 
-		$oPushButton.Control.ImageURL = _LOWriter_PathConvert($sGraphics, $LOW_PATHCONV_OFFICE_RETURN)
-		$iError = ($oPushButton.Control.ImageURL() = _LOWriter_PathConvert($sGraphics, $LOW_PATHCONV_OFFICE_RETURN)) ? ($iError) : (BitOR($iError, 4194304))
+		$oPushButton.Control.ImageURL = _LO_PathConvert($sGraphics, $LO_PATHCONV_OFFICE_RETURN)
+		$iError = ($oPushButton.Control.ImageURL() = _LO_PathConvert($sGraphics, $LO_PATHCONV_OFFICE_RETURN)) ? ($iError) : (BitOR($iError, 4194304))
 	EndIf
 
 	If ($iGraphicAlign = Default) Then
 		$oPushButton.Control.setPropertyToDefault("ImagePosition")
 
 	ElseIf ($iGraphicAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iGraphicAlign, $LOW_FORM_CON_IMG_ALIGN_LEFT_TOP, $LOW_FORM_CON_IMG_ALIGN_CENTERED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
+		If Not __LO_IntIsBetween($iGraphicAlign, $LOW_FORM_CON_IMG_ALIGN_LEFT_TOP, $LOW_FORM_CON_IMG_ALIGN_CENTERED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
 
 		$oPushButton.Control.ImagePosition = $iGraphicAlign
 		$iError = ($oPushButton.Control.ImagePosition() = $iGraphicAlign) ? ($iError) : (BitOR($iError, 8388608))
@@ -7893,7 +7893,7 @@ Func _LOWriter_FormConPushButtonState(ByRef $oPushButton, $iState = Null)
 	If (__LOWriter_FormConIdentify($oPushButton) <> $LOW_FORM_CON_TYPE_PUSH_BUTTON) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($iState) Then
+	If __LO_VarsAreNull($iState) Then
 		$iCurState = $oPushButton.Control.State()
 		If Not IsInt($iCurState) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -7904,7 +7904,7 @@ Func _LOWriter_FormConPushButtonState(ByRef $oPushButton, $iState = Null)
 		$oPushButton.Control.setPropertyToDefault("State")
 
 	Else
-		If Not __LOWriter_IntIsBetween($iState, $LOW_FORM_CON_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CON_CHKBX_STATE_NOT_DEFINED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		If Not __LO_IntIsBetween($iState, $LOW_FORM_CON_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CON_CHKBX_STATE_NOT_DEFINED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oPushButton.Control.State = $iState
 		$iError = ($oPushButton.Control.State() = $iState) ? ($iError) : (BitOR($iError, 1))
@@ -7951,7 +7951,7 @@ Func _LOWriter_FormConsGetList(ByRef $oObj, $iType = $LOW_FORM_CON_TYPE_ALL)
 	Local $iCount = 0, $iControlType
 
 	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_IntIsBetween($iType, $LOW_FORM_CON_TYPE_CHECK_BOX, $LOW_FORM_CON_TYPE_ALL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LO_IntIsBetween($iType, $LOW_FORM_CON_TYPE_CHECK_BOX, $LOW_FORM_CON_TYPE_ALL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If $oObj.supportsService("com.sun.star.form.component.Form") Then ; Get only controls in the form.
 
@@ -8079,7 +8079,7 @@ EndFunc   ;==>_LOWriter_FormConsGetList
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  I have skipped Keep Ratio, as currently it seems unable to be set for controls.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_FormConPosition
+; Related .......: _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOWriter_FormConPosition
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -8096,29 +8096,29 @@ Func _LOWriter_FormConSize(ByRef $oControl, $iWidth = Null, $iHeight = Null, $bP
 	$tSize = $oControl.Size()
 	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($iWidth, $iHeight, $bProtectSize) Then
-		__LOWriter_ArrayFill($avSize, $tSize.Width(), $tSize.Height(), $oControl.SizeProtect())
+	If __LO_VarsAreNull($iWidth, $iHeight, $bProtectSize) Then
+		__LO_ArrayFill($avSize, $tSize.Width(), $tSize.Height(), $oControl.SizeProtect())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avSize)
 	EndIf
 
 	If ($iWidth <> Null) Or ($iHeight <> Null) Then
 		If ($iWidth <> Null) Then ; Min 51
-			If Not __LOWriter_IntIsBetween($iWidth, 51) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+			If Not __LO_IntIsBetween($iWidth, 51) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 			$tSize.Width = $iWidth
 		EndIf
 
 		If ($iHeight <> Null) Then
-			If Not __LOWriter_IntIsBetween($iHeight, 51) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+			If Not __LO_IntIsBetween($iHeight, 51) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 			$tSize.Height = $iHeight
 		EndIf
 
 		$oControl.Size = $tSize
 
-		$iError = ($iWidth = Null) ? ($iError) : ((__LOWriter_IntIsBetween($oControl.Size.Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
-		$iError = ($iHeight = Null) ? ($iError) : ((__LOWriter_IntIsBetween($oControl.Size.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 2)))
+		$iError = ($iWidth = Null) ? ($iError) : ((__LO_IntIsBetween($oControl.Size.Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
+		$iError = ($iHeight = Null) ? ($iError) : ((__LO_IntIsBetween($oControl.Size.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 2)))
 	EndIf
 
 	If ($bProtectSize <> Null) Then
@@ -8175,8 +8175,8 @@ Func _LOWriter_FormConTableConCheckBoxData(ByRef $oCheckBox, $sDataField = Null,
 	If (__LOWriter_FormConIdentify($oCheckBox) <> $LOW_FORM_CON_TYPE_CHECK_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
-		__LOWriter_ArrayFill($avControl, $oCheckBox.DataField(), $oCheckBox.InputRequired())
+	If __LO_VarsAreNull($sDataField, $bInputRequired) Then
+		__LO_ArrayFill($avControl, $oCheckBox.DataField(), $oCheckBox.InputRequired())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
@@ -8260,7 +8260,7 @@ EndFunc   ;==>_LOWriter_FormConTableConCheckBoxData
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iDefaultState, $sAddInfo.
-; Related .......: _LOWriter_FormConCheckBoxData, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_FormConCheckBoxData, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -8275,8 +8275,8 @@ Func _LOWriter_FormConTableConCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $
 	If ( __LOWriter_FormConIdentify($oCheckBox) <> $LOW_FORM_CON_TYPE_CHECK_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $bEnabled, $iDefaultState, $iWidth, $iStyle, $iAlign, $bWordBreak, $bTriState, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oCheckBox.Name(), $oCheckBox.Label(), $oCheckBox.WritingMode(), $oCheckBox.Enabled(), _
+	If __LO_VarsAreNull($sName, $sLabel, $iTxtDir, $bEnabled, $iDefaultState, $iWidth, $iStyle, $iAlign, $bWordBreak, $bTriState, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LO_ArrayFill($avControl, $oCheckBox.Name(), $oCheckBox.Label(), $oCheckBox.WritingMode(), $oCheckBox.Enabled(), _
 				$oCheckBox.DefaultState(), Int($oCheckBox.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
 				$oCheckBox.VisualEffect(), $oCheckBox.Align(), $oCheckBox.MultiLine(), $oCheckBox.TriState(), _
 				$oCheckBox.Tag(), $oCheckBox.HelpText(), $oCheckBox.HelpURL())
@@ -8308,7 +8308,7 @@ Func _LOWriter_FormConTableConCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $
 		$oCheckBox.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oCheckBox.WritingMode = $iTxtDir
 		$iError = ($oCheckBox.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
@@ -8328,7 +8328,7 @@ Func _LOWriter_FormConTableConCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $
 		$iError = BitOR($iError, 16) ; Can't Default DefaultState.
 
 	ElseIf ($iDefaultState <> Null) Then
-		If Not __LOWriter_IntIsBetween($iDefaultState, $LOW_FORM_CON_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CON_CHKBX_STATE_NOT_DEFINED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LO_IntIsBetween($iDefaultState, $LOW_FORM_CON_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CON_CHKBX_STATE_NOT_DEFINED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$oCheckBox.DefaultState = $iDefaultState
 		$iError = ($oCheckBox.DefaultState() = $iDefaultState) ? ($iError) : (BitOR($iError, 16))
@@ -8338,7 +8338,7 @@ Func _LOWriter_FormConTableConCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $
 		$oCheckBox.setPropertyToDefault("Width")
 
 	ElseIf ($iWidth <> Null) Then
-		If Not __LOWriter_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LO_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 		$oCheckBox.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
 		$iError = ($oCheckBox.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 32))
@@ -8348,7 +8348,7 @@ Func _LOWriter_FormConTableConCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $
 		$oCheckBox.setPropertyToDefault("VisualEffect")
 
 	ElseIf ($iStyle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iStyle, $LOW_FORM_CON_BORDER_3D, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LO_IntIsBetween($iStyle, $LOW_FORM_CON_BORDER_3D, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 		$oCheckBox.VisualEffect = $iStyle
 		$iError = ($oCheckBox.VisualEffect() = $iStyle) ? ($iError) : (BitOR($iError, 64))
@@ -8358,7 +8358,7 @@ Func _LOWriter_FormConTableConCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $
 		$oCheckBox.setPropertyToDefault("Align")
 
 	ElseIf ($iAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		If Not __LO_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
 		$oCheckBox.Align = $iAlign
 		$iError = ($oCheckBox.Align() = $iAlign) ? ($iError) : (BitOR($iError, 128))
@@ -8457,11 +8457,11 @@ Func _LOWriter_FormConTableConColumnAdd(ByRef $oTableCon, $iControl, $iPos = Nul
 	If Not IsObj($oTableCon) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If (__LOWriter_FormConIdentify($oTableCon) <> $LOW_FORM_CON_TYPE_TABLE_CONTROL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-	If Not __LOWriter_IntIsBetween($iControl, $LOW_FORM_CON_TYPE_CHECK_BOX, $LOW_FORM_CON_TYPE_DATE_FIELD, "", $sAccepted) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iControl, $LOW_FORM_CON_TYPE_CHECK_BOX, $LOW_FORM_CON_TYPE_DATE_FIELD, "", $sAccepted) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$iPos = ($iPos = Null) ? ($oTableCon.Control.Count()) : ($iPos)
 
-	If ($iPos <> Null) And Not __LOWriter_IntIsBetween($iPos, 0, $oTableCon.Control.Count()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iPos <> Null) And Not __LO_IntIsBetween($iPos, 0, $oTableCon.Control.Count()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$sControl = __LOWriter_FormConIdentify(Null, $iControl)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
@@ -8675,8 +8675,8 @@ Func _LOWriter_FormConTableConComboBoxData(ByRef $oComboBox, $sDataField = Null,
 	If (__LOWriter_FormConIdentify($oComboBox) <> $LOW_FORM_CON_TYPE_COMBO_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $iType, $sListContent) Then
-		__LOWriter_ArrayFill($avControl, $oComboBox.DataField(), $oComboBox.ConvertEmptyToNull(), $oComboBox.InputRequired(), _
+	If __LO_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $iType, $sListContent) Then
+		__LO_ArrayFill($avControl, $oComboBox.DataField(), $oComboBox.ConvertEmptyToNull(), $oComboBox.InputRequired(), _
 				$oComboBox.ListSourceType(), $oComboBox.ListSource())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
@@ -8704,7 +8704,7 @@ Func _LOWriter_FormConTableConComboBoxData(ByRef $oComboBox, $sDataField = Null,
 	EndIf
 
 	If ($iType <> Null) Then
-		If Not __LOWriter_IntIsBetween($iType, $LOW_FORM_CON_SOURCE_TYPE_TABLE, $LOW_FORM_CON_SOURCE_TYPE_TABLE_FIELDS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iType, $LOW_FORM_CON_SOURCE_TYPE_TABLE, $LOW_FORM_CON_SOURCE_TYPE_TABLE_FIELDS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oComboBox.ListSourceType = $iType
 		$iError = ($oComboBox.ListSourceType() = $iType) ? ($iError) : (BitOR($iError, 8))
@@ -8792,7 +8792,7 @@ EndFunc   ;==>_LOWriter_FormConTableConComboBoxData
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $asList, $sDefaultTxt, $sAddInfo.
-; Related .......: _LOWriter_FormConComboBoxData, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_FormConComboBoxData, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -8807,8 +8807,8 @@ Func _LOWriter_FormConTableConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $
 	If (__LOWriter_FormConIdentify($oComboBox) <> $LOW_FORM_CON_TYPE_COMBO_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $iMaxLen, $bEnabled, $bReadOnly, $iMouseScroll, $iWidth, $asList, $sDefaultTxt, $iAlign, $iLines, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oComboBox.Name(), $oComboBox.Label(), $oComboBox.WritingMode(), $oComboBox.MaxTextLen(), _
+	If __LO_VarsAreNull($sName, $sLabel, $iTxtDir, $iMaxLen, $bEnabled, $bReadOnly, $iMouseScroll, $iWidth, $asList, $sDefaultTxt, $iAlign, $iLines, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LO_ArrayFill($avControl, $oComboBox.Name(), $oComboBox.Label(), $oComboBox.WritingMode(), $oComboBox.MaxTextLen(), _
 				$oComboBox.Enabled(), $oComboBox.ReadOnly(), $oComboBox.MouseWheelBehavior(), _
 				Int($oComboBox.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
 				$oComboBox.StringItemList(), $oComboBox.DefaultText(), _
@@ -8843,7 +8843,7 @@ Func _LOWriter_FormConTableConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $
 		$oComboBox.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oComboBox.WritingMode = $iTxtDir
 		$iError = ($oComboBox.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
@@ -8853,7 +8853,7 @@ Func _LOWriter_FormConTableConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $
 		$oComboBox.setPropertyToDefault("MaxTextLen")
 
 	ElseIf ($iMaxLen <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMaxLen, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iMaxLen, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oComboBox.MaxTextLen = $iMaxLen
 		$iError = ($oComboBox.MaxTextLen() = $iMaxLen) ? ($iError) : (BitOR($iError, 8))
@@ -8883,7 +8883,7 @@ Func _LOWriter_FormConTableConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $
 		$oComboBox.setPropertyToDefault("MouseWheelBehavior")
 
 	ElseIf ($iMouseScroll <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LO_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 		$oComboBox.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oComboBox.MouseWheelBehavior = $iMouseScroll) ? ($iError) : (BitOR($iError, 64))
@@ -8893,7 +8893,7 @@ Func _LOWriter_FormConTableConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $
 		$oComboBox.setPropertyToDefault("Width")
 
 	ElseIf ($iWidth <> Null) Then
-		If Not __LOWriter_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		If Not __LO_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
 		$oComboBox.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
 		$iError = ($oComboBox.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 128))
@@ -8928,7 +8928,7 @@ Func _LOWriter_FormConTableConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $
 		$oComboBox.setPropertyToDefault("Align")
 
 	ElseIf ($iAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		If Not __LO_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 
 		$oComboBox.Align = $iAlign
 		$iError = ($oComboBox.Align() = $iAlign) ? ($iError) : (BitOR($iError, 1024))
@@ -8938,7 +8938,7 @@ Func _LOWriter_FormConTableConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $
 		$oComboBox.setPropertyToDefault("LineCount")
 
 	ElseIf ($iLines <> Null) Then
-		If Not __LOWriter_IntIsBetween($iLines, -2147483648, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
+		If Not __LO_IntIsBetween($iLines, -2147483648, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 
 		$oComboBox.LineCount = $iLines
 		$iError = ($oComboBox.LineCount = $iLines) ? ($iError) : (BitOR($iError, 2048))
@@ -9030,8 +9030,8 @@ Func _LOWriter_FormConTableConCurrencyFieldData(ByRef $oCurrencyField, $sDataFie
 	If (__LOWriter_FormConIdentify($oCurrencyField) <> $LOW_FORM_CON_TYPE_CURRENCY_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
-		__LOWriter_ArrayFill($avControl, $oCurrencyField.DataField(), $oCurrencyField.InputRequired())
+	If __LO_VarsAreNull($sDataField, $bInputRequired) Then
+		__LO_ArrayFill($avControl, $oCurrencyField.DataField(), $oCurrencyField.InputRequired())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
@@ -9148,7 +9148,7 @@ EndFunc   ;==>_LOWriter_FormConTableConCurrencyFieldData
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $sAddInfo.
-; Related .......: _LOWriter_FormConCurrencyFieldData, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_FormConCurrencyFieldData, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -9163,8 +9163,8 @@ Func _LOWriter_FormConTableConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName
 	If (__LOWriter_FormConIdentify($oCurrencyField) <> $LOW_FORM_CON_TYPE_CURRENCY_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $bStrict, $bEnabled, $bReadOnly, $iMouseScroll, $nMin, $nMax, $iIncr, $nDefault, $iDecimal, $bThousandsSep, $sCurrSymbol, $bPrefix, $bSpin, $bRepeat, $iDelay, $iWidth, $iAlign, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oCurrencyField.Name(), $oCurrencyField.Label(), $oCurrencyField.WritingMode(), _
+	If __LO_VarsAreNull($sName, $sLabel, $iTxtDir, $bStrict, $bEnabled, $bReadOnly, $iMouseScroll, $nMin, $nMax, $iIncr, $nDefault, $iDecimal, $bThousandsSep, $sCurrSymbol, $bPrefix, $bSpin, $bRepeat, $iDelay, $iWidth, $iAlign, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LO_ArrayFill($avControl, $oCurrencyField.Name(), $oCurrencyField.Label(), $oCurrencyField.WritingMode(), _
 				$oCurrencyField.StrictFormat(), $oCurrencyField.Enabled(), $oCurrencyField.ReadOnly(), _
 				$oCurrencyField.MouseWheelBehavior(), _
 				$oCurrencyField.ValueMin(), $oCurrencyField.ValueMax(), $oCurrencyField.ValueStep(), $oCurrencyField.DefaultValue(), _
@@ -9201,7 +9201,7 @@ Func _LOWriter_FormConTableConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName
 		$oCurrencyField.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oCurrencyField.WritingMode = $iTxtDir
 		$iError = ($oCurrencyField.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
@@ -9241,7 +9241,7 @@ Func _LOWriter_FormConTableConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName
 		$oCurrencyField.setPropertyToDefault("MouseWheelBehavior")
 
 	ElseIf ($iMouseScroll <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LO_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 		$oCurrencyField.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oCurrencyField.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 64))
@@ -9291,7 +9291,7 @@ Func _LOWriter_FormConTableConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName
 		$oCurrencyField.setPropertyToDefault("DecimalAccuracy")
 
 	ElseIf ($iDecimal <> Null) Then
-		If Not __LOWriter_IntIsBetween($iDecimal, 0, 20) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		If Not __LO_IntIsBetween($iDecimal, 0, 20) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 
 		$oCurrencyField.DecimalAccuracy = $iDecimal
 		$iError = ($oCurrencyField.DecimalAccuracy() = $iDecimal) ? ($iError) : (BitOR($iError, 2048))
@@ -9351,7 +9351,7 @@ Func _LOWriter_FormConTableConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName
 		$oCurrencyField.setPropertyToDefault("RepeatDelay")
 
 	ElseIf ($iDelay <> Null) Then
-		If Not __LOWriter_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
+		If Not __LO_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
 
 		$oCurrencyField.RepeatDelay = $iDelay
 		$iError = ($oCurrencyField.RepeatDelay() = $iDelay) ? ($iError) : (BitOR($iError, 131072))
@@ -9361,7 +9361,7 @@ Func _LOWriter_FormConTableConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName
 		$oCurrencyField.setPropertyToDefault("Width")
 
 	ElseIf ($iWidth <> Null) Then
-		If Not __LOWriter_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
+		If Not __LO_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 
 		$oCurrencyField.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
 		$iError = ($oCurrencyField.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 262144))
@@ -9371,7 +9371,7 @@ Func _LOWriter_FormConTableConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName
 		$oCurrencyField.setPropertyToDefault("Align")
 
 	ElseIf ($iAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
+		If Not __LO_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
 
 		$oCurrencyField.Align = $iAlign
 		$iError = ($oCurrencyField.Align() = $iAlign) ? ($iError) : (BitOR($iError, 524288))
@@ -9463,8 +9463,8 @@ Func _LOWriter_FormConTableConDateFieldData(ByRef $oDateField, $sDataField = Nul
 	If (__LOWriter_FormConIdentify($oDateField) <> $LOW_FORM_CON_TYPE_DATE_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
-		__LOWriter_ArrayFill($avControl, $oDateField.DataField(), $oDateField.InputRequired())
+	If __LO_VarsAreNull($sDataField, $bInputRequired) Then
+		__LO_ArrayFill($avControl, $oDateField.DataField(), $oDateField.InputRequired())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
@@ -9577,7 +9577,7 @@ EndFunc   ;==>_LOWriter_FormConTableConDateFieldData
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $sAddInfo.
-; Related .......: _LOWriter_FormConDateFieldData, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_FormConDateFieldData, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -9593,11 +9593,11 @@ Func _LOWriter_FormConTableConDateFieldGeneral(ByRef $oDateField, $sName = Null,
 	If (__LOWriter_FormConIdentify($oDateField) <> $LOW_FORM_CON_TYPE_DATE_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $bStrict, $bEnabled, $bReadOnly, $iMouseScroll, $tDateMin, $tDateMax, $iFormat, $tDateDefault, $bSpin, $bRepeat, $iDelay, $iWidth, $iAlign, $bDropdown, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
+	If __LO_VarsAreNull($sName, $sLabel, $iTxtDir, $bStrict, $bEnabled, $bReadOnly, $iMouseScroll, $tDateMin, $tDateMax, $iFormat, $tDateDefault, $bSpin, $bRepeat, $iDelay, $iWidth, $iAlign, $bDropdown, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
 		$tDate = $oDateField.DateMin()
 		If Not IsObj($tDate) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-		$tCurMin = __LOWriter_CreateStruct("com.sun.star.util.DateTime")
+		$tCurMin = __LO_CreateStruct("com.sun.star.util.DateTime")
 		If Not IsObj($tCurMin) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 		$tCurMin.Year = $tDate.Year()
@@ -9607,7 +9607,7 @@ Func _LOWriter_FormConTableConDateFieldGeneral(ByRef $oDateField, $sName = Null,
 		$tDate = $oDateField.DateMax()
 		If Not IsObj($tDate) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
-		$tCurMax = __LOWriter_CreateStruct("com.sun.star.util.DateTime")
+		$tCurMax = __LO_CreateStruct("com.sun.star.util.DateTime")
 		If Not IsObj($tCurMax) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 		$tCurMax.Year = $tDate.Year()
@@ -9616,7 +9616,7 @@ Func _LOWriter_FormConTableConDateFieldGeneral(ByRef $oDateField, $sName = Null,
 
 		$tDate = $oDateField.DefaultDate() ; Default date is Null when not set.
 		If IsObj($tDate) Then
-			$tCurDefault = __LOWriter_CreateStruct("com.sun.star.util.DateTime")
+			$tCurDefault = __LO_CreateStruct("com.sun.star.util.DateTime")
 			If Not IsObj($tCurDefault) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 			$tCurDefault.Year = $tDate.Year()
@@ -9627,7 +9627,7 @@ Func _LOWriter_FormConTableConDateFieldGeneral(ByRef $oDateField, $sName = Null,
 			$tCurDefault = $tDate
 		EndIf
 
-		__LOWriter_ArrayFill($avControl, $oDateField.Name(), $oDateField.Label(), $oDateField.WritingMode(), $oDateField.StrictFormat(), _
+		__LO_ArrayFill($avControl, $oDateField.Name(), $oDateField.Label(), $oDateField.WritingMode(), $oDateField.StrictFormat(), _
 				$oDateField.Enabled(), $oDateField.ReadOnly(), $oDateField.MouseWheelBehavior(), _
 				$tCurMin, $tCurMax, $oDateField.DateFormat(), $tCurDefault, $oDateField.Spin(), _
 				$oDateField.Repeat(), $oDateField.RepeatDelay(), Int($oDateField.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
@@ -9662,7 +9662,7 @@ Func _LOWriter_FormConTableConDateFieldGeneral(ByRef $oDateField, $sName = Null,
 		$oDateField.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oDateField.WritingMode = $iTxtDir
 		$iError = ($oDateField.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
@@ -9702,7 +9702,7 @@ Func _LOWriter_FormConTableConDateFieldGeneral(ByRef $oDateField, $sName = Null,
 		$oDateField.setPropertyToDefault("MouseWheelBehavior")
 
 	ElseIf ($iMouseScroll <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LO_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 		$oDateField.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oDateField.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 64))
@@ -9714,7 +9714,7 @@ Func _LOWriter_FormConTableConDateFieldGeneral(ByRef $oDateField, $sName = Null,
 	ElseIf ($tDateMin <> Null) Then
 		If Not IsObj($tDateMin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
-		$tDate = __LOWriter_CreateStruct("com.sun.star.util.Date")
+		$tDate = __LO_CreateStruct("com.sun.star.util.Date")
 		If Not IsObj($tDate) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 		$tDate.Year = $tDateMin.Year()
@@ -9731,7 +9731,7 @@ Func _LOWriter_FormConTableConDateFieldGeneral(ByRef $oDateField, $sName = Null,
 	ElseIf ($tDateMax <> Null) Then
 		If Not IsObj($tDateMax) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 
-		$tDate = __LOWriter_CreateStruct("com.sun.star.util.Date")
+		$tDate = __LO_CreateStruct("com.sun.star.util.Date")
 		If Not IsObj($tDate) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 		$tDate.Year = $tDateMax.Year()
@@ -9746,7 +9746,7 @@ Func _LOWriter_FormConTableConDateFieldGeneral(ByRef $oDateField, $sName = Null,
 		$oDateField.setPropertyToDefault("DateFormat")
 
 	ElseIf ($iFormat <> Null) Then
-		If Not __LOWriter_IntIsBetween($iFormat, $LOW_FORM_CON_DATE_FRMT_SYSTEM_SHORT, $LOW_FORM_CON_DATE_FRMT_SHORT_YYYY_MM_DD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LO_IntIsBetween($iFormat, $LOW_FORM_CON_DATE_FRMT_SYSTEM_SHORT, $LOW_FORM_CON_DATE_FRMT_SHORT_YYYY_MM_DD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 
 		$oDateField.DateFormat = $iFormat
 		$iError = ($oDateField.DateFormat() = $iFormat) ? ($iError) : (BitOR($iError, 512))
@@ -9758,7 +9758,7 @@ Func _LOWriter_FormConTableConDateFieldGeneral(ByRef $oDateField, $sName = Null,
 	ElseIf ($tDateDefault <> Null) Then
 		If Not IsObj($tDateDefault) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 
-		$tDate = __LOWriter_CreateStruct("com.sun.star.util.Date")
+		$tDate = __LO_CreateStruct("com.sun.star.util.Date")
 		If Not IsObj($tDate) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 		$tDate.Year = $tDateDefault.Year()
@@ -9793,7 +9793,7 @@ Func _LOWriter_FormConTableConDateFieldGeneral(ByRef $oDateField, $sName = Null,
 		$oDateField.setPropertyToDefault("RepeatDelay")
 
 	ElseIf ($iDelay <> Null) Then
-		If Not __LOWriter_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
+		If Not __LO_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 
 		$oDateField.RepeatDelay = $iDelay
 		$iError = ($oDateField.RepeatDelay() = $iDelay) ? ($iError) : (BitOR($iError, 8192))
@@ -9803,7 +9803,7 @@ Func _LOWriter_FormConTableConDateFieldGeneral(ByRef $oDateField, $sName = Null,
 		$oDateField.setPropertyToDefault("Width")
 
 	ElseIf ($iWidth <> Null) Then
-		If Not __LOWriter_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+		If Not __LO_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 
 		$oDateField.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
 		$iError = ($oDateField.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 16384))
@@ -9813,7 +9813,7 @@ Func _LOWriter_FormConTableConDateFieldGeneral(ByRef $oDateField, $sName = Null,
 		$oDateField.setPropertyToDefault("Align")
 
 	ElseIf ($iAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
+		If Not __LO_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 
 		$oDateField.Align = $iAlign
 		$iError = ($oDateField.Align() = $iAlign) ? ($iError) : (BitOR($iError, 32768))
@@ -9921,8 +9921,8 @@ Func _LOWriter_FormConTableConFormattedFieldData(ByRef $oFormatField, $sDataFiel
 	If (__LOWriter_FormConIdentify($oFormatField) <> $LOW_FORM_CON_TYPE_FORMATTED_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $bFilter) Then
-		__LOWriter_ArrayFill($avControl, $oFormatField.DataField(), $oFormatField.ConvertEmptyToNull(), $oFormatField.InputRequired(), _
+	If __LO_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $bFilter) Then
+		__LO_ArrayFill($avControl, $oFormatField.DataField(), $oFormatField.ConvertEmptyToNull(), $oFormatField.InputRequired(), _
 				$oFormatField.UseFilterValueProposal())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
@@ -10043,7 +10043,7 @@ EndFunc   ;==>_LOWriter_FormConTableConFormattedFieldData
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $sAddInfo.
-; Related .......: _LOWriter_FormatKeyCreate, _LOWriter_FormatKeysGetList, _LOWriter_FormConFormattedFieldData, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_FormatKeyCreate, _LOWriter_FormatKeysGetList, _LOWriter_FormConFormattedFieldData, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -10059,8 +10059,8 @@ Func _LOWriter_FormConTableConFormattedFieldGeneral(ByRef $oFormatField, $sName 
 	If (__LOWriter_FormConIdentify($oFormatField) <> $LOW_FORM_CON_TYPE_FORMATTED_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $iMaxLen, $bEnabled, $bReadOnly, $iMouseScroll, $nMin, $nMax, $nDefault, $iFormat, $bSpin, $bRepeat, $iDelay, $iWidth, $iAlign, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oFormatField.Name(), $oFormatField.Label(), $oFormatField.WritingMode(), $oFormatField.MaxTextLen(), _
+	If __LO_VarsAreNull($sName, $sLabel, $iTxtDir, $iMaxLen, $bEnabled, $bReadOnly, $iMouseScroll, $nMin, $nMax, $nDefault, $iFormat, $bSpin, $bRepeat, $iDelay, $iWidth, $iAlign, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LO_ArrayFill($avControl, $oFormatField.Name(), $oFormatField.Label(), $oFormatField.WritingMode(), $oFormatField.MaxTextLen(), _
 				$oFormatField.Enabled(), $oFormatField.ReadOnly(), _
 				$oFormatField.MouseWheelBehavior(), $oFormatField.EffectiveMin(), _
 				$oFormatField.EffectiveMax(), $oFormatField.EffectiveDefault(), $oFormatField.FormatKey(), $oFormatField.Spin(), _
@@ -10095,7 +10095,7 @@ Func _LOWriter_FormConTableConFormattedFieldGeneral(ByRef $oFormatField, $sName 
 		$oFormatField.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oFormatField.WritingMode = $iTxtDir
 		$iError = ($oFormatField.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
@@ -10105,7 +10105,7 @@ Func _LOWriter_FormConTableConFormattedFieldGeneral(ByRef $oFormatField, $sName 
 		$oFormatField.setPropertyToDefault("MaxTextLen")
 
 	ElseIf ($iMaxLen <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMaxLen, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iMaxLen, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oFormatField.MaxTextLen = $iMaxLen
 		$iError = ($oFormatField.MaxTextLen = $iMaxLen) ? ($iError) : (BitOR($iError, 8))
@@ -10135,7 +10135,7 @@ Func _LOWriter_FormConTableConFormattedFieldGeneral(ByRef $oFormatField, $sName 
 		$oFormatField.setPropertyToDefault("MouseWheelBehavior")
 
 	ElseIf ($iMouseScroll <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LO_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 		$oFormatField.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oFormatField.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 64))
@@ -10214,7 +10214,7 @@ Func _LOWriter_FormConTableConFormattedFieldGeneral(ByRef $oFormatField, $sName 
 		$oFormatField.setPropertyToDefault("RepeatDelay")
 
 	ElseIf ($iDelay <> Null) Then
-		If Not __LOWriter_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+		If Not __LO_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 
 		$oFormatField.RepeatDelay = $iDelay
 		$iError = ($oFormatField.RepeatDelay() = $iDelay) ? ($iError) : (BitOR($iError, 8192))
@@ -10224,7 +10224,7 @@ Func _LOWriter_FormConTableConFormattedFieldGeneral(ByRef $oFormatField, $sName 
 		$oFormatField.setPropertyToDefault("Width")
 
 	ElseIf ($iWidth <> Null) Then
-		If Not __LOWriter_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
+		If Not __LO_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 
 		$oFormatField.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
 		$iError = ($oFormatField.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 16384))
@@ -10234,7 +10234,7 @@ Func _LOWriter_FormConTableConFormattedFieldGeneral(ByRef $oFormatField, $sName 
 		$oFormatField.setPropertyToDefault("Align")
 
 	ElseIf ($iAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
+		If Not __LO_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 
 		$oFormatField.Align = $iAlign
 		$iError = ($oFormatField.Align() = $iAlign) ? ($iError) : (BitOR($iError, 32768))
@@ -10373,8 +10373,8 @@ Func _LOWriter_FormConTableConGeneral(ByRef $oTableCon, $sName = Null, $iTxtDir 
 	If (__LOWriter_FormConIdentify($oTableCon) <> $LOW_FORM_CON_TYPE_TABLE_CONTROL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sName, $iTxtDir, $bEnabled, $bVisible, $bPrintable, $bTabStop, $iTabOrder, $mFont, $nRowHeight, $iBackColor, $iBorder, $iBorderColor, $bNavBar, $bRecordMarker, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oTableCon.Control.Name(), $oTableCon.Control.WritingMode(), $oTableCon.Control.Enabled(), $oTableCon.Control.EnableVisible(), _
+	If __LO_VarsAreNull($sName, $iTxtDir, $bEnabled, $bVisible, $bPrintable, $bTabStop, $iTabOrder, $mFont, $nRowHeight, $iBackColor, $iBorder, $iBorderColor, $bNavBar, $bRecordMarker, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LO_ArrayFill($avControl, $oTableCon.Control.Name(), $oTableCon.Control.WritingMode(), $oTableCon.Control.Enabled(), $oTableCon.Control.EnableVisible(), _
 				$oTableCon.Control.Printable(), $oTableCon.Control.Tabstop(), $oTableCon.Control.TabIndex(), __LOWriter_FormConSetGetFontDesc($oTableCon), $oTableCon.Control.RowHeight(), _
 				$oTableCon.Control.BackgroundColor(), $oTableCon.Control.Border(), $oTableCon.Control.BorderColor(), $oTableCon.Control.HasNavigationBar(), _
 				$oTableCon.Control.HasRecordMarker(), $oTableCon.Control.Tag(), $oTableCon.Control.HelpText(), $oTableCon.Control.HelpURL())
@@ -10396,7 +10396,7 @@ Func _LOWriter_FormConTableConGeneral(ByRef $oTableCon, $sName = Null, $iTxtDir 
 		$oTableCon.Control.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		$oTableCon.Control.WritingMode = $iTxtDir
 		$iError = ($oTableCon.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 2))
@@ -10446,7 +10446,7 @@ Func _LOWriter_FormConTableConGeneral(ByRef $oTableCon, $sName = Null, $iTxtDir 
 		$iError = BitOR($iError, 64) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LO_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 		$oTableCon.Control.TabIndex = $iTabOrder
 		$iError = ($oTableCon.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 64))
@@ -10466,17 +10466,17 @@ Func _LOWriter_FormConTableConGeneral(ByRef $oTableCon, $sName = Null, $iTxtDir 
 		$oTableCon.Control.setPropertyToDefault("RowHeight")
 
 	ElseIf ($nRowHeight <> Null) Then
-		If Not __LOWriter_NumIsBetween($nRowHeight, -21474836.48, 21474836.48) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		If Not __LO_NumIsBetween($nRowHeight, -21474836.48, 21474836.48) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 
 		$oTableCon.Control.RowHeight = $nRowHeight
-		$iError = (__LOWriter_NumIsBetween($oTableCon.Control.RowHeight(), $nRowHeight - 1, $nRowHeight + 1)) ? ($iError) : (BitOR($iError, 256))
+		$iError = (__LO_NumIsBetween($oTableCon.Control.RowHeight(), $nRowHeight - 1, $nRowHeight + 1)) ? ($iError) : (BitOR($iError, 256))
 	EndIf
 
 	If ($iBackColor = Default) Then
 		$oTableCon.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 
 		$oTableCon.Control.BackgroundColor = $iBackColor
 		$iError = ($oTableCon.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 512))
@@ -10486,7 +10486,7 @@ Func _LOWriter_FormConTableConGeneral(ByRef $oTableCon, $sName = Null, $iTxtDir 
 		$oTableCon.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+		If Not __LO_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 
 		$oTableCon.Control.Border = $iBorder
 		$iError = ($oTableCon.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 1024))
@@ -10496,7 +10496,7 @@ Func _LOWriter_FormConTableConGeneral(ByRef $oTableCon, $sName = Null, $iTxtDir 
 		$oTableCon.Control.setPropertyToDefault("BorderColor")
 
 	ElseIf ($iBorderColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		If Not __LO_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 
 		$oTableCon.Control.setPropertyValue("BorderColor", $iBorderColor)
 		$iError = ($oTableCon.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 2048))
@@ -10611,8 +10611,8 @@ Func _LOWriter_FormConTableConListBoxData(ByRef $oListBox, $sDataField = Null, $
 	If (__LOWriter_FormConIdentify($oListBox) <> $LOW_FORM_CON_TYPE_LIST_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sDataField, $bInputRequired, $iType, $asListContent, $iBoundField) Then
-		__LOWriter_ArrayFill($avControl, $oListBox.DataField(), $oListBox.InputRequired(), $oListBox.ListSourceType(), _
+	If __LO_VarsAreNull($sDataField, $bInputRequired, $iType, $asListContent, $iBoundField) Then
+		__LO_ArrayFill($avControl, $oListBox.DataField(), $oListBox.InputRequired(), $oListBox.ListSourceType(), _
 				$oListBox.ListSource(), $oListBox.BoundColumn())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
@@ -10633,7 +10633,7 @@ Func _LOWriter_FormConTableConListBoxData(ByRef $oListBox, $sDataField = Null, $
 	EndIf
 
 	If ($iType <> Null) Then
-		If Not __LOWriter_IntIsBetween($iType, $LOW_FORM_CON_SOURCE_TYPE_VALUE_LIST, $LOW_FORM_CON_SOURCE_TYPE_TABLE_FIELDS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iType, $LOW_FORM_CON_SOURCE_TYPE_VALUE_LIST, $LOW_FORM_CON_SOURCE_TYPE_TABLE_FIELDS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oListBox.ListSourceType = $iType
 		$iError = ($oListBox.ListSourceType() = $iType) ? ($iError) : (BitOR($iError, 4))
@@ -10648,7 +10648,7 @@ Func _LOWriter_FormConTableConListBoxData(ByRef $oListBox, $sDataField = Null, $
 	EndIf
 
 	If ($iBoundField <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBoundField, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LO_IntIsBetween($iBoundField, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 		$oListBox.BoundColumn = $iBoundField
 		$iError = ($oListBox.BoundColumn() = $iBoundField) ? ($iError) : (BitOR($iError, 16))
@@ -10727,7 +10727,7 @@ EndFunc   ;==>_LOWriter_FormConTableConListBoxData
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $asList, $sAddInfo.
-; Related .......: _LOWriter_FormConListBoxData, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_FormConListBoxData, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -10742,8 +10742,8 @@ Func _LOWriter_FormConTableConListBoxGeneral(ByRef $oListBox, $sName = Null, $sL
 	If (__LOWriter_FormConIdentify($oListBox) <> $LOW_FORM_CON_TYPE_LIST_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $bEnabled, $bReadOnly, $iMouseScroll, $iWidth, $asList, $iAlign, $iLines, $aiDefaultSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oListBox.Name(), $oListBox.Label(), $oListBox.WritingMode(), $oListBox.Enabled(), _
+	If __LO_VarsAreNull($sName, $sLabel, $iTxtDir, $bEnabled, $bReadOnly, $iMouseScroll, $iWidth, $asList, $iAlign, $iLines, $aiDefaultSel, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LO_ArrayFill($avControl, $oListBox.Name(), $oListBox.Label(), $oListBox.WritingMode(), $oListBox.Enabled(), _
 				$oListBox.ReadOnly(), $oListBox.MouseWheelBehavior(), Int($oListBox.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
 				$oListBox.StringItemList(), $oListBox.Align(), $oListBox.LineCount(), _
 				$oListBox.DefaultSelection(), $oListBox.Tag(), $oListBox.HelpText(), $oListBox.HelpURL())
@@ -10775,7 +10775,7 @@ Func _LOWriter_FormConTableConListBoxGeneral(ByRef $oListBox, $sName = Null, $sL
 		$oListBox.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oListBox.WritingMode = $iTxtDir
 		$iError = ($oListBox.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
@@ -10805,7 +10805,7 @@ Func _LOWriter_FormConTableConListBoxGeneral(ByRef $oListBox, $sName = Null, $sL
 		$oListBox.setPropertyToDefault("MouseWheelBehavior")
 
 	ElseIf ($iMouseScroll <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LO_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 		$oListBox.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oListBox.MouseWheelBehavior = $iMouseScroll) ? ($iError) : (BitOR($iError, 32))
@@ -10815,7 +10815,7 @@ Func _LOWriter_FormConTableConListBoxGeneral(ByRef $oListBox, $sName = Null, $sL
 		$oListBox.setPropertyToDefault("Width")
 
 	ElseIf ($iWidth <> Null) Then
-		If Not __LOWriter_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LO_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 		$oListBox.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
 		$iError = ($oListBox.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 64))
@@ -10840,7 +10840,7 @@ Func _LOWriter_FormConTableConListBoxGeneral(ByRef $oListBox, $sName = Null, $sL
 		$oListBox.setPropertyToDefault("Align")
 
 	ElseIf ($iAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LO_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 
 		$oListBox.Align = $iAlign
 		$iError = ($oListBox.Align() = $iAlign) ? ($iError) : (BitOR($iError, 256))
@@ -10850,7 +10850,7 @@ Func _LOWriter_FormConTableConListBoxGeneral(ByRef $oListBox, $sName = Null, $sL
 		$oListBox.setPropertyToDefault("LineCount")
 
 	ElseIf ($iLines <> Null) Then
-		If Not __LOWriter_IntIsBetween($iLines, -2147483648, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+		If Not __LO_IntIsBetween($iLines, -2147483648, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 
 		$oListBox.LineCount = $iLines
 		$iError = ($oListBox.LineCount = $iLines) ? ($iError) : (BitOR($iError, 512))
@@ -10948,8 +10948,8 @@ Func _LOWriter_FormConTableConNumericFieldData(ByRef $oNumericField, $sDataField
 	If (__LOWriter_FormConIdentify($oNumericField) <> $LOW_FORM_CON_TYPE_NUMERIC_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
-		__LOWriter_ArrayFill($avControl, $oNumericField.DataField(), $oNumericField.InputRequired())
+	If __LO_VarsAreNull($sDataField, $bInputRequired) Then
+		__LO_ArrayFill($avControl, $oNumericField.DataField(), $oNumericField.InputRequired())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
@@ -11066,7 +11066,7 @@ EndFunc   ;==>_LOWriter_FormConTableConNumericFieldData
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $sAddInfo.
-; Related .......: _LOWriter_FormConNumericFieldData, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_FormConNumericFieldData, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -11081,8 +11081,8 @@ Func _LOWriter_FormConTableConNumericFieldGeneral(ByRef $oNumericField, $sName =
 	If (__LOWriter_FormConIdentify($oNumericField) <> $LOW_FORM_CON_TYPE_NUMERIC_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $bStrict, $bEnabled, $bReadOnly, $iMouseScroll, $nMin, $nMax, $iIncr, $nDefault, $iDecimal, $bThousandsSep, $bSpin, $bRepeat, $iDelay, $iWidth, $iAlign, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oNumericField.Name(), $oNumericField.Label(), $oNumericField.WritingMode(), $oNumericField.StrictFormat(), _
+	If __LO_VarsAreNull($sName, $sLabel, $iTxtDir, $bStrict, $bEnabled, $bReadOnly, $iMouseScroll, $nMin, $nMax, $iIncr, $nDefault, $iDecimal, $bThousandsSep, $bSpin, $bRepeat, $iDelay, $iWidth, $iAlign, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LO_ArrayFill($avControl, $oNumericField.Name(), $oNumericField.Label(), $oNumericField.WritingMode(), $oNumericField.StrictFormat(), _
 				$oNumericField.Enabled(), $oNumericField.ReadOnly(), _
 				$oNumericField.MouseWheelBehavior(), $oNumericField.ValueMin(), _
 				$oNumericField.ValueMax(), $oNumericField.ValueStep(), $oNumericField.DefaultValue(), $oNumericField.DecimalAccuracy(), _
@@ -11118,7 +11118,7 @@ Func _LOWriter_FormConTableConNumericFieldGeneral(ByRef $oNumericField, $sName =
 		$oNumericField.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oNumericField.WritingMode = $iTxtDir
 		$iError = ($oNumericField.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
@@ -11158,7 +11158,7 @@ Func _LOWriter_FormConTableConNumericFieldGeneral(ByRef $oNumericField, $sName =
 		$oNumericField.setPropertyToDefault("MouseWheelBehavior")
 
 	ElseIf ($iMouseScroll <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LO_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 		$oNumericField.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oNumericField.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 64))
@@ -11208,7 +11208,7 @@ Func _LOWriter_FormConTableConNumericFieldGeneral(ByRef $oNumericField, $sName =
 		$oNumericField.setPropertyToDefault("DecimalAccuracy")
 
 	ElseIf ($iDecimal <> Null) Then
-		If Not __LOWriter_IntIsBetween($iDecimal, 0, 20) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		If Not __LO_IntIsBetween($iDecimal, 0, 20) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 
 		$oNumericField.DecimalAccuracy = $iDecimal
 		$iError = ($oNumericField.DecimalAccuracy() = $iDecimal) ? ($iError) : (BitOR($iError, 2048))
@@ -11248,7 +11248,7 @@ Func _LOWriter_FormConTableConNumericFieldGeneral(ByRef $oNumericField, $sName =
 		$oNumericField.setPropertyToDefault("RepeatDelay")
 
 	ElseIf ($iDelay <> Null) Then
-		If Not __LOWriter_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
+		If Not __LO_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 
 		$oNumericField.RepeatDelay = $iDelay
 		$iError = ($oNumericField.RepeatDelay() = $iDelay) ? ($iError) : (BitOR($iError, 32768))
@@ -11258,7 +11258,7 @@ Func _LOWriter_FormConTableConNumericFieldGeneral(ByRef $oNumericField, $sName =
 		$oNumericField.setPropertyToDefault("Width")
 
 	ElseIf ($iWidth <> Null) Then
-		If Not __LOWriter_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
+		If Not __LO_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 
 		$oNumericField.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
 		$iError = ($oNumericField.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 65536))
@@ -11268,7 +11268,7 @@ Func _LOWriter_FormConTableConNumericFieldGeneral(ByRef $oNumericField, $sName =
 		$oNumericField.setPropertyToDefault("Align")
 
 	ElseIf ($iAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
+		If Not __LO_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
 
 		$oNumericField.Align = $iAlign
 		$iError = ($oNumericField.Align() = $iAlign) ? ($iError) : (BitOR($iError, 131072))
@@ -11366,8 +11366,8 @@ Func _LOWriter_FormConTableConPatternFieldData(ByRef $oPatternField, $sDataField
 	If (__LOWriter_FormConIdentify($oPatternField) <> $LOW_FORM_CON_TYPE_PATTERN_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $bFilter) Then
-		__LOWriter_ArrayFill($avControl, $oPatternField.DataField(), $oPatternField.ConvertEmptyToNull(), $oPatternField.InputRequired(), _
+	If __LO_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $bFilter) Then
+		__LO_ArrayFill($avControl, $oPatternField.DataField(), $oPatternField.ConvertEmptyToNull(), $oPatternField.InputRequired(), _
 				$oPatternField.UseFilterValueProposal())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
@@ -11478,7 +11478,7 @@ EndFunc   ;==>_LOWriter_FormConTableConPatternFieldData
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $sDefaultTxt, $sAddInfo.
-; Related .......: _LOWriter_FormConPatternFieldData, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_FormConPatternFieldData, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -11493,8 +11493,8 @@ Func _LOWriter_FormConTableConPatternFieldGeneral(ByRef $oPatternField, $sName =
 	If (__LOWriter_FormConIdentify($oPatternField) <> $LOW_FORM_CON_TYPE_PATTERN_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $iMaxLen, $sEditMask, $sLiteralMask, $bStrict, $bEnabled, $bReadOnly, $iMouseScroll, $iWidth, $sDefaultTxt, $iAlign, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oPatternField.Name(), $oPatternField.Label(), $oPatternField.WritingMode(), _
+	If __LO_VarsAreNull($sName, $sLabel, $iTxtDir, $iMaxLen, $sEditMask, $sLiteralMask, $bStrict, $bEnabled, $bReadOnly, $iMouseScroll, $iWidth, $sDefaultTxt, $iAlign, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LO_ArrayFill($avControl, $oPatternField.Name(), $oPatternField.Label(), $oPatternField.WritingMode(), _
 				$oPatternField.MaxTextLen(), $oPatternField.EditMask(), $oPatternField.LiteralMask(), $oPatternField.StrictFormat(), _
 				$oPatternField.Enabled(), $oPatternField.ReadOnly(), _
 				$oPatternField.MouseWheelBehavior(), Int($oPatternField.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
@@ -11529,7 +11529,7 @@ Func _LOWriter_FormConTableConPatternFieldGeneral(ByRef $oPatternField, $sName =
 		$oPatternField.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oPatternField.WritingMode = $iTxtDir
 		$iError = ($oPatternField.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
@@ -11539,7 +11539,7 @@ Func _LOWriter_FormConTableConPatternFieldGeneral(ByRef $oPatternField, $sName =
 		$oPatternField.setPropertyToDefault("MaxTextLen")
 
 	ElseIf ($iMaxLen <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMaxLen, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iMaxLen, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oPatternField.MaxTextLen = $iMaxLen
 		$iError = ($oPatternField.MaxTextLen = $iMaxLen) ? ($iError) : (BitOR($iError, 8))
@@ -11599,7 +11599,7 @@ Func _LOWriter_FormConTableConPatternFieldGeneral(ByRef $oPatternField, $sName =
 		$oPatternField.setPropertyToDefault("MouseWheelBehavior")
 
 	ElseIf ($iMouseScroll <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LO_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 
 		$oPatternField.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oPatternField.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 512))
@@ -11609,7 +11609,7 @@ Func _LOWriter_FormConTableConPatternFieldGeneral(ByRef $oPatternField, $sName =
 		$oPatternField.setPropertyToDefault("Width")
 
 	ElseIf ($iWidth <> Null) Then
-		If Not __LOWriter_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+		If Not __LO_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 
 		$oPatternField.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
 		$iError = ($oPatternField.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 1024))
@@ -11629,7 +11629,7 @@ Func _LOWriter_FormConTableConPatternFieldGeneral(ByRef $oPatternField, $sName =
 		$oPatternField.setPropertyToDefault("Align")
 
 	ElseIf ($iAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
+		If Not __LO_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 
 		$oPatternField.Align = $iAlign
 		$iError = ($oPatternField.Align() = $iAlign) ? ($iError) : (BitOR($iError, 4096))
@@ -11727,8 +11727,8 @@ Func _LOWriter_FormConTableConTextBoxData(ByRef $oTextBox, $sDataField = Null, $
 	If (__LOWriter_FormConIdentify($oTextBox) <> $LOW_FORM_CON_TYPE_TEXT_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $bFilter) Then
-		__LOWriter_ArrayFill($avControl, $oTextBox.DataField(), $oTextBox.ConvertEmptyToNull(), $oTextBox.InputRequired(), _
+	If __LO_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $bFilter) Then
+		__LO_ArrayFill($avControl, $oTextBox.DataField(), $oTextBox.ConvertEmptyToNull(), $oTextBox.InputRequired(), _
 				$oTextBox.UseFilterValueProposal())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
@@ -11833,7 +11833,7 @@ EndFunc   ;==>_LOWriter_FormConTableConTextBoxData
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $sDefaultTxt, $sAddInfo.
-; Related .......: _LOWriter_FormConTextBoxData, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_FormConTextBoxData, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -11850,8 +11850,8 @@ Func _LOWriter_FormConTableConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $sL
 	If (__LOWriter_FormConIdentify($oTextBox) <> $LOW_FORM_CON_TYPE_TEXT_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $iMaxLen, $bEnabled, $bReadOnly, $iWidth, $sDefaultTxt, $iAlign, $bMultiLine, $bEndWithLF, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oTextBox.Name(), $oTextBox.Label(), $oTextBox.WritingMode(), $oTextBox.MaxTextLen(), _
+	If __LO_VarsAreNull($sName, $sLabel, $iTxtDir, $iMaxLen, $bEnabled, $bReadOnly, $iWidth, $sDefaultTxt, $iAlign, $bMultiLine, $bEndWithLF, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LO_ArrayFill($avControl, $oTextBox.Name(), $oTextBox.Label(), $oTextBox.WritingMode(), $oTextBox.MaxTextLen(), _
 				$oTextBox.Enabled(), $oTextBox.ReadOnly(), _
 				Int($oTextBox.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
 				$oTextBox.DefaultText(), $oTextBox.Align(), $oTextBox.MultiLine(), _
@@ -11885,7 +11885,7 @@ Func _LOWriter_FormConTableConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $sL
 		$oTextBox.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oTextBox.WritingMode = $iTxtDir
 		$iError = ($oTextBox.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
@@ -11895,7 +11895,7 @@ Func _LOWriter_FormConTableConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $sL
 		$oTextBox.setPropertyToDefault("MaxTextLen")
 
 	ElseIf ($iMaxLen <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMaxLen, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iMaxLen, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oTextBox.MaxTextLen = $iMaxLen
 		$iError = ($oTextBox.MaxTextLen() = $iMaxLen) ? ($iError) : (BitOR($iError, 8))
@@ -11925,7 +11925,7 @@ Func _LOWriter_FormConTableConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $sL
 		$oTextBox.setPropertyToDefault("Width")
 
 	ElseIf ($iWidth <> Null) Then
-		If Not __LOWriter_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LO_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 		$oTextBox.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
 		$iError = ($oTextBox.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 64))
@@ -11945,7 +11945,7 @@ Func _LOWriter_FormConTableConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $sL
 		$oTextBox.setPropertyToDefault("Align")
 
 	ElseIf ($iAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		If Not __LO_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 
 		$oTextBox.Align = $iAlign
 		$iError = ($oTextBox.Align() = $iAlign) ? ($iError) : (BitOR($iError, 256))
@@ -12063,8 +12063,8 @@ Func _LOWriter_FormConTableConTimeFieldData(ByRef $oTimeField, $sDataField = Nul
 	If (__LOWriter_FormConIdentify($oTimeField) <> $LOW_FORM_CON_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
-		__LOWriter_ArrayFill($avControl, $oTimeField.DataField(), $oTimeField.InputRequired())
+	If __LO_VarsAreNull($sDataField, $bInputRequired) Then
+		__LO_ArrayFill($avControl, $oTimeField.DataField(), $oTimeField.InputRequired())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
@@ -12174,7 +12174,7 @@ EndFunc   ;==>_LOWriter_FormConTableConTimeFieldData
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
 ;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $mFont, $sAddInfo.
-; Related .......: _LOWriter_FormatKeyCreate, _LOWriter_FormatKeysGetList, _LOWriter_FormConTimeFieldData, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_FormatKeyCreate, _LOWriter_FormatKeysGetList, _LOWriter_FormConTimeFieldData, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -12190,47 +12190,47 @@ Func _LOWriter_FormConTableConTimeFieldGeneral(ByRef $oTimeField, $sName = Null,
 	If (__LOWriter_FormConIdentify($oTimeField) <> $LOW_FORM_CON_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $bStrict, $bEnabled, $bReadOnly, $iMouseScroll, $tTimeMin, $tTimeMax, $iFormat, $tTimeDefault, $bSpin, $bRepeat, $iDelay, $iWidth, $iAlign, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
+	If __LO_VarsAreNull($sName, $sLabel, $iTxtDir, $bStrict, $bEnabled, $bReadOnly, $iMouseScroll, $tTimeMin, $tTimeMax, $iFormat, $tTimeDefault, $bSpin, $bRepeat, $iDelay, $iWidth, $iAlign, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
 		$tTime = $oTimeField.TimeMin()
 		If Not IsObj($tTime) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-		$tCurMin = __LOWriter_CreateStruct("com.sun.star.util.DateTime")
+		$tCurMin = __LO_CreateStruct("com.sun.star.util.DateTime")
 		If Not IsObj($tCurMin) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 		$tCurMin.Hours = $tTime.Hours()
 		$tCurMin.Minutes = $tTime.Minutes()
 		$tCurMin.Seconds = $tTime.Seconds()
 		$tCurMin.NanoSeconds = $tTime.NanoSeconds()
-		If __LOWriter_VersionCheck(4.1) Then $tCurMin.IsUTC = $tTime.IsUTC()
+		If __LO_VersionCheck(4.1) Then $tCurMin.IsUTC = $tTime.IsUTC()
 
 		$tTime = $oTimeField.TimeMax()
 		If Not IsObj($tTime) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
-		$tCurMax = __LOWriter_CreateStruct("com.sun.star.util.DateTime")
+		$tCurMax = __LO_CreateStruct("com.sun.star.util.DateTime")
 		If Not IsObj($tCurMax) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 		$tCurMax.Hours = $tTime.Hours()
 		$tCurMax.Minutes = $tTime.Minutes()
 		$tCurMax.Seconds = $tTime.Seconds()
 		$tCurMax.NanoSeconds = $tTime.NanoSeconds()
-		If __LOWriter_VersionCheck(4.1) Then $tCurMax.IsUTC = $tTime.IsUTC()
+		If __LO_VersionCheck(4.1) Then $tCurMax.IsUTC = $tTime.IsUTC()
 
 		$tTime = $oTimeField.DefaultTime() ; Default time is Null when not set.
 		If IsObj($tTime) Then
-			$tCurDefault = __LOWriter_CreateStruct("com.sun.star.util.DateTime")
+			$tCurDefault = __LO_CreateStruct("com.sun.star.util.DateTime")
 			If Not IsObj($tCurDefault) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 			$tCurDefault.Hours = $tTime.Hours()
 			$tCurDefault.Minutes = $tTime.Minutes()
 			$tCurDefault.Seconds = $tTime.Seconds()
 			$tCurDefault.NanoSeconds = $tTime.NanoSeconds()
-			If __LOWriter_VersionCheck(4.1) Then $tCurDefault.IsUTC = $tTime.IsUTC()
+			If __LO_VersionCheck(4.1) Then $tCurDefault.IsUTC = $tTime.IsUTC()
 
 		Else
 			$tCurDefault = $tTime
 		EndIf
 
-		__LOWriter_ArrayFill($avControl, $oTimeField.Name(), $oTimeField.Label(), $oTimeField.WritingMode(), $oTimeField.StrictFormat(), _
+		__LO_ArrayFill($avControl, $oTimeField.Name(), $oTimeField.Label(), $oTimeField.WritingMode(), $oTimeField.StrictFormat(), _
 				$oTimeField.Enabled(), $oTimeField.ReadOnly(), $oTimeField.MouseWheelBehavior(), _
 				$tCurMin, $tCurMax, $oTimeField.TimeFormat(), $tCurDefault, $oTimeField.Spin(), _
 				$oTimeField.Repeat(), $oTimeField.RepeatDelay(), Int($oTimeField.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
@@ -12263,7 +12263,7 @@ Func _LOWriter_FormConTableConTimeFieldGeneral(ByRef $oTimeField, $sName = Null,
 		$oTimeField.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oTimeField.WritingMode = $iTxtDir
 		$iError = ($oTimeField.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
@@ -12303,7 +12303,7 @@ Func _LOWriter_FormConTableConTimeFieldGeneral(ByRef $oTimeField, $sName = Null,
 		$oTimeField.setPropertyToDefault("MouseWheelBehavior")
 
 	ElseIf ($iMouseScroll <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LO_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 		$oTimeField.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oTimeField.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 64))
@@ -12315,14 +12315,14 @@ Func _LOWriter_FormConTableConTimeFieldGeneral(ByRef $oTimeField, $sName = Null,
 	ElseIf ($tTimeMin <> Null) Then
 		If Not IsObj($tTimeMin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
-		$tTime = __LOWriter_CreateStruct("com.sun.star.util.Time")
+		$tTime = __LO_CreateStruct("com.sun.star.util.Time")
 		If Not IsObj($tTime) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 		$tTime.Hours = $tTimeMin.Hours()
 		$tTime.Minutes = $tTimeMin.Minutes()
 		$tTime.Seconds = $tTimeMin.Seconds()
 		$tTime.NanoSeconds = $tTimeMin.NanoSeconds()
-		If __LOWriter_VersionCheck(4.1) Then $tTime.IsUTC = $tTimeMin.IsUTC()
+		If __LO_VersionCheck(4.1) Then $tTime.IsUTC = $tTimeMin.IsUTC()
 
 		$oTimeField.TimeMin = $tTime
 		$iError = (__LOWriter_DateStructCompare($oTimeField.TimeMin(), $tTime, False, True)) ? ($iError) : (BitOR($iError, 128))
@@ -12334,14 +12334,14 @@ Func _LOWriter_FormConTableConTimeFieldGeneral(ByRef $oTimeField, $sName = Null,
 	ElseIf ($tTimeMax <> Null) Then
 		If Not IsObj($tTimeMax) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 
-		$tTime = __LOWriter_CreateStruct("com.sun.star.util.Time")
+		$tTime = __LO_CreateStruct("com.sun.star.util.Time")
 		If Not IsObj($tTime) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 		$tTime.Hours = $tTimeMax.Hours()
 		$tTime.Minutes = $tTimeMax.Minutes()
 		$tTime.Seconds = $tTimeMax.Seconds()
 		$tTime.NanoSeconds = $tTimeMax.NanoSeconds()
-		If __LOWriter_VersionCheck(4.1) Then $tTime.IsUTC = $tTimeMax.IsUTC()
+		If __LO_VersionCheck(4.1) Then $tTime.IsUTC = $tTimeMax.IsUTC()
 
 		$oTimeField.TimeMax = $tTime
 		$iError = (__LOWriter_DateStructCompare($oTimeField.TimeMax(), $tTime, False, True)) ? ($iError) : (BitOR($iError, 256))
@@ -12351,7 +12351,7 @@ Func _LOWriter_FormConTableConTimeFieldGeneral(ByRef $oTimeField, $sName = Null,
 		$oTimeField.setPropertyToDefault("TimeFormat")
 
 	ElseIf ($iFormat <> Null) Then
-		If Not __LOWriter_IntIsBetween($iFormat, $LOW_FORM_CON_TIME_FRMT_24_SHORT, $LOW_FORM_CON_TIME_FRMT_DURATION_LONG) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LO_IntIsBetween($iFormat, $LOW_FORM_CON_TIME_FRMT_24_SHORT, $LOW_FORM_CON_TIME_FRMT_DURATION_LONG) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 
 		$oTimeField.TimeFormat = $iFormat
 		$iError = ($oTimeField.TimeFormat() = $iFormat) ? ($iError) : (BitOR($iError, 512))
@@ -12363,14 +12363,14 @@ Func _LOWriter_FormConTableConTimeFieldGeneral(ByRef $oTimeField, $sName = Null,
 	ElseIf ($tTimeDefault <> Null) Then
 		If Not IsObj($tTimeDefault) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 
-		$tTime = __LOWriter_CreateStruct("com.sun.star.util.Time")
+		$tTime = __LO_CreateStruct("com.sun.star.util.Time")
 		If Not IsObj($tTime) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 		$tTime.Hours = $tTimeDefault.Hours()
 		$tTime.Minutes = $tTimeDefault.Minutes()
 		$tTime.Seconds = $tTimeDefault.Seconds()
 		$tTime.NanoSeconds = $tTimeDefault.NanoSeconds()
-		If __LOWriter_VersionCheck(4.1) Then $tTime.IsUTC = $tTimeDefault.IsUTC()
+		If __LO_VersionCheck(4.1) Then $tTime.IsUTC = $tTimeDefault.IsUTC()
 
 		$oTimeField.DefaultTime = $tTime
 		$iError = (__LOWriter_DateStructCompare($oTimeField.DefaultTime(), $tTime, False, True)) ? ($iError) : (BitOR($iError, 1024))
@@ -12400,7 +12400,7 @@ Func _LOWriter_FormConTableConTimeFieldGeneral(ByRef $oTimeField, $sName = Null,
 		$oTimeField.setPropertyToDefault("RepeatDelay")
 
 	ElseIf ($iDelay <> Null) Then
-		If Not __LOWriter_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
+		If Not __LO_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 
 		$oTimeField.RepeatDelay = $iDelay
 		$iError = ($oTimeField.RepeatDelay() = $iDelay) ? ($iError) : (BitOR($iError, 8192))
@@ -12410,7 +12410,7 @@ Func _LOWriter_FormConTableConTimeFieldGeneral(ByRef $oTimeField, $sName = Null,
 		$oTimeField.setPropertyToDefault("Width")
 
 	ElseIf ($iWidth <> Null) Then
-		If Not __LOWriter_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+		If Not __LO_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 
 		$oTimeField.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
 		$iError = ($oTimeField.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 16384))
@@ -12420,7 +12420,7 @@ Func _LOWriter_FormConTableConTimeFieldGeneral(ByRef $oTimeField, $sName = Null,
 		$oTimeField.setPropertyToDefault("Align")
 
 	ElseIf ($iAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
+		If Not __LO_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 
 		$oTimeField.Align = $iAlign
 		$iError = ($oTimeField.Align() = $iAlign) ? ($iError) : (BitOR($iError, 32768))
@@ -12557,8 +12557,8 @@ Func _LOWriter_FormConTextBoxData(ByRef $oTextBox, $sDataField = Null, $bEmptyIs
 	If (__LOWriter_FormConIdentify($oTextBox) <> $LOW_FORM_CON_TYPE_TEXT_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $bFilter) Then
-		__LOWriter_ArrayFill($avControl, $oTextBox.Control.DataField(), $oTextBox.Control.ConvertEmptyToNull(), $oTextBox.Control.InputRequired(), _
+	If __LO_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $bFilter) Then
+		__LO_ArrayFill($avControl, $oTextBox.Control.DataField(), $oTextBox.Control.ConvertEmptyToNull(), $oTextBox.Control.InputRequired(), _
 				$oTextBox.Control.UseFilterValueProposal())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
@@ -12712,8 +12712,8 @@ Func _LOWriter_FormConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabelFiel
 	If (__LOWriter_FormConIdentify($oTextBox) <> $LOW_FORM_CON_TYPE_TEXT_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $iMaxLen, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $bTabStop, $iTabOrder, $sDefaultTxt, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $iTextType, $bEndWithLF, $iScrollbars, $iPassChar, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
-		__LOWriter_ArrayFill($avControl, $oTextBox.Control.Name(), __LOWriter_FormConGetObj($oTextBox.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oTextBox.Control.WritingMode(), $oTextBox.Control.MaxTextLen(), _
+	If __LO_VarsAreNull($sName, $oLabelField, $iTxtDir, $iMaxLen, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $bTabStop, $iTabOrder, $sDefaultTxt, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $iTextType, $bEndWithLF, $iScrollbars, $iPassChar, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LO_ArrayFill($avControl, $oTextBox.Control.Name(), __LOWriter_FormConGetObj($oTextBox.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oTextBox.Control.WritingMode(), $oTextBox.Control.MaxTextLen(), _
 				$oTextBox.Control.Enabled(), $oTextBox.Control.EnableVisible(), $oTextBox.Control.ReadOnly(), $oTextBox.Control.Printable(), $oTextBox.Control.Tabstop(), _
 				$oTextBox.Control.TabIndex(), $oTextBox.Control.DefaultText(), __LOWriter_FormConSetGetFontDesc($oTextBox), $oTextBox.Control.Align(), $oTextBox.Control.VerticalAlign(), _
 				$oTextBox.Control.BackgroundColor(), $oTextBox.Control.Border(), $oTextBox.Control.BorderColor(), _
@@ -12752,7 +12752,7 @@ Func _LOWriter_FormConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabelFiel
 		$oTextBox.Control.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oTextBox.Control.WritingMode = $iTxtDir
 		$iError = ($oTextBox.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
@@ -12762,7 +12762,7 @@ Func _LOWriter_FormConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabelFiel
 		$oTextBox.Control.setPropertyToDefault("MaxTextLen")
 
 	ElseIf ($iMaxLen <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMaxLen, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LO_IntIsBetween($iMaxLen, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$oTextBox.Control.MaxTextLen = $iMaxLen
 		$iError = ($oTextBox.Control.MaxTextLen() = $iMaxLen) ? ($iError) : (BitOR($iError, 8))
@@ -12822,7 +12822,7 @@ Func _LOWriter_FormConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabelFiel
 		$iError = BitOR($iError, 512) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+		If Not __LO_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 
 		$oTextBox.Control.TabIndex = $iTabOrder
 		$iError = ($oTextBox.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 512))
@@ -12852,7 +12852,7 @@ Func _LOWriter_FormConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabelFiel
 		$oTextBox.Control.setPropertyToDefault("Align")
 
 	ElseIf ($iAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
+		If Not __LO_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 
 		$oTextBox.Control.Align = $iAlign
 		$iError = ($oTextBox.Control.Align() = $iAlign) ? ($iError) : (BitOR($iError, 4096))
@@ -12862,7 +12862,7 @@ Func _LOWriter_FormConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabelFiel
 		$oTextBox.Control.setPropertyToDefault("VerticalAlign")
 
 	ElseIf ($iVertAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+		If Not __LO_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 
 		$oTextBox.Control.VerticalAlign = $iVertAlign
 		$iError = ($oTextBox.Control.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 8192))
@@ -12872,7 +12872,7 @@ Func _LOWriter_FormConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabelFiel
 		$oTextBox.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 
 		$oTextBox.Control.BackgroundColor = $iBackColor
 		$iError = ($oTextBox.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 16384))
@@ -12882,7 +12882,7 @@ Func _LOWriter_FormConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabelFiel
 		$oTextBox.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
+		If Not __LO_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 
 		$oTextBox.Control.Border = $iBorder
 		$iError = ($oTextBox.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 32768))
@@ -12892,7 +12892,7 @@ Func _LOWriter_FormConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabelFiel
 		$oTextBox.Control.setPropertyToDefault("BorderColor")
 
 	ElseIf ($iBorderColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
+		If Not __LO_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
 
 		$oTextBox.Control.BorderColor = $iBorderColor
 		$iError = ($oTextBox.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 65536))
@@ -12903,7 +12903,7 @@ Func _LOWriter_FormConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabelFiel
 		$oTextBox.Control.setPropertyToDefault("RichText")
 
 	ElseIf ($iTextType <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTextType, $LOW_FORM_CON_TXT_TYPE_SINGLE_LINE, $LOW_FORM_CON_TXT_TYPE_MULTI_LINE_FORMATTED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
+		If Not __LO_IntIsBetween($iTextType, $LOW_FORM_CON_TXT_TYPE_SINGLE_LINE, $LOW_FORM_CON_TXT_TYPE_MULTI_LINE_FORMATTED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 
 		Switch $iTextType
 			Case $LOW_FORM_CON_TXT_TYPE_SINGLE_LINE
@@ -12947,7 +12947,7 @@ Func _LOWriter_FormConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabelFiel
 		$oTextBox.Control.setPropertyToDefault("VScroll")
 
 	ElseIf ($iScrollbars <> Null) Then
-		If Not __LOWriter_IntIsBetween($iScrollbars, $LOW_FORM_CON_SCROLL_NONE, $LOW_FORM_CON_SCROLL_BOTH) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
+		If Not __LO_IntIsBetween($iScrollbars, $LOW_FORM_CON_SCROLL_NONE, $LOW_FORM_CON_SCROLL_BOTH) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
 
 		Switch $iScrollbars
 			Case $LOW_FORM_CON_SCROLL_NONE
@@ -13068,8 +13068,8 @@ Func _LOWriter_FormConTimeFieldData(ByRef $oTimeField, $sDataField = Null, $bInp
 	If (__LOWriter_FormConIdentify($oTimeField) <> $LOW_FORM_CON_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
-		__LOWriter_ArrayFill($avControl, $oTimeField.Control.DataField(), $oTimeField.Control.InputRequired())
+	If __LO_VarsAreNull($sDataField, $bInputRequired) Then
+		__LO_ArrayFill($avControl, $oTimeField.Control.DataField(), $oTimeField.Control.InputRequired())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
@@ -13221,47 +13221,47 @@ Func _LOWriter_FormConTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oLabel
 	If (__LOWriter_FormConIdentify($oTimeField) <> $LOW_FORM_CON_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sName, $oLabelField, $iTxtDir, $bStrict, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $tTimeMin, $tTimeMax, $iFormat, $tTimeDefault, $bSpin, $bRepeat, $iDelay, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
+	If __LO_VarsAreNull($sName, $oLabelField, $iTxtDir, $bStrict, $bEnabled, $bVisible, $bReadOnly, $bPrintable, $iMouseScroll, $bTabStop, $iTabOrder, $tTimeMin, $tTimeMax, $iFormat, $tTimeDefault, $bSpin, $bRepeat, $iDelay, $mFont, $iAlign, $iVertAlign, $iBackColor, $iBorder, $iBorderColor, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
 		$tTime = $oTimeField.Control.TimeMin()
 		If Not IsObj($tTime) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-		$tCurMin = __LOWriter_CreateStruct("com.sun.star.util.DateTime")
+		$tCurMin = __LO_CreateStruct("com.sun.star.util.DateTime")
 		If Not IsObj($tCurMin) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 		$tCurMin.Hours = $tTime.Hours()
 		$tCurMin.Minutes = $tTime.Minutes()
 		$tCurMin.Seconds = $tTime.Seconds()
 		$tCurMin.NanoSeconds = $tTime.NanoSeconds()
-		If __LOWriter_VersionCheck(4.1) Then $tCurMin.IsUTC = $tTime.IsUTC()
+		If __LO_VersionCheck(4.1) Then $tCurMin.IsUTC = $tTime.IsUTC()
 
 		$tTime = $oTimeField.Control.TimeMax()
 		If Not IsObj($tTime) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
-		$tCurMax = __LOWriter_CreateStruct("com.sun.star.util.DateTime")
+		$tCurMax = __LO_CreateStruct("com.sun.star.util.DateTime")
 		If Not IsObj($tCurMax) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 		$tCurMax.Hours = $tTime.Hours()
 		$tCurMax.Minutes = $tTime.Minutes()
 		$tCurMax.Seconds = $tTime.Seconds()
 		$tCurMax.NanoSeconds = $tTime.NanoSeconds()
-		If __LOWriter_VersionCheck(4.1) Then $tCurMax.IsUTC = $tTime.IsUTC()
+		If __LO_VersionCheck(4.1) Then $tCurMax.IsUTC = $tTime.IsUTC()
 
 		$tTime = $oTimeField.Control.DefaultTime() ; Default time is Null when not set.
 		If IsObj($tTime) Then
-			$tCurDefault = __LOWriter_CreateStruct("com.sun.star.util.DateTime")
+			$tCurDefault = __LO_CreateStruct("com.sun.star.util.DateTime")
 			If Not IsObj($tCurDefault) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 			$tCurDefault.Hours = $tTime.Hours()
 			$tCurDefault.Minutes = $tTime.Minutes()
 			$tCurDefault.Seconds = $tTime.Seconds()
 			$tCurDefault.NanoSeconds = $tTime.NanoSeconds()
-			If __LOWriter_VersionCheck(4.1) Then $tCurDefault.IsUTC = $tTime.IsUTC()
+			If __LO_VersionCheck(4.1) Then $tCurDefault.IsUTC = $tTime.IsUTC()
 
 		Else
 			$tCurDefault = $tTime
 		EndIf
 
-		__LOWriter_ArrayFill($avControl, $oTimeField.Control.Name(), __LOWriter_FormConGetObj($oTimeField.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oTimeField.Control.WritingMode(), $oTimeField.Control.StrictFormat(), _
+		__LO_ArrayFill($avControl, $oTimeField.Control.Name(), __LOWriter_FormConGetObj($oTimeField.Control.LabelControl(), $LOW_FORM_CON_TYPE_LABEL), $oTimeField.Control.WritingMode(), $oTimeField.Control.StrictFormat(), _
 				$oTimeField.Control.Enabled(), $oTimeField.Control.EnableVisible(), $oTimeField.Control.ReadOnly(), $oTimeField.Control.Printable(), $oTimeField.Control.MouseWheelBehavior(), _
 				$oTimeField.Control.Tabstop(), $oTimeField.Control.TabIndex(), $tCurMin, $tCurMax, $oTimeField.Control.TimeFormat(), $tCurDefault, $oTimeField.Control.Spin(), _
 				$oTimeField.Control.Repeat(), $oTimeField.Control.RepeatDelay(), __LOWriter_FormConSetGetFontDesc($oTimeField), $oTimeField.Control.Align(), $oTimeField.Control.VerticalAlign(), _
@@ -13296,7 +13296,7 @@ Func _LOWriter_FormConTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oLabel
 		$oTimeField.Control.setPropertyToDefault("WritingMode")
 
 	ElseIf ($iTxtDir <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oTimeField.Control.WritingMode = $iTxtDir
 		$iError = ($oTimeField.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
@@ -13356,7 +13356,7 @@ Func _LOWriter_FormConTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oLabel
 		$oTimeField.Control.setPropertyToDefault("MouseWheelBehavior")
 
 	ElseIf ($iMouseScroll <> Null) Then
-		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LO_IntIsBetween($iMouseScroll, $LOW_FORM_CON_MOUSE_SCROLL_DISABLED, $LOW_FORM_CON_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 
 		$oTimeField.Control.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oTimeField.Control.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 256))
@@ -13376,7 +13376,7 @@ Func _LOWriter_FormConTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oLabel
 		$iError = BitOR($iError, 1024) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		If Not __LO_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 
 		$oTimeField.Control.TabIndex = $iTabOrder
 		$iError = ($oTimeField.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 1024))
@@ -13388,14 +13388,14 @@ Func _LOWriter_FormConTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oLabel
 	ElseIf ($tTimeMin <> Null) Then
 		If Not IsObj($tTimeMin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 
-		$tTime = __LOWriter_CreateStruct("com.sun.star.util.Time")
+		$tTime = __LO_CreateStruct("com.sun.star.util.Time")
 		If Not IsObj($tTime) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 		$tTime.Hours = $tTimeMin.Hours()
 		$tTime.Minutes = $tTimeMin.Minutes()
 		$tTime.Seconds = $tTimeMin.Seconds()
 		$tTime.NanoSeconds = $tTimeMin.NanoSeconds()
-		If __LOWriter_VersionCheck(4.1) Then $tTime.IsUTC = $tTimeMin.IsUTC()
+		If __LO_VersionCheck(4.1) Then $tTime.IsUTC = $tTimeMin.IsUTC()
 
 		$oTimeField.Control.TimeMin = $tTime
 		$iError = (__LOWriter_DateStructCompare($oTimeField.Control.TimeMin(), $tTime, False, True)) ? ($iError) : (BitOR($iError, 2048))
@@ -13407,14 +13407,14 @@ Func _LOWriter_FormConTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oLabel
 	ElseIf ($tTimeMax <> Null) Then
 		If Not IsObj($tTimeMax) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 
-		$tTime = __LOWriter_CreateStruct("com.sun.star.util.Time")
+		$tTime = __LO_CreateStruct("com.sun.star.util.Time")
 		If Not IsObj($tTime) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 		$tTime.Hours = $tTimeMax.Hours()
 		$tTime.Minutes = $tTimeMax.Minutes()
 		$tTime.Seconds = $tTimeMax.Seconds()
 		$tTime.NanoSeconds = $tTimeMax.NanoSeconds()
-		If __LOWriter_VersionCheck(4.1) Then $tTime.IsUTC = $tTimeMax.IsUTC()
+		If __LO_VersionCheck(4.1) Then $tTime.IsUTC = $tTimeMax.IsUTC()
 
 		$oTimeField.Control.TimeMax = $tTime
 		$iError = (__LOWriter_DateStructCompare($oTimeField.Control.TimeMax(), $tTime, False, True)) ? ($iError) : (BitOR($iError, 4096))
@@ -13424,7 +13424,7 @@ Func _LOWriter_FormConTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oLabel
 		$oTimeField.Control.setPropertyToDefault("TimeFormat")
 
 	ElseIf ($iFormat <> Null) Then
-		If Not __LOWriter_IntIsBetween($iFormat, $LOW_FORM_CON_TIME_FRMT_24_SHORT, $LOW_FORM_CON_TIME_FRMT_DURATION_LONG) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+		If Not __LO_IntIsBetween($iFormat, $LOW_FORM_CON_TIME_FRMT_24_SHORT, $LOW_FORM_CON_TIME_FRMT_DURATION_LONG) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 
 		$oTimeField.Control.TimeFormat = $iFormat
 		$iError = ($oTimeField.Control.TimeFormat() = $iFormat) ? ($iError) : (BitOR($iError, 8192))
@@ -13436,14 +13436,14 @@ Func _LOWriter_FormConTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oLabel
 	ElseIf ($tTimeDefault <> Null) Then
 		If Not IsObj($tTimeDefault) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 
-		$tTime = __LOWriter_CreateStruct("com.sun.star.util.Time")
+		$tTime = __LO_CreateStruct("com.sun.star.util.Time")
 		If Not IsObj($tTime) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 		$tTime.Hours = $tTimeDefault.Hours()
 		$tTime.Minutes = $tTimeDefault.Minutes()
 		$tTime.Seconds = $tTimeDefault.Seconds()
 		$tTime.NanoSeconds = $tTimeDefault.NanoSeconds()
-		If __LOWriter_VersionCheck(4.1) Then $tTime.IsUTC = $tTimeDefault.IsUTC()
+		If __LO_VersionCheck(4.1) Then $tTime.IsUTC = $tTimeDefault.IsUTC()
 
 		$oTimeField.Control.DefaultTime = $tTime
 		$iError = (__LOWriter_DateStructCompare($oTimeField.Control.DefaultTime(), $tTime, False, True)) ? ($iError) : (BitOR($iError, 16384))
@@ -13473,7 +13473,7 @@ Func _LOWriter_FormConTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oLabel
 		$oTimeField.Control.setPropertyToDefault("RepeatDelay")
 
 	ElseIf ($iDelay <> Null) Then
-		If Not __LOWriter_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
+		If Not __LO_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 
 		$oTimeField.Control.RepeatDelay = $iDelay
 		$iError = ($oTimeField.Control.RepeatDelay() = $iDelay) ? ($iError) : (BitOR($iError, 131072))
@@ -13493,7 +13493,7 @@ Func _LOWriter_FormConTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oLabel
 		$oTimeField.Control.setPropertyToDefault("Align")
 
 	ElseIf ($iAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
+		If Not __LO_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
 
 		$oTimeField.Control.Align = $iAlign
 		$iError = ($oTimeField.Control.Align() = $iAlign) ? ($iError) : (BitOR($iError, 524288))
@@ -13503,7 +13503,7 @@ Func _LOWriter_FormConTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oLabel
 		$oTimeField.Control.setPropertyToDefault("VerticalAlign")
 
 	ElseIf ($iVertAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 24, 0)
+		If Not __LO_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 24, 0)
 
 		$oTimeField.Control.VerticalAlign = $iVertAlign
 		$iError = ($oTimeField.Control.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 1048576))
@@ -13513,7 +13513,7 @@ Func _LOWriter_FormConTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oLabel
 		$oTimeField.Control.setPropertyToDefault("BackgroundColor")
 
 	ElseIf ($iBackColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 25, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 25, 0)
 
 		$oTimeField.Control.BackgroundColor = $iBackColor
 		$iError = ($oTimeField.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 2097152))
@@ -13523,7 +13523,7 @@ Func _LOWriter_FormConTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oLabel
 		$oTimeField.Control.setPropertyToDefault("Border")
 
 	ElseIf ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
+		If Not __LO_IntIsBetween($iBorder, $LOW_FORM_CON_BORDER_WITHOUT, $LOW_FORM_CON_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
 
 		$oTimeField.Control.Border = $iBorder
 		$iError = ($oTimeField.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 4194304))
@@ -13533,7 +13533,7 @@ Func _LOWriter_FormConTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oLabel
 		$oTimeField.Control.setPropertyToDefault("BorderColor")
 
 	ElseIf ($iBorderColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
+		If Not __LO_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
 
 		$oTimeField.Control.BorderColor = $iBorderColor
 		$iError = ($oTimeField.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 8388608))
@@ -13624,17 +13624,17 @@ Func _LOWriter_FormConTimeFieldValue(ByRef $oTimeField, $tTimeValue = Null)
 	If (__LOWriter_FormConIdentify($oTimeField) <> $LOW_FORM_CON_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($tTimeValue) Then
+	If __LO_VarsAreNull($tTimeValue) Then
 		$tTime = $oTimeField.Control.Time() ; Time is Null when not set.
 		If IsObj($tTime) Then
-			$tCurTime = __LOWriter_CreateStruct("com.sun.star.util.DateTime")
+			$tCurTime = __LO_CreateStruct("com.sun.star.util.DateTime")
 			If Not IsObj($tCurTime) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 			$tCurTime.Hours = $tTime.Hours()
 			$tCurTime.Minutes = $tTime.Minutes()
 			$tCurTime.Seconds = $tTime.Seconds()
 			$tCurTime.NanoSeconds = $tTime.NanoSeconds()
-			If __LOWriter_VersionCheck(4.1) Then $tCurTime.IsUTC = $tTime.IsUTC()
+			If __LO_VersionCheck(4.1) Then $tCurTime.IsUTC = $tTime.IsUTC()
 
 		Else
 			$tCurTime = $tTime
@@ -13649,14 +13649,14 @@ Func _LOWriter_FormConTimeFieldValue(ByRef $oTimeField, $tTimeValue = Null)
 	Else
 		If Not IsObj($tTimeValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-		$tTime = __LOWriter_CreateStruct("com.sun.star.util.Time")
+		$tTime = __LO_CreateStruct("com.sun.star.util.Time")
 		If Not IsObj($tTime) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 		$tTime.Hours = $tTimeValue.Hours()
 		$tTime.Minutes = $tTimeValue.Minutes()
 		$tTime.Seconds = $tTimeValue.Seconds()
 		$tTime.NanoSeconds = $tTimeValue.NanoSeconds()
-		If __LOWriter_VersionCheck(4.1) Then $tTime.IsUTC = $tTimeValue.IsUTC()
+		If __LO_VersionCheck(4.1) Then $tTime.IsUTC = $tTimeValue.IsUTC()
 
 		$oTimeField.Control.Time = $tTime
 		$iError = (__LOWriter_DateStructCompare($oTimeField.Control.Time(), $tTime, False, True)) ? ($iError) : (BitOR($iError, 1))
@@ -13770,7 +13770,7 @@ Func _LOWriter_FormGetObjByIndex(ByRef $oObj, $iForm)
 
 	$iForms = _LOWriter_FormsGetCount($oObj)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-	If Not __LOWriter_IntIsBetween($iForm, 0, ($iForms - 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LO_IntIsBetween($iForm, 0, ($iForms - 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If $oObj.supportsService("com.sun.star.form.component.Form") Then
 		For $i = 0 To $oObj.Count() - 1
@@ -13847,7 +13847,7 @@ Func _LOWriter_FormParent(ByRef $oForm, $oParent = Null)
 	$oOldParent = $oForm.getParent()
 	If Not IsObj($oOldParent) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($oParent) Then
+	If __LO_VarsAreNull($oParent) Then
 		If $oOldParent.supportsService("com.sun.star.text.TextDocument") Then ; Parent is a Document.
 
 			Return SetError($__LO_STATUS_SUCCESS, 1, $oOldParent)
@@ -13990,13 +13990,13 @@ Func _LOWriter_FormPropertiesData(ByRef $oForm, $sSource = Null, $iContentType =
 	If Not IsObj($oForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oForm.supportsService("com.sun.star.form.component.Form") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOWriter_VarsAreNull($sSource, $iContentType, $sContent, $bAnalyzeSQL, $sFilter, $sSort, $aLinkMaster, $aLinkSlave, $bAdditions, $bModifications, $bDeletions, $bAddOnly, $iNavBar, $iCycle) Then
+	If __LO_VarsAreNull($sSource, $iContentType, $sContent, $bAnalyzeSQL, $sFilter, $sSort, $aLinkMaster, $aLinkSlave, $bAdditions, $bModifications, $bDeletions, $bAddOnly, $iNavBar, $iCycle) Then
 		$sSourceName = $oForm.DataSourceName()
 		If Not IsString($sSourceName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-		If StringInStr($sSourceName, "/") Then $sSourceName = _LOWriter_PathConvert($sSourceName, $LOW_PATHCONV_PCPATH_RETURN)
+		If StringInStr($sSourceName, "/") Then $sSourceName = _LO_PathConvert($sSourceName, $LO_PATHCONV_PCPATH_RETURN)
 
-		__LOWriter_ArrayFill($avForm, $sSourceName, $oForm.CommandType(), $oForm.Command(), $oForm.EscapeProcessing(), $oForm.Filter(), $oForm.Order(), _
+		__LO_ArrayFill($avForm, $sSourceName, $oForm.CommandType(), $oForm.Command(), $oForm.EscapeProcessing(), $oForm.Filter(), $oForm.Order(), _
 				$oForm.MasterFields(), $oForm.DetailFields(), $oForm.AllowInserts(), $oForm.AllowUpdates(), $oForm.AllowDeletes(), $oForm.IgnoreResult(), $oForm.NavigationBarMode(), $oForm.Cycle())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avForm)
@@ -14010,9 +14010,9 @@ Func _LOWriter_FormPropertiesData(ByRef $oForm, $sSource = Null, $iContentType =
 
 		$oDBaseContext = $oServiceManager.createInstance("com.sun.star.sdb.DatabaseContext")
 		If Not IsObj($oDBaseContext) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
-		If Not ($oDBaseContext.hasByName($sSource)) And Not FileExists(_LOWriter_PathConvert($sSource, $LOW_PATHCONV_PCPATH_RETURN)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not ($oDBaseContext.hasByName($sSource)) And Not FileExists(_LO_PathConvert($sSource, $LO_PATHCONV_PCPATH_RETURN)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-		If StringInStr($sSource, "\") Then $sSource = _LOWriter_PathConvert($sSource, $LOW_PATHCONV_OFFICE_RETURN)
+		If StringInStr($sSource, "\") Then $sSource = _LO_PathConvert($sSource, $LO_PATHCONV_OFFICE_RETURN)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		$oForm.DataSourceName = $sSource
@@ -14020,7 +14020,7 @@ Func _LOWriter_FormPropertiesData(ByRef $oForm, $sSource = Null, $iContentType =
 	EndIf
 
 	If ($iContentType <> Null) Then
-		If Not __LOWriter_IntIsBetween($iContentType, $LOW_FORM_CONTENT_TYPE_TABLE, $LOW_FORM_CONTENT_TYPE_SQL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iContentType, $LOW_FORM_CONTENT_TYPE_TABLE, $LOW_FORM_CONTENT_TYPE_SQL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oForm.CommandType = $iContentType
 		$iError = ($oForm.CommandType() = $iContentType) ? ($iError) : (BitOR($iError, 2))
@@ -14097,14 +14097,14 @@ Func _LOWriter_FormPropertiesData(ByRef $oForm, $sSource = Null, $iContentType =
 	EndIf
 
 	If ($iNavBar <> Null) Then
-		If Not __LOWriter_IntIsBetween($iNavBar, $LOW_FORM_NAV_BAR_MODE_NO, $LOW_FORM_NAV_BAR_MODE_PARENT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
+		If Not __LO_IntIsBetween($iNavBar, $LOW_FORM_NAV_BAR_MODE_NO, $LOW_FORM_NAV_BAR_MODE_PARENT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 
 		$oForm.NavigationBarMode = $iNavBar
 		$iError = ($oForm.NavigationBarMode() = $iNavBar) ? ($iError) : (BitOR($iError, 4096))
 	EndIf
 
 	If ($iCycle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iCycle, $LOW_FORM_CYCLE_MODE_ALL_RECORDS, $LOW_FORM_CYCLE_MODE_CURRENT_PAGE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+		If Not __LO_IntIsBetween($iCycle, $LOW_FORM_CYCLE_MODE_ALL_RECORDS, $LOW_FORM_CYCLE_MODE_CURRENT_PAGE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 
 		$oForm.Cycle = $iCycle
 		$iError = ($oForm.Cycle() = $iCycle) ? ($iError) : (BitOR($iError, 8192))
@@ -14162,8 +14162,8 @@ Func _LOWriter_FormPropertiesGeneral(ByRef $oForm, $sName = Null, $sURL = Null, 
 	If Not IsObj($oForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oForm.supportsService("com.sun.star.form.component.Form") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOWriter_VarsAreNull($sName, $sURL, $sFrame, $iEncoding, $iSubType) Then
-		__LOWriter_ArrayFill($avForm, $oForm.Name(), $oForm.URL(), $oForm.TargetFrame(), $oForm.SubmitEncoding(), $oForm.SubmitMethod())
+	If __LO_VarsAreNull($sName, $sURL, $sFrame, $iEncoding, $iSubType) Then
+		__LO_ArrayFill($avForm, $oForm.Name(), $oForm.URL(), $oForm.TargetFrame(), $oForm.SubmitEncoding(), $oForm.SubmitMethod())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avForm)
 	EndIf
@@ -14193,14 +14193,14 @@ Func _LOWriter_FormPropertiesGeneral(ByRef $oForm, $sName = Null, $sURL = Null, 
 	EndIf
 
 	If ($iEncoding <> Null) Then
-		If Not __LOWriter_IntIsBetween($iEncoding, $LOW_FORM_SUBMIT_ENCODING_URL, $LOW_FORM_SUBMIT_ENCODING_TEXT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LO_IntIsBetween($iEncoding, $LOW_FORM_SUBMIT_ENCODING_URL, $LOW_FORM_SUBMIT_ENCODING_TEXT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$oForm.SubmitEncoding = $iEncoding
 		$iError = ($oForm.SubmitEncoding() = $iEncoding) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iSubType <> Null) Then
-		If Not __LOWriter_IntIsBetween($iSubType, $LOW_FORM_SUBMIT_METHOD_GET, $LOW_FORM_SUBMIT_METHOD_POST) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LO_IntIsBetween($iSubType, $LOW_FORM_SUBMIT_METHOD_GET, $LOW_FORM_SUBMIT_METHOD_POST) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 		$oForm.SubmitMethod = $iSubType
 		$iError = ($oForm.SubmitMethod() = $iSubType) ? ($iError) : (BitOR($iError, 16))

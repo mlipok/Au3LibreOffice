@@ -106,7 +106,7 @@
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertColorFromLong, _LO_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -120,14 +120,14 @@ Func _LOWriter_PageStyleAreaColor(ByRef $oPageStyle, $iBackColor = Null, $bBackT
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOWriter_VarsAreNull($iBackColor, $bBackTransparent) Then
-		__LOWriter_ArrayFill($avColor, __LOWriter_ColorRemoveAlpha($oPageStyle.BackColor()), $oPageStyle.BackTransparent())
+	If __LO_VarsAreNull($iBackColor, $bBackTransparent) Then
+		__LO_ArrayFill($avColor, __LOWriter_ColorRemoveAlpha($oPageStyle.BackColor()), $oPageStyle.BackTransparent())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avColor)
 	EndIf
 
 	If ($iBackColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$iOldTransparency = $oPageStyle.FillTransparence()
 		If Not IsInt($iOldTransparency) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -244,7 +244,7 @@ EndFunc   ;==>_LOWriter_PageStyleAreaFillStyle
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Gradient Name has no use other than for applying a pre-existing preset gradient.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertColorFromLong, _LO_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -265,8 +265,8 @@ Func _LOWriter_PageStyleAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGradientN
 	$tStyleGradient = $oPageStyle.FillGradient()
 	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sGradientName, $iType, $iIncrement, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iFromColor, $iToColor, $iFromIntense, $iToIntense) Then
-		__LOWriter_ArrayFill($avGradient, $oPageStyle.FillGradientName(), $tStyleGradient.Style(), _
+	If __LO_VarsAreNull($sGradientName, $iType, $iIncrement, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iFromColor, $iToColor, $iFromIntense, $iToIntense) Then
+		__LO_ArrayFill($avGradient, $oPageStyle.FillGradientName(), $tStyleGradient.Style(), _
 				$oPageStyle.FillGradientStepCount(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), Int($tStyleGradient.Angle() / 10), _
 				$tStyleGradient.Border(), $tStyleGradient.StartColor(), $tStyleGradient.EndColor(), $tStyleGradient.StartIntensity(), _
 				$tStyleGradient.EndIntensity()) ; Angle is set in thousands
@@ -290,13 +290,13 @@ Func _LOWriter_PageStyleAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGradientN
 			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf
 
-		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$tStyleGradient.Style = $iType
 	EndIf
 
 	If ($iIncrement <> Null) Then
-		If Not __LOWriter_IntIsBetween($iIncrement, 3, 256, "", 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iIncrement, 3, 256, "", 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oPageStyle.FillGradientStepCount = $iIncrement
 		$tStyleGradient.StepCount = $iIncrement ; Must set both of these in order for it to take effect.
@@ -304,35 +304,35 @@ Func _LOWriter_PageStyleAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGradientN
 	EndIf
 
 	If ($iXCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LO_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$tStyleGradient.XOffset = $iXCenter
 	EndIf
 
 	If ($iYCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LO_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 		$tStyleGradient.YOffset = $iYCenter
 	EndIf
 
 	If ($iAngle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LO_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 		$tStyleGradient.Angle = Int($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iTransitionStart <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		If Not __LO_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
 		$tStyleGradient.Border = $iTransitionStart
 	EndIf
 
 	If ($iFromColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iFromColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		If Not __LO_IntIsBetween($iFromColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 
 		$tStyleGradient.StartColor = $iFromColor
 
-		If __LOWriter_VersionCheck(7.6) Then
+		If __LO_VersionCheck(7.6) Then
 			$atColorStop = $tStyleGradient.ColorStops()
 			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -353,11 +353,11 @@ Func _LOWriter_PageStyleAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGradientN
 	EndIf
 
 	If ($iToColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iToColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LO_IntIsBetween($iToColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 
 		$tStyleGradient.EndColor = $iToColor
 
-		If __LOWriter_VersionCheck(7.6) Then
+		If __LO_VersionCheck(7.6) Then
 			$atColorStop = $tStyleGradient.ColorStops()
 			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -378,13 +378,13 @@ Func _LOWriter_PageStyleAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGradientN
 	EndIf
 
 	If ($iFromIntense <> Null) Then
-		If Not __LOWriter_IntIsBetween($iFromIntense, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+		If Not __LO_IntIsBetween($iFromIntense, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 
 		$tStyleGradient.StartIntensity = $iFromIntense
 	EndIf
 
 	If ($iToIntense <> Null) Then
-		If Not __LOWriter_IntIsBetween($iToIntense, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		If Not __LO_IntIsBetween($iToIntense, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 
 		$tStyleGradient.EndIntensity = $iToIntense
 	EndIf
@@ -465,12 +465,12 @@ Func _LOWriter_PageStyleAreaGradientMulticolor(ByRef $oPageStyle, $avColorStops 
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOWriter_VersionCheck(7.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not __LO_VersionCheck(7.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 
 	$tStyleGradient = $oPageStyle.FillGradient()
 	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($avColorStops) Then
+	If __LO_VarsAreNull($avColorStops) Then
 		$atColorStops = $tStyleGradient.ColorStops()
 		If Not IsArray($atColorStops) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -494,16 +494,16 @@ Func _LOWriter_PageStyleAreaGradientMulticolor(ByRef $oPageStyle, $avColorStops 
 	ReDim $atColorStops[UBound($avColorStops)]
 
 	For $i = 0 To UBound($avColorStops) - 1
-		$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+		$tColorStop = __LO_CreateStruct("com.sun.star.awt.ColorStop")
 		If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 		$tStopColor = $tColorStop.StopColor()
 		If Not IsObj($tStopColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-		If Not __LOWriter_NumIsBetween($avColorStops[$i][0], 0, 1.0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
+		If Not __LO_NumIsBetween($avColorStops[$i][0], 0, 1.0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
 
 		$tColorStop.StopOffset = $avColorStops[$i][0]
 
-		If Not __LOWriter_IntIsBetween($avColorStops[$i][1], $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
+		If Not __LO_IntIsBetween($avColorStops[$i][1], $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
 
 		$tStopColor.Red = (BitAND(BitShift($avColorStops[$i][1], 16), 0xff) / 255)
 		$tStopColor.Green = (BitAND(BitShift($avColorStops[$i][1], 8), 0xff) / 255)
@@ -559,9 +559,9 @@ Func _LOWriter_PageStyleAreaTransparency(ByRef $oPageStyle, $iTransparency = Nul
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOWriter_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oPageStyle.FillTransparence())
+	If __LO_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oPageStyle.FillTransparence())
 
-	If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oPageStyle.FillTransparenceGradientName = ""
 	$oPageStyle.FillTransparence = $iTransparency
@@ -640,8 +640,8 @@ Func _LOWriter_PageStyleAreaTransparencyGradient(ByRef $oDoc, ByRef $oPageStyle,
 	$tStyleGradient = $oPageStyle.FillTransparenceGradient()
 	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
-		__LOWriter_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
+	If __LO_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
+		__LO_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
 				Int($tStyleGradient.Angle() / 10), $tStyleGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.StartColor()), _
 				__LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.EndColor())) ; Angle is set in thousands
 
@@ -655,41 +655,41 @@ Func _LOWriter_PageStyleAreaTransparencyGradient(ByRef $oDoc, ByRef $oPageStyle,
 			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf
 
-		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LO_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		$tStyleGradient.Style = $iType
 	EndIf
 
 	If ($iXCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$tStyleGradient.XOffset = $iXCenter
 	EndIf
 
 	If ($iYCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$tStyleGradient.YOffset = $iYCenter
 	EndIf
 
 	If ($iAngle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LO_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$tStyleGradient.Angle = Int($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iTransitionStart <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LO_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 		$tStyleGradient.Border = $iTransitionStart
 	EndIf
 
 	If ($iStart <> Null) Then
-		If Not __LOWriter_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LO_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 		$tStyleGradient.StartColor = __LOWriter_TransparencyGradientConvert($iStart)
 
-		If __LOWriter_VersionCheck(7.6) Then
+		If __LO_VersionCheck(7.6) Then
 			$atColorStop = $tStyleGradient.ColorStops()
 			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -712,11 +712,11 @@ Func _LOWriter_PageStyleAreaTransparencyGradient(ByRef $oDoc, ByRef $oPageStyle,
 	EndIf
 
 	If ($iEnd <> Null) Then
-		If Not __LOWriter_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		If Not __LO_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
 		$tStyleGradient.EndColor = __LOWriter_TransparencyGradientConvert($iEnd)
 
-		If __LOWriter_VersionCheck(7.6) Then
+		If __LO_VersionCheck(7.6) Then
 			$atColorStop = $tStyleGradient.ColorStops()
 			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -811,12 +811,12 @@ Func _LOWriter_PageStyleAreaTransparencyGradientMulti(ByRef $oPageStyle, $avColo
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOWriter_VersionCheck(7.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not __LO_VersionCheck(7.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 
 	$tStyleGradient = $oPageStyle.FillTransparenceGradient()
 	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($avColorStops) Then
+	If __LO_VarsAreNull($avColorStops) Then
 		$atColorStops = $tStyleGradient.ColorStops()
 		If Not IsArray($atColorStops) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -840,16 +840,16 @@ Func _LOWriter_PageStyleAreaTransparencyGradientMulti(ByRef $oPageStyle, $avColo
 	ReDim $atColorStops[UBound($avColorStops)]
 
 	For $i = 0 To UBound($avColorStops) - 1
-		$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+		$tColorStop = __LO_CreateStruct("com.sun.star.awt.ColorStop")
 		If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 		$tStopColor = $tColorStop.StopColor()
 		If Not IsObj($tStopColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-		If Not __LOWriter_NumIsBetween($avColorStops[$i][0], 0, 1.0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
+		If Not __LO_NumIsBetween($avColorStops[$i][0], 0, 1.0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
 
 		$tColorStop.StopOffset = $avColorStops[$i][0]
 
-		If Not __LOWriter_IntIsBetween($avColorStops[$i][1], 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
+		If Not __LO_IntIsBetween($avColorStops[$i][1], 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
 
 		$tStopColor.Red = ($avColorStops[$i][1] / 100)
 		$tStopColor.Green = ($avColorStops[$i][1] / 100)
@@ -907,7 +907,7 @@ EndFunc   ;==>_LOWriter_PageStyleAreaTransparencyGradientMulti
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_PageStyleBorderWidth, _LOWriter_PageStyleBorderStyle, _LOWriter_PageStyleBorderPadding
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LOWriter_PageStyleBorderWidth, _LOWriter_PageStyleBorderStyle, _LOWriter_PageStyleBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -919,10 +919,10 @@ Func _LOWriter_PageStyleBorderColor(ByRef $oPageStyle, $iTop = Null, $iBottom = 
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LO_IntIsBetween($iTop, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LO_IntIsBetween($iBottom, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LO_IntIsBetween($iLeft, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LO_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_Border($oPageStyle, False, False, True, $iTop, $iBottom, $iLeft, $iRight)
 
@@ -963,7 +963,7 @@ EndFunc   ;==>_LOWriter_PageStyleBorderColor
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_PageStyleBorderWidth, _LOWriter_PageStyleBorderStyle, _LOWriter_PageStyleBorderColor
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOWriter_PageStyleBorderWidth, _LOWriter_PageStyleBorderStyle, _LOWriter_PageStyleBorderColor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -977,46 +977,46 @@ Func _LOWriter_PageStyleBorderPadding(ByRef $oPageStyle, $iAll = Null, $iTop = N
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOWriter_VarsAreNull($iAll, $iTop, $iBottom, $iLeft, $iRight) Then
-		__LOWriter_ArrayFill($aiBPadding, $oPageStyle.BorderDistance(), $oPageStyle.TopBorderDistance(), _
+	If __LO_VarsAreNull($iAll, $iTop, $iBottom, $iLeft, $iRight) Then
+		__LO_ArrayFill($aiBPadding, $oPageStyle.BorderDistance(), $oPageStyle.TopBorderDistance(), _
 				$oPageStyle.BottomBorderDistance(), $oPageStyle.LeftBorderDistance(), $oPageStyle.RightBorderDistance())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiBPadding)
 	EndIf
 
 	If ($iAll <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAll, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		If Not __LO_IntIsBetween($iAll, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oPageStyle.BorderDistance = $iAll
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.BorderDistance(), $iAll - 1, $iAll + 1)) ? ($iError) : (BitOR($iError, 1))
+		$iError = (__LO_IntIsBetween($oPageStyle.BorderDistance(), $iAll - 1, $iAll + 1)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iTop <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LO_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		$oPageStyle.TopBorderDistance = $iTop
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.TopBorderDistance(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 2))
+		$iError = (__LO_IntIsBetween($oPageStyle.TopBorderDistance(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iBottom <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oPageStyle.BottomBorderDistance = $iBottom
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.BottomBorderDistance(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 4))
+		$iError = (__LO_IntIsBetween($oPageStyle.BottomBorderDistance(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iLeft <> Null) Then
-		If Not __LOWriter_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oPageStyle.LeftBorderDistance = $iLeft
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.LeftBorderDistance(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 8))
+		$iError = (__LO_IntIsBetween($oPageStyle.LeftBorderDistance(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iRight <> Null) Then
-		If Not __LOWriter_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LO_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$oPageStyle.RightBorderDistance = $iRight
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.RightBorderDistance(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 16))
+		$iError = (__LO_IntIsBetween($oPageStyle.RightBorderDistance(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
@@ -1071,10 +1071,10 @@ Func _LOWriter_PageStyleBorderStyle(ByRef $oPageStyle, $iTop = Null, $iBottom = 
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LO_IntIsBetween($iTop, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LO_IntIsBetween($iBottom, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LO_IntIsBetween($iLeft, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LO_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_Border($oPageStyle, False, True, False, $iTop, $iBottom, $iLeft, $iRight)
 
@@ -1113,7 +1113,7 @@ EndFunc   ;==>_LOWriter_PageStyleBorderStyle
 ; Remarks .......: To "Turn Off" Borders, set Width to 0
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_PageStyleBorderStyle, _LOWriter_PageStyleBorderColor, _LOWriter_PageStyleBorderPadding
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOWriter_PageStyleBorderStyle, _LOWriter_PageStyleBorderColor, _LOWriter_PageStyleBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1125,10 +1125,10 @@ Func _LOWriter_PageStyleBorderWidth(ByRef $oPageStyle, $iTop = Null, $iBottom = 
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LO_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LO_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LO_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LO_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_Border($oPageStyle, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
 
@@ -1174,7 +1174,7 @@ EndFunc   ;==>_LOWriter_PageStyleBorderWidth
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1192,8 +1192,8 @@ Func _LOWriter_PageStyleColumnSeparator(ByRef $oPageStyle, $bSeparatorOn = Null,
 	$oTextColumns = $oPageStyle.TextColumns()
 	If Not IsObj($oTextColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($bSeparatorOn, $iStyle, $iWidth, $iColor, $iHeight, $iPosition) Then
-		__LOWriter_ArrayFill($avColumnLine, $oTextColumns.SeparatorLineIsOn(), $oTextColumns.SeparatorLineStyle(), $oTextColumns.SeparatorLineWidth(), _
+	If __LO_VarsAreNull($bSeparatorOn, $iStyle, $iWidth, $iColor, $iHeight, $iPosition) Then
+		__LO_ArrayFill($avColumnLine, $oTextColumns.SeparatorLineIsOn(), $oTextColumns.SeparatorLineStyle(), $oTextColumns.SeparatorLineWidth(), _
 				$oTextColumns.SeparatorLineColor(), $oTextColumns.SeparatorLineRelativeHeight(), $oTextColumns.SeparatorLineVerticalAlignment())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avColumnLine)
@@ -1207,35 +1207,35 @@ Func _LOWriter_PageStyleColumnSeparator(ByRef $oPageStyle, $bSeparatorOn = Null,
 	EndIf
 
 	If ($iStyle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iStyle, $LOW_LINE_STYLE_NONE, $LOW_LINE_STYLE_DASHED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LO_IntIsBetween($iStyle, $LOW_LINE_STYLE_NONE, $LOW_LINE_STYLE_DASHED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		$oTextColumns.SeparatorLineStyle = $iStyle
 		$iError = ($oTextColumns.SeparatorLineStyle() = $iStyle) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iWidth <> Null) Then
-		If Not __LOWriter_IntIsBetween($iWidth, 5, 180) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iWidth, 5, 180) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oTextColumns.SeparatorLineWidth = $iWidth
-		$iError = (__LOWriter_IntIsBetween($oTextColumns.SeparatorLineWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 4))
+		$iError = (__LO_IntIsBetween($oTextColumns.SeparatorLineWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oTextColumns.SeparatorLineColor = $iColor
 		$iError = ($oTextColumns.SeparatorLineColor() = $iColor) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iHeight <> Null) Then
-		If Not __LOWriter_IntIsBetween($iHeight, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LO_IntIsBetween($iHeight, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$oTextColumns.SeparatorLineRelativeHeight = $iHeight
 		$iError = ($oTextColumns.SeparatorLineRelativeHeight() = $iHeight) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($iPosition <> Null) Then
-		If Not __LOWriter_IntIsBetween($iPosition, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LO_IntIsBetween($iPosition, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 		$oTextColumns.SeparatorLineVerticalAlignment = $iPosition
 		$iError = ($oTextColumns.SeparatorLineVerticalAlignment() = $iPosition) ? ($iError) : (BitOR($iError, 32))
@@ -1287,9 +1287,9 @@ Func _LOWriter_PageStyleColumnSettings(ByRef $oPageStyle, $iColumns = Null)
 	$oTextColumns = $oPageStyle.TextColumns()
 	If Not IsObj($oTextColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($iColumns) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oTextColumns.ColumnCount())
+	If __LO_VarsAreNull($iColumns) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oTextColumns.ColumnCount())
 
-	If Not __LOWriter_IntIsBetween($iColumns, 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iColumns, 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oTextColumns.ColumnCount = $iColumns
 	$oPageStyle.TextColumns = $oTextColumns
@@ -1340,7 +1340,7 @@ EndFunc   ;==>_LOWriter_PageStyleColumnSettings
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  To set $bAutoWidth or $iGlobalSpacing you may enter any number in $iColumn as long as you are not setting width or spacing, as AutoWidth is not column specific. If you set a value for $iGlobalSpacing with $bAutoWidth set to false, the value is applied to all the columns still.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1367,13 +1367,13 @@ Func _LOWriter_PageStyleColumnSize(ByRef $oPageStyle, $iColumn, $bAutoWidth = Nu
 
 	$iColumn = $iColumn - 1 ; Libre Columns Array is 0 based -- Minus one to compensate
 
-	If __LOWriter_VarsAreNull($bAutoWidth, $iGlobalSpacing, $iSpacing, $iWidth) Then
+	If __LO_VarsAreNull($bAutoWidth, $iGlobalSpacing, $iSpacing, $iWidth) Then
 		If ($iColumn = (UBound($atColumns) - 1)) Then ; If last column is called, there is no spacing value, so return the outer margin, which will be 0.
-			__LOWriter_ArrayFill($avColumnSize, $oTextColumns.IsAutomatic, $oTextColumns.AutomaticDistance(), _
+			__LO_ArrayFill($avColumnSize, $oTextColumns.IsAutomatic, $oTextColumns.AutomaticDistance(), _
 					$atColumns[$iColumn].RightMargin(), $atColumns[$iColumn].Width())
 
 		Else
-			__LOWriter_ArrayFill($avColumnSize, $oTextColumns.IsAutomatic, $oTextColumns.AutomaticDistance(), _
+			__LO_ArrayFill($avColumnSize, $oTextColumns.IsAutomatic, $oTextColumns.AutomaticDistance(), _
 					$atColumns[$iColumn].RightMargin() + $atColumns[$iColumn + 1].LeftMargin(), $atColumns[$iColumn].Width())
 		EndIf
 
@@ -1413,7 +1413,7 @@ Func _LOWriter_PageStyleColumnSize(ByRef $oPageStyle, $iColumn, $bAutoWidth = Nu
 
 		If ($oPageStyle.TextColumns.IsAutomatic() = True) Then ; If AutoWidth is on (True) Then error test, else don't, because I use $iGlobalSpacing
 			; for setting the width internally also.
-			$iError = (__LOWriter_IntIsBetween($oPageStyle.TextColumns.AutomaticDistance(), $iGlobalSpacing - 2, $iGlobalSpacing + 2)) ? ($iError) : (BitOR($iError, 2))
+			$iError = (__LO_IntIsBetween($oPageStyle.TextColumns.AutomaticDistance(), $iGlobalSpacing - 2, $iGlobalSpacing + 2)) ? ($iError) : (BitOR($iError, 2))
 		EndIf
 	EndIf
 
@@ -1443,7 +1443,7 @@ Func _LOWriter_PageStyleColumnSize(ByRef $oPageStyle, $iColumn, $bAutoWidth = Nu
 
 			; See if setting spacing worked. Spacing is equally divided between the two adjoining columns, so retrieve the first columns right
 			; margin, and the next column's left margin.
-			$iError = (__LOWriter_IntIsBetween($atColumns[$iColumn].RightMargin() + $atColumns[$iColumn + 1].LeftMargin(), $iSpacing - 1, $iSpacing + 1)) ? ($iError) : (BitOR($iError, 4))
+			$iError = (__LO_IntIsBetween($atColumns[$iColumn].RightMargin() + $atColumns[$iColumn + 1].LeftMargin(), $iSpacing - 1, $iSpacing + 1)) ? ($iError) : (BitOR($iError, 4))
 		EndIf
 	EndIf
 
@@ -1460,7 +1460,7 @@ Func _LOWriter_PageStyleColumnSize(ByRef $oPageStyle, $iColumn, $bAutoWidth = Nu
 		$atColumns = $oPageStyle.TextColumns.Columns()
 		If Not IsArray($atColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-		$iError = ($iWidth = Null) ? ($iError) : ((__LOWriter_IntIsBetween($atColumns[$iColumn].Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 8)))
+		$iError = ($iWidth = Null) ? ($iError) : ((__LO_IntIsBetween($atColumns[$iColumn].Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 8)))
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
@@ -1650,7 +1650,7 @@ EndFunc   ;==>_LOWriter_PageStyleExists
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1664,14 +1664,14 @@ Func _LOWriter_PageStyleFooter(ByRef $oPageStyle, $bFooterOn = Null, $bSameLeftR
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOWriter_VarsAreNull($bFooterOn, $bSameLeftRight, $bSameOnFirst, $iLeftMargin, $iRightMargin, $iSpacing, $bDynamicSpacing, $iHeight, $bAutoHeight) Then
-		If __LOWriter_VersionCheck(4.0) Then
-			__LOWriter_ArrayFill($avFooter, $oPageStyle.FooterIsOn(), $oPageStyle.FooterIsShared(), $oPageStyle.FirstIsShared(), $oPageStyle.FooterLeftMargin(), _
+	If __LO_VarsAreNull($bFooterOn, $bSameLeftRight, $bSameOnFirst, $iLeftMargin, $iRightMargin, $iSpacing, $bDynamicSpacing, $iHeight, $bAutoHeight) Then
+		If __LO_VersionCheck(4.0) Then
+			__LO_ArrayFill($avFooter, $oPageStyle.FooterIsOn(), $oPageStyle.FooterIsShared(), $oPageStyle.FirstIsShared(), $oPageStyle.FooterLeftMargin(), _
 					$oPageStyle.FooterRightMargin(), $oPageStyle.FooterBodyDistance(), $oPageStyle.FooterDynamicSpacing(), $oPageStyle.FooterHeight(), _
 					$oPageStyle.FooterIsDynamicHeight())
 
 		Else
-			__LOWriter_ArrayFill($avFooter, $oPageStyle.FooterIsOn(), $oPageStyle.FooterIsShared(), $oPageStyle.FooterLeftMargin(), _
+			__LO_ArrayFill($avFooter, $oPageStyle.FooterIsOn(), $oPageStyle.FooterIsShared(), $oPageStyle.FooterLeftMargin(), _
 					$oPageStyle.FooterRightMargin(), $oPageStyle.FooterBodyDistance(), $oPageStyle.FooterDynamicSpacing(), $oPageStyle.FooterHeight(), _
 					$oPageStyle.FooterIsDynamicHeight())
 		EndIf
@@ -1695,7 +1695,7 @@ Func _LOWriter_PageStyleFooter(ByRef $oPageStyle, $bFooterOn = Null, $bSameLeftR
 
 	If ($bSameOnFirst <> Null) Then
 		If Not IsBool($bSameOnFirst) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-		If Not __LOWriter_VersionCheck(4.0) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+		If Not __LO_VersionCheck(4.0) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 
 		$oPageStyle.FirstIsShared = $bSameOnFirst
 		$iError = ($oPageStyle.FirstIsShared() = $bSameOnFirst) ? ($iError) : (BitOR($iError, 4))
@@ -1705,21 +1705,21 @@ Func _LOWriter_PageStyleFooter(ByRef $oPageStyle, $bFooterOn = Null, $bSameLeftR
 		If Not IsInt($iLeftMargin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oPageStyle.FooterLeftMargin = $iLeftMargin
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.FooterLeftMargin(), $iLeftMargin - 1, $iLeftMargin + 1)) ? ($iError) : (BitOR($iError, 8))
+		$iError = (__LO_IntIsBetween($oPageStyle.FooterLeftMargin(), $iLeftMargin - 1, $iLeftMargin + 1)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iRightMargin <> Null) Then
 		If Not IsInt($iRightMargin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$oPageStyle.FooterRightMargin = $iRightMargin
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.FooterRightMargin(), $iRightMargin - 1, $iRightMargin + 1)) ? ($iError) : (BitOR($iError, 16))
+		$iError = (__LO_IntIsBetween($oPageStyle.FooterRightMargin(), $iRightMargin - 1, $iRightMargin + 1)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($iSpacing <> Null) Then
 		If Not IsInt($iSpacing) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 		$oPageStyle.FooterBodyDistance = $iSpacing
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.FooterBodyDistance(), $iSpacing - 1, $iSpacing + 1)) ? ($iError) : (BitOR($iError, 32))
+		$iError = (__LO_IntIsBetween($oPageStyle.FooterBodyDistance(), $iSpacing - 1, $iSpacing + 1)) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($bDynamicSpacing <> Null) Then
@@ -1733,7 +1733,7 @@ Func _LOWriter_PageStyleFooter(ByRef $oPageStyle, $bFooterOn = Null, $bSameLeftR
 		If Not IsInt($iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
 		$oPageStyle.FooterHeight = $iHeight
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.FooterHeight(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 128))
+		$iError = (__LO_IntIsBetween($oPageStyle.FooterHeight(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
 	If ($bAutoHeight <> Null) Then
@@ -1774,7 +1774,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooter
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertColorFromLong, _LO_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1789,14 +1789,14 @@ Func _LOWriter_PageStyleFooterAreaColor(ByRef $oPageStyle, $iBackColor = Null, $
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($oPageStyle.FooterIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($iBackColor, $bBackTransparent) Then
-		__LOWriter_ArrayFill($avColor, __LOWriter_ColorRemoveAlpha($oPageStyle.FooterBackColor()), $oPageStyle.FooterBackTransparent())
+	If __LO_VarsAreNull($iBackColor, $bBackTransparent) Then
+		__LO_ArrayFill($avColor, __LOWriter_ColorRemoveAlpha($oPageStyle.FooterBackColor()), $oPageStyle.FooterBackTransparent())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avColor)
 	EndIf
 
 	If ($iBackColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$iOldTransparency = $oPageStyle.FooterFillTransparence()
 		If Not IsInt($iOldTransparency) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
@@ -1914,7 +1914,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterAreaFillStyle
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Gradient Name has no use other than for applying a pre-existing preset gradient.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertColorFromLong, _LO_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1936,8 +1936,8 @@ Func _LOWriter_PageStyleFooterAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 	$tStyleGradient = $oPageStyle.FooterFillGradient()
 	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	If __LOWriter_VarsAreNull($sGradientName, $iType, $iIncrement, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iFromColor, $iToColor, $iFromIntense, $iToIntense) Then
-		__LOWriter_ArrayFill($avGradient, $oPageStyle.FooterFillGradientName(), $tStyleGradient.Style(), _
+	If __LO_VarsAreNull($sGradientName, $iType, $iIncrement, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iFromColor, $iToColor, $iFromIntense, $iToIntense) Then
+		__LO_ArrayFill($avGradient, $oPageStyle.FooterFillGradientName(), $tStyleGradient.Style(), _
 				$oPageStyle.FooterFillGradientStepCount(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), Int($tStyleGradient.Angle() / 10), _
 				$tStyleGradient.Border(), $tStyleGradient.StartColor(), $tStyleGradient.EndColor(), $tStyleGradient.StartIntensity(), _
 				$tStyleGradient.EndIntensity()) ; Angle is set in thousands
@@ -1961,13 +1961,13 @@ Func _LOWriter_PageStyleFooterAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf
 
-		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$tStyleGradient.Style = $iType
 	EndIf
 
 	If ($iIncrement <> Null) Then
-		If Not __LOWriter_IntIsBetween($iIncrement, 3, 256, "", 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iIncrement, 3, 256, "", 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oPageStyle.FooterFillGradientStepCount = $iIncrement
 		$tStyleGradient.StepCount = $iIncrement ; Must set both of these in order for it to take effect.
@@ -1975,35 +1975,35 @@ Func _LOWriter_PageStyleFooterAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 	EndIf
 
 	If ($iXCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LO_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$tStyleGradient.XOffset = $iXCenter
 	EndIf
 
 	If ($iYCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LO_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 		$tStyleGradient.YOffset = $iYCenter
 	EndIf
 
 	If ($iAngle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LO_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 		$tStyleGradient.Angle = Int($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iTransitionStart <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		If Not __LO_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
 		$tStyleGradient.Border = $iTransitionStart
 	EndIf
 
 	If ($iFromColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iFromColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		If Not __LO_IntIsBetween($iFromColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 
 		$tStyleGradient.StartColor = $iFromColor
 
-		If __LOWriter_VersionCheck(7.6) Then
+		If __LO_VersionCheck(7.6) Then
 			$atColorStop = $tStyleGradient.ColorStops()
 			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
@@ -2024,11 +2024,11 @@ Func _LOWriter_PageStyleFooterAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 	EndIf
 
 	If ($iToColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iToColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LO_IntIsBetween($iToColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 
 		$tStyleGradient.EndColor = $iToColor
 
-		If __LOWriter_VersionCheck(7.6) Then
+		If __LO_VersionCheck(7.6) Then
 			$atColorStop = $tStyleGradient.ColorStops()
 			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
@@ -2049,13 +2049,13 @@ Func _LOWriter_PageStyleFooterAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 	EndIf
 
 	If ($iFromIntense <> Null) Then
-		If Not __LOWriter_IntIsBetween($iFromIntense, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+		If Not __LO_IntIsBetween($iFromIntense, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 
 		$tStyleGradient.StartIntensity = $iFromIntense
 	EndIf
 
 	If ($iToIntense <> Null) Then
-		If Not __LOWriter_IntIsBetween($iToIntense, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		If Not __LO_IntIsBetween($iToIntense, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 
 		$tStyleGradient.EndIntensity = $iToIntense
 	EndIf
@@ -2136,12 +2136,12 @@ Func _LOWriter_PageStyleFooterAreaGradientMulticolor(ByRef $oPageStyle, $avColor
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOWriter_VersionCheck(7.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not __LO_VersionCheck(7.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 
 	$tStyleGradient = $oPageStyle.FooterFillGradient()
 	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($avColorStops) Then
+	If __LO_VarsAreNull($avColorStops) Then
 		$atColorStops = $tStyleGradient.ColorStops()
 		If Not IsArray($atColorStops) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -2165,16 +2165,16 @@ Func _LOWriter_PageStyleFooterAreaGradientMulticolor(ByRef $oPageStyle, $avColor
 	ReDim $atColorStops[UBound($avColorStops)]
 
 	For $i = 0 To UBound($avColorStops) - 1
-		$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+		$tColorStop = __LO_CreateStruct("com.sun.star.awt.ColorStop")
 		If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 		$tStopColor = $tColorStop.StopColor()
 		If Not IsObj($tStopColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-		If Not __LOWriter_NumIsBetween($avColorStops[$i][0], 0, 1.0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
+		If Not __LO_NumIsBetween($avColorStops[$i][0], 0, 1.0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
 
 		$tColorStop.StopOffset = $avColorStops[$i][0]
 
-		If Not __LOWriter_IntIsBetween($avColorStops[$i][1], $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
+		If Not __LO_IntIsBetween($avColorStops[$i][1], $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
 
 		$tStopColor.Red = (BitAND(BitShift($avColorStops[$i][1], 16), 0xff) / 255)
 		$tStopColor.Green = (BitAND(BitShift($avColorStops[$i][1], 8), 0xff) / 255)
@@ -2233,9 +2233,9 @@ Func _LOWriter_PageStyleFooterAreaTransparency(ByRef $oPageStyle, $iTransparency
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($oPageStyle.FooterIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oPageStyle.FooterFillTransparence())
+	If __LO_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oPageStyle.FooterFillTransparence())
 
-	If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oPageStyle.FooterFillTransparenceGradientName = ""
 	$oPageStyle.FooterFillTransparence = $iTransparency
@@ -2316,8 +2316,8 @@ Func _LOWriter_PageStyleFooterAreaTransparencyGradient(ByRef $oDoc, ByRef $oPage
 	$tStyleGradient = $oPageStyle.FooterFillTransparenceGradient()
 	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
-		__LOWriter_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
+	If __LO_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
+		__LO_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
 				Int($tStyleGradient.Angle() / 10), $tStyleGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.StartColor()), _
 				__LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.EndColor())) ; Angle is set in thousands
 
@@ -2331,41 +2331,41 @@ Func _LOWriter_PageStyleFooterAreaTransparencyGradient(ByRef $oDoc, ByRef $oPage
 			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf
 
-		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LO_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		$tStyleGradient.Style = $iType
 	EndIf
 
 	If ($iXCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$tStyleGradient.XOffset = $iXCenter
 	EndIf
 
 	If ($iYCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$tStyleGradient.YOffset = $iYCenter
 	EndIf
 
 	If ($iAngle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LO_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$tStyleGradient.Angle = Int($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iTransitionStart <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LO_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 		$tStyleGradient.Border = $iTransitionStart
 	EndIf
 
 	If ($iStart <> Null) Then
-		If Not __LOWriter_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LO_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 		$tStyleGradient.StartColor = __LOWriter_TransparencyGradientConvert($iStart)
 
-		If __LOWriter_VersionCheck(7.6) Then
+		If __LO_VersionCheck(7.6) Then
 			$atColorStop = $tStyleGradient.ColorStops()
 			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
@@ -2388,11 +2388,11 @@ Func _LOWriter_PageStyleFooterAreaTransparencyGradient(ByRef $oDoc, ByRef $oPage
 	EndIf
 
 	If ($iEnd <> Null) Then
-		If Not __LOWriter_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		If Not __LO_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
 		$tStyleGradient.EndColor = __LOWriter_TransparencyGradientConvert($iEnd)
 
-		If __LOWriter_VersionCheck(7.6) Then
+		If __LO_VersionCheck(7.6) Then
 			$atColorStop = $tStyleGradient.ColorStops()
 			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
@@ -2487,12 +2487,12 @@ Func _LOWriter_PageStyleFooterAreaTransparencyGradientMulti(ByRef $oPageStyle, $
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOWriter_VersionCheck(7.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not __LO_VersionCheck(7.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 
 	$tStyleGradient = $oPageStyle.FooterFillTransparenceGradient()
 	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($avColorStops) Then
+	If __LO_VarsAreNull($avColorStops) Then
 		$atColorStops = $tStyleGradient.ColorStops()
 		If Not IsArray($atColorStops) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -2516,16 +2516,16 @@ Func _LOWriter_PageStyleFooterAreaTransparencyGradientMulti(ByRef $oPageStyle, $
 	ReDim $atColorStops[UBound($avColorStops)]
 
 	For $i = 0 To UBound($avColorStops) - 1
-		$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+		$tColorStop = __LO_CreateStruct("com.sun.star.awt.ColorStop")
 		If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 		$tStopColor = $tColorStop.StopColor()
 		If Not IsObj($tStopColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-		If Not __LOWriter_NumIsBetween($avColorStops[$i][0], 0, 1.0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
+		If Not __LO_NumIsBetween($avColorStops[$i][0], 0, 1.0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
 
 		$tColorStop.StopOffset = $avColorStops[$i][0]
 
-		If Not __LOWriter_IntIsBetween($avColorStops[$i][1], 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
+		If Not __LO_IntIsBetween($avColorStops[$i][1], 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
 
 		$tStopColor.Red = ($avColorStops[$i][1] / 100)
 		$tStopColor.Green = ($avColorStops[$i][1] / 100)
@@ -2582,7 +2582,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterAreaTransparencyGradientMulti
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_PageStyleFooterBorderWidth, _LOWriter_PageStyleFooterBorderStyle, _LOWriter_PageStyleFooterBorderPadding
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LOWriter_PageStyleFooterBorderWidth, _LOWriter_PageStyleFooterBorderStyle, _LOWriter_PageStyleFooterBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2595,10 +2595,10 @@ Func _LOWriter_PageStyleFooterBorderColor(ByRef $oPageStyle, $iTop = Null, $iBot
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($oPageStyle.FooterIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LO_IntIsBetween($iTop, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LO_IntIsBetween($iBottom, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LO_IntIsBetween($iLeft, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LO_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_FooterBorder($oPageStyle, False, False, True, $iTop, $iBottom, $iLeft, $iRight)
 
@@ -2641,7 +2641,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterBorderColor
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_PageStyleFooterBorderWidth, _LOWriter_PageStyleFooterBorderStyle, _LOWriter_PageStyleFooterBorderColor
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOWriter_PageStyleFooterBorderWidth, _LOWriter_PageStyleFooterBorderStyle, _LOWriter_PageStyleFooterBorderColor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2656,8 +2656,8 @@ Func _LOWriter_PageStyleFooterBorderPadding(ByRef $oPageStyle, $iAll = Null, $iT
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($oPageStyle.FooterIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($iAll, $iTop, $iBottom, $iLeft, $iRight) Then
-		__LOWriter_ArrayFill($aiBPadding, $oPageStyle.FooterBorderDistance(), $oPageStyle.FooterTopBorderDistance(), _
+	If __LO_VarsAreNull($iAll, $iTop, $iBottom, $iLeft, $iRight) Then
+		__LO_ArrayFill($aiBPadding, $oPageStyle.FooterBorderDistance(), $oPageStyle.FooterTopBorderDistance(), _
 				$oPageStyle.FooterBottomBorderDistance(), $oPageStyle.FooterLeftBorderDistance(), $oPageStyle.FooterRightBorderDistance())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiBPadding)
@@ -2667,35 +2667,35 @@ Func _LOWriter_PageStyleFooterBorderPadding(ByRef $oPageStyle, $iAll = Null, $iT
 		If Not (IsInt($iAll) Or ($iAll > 0)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oPageStyle.FooterBorderDistance = $iAll
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.FooterBorderDistance(), $iAll - 1, $iAll + 1)) ? ($iError) : (BitOR($iError, 1))
+		$iError = (__LO_IntIsBetween($oPageStyle.FooterBorderDistance(), $iAll - 1, $iAll + 1)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iTop <> Null) Then
 		If Not (IsInt($iTop) Or ($iTop > 0)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		$oPageStyle.FooterTopBorderDistance = $iTop
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.FooterTopBorderDistance(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 2))
+		$iError = (__LO_IntIsBetween($oPageStyle.FooterTopBorderDistance(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iBottom <> Null) Then
 		If Not (IsInt($iBottom) Or ($iBottom > 0)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oPageStyle.FooterBottomBorderDistance = $iBottom
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.FooterBottomBorderDistance(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 4))
+		$iError = (__LO_IntIsBetween($oPageStyle.FooterBottomBorderDistance(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iLeft <> Null) Then
 		If Not (IsInt($iLeft) Or ($iLeft > 0)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oPageStyle.FooterLeftBorderDistance = $iLeft
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.FooterLeftBorderDistance(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 8))
+		$iError = (__LO_IntIsBetween($oPageStyle.FooterLeftBorderDistance(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iRight <> Null) Then
 		If Not (IsInt($iRight) Or ($iRight > 0)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$oPageStyle.FooterRightBorderDistance = $iRight
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.FooterRightBorderDistance(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 16))
+		$iError = (__LO_IntIsBetween($oPageStyle.FooterRightBorderDistance(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
@@ -2750,10 +2750,10 @@ Func _LOWriter_PageStyleFooterBorderStyle(ByRef $oPageStyle, $iTop = Null, $iBot
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($oPageStyle.FooterIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LO_IntIsBetween($iTop, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LO_IntIsBetween($iBottom, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LO_IntIsBetween($iLeft, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LO_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_FooterBorder($oPageStyle, False, True, False, $iTop, $iBottom, $iLeft, $iRight)
 
@@ -2791,7 +2791,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterBorderStyle
 ; Remarks .......: To "Turn Off" Borders, set Width to 0.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_PageStyleFooterBorderStyle, _LOWriter_PageStyleFooterBorderColor, _LOWriter_PageStyleFooterBorderPadding
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOWriter_PageStyleFooterBorderStyle, _LOWriter_PageStyleFooterBorderColor, _LOWriter_PageStyleFooterBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2804,10 +2804,10 @@ Func _LOWriter_PageStyleFooterBorderWidth(ByRef $oPageStyle, $iTop = Null, $iBot
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($oPageStyle.FooterIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LO_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LO_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LO_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LO_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_FooterBorder($oPageStyle, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
 
@@ -2850,7 +2850,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterBorderWidth
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  LibreOffice may change the shadow width +/- a Micrometer.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2869,8 +2869,8 @@ Func _LOWriter_PageStyleFooterShadow(ByRef $oPageStyle, $iWidth = Null, $iColor 
 	$tShdwFrmt = $oPageStyle.FooterShadowFormat()
 	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	If __LOWriter_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
-		__LOWriter_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
+	If __LO_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
+		__LO_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avShadow)
 	EndIf
@@ -2882,7 +2882,7 @@ Func _LOWriter_PageStyleFooterShadow(ByRef $oPageStyle, $iWidth = Null, $iColor 
 	EndIf
 
 	If ($iColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LO_IntIsBetween($iColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		$tShdwFrmt.Color = $iColor
 	EndIf
@@ -2894,7 +2894,7 @@ Func _LOWriter_PageStyleFooterShadow(ByRef $oPageStyle, $iWidth = Null, $iColor 
 	EndIf
 
 	If ($iLocation <> Null) Then
-		If Not __LOWriter_IntIsBetween($iLocation, $LOW_SHADOW_NONE, $LOW_SHADOW_BOTTOM_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iLocation, $LOW_SHADOW_NONE, $LOW_SHADOW_BOTTOM_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$tShdwFrmt.Location = $iLocation
 	EndIf
@@ -2904,7 +2904,7 @@ Func _LOWriter_PageStyleFooterShadow(ByRef $oPageStyle, $iWidth = Null, $iColor 
 	$tShdwFrmt = $oPageStyle.FooterShadowFormat
 	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
-	$iError = ($iWidth = Null) ? ($iError) : ((__LOWriter_IntIsBetween($tShdwFrmt.ShadowWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
+	$iError = ($iWidth = Null) ? ($iError) : ((__LO_IntIsBetween($tShdwFrmt.ShadowWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
 	$iError = ($iColor = Null) ? ($iError) : (($tShdwFrmt.Color() = $iColor) ? ($iError) : (BitOR($iError, 2)))
 	$iError = ($bTransparent = Null) ? ($iError) : (($tShdwFrmt.IsTransparent() = $bTransparent) ? ($iError) : (BitOR($iError, 4)))
 	$iError = ($iLocation = Null) ? ($iError) : (($tShdwFrmt.Location() = $iLocation) ? ($iError) : (BitOR($iError, 8)))
@@ -2937,7 +2937,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterShadow
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2951,24 +2951,24 @@ Func _LOWriter_PageStyleFootnoteArea(ByRef $oPageStyle, $iFootnoteHeight = Null,
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOWriter_VarsAreNull($iFootnoteHeight, $iSpaceToText) Then
-		__LOWriter_ArrayFill($aiFootnote, $oPageStyle.FootnoteHeight(), $oPageStyle.FootnoteLineTextDistance())
+	If __LO_VarsAreNull($iFootnoteHeight, $iSpaceToText) Then
+		__LO_ArrayFill($aiFootnote, $oPageStyle.FootnoteHeight(), $oPageStyle.FootnoteLineTextDistance())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiFootnote)
 	EndIf
 
 	If ($iFootnoteHeight <> Null) Then
-		If Not __LOWriter_IntIsBetween($iFootnoteHeight, 508, $iFootnoteHeight, "", 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		If Not __LO_IntIsBetween($iFootnoteHeight, 508, $iFootnoteHeight, "", 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oPageStyle.FootnoteHeight = $iFootnoteHeight
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.FootnoteHeight(), $iFootnoteHeight - 1, $iFootnoteHeight + 1)) ? ($iError) : (BitOR($iError, 1))
+		$iError = (__LO_IntIsBetween($oPageStyle.FootnoteHeight(), $iFootnoteHeight - 1, $iFootnoteHeight + 1)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iSpaceToText <> Null) Then
 		If Not IsInt($iSpaceToText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		$oPageStyle.FootnoteLineTextDistance = $iSpaceToText
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.FootnoteLineTextDistance(), $iSpaceToText - 1, $iSpaceToText + 1)) ? ($iError) : (BitOR($iError, 2))
+		$iError = (__LO_IntIsBetween($oPageStyle.FootnoteLineTextDistance(), $iSpaceToText - 1, $iSpaceToText + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
@@ -3013,7 +3013,7 @@ EndFunc   ;==>_LOWriter_PageStyleFootnoteArea
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3027,47 +3027,47 @@ Func _LOWriter_PageStyleFootnoteLine(ByRef $oPageStyle, $iPosition = Null, $iSty
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOWriter_VarsAreNull($iPosition, $iStyle, $nThickness, $iColor, $iLength, $iSpacing) Then
-		__LOWriter_ArrayFill($avFootnoteLine, $oPageStyle.FootnoteLineAdjust(), $oPageStyle.FootnoteLineStyle(), _
-				__LOWriter_UnitConvert($oPageStyle.FootnoteLineWeight(), $__LOCONST_CONVERT_UM_PT), _ ; Convert Thickness from uM to Point.
+	If __LO_VarsAreNull($iPosition, $iStyle, $nThickness, $iColor, $iLength, $iSpacing) Then
+		__LO_ArrayFill($avFootnoteLine, $oPageStyle.FootnoteLineAdjust(), $oPageStyle.FootnoteLineStyle(), _
+				__LO_UnitConvert($oPageStyle.FootnoteLineWeight(), $__LOCONST_CONVERT_UM_PT), _ ; Convert Thickness from uM to Point.
 				$oPageStyle.FootnoteLineColor(), $oPageStyle.FootnoteLineRelativeWidth(), $oPageStyle.FootnoteLineDistance())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avFootnoteLine)
 	EndIf
 
 	If ($iPosition <> Null) Then
-		If Not __LOWriter_IntIsBetween($iPosition, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		If Not __LO_IntIsBetween($iPosition, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oPageStyle.FootnoteLineAdjust = $iPosition
 		$iError = ($oPageStyle.FootnoteLineAdjust() = $iPosition) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iStyle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iStyle, $LOW_LINE_STYLE_NONE, $LOW_LINE_STYLE_DASHED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LO_IntIsBetween($iStyle, $LOW_LINE_STYLE_NONE, $LOW_LINE_STYLE_DASHED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		$oPageStyle.FootnoteLineStyle = $iStyle
 		$iError = ($oPageStyle.FootnoteLineStyle() = $iStyle) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($nThickness <> Null) Then
-		If Not __LOWriter_NumIsBetween($nThickness, 0, 9) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_NumIsBetween($nThickness, 0, 9) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
-		$nThickness = __LOWriter_UnitConvert($nThickness, $__LOCONST_CONVERT_PT_UM) ; Convert Thickness from Point to uM
+		$nThickness = __LO_UnitConvert($nThickness, $__LOCONST_CONVERT_PT_UM) ; Convert Thickness from Point to uM
 		If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 		$oPageStyle.FootnoteLineWeight = $nThickness
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.FootnoteLineWeight, $nThickness - 1, $nThickness + 1)) ? ($iError) : (BitOR($iError, 4))
+		$iError = (__LO_IntIsBetween($oPageStyle.FootnoteLineWeight, $nThickness - 1, $nThickness + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oPageStyle.FootnoteLineColor = $iColor
 		$iError = ($oPageStyle.FootnoteLineColor() = $iColor) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iLength <> Null) Then
-		If Not __LOWriter_IntIsBetween($iLength, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LO_IntIsBetween($iLength, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$oPageStyle.FootnoteLineRelativeWidth = $iLength
 		$iError = ($oPageStyle.FootnoteLineRelativeWidth() = $iLength) ? ($iError) : (BitOR($iError, 16))
@@ -3077,7 +3077,7 @@ Func _LOWriter_PageStyleFootnoteLine(ByRef $oPageStyle, $iPosition = Null, $iSty
 		If Not IsInt($iSpacing) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 		$oPageStyle.FootnoteLineDistance = $iSpacing
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.FootnoteLineDistance, $iSpacing - 1, $iSpacing + 1)) ? ($iError) : (BitOR($iError, 32))
+		$iError = (__LO_IntIsBetween($oPageStyle.FootnoteLineDistance, $iSpacing - 1, $iSpacing + 1)) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
@@ -3170,7 +3170,7 @@ EndFunc   ;==>_LOWriter_PageStyleGetObj
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3184,14 +3184,14 @@ Func _LOWriter_PageStyleHeader(ByRef $oPageStyle, $bHeaderOn = Null, $bSameLeftR
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOWriter_VarsAreNull($bHeaderOn, $bSameLeftRight, $bSameOnFirst, $iLeftMargin, $iRightMargin, $iSpacing, $bDynamicSpacing, $iHeight, $bAutoHeight) Then
-		If __LOWriter_VersionCheck(4.0) Then
-			__LOWriter_ArrayFill($avHeader, $oPageStyle.HeaderIsOn(), $oPageStyle.HeaderIsShared(), $oPageStyle.FirstIsShared(), $oPageStyle.HeaderLeftMargin(), _
+	If __LO_VarsAreNull($bHeaderOn, $bSameLeftRight, $bSameOnFirst, $iLeftMargin, $iRightMargin, $iSpacing, $bDynamicSpacing, $iHeight, $bAutoHeight) Then
+		If __LO_VersionCheck(4.0) Then
+			__LO_ArrayFill($avHeader, $oPageStyle.HeaderIsOn(), $oPageStyle.HeaderIsShared(), $oPageStyle.FirstIsShared(), $oPageStyle.HeaderLeftMargin(), _
 					$oPageStyle.HeaderRightMargin(), $oPageStyle.HeaderBodyDistance(), $oPageStyle.HeaderDynamicSpacing(), $oPageStyle.HeaderHeight(), _
 					$oPageStyle.HeaderIsDynamicHeight())
 
 		Else
-			__LOWriter_ArrayFill($avHeader, $oPageStyle.HeaderIsOn(), $oPageStyle.HeaderIsShared(), $oPageStyle.HeaderLeftMargin(), _
+			__LO_ArrayFill($avHeader, $oPageStyle.HeaderIsOn(), $oPageStyle.HeaderIsShared(), $oPageStyle.HeaderLeftMargin(), _
 					$oPageStyle.HeaderRightMargin(), $oPageStyle.HeaderBodyDistance(), $oPageStyle.HeaderDynamicSpacing(), $oPageStyle.HeaderHeight(), _
 					$oPageStyle.HeaderIsDynamicHeight())
 		EndIf
@@ -3215,7 +3215,7 @@ Func _LOWriter_PageStyleHeader(ByRef $oPageStyle, $bHeaderOn = Null, $bSameLeftR
 
 	If ($bSameOnFirst <> Null) Then
 		If Not IsBool($bSameOnFirst) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-		If Not __LOWriter_VersionCheck(4.0) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+		If Not __LO_VersionCheck(4.0) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 
 		$oPageStyle.FirstIsShared = $bSameOnFirst
 		$iError = ($oPageStyle.FirstIsShared() = $bSameOnFirst) ? ($iError) : (BitOR($iError, 4))
@@ -3225,21 +3225,21 @@ Func _LOWriter_PageStyleHeader(ByRef $oPageStyle, $bHeaderOn = Null, $bSameLeftR
 		If Not IsInt($iLeftMargin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oPageStyle.HeaderLeftMargin = $iLeftMargin
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.HeaderLeftMargin(), $iLeftMargin - 1, $iLeftMargin + 1)) ? ($iError) : (BitOR($iError, 8))
+		$iError = (__LO_IntIsBetween($oPageStyle.HeaderLeftMargin(), $iLeftMargin - 1, $iLeftMargin + 1)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iRightMargin <> Null) Then
 		If Not IsInt($iRightMargin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$oPageStyle.HeaderRightMargin = $iRightMargin
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.HeaderRightMargin(), $iRightMargin - 1, $iRightMargin + 1)) ? ($iError) : (BitOR($iError, 16))
+		$iError = (__LO_IntIsBetween($oPageStyle.HeaderRightMargin(), $iRightMargin - 1, $iRightMargin + 1)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($iSpacing <> Null) Then
 		If Not IsInt($iSpacing) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 		$oPageStyle.HeaderBodyDistance = $iSpacing
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.HeaderBodyDistance(), $iSpacing - 1, $iSpacing + 1)) ? ($iError) : (BitOR($iError, 32))
+		$iError = (__LO_IntIsBetween($oPageStyle.HeaderBodyDistance(), $iSpacing - 1, $iSpacing + 1)) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($bDynamicSpacing <> Null) Then
@@ -3253,7 +3253,7 @@ Func _LOWriter_PageStyleHeader(ByRef $oPageStyle, $bHeaderOn = Null, $bSameLeftR
 		If Not IsInt($iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
 		$oPageStyle.HeaderHeight = $iHeight
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.HeaderHeight(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 128))
+		$iError = (__LO_IntIsBetween($oPageStyle.HeaderHeight(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
 	If ($bAutoHeight <> Null) Then
@@ -3294,7 +3294,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeader
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertColorFromLong, _LO_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3309,14 +3309,14 @@ Func _LOWriter_PageStyleHeaderAreaColor(ByRef $oPageStyle, $iBackColor = Null, $
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($oPageStyle.HeaderIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($iBackColor, $bBackTransparent) Then
-		__LOWriter_ArrayFill($avColor, __LOWriter_ColorRemoveAlpha($oPageStyle.HeaderBackColor()), $oPageStyle.HeaderBackTransparent())
+	If __LO_VarsAreNull($iBackColor, $bBackTransparent) Then
+		__LO_ArrayFill($avColor, __LOWriter_ColorRemoveAlpha($oPageStyle.HeaderBackColor()), $oPageStyle.HeaderBackTransparent())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avColor)
 	EndIf
 
 	If ($iBackColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		If Not __LO_IntIsBetween($iBackColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$iOldTransparency = $oPageStyle.HeaderFillTransparence()
 		If Not IsInt($iOldTransparency) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
@@ -3434,7 +3434,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderAreaFillStyle
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Gradient Name has no use other than for applying a pre-existing preset gradient.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertColorFromLong, _LO_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3456,8 +3456,8 @@ Func _LOWriter_PageStyleHeaderAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 	$tStyleGradient = $oPageStyle.HeaderFillGradient()
 	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	If __LOWriter_VarsAreNull($sGradientName, $iType, $iIncrement, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iFromColor, $iToColor, $iFromIntense, $iToIntense) Then
-		__LOWriter_ArrayFill($avGradient, $oPageStyle.HeaderFillGradientName(), $tStyleGradient.Style(), _
+	If __LO_VarsAreNull($sGradientName, $iType, $iIncrement, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iFromColor, $iToColor, $iFromIntense, $iToIntense) Then
+		__LO_ArrayFill($avGradient, $oPageStyle.HeaderFillGradientName(), $tStyleGradient.Style(), _
 				$oPageStyle.HeaderFillGradientStepCount(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), Int($tStyleGradient.Angle() / 10), _
 				$tStyleGradient.Border(), $tStyleGradient.StartColor(), $tStyleGradient.EndColor(), $tStyleGradient.StartIntensity(), _
 				$tStyleGradient.EndIntensity()) ; Angle is set in thousands
@@ -3481,13 +3481,13 @@ Func _LOWriter_PageStyleHeaderAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf
 
-		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$tStyleGradient.Style = $iType
 	EndIf
 
 	If ($iIncrement <> Null) Then
-		If Not __LOWriter_IntIsBetween($iIncrement, 3, 256, "", 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iIncrement, 3, 256, "", 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oPageStyle.HeaderFillGradientStepCount = $iIncrement
 		$tStyleGradient.StepCount = $iIncrement ; Must set both of these in order for it to take effect.
@@ -3495,35 +3495,35 @@ Func _LOWriter_PageStyleHeaderAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 	EndIf
 
 	If ($iXCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LO_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$tStyleGradient.XOffset = $iXCenter
 	EndIf
 
 	If ($iYCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LO_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 		$tStyleGradient.YOffset = $iYCenter
 	EndIf
 
 	If ($iAngle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LO_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 		$tStyleGradient.Angle = Int($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iTransitionStart <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		If Not __LO_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
 		$tStyleGradient.Border = $iTransitionStart
 	EndIf
 
 	If ($iFromColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iFromColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		If Not __LO_IntIsBetween($iFromColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 
 		$tStyleGradient.StartColor = $iFromColor
 
-		If __LOWriter_VersionCheck(7.6) Then
+		If __LO_VersionCheck(7.6) Then
 			$atColorStop = $tStyleGradient.ColorStops()
 			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
@@ -3544,11 +3544,11 @@ Func _LOWriter_PageStyleHeaderAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 	EndIf
 
 	If ($iToColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iToColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LO_IntIsBetween($iToColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 
 		$tStyleGradient.EndColor = $iToColor
 
-		If __LOWriter_VersionCheck(7.6) Then
+		If __LO_VersionCheck(7.6) Then
 			$atColorStop = $tStyleGradient.ColorStops()
 			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
@@ -3569,13 +3569,13 @@ Func _LOWriter_PageStyleHeaderAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 	EndIf
 
 	If ($iFromIntense <> Null) Then
-		If Not __LOWriter_IntIsBetween($iFromIntense, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+		If Not __LO_IntIsBetween($iFromIntense, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 
 		$tStyleGradient.StartIntensity = $iFromIntense
 	EndIf
 
 	If ($iToIntense <> Null) Then
-		If Not __LOWriter_IntIsBetween($iToIntense, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+		If Not __LO_IntIsBetween($iToIntense, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 
 		$tStyleGradient.EndIntensity = $iToIntense
 	EndIf
@@ -3656,12 +3656,12 @@ Func _LOWriter_PageStyleHeaderAreaGradientMulticolor(ByRef $oPageStyle, $avColor
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOWriter_VersionCheck(7.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not __LO_VersionCheck(7.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 
 	$tStyleGradient = $oPageStyle.HeaderFillGradient()
 	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($avColorStops) Then
+	If __LO_VarsAreNull($avColorStops) Then
 		$atColorStops = $tStyleGradient.ColorStops()
 		If Not IsArray($atColorStops) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -3685,16 +3685,16 @@ Func _LOWriter_PageStyleHeaderAreaGradientMulticolor(ByRef $oPageStyle, $avColor
 	ReDim $atColorStops[UBound($avColorStops)]
 
 	For $i = 0 To UBound($avColorStops) - 1
-		$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+		$tColorStop = __LO_CreateStruct("com.sun.star.awt.ColorStop")
 		If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 		$tStopColor = $tColorStop.StopColor()
 		If Not IsObj($tStopColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-		If Not __LOWriter_NumIsBetween($avColorStops[$i][0], 0, 1.0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
+		If Not __LO_NumIsBetween($avColorStops[$i][0], 0, 1.0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
 
 		$tColorStop.StopOffset = $avColorStops[$i][0]
 
-		If Not __LOWriter_IntIsBetween($avColorStops[$i][1], $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
+		If Not __LO_IntIsBetween($avColorStops[$i][1], $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
 
 		$tStopColor.Red = (BitAND(BitShift($avColorStops[$i][1], 16), 0xff) / 255)
 		$tStopColor.Green = (BitAND(BitShift($avColorStops[$i][1], 8), 0xff) / 255)
@@ -3753,9 +3753,9 @@ Func _LOWriter_PageStyleHeaderAreaTransparency(ByRef $oPageStyle, $iTransparency
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($oPageStyle.HeaderIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oPageStyle.HeaderFillTransparence())
+	If __LO_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oPageStyle.HeaderFillTransparence())
 
-	If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oPageStyle.HeaderFillTransparenceGradientName = ""
 	$oPageStyle.HeaderFillTransparence = $iTransparency
@@ -3836,8 +3836,8 @@ Func _LOWriter_PageStyleHeaderAreaTransparencyGradient(ByRef $oDoc, ByRef $oPage
 	$tStyleGradient = $oPageStyle.HeaderFillTransparenceGradient()
 	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
-		__LOWriter_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
+	If __LO_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
+		__LO_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
 				Int($tStyleGradient.Angle() / 10), $tStyleGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.StartColor()), _
 				__LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.EndColor())) ; Angle is set in thousands
 
@@ -3851,41 +3851,41 @@ Func _LOWriter_PageStyleHeaderAreaTransparencyGradient(ByRef $oDoc, ByRef $oPage
 			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf
 
-		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LO_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		$tStyleGradient.Style = $iType
 	EndIf
 
 	If ($iXCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$tStyleGradient.XOffset = $iXCenter
 	EndIf
 
 	If ($iYCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$tStyleGradient.YOffset = $iYCenter
 	EndIf
 
 	If ($iAngle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LO_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$tStyleGradient.Angle = Int($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iTransitionStart <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LO_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 		$tStyleGradient.Border = $iTransitionStart
 	EndIf
 
 	If ($iStart <> Null) Then
-		If Not __LOWriter_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LO_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 		$tStyleGradient.StartColor = __LOWriter_TransparencyGradientConvert($iStart)
 
-		If __LOWriter_VersionCheck(7.6) Then
+		If __LO_VersionCheck(7.6) Then
 			$atColorStop = $tStyleGradient.ColorStops()
 			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
@@ -3908,11 +3908,11 @@ Func _LOWriter_PageStyleHeaderAreaTransparencyGradient(ByRef $oDoc, ByRef $oPage
 	EndIf
 
 	If ($iEnd <> Null) Then
-		If Not __LOWriter_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		If Not __LO_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
 		$tStyleGradient.EndColor = __LOWriter_TransparencyGradientConvert($iEnd)
 
-		If __LOWriter_VersionCheck(7.6) Then
+		If __LO_VersionCheck(7.6) Then
 			$atColorStop = $tStyleGradient.ColorStops()
 			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
@@ -4007,12 +4007,12 @@ Func _LOWriter_PageStyleHeaderAreaTransparencyGradientMulti(ByRef $oPageStyle, $
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOWriter_VersionCheck(7.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not __LO_VersionCheck(7.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 
 	$tStyleGradient = $oPageStyle.HeaderFillTransparenceGradient()
 	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($avColorStops) Then
+	If __LO_VarsAreNull($avColorStops) Then
 		$atColorStops = $tStyleGradient.ColorStops()
 		If Not IsArray($atColorStops) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -4036,16 +4036,16 @@ Func _LOWriter_PageStyleHeaderAreaTransparencyGradientMulti(ByRef $oPageStyle, $
 	ReDim $atColorStops[UBound($avColorStops)]
 
 	For $i = 0 To UBound($avColorStops) - 1
-		$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+		$tColorStop = __LO_CreateStruct("com.sun.star.awt.ColorStop")
 		If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 		$tStopColor = $tColorStop.StopColor()
 		If Not IsObj($tStopColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-		If Not __LOWriter_NumIsBetween($avColorStops[$i][0], 0, 1.0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
+		If Not __LO_NumIsBetween($avColorStops[$i][0], 0, 1.0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
 
 		$tColorStop.StopOffset = $avColorStops[$i][0]
 
-		If Not __LOWriter_IntIsBetween($avColorStops[$i][1], 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
+		If Not __LO_IntIsBetween($avColorStops[$i][1], 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
 
 		$tStopColor.Red = ($avColorStops[$i][1] / 100)
 		$tStopColor.Green = ($avColorStops[$i][1] / 100)
@@ -4102,7 +4102,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderAreaTransparencyGradientMulti
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_PageStyleHeaderBorderWidth, _LOWriter_PageStyleHeaderBorderStyle, _LOWriter_PageStyleHeaderBorderPadding
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LOWriter_PageStyleHeaderBorderWidth, _LOWriter_PageStyleHeaderBorderStyle, _LOWriter_PageStyleHeaderBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4115,10 +4115,10 @@ Func _LOWriter_PageStyleHeaderBorderColor(ByRef $oPageStyle, $iTop = Null, $iBot
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($oPageStyle.HeaderIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LO_IntIsBetween($iTop, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LO_IntIsBetween($iBottom, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LO_IntIsBetween($iLeft, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LO_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_HeaderBorder($oPageStyle, False, False, True, $iTop, $iBottom, $iLeft, $iRight)
 
@@ -4161,7 +4161,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderBorderColor
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_PageStyleHeaderBorderWidth, _LOWriter_PageStyleHeaderBorderStyle, _LOWriter_PageStyleHeaderBorderColor
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOWriter_PageStyleHeaderBorderWidth, _LOWriter_PageStyleHeaderBorderStyle, _LOWriter_PageStyleHeaderBorderColor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4176,46 +4176,46 @@ Func _LOWriter_PageStyleHeaderBorderPadding(ByRef $oPageStyle, $iAll = Null, $iT
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($oPageStyle.HeaderIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($iAll, $iTop, $iBottom, $iLeft, $iRight) Then
-		__LOWriter_ArrayFill($aiBPadding, $oPageStyle.HeaderBorderDistance(), $oPageStyle.HeaderTopBorderDistance(), _
+	If __LO_VarsAreNull($iAll, $iTop, $iBottom, $iLeft, $iRight) Then
+		__LO_ArrayFill($aiBPadding, $oPageStyle.HeaderBorderDistance(), $oPageStyle.HeaderTopBorderDistance(), _
 				$oPageStyle.HeaderBottomBorderDistance(), $oPageStyle.HeaderLeftBorderDistance(), $oPageStyle.HeaderRightBorderDistance())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiBPadding)
 	EndIf
 
 	If ($iAll <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAll, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		If Not __LO_IntIsBetween($iAll, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oPageStyle.HeaderBorderDistance = $iAll
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.HeaderBorderDistance(), $iAll - 1, $iAll + 1)) ? ($iError) : (BitOR($iError, 1))
+		$iError = (__LO_IntIsBetween($oPageStyle.HeaderBorderDistance(), $iAll - 1, $iAll + 1)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iTop <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LO_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		$oPageStyle.HeaderTopBorderDistance = $iTop
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.HeaderTopBorderDistance(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 2))
+		$iError = (__LO_IntIsBetween($oPageStyle.HeaderTopBorderDistance(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iBottom <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oPageStyle.HeaderBottomBorderDistance = $iBottom
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.HeaderBottomBorderDistance(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 4))
+		$iError = (__LO_IntIsBetween($oPageStyle.HeaderBottomBorderDistance(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iLeft <> Null) Then
-		If Not __LOWriter_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oPageStyle.HeaderLeftBorderDistance = $iLeft
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.HeaderLeftBorderDistance(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 8))
+		$iError = (__LO_IntIsBetween($oPageStyle.HeaderLeftBorderDistance(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iRight <> Null) Then
-		If Not __LOWriter_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LO_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$oPageStyle.HeaderRightBorderDistance = $iRight
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.HeaderRightBorderDistance(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 16))
+		$iError = (__LO_IntIsBetween($oPageStyle.HeaderRightBorderDistance(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
@@ -4270,10 +4270,10 @@ Func _LOWriter_PageStyleHeaderBorderStyle(ByRef $oPageStyle, $iTop = Null, $iBot
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($oPageStyle.HeaderIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LO_IntIsBetween($iTop, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LO_IntIsBetween($iBottom, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LO_IntIsBetween($iLeft, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LO_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_HeaderBorder($oPageStyle, False, True, False, $iTop, $iBottom, $iLeft, $iRight)
 
@@ -4311,7 +4311,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderBorderStyle
 ; Remarks .......: To "Turn Off" Borders, set Width to 0.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_PageStyleHeaderBorderStyle, _LOWriter_PageStyleHeaderBorderColor, _LOWriter_PageStyleHeaderBorderPadding
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOWriter_PageStyleHeaderBorderStyle, _LOWriter_PageStyleHeaderBorderColor, _LOWriter_PageStyleHeaderBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4324,10 +4324,10 @@ Func _LOWriter_PageStyleHeaderBorderWidth(ByRef $oPageStyle, $iTop = Null, $iBot
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($oPageStyle.HeaderIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LO_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LO_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LO_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LO_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_HeaderBorder($oPageStyle, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
 
@@ -4370,7 +4370,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderBorderWidth
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  LibreOffice may change the shadow width +/- a Micrometer.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4389,8 +4389,8 @@ Func _LOWriter_PageStyleHeaderShadow(ByRef $oPageStyle, $iWidth = Null, $iColor 
 	$tShdwFrmt = $oPageStyle.HeaderShadowFormat()
 	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	If __LOWriter_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
-		__LOWriter_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
+	If __LO_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
+		__LO_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avShadow)
 	EndIf
@@ -4402,7 +4402,7 @@ Func _LOWriter_PageStyleHeaderShadow(ByRef $oPageStyle, $iWidth = Null, $iColor 
 	EndIf
 
 	If ($iColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LO_IntIsBetween($iColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		$tShdwFrmt.Color = $iColor
 	EndIf
@@ -4414,7 +4414,7 @@ Func _LOWriter_PageStyleHeaderShadow(ByRef $oPageStyle, $iWidth = Null, $iColor 
 	EndIf
 
 	If ($iLocation <> Null) Then
-		If Not __LOWriter_IntIsBetween($iLocation, $LOW_SHADOW_NONE, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iLocation, $LOW_SHADOW_NONE, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$tShdwFrmt.Location = $iLocation
 	EndIf
@@ -4424,7 +4424,7 @@ Func _LOWriter_PageStyleHeaderShadow(ByRef $oPageStyle, $iWidth = Null, $iColor 
 	$tShdwFrmt = $oPageStyle.HeaderShadowFormat
 	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
-	$iError = ($iWidth = Null) ? ($iError) : ((__LOWriter_IntIsBetween($tShdwFrmt.ShadowWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
+	$iError = ($iWidth = Null) ? ($iError) : ((__LO_IntIsBetween($tShdwFrmt.ShadowWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
 	$iError = ($iColor = Null) ? ($iError) : (($tShdwFrmt.Color() = $iColor) ? ($iError) : (BitOR($iError, 2)))
 	$iError = ($bTransparent = Null) ? ($iError) : (($tShdwFrmt.IsTransparent() = $bTransparent) ? ($iError) : (BitOR($iError, 4)))
 	$iError = ($iLocation = Null) ? ($iError) : (($tShdwFrmt.Location() = $iLocation) ? ($iError) : (BitOR($iError, 8)))
@@ -4499,15 +4499,15 @@ Func _LOWriter_PageStyleLayout(ByRef $oDoc, ByRef $oPageStyle, $iLayout = Null, 
 	$oSettings = $oDoc.createInstance("com.sun.star.text.DocumentSettings")
 	If Not IsObj($oSettings) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($iLayout, $iNumFormat, $sRefStyle, $bGutterOnRight, $bGutterAtTop, $bBackCoversMargins, $sPaperTray) Then
-		If __LOWriter_VersionCheck(7.2) Then
-			__LOWriter_ArrayFill($avLayout, $oPageStyle.PageStyleLayout(), $oPageStyle.NumberingType(), _
+	If __LO_VarsAreNull($iLayout, $iNumFormat, $sRefStyle, $bGutterOnRight, $bGutterAtTop, $bBackCoversMargins, $sPaperTray) Then
+		If __LO_VersionCheck(7.2) Then
+			__LO_ArrayFill($avLayout, $oPageStyle.PageStyleLayout(), $oPageStyle.NumberingType(), _
 					__LOWriter_ParStyleNameToggle($oPageStyle.RegisterParagraphStyle(), True), _
 					$oPageStyle.RtlGutter(), $oSettings.getPropertyValue("GutterAtTop"), $oPageStyle.BackgroundFullSize(), _
 					$oPageStyle.PrinterPaperTray())
 
 		Else
-			__LOWriter_ArrayFill($avLayout, $oPageStyle.PageStyleLayout(), $oPageStyle.NumberingType(), _
+			__LO_ArrayFill($avLayout, $oPageStyle.PageStyleLayout(), $oPageStyle.NumberingType(), _
 					__LOWriter_ParStyleNameToggle($oPageStyle.RegisterParagraphStyle(), True), $oPageStyle.PrinterPaperTray())
 		EndIf
 
@@ -4515,14 +4515,14 @@ Func _LOWriter_PageStyleLayout(ByRef $oDoc, ByRef $oPageStyle, $iLayout = Null, 
 	EndIf
 
 	If ($iLayout <> Null) Then
-		If Not __LOWriter_IntIsBetween($iLayout, $LOW_PAGE_LAYOUT_ALL, $LOW_PAGE_LAYOUT_MIRRORED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LO_IntIsBetween($iLayout, $LOW_PAGE_LAYOUT_ALL, $LOW_PAGE_LAYOUT_MIRRORED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		$oPageStyle.PageStyleLayout = $iLayout
 		$iError = ($oPageStyle.PageStyleLayout() = $iLayout) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iNumFormat <> Null) Then
-		If Not __LOWriter_IntIsBetween($iNumFormat, $LOW_NUM_STYLE_CHARS_UPPER_LETTER, $LOW_NUM_STYLE_NUMBER_LEGAL_KO) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iNumFormat, $LOW_NUM_STYLE_CHARS_UPPER_LETTER, $LOW_NUM_STYLE_NUMBER_LEGAL_KO) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oPageStyle.NumberingType = $iNumFormat
 		$iError = ($oPageStyle.NumberingType() = $iNumFormat) ? ($iError) : (BitOR($iError, 2))
@@ -4539,7 +4539,7 @@ Func _LOWriter_PageStyleLayout(ByRef $oDoc, ByRef $oPageStyle, $iLayout = Null, 
 
 	If ($bGutterOnRight <> Null) Then
 		If Not IsBool($bGutterOnRight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
-		If Not __LOWriter_VersionCheck(7.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+		If Not __LO_VersionCheck(7.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 
 		$oPageStyle.RtlGutter = $bGutterOnRight
 		$iError = ($oPageStyle.RtlGutter() = $bGutterOnRight) ? ($iError) : (BitOR($iError, 8))
@@ -4547,7 +4547,7 @@ Func _LOWriter_PageStyleLayout(ByRef $oDoc, ByRef $oPageStyle, $iLayout = Null, 
 
 	If ($bGutterAtTop <> Null) Then
 		If Not IsBool($bGutterAtTop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
-		If Not __LOWriter_VersionCheck(7.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+		If Not __LO_VersionCheck(7.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 
 		$oSettings.setPropertyValue("GutterAtTop", $bGutterAtTop)
 		$iError = ($oSettings.getPropertyValue("GutterAtTop") = $bGutterAtTop) ? ($iError) : (BitOR($iError, 16))
@@ -4555,7 +4555,7 @@ Func _LOWriter_PageStyleLayout(ByRef $oDoc, ByRef $oPageStyle, $iLayout = Null, 
 
 	If ($bBackCoversMargins <> Null) Then
 		If Not IsBool($bBackCoversMargins) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
-		If Not __LOWriter_VersionCheck(7.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+		If Not __LO_VersionCheck(7.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 
 		$oPageStyle.BackgroundFullSize = $bBackCoversMargins
 		$iError = ($oPageStyle.BackgroundFullSize() = $bBackCoversMargins) ? ($iError) : (BitOR($iError, 32))
@@ -4607,7 +4607,7 @@ EndFunc   ;==>_LOWriter_PageStyleLayout
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4621,13 +4621,13 @@ Func _LOWriter_PageStyleMargins(ByRef $oPageStyle, $iLeft = Null, $iRight = Null
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOWriter_VarsAreNull($iLeft, $iRight, $iTop, $iBottom, $iGutter) Then
-		If __LOWriter_VersionCheck(7.2) Then
-			__LOWriter_ArrayFill($aiMargins, $oPageStyle.LeftMargin(), $oPageStyle.RightMargin(), $oPageStyle.TopMargin(), $oPageStyle.BottomMargin(), _
+	If __LO_VarsAreNull($iLeft, $iRight, $iTop, $iBottom, $iGutter) Then
+		If __LO_VersionCheck(7.2) Then
+			__LO_ArrayFill($aiMargins, $oPageStyle.LeftMargin(), $oPageStyle.RightMargin(), $oPageStyle.TopMargin(), $oPageStyle.BottomMargin(), _
 					$oPageStyle.GutterMargin())
 
 		Else
-			__LOWriter_ArrayFill($aiMargins, $oPageStyle.LeftMargin(), $oPageStyle.RightMargin(), $oPageStyle.TopMargin(), $oPageStyle.BottomMargin())
+			__LO_ArrayFill($aiMargins, $oPageStyle.LeftMargin(), $oPageStyle.RightMargin(), $oPageStyle.TopMargin(), $oPageStyle.BottomMargin())
 		EndIf
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiMargins)
@@ -4637,36 +4637,36 @@ Func _LOWriter_PageStyleMargins(ByRef $oPageStyle, $iLeft = Null, $iRight = Null
 		If Not IsInt($iLeft) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oPageStyle.LeftMargin = $iLeft
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.LeftMargin(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 1))
+		$iError = (__LO_IntIsBetween($oPageStyle.LeftMargin(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iRight <> Null) Then
 		If Not IsInt($iRight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		$oPageStyle.RightMargin = $iRight
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.RightMargin(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 2))
+		$iError = (__LO_IntIsBetween($oPageStyle.RightMargin(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iTop <> Null) Then
 		If Not IsInt($iTop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oPageStyle.TopMargin = $iTop
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.TopMargin(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 4))
+		$iError = (__LO_IntIsBetween($oPageStyle.TopMargin(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iBottom <> Null) Then
 		If Not IsInt($iBottom) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oPageStyle.BottomMargin = $iBottom
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.BottomMargin(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 8))
+		$iError = (__LO_IntIsBetween($oPageStyle.BottomMargin(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iGutter <> Null) Then
 		If Not IsInt($iGutter) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
-		If Not __LOWriter_VersionCheck(7.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+		If Not __LO_VersionCheck(7.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 
 		$oPageStyle.GutterMargin = $iGutter
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.GutterMargin(), $iGutter - 1, $iGutter + 1)) ? ($iError) : (BitOR($iError, 16))
+		$iError = (__LO_IntIsBetween($oPageStyle.GutterMargin(), $iGutter - 1, $iGutter + 1)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
@@ -4721,12 +4721,12 @@ Func _LOWriter_PageStyleOrganizer(ByRef $oDoc, ByRef $oPageStyle, $sNewPageStyle
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-	If __LOWriter_VarsAreNull($sNewPageStyleName, $bHidden, $sFollowStyle) Then
-		If __LOWriter_VersionCheck(4.0) Then
-			__LOWriter_ArrayFill($avOrganizer, $oPageStyle.Name(), $oPageStyle.Hidden(), __LOWriter_PageStyleNameToggle($oPageStyle.FollowStyle(), True))
+	If __LO_VarsAreNull($sNewPageStyleName, $bHidden, $sFollowStyle) Then
+		If __LO_VersionCheck(4.0) Then
+			__LO_ArrayFill($avOrganizer, $oPageStyle.Name(), $oPageStyle.Hidden(), __LOWriter_PageStyleNameToggle($oPageStyle.FollowStyle(), True))
 
 		Else
-			__LOWriter_ArrayFill($avOrganizer, $oPageStyle.Name(), __LOWriter_PageStyleNameToggle($oPageStyle.FollowStyle(), True))
+			__LO_ArrayFill($avOrganizer, $oPageStyle.Name(), __LOWriter_PageStyleNameToggle($oPageStyle.FollowStyle(), True))
 		EndIf
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avOrganizer)
@@ -4742,7 +4742,7 @@ Func _LOWriter_PageStyleOrganizer(ByRef $oDoc, ByRef $oPageStyle, $sNewPageStyle
 
 	If ($bHidden <> Null) Then
 		If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-		If Not __LOWriter_VersionCheck(4.0) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+		If Not __LO_VersionCheck(4.0) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 
 		$oPageStyle.Hidden = $bHidden
 		$iError = ($oPageStyle.Hidden() = $bHidden) ? ($iError) : (BitOR($iError, 2))
@@ -4788,7 +4788,7 @@ EndFunc   ;==>_LOWriter_PageStyleOrganizer
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4802,8 +4802,8 @@ Func _LOWriter_PageStylePaperFormat(ByRef $oPageStyle, $iWidth = Null, $iHeight 
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOWriter_VarsAreNull($iWidth, $iHeight, $bLandscape) Then
-		__LOWriter_ArrayFill($avFormat, $oPageStyle.Width(), $oPageStyle.Height(), $oPageStyle.IsLandscape())
+	If __LO_VarsAreNull($iWidth, $iHeight, $bLandscape) Then
+		__LO_ArrayFill($avFormat, $oPageStyle.Width(), $oPageStyle.Height(), $oPageStyle.IsLandscape())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avFormat)
 	EndIf
@@ -4812,14 +4812,14 @@ Func _LOWriter_PageStylePaperFormat(ByRef $oPageStyle, $iWidth = Null, $iHeight 
 		If Not IsInt($iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oPageStyle.Width = $iWidth
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1))
+		$iError = (__LO_IntIsBetween($oPageStyle.Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iHeight <> Null) Then
 		If Not IsInt($iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		$oPageStyle.Height = $iHeight
-		$iError = (__LOWriter_IntIsBetween($oPageStyle.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 2))
+		$iError = (__LO_IntIsBetween($oPageStyle.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bLandscape <> Null) Then
@@ -4994,7 +4994,7 @@ EndFunc   ;==>_LOWriter_PageStylesGetNames
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  LibreOffice may change the shadow width +/- a Micrometer.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -5012,8 +5012,8 @@ Func _LOWriter_PageStyleShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = Null
 	$tShdwFrmt = $oPageStyle.ShadowFormat()
 	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
-		__LOWriter_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
+	If __LO_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
+		__LO_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avShadow)
 	EndIf
@@ -5025,7 +5025,7 @@ Func _LOWriter_PageStyleShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = Null
 	EndIf
 
 	If ($iColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LO_IntIsBetween($iColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		$tShdwFrmt.Color = $iColor
 	EndIf
@@ -5037,7 +5037,7 @@ Func _LOWriter_PageStyleShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = Null
 	EndIf
 
 	If ($iLocation <> Null) Then
-		If Not __LOWriter_IntIsBetween($iLocation, $LOW_SHADOW_NONE, $LOW_SHADOW_BOTTOM_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iLocation, $LOW_SHADOW_NONE, $LOW_SHADOW_BOTTOM_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$tShdwFrmt.Location = $iLocation
 	EndIf
@@ -5047,7 +5047,7 @@ Func _LOWriter_PageStyleShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = Null
 	$tShdwFrmt = $oPageStyle.ShadowFormat
 	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	$iError = ($iWidth = Null) ? ($iError) : ((__LOWriter_IntIsBetween($tShdwFrmt.ShadowWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
+	$iError = ($iWidth = Null) ? ($iError) : ((__LO_IntIsBetween($tShdwFrmt.ShadowWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
 	$iError = ($iColor = Null) ? ($iError) : (($tShdwFrmt.Color() = $iColor) ? ($iError) : (BitOR($iError, 2)))
 	$iError = ($bTransparent = Null) ? ($iError) : (($tShdwFrmt.IsTransparent() = $bTransparent) ? ($iError) : (BitOR($iError, 4)))
 	$iError = ($iLocation = Null) ? ($iError) : (($tShdwFrmt.Location() = $iLocation) ? ($iError) : (BitOR($iError, 8)))
