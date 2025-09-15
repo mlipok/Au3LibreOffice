@@ -112,7 +112,6 @@ Func Example()
 	$iCurPos2 = _LOBase_ReportGroupPosition($oLast_Col_Group)
 	If @error Then Return _ERROR($oDoc, $oReportDoc, "Failed to retrieve the Group's position. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Column ""Last_Col"" is now at position: " & $iCurPos2 & @CRLF & _
 			"The Column ""Value_Col"" is now at position: " & $iCurPos1 & @CRLF & _
 			"Press Ok to close the document.")
