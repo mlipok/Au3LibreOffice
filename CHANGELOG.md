@@ -647,6 +647,26 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - __LOCalc_VarsAreDefault
 - LibreOfficeCalc_Font file, combined functions into LibreOfficeCalc_Helper.
 - $__LO_STATUS_DOC_ERROR Error Constant and renumber all after errors.
+- Centralized some internal functions. Thus removing the following individual Functions:
+	- __LOCalc_ArrayFill
+	- __LOCalc_AddTo1DArray
+	- __LOCalc_CreateStruct
+	- __LOCalc_IntIsBetween
+	- __LOCalc_NumIsBetween
+	- __LOCalc_SetPropertyValue
+	- __LOCalc_UnitConvert
+	- __LOCalc_VarsAreNull
+	- __LOCalc_VersionCheck
+- Centralized some Helper functions. Thus removing the following individual Functions:
+	- _LOCalc_ConvertColorFromLong
+	- _LOCalc_ConvertColorToLong
+	- _LOCalc_ConvertFromMicrometer
+	- _LOCalc_ConvertToMicrometer
+	- _LOCalc_PathConvert
+	- _LOCalc_VersionGet
+- Centralized some Constants. Thus removing the following individual Constants:
+	- $LOC_PATHCONV_*
+	- $LOC_COLOR_*
 
 > [!NOTE]
 > **LibreOfficeWriter**
