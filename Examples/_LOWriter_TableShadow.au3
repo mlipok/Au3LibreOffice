@@ -26,7 +26,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to insert Text Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Convert 1/2 Inch to Micrometers.
-	$iMicrometers = _LOWriter_ConvertToMicrometer(0.5)
+	$iMicrometers = _LO_ConvertToMicrometer(0.5)
 	If @error Then _ERROR($oDoc, "Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set the Table shadow to 1/2 an inch wide, the color to $LOW_COLOR_DKGRAY, Transparent to False, and shadow location to

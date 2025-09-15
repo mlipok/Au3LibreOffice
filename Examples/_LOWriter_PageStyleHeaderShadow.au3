@@ -18,7 +18,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve Page Style Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Convert 1/8" to Micrometers
-	$iMicrometers = _LOWriter_ConvertToMicrometer(.125)
+	$iMicrometers = _LO_ConvertToMicrometer(.125)
 	If @error Then _ERROR($oDoc, "Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Turn Header on.

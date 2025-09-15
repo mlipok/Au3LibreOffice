@@ -18,7 +18,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve Page Style Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Convert 1/4" to Micrometers
-	$iMicrometers = _LOWriter_ConvertToMicrometer(.25)
+	$iMicrometers = _LO_ConvertToMicrometer(.25)
 	If @error Then _ERROR($oDoc, "Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set Page style Footnote separator line settings to: Position = $LOW_ALIGN_HORI_CENTER, Line style = $LOW_LINE_STYLE_DOTTED,

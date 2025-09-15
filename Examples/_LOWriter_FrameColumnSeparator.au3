@@ -26,7 +26,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to modify Frame settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Convert 1/16" to Micrometers
-	$iMicrometers = _LOWriter_ConvertToMicrometer(.0625)
+	$iMicrometers = _LO_ConvertToMicrometer(.0625)
 	If @error Then _ERROR($oDoc, "Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set Frame Column Separator line settings to: Separator on (True), Line Style = $LOW_LINE_STYLE_SOLID, Line width to 1/16"

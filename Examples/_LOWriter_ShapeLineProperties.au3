@@ -22,7 +22,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to create a Shape. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Convert 1/8" to Micrometers
-	$iMicrometers = _LOWriter_ConvertToMicrometer(.125)
+	$iMicrometers = _LO_ConvertToMicrometer(.125)
 	If @error Then _ERROR($oDoc, "Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Modify the Shape Line Properties settings to: Set the Line Style to $LOW_SHAPE_LINE_STYLE_3_DASHES_3_DOTS, Line Color to $LOW_COLOR_MAGENTA,

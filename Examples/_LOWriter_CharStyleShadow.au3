@@ -42,7 +42,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve Character style object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Convert 1/4" to Micrometers
-	$iMicrometers = _LOWriter_ConvertToMicrometer(0.25)
+	$iMicrometers = _LO_ConvertToMicrometer(0.25)
 	If @error Then _ERROR($oDoc, "Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set "Example" Character style Shadow to 1/4" wide, Color to $LOW_COLOR_PURPLE, Transparent to false, and location to $LOW_SHADOW_TOP_LEFT
