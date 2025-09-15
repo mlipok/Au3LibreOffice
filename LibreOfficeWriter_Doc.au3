@@ -6,6 +6,7 @@
 ; Main LibreOffice Includes
 #include "LibreOffice_Constants.au3"
 #include "LibreOffice_Helper.au3"
+#include "LibreOffice_Internal.au3"
 
 ; Common includes for Writer
 #include "LibreOfficeWriter_Constants.au3"
