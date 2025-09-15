@@ -20,8 +20,8 @@ Func Example()
 	_LOWriter_PageStyleFooter($oPageStyle, True)
 	If @error Then _ERROR($oDoc, "Failed to turn Page Style footers on. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Set Footer Background Color to $LOW_COLOR_RED, Color transparent to False.
-	_LOWriter_PageStyleFooterAreaColor($oPageStyle, $LOW_COLOR_RED, False)
+	; Set Footer Background Color to $LO_COLOR_RED, Color transparent to False.
+	_LOWriter_PageStyleFooterAreaColor($oPageStyle, $LO_COLOR_RED, False)
 	If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set Page style Footer Transparency settings to 55% transparent
