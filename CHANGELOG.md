@@ -1045,6 +1045,26 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - __LOWriter_RegExpConvert.
 - __LOWriter_AddTo2DArray.
 - __LOWriter_VarsAreDefault
+- Centralized some internal functions. Thus removing the following individual Functions:
+	- __LOWriter_ArrayFill
+	- __LOWriter_AddTo1DArray
+	- __LOWriter_CreateStruct
+	- __LOWriter_IntIsBetween
+	- __LOWriter_NumIsBetween
+	- __LOWriter_SetPropertyValue
+	- __LOWriter_UnitConvert
+	- __LOWriter_VarsAreNull
+	- __LOWriter_VersionCheck
+- Centralized some Helper functions. Thus removing the following individual Functions:
+	- _LOWriter_ConvertColorFromLong
+	- _LOWriter_ConvertColorToLong
+	- _LOWriter_ConvertFromMicrometer
+	- _LOWriter_ConvertToMicrometer
+	- _LOWriter_PathConvert
+	- _LOWriter_VersionGet
+- Centralized some Constants. Thus removing the following individual Constants:
+	- $LOW_PATHCONV_*
+	- $LOW_COLOR_*
 
 [To Top](#releases)
 
