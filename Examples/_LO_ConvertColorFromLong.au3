@@ -9,23 +9,23 @@ Func Example()
 	Local $sHex
 	Local $aiRGB, $aiCMYK, $aiHSB
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "I am going to demonstrate how to convert the Long color format integer value, $LOW_COLOR_MAGENTA (12517441), into R(ed), G(reen), " & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I am going to demonstrate how to convert the Long color format integer value, $LO_COLOR_MAGENTA (12517441), into R(ed), G(reen), " & _
 			"B(lue) values, a Hexadecimal value, C(yan), M(agenta), Y(ellow), and K(ey) values, and H(ue), S(aturation) B(rightness) values.")
 
 	; Convert to RGB From Long Color format, the RGB values are returned as an array in their order.
-	$aiRGB = _LO_ConvertColorFromLong(Null, $LOW_COLOR_MAGENTA)
+	$aiRGB = _LO_ConvertColorFromLong(Null, $LO_COLOR_MAGENTA)
 	If @error Then _ERROR("Failed to convert to RGB color value from Long color format integer. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Convert to Hex From Long color format, Hex is returned as a string.
-	$sHex = _LO_ConvertColorFromLong($LOW_COLOR_MAGENTA)
+	$sHex = _LO_ConvertColorFromLong($LO_COLOR_MAGENTA)
 	If @error Then _ERROR("Failed to convert to HEX color value from Long color format integer. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Convert to CMYK From Long Color format, the CMYK values are returned as an array in their order.
-	$aiCMYK = _LO_ConvertColorFromLong(Null, Null, Null, $LOW_COLOR_MAGENTA)
+	$aiCMYK = _LO_ConvertColorFromLong(Null, Null, Null, $LO_COLOR_MAGENTA)
 	If @error Then _ERROR("Failed to convert to CMYK color value from Long color format integer. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Convert to HSB From Long Color format, the HSB values are returned as an array in their order.
-	$aiHSB = _LO_ConvertColorFromLong(Null, Null, $LOW_COLOR_MAGENTA)
+	$aiHSB = _LO_ConvertColorFromLong(Null, Null, $LO_COLOR_MAGENTA)
 	If @error Then _ERROR("Failed to convert to HSB color value from Long color format integer. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The conversion results are as follows: " & @CRLF & _

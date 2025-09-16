@@ -80,7 +80,6 @@ Func Example()
 
 	; Create a COM Error by calling a non existent Method.
 	$oServiceManager.FakeMethod()
-
 EndFunc
 
 Func _FunctionForErrors($oObjectError)
