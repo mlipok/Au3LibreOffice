@@ -1388,7 +1388,7 @@ EndFunc   ;==>_LOCalc_CommentGetObjByCell
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iComment not an Integer.
-;                  @Error 1 @Extended 2 Return 0 = Index number called in $iComment less than 0, or greater than number of Comments contained in Sheet.
+;                  @Error 1 @Extended 3 Return 0 = Index number called in $iComment less than 0, or greater than number of Comments contained in Sheet.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Annotations Object.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve total count of Comments.
@@ -2402,7 +2402,7 @@ EndFunc   ;==>_LOCalc_CommentTextAnimation
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.text.TextColumns" Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Annotation Shape Object.
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Text Columns Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Text Columns Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $iColumns
