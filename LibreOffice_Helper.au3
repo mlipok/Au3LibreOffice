@@ -667,8 +667,7 @@ EndFunc   ;==>_LO_InitializePortable
 ; ===============================================================================================================================
 Func _LO_PathConvert($sFilePath, $iReturnMode = $LO_PATHCONV_AUTO_RETURN)
 	Local Const $__STR_STRIPLEADING = 1
-	Local $asURLReplace[9][2] = [["%", "%25"], [" ", "%20"], ["\", "/"], [";", "%3B"], ["#", "%23"], ["^", "%5E"], ["{", "%7B"], _
-			["}", "%7D"], ["`", "%60"]]
+	Local $asURLReplace[9][2] = [["%", "%25"], [" ", "%20"], ["\", "/"], [";", "%3B"], ["#", "%23"], ["^", "%5E"], ["{", "%7B"], ["}", "%7D"], ["`", "%60"]]
 	Local $iPathSearch, $iFileSearch, $iPartialPCPath, $iPartialFilePath
 
 	If Not IsString($sFilePath) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
