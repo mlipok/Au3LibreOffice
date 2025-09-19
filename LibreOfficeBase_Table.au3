@@ -508,7 +508,7 @@ EndFunc   ;==>_LOBase_TableColGetObjByIndex
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
-;                  @Error 1 @Extended 2 Return 0 = Table does not contain a column with a name as called in $sName.
+;                  @Error 1 @Extended 3 Return 0 = Table does not contain a column with a name as called in $sName.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Columns Object
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Column Object.
