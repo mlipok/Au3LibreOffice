@@ -641,6 +641,11 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Made $oDoc Parameter optional for _LOCalc_FontsGetNames.
 - Added count of number of results for _LOCalc_DocConnect, connect-all and partial name search when more than one result is present.
 - Removed _ArrayDisplay from most examples.
+- Corrected wrong usage of `$__LO_STATUS_INIT_ERROR`, and renumbered `$__LO_STATUS_PROCESSING_ERROR`, the following functions were affected:
+	- _LOCalc_CommentAreaGradient
+	- _LOCalc_CommentAreaTransparencyGradient
+	- _LOCalc_CommentPosition
+	- _LOCalc_CommentSize
 
 ### Removed
 

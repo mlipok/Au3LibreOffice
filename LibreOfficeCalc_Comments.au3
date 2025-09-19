@@ -220,12 +220,11 @@ EndFunc   ;==>_LOCalc_CommentAreaFillStyle
 ;                  @Error 1 @Extended 10 Return 0 = $iToColor not an Integer, less than 0, or greater than 16777215.
 ;                  @Error 1 @Extended 11 Return 0 = $iFromIntense not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 12 Return 0 = $iToIntense not an Integer, less than 0, or greater than 100.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving "FillGradient" Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Annotation Shape Object.
-;                  @Error 3 @Extended 2 Return 0 = Error retrieving Color Stop Array for "From" color
-;                  @Error 3 @Extended 3 Return 0 = Error retrieving Color Stop Array for "To" color
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving "FillGradient" Object.
+;                  @Error 3 @Extended 3 Return 0 = Error retrieving Color Stop Array for "From" color
+;                  @Error 3 @Extended 4 Return 0 = Error retrieving Color Stop Array for "To" color
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $sGradientName
@@ -269,7 +268,7 @@ Func _LOCalc_CommentAreaGradient(ByRef $oComment, $sGradientName = Null, $iType 
 	If Not IsObj($oAnnotationShape) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$tStyleGradient = $oAnnotationShape.FillGradient()
-	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If __LO_VarsAreNull($sGradientName, $iType, $iIncrement, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iFromColor, $iToColor, $iFromIntense, $iToIntense) Then
 		__LO_ArrayFill($avGradient, $oAnnotationShape.FillGradientName(), $tStyleGradient.Style(), _
@@ -289,7 +288,7 @@ Func _LOCalc_CommentAreaGradient(ByRef $oComment, $sGradientName = Null, $iType 
 		$iError = ($oAnnotationShape.FillGradientName() = $sGradientName) ? ($iError) : (BitOR($iError, 1))
 
 		$tStyleGradient = $oAnnotationShape.FillGradient()
-		If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+		If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	EndIf
 
 	If ($iType <> Null) Then
@@ -348,7 +347,7 @@ Func _LOCalc_CommentAreaGradient(ByRef $oComment, $sGradientName = Null, $iType 
 			$nBlue = (BitAND($iFromColor, 0xff) / 255)
 
 			$atColorStop = $tStyleGradient.ColorStops()
-			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 			$tColorStop = $atColorStop[0] ; StopOffset 0 is the "From Color" Value.
 
@@ -377,7 +376,7 @@ Func _LOCalc_CommentAreaGradient(ByRef $oComment, $sGradientName = Null, $iType 
 			$nBlue = (BitAND($iToColor, 0xff) / 255)
 
 			$atColorStop = $tStyleGradient.ColorStops()
-			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 			$tColorStop = $atColorStop[UBound($atColorStop) - 1] ; Last StopOffset is the "To Color" Value.
 
@@ -739,14 +738,13 @@ EndFunc   ;==>_LOCalc_CommentAreaTransparency
 ;                  @Error 1 @Extended 7 Return 0 = $iTransitionStart Not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 8 Return 0 = $iStart Not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 9 Return 0 = $iEnd Not an Integer, less than 0, or greater than 100.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Annotation Shape Object.
-;                  @Error 3 @Extended 2 Return 0 = Error retrieving Color Stop Array for "From" color
-;                  @Error 3 @Extended 3 Return 0 = Error retrieving Color Stop Array for "To" color
-;                  @Error 3 @Extended 4 Return 0 = Error creating Transparency Gradient name.
-;                  @Error 3 @Extended 5 Return 0 = Error setting Transparency Gradient name.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving "FillTransparenceGradient" Object.
+;                  @Error 3 @Extended 3 Return 0 = Error retrieving Color Stop Array for "From" color
+;                  @Error 3 @Extended 4 Return 0 = Error retrieving Color Stop Array for "To" color
+;                  @Error 3 @Extended 5 Return 0 = Error creating Transparency Gradient name.
+;                  @Error 3 @Extended 6 Return 0 = Error setting Transparency Gradient name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iType
@@ -787,7 +785,7 @@ Func _LOCalc_CommentAreaTransparencyGradient(ByRef $oDoc, ByRef $oComment, $iTyp
 	If Not IsObj($oAnnotationShape) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$tGradient = $oAnnotationShape.FillTransparenceGradient()
-	If Not IsObj($tGradient) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If __LO_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
 		__LO_ArrayFill($aiTransparent, $tGradient.Style(), $tGradient.XOffset(), $tGradient.YOffset(), _
@@ -840,7 +838,7 @@ Func _LOCalc_CommentAreaTransparencyGradient(ByRef $oDoc, ByRef $oComment, $iTyp
 
 		If __LO_VersionCheck(7.6) Then
 			$atColorStop = $tGradient.ColorStops()
-			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 			$tColorStop = $atColorStop[0] ; StopOffset 0 is the "Start" Value.
 
@@ -867,7 +865,7 @@ Func _LOCalc_CommentAreaTransparencyGradient(ByRef $oDoc, ByRef $oComment, $iTyp
 
 		If __LO_VersionCheck(7.6) Then
 			$atColorStop = $tGradient.ColorStops()
-			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 			$tColorStop = $atColorStop[UBound($atColorStop) - 1] ; StopOffset 0 is the "End" Value.
 
@@ -889,10 +887,10 @@ Func _LOCalc_CommentAreaTransparencyGradient(ByRef $oDoc, ByRef $oComment, $iTyp
 
 	If ($oAnnotationShape.FillTransparenceGradientName() = "") Then
 		$sTGradName = __LOCalc_TransparencyGradientNameInsert($oDoc, $tGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
 		$oAnnotationShape.FillTransparenceGradientName = $sTGradName
-		If ($oAnnotationShape.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+		If ($oAnnotationShape.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
 	EndIf
 
 	$oAnnotationShape.FillTransparenceGradient = $tGradient
@@ -1741,10 +1739,9 @@ EndFunc   ;==>_LOCalc_CommentLineProperties
 ;                  @Error 1 @Extended 2 Return 0 = $iX not an Integer.
 ;                  @Error 1 @Extended 3 Return 0 = $iY not an Integer.
 ;                  @Error 1 @Extended 4 Return 0 = $bProtectPos not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Comment's Position Structure.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Annotation Shape Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Comment's Position Structure.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $iX
@@ -1775,7 +1772,7 @@ Func _LOCalc_CommentPosition(ByRef $oComment, $iX = Null, $iY = Null, $bProtectP
 	If Not IsObj($oAnnotationShape) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$tPos = $oAnnotationShape.Position()
-	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If __LO_VarsAreNull($iX, $iY, $bProtectPos) Then
 		__LO_ArrayFill($avPosition, $tPos.X(), $tPos.Y(), $oAnnotationShape.MoveProtect())
@@ -1963,6 +1960,7 @@ EndFunc   ;==>_LOCalc_CommentsGetList
 ;                  @Error 1 @Extended 4 Return 0 = $bProtectSize not a Boolean.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Annotation Shape Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Comment's Size Structure.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWidth
@@ -1995,7 +1993,7 @@ Func _LOCalc_CommentSize(ByRef $oComment, $iWidth = Null, $iHeight = Null, $bPro
 	If Not IsObj($oAnnotationShape) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$tSize = $oAnnotationShape.Size()
-	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If __LO_VarsAreNull($iWidth, $iHeight, $bProtectSize) Then
 		__LO_ArrayFill($avSize, $tSize.Width(), $tSize.Height(), $oAnnotationShape.SizeProtect())
