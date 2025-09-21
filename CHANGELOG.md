@@ -652,6 +652,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Made $oDoc Parameter optional for `_LOCalc_FontsGetNames`.
 - Added count of number of results for `_LOCalc_DocConnect`, connect-all and partial name search when more than one result is present.
 - Removed _ArrayDisplay from most examples.
+- `_LOWriter_DocRedoCurActionTitle` to only have one Success return, either with an empty String or the Current Redo Action Title.
+- `_LOWriter_DocUndoCurActionTitle` to only have one Success return, either with an empty String or the Current Undo Action Title.
 
 ### Removed
 
