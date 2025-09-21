@@ -646,6 +646,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_CommentAreaTransparencyGradient
 	- _LOCalc_CommentPosition
 	- _LOCalc_CommentSize
+- `_LOCalc_DocRedoCurActionTitle` to only have one Success return, either with an empty String or the Current Redo Action Title.
+- `_LOCalc_DocUndoCurActionTitle` to only have one Success return, either with an empty String or the Current Undo Action Title.
+
 
 ### Removed
 

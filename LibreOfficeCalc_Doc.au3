@@ -1376,9 +1376,10 @@ EndFunc   ;==>_LOCalc_DocRedoClear
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve current Redo Action.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return String = No Current Redo Action available. Returning Empty String.
-;                  @Error 0 @Extended 1 Return String = Returns the current available redo action Title as a String.
+;                  @Error 0 @Extended 0 Return String = Returning the current available redo action title as a String. Will be an empty String if no action is available.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1390,16 +1391,15 @@ Func _LOCalc_DocRedoCurActionTitle(ByRef $oDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
+	Local $sRedoAction
+
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($oDoc.UndoManager.isRedoPossible()) Then
+	$sRedoAction = $oDoc.UndoManager.getCurrentRedoActionTitle()
+	If ($sRedoAction = Null) Then $sRedoAction = ""
+	If Not IsString($sRedoAction) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-		Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.getCurrentRedoActionTitle())
-
-	Else
-
-		Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.UndoManager.getCurrentRedoActionTitle())
-	EndIf
+	Return SetError($__LO_STATUS_SUCCESS, 0, $sRedoAction)
 EndFunc   ;==>_LOCalc_DocRedoCurActionTitle
 
 ; #FUNCTION# ====================================================================================================================
@@ -1962,9 +1962,10 @@ EndFunc   ;==>_LOCalc_DocUndoClear
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve current Undo Action.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return String = No Current Undo Action available. Returning Empty String.
-;                  @Error 0 @Extended 1 Return String = Returns the current available undo action Title in String format.
+;                  @Error 0 @Extended 0 Return String = Returning the current available Undo action title as a String. Will be an empty String if no action is available.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1976,16 +1977,14 @@ Func _LOCalc_DocUndoCurActionTitle(ByRef $oDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
+	Local $sUndoAction
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($oDoc.UndoManager.isUndoPossible()) Then
+	$sUndoAction = $oDoc.UndoManager.getCurrentUndoActionTitle()
+	If ($sUndoAction = Null) Then $sUndoAction = ""
+	If Not IsString($sUndoAction) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-		Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.getCurrentUndoActionTitle())
-
-	Else
-
-		Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.UndoManager.getCurrentUndoActionTitle())
-	EndIf
+	Return SetError($__LO_STATUS_SUCCESS, 0, $sUndoAction)
 EndFunc   ;==>_LOCalc_DocUndoCurActionTitle
 
 ; #FUNCTION# ====================================================================================================================
