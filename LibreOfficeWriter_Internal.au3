@@ -1344,7 +1344,7 @@ EndFunc   ;==>__LOWriter_CharUnderLine
 ;                  @Error 0 @Extended 1 Return Integer = Success. Removed Alpha value from Long Color value, returning new Color value.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: In functions which return the current color value, generally background colors, if Transparency (alpha) is set, the background color value is not the literal color set, but also includes the transparency value added to it. This functions removed that value for simpler color values.
+; Remarks .......: In functions which return the current color value, generally background colors, if Transparency (alpha) is set, the background color value is not the literal color set, but also includes the transparency value added to it. This functions removes that value for simpler color values.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
