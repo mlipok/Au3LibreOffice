@@ -386,7 +386,7 @@ EndFunc   ;==>_LOBase_QueryExists
 ; Syntax ........: _LOBase_QueryFieldGetObjByIndex(ByRef $oQuery, $iField)
 ; Parameters ....: $oQuery              - [in/out] an object. A Query object returned by a previous _LOBase_QueryGetObjByName, _LOBase_QueryGetObjByIndex, _LOBase_QueryAddByName, or _LOBase_QueryAddBySQL function.
 ;                  $iField              - an integer value. The Index value of the Field to retrieve the Object for. 0 Based.
-; Return values . Success: Object
+; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oQuery not an Object.

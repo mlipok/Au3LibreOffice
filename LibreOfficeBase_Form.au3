@@ -181,7 +181,7 @@ EndFunc   ;==>_LOBase_FormConnect
 ; Syntax ........: _LOBase_FormCopy(ByRef $oConnection, $sInputForm, $sOutputForm)
 ; Parameters ....: $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
 ;                  $sInputForm          - a string value. The Name of the Form to Copy. Also the Sub-directory the Form is in. See Remarks.
-;                  $sOutputForm       - a string value. The Name of the Form to Create. Also the Sub-directory to place the Form in. See Remarks.
+;                  $sOutputForm         - a string value. The Name of the Form to Create. Also the Sub-directory to place the Form in. See Remarks.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
