@@ -518,7 +518,7 @@ Func _LOWriter_ShapeAreaTransparency(ByRef $oShape, $iTransparency = Null)
 
 	If Not __LO_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	$oShape.FillTransparenceGradientName = "" ; Turn of Gradient if it is on, else settings wont be applied.
+	$oShape.FillTransparenceGradientName = "" ; Turn off Gradient if it is on, else settings wont be applied.
 	$oShape.FillTransparence = $iTransparency
 	$iError = ($oShape.FillTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 1))
 
