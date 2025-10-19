@@ -5582,8 +5582,8 @@ EndFunc   ;==>__LOWriter_ParTxtFlowOpt
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_Shape_CreateArrow
 ; Description ...: Create a Arrow type Shape.
-; Syntax ........: __LOWriter_Shape_CreateArrow($oDoc, $iWidth, $iHeight, $iShapeType)
-; Parameters ....: $oDoc                - an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Syntax ........: __LOWriter_Shape_CreateArrow(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $iWidth              - an integer value. The Shape's Width in Micrometers.
 ;                  $iHeight             - an integer value. The Shape's Height in Micrometers.
 ;                  $iShapeType          - an integer value (0-25). The Type of shape to create. See $LOW_SHAPE_TYPE_ARROWS_* as defined in LibreOfficeWriter_Constants.au3
@@ -5613,7 +5613,7 @@ EndFunc   ;==>__LOWriter_ParTxtFlowOpt
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_Shape_CreateArrow($oDoc, $iWidth, $iHeight, $iShapeType)
+Func __LOWriter_Shape_CreateArrow(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -5746,8 +5746,8 @@ EndFunc   ;==>__LOWriter_Shape_CreateArrow
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_Shape_CreateBasic
 ; Description ...: Create a Basic type Shape.
-; Syntax ........: __LOWriter_Shape_CreateBasic($oDoc, $iWidth, $iHeight, $iShapeType)
-; Parameters ....: $oDoc                - an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Syntax ........: __LOWriter_Shape_CreateBasic(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $iWidth              - an integer value. The Shape's Width in Micrometers.
 ;                  $iHeight             - an integer value. The Shape's Height in Micrometers.
 ;                  $iShapeType          - an integer value (26-49). The Type of shape to create. See $LOW_SHAPE_TYPE_BASIC_* as defined in LibreOfficeWriter_Constants.au3
@@ -5775,7 +5775,7 @@ EndFunc   ;==>__LOWriter_Shape_CreateArrow
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_Shape_CreateBasic($oDoc, $iWidth, $iHeight, $iShapeType)
+Func __LOWriter_Shape_CreateBasic(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -5909,8 +5909,8 @@ EndFunc   ;==>__LOWriter_Shape_CreateBasic
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_Shape_CreateCallout
 ; Description ...: Create a Callout type Shape.
-; Syntax ........: __LOWriter_Shape_CreateCallout($oDoc, $iWidth, $iHeight, $iShapeType)
-; Parameters ....: $oDoc                - an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Syntax ........: __LOWriter_Shape_CreateCallout(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $iWidth              - an integer value. The Shape's Width in Micrometers.
 ;                  $iHeight             - an integer value. The Shape's Height in Micrometers.
 ;                  $iShapeType          - an integer value (50-56). The Type of shape to create. See $LOW_SHAPE_TYPE_CALLOUT_* as defined in LibreOfficeWriter_Constants.au3
@@ -5937,7 +5937,7 @@ EndFunc   ;==>__LOWriter_Shape_CreateBasic
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_Shape_CreateCallout($oDoc, $iWidth, $iHeight, $iShapeType)
+Func __LOWriter_Shape_CreateCallout(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -6007,8 +6007,8 @@ EndFunc   ;==>__LOWriter_Shape_CreateCallout
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_Shape_CreateFlowchart
 ; Description ...: Create a FlowChart type Shape.
-; Syntax ........: __LOWriter_Shape_CreateFlowchart($oDoc, $iWidth, $iHeight, $iShapeType)
-; Parameters ....: $oDoc                - an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Syntax ........: __LOWriter_Shape_CreateFlowchart(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $iWidth              - an integer value. The Shape's Width in Micrometers.
 ;                  $iHeight             - an integer value. The Shape's Height in Micrometers.
 ;                  $iShapeType          - an integer value (57-84). The Type of shape to create. See $LOW_SHAPE_TYPE_FLOWCHART_* as defined in LibreOfficeWriter_Constants.au3
@@ -6035,7 +6035,7 @@ EndFunc   ;==>__LOWriter_Shape_CreateCallout
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_Shape_CreateFlowchart($oDoc, $iWidth, $iHeight, $iShapeType)
+Func __LOWriter_Shape_CreateFlowchart(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -6168,8 +6168,8 @@ EndFunc   ;==>__LOWriter_Shape_CreateFlowchart
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_Shape_CreateLine
 ; Description ...: Create a Line type Shape.
-; Syntax ........: __LOWriter_Shape_CreateLine($oDoc, $iWidth, $iHeight, $iShapeType)
-; Parameters ....: $oDoc                - an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Syntax ........: __LOWriter_Shape_CreateLine(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $iWidth              - an integer value. The Shape's Width in Micrometers.
 ;                  $iHeight             - an integer value. The Shape's Height in Micrometers.
 ;                  $iShapeType          - an integer value (85-92). The Type of shape to create. See $LOW_SHAPE_TYPE_LINE_* as defined in LibreOfficeWriter_Constants.au3
@@ -6197,7 +6197,7 @@ EndFunc   ;==>__LOWriter_Shape_CreateFlowchart
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_Shape_CreateLine($oDoc, $iWidth, $iHeight, $iShapeType)
+Func __LOWriter_Shape_CreateLine(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -6441,8 +6441,8 @@ EndFunc   ;==>__LOWriter_Shape_CreateLine
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_Shape_CreateStars
 ; Description ...: Create a Star or Banner type Shape.
-; Syntax ........: __LOWriter_Shape_CreateStars($oDoc, $iWidth, $iHeight, $iShapeType)
-; Parameters ....: $oDoc                - an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Syntax ........: __LOWriter_Shape_CreateStars(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $iWidth              - an integer value. The Shape's Width in Micrometers.
 ;                  $iHeight             - an integer value. The Shape's Height in Micrometers.
 ;                  $iShapeType          - an integer value (93-104). The Type of shape to create. See $LOW_SHAPE_TYPE_STARS_* as defined in LibreOfficeWriter_Constants.au3
@@ -6470,7 +6470,7 @@ EndFunc   ;==>__LOWriter_Shape_CreateLine
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_Shape_CreateStars($oDoc, $iWidth, $iHeight, $iShapeType)
+Func __LOWriter_Shape_CreateStars(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -6555,8 +6555,8 @@ EndFunc   ;==>__LOWriter_Shape_CreateStars
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_Shape_CreateSymbol
 ; Description ...: Create a Symbol type Shape.
-; Syntax ........: __LOWriter_Shape_CreateSymbol($oDoc, $iWidth, $iHeight, $iShapeType)
-; Parameters ....: $oDoc                - an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Syntax ........: __LOWriter_Shape_CreateSymbol(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
+; Parameters ....: $oDoc               - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $iWidth              - an integer value. The Shape's Width in Micrometers.
 ;                  $iHeight             - an integer value. The Shape's Height in Micrometers.
 ;                  $iShapeType          - an integer value (105-122). The Type of shape to create. See $LOW_SHAPE_TYPE_SYMBOL_* as defined in LibreOfficeWriter_Constants.au3
@@ -6586,7 +6586,23 @@ EndFunc   ;==>__LOWriter_Shape_CreateStars
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_Shape_CreateSymbol($oDoc, $iWidth, $iHeight, $iShapeType)
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_Shape_CreateSymbol
+; Description ...:
+; Syntax ........: __LOWriter_Shape_CreateSymbol(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
+; Parameters ....: $oDoc                - [in/out] an object.
+;                  $iWidth              - an integer value.
+;                  $iHeight             - an integer value.
+;                  $iShapeType          - an integer value.
+; Return values .: None
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_Shape_CreateSymbol(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
