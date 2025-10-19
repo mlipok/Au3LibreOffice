@@ -1091,14 +1091,14 @@ Func _LOWriter_ShapeGetType(ByRef $oShape)
 			EndIf
 
 		Case "com.sun.star.drawing.OpenBezierShape"
-			;~ $LOW_SHAPE_TYPE_LINE_CURVE ; No way to differentiate between these??
-			;~ $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE
+;~ $LOW_SHAPE_TYPE_LINE_CURVE ; No way to differentiate between these??
+;~ $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE
 
 			Return SetError($__LO_STATUS_SUCCESS, 3, $LOW_SHAPE_TYPE_LINE_CURVE)
 
 		Case "com.sun.star.drawing.ClosedBezierShape"
-			;~ $LOW_SHAPE_TYPE_LINE_CURVE_FILLED ; No way to differentiate between these??
-			;~ $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE_FILLED
+;~ $LOW_SHAPE_TYPE_LINE_CURVE_FILLED ; No way to differentiate between these??
+;~ $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE_FILLED
 
 			Return SetError($__LO_STATUS_SUCCESS, 4, $LOW_SHAPE_TYPE_LINE_CURVE_FILLED)
 
@@ -1109,9 +1109,9 @@ Func _LOWriter_ShapeGetType(ByRef $oShape)
 		Case "com.sun.star.drawing.PolyPolygonShape"
 
 			Return SetError($__LO_STATUS_SUCCESS, 6, $LOW_SHAPE_TYPE_LINE_POLYGON)
-			;~ $LOW_SHAPE_TYPE_LINE_POLYGON ; No way to differentiate between these??
-			;~ $LOW_SHAPE_TYPE_LINE_POLYGON_45
-			;~ $LOW_SHAPE_TYPE_LINE_POLYGON_45_FILLED
+;~ $LOW_SHAPE_TYPE_LINE_POLYGON ; No way to differentiate between these??
+;~ $LOW_SHAPE_TYPE_LINE_POLYGON_45
+;~ $LOW_SHAPE_TYPE_LINE_POLYGON_45_FILLED
 
 		Case Else
 
@@ -1122,12 +1122,14 @@ EndFunc   ;==>_LOWriter_ShapeGetType
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ShapeInsert
 ; Description ...: Insert a shape into a document.
-; Syntax ........: _LOWriter_ShapeInsert(ByRef $oDoc, ByRef $oCursor, $iShapeType, $iWidth, $iHeight)
+; Syntax ........: _LOWriter_ShapeInsert(ByRef $oDoc, ByRef $oCursor, $iShapeType, $iWidth, $iHeight[, $iX = 0[, $iY = 0]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions. See Remarks.
 ;                  $iShapeType          - an integer value (0-122). The Type of shape to create. See remarks. See $LOW_SHAPE_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ;                  $iWidth              - an integer value. The Shape's Width in Micrometers. Note, for Lines, Width is the length of the line
 ;                  $iHeight             - an integer value. The Shape's Height in Micrometers. Note, for Lines, Height is the amount the line goes below the point of insertion.
+;                  $iX                  - [optional] an integer value. Default is 0. The X position from the insertion point, in Micrometers.
+;                  $iY                  - [optional] an integer value. Default is 0. The Y position from the insertion point, in Micrometers.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1136,14 +1138,13 @@ EndFunc   ;==>_LOWriter_ShapeGetType
 ;                  @Error 1 @Extended 3 Return 0 = $iShapeType not an Integer, less than 0, or greater than 122. See $LOW_SHAPE_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ;                  @Error 1 @Extended 4 Return 0 = $iWidth not an Integer.
 ;                  @Error 1 @Extended 5 Return 0 = $iHeight not an Integer.
-;                  @Error 1 @Extended 6 Return 0 = Cursor called in $oCursor is a Table Cursor, and cannot be used.
+;                  @Error 1 @Extended 6 Return 0 = $iX not an Integer.
+;                  @Error 1 @Extended 7 Return 0 = $iY not an Integer.
+;                  @Error 1 @Extended 8 Return 0 = Cursor called in $oCursor is a Table Cursor, and cannot be used.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create requested Shape.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to determine Cursor type.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve CustomShapeGeometry Array of Structures.
-;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve PolyPolygonBezier Structure.
-;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve the Position Structure.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. The Shape was successfully inserted. Returning the Shape's Object.
 ; Author ........: donnyh13
@@ -1163,103 +1164,54 @@ EndFunc   ;==>_LOWriter_ShapeGetType
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_ShapeInsert(ByRef $oDoc, ByRef $oCursor, $iShapeType, $iWidth, $iHeight)
+Func _LOWriter_ShapeInsert(ByRef $oDoc, ByRef $oCursor, $iShapeType, $iWidth, $iHeight, $iX = 0, $iY = 0)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iCursorType
 	Local $oShape
-	Local $tPos, $tPolyCoords
-	Local $atCusShapeGeo
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not __LO_IntIsBetween($iShapeType, $LOW_SHAPE_TYPE_ARROWS_ARROW_4_WAY, $LOW_SHAPE_TYPE_SYMBOL_PUZZLE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsInt($iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not IsInt($iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsInt($iX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsInt($iY) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 	$iCursorType = __LOWriter_Internal_CursorGetType($oCursor)
 	If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-	If ($iCursorType = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If ($iCursorType = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 	Switch $iShapeType
 		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_4_WAY To $LOW_SHAPE_TYPE_ARROWS_PENTAGON ; Create an Arrow Shape.
-			$oShape = __LOWriter_Shape_CreateArrow($oDoc, $iWidth, $iHeight, $iShapeType)
+			$oShape = __LOWriter_Shape_CreateArrow($oDoc, $oCursor, $iWidth, $iHeight, $iX, $iY, $iShapeType)
 			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-
-			$atCusShapeGeo = $oShape.CustomShapeGeometry() ; Backup the CustomShapeGeometry property, as it is generally lost upon insertion.
-			If Not IsArray($atCusShapeGeo) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		Case $LOW_SHAPE_TYPE_BASIC_ARC To $LOW_SHAPE_TYPE_BASIC_TRIANGLE_RIGHT ; Create a Basic Shape.
-			$oShape = __LOWriter_Shape_CreateBasic($oDoc, $iWidth, $iHeight, $iShapeType)
+			$oShape = __LOWriter_Shape_CreateBasic($oDoc, $oCursor, $iWidth, $iHeight, $iX, $iY, $iShapeType)
 			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-
-			If ($iShapeType <> $LOW_SHAPE_TYPE_BASIC_CIRCLE_SEGMENT) And ($iShapeType <> $LOW_SHAPE_TYPE_BASIC_ARC) Then ; Arc and Circle Segment shapes are different from the rest, and don't have CustomShapeGeometry property.
-				$atCusShapeGeo = $oShape.CustomShapeGeometry() ; Backup the CustomShapeGeometry property, as it is generally lost upon insertion.
-				If Not IsArray($atCusShapeGeo) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-			EndIf
 
 		Case $LOW_SHAPE_TYPE_CALLOUT_CLOUD To $LOW_SHAPE_TYPE_CALLOUT_ROUND ; Create a Callout Shape.
-			$oShape = __LOWriter_Shape_CreateCallout($oDoc, $iWidth, $iHeight, $iShapeType)
+			$oShape = __LOWriter_Shape_CreateCallout($oDoc, $oCursor, $iWidth, $iHeight, $iX, $iY, $iShapeType)
 			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-
-			$atCusShapeGeo = $oShape.CustomShapeGeometry() ; Backup the CustomShapeGeometry property, as it is generally lost upon insertion.
-			If Not IsArray($atCusShapeGeo) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		Case $LOW_SHAPE_TYPE_FLOWCHART_CARD To $LOW_SHAPE_TYPE_FLOWCHART_TERMINATOR ; Create a Flowchart Shape.
-			$oShape = __LOWriter_Shape_CreateFlowchart($oDoc, $iWidth, $iHeight, $iShapeType)
+			$oShape = __LOWriter_Shape_CreateFlowchart($oDoc, $oCursor, $iWidth, $iHeight, $iX, $iY, $iShapeType)
 			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-
-			$atCusShapeGeo = $oShape.CustomShapeGeometry() ; Backup the CustomShapeGeometry property, as it is generally lost upon insertion.
-			If Not IsArray($atCusShapeGeo) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		Case $LOW_SHAPE_TYPE_LINE_CURVE To $LOW_SHAPE_TYPE_LINE_POLYGON_45_FILLED ; Create a Line Shape.
-			$oShape = __LOWriter_Shape_CreateLine($oDoc, $iWidth, $iHeight, $iShapeType)
+			$oShape = __LOWriter_Shape_CreateLine($oDoc, $oCursor, $iWidth, $iHeight, $iX, $iY, $iShapeType)
 			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-
-			$tPolyCoords = $oShape.PolyPolygonBezier()
-			If Not IsObj($tPolyCoords) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		Case $LOW_SHAPE_TYPE_STARS_4_POINT To $LOW_SHAPE_TYPE_STARS_SIGNET ; Create a Star or Banner Shape.
-			$oShape = __LOWriter_Shape_CreateStars($oDoc, $iWidth, $iHeight, $iShapeType)
+			$oShape = __LOWriter_Shape_CreateStars($oDoc, $oCursor, $iWidth, $iHeight, $iX, $iY, $iShapeType)
 			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-
-			$atCusShapeGeo = $oShape.CustomShapeGeometry() ; Backup the CustomShapeGeometry property, as it is generally lost upon insertion.
-			If Not IsArray($atCusShapeGeo) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		Case $LOW_SHAPE_TYPE_SYMBOL_BEVEL_DIAMOND To $LOW_SHAPE_TYPE_SYMBOL_PUZZLE ; Create a Symbol Shape.
-			$oShape = __LOWriter_Shape_CreateSymbol($oDoc, $iWidth, $iHeight, $iShapeType)
+			$oShape = __LOWriter_Shape_CreateSymbol($oDoc, $oCursor, $iWidth, $iHeight, $iX, $iY, $iShapeType)
 			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-
-			$atCusShapeGeo = $oShape.CustomShapeGeometry() ; Backup the CustomShapeGeometry property, as it is generally lost upon insertion.
-			If Not IsArray($atCusShapeGeo) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	EndSwitch
-
-	$tPos = $oShape.Position() ; Backup the position, as it is generally lost upon insertion.
-	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
-
-	$oCursor.Text.insertTextContent($oCursor, $oShape, False)
-
-	$oShape.AnchorType = $LOW_ANCHOR_AT_PARAGRAPH
-
-	If IsObj($tPolyCoords) Then
-		$oShape.PolyPolygonBezier = $tPolyCoords ; If shape used the PolyPolygonBezier property, re-Set it after insertion.
-
-	ElseIf IsArray($atCusShapeGeo) Then
-		$oShape.CustomShapeGeometry = $atCusShapeGeo ; If shape used the CustomSHapeGeometry property, re-Set it after insertion.
-	EndIf
-
-	$oShape.Position = $tPos ; re-Set the position after insertion.
-
-	If ($oShape.ShapeType() = "com.sun.star.drawing.CustomShape") Then
-		; Settings for TextBox use.
-		$oShape.TextMinimumFrameWidth = $iWidth
-		$oShape.TextMinimumFrameHeight = $iHeight
-		$oShape.TextVerticalAdjust = $LOW_ALIGN_VERT_MIDDLE
-		$oShape.TextWrap = $LOW_WRAP_MODE_THROUGH
-		$oShape.TextAutoGrowHeight = False
-		$oShape.TextAutoGrowWidth = False
-	EndIf
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oShape)
 EndFunc   ;==>_LOWriter_ShapeInsert

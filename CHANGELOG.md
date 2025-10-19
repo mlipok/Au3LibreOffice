@@ -863,6 +863,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	5. Shape Functions:
 		- _LOWriter_ShapeAreaGradientMulticolor
 		- _LOWriter_ShapeAreaTransparencyGradientMulti
+- Position parameters (X and Y) to `_LOWriter_ShapeInsert`.
 
 ### Changed
 
@@ -991,6 +992,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- `_LOWriter_ShapeTransparency` --> `_LOWriter_ShapeAreaTransparency`
 	- `_LOWriter_ShapeTransparencyGradient` --> `_LOWriter_ShapeAreaTransparencyGradient`
 - Renamed Shape line style constant `$LOW_SHAPE_LINE_STYLE_LINE_STYLE_9` to `$LOW_SHAPE_LINE_STYLE_SPARSE_DASH` to match changes in L.O. 24.2.
+- Made Shape insertion work better.
 
 ### Fixed
 

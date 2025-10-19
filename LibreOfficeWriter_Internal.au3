@@ -711,9 +711,9 @@ Func __LOWriter_CharFontColor(ByRef $oObj, $iFontColor, $iTransparency, $iHighli
 		If Not __LO_IntIsBetween($iHighlight, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		; CharHighlight; same as CharBackColor---Libre seems to use back color for highlighting however, so using that for setting.
-		;~ 		If Not __LO_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 2, 0)
-		;~ 		$oObj.CharHighlight = $iHighlight ;-- keeping old method in case.
-		;~ 		$iError = ($oObj.CharHighlight() = $iHighlight) ? ($iError) : (BitOR($iError, 4)
+;~ 		If Not __LO_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 2, 0)
+;~ 		$oObj.CharHighlight = $iHighlight ;-- keeping old method in case.
+;~ 		$iError = ($oObj.CharHighlight() = $iHighlight) ? ($iError) : (BitOR($iError, 4)
 		$oObj.CharBackColor = $iHighlight
 		$iError = ($oObj.CharBackColor() = $iHighlight) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -2462,6 +2462,7 @@ Func __LOWriter_GetShapeName(ByRef $oDoc, $sShapeName)
 	#forceref $oCOM_ErrorHandler
 
 	Local $oShapes
+	Local $iCount = 0
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sShapeName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -2470,22 +2471,19 @@ Func __LOWriter_GetShapeName(ByRef $oDoc, $sShapeName)
 	If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If $oShapes.hasElements() Then
-		For $i = 1 To $oShapes.getCount() - 1
-			For $j = 0 To $oShapes.getCount() - 1
-				If ($oShapes.getByIndex($j).Name() = $sShapeName & $i) Then ExitLoop
-
+		Do
+			$iCount += 1
+			For $i = 0 To $oShapes.getCount() - 1
+				If ($oShapes.getByIndex($i).Name() = $sShapeName & $iCount) Then ExitLoop
 				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 			Next
-
-			If ($oShapes.getByIndex($j).Name() <> $sShapeName & $i) Then ExitLoop ; If no matches, exit loop with current name.
-		Next
-
+		Until $i = $oShapes.getCount()
 	Else
 
 		Return SetError($__LO_STATUS_SUCCESS, 0, $sShapeName & "1") ; If Doc has no shapes, just return the name with a "1" appended.
 	EndIf
 
-	Return SetError($__LO_STATUS_SUCCESS, 1, $sShapeName & $i)
+	Return SetError($__LO_STATUS_SUCCESS, 1, $sShapeName & $iCount)
 EndFunc   ;==>__LOWriter_GetShapeName
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -5582,26 +5580,32 @@ EndFunc   ;==>__LOWriter_ParTxtFlowOpt
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_Shape_CreateArrow
 ; Description ...: Create a Arrow type Shape.
-; Syntax ........: __LOWriter_Shape_CreateArrow(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
+; Syntax ........: __LOWriter_Shape_CreateArrow(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight, $iX, $iY, $iShapeType)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions.
 ;                  $iWidth              - an integer value. The Shape's Width in Micrometers.
 ;                  $iHeight             - an integer value. The Shape's Height in Micrometers.
+;                  $iX                  - an integer value. The X position from the insertion point, in Micrometers.
+;                  $iY                  - an integer value. The Y position from the insertion point, in Micrometers.
 ;                  $iShapeType          - an integer value (0-25). The Type of shape to create. See $LOW_SHAPE_TYPE_ARROWS_* as defined in LibreOfficeWriter_Constants.au3
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iWidth not an Integer.
-;                  @Error 1 @Extended 3 Return 0 = $iHeight not an Integer.
-;                  @Error 1 @Extended 4 Return 0 = $iShapeType not an Integer
+;                  @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $iWidth not an Integer.
+;                  @Error 1 @Extended 4 Return 0 = $iHeight not an Integer.
+;                  @Error 1 @Extended 5 Return 0 = $iX not an Integer.
+;                  @Error 1 @Extended 6 Return 0 = $iY not an Integer.
+;                  @Error 1 @Extended 7 Return 0 = $iShapeType not an Integer
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.drawing.CustomShape" or "com.sun.star.drawing.EllipseShape" Object.
 ;                  @Error 2 @Extended 2 Return 0 = Failed to create a property structure.
 ;                  @Error 2 @Extended 3 Return 0 = Failed to create "MirroredX" property structure.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve the Position Structure.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve the Size Structure.
-;                  @Error 3 @Extended 3 Return 0 = Failed to create a unique Shape name.
+;                  @Error 3 @Extended 1 Return 0 = Failed to create a unique Shape name.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve the Position Structure.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve the Size Structure.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Returning the newly created shape.
 ; Author ........: donnyh13
@@ -5613,7 +5617,7 @@ EndFunc   ;==>__LOWriter_ParTxtFlowOpt
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_Shape_CreateArrow(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
+Func __LOWriter_Shape_CreateArrow(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight, $iX, $iY, $iShapeType)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -5622,9 +5626,12 @@ Func __LOWriter_Shape_CreateArrow(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 	Local $atCusShapeGeo[1]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsInt($iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsInt($iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsInt($iShapeType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsInt($iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsInt($iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsInt($iX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsInt($iY) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsInt($iShapeType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 	$oShape = $oDoc.createInstance("com.sun.star.drawing.CustomShape")
 	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
@@ -5718,27 +5725,39 @@ Func __LOWriter_Shape_CreateArrow(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 			$tProp.Value = "pentagon-right"
 	EndSwitch
 
+	$oShape.Name = __LOWriter_GetShapeName($oDoc, "Shape ")
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$oCursor.Text.insertTextContent($oCursor, $oShape, False)
+
 	$atCusShapeGeo[0] = $tProp
 	$oShape.CustomShapeGeometry = $atCusShapeGeo
 
 	$tPos = $oShape.Position()
-	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	$tPos.X = 0
-	$tPos.Y = 0
+	$tPos.X = $iX
+	$tPos.Y = $iY
 
 	$oShape.Position = $tPos
 
 	$tSize = $oShape.Size()
-	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	$tSize.Width = $iWidth
 	$tSize.Height = $iHeight
 
 	$oShape.Size = $tSize
 
-	$oShape.Name = __LOWriter_GetShapeName($oDoc, "Shape ")
-	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	$oShape.AnchorType = $LOW_ANCHOR_AT_PARAGRAPH
+
+	; Settings for TextBox use.
+	$oShape.TextMinimumFrameWidth = $iWidth
+	$oShape.TextMinimumFrameHeight = $iHeight
+	$oShape.TextVerticalAdjust = $LOW_ALIGN_VERT_MIDDLE
+	$oShape.TextWrap = $LOW_WRAP_MODE_THROUGH
+	$oShape.TextAutoGrowHeight = False
+	$oShape.TextAutoGrowWidth = False
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oShape)
 EndFunc   ;==>__LOWriter_Shape_CreateArrow
@@ -5746,18 +5765,24 @@ EndFunc   ;==>__LOWriter_Shape_CreateArrow
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_Shape_CreateBasic
 ; Description ...: Create a Basic type Shape.
-; Syntax ........: __LOWriter_Shape_CreateBasic(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
+; Syntax ........: __LOWriter_Shape_CreateBasic(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight, $iX, $iY, $iShapeType)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions.
 ;                  $iWidth              - an integer value. The Shape's Width in Micrometers.
 ;                  $iHeight             - an integer value. The Shape's Height in Micrometers.
+;                  $iX                  - an integer value. The X position from the insertion point, in Micrometers.
+;                  $iY                  - an integer value. The Y position from the insertion point, in Micrometers.
 ;                  $iShapeType          - an integer value (26-49). The Type of shape to create. See $LOW_SHAPE_TYPE_BASIC_* as defined in LibreOfficeWriter_Constants.au3
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iWidth not an Integer.
-;                  @Error 1 @Extended 3 Return 0 = $iHeight not an Integer.
-;                  @Error 1 @Extended 4 Return 0 = $iShapeType not an Integer
+;                  @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $iWidth not an Integer.
+;                  @Error 1 @Extended 4 Return 0 = $iHeight not an Integer.
+;                  @Error 1 @Extended 5 Return 0 = $iX not an Integer.
+;                  @Error 1 @Extended 6 Return 0 = $iY not an Integer.
+;                  @Error 1 @Extended 7 Return 0 = $iShapeType not an Integer.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.drawing.CustomShape" or "com.sun.star.drawing.EllipseShape" Object.
 ;                  @Error 2 @Extended 2 Return 0 = Failed to create a property structure.
@@ -5775,7 +5800,7 @@ EndFunc   ;==>__LOWriter_Shape_CreateArrow
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_Shape_CreateBasic(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
+Func __LOWriter_Shape_CreateBasic(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight, $iX, $iY, $iShapeType)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -5786,14 +5811,25 @@ Func __LOWriter_Shape_CreateBasic(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 	Local $iCircleKind_ARC = 3 ; a circle with an open cut.
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsInt($iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsInt($iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsInt($iShapeType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsInt($iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsInt($iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsInt($iX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsInt($iY) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsInt($iShapeType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 	If ($iShapeType = $LOW_SHAPE_TYPE_BASIC_CIRCLE_SEGMENT) Or ($iShapeType = $LOW_SHAPE_TYPE_BASIC_ARC) Then ; These two shapes need special procedures.
 		$oShape = $oDoc.createInstance("com.sun.star.drawing.EllipseShape")
 		If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
+		If ($iShapeType = $LOW_SHAPE_TYPE_BASIC_CIRCLE_SEGMENT) Then
+			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Ellipse Segment ")
+			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+		ElseIf ($iShapeType = $LOW_SHAPE_TYPE_BASIC_ARC) Then
+			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Elliptical arc ")
+			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		EndIf
 	Else
 		$oShape = $oDoc.createInstance("com.sun.star.drawing.CustomShape")
 		If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
@@ -5805,13 +5841,13 @@ Func __LOWriter_Shape_CreateBasic(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	EndIf
 
+	$oCursor.Text.insertTextContent($oCursor, $oShape, False)
+
+	$oShape.AnchorType = $LOW_ANCHOR_AT_PARAGRAPH
+
 	Switch $iShapeType
 		Case $LOW_SHAPE_TYPE_BASIC_ARC
 			$oShape.FillColor = $LO_COLOR_OFF
-
-			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Elliptical arc ")
-			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
 			$oShape.CircleKind = $iCircleKind_ARC
 			$oShape.CircleStartAngle = 0
 			$oShape.CircleEndAngle = 25000
@@ -5823,9 +5859,6 @@ Func __LOWriter_Shape_CreateBasic(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 			$tProp.Value = "circle-pie" ; "mso-spt100"
 
 		Case $LOW_SHAPE_TYPE_BASIC_CIRCLE_SEGMENT
-			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Ellipse Segment ")
-			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
 			$oShape.CircleKind = $iCircleKind_CUT
 			$oShape.CircleStartAngle = 0
 			$oShape.CircleEndAngle = 25000
@@ -5885,13 +5918,20 @@ Func __LOWriter_Shape_CreateBasic(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 	If ($iShapeType <> $LOW_SHAPE_TYPE_BASIC_CIRCLE_SEGMENT) And ($iShapeType <> $LOW_SHAPE_TYPE_BASIC_ARC) Then
 		$atCusShapeGeo[0] = $tProp
 		$oShape.CustomShapeGeometry = $atCusShapeGeo
+		; Settings for TextBox use.
+		$oShape.TextMinimumFrameWidth = $iWidth
+		$oShape.TextMinimumFrameHeight = $iHeight
+		$oShape.TextVerticalAdjust = $LOW_ALIGN_VERT_MIDDLE
+		$oShape.TextWrap = $LOW_WRAP_MODE_THROUGH
+		$oShape.TextAutoGrowHeight = False
+		$oShape.TextAutoGrowWidth = False
 	EndIf
 
 	$tPos = $oShape.Position()
 	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	$tPos.X = 0
-	$tPos.Y = 0
+	$tPos.X = $iX
+	$tPos.Y = $iY
 
 	$oShape.Position = $tPos
 
@@ -5909,25 +5949,31 @@ EndFunc   ;==>__LOWriter_Shape_CreateBasic
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_Shape_CreateCallout
 ; Description ...: Create a Callout type Shape.
-; Syntax ........: __LOWriter_Shape_CreateCallout(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
+; Syntax ........: __LOWriter_Shape_CreateCallout(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight, $iX, $iY, $iShapeType)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions.
 ;                  $iWidth              - an integer value. The Shape's Width in Micrometers.
 ;                  $iHeight             - an integer value. The Shape's Height in Micrometers.
+;                  $iX                  - an integer value. The X position from the insertion point, in Micrometers.
+;                  $iY                  - an integer value. The Y position from the insertion point, in Micrometers.
 ;                  $iShapeType          - an integer value (50-56). The Type of shape to create. See $LOW_SHAPE_TYPE_CALLOUT_* as defined in LibreOfficeWriter_Constants.au3
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iWidth not an Integer.
-;                  @Error 1 @Extended 3 Return 0 = $iHeight not an Integer.
-;                  @Error 1 @Extended 4 Return 0 = $iShapeType not an Integer
+;                  @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $iWidth not an Integer.
+;                  @Error 1 @Extended 4 Return 0 = $iHeight not an Integer.
+;                  @Error 1 @Extended 5 Return 0 = $iX not an Integer.
+;                  @Error 1 @Extended 6 Return 0 = $iY not an Integer.
+;                  @Error 1 @Extended 7 Return 0 = $iShapeType not an Integer.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.drawing.CustomShape" Object.
 ;                  @Error 2 @Extended 2 Return 0 = Failed to create a property structure.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve the Position Structure.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve the Size Structure.
-;                  @Error 3 @Extended 3 Return 0 = Failed to create a unique Shape name.
+;                  @Error 3 @Extended 1 Return 0 = Failed to create a unique Shape name.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve the Position Structure.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve the Size Structure.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Returning the newly created shape.
 ; Author ........: donnyh13
@@ -5937,7 +5983,7 @@ EndFunc   ;==>__LOWriter_Shape_CreateBasic
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_Shape_CreateCallout(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
+Func __LOWriter_Shape_CreateCallout(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight, $iX, $iY, $iShapeType)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -5946,9 +5992,12 @@ Func __LOWriter_Shape_CreateCallout(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 	Local $atCusShapeGeo[1]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsInt($iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsInt($iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsInt($iShapeType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsInt($iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsInt($iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsInt($iX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsInt($iY) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsInt($iShapeType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 	$oShape = $oDoc.createInstance("com.sun.star.drawing.CustomShape")
 	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
@@ -5979,27 +6028,39 @@ Func __LOWriter_Shape_CreateCallout(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 			$tProp.Value = "round-callout"
 	EndSwitch
 
+	$oShape.Name = __LOWriter_GetShapeName($oDoc, "Shape ")
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$oCursor.Text.insertTextContent($oCursor, $oShape, False)
+
+	$oShape.AnchorType = $LOW_ANCHOR_AT_PARAGRAPH
+
 	$atCusShapeGeo[0] = $tProp
 	$oShape.CustomShapeGeometry = $atCusShapeGeo
 
 	$tPos = $oShape.Position()
-	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	$tPos.X = 0
-	$tPos.Y = 0
+	$tPos.X = $iX
+	$tPos.Y = $iY
 
 	$oShape.Position = $tPos
 
 	$tSize = $oShape.Size()
-	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	$tSize.Width = $iWidth
 	$tSize.Height = $iHeight
 
 	$oShape.Size = $tSize
 
-	$oShape.Name = __LOWriter_GetShapeName($oDoc, "Shape ")
-	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	; Settings for TextBox use.
+	$oShape.TextMinimumFrameWidth = $iWidth
+	$oShape.TextMinimumFrameHeight = $iHeight
+	$oShape.TextVerticalAdjust = $LOW_ALIGN_VERT_MIDDLE
+	$oShape.TextWrap = $LOW_WRAP_MODE_THROUGH
+	$oShape.TextAutoGrowHeight = False
+	$oShape.TextAutoGrowWidth = False
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oShape)
 EndFunc   ;==>__LOWriter_Shape_CreateCallout
@@ -6007,25 +6068,31 @@ EndFunc   ;==>__LOWriter_Shape_CreateCallout
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_Shape_CreateFlowchart
 ; Description ...: Create a FlowChart type Shape.
-; Syntax ........: __LOWriter_Shape_CreateFlowchart(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
+; Syntax ........: __LOWriter_Shape_CreateFlowchart(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight, $iX, $iY, $iShapeType)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions.
 ;                  $iWidth              - an integer value. The Shape's Width in Micrometers.
 ;                  $iHeight             - an integer value. The Shape's Height in Micrometers.
+;                  $iX                  - an integer value. The X position from the insertion point, in Micrometers.
+;                  $iY                  - an integer value. The Y position from the insertion point, in Micrometers.
 ;                  $iShapeType          - an integer value (57-84). The Type of shape to create. See $LOW_SHAPE_TYPE_FLOWCHART_* as defined in LibreOfficeWriter_Constants.au3
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iWidth not an Integer.
-;                  @Error 1 @Extended 3 Return 0 = $iHeight not an Integer.
-;                  @Error 1 @Extended 4 Return 0 = $iShapeType not an Integer
+;                  @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $iWidth not an Integer.
+;                  @Error 1 @Extended 4 Return 0 = $iHeight not an Integer.
+;                  @Error 1 @Extended 5 Return 0 = $iX not an Integer.
+;                  @Error 1 @Extended 6 Return 0 = $iY not an Integer.
+;                  @Error 1 @Extended 7 Return 0 = $iShapeType not an Integer.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.drawing.CustomShape" Object.
 ;                  @Error 2 @Extended 2 Return 0 = Failed to create a property structure.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve the Position Structure.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve the Size Structure.
-;                  @Error 3 @Extended 3 Return 0 = Failed to create a unique Shape name.
+;                  @Error 3 @Extended 1 Return 0 = Failed to create a unique Shape name.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve the Position Structure.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve the Size Structure.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Returning the newly created shape.
 ; Author ........: donnyh13
@@ -6035,7 +6102,7 @@ EndFunc   ;==>__LOWriter_Shape_CreateCallout
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_Shape_CreateFlowchart(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
+Func __LOWriter_Shape_CreateFlowchart(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight, $iX, $iY, $iShapeType)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -6044,9 +6111,12 @@ Func __LOWriter_Shape_CreateFlowchart(ByRef $oDoc, $iWidth, $iHeight, $iShapeTyp
 	Local $atCusShapeGeo[1]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsInt($iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsInt($iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsInt($iShapeType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsInt($iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsInt($iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsInt($iX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsInt($iY) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsInt($iShapeType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 	$oShape = $oDoc.createInstance("com.sun.star.drawing.CustomShape")
 	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
@@ -6140,27 +6210,39 @@ Func __LOWriter_Shape_CreateFlowchart(ByRef $oDoc, $iWidth, $iHeight, $iShapeTyp
 			$tProp.Value = "flowchart-terminator"
 	EndSwitch
 
+	$oShape.Name = __LOWriter_GetShapeName($oDoc, "Shape ")
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$oCursor.Text.insertTextContent($oCursor, $oShape, False)
+
+	$oShape.AnchorType = $LOW_ANCHOR_AT_PARAGRAPH
+
 	$atCusShapeGeo[0] = $tProp
 	$oShape.CustomShapeGeometry = $atCusShapeGeo
 
 	$tPos = $oShape.Position()
-	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	$tPos.X = 0
-	$tPos.Y = 0
+	$tPos.X = $iX
+	$tPos.Y = $iY
 
 	$oShape.Position = $tPos
 
 	$tSize = $oShape.Size()
-	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	$tSize.Width = $iWidth
 	$tSize.Height = $iHeight
 
 	$oShape.Size = $tSize
 
-	$oShape.Name = __LOWriter_GetShapeName($oDoc, "Shape ")
-	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	; Settings for TextBox use.
+	$oShape.TextMinimumFrameWidth = $iWidth
+	$oShape.TextMinimumFrameHeight = $iHeight
+	$oShape.TextVerticalAdjust = $LOW_ALIGN_VERT_MIDDLE
+	$oShape.TextWrap = $LOW_WRAP_MODE_THROUGH
+	$oShape.TextAutoGrowHeight = False
+	$oShape.TextAutoGrowWidth = False
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oShape)
 EndFunc   ;==>__LOWriter_Shape_CreateFlowchart
@@ -6168,18 +6250,24 @@ EndFunc   ;==>__LOWriter_Shape_CreateFlowchart
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_Shape_CreateLine
 ; Description ...: Create a Line type Shape.
-; Syntax ........: __LOWriter_Shape_CreateLine(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
+; Syntax ........: __LOWriter_Shape_CreateLine(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight, $iX, $iY, $iShapeType)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions.
 ;                  $iWidth              - an integer value. The Shape's Width in Micrometers.
 ;                  $iHeight             - an integer value. The Shape's Height in Micrometers.
+;                  $iX                  - an integer value. The X position from the insertion point, in Micrometers.
+;                  $iY                  - an integer value. The Y position from the insertion point, in Micrometers.
 ;                  $iShapeType          - an integer value (85-92). The Type of shape to create. See $LOW_SHAPE_TYPE_LINE_* as defined in LibreOfficeWriter_Constants.au3
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iWidth not an Integer.
-;                  @Error 1 @Extended 3 Return 0 = $iHeight not an Integer.
-;                  @Error 1 @Extended 4 Return 0 = $iShapeType not an Integer
+;                  @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $iWidth not an Integer.
+;                  @Error 1 @Extended 4 Return 0 = $iHeight not an Integer.
+;                  @Error 1 @Extended 5 Return 0 = $iX not an Integer.
+;                  @Error 1 @Extended 6 Return 0 = $iY not an Integer.
+;                  @Error 1 @Extended 7 Return 0 = $iShapeType not an Integer.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create the requested Line type Object.
 ;                  @Error 2 @Extended 2 Return 0 = Failed to create a Position structure.
@@ -6197,7 +6285,7 @@ EndFunc   ;==>__LOWriter_Shape_CreateFlowchart
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_Shape_CreateLine(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
+Func __LOWriter_Shape_CreateLine(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight, $iX, $iY, $iShapeType)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -6207,9 +6295,12 @@ Func __LOWriter_Shape_CreateLine(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 	Local $avArray[1]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsInt($iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsInt($iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsInt($iShapeType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsInt($iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsInt($iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsInt($iX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsInt($iY) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsInt($iShapeType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 	$tPolyCoords = __LO_CreateStruct("com.sun.star.drawing.PolyPolygonBezierCoords")
 	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
@@ -6219,19 +6310,22 @@ Func __LOWriter_Shape_CreateLine(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 			$oShape = $oDoc.createInstance("com.sun.star.drawing.OpenBezierShape")
 			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
+			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Bézier curve ")
+			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 			ReDim $atPoint[4]
 			ReDim $aiFlags[4]
 
-			$atPoint[0] = __LOWriter_CreatePoint(0, 0)
+			$atPoint[0] = __LOWriter_CreatePoint($iX, $iY)
 			If Not IsObj($atPoint[0]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[1] = __LOWriter_CreatePoint(Int($iWidth / 2), $iHeight)
+			$atPoint[1] = __LOWriter_CreatePoint(Int(($iX + $iWidth) / 2), ($iY + $iHeight))
 			If Not IsObj($atPoint[1]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[2] = __LOWriter_CreatePoint(Int($iWidth / 2), Int($iHeight / 2))
+			$atPoint[2] = __LOWriter_CreatePoint(Int(($iX + $iWidth) / 2), Int(($iY + $iHeight) / 2))
 			If Not IsObj($atPoint[2]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[3] = __LOWriter_CreatePoint($iWidth, 0)
+			$atPoint[3] = __LOWriter_CreatePoint(($iX + $iWidth), $iY)
 			If Not IsObj($atPoint[3]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$aiFlags[0] = $LOW_SHAPE_POINT_TYPE_NORMAL
@@ -6239,8 +6333,7 @@ Func __LOWriter_Shape_CreateLine(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 			$aiFlags[2] = $LOW_SHAPE_POINT_TYPE_CONTROL
 			$aiFlags[3] = $LOW_SHAPE_POINT_TYPE_NORMAL
 
-			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Bézier curve ")
-			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+			$oCursor.Text.insertTextContent($oCursor, $oShape, False)
 
 			$oShape.FillColor = $LO_COLOR_OFF
 
@@ -6248,19 +6341,22 @@ Func __LOWriter_Shape_CreateLine(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 			$oShape = $oDoc.createInstance("com.sun.star.drawing.ClosedBezierShape")
 			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
+			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Bézier curve ")
+			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 			ReDim $atPoint[4]
 			ReDim $aiFlags[4]
 
-			$atPoint[0] = __LOWriter_CreatePoint(0, 0)
+			$atPoint[0] = __LOWriter_CreatePoint($iX, $iY)
 			If Not IsObj($atPoint[0]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[1] = __LOWriter_CreatePoint(Int($iWidth / 2), $iHeight)
+			$atPoint[1] = __LOWriter_CreatePoint(Int(($iX + $iWidth) / 2), ($iY + $iHeight))
 			If Not IsObj($atPoint[1]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[2] = __LOWriter_CreatePoint(Int($iWidth / 2), Int($iHeight / 2))
+			$atPoint[2] = __LOWriter_CreatePoint(Int(($iX + $iWidth) / 2), Int(($iY + $iHeight) / 2))
 			If Not IsObj($atPoint[2]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[3] = __LOWriter_CreatePoint($iWidth, 0)
+			$atPoint[3] = __LOWriter_CreatePoint(($iX + $iWidth), $iY)
 			If Not IsObj($atPoint[3]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$aiFlags[0] = $LOW_SHAPE_POINT_TYPE_NORMAL
@@ -6268,8 +6364,7 @@ Func __LOWriter_Shape_CreateLine(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 			$aiFlags[2] = $LOW_SHAPE_POINT_TYPE_CONTROL
 			$aiFlags[3] = $LOW_SHAPE_POINT_TYPE_NORMAL
 
-			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Bézier curve ")
-			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+			$oCursor.Text.insertTextContent($oCursor, $oShape, False)
 
 			$oShape.FillColor = 7512015 ; Light blue
 
@@ -6277,42 +6372,47 @@ Func __LOWriter_Shape_CreateLine(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 			$oShape = $oDoc.createInstance("com.sun.star.drawing.OpenBezierShape")
 			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
+			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Bézier curve ")
+			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 			ReDim $atPoint[3]
 			ReDim $aiFlags[3]
 
-			$atPoint[0] = __LOWriter_CreatePoint(0, 0)
+			$atPoint[0] = __LOWriter_CreatePoint($iX, $iY)
 			If Not IsObj($atPoint[0]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[1] = __LOWriter_CreatePoint(Int($iWidth / 2), Int($iHeight / 2))
+			$atPoint[1] = __LOWriter_CreatePoint(Int(($iX + $iWidth) / 2), Int(($iY + $iHeight) / 2))
 			If Not IsObj($atPoint[1]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[2] = __LOWriter_CreatePoint(Int($iWidth), Int($iHeight))
+			$atPoint[2] = __LOWriter_CreatePoint(Int(($iX + $iWidth)), Int(($iY + $iHeight)))
 			If Not IsObj($atPoint[2]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$aiFlags[0] = $LOW_SHAPE_POINT_TYPE_NORMAL
 			$aiFlags[1] = $LOW_SHAPE_POINT_TYPE_CONTROL
 			$aiFlags[2] = $LOW_SHAPE_POINT_TYPE_NORMAL
 
-			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Bézier curve ")
-			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+			$oCursor.Text.insertTextContent($oCursor, $oShape, False)
 
 		Case $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE_FILLED
 			$oShape = $oDoc.createInstance("com.sun.star.drawing.ClosedBezierShape")
 			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
+			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Bézier curve ")
+			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 			ReDim $atPoint[4]
 			ReDim $aiFlags[4]
 
-			$atPoint[0] = __LOWriter_CreatePoint(0, 0)
+			$atPoint[0] = __LOWriter_CreatePoint($iX, $iY)
 			If Not IsObj($atPoint[0]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[1] = __LOWriter_CreatePoint($iWidth + Int(($iWidth / 8)), Int(($iHeight / 2)))
+			$atPoint[1] = __LOWriter_CreatePoint(($iX + $iWidth) + Int((($iX + $iWidth) / 8)), Int((($iY + $iHeight) / 2)))
 			If Not IsObj($atPoint[1]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[2] = __LOWriter_CreatePoint(Int($iWidth), Int($iHeight))
+			$atPoint[2] = __LOWriter_CreatePoint(Int(($iX + $iWidth)), Int(($iY + $iHeight)))
 			If Not IsObj($atPoint[2]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[3] = __LOWriter_CreatePoint(0, 0)
+			$atPoint[3] = __LOWriter_CreatePoint($iX, $iY)
 			If Not IsObj($atPoint[3]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$aiFlags[0] = $LOW_SHAPE_POINT_TYPE_NORMAL
@@ -6320,8 +6420,7 @@ Func __LOWriter_Shape_CreateLine(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 			$aiFlags[2] = $LOW_SHAPE_POINT_TYPE_NORMAL
 			$aiFlags[3] = $LOW_SHAPE_POINT_TYPE_NORMAL
 
-			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Bézier curve ")
-			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+			$oCursor.Text.insertTextContent($oCursor, $oShape, False)
 
 			$oShape.FillColor = 7512015 ; Light blue
 
@@ -6329,41 +6428,46 @@ Func __LOWriter_Shape_CreateLine(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 			$oShape = $oDoc.createInstance("com.sun.star.drawing.LineShape")
 			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
+			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Line ")
+			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 			ReDim $atPoint[2]
 			ReDim $aiFlags[2]
 
-			$atPoint[0] = __LOWriter_CreatePoint(0, 0)
+			$atPoint[0] = __LOWriter_CreatePoint($iX, $iY)
 			If Not IsObj($atPoint[0]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[1] = __LOWriter_CreatePoint(Int($iWidth), Int($iHeight))
+			$atPoint[1] = __LOWriter_CreatePoint(Int(($iX + $iWidth)), Int(($iY + $iHeight)))
 			If Not IsObj($atPoint[1]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$aiFlags[0] = $LOW_SHAPE_POINT_TYPE_NORMAL
 			$aiFlags[1] = $LOW_SHAPE_POINT_TYPE_NORMAL
 
-			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Line ")
-			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+			$oCursor.Text.insertTextContent($oCursor, $oShape, False)
 
 		Case $LOW_SHAPE_TYPE_LINE_POLYGON, $LOW_SHAPE_TYPE_LINE_POLYGON_45
 			$oShape = $oDoc.createInstance("com.sun.star.drawing.PolyPolygonShape")
 			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
+			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Polygon 4 corners ")
+			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 			ReDim $atPoint[5]
 			ReDim $aiFlags[5]
 
-			$atPoint[0] = __LOWriter_CreatePoint(0, 0)
+			$atPoint[0] = __LOWriter_CreatePoint($iX, $iY)
 			If Not IsObj($atPoint[0]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[1] = __LOWriter_CreatePoint(Int($iWidth), 0)
+			$atPoint[1] = __LOWriter_CreatePoint(Int(($iX + $iWidth)), $iY)
 			If Not IsObj($atPoint[1]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[2] = __LOWriter_CreatePoint(Int($iWidth), Int($iHeight))
+			$atPoint[2] = __LOWriter_CreatePoint(Int(($iX + $iWidth)), Int(($iY + $iHeight)))
 			If Not IsObj($atPoint[2]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[3] = __LOWriter_CreatePoint(0, Int($iHeight))
+			$atPoint[3] = __LOWriter_CreatePoint($iX, Int(($iY + $iHeight)))
 			If Not IsObj($atPoint[3]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[4] = __LOWriter_CreatePoint(0, 0)
+			$atPoint[4] = __LOWriter_CreatePoint($iX, $iY)
 			If Not IsObj($atPoint[4]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$aiFlags[0] = $LOW_SHAPE_POINT_TYPE_NORMAL
@@ -6372,8 +6476,7 @@ Func __LOWriter_Shape_CreateLine(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 			$aiFlags[3] = $LOW_SHAPE_POINT_TYPE_NORMAL
 			$aiFlags[4] = $LOW_SHAPE_POINT_TYPE_NORMAL
 
-			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Polygon 4 corners ")
-			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+			$oCursor.Text.insertTextContent($oCursor, $oShape, False)
 
 			$oShape.FillColor = $LO_COLOR_OFF
 
@@ -6381,22 +6484,25 @@ Func __LOWriter_Shape_CreateLine(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 			$oShape = $oDoc.createInstance("com.sun.star.drawing.PolyPolygonShape")
 			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
+			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Polygon 4 corners ")
+			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 			ReDim $atPoint[5]
 			ReDim $aiFlags[5]
 
-			$atPoint[0] = __LOWriter_CreatePoint(0, 0)
+			$atPoint[0] = __LOWriter_CreatePoint($iX, $iY)
 			If Not IsObj($atPoint[0]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[1] = __LOWriter_CreatePoint(Int($iWidth), 0)
+			$atPoint[1] = __LOWriter_CreatePoint(Int(($iX + $iWidth)), $iY)
 			If Not IsObj($atPoint[1]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[2] = __LOWriter_CreatePoint(Int($iWidth), Int($iHeight))
+			$atPoint[2] = __LOWriter_CreatePoint(Int(($iX + $iWidth)), Int(($iY + $iHeight)))
 			If Not IsObj($atPoint[2]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[3] = __LOWriter_CreatePoint(0, Int($iHeight))
+			$atPoint[3] = __LOWriter_CreatePoint($iX, Int(($iY + $iHeight)))
 			If Not IsObj($atPoint[3]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[4] = __LOWriter_CreatePoint(0, 0)
+			$atPoint[4] = __LOWriter_CreatePoint($iX, $iY)
 			If Not IsObj($atPoint[4]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$aiFlags[0] = $LOW_SHAPE_POINT_TYPE_NORMAL
@@ -6405,11 +6511,20 @@ Func __LOWriter_Shape_CreateLine(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 			$aiFlags[3] = $LOW_SHAPE_POINT_TYPE_NORMAL
 			$aiFlags[4] = $LOW_SHAPE_POINT_TYPE_NORMAL
 
-			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Polygon 4 corners ")
-			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+			$oCursor.Text.insertTextContent($oCursor, $oShape, False)
 
 			$oShape.FillColor = 7512015 ; Light blue
 	EndSwitch
+
+	$avArray[0] = $atPoint
+	$tPolyCoords.Coordinates = $avArray
+
+	$avArray[0] = $aiFlags
+	$tPolyCoords.Flags = $avArray
+
+	$oShape.PolyPolygonBezier = $tPolyCoords
+
+	$oShape.AnchorType = $LOW_ANCHOR_AT_PARAGRAPH
 
 	$tSize = $oShape.Size()
 	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
@@ -6422,18 +6537,10 @@ Func __LOWriter_Shape_CreateLine(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 	$tPos = $oShape.Position()
 	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
-	$tPos.X = 0
-	$tPos.Y = 0
+	$tPos.X = $iX
+	$tPos.Y = $iY
 
 	$oShape.Position = $tPos
-
-	$avArray[0] = $atPoint
-	$tPolyCoords.Coordinates = $avArray
-
-	$avArray[0] = $aiFlags
-	$tPolyCoords.Flags = $avArray
-
-	$oShape.PolyPolygonBezier = $tPolyCoords
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oShape)
 EndFunc   ;==>__LOWriter_Shape_CreateLine
@@ -6441,25 +6548,31 @@ EndFunc   ;==>__LOWriter_Shape_CreateLine
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_Shape_CreateStars
 ; Description ...: Create a Star or Banner type Shape.
-; Syntax ........: __LOWriter_Shape_CreateStars(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
+; Syntax ........: __LOWriter_Shape_CreateStars(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight, $iX, $iY, $iShapeType)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions.
 ;                  $iWidth              - an integer value. The Shape's Width in Micrometers.
 ;                  $iHeight             - an integer value. The Shape's Height in Micrometers.
+;                  $iX                  - an integer value. The X position from the insertion point, in Micrometers.
+;                  $iY                  - an integer value. The Y position from the insertion point, in Micrometers.
 ;                  $iShapeType          - an integer value (93-104). The Type of shape to create. See $LOW_SHAPE_TYPE_STARS_* as defined in LibreOfficeWriter_Constants.au3
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iWidth not an Integer.
-;                  @Error 1 @Extended 3 Return 0 = $iHeight not an Integer.
-;                  @Error 1 @Extended 4 Return 0 = $iShapeType not an Integer
+;                  @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $iWidth not an Integer.
+;                  @Error 1 @Extended 4 Return 0 = $iHeight not an Integer.
+;                  @Error 1 @Extended 5 Return 0 = $iX not an Integer.
+;                  @Error 1 @Extended 6 Return 0 = $iY not an Integer.
+;                  @Error 1 @Extended 7 Return 0 = $iShapeType not an Integer.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.drawing.CustomShape" Object.
 ;                  @Error 2 @Extended 2 Return 0 = Failed to create a property structure.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve the Position Structure.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve the Size Structure.
-;                  @Error 3 @Extended 3 Return 0 = Failed to create a unique Shape name.
+;                  @Error 3 @Extended 1 Return 0 = Failed to create a unique Shape name.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve the Position Structure.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve the Size Structure.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Returning the newly created shape.
 ; Author ........: donnyh13
@@ -6470,7 +6583,7 @@ EndFunc   ;==>__LOWriter_Shape_CreateLine
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_Shape_CreateStars(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
+Func __LOWriter_Shape_CreateStars(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight, $iX, $iY, $iShapeType)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -6479,9 +6592,12 @@ Func __LOWriter_Shape_CreateStars(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 	Local $atCusShapeGeo[1]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsInt($iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsInt($iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsInt($iShapeType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsInt($iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsInt($iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsInt($iX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsInt($iY) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsInt($iShapeType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 	$oShape = $oDoc.createInstance("com.sun.star.drawing.CustomShape")
 	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
@@ -6527,27 +6643,39 @@ Func __LOWriter_Shape_CreateStars(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 			$tProp.Value = "signet" ; "non-primitive"
 	EndSwitch
 
+	$oShape.Name = __LOWriter_GetShapeName($oDoc, "Shape ")
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$oCursor.Text.insertTextContent($oCursor, $oShape, False)
+
+	$oShape.AnchorType = $LOW_ANCHOR_AT_PARAGRAPH
+
 	$atCusShapeGeo[0] = $tProp
 	$oShape.CustomShapeGeometry = $atCusShapeGeo
 
 	$tPos = $oShape.Position()
-	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	$tPos.X = 0
-	$tPos.Y = 0
+	$tPos.X = $iX
+	$tPos.Y = $iY
 
 	$oShape.Position = $tPos
 
 	$tSize = $oShape.Size()
-	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	$tSize.Width = $iWidth
 	$tSize.Height = $iHeight
 
 	$oShape.Size = $tSize
 
-	$oShape.Name = __LOWriter_GetShapeName($oDoc, "Shape ")
-	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	; Settings for TextBox use.
+	$oShape.TextMinimumFrameWidth = $iWidth
+	$oShape.TextMinimumFrameHeight = $iHeight
+	$oShape.TextVerticalAdjust = $LOW_ALIGN_VERT_MIDDLE
+	$oShape.TextWrap = $LOW_WRAP_MODE_THROUGH
+	$oShape.TextAutoGrowHeight = False
+	$oShape.TextAutoGrowWidth = False
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oShape)
 EndFunc   ;==>__LOWriter_Shape_CreateStars
@@ -6555,18 +6683,24 @@ EndFunc   ;==>__LOWriter_Shape_CreateStars
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_Shape_CreateSymbol
 ; Description ...: Create a Symbol type Shape.
-; Syntax ........: __LOWriter_Shape_CreateSymbol(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
-; Parameters ....: $oDoc               - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Syntax ........: __LOWriter_Shape_CreateSymbol(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight, $iX, $iY, $iShapeType)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions.
 ;                  $iWidth              - an integer value. The Shape's Width in Micrometers.
 ;                  $iHeight             - an integer value. The Shape's Height in Micrometers.
+;                  $iX                  - an integer value. The X position from the insertion point, in Micrometers.
+;                  $iY                  - an integer value. The Y position from the insertion point, in Micrometers.
 ;                  $iShapeType          - an integer value (105-122). The Type of shape to create. See $LOW_SHAPE_TYPE_SYMBOL_* as defined in LibreOfficeWriter_Constants.au3
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iWidth not an Integer.
-;                  @Error 1 @Extended 3 Return 0 = $iHeight not an Integer.
-;                  @Error 1 @Extended 4 Return 0 = $iShapeType not an Integer
+;                  @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $iWidth not an Integer.
+;                  @Error 1 @Extended 4 Return 0 = $iHeight not an Integer.
+;                  @Error 1 @Extended 5 Return 0 = $iX not an Integer.
+;                  @Error 1 @Extended 6 Return 0 = $iY not an Integer.
+;                  @Error 1 @Extended 7 Return 0 = $iShapeType not an Integer.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.drawing.CustomShape" Object.
 ;                  @Error 2 @Extended 2 Return 0 = Failed to create a property structure.
@@ -6586,23 +6720,7 @@ EndFunc   ;==>__LOWriter_Shape_CreateStars
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-; #INTERNAL_USE_ONLY# ===========================================================================================================
-; Name ..........: __LOWriter_Shape_CreateSymbol
-; Description ...:
-; Syntax ........: __LOWriter_Shape_CreateSymbol(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
-; Parameters ....: $oDoc                - [in/out] an object.
-;                  $iWidth              - an integer value.
-;                  $iHeight             - an integer value.
-;                  $iShapeType          - an integer value.
-; Return values .: None
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func __LOWriter_Shape_CreateSymbol(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
+Func __LOWriter_Shape_CreateSymbol(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight, $iX, $iY, $iShapeType)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -6611,9 +6729,12 @@ Func __LOWriter_Shape_CreateSymbol(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 	Local $atCusShapeGeo[1]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsInt($iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsInt($iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsInt($iShapeType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsInt($iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsInt($iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsInt($iX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsInt($iY) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsInt($iShapeType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 	$oShape = $oDoc.createInstance("com.sun.star.drawing.CustomShape")
 	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
@@ -6656,18 +6777,18 @@ Func __LOWriter_Shape_CreateSymbol(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 			$oShape.FillColor = $LO_COLOR_OFF
 
 		Case $LOW_SHAPE_TYPE_SYMBOL_CLOUD
-			;~ Custom Shape Geometry Type = "non-primitive" ???? Try "cloud"
+;~ Custom Shape Geometry Type = "non-primitive" ???? Try "cloud"
 			$tProp.Value = "cloud"
 
 		Case $LOW_SHAPE_TYPE_SYMBOL_FLOWER
-			;~ Custom Shape Geometry Type = "non-primitive" ???? Try "flower"
+;~ Custom Shape Geometry Type = "non-primitive" ???? Try "flower"
 			$tProp.Value = "flower"
 
 		Case $LOW_SHAPE_TYPE_SYMBOL_HEART
 			$tProp.Value = "heart"
 
 		Case $LOW_SHAPE_TYPE_SYMBOL_LIGHTNING
-			;~ Custom Shape Geometry Type = "non-primitive" ???? Try "lightning"
+;~ Custom Shape Geometry Type = "non-primitive" ???? Try "lightning"
 			$tProp.Value = "lightning"
 
 		Case $LOW_SHAPE_TYPE_SYMBOL_MOON
@@ -6686,14 +6807,21 @@ Func __LOWriter_Shape_CreateSymbol(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 			$tProp.Value = "puzzle"
 	EndSwitch
 
+	$oShape.Name = __LOWriter_GetShapeName($oDoc, "Shape ")
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+	$oCursor.Text.insertTextContent($oCursor, $oShape, False)
+
+	$oShape.AnchorType = $LOW_ANCHOR_AT_PARAGRAPH
+
 	$atCusShapeGeo[0] = $tProp
 	$oShape.CustomShapeGeometry = $atCusShapeGeo
 
 	$tPos = $oShape.Position()
 	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	$tPos.X = 0
-	$tPos.Y = 0
+	$tPos.X = $iX
+	$tPos.Y = $iY
 
 	$oShape.Position = $tPos
 
@@ -6705,8 +6833,13 @@ Func __LOWriter_Shape_CreateSymbol(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 
 	$oShape.Size = $tSize
 
-	$oShape.Name = __LOWriter_GetShapeName($oDoc, "Shape ")
-	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	; Settings for TextBox use.
+	$oShape.TextMinimumFrameWidth = $iWidth
+	$oShape.TextMinimumFrameHeight = $iHeight
+	$oShape.TextVerticalAdjust = $LOW_ALIGN_VERT_MIDDLE
+	$oShape.TextWrap = $LOW_WRAP_MODE_THROUGH
+	$oShape.TextAutoGrowHeight = False
+	$oShape.TextAutoGrowWidth = False
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oShape)
 EndFunc   ;==>__LOWriter_Shape_CreateSymbol
@@ -6791,8 +6924,8 @@ Func __LOWriter_Shape_GetCustomType($sCusShapeType)
 
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_DOWN)
 
-			;~ 	Case "mso-spt100" ; Can't include this one as other shapes return mso-spt100 also
-			;~ Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT)
+;~ 	Case "mso-spt100" ; Can't include this one as other shapes return mso-spt100 also
+;~ Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT)
 
 		Case "circular-arrow"
 
@@ -6889,7 +7022,7 @@ Func __LOWriter_Shape_GetCustomType($sCusShapeType)
 		Case "ellipse"
 
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_CIRCLE)
-			;~ $LOW_SHAPE_TYPE_BASIC_ELLIPSE
+;~ $LOW_SHAPE_TYPE_BASIC_ELLIPSE
 
 		Case "paper"
 
@@ -6914,12 +7047,12 @@ Func __LOWriter_Shape_GetCustomType($sCusShapeType)
 		Case "rectangle"
 
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_SQUARE)
-			;~ $LOW_SHAPE_TYPE_BASIC_RECTANGLE
+;~ $LOW_SHAPE_TYPE_BASIC_RECTANGLE
 
 		Case "round-rectangle"
 
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED)
-			;~ $LOW_SHAPE_TYPE_BASIC_RECTANGLE_ROUNDED
+;~ $LOW_SHAPE_TYPE_BASIC_RECTANGLE_ROUNDED
 
 		Case "pentagon"
 
@@ -7166,12 +7299,12 @@ Func __LOWriter_Shape_GetCustomType($sCusShapeType)
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_BRACKET_RIGHT)
 
 		Case "cloud"
-			;~ Custom Shape Geometry Type = "non-primitive" ???? Try "cloud"
+;~ Custom Shape Geometry Type = "non-primitive" ???? Try "cloud"
 
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_CLOUD)
 
 		Case "flower"
-			;~ Custom Shape Geometry Type = "non-primitive" ???? Try "flower"
+;~ Custom Shape Geometry Type = "non-primitive" ???? Try "flower"
 
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_FLOWER)
 
@@ -7180,7 +7313,7 @@ Func __LOWriter_Shape_GetCustomType($sCusShapeType)
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_HEART)
 
 		Case "lightning"
-			;~ Custom Shape Geometry Type = "non-primitive" ???? Try "lightning"
+;~ Custom Shape Geometry Type = "non-primitive" ???? Try "lightning"
 
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_LIGHTNING)
 
