@@ -990,6 +990,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- `_LOWriter_PageStyleTransparencyGradient` --> `_LOWriter_PageStyleAreaTransparencyGradient`
 	- `_LOWriter_ShapeTransparency` --> `_LOWriter_ShapeAreaTransparency`
 	- `_LOWriter_ShapeTransparencyGradient` --> `_LOWriter_ShapeAreaTransparencyGradient`
+- Renamed Shape line style constant `$LOW_SHAPE_LINE_STYLE_LINE_STYLE_9` to `$LOW_SHAPE_LINE_STYLE_SPARSE_DASH` to match changes in L.O. 24.2.
 
 ### Fixed
 
@@ -1037,6 +1038,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_FieldFileNameModify
 - Add missing parameter to VarsAreNull in `_LOWriter_DocFormSettings`.
 - `_LOWriter_DocCreate` not finding a blank open document to connect to, if available, due to reversed logical operator.
+- `__LOWriter_Shape_CreateLine` was not checking if a Struct was created appropriately.
+- All `__LOWriter_Shape_Create*` functions did not use ByRef for one parameter.
+- One Shape line style (`$LOW_SHAPE_LINE_STYLE_LINE_STYLE_9`), was renamed in L.O. Version 24.2 to "Sparse Dash".
 
 ### Removed
 
