@@ -6223,16 +6223,16 @@ Func __LOWriter_Shape_CreateLine(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 			ReDim $aiFlags[4]
 
 			$atPoint[0] = __LOWriter_CreatePoint(0, 0)
-			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($atPoint[0]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$atPoint[1] = __LOWriter_CreatePoint(Int($iWidth / 2), $iHeight)
-			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($atPoint[1]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$atPoint[2] = __LOWriter_CreatePoint(Int($iWidth / 2), Int($iHeight / 2))
-			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($atPoint[2]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$atPoint[3] = __LOWriter_CreatePoint($iWidth, 0)
-			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($atPoint[3]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$aiFlags[0] = $LOW_SHAPE_POINT_TYPE_NORMAL
 			$aiFlags[1] = $LOW_SHAPE_POINT_TYPE_CONTROL
@@ -6252,16 +6252,16 @@ Func __LOWriter_Shape_CreateLine(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 			ReDim $aiFlags[4]
 
 			$atPoint[0] = __LOWriter_CreatePoint(0, 0)
-			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($atPoint[0]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$atPoint[1] = __LOWriter_CreatePoint(Int($iWidth / 2), $iHeight)
-			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($atPoint[1]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$atPoint[2] = __LOWriter_CreatePoint(Int($iWidth / 2), Int($iHeight / 2))
-			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($atPoint[2]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$atPoint[3] = __LOWriter_CreatePoint($iWidth, 0)
-			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($atPoint[3]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$aiFlags[0] = $LOW_SHAPE_POINT_TYPE_NORMAL
 			$aiFlags[1] = $LOW_SHAPE_POINT_TYPE_CONTROL
@@ -6281,13 +6281,13 @@ Func __LOWriter_Shape_CreateLine(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 			ReDim $aiFlags[3]
 
 			$atPoint[0] = __LOWriter_CreatePoint(0, 0)
-			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($atPoint[0]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$atPoint[1] = __LOWriter_CreatePoint(Int($iWidth / 2), Int($iHeight / 2))
-			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($atPoint[1]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$atPoint[2] = __LOWriter_CreatePoint(Int($iWidth), Int($iHeight))
-			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($atPoint[2]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$aiFlags[0] = $LOW_SHAPE_POINT_TYPE_NORMAL
 			$aiFlags[1] = $LOW_SHAPE_POINT_TYPE_CONTROL
@@ -6304,16 +6304,16 @@ Func __LOWriter_Shape_CreateLine(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 			ReDim $aiFlags[4]
 
 			$atPoint[0] = __LOWriter_CreatePoint(0, 0)
-			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($atPoint[0]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$atPoint[1] = __LOWriter_CreatePoint($iWidth + Int(($iWidth / 8)), Int(($iHeight / 2)))
-			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($atPoint[1]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$atPoint[2] = __LOWriter_CreatePoint(Int($iWidth), Int($iHeight))
-			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($atPoint[2]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$atPoint[3] = __LOWriter_CreatePoint(0, 0)
-			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($atPoint[3]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$aiFlags[0] = $LOW_SHAPE_POINT_TYPE_NORMAL
 			$aiFlags[1] = $LOW_SHAPE_POINT_TYPE_CONTROL
@@ -6333,10 +6333,10 @@ Func __LOWriter_Shape_CreateLine(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 			ReDim $aiFlags[2]
 
 			$atPoint[0] = __LOWriter_CreatePoint(0, 0)
-			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($atPoint[0]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$atPoint[1] = __LOWriter_CreatePoint(Int($iWidth), Int($iHeight))
-			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($atPoint[1]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$aiFlags[0] = $LOW_SHAPE_POINT_TYPE_NORMAL
 			$aiFlags[1] = $LOW_SHAPE_POINT_TYPE_NORMAL
@@ -6352,19 +6352,19 @@ Func __LOWriter_Shape_CreateLine(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 			ReDim $aiFlags[5]
 
 			$atPoint[0] = __LOWriter_CreatePoint(0, 0)
-			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($atPoint[0]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$atPoint[1] = __LOWriter_CreatePoint(Int($iWidth), 0)
-			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($atPoint[1]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$atPoint[2] = __LOWriter_CreatePoint(Int($iWidth), Int($iHeight))
-			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($atPoint[2]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$atPoint[3] = __LOWriter_CreatePoint(0, Int($iHeight))
-			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($atPoint[3]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$atPoint[4] = __LOWriter_CreatePoint(0, 0)
-			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($atPoint[4]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$aiFlags[0] = $LOW_SHAPE_POINT_TYPE_NORMAL
 			$aiFlags[1] = $LOW_SHAPE_POINT_TYPE_NORMAL
@@ -6385,19 +6385,19 @@ Func __LOWriter_Shape_CreateLine(ByRef $oDoc, $iWidth, $iHeight, $iShapeType)
 			ReDim $aiFlags[5]
 
 			$atPoint[0] = __LOWriter_CreatePoint(0, 0)
-			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($atPoint[0]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$atPoint[1] = __LOWriter_CreatePoint(Int($iWidth), 0)
-			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($atPoint[1]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$atPoint[2] = __LOWriter_CreatePoint(Int($iWidth), Int($iHeight))
-			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($atPoint[2]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$atPoint[3] = __LOWriter_CreatePoint(0, Int($iHeight))
-			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($atPoint[3]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$atPoint[4] = __LOWriter_CreatePoint(0, 0)
-			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($atPoint[4]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$aiFlags[0] = $LOW_SHAPE_POINT_TYPE_NORMAL
 			$aiFlags[1] = $LOW_SHAPE_POINT_TYPE_NORMAL
