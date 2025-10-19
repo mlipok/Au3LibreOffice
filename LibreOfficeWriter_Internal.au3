@@ -6321,13 +6321,13 @@ Func __LOWriter_Shape_CreateLine(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight,
 			$atPoint[0] = __LOWriter_CreatePoint($iX, $iY)
 			If Not IsObj($atPoint[0]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[1] = __LOWriter_CreatePoint(Int(($iX + $iWidth) / 2), ($iY + $iHeight))
+			$atPoint[1] = __LOWriter_CreatePoint(Int(($iX + $iWidth) / 2), Int($iY + $iHeight))
 			If Not IsObj($atPoint[1]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$atPoint[2] = __LOWriter_CreatePoint(Int(($iX + $iWidth) / 2), Int(($iY + $iHeight) / 2))
 			If Not IsObj($atPoint[2]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[3] = __LOWriter_CreatePoint(($iX + $iWidth), $iY)
+			$atPoint[3] = __LOWriter_CreatePoint(Int($iX + $iWidth), $iY)
 			If Not IsObj($atPoint[3]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$aiFlags[0] = $LOW_SHAPE_POINT_TYPE_NORMAL
@@ -6352,13 +6352,13 @@ Func __LOWriter_Shape_CreateLine(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight,
 			$atPoint[0] = __LOWriter_CreatePoint($iX, $iY)
 			If Not IsObj($atPoint[0]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[1] = __LOWriter_CreatePoint(Int(($iX + $iWidth) / 2), ($iY + $iHeight))
+			$atPoint[1] = __LOWriter_CreatePoint(Int(($iX + $iWidth) / 2), Int($iY + $iHeight))
 			If Not IsObj($atPoint[1]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$atPoint[2] = __LOWriter_CreatePoint(Int(($iX + $iWidth) / 2), Int(($iY + $iHeight) / 2))
 			If Not IsObj($atPoint[2]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[3] = __LOWriter_CreatePoint(($iX + $iWidth), $iY)
+			$atPoint[3] = __LOWriter_CreatePoint(Int($iX + $iWidth), $iY)
 			If Not IsObj($atPoint[3]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$aiFlags[0] = $LOW_SHAPE_POINT_TYPE_NORMAL
@@ -6386,7 +6386,7 @@ Func __LOWriter_Shape_CreateLine(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight,
 			$atPoint[1] = __LOWriter_CreatePoint(Int(($iX + $iWidth) / 2), Int(($iY + $iHeight) / 2))
 			If Not IsObj($atPoint[1]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[2] = __LOWriter_CreatePoint(Int(($iX + $iWidth)), Int(($iY + $iHeight)))
+			$atPoint[2] = __LOWriter_CreatePoint(Int($iX + $iWidth), Int($iY + $iHeight))
 			If Not IsObj($atPoint[2]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$aiFlags[0] = $LOW_SHAPE_POINT_TYPE_NORMAL
@@ -6408,10 +6408,10 @@ Func __LOWriter_Shape_CreateLine(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight,
 			$atPoint[0] = __LOWriter_CreatePoint($iX, $iY)
 			If Not IsObj($atPoint[0]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[1] = __LOWriter_CreatePoint(($iX + $iWidth) + Int((($iX + $iWidth) / 8)), Int((($iY + $iHeight) / 2)))
+			$atPoint[1] = __LOWriter_CreatePoint(Int($iX + $iWidth) + Int(($iX + $iWidth) / 8), Int(($iY + $iHeight) / 2))
 			If Not IsObj($atPoint[1]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[2] = __LOWriter_CreatePoint(Int(($iX + $iWidth)), Int(($iY + $iHeight)))
+			$atPoint[2] = __LOWriter_CreatePoint(Int($iX + $iWidth), Int($iY + $iHeight))
 			If Not IsObj($atPoint[2]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$atPoint[3] = __LOWriter_CreatePoint($iX, $iY)
@@ -6439,7 +6439,7 @@ Func __LOWriter_Shape_CreateLine(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight,
 			$atPoint[0] = __LOWriter_CreatePoint($iX, $iY)
 			If Not IsObj($atPoint[0]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[1] = __LOWriter_CreatePoint(Int(($iX + $iWidth)), Int(($iY + $iHeight)))
+			$atPoint[1] = __LOWriter_CreatePoint(Int($iX + $iWidth), Int($iY + $iHeight))
 			If Not IsObj($atPoint[1]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$aiFlags[0] = $LOW_SHAPE_POINT_TYPE_NORMAL
@@ -6460,13 +6460,13 @@ Func __LOWriter_Shape_CreateLine(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight,
 			$atPoint[0] = __LOWriter_CreatePoint($iX, $iY)
 			If Not IsObj($atPoint[0]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[1] = __LOWriter_CreatePoint(Int(($iX + $iWidth)), $iY)
+			$atPoint[1] = __LOWriter_CreatePoint(Int($iX + $iWidth), $iY)
 			If Not IsObj($atPoint[1]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[2] = __LOWriter_CreatePoint(Int(($iX + $iWidth)), Int(($iY + $iHeight)))
+			$atPoint[2] = __LOWriter_CreatePoint(Int($iX + $iWidth), Int($iY + $iHeight))
 			If Not IsObj($atPoint[2]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[3] = __LOWriter_CreatePoint($iX, Int(($iY + $iHeight)))
+			$atPoint[3] = __LOWriter_CreatePoint($iX, Int($iY + $iHeight))
 			If Not IsObj($atPoint[3]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$atPoint[4] = __LOWriter_CreatePoint($iX, $iY)
@@ -6495,13 +6495,13 @@ Func __LOWriter_Shape_CreateLine(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight,
 			$atPoint[0] = __LOWriter_CreatePoint($iX, $iY)
 			If Not IsObj($atPoint[0]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[1] = __LOWriter_CreatePoint(Int(($iX + $iWidth)), $iY)
+			$atPoint[1] = __LOWriter_CreatePoint(Int($iX + $iWidth), $iY)
 			If Not IsObj($atPoint[1]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[2] = __LOWriter_CreatePoint(Int(($iX + $iWidth)), Int(($iY + $iHeight)))
+			$atPoint[2] = __LOWriter_CreatePoint(Int($iX + $iWidth), Int($iY + $iHeight))
 			If Not IsObj($atPoint[2]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[3] = __LOWriter_CreatePoint($iX, Int(($iY + $iHeight)))
+			$atPoint[3] = __LOWriter_CreatePoint($iX, Int($iY + $iHeight))
 			If Not IsObj($atPoint[3]) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$atPoint[4] = __LOWriter_CreatePoint($iX, $iY)
