@@ -2755,7 +2755,7 @@ EndFunc   ;==>_LOWriter_ShapesGetNames
 ; Description ...: Activate, Set, and Retrieve Shape TextBox settings.
 ; Syntax ........: _LOWriter_ShapeTextBox(ByRef $oShape[, $bTextBox = Null[, $sContent = Null]])
 ; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by a previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
-;                  $bTextBox            - [optional] a boolean value. Default is Null. If True, adds a TexttBox inside of the Shape. See Remarks.
+;                  $bTextBox            - [optional] a boolean value. Default is Null. If True, adds a TextBox inside of the Shape. See Remarks.
 ;                  $sContent            - [optional] a string value. Default is Null. The Text content of the Shape's TextBox.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
