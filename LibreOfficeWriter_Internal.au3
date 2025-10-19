@@ -5157,10 +5157,10 @@ EndFunc   ;==>__LOWriter_ParStyleNameToggle
 ;                  @Error 3 @Extended 3 Return 0 = Failed to identify the new Tabstop once inserted.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return Integer = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                     1 = Error setting $iPosition
-;                  |                                     2 = Error setting $iFillChar
-;                  |                                     4 = Error setting $iAlignment
-;                  |                                     8 = Error setting $iDecChar
+;                  |                               1 = Error setting $iPosition
+;                  |                               2 = Error setting $iFillChar
+;                  |                               4 = Error setting $iAlignment
+;                  |                               8 = Error setting $iDecChar
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Integer = Success. Settings were successfully set. New TabStop position is returned.
 ; Author ........: donnyh13
@@ -6862,30 +6862,30 @@ EndFunc   ;==>__LOWriter_Shape_CreateSymbol
 ; Modified ......:
 ; Remarks .......: Some shapes are not implemented, or not fully implemented into LibreOffice for automation, consequently they do not have appropriate type names as of yet. Many have simply ambiguous names, such as "non-primitive".
 ;                  Because of this the following shape types cannot be identified, and this function will return -1:
-;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT, known as "mso-spt100".
-;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_CORNER_RIGHT, known as "non-primitive", should be "corner-right-arrow".
-;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT_OR_LEFT, known as "non-primitive", should be "right-left-arrow".
-;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_S_SHAPED, known as "non-primitive", should be "s-sharped-arrow".
-;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_SPLIT, known as "non-primitive", should be "split-arrow".
-;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_STRIPED_RIGHT, known as "mso-spt100", should be "striped-right-arrow".
-;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT, known as "mso-spt89", should be "up-right-arrow-callout".
-;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN, known as "mso-spt100", should be "up-right-down-arrow".
-;                   $LOW_SHAPE_TYPE_BASIC_CIRCLE_PIE, known as "mso-spt100", should be "circle-pie".
-;                   $LOW_SHAPE_TYPE_STARS_6_POINT, known as "non-primitive", should be "star6".
-;                   $LOW_SHAPE_TYPE_STARS_6_POINT_CONCAVE, known as "non-primitive", should be "concave-star6".
-;                   $LOW_SHAPE_TYPE_STARS_12_POINT, known as "non-primitive", should be "star12".
-;                   $LOW_SHAPE_TYPE_STARS_SIGNET, known as "non-primitive", should be "signet".
-;                   $LOW_SHAPE_TYPE_SYMBOL_CLOUD, known as "non-primitive", should be "cloud"?
-;                   $LOW_SHAPE_TYPE_SYMBOL_FLOWER, known as "non-primitive", should be "flower"?
-;                   $LOW_SHAPE_TYPE_SYMBOL_LIGHTNING, known as "non-primitive", should be "lightning".
+;                  - $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT, known as "mso-spt100".
+;                  - $LOW_SHAPE_TYPE_ARROWS_ARROW_CORNER_RIGHT, known as "non-primitive", should be "corner-right-arrow".
+;                  - $LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT_OR_LEFT, known as "non-primitive", should be "right-left-arrow".
+;                  - $LOW_SHAPE_TYPE_ARROWS_ARROW_S_SHAPED, known as "non-primitive", should be "s-sharped-arrow".
+;                  - $LOW_SHAPE_TYPE_ARROWS_ARROW_SPLIT, known as "non-primitive", should be "split-arrow".
+;                  - $LOW_SHAPE_TYPE_ARROWS_ARROW_STRIPED_RIGHT, known as "mso-spt100", should be "striped-right-arrow".
+;                  - $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT, known as "mso-spt89", should be "up-right-arrow-callout".
+;                  - $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN, known as "mso-spt100", should be "up-right-down-arrow".
+;                  - $LOW_SHAPE_TYPE_BASIC_CIRCLE_PIE, known as "mso-spt100", should be "circle-pie".
+;                  - $LOW_SHAPE_TYPE_STARS_6_POINT, known as "non-primitive", should be "star6".
+;                  - $LOW_SHAPE_TYPE_STARS_6_POINT_CONCAVE, known as "non-primitive", should be "concave-star6".
+;                  - $LOW_SHAPE_TYPE_STARS_12_POINT, known as "non-primitive", should be "star12".
+;                  - $LOW_SHAPE_TYPE_STARS_SIGNET, known as "non-primitive", should be "signet".
+;                  - $LOW_SHAPE_TYPE_SYMBOL_CLOUD, known as "non-primitive", should be "cloud"?
+;                  - $LOW_SHAPE_TYPE_SYMBOL_FLOWER, known as "non-primitive", should be "flower"?
+;                  - $LOW_SHAPE_TYPE_SYMBOL_LIGHTNING, known as "non-primitive", should be "lightning".
 ;                  The following Shapes implement the same type names, and are consequently indistinguishable:
-;                   $LOW_SHAPE_TYPE_BASIC_CIRCLE, $LOW_SHAPE_TYPE_BASIC_ELLIPSE (The Value of $LOW_SHAPE_TYPE_BASIC_CIRCLE is returned for either one.)
-;                   $LOW_SHAPE_TYPE_BASIC_SQUARE, $LOW_SHAPE_TYPE_BASIC_RECTANGLE (The Value of $LOW_SHAPE_TYPE_BASIC_SQUARE is returned for either one.)
-;                   $LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED, $LOW_SHAPE_TYPE_BASIC_RECTANGLE_ROUNDED (The Value of $LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED is returned for either one.)
+;                  - $LOW_SHAPE_TYPE_BASIC_CIRCLE, $LOW_SHAPE_TYPE_BASIC_ELLIPSE (The Value of $LOW_SHAPE_TYPE_BASIC_CIRCLE is returned for either one.)
+;                  - $LOW_SHAPE_TYPE_BASIC_SQUARE, $LOW_SHAPE_TYPE_BASIC_RECTANGLE (The Value of $LOW_SHAPE_TYPE_BASIC_SQUARE is returned for either one.)
+;                  - $LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED, $LOW_SHAPE_TYPE_BASIC_RECTANGLE_ROUNDED (The Value of $LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED is returned for either one.)
 ;                  The following Shapes have strange names that may change in the future, but currently are able to be identified:
-;                   $LOW_SHAPE_TYPE_STARS_DOORPLATE, known as, "mso-spt21", should be "doorplate"
-;                   $LOW_SHAPE_TYPE_SYMBOL_BEVEL_DIAMOND, known as, "col-502ad400", should be ??
-;                   $LOW_SHAPE_TYPE_SYMBOL_BEVEL_OCTAGON, known as, "col-60da8460", should be ??
+;                  - $LOW_SHAPE_TYPE_STARS_DOORPLATE, known as, "mso-spt21", should be "doorplate"
+;                  - $LOW_SHAPE_TYPE_SYMBOL_BEVEL_DIAMOND, known as, "col-502ad400", should be ??
+;                  - $LOW_SHAPE_TYPE_SYMBOL_BEVEL_OCTAGON, known as, "col-60da8460", should be ??
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -8317,13 +8317,13 @@ EndFunc   ;==>__LOWriter_TableBorder
 ; Remarks .......: $iMove may be set to any of the following constants. Only some movements accept movement amounts (such as "goRight" 2) etc. Also only some accept creating/ extending a selection of text/ data. They will be specified below.
 ;                  To Clear /Unselect a current selection, you can input a move such as "goRight", 0, False.
 ;                  #Cursor Movement Constants which accept number of Moves and Selecting:
-;                   $LOW_TABLECUR_GO_LEFT, Move the cursor left/right n cells.
-;                   $LOW_TABLECUR_GO_RIGHT, Move the cursor left/right n cells.
-;                   $LOW_TABLECUR_GO_UP, Move the cursor up/down n cells.
-;                   $LOW_TABLECUR_GO_DOWN, Move the cursor up/down n cells.
+;                  - $LOW_TABLECUR_GO_LEFT, Move the cursor left/right n cells.
+;                  - $LOW_TABLECUR_GO_RIGHT, Move the cursor left/right n cells.
+;                  - $LOW_TABLECUR_GO_UP, Move the cursor up/down n cells.
+;                  - $LOW_TABLECUR_GO_DOWN, Move the cursor up/down n cells.
 ;                  #Cursor Movements which accept Selecting Only:
-;                   $LOW_TABLECUR_GOTO_START, Move the cursor to the top left cell.
-;                   $LOW_TABLECUR_GOTO_END, Move the cursor to the bottom right cell.
+;                  - $LOW_TABLECUR_GOTO_START, Move the cursor to the top left cell.
+;                  - $LOW_TABLECUR_GOTO_END, Move the cursor to the bottom right cell.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -8559,26 +8559,26 @@ EndFunc   ;==>__LOWriter_TableRowSplitToggle
 ;                  Only some accept creating/ extending a selection of text/ data. They will be specified below.
 ;                  To Clear /Unselect a current selection, you can input a move such as "goRight", 0, False.
 ;                  #Cursor Movement Constants which accept number of Moves and Selecting:
-;                   $LOW_TEXTCUR_GO_LEFT, Move the cursor left by n characters.
-;                   $LOW_TEXTCUR_GO_RIGHT, Move the cursor right by n characters.
-;                   $LOW_TEXTCUR_GOTO_NEXT_WORD, Move to the start of the next word.
-;                   $LOW_TEXTCUR_GOTO_PREV_WORD, Move to the end of the previous word.
-;                   $LOW_TEXTCUR_GOTO_NEXT_SENTENCE, Move to the start of the next sentence.
-;                   $LOW_TEXTCUR_GOTO_PREV_SENTENCE, Move to the end of the previous sentence.
-;                   $LOW_TEXTCUR_GOTO_NEXT_PARAGRAPH, Move to the start of the next paragraph.
-;                   $LOW_TEXTCUR_GOTO_PREV_PARAGRAPH, Move to the End of the previous paragraph.
+;                  - $LOW_TEXTCUR_GO_LEFT, Move the cursor left by n characters.
+;                  - $LOW_TEXTCUR_GO_RIGHT, Move the cursor right by n characters.
+;                  - $LOW_TEXTCUR_GOTO_NEXT_WORD, Move to the start of the next word.
+;                  - $LOW_TEXTCUR_GOTO_PREV_WORD, Move to the end of the previous word.
+;                  - $LOW_TEXTCUR_GOTO_NEXT_SENTENCE, Move to the start of the next sentence.
+;                  - $LOW_TEXTCUR_GOTO_PREV_SENTENCE, Move to the end of the previous sentence.
+;                  - $LOW_TEXTCUR_GOTO_NEXT_PARAGRAPH, Move to the start of the next paragraph.
+;                  - $LOW_TEXTCUR_GOTO_PREV_PARAGRAPH, Move to the End of the previous paragraph.
 ;                  #Cursor Movements which accept Selecting Only:
-;                   $LOW_TEXTCUR_GOTO_START, Move the cursor to the start of the text.
-;                   $LOW_TEXTCUR_GOTO_END, Move the cursor to the end of the text.
-;                   $LOW_TEXTCUR_GOTO_END_OF_WORD, Move to the end of the current word.
-;                   $LOW_TEXTCUR_GOTO_START_OF_WORD, Move to the start of the current word.
-;                   $LOW_TEXTCUR_GOTO_END_OF_SENTENCE, Move to the end of the current sentence.
-;                   $LOW_TEXTCUR_GOTO_START_OF_SENTENCE, Move to the start of the current sentence.
-;                   $LOW_TEXTCUR_GOTO_END_OF_PARAGRAPH, Move to the end of the current paragraph.
-;                   $LOW_TEXTCUR_GOTO_START_OF_PARAGRAPH, Move to the start of the current paragraph.
+;                  - $LOW_TEXTCUR_GOTO_START, Move the cursor to the start of the text.
+;                  - $LOW_TEXTCUR_GOTO_END, Move the cursor to the end of the text.
+;                  - $LOW_TEXTCUR_GOTO_END_OF_WORD, Move to the end of the current word.
+;                  - $LOW_TEXTCUR_GOTO_START_OF_WORD, Move to the start of the current word.
+;                  - $LOW_TEXTCUR_GOTO_END_OF_SENTENCE, Move to the end of the current sentence.
+;                  - $LOW_TEXTCUR_GOTO_START_OF_SENTENCE, Move to the start of the current sentence.
+;                  - $LOW_TEXTCUR_GOTO_END_OF_PARAGRAPH, Move to the end of the current paragraph.
+;                  - $LOW_TEXTCUR_GOTO_START_OF_PARAGRAPH, Move to the start of the current paragraph.
 ;                  #Cursor Movements which accept nothing and are done once per call:
-;                   $LOW_TEXTCUR_COLLAPSE_TO_START,
-;                   $LOW_TEXTCUR_COLLAPSE_TO_END (Collapses the current selection and moves the cursor to start or End of selection.
+;                  - $LOW_TEXTCUR_COLLAPSE_TO_START,
+;                  - $LOW_TEXTCUR_COLLAPSE_TO_END (Collapses the current selection and moves the cursor to start or End of selection.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -8792,27 +8792,27 @@ EndFunc   ;==>__LOWriter_TransparencyGradientNameInsert
 ;                  Only some accept creating/ extending a selection of text/ data. They will be specified below.
 ;                  To Clear /Unselect a current selection, you can input a move such as "goRight", 0, False.
 ;                  #Cursor Movement Constants which accept number of Moves and Selecting:
-;                   $LOW_VIEWCUR_GO_DOWN, Move the cursor Down by n lines.
-;                   $LOW_VIEWCUR_GO_UP, Move the cursor Up by n lines.
-;                   $LOW_VIEWCUR_GO_LEFT, Move the cursor left by n characters.
-;                   $LOW_VIEWCUR_GO_RIGHT, Move the cursor right by n characters.
+;                  - $LOW_VIEWCUR_GO_DOWN, Move the cursor Down by n lines.
+;                  - $LOW_VIEWCUR_GO_UP, Move the cursor Up by n lines.
+;                  - $LOW_VIEWCUR_GO_LEFT, Move the cursor left by n characters.
+;                  - $LOW_VIEWCUR_GO_RIGHT, Move the cursor right by n characters.
 ;                  #Cursor Movements which accept number of Moves Only:
-;                   $LOW_VIEWCUR_JUMP_TO_NEXT_PAGE, Move the cursor to the Next page.
-;                   $LOW_VIEWCUR_JUMP_TO_PREV_PAGE, Move the cursor to the previous page.
-;                   $LOW_VIEWCUR_SCREEN_DOWN, Scroll the view forward by one visible page.
-;                   $LOW_VIEWCUR_SCREEN_UP, Scroll the view back by one visible page.
+;                  - $LOW_VIEWCUR_JUMP_TO_NEXT_PAGE, Move the cursor to the Next page.
+;                  - $LOW_VIEWCUR_JUMP_TO_PREV_PAGE, Move the cursor to the previous page.
+;                  - $LOW_VIEWCUR_SCREEN_DOWN, Scroll the view forward by one visible page.
+;                  - $LOW_VIEWCUR_SCREEN_UP, Scroll the view back by one visible page.
 ;                  #Cursor Movements which accept Selecting Only:
-;                   $LOW_VIEWCUR_GOTO_END_OF_LINE, Move the cursor to the end of the current line.
-;                   $LOW_VIEWCUR_GOTO_START_OF_LINE, Move the cursor to the start of the current line.
-;                   $LOW_VIEWCUR_GOTO_START, Move the cursor to the start of the document or Table.
-;                   $LOW_VIEWCUR_GOTO_END, Move the cursor to the end of the document or Table.
+;                  - $LOW_VIEWCUR_GOTO_END_OF_LINE, Move the cursor to the end of the current line.
+;                  - $LOW_VIEWCUR_GOTO_START_OF_LINE, Move the cursor to the start of the current line.
+;                  - $LOW_VIEWCUR_GOTO_START, Move the cursor to the start of the document or Table.
+;                  - $LOW_VIEWCUR_GOTO_END, Move the cursor to the end of the document or Table.
 ;                  #Cursor Movements which accept nothing and are done once per call:
-;                   $LOW_VIEWCUR_JUMP_TO_FIRST_PAGE, Move the cursor to the first page.
-;                   $LOW_VIEWCUR_JUMP_TO_LAST_PAGE, Move the cursor to the Last page.
-;                   $LOW_VIEWCUR_JUMP_TO_END_OF_PAGE, Move the cursor to the end of the current page.
-;                   $LOW_VIEWCUR_JUMP_TO_START_OF_PAGE, Move the cursor to the start of the current page.
+;                  - $LOW_VIEWCUR_JUMP_TO_FIRST_PAGE, Move the cursor to the first page.
+;                  - $LOW_VIEWCUR_JUMP_TO_LAST_PAGE, Move the cursor to the Last page.
+;                  - $LOW_VIEWCUR_JUMP_TO_END_OF_PAGE, Move the cursor to the end of the current page.
+;                  - $LOW_VIEWCUR_JUMP_TO_START_OF_PAGE, Move the cursor to the start of the current page.
 ;                  #Misc. Cursor Movements:
-;                   $LOW_VIEWCUR_JUMP_TO_PAGE (accepts page number to jump to in $iCount, Returns what page was successfully jumped to.
+;                  - $LOW_VIEWCUR_JUMP_TO_PAGE (accepts page number to jump to in $iCount, Returns what page was successfully jumped to.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
