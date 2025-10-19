@@ -2478,6 +2478,7 @@ Func __LOWriter_GetShapeName(ByRef $oDoc, $sShapeName)
 				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 			Next
 		Until $i = $oShapes.getCount()
+
 	Else
 
 		Return SetError($__LO_STATUS_SUCCESS, 0, $sShapeName & "1") ; If Doc has no shapes, just return the name with a "1" appended.
@@ -5830,6 +5831,7 @@ Func __LOWriter_Shape_CreateBasic(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight
 			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Elliptical arc ")
 			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 		EndIf
+
 	Else
 		$oShape = $oDoc.createInstance("com.sun.star.drawing.CustomShape")
 		If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)

@@ -4617,7 +4617,7 @@ Func _LOWriter_DocUndoCurActionTitle(ByRef $oDoc)
 	If ($sUndoAction = Null) Then $sUndoAction = ""
 	If Not IsString($sUndoAction) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-		Return SetError($__LO_STATUS_SUCCESS, 0, $sUndoAction)
+	Return SetError($__LO_STATUS_SUCCESS, 0, $sUndoAction)
 EndFunc   ;==>_LOWriter_DocUndoCurActionTitle
 
 ; #FUNCTION# ====================================================================================================================
