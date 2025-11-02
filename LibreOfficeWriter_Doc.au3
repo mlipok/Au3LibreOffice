@@ -4403,7 +4403,7 @@ EndFunc   ;==>_LOWriter_DocSelectionGet
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oObj not an Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return ? = Failed to select object.
+;                  @Error 3 @Extended 1 Return 0 = Failed to select object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Object called in $oObj successfully selected.
 ; Author ........: donnyh13
