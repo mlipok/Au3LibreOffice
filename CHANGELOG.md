@@ -35,17 +35,16 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- LibreOffice_Constants.au3
 		- $__LOCONST_SLEEP_DIV
 		- $LO_COLOR_*
+		- $LO_CONVERT_UNIT_*
 		- $LO_PATHCONV_*
 		- $__LO_STATUS_*
-		- $__LOCONST_CONVERT_*
 	- LibreOffice_Helper.au3
 		- _LO_ComError_UserFunction
 		- _LO_ConvertColorFromLong
 		- _LO_ConvertColorToLong
-		- _LO_ConvertFromMicrometer
-		- _LO_ConvertToMicrometer
 		- _LO_InitializePortable
 		- _LO_PathConvert
+		- _LO_UnitConvert
 		- _LO_VersionGet
 	- LibreOffice_Internal.au3
 		- __LO_AddTo1DArray
@@ -58,12 +57,13 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 		- __LO_ServiceManager
 		- __LO_SetPortableServiceManager
 		- __LO_SetPropertyValue
-		- __LO_UnitConvert
 		- __LO_VarsAreNull
 		- __LO_VersionCheck
 - Central UDF File for all components (@mLipok)
 	- LibreOffice.au3
 - Support for LibreOffice Portable usage. See `_LO_InitializePortable`.
+- $LO_CONVERT_* Constant.
+- `_LO_UnitConvert` Function for converting Inches, Centimeters, etc. Replacing `_LO_ConvertFromMicrometer` and `_LO_ConvertToMicrometer`.
 
 ### Changed
 
@@ -110,6 +110,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Tabs from headers, replaced with spaces.
 - Manual line breaks from headers.
 - Removed Error returns listed in Function Headers that no longer existed.
+- $__LOCONST_CONVERT_* Internal Constant.
+- `__LO_UnitConvert` Internal Function.
+- `_LO_ConvertFromMicrometer` and `_LO_ConvertToMicrometer` internal functions.
 
 > [!NOTE]
 > **LibreOfficeCalc**

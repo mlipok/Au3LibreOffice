@@ -43,6 +43,20 @@ Global Const _
 		$LO_COLOR_YELLOW = 16776960, _           ; Yellow color.
 		$LO_COLOR_WHITE = 16777215               ; White color.
 
+; Conversion Constants.
+Global Enum _
+		$LO_CONVERT_UNIT_TWIPS_CM, _             ; 0 Convert from TWIPS (Twentieth of a Printer Point) To Centimeters.
+		$LO_CONVERT_UNIT_TWIPS_INCH, _           ; 1 Convert from TWIPS (Twentieth of a Printer Point) To Inches.
+		$LO_CONVERT_UNIT_TWIPS_100THMM, _        ; 2 Convert from TWIPS(Twentieth of a Printer Point) To 1/100th of a Millimeter.
+		$LO_CONVERT_UNIT_MM_100THMM, _           ; 3 Convert from Millimeters To 1/100th of a Millimeter.
+		$LO_CONVERT_UNIT_100THMM_MM, _           ; 4 Convert from 1/100th of a Millimeter To Millimeters.
+		$LO_CONVERT_UNIT_CM_100THMM, _           ; 5 Convert from Centimeters To 1/100th of a Millimeter.
+		$LO_CONVERT_UNIT_100THMM_CM, _           ; 6 Convert from 1/100th of a Millimeter To Centimeters.
+		$LO_CONVERT_UNIT_INCH_100THMM, _         ; 7 Convert from Inches To 1/100th of a Millimeter.
+		$LO_CONVERT_UNIT_100THMM_INCH, _         ; 8 Convert from 1/100th of a Millimeter To Inches.
+		$LO_CONVERT_UNIT_PT_100THMM, _           ; 9 Convert from Printers Point to 1/100th of a Millimeter.
+		$LO_CONVERT_UNIT_100THMM_PT              ; 10 Convert from 1/100th of a Millimeter to Printers Point.
+
 ; Path Convert Constants.
 Global Const _
 		$LO_PATHCONV_AUTO_RETURN = 0, _          ; Automatically returns the opposite of the input path, determined by StringInStr search for either "File:///"(L.O.Office URL) or "[A-Z]:\" (Windows File Path).
@@ -58,17 +72,3 @@ Global Enum _
 		$__LO_STATUS_PROP_SETTING_ERROR, _       ; 4 Function encountered a Property setting error.
 		$__LO_STATUS_PRINTER_RELATED_ERROR, _    ; 5 Function encountered a Printer related error.
 		$__LO_STATUS_VER_ERROR                   ; 6 Function encountered a Version error.
-
-; Conversion Constants.
-Global Enum _
-		$__LOCONST_CONVERT_TWIPS_CM, _           ; 0 Convert from TWIPS (Twentieth of a Printer Point) To Centimeters.
-		$__LOCONST_CONVERT_TWIPS_INCH, _         ; 1 Convert from TWIPS (Twentieth of a Printer Point) To Inches.
-		$__LOCONST_CONVERT_TWIPS_UM, _           ; 2 Convert from TWIPS(Twentieth of a Printer Point) To Micrometer(100th of a millimeter).
-		$__LOCONST_CONVERT_MM_UM, _              ; 3 Convert from Millimeters To Micrometer (100th of a millimeter).
-		$__LOCONST_CONVERT_UM_MM, _              ; 4 Convert from Micrometer (100th of a millimeter) To Millimeters.
-		$__LOCONST_CONVERT_CM_UM, _              ; 5 Convert from Centimeters To Micrometer (100th of a millimeter).
-		$__LOCONST_CONVERT_UM_CM, _              ; 6 Convert from Micrometer (100th of a millimeter) To Centimeters.
-		$__LOCONST_CONVERT_INCH_UM, _            ; 7 Convert from Inches To Micrometer (100th of a millimeter).
-		$__LOCONST_CONVERT_UM_INCH, _            ; 8 Convert from Micrometer (100th of a millimeter) To Inches.
-		$__LOCONST_CONVERT_PT_UM, _              ; 9 Convert from Printers Point to Micrometers.
-		$__LOCONST_CONVERT_UM_PT                 ; 10 Convert from Micrometers to Printers Point.

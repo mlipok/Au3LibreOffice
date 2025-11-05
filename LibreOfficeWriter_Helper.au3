@@ -1499,7 +1499,7 @@ Func _LOWriter_FindFormatModifyRotateScaleSpace(ByRef $atFormat, $iRotation = Nu
 		Else
 			If Not __LO_NumIsBetween($nKerning, -2, 928.8) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
-			$nKerning = __LO_UnitConvert($nKerning, $__LOCONST_CONVERT_PT_UM)
+			$nKerning = _LO_UnitConvert($nKerning, $LO_CONVERT_UNIT_PT_100THMM)
 			__LOWriter_FindFormatAddSetting($atFormat, __LO_SetPropertyValue("CharKerning", $nKerning))
 		EndIf
 	EndIf

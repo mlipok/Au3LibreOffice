@@ -1109,7 +1109,7 @@ Func __LOWriter_CharSpacing(ByRef $oObj, $bAutoKerning, $nKerning)
 	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	If __LO_VarsAreNull($bAutoKerning, $nKerning) Then
-		$nKerning = __LO_UnitConvert($oObj.CharKerning(), $__LOCONST_CONVERT_UM_PT)
+		$nKerning = _LO_UnitConvert($oObj.CharKerning(), $LO_CONVERT_UNIT_100THMM_PT)
 		__LO_ArrayFill($avKerning, $oObj.CharAutoKerning(), (($nKerning > 928.8) ? (1000) : ($nKerning)))
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avKerning)
@@ -1125,7 +1125,7 @@ Func __LOWriter_CharSpacing(ByRef $oObj, $bAutoKerning, $nKerning)
 	If ($nKerning <> Null) Then
 		If Not __LO_NumIsBetween($nKerning, -2, 928.8) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
-		$nKerning = __LO_UnitConvert($nKerning, $__LOCONST_CONVERT_PT_UM)
+		$nKerning = _LO_UnitConvert($nKerning, $LO_CONVERT_UNIT_PT_100THMM)
 
 		$oObj.CharKerning = $nKerning
 		$iError = ($oObj.CharKerning() = $nKerning) ? ($iError) : (BitOR($iError, 2))

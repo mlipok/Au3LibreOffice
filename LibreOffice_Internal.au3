@@ -27,7 +27,6 @@
 ; __LO_ServiceManager
 ; __LO_SetPortableServiceManager
 ; __LO_SetPropertyValue
-; __LO_UnitConvert
 ; __LO_VarsAreNull
 ; __LO_VersionCheck
 ; ===============================================================================================================================
@@ -685,121 +684,6 @@ Func __LO_SetPropertyValue($sName, $vValue)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $tProperties)
 EndFunc   ;==>__LO_SetPropertyValue
-
-; #INTERNAL_USE_ONLY# ===========================================================================================================
-; Name ..........: __LO_UnitConvert
-; Description ...: For converting measurement units.
-; Syntax ........: __LO_UnitConvert($nValue, $iReturnType)
-; Parameters ....: $nValue              - a general number value. The Number to be converted.
-;                  $iReturnType         - a Integer value. Determines conversion type. See Constants, $__LOCONST_CONVERT_* as defined in LibreOffice_Constants.au3.
-; Return values .: Success: Integer or Number.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $nValue is not a Number.
-;                  @Error 1 @Extended 2 Return 0 = $iReturnType is not a Integer.
-;                  @Error 1 @Extended 3 Return 0 = $iReturnType does not match constants, See Constants, $__LOCONST_CONVERT_* as defined in LibreOffice_Constants.au3.
-;                  --Success--
-;                  @Error 0 @Extended 1 Return Number = Returns Number converted from TWIPS to Centimeters.
-;                  @Error 0 @Extended 2 Return Number = Returns Number converted from TWIPS to Inches.
-;                  @Error 0 @Extended 3 Return Integer = Returns Number converted from Millimeters to uM (Micrometers).
-;                  @Error 0 @Extended 4 Return Number = Returns Number converted from Micrometers to MM
-;                  @Error 0 @Extended 5 Return Integer = Returns Number converted from Centimeters To uM
-;                  @Error 0 @Extended 6 Return Number = Returns Number converted from um (Micrometers) To CM
-;                  @Error 0 @Extended 7 Return Integer = Returns Number converted from Inches to uM(Micrometers).
-;                  @Error 0 @Extended 8 Return Number = Returns Number converted from uM(Micrometers) to Inches.
-;                  @Error 0 @Extended 9 Return Integer = Returns Number converted from TWIPS to uM(Micrometers).
-;                  @Error 0 @Extended 10 Return Integer = Returns Number converted from Point to uM(Micrometers).
-;                  @Error 0 @Extended 11 Return Number = Returns Number converted from uM(Micrometers) to Point.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......: _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func __LO_UnitConvert($nValue, $iReturnType)
-	Local $iUM, $iMM, $iCM, $iInch
-
-	If Not IsNumber($nValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsInt($iReturnType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-	Switch $iReturnType
-		Case $__LOCONST_CONVERT_TWIPS_CM ; TWIPS TO CM
-			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
-			$iInch = ($nValue / 20 / 72)
-			; 1 Inch = 2.54 CM
-			$iCM = Round(Round($iInch * 2.54, 3), 2)
-
-			Return SetError($__LO_STATUS_SUCCESS, 1, Number($iCM))
-
-		Case $__LOCONST_CONVERT_TWIPS_INCH ; TWIPS to Inch
-			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
-			$iInch = ($nValue / 20 / 72)
-			$iInch = Round(Round($iInch, 3), 2)
-
-			Return SetError($__LO_STATUS_SUCCESS, 2, Number($iInch))
-
-		Case $__LOCONST_CONVERT_MM_UM ; Millimeter to Micrometer
-			$iUM = ($nValue * 100)
-			$iUM = Round(Round($iUM, 1))
-
-			Return SetError($__LO_STATUS_SUCCESS, 3, Number($iUM))
-
-		Case $__LOCONST_CONVERT_UM_MM ; Micrometer to Millimeter
-			$iMM = ($nValue / 100)
-			$iMM = Round(Round($iMM, 3), 2)
-
-			Return SetError($__LO_STATUS_SUCCESS, 4, Number($iMM))
-
-		Case $__LOCONST_CONVERT_CM_UM ; Centimeter to Micrometer
-			$iUM = ($nValue * 1000)
-			$iUM = Round(Round($iUM, 1))
-
-			Return SetError($__LO_STATUS_SUCCESS, 5, Int($iUM))
-
-		Case $__LOCONST_CONVERT_UM_CM ; Micrometer to Centimeter
-			$iCM = ($nValue / 1000)
-			$iCM = Round(Round($iCM, 3), 2)
-
-			Return SetError($__LO_STATUS_SUCCESS, 6, Number($iCM))
-
-		Case $__LOCONST_CONVERT_INCH_UM ; Inch to Micrometer
-			; 1 Inch - 2.54 Cm; Micrometer = 1/1000 CM
-			$iUM = ($nValue * 2.54) * 1000 ; + .0055
-			$iUM = Round(Round($iUM, 1))
-
-			Return SetError($__LO_STATUS_SUCCESS, 7, Int($iUM))
-
-		Case $__LOCONST_CONVERT_UM_INCH ; Micrometer to Inch
-			; 1 Inch - 2.54 Cm; Micrometer = 1/1000 CM
-			$iInch = ($nValue / 1000) / 2.54 ; + .0055
-			$iInch = Round(Round($iInch, 3), 2)
-
-			Return SetError($__LO_STATUS_SUCCESS, 8, $iInch)
-
-		Case $__LOCONST_CONVERT_TWIPS_UM ; TWIPS to MicroMeter
-			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
-			$iInch = (($nValue / 20) / 72)
-			$iInch = Round(Round($iInch, 3), 2)
-			; 1 Inch - 25.4 MM; Micrometer = 1/100 MM
-			$iUM = Round($iInch * 25.4 * 100)
-
-			Return SetError($__LO_STATUS_SUCCESS, 9, Int($iUM))
-
-		Case $__LOCONST_CONVERT_PT_UM
-			; 1 pt = 35 uM
-
-			Return ($nValue = 0) ? (SetError($__LO_STATUS_SUCCESS, 10, 0)) : (SetError($__LO_STATUS_SUCCESS, 10, Round(($nValue * 35.2778))))
-
-		Case $__LOCONST_CONVERT_UM_PT
-
-			Return ($nValue = 0) ? (SetError($__LO_STATUS_SUCCESS, 11, 0)) : (SetError($__LO_STATUS_SUCCESS, 11, Round(($nValue / 35.2778), 2)))
-
-		Case Else
-
-			Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	EndSwitch
-EndFunc   ;==>__LO_UnitConvert
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LO_VarsAreNull

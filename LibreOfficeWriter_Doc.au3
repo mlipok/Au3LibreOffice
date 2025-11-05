@@ -3723,8 +3723,8 @@ Func _LOWriter_DocPrintSizeSettings(ByRef $oDoc, $iPaperFormat = Null, $iPaperWi
 
 	If __LO_VarsAreNull($iPaperFormat, $iPaperWidth, $iPaperHeight) Then
 		__LO_ArrayFill($aiPrintSettings, __LOWriter_GetPrinterSetting($oDoc, "PaperFormat"), _
-				__LO_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Width(), $__LOCONST_CONVERT_TWIPS_UM), _
-				__LO_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Height(), $__LOCONST_CONVERT_TWIPS_UM))
+				_LO_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Width(), $LO_CONVERT_UNIT_TWIPS_100THMM), _
+				_LO_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Height(), $LO_CONVERT_UNIT_TWIPS_100THMM))
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiPrintSettings)
 	EndIf
@@ -3758,13 +3758,13 @@ Func _LOWriter_DocPrintSizeSettings(ByRef $oDoc, $iPaperFormat = Null, $iPaperWi
 			$tSize = __LO_CreateStruct("com.sun.star.awt.Size")
 			If Not IsObj($tSize) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-			$tSize.Width = ($iPaperWidth = Null) ? (__LO_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Width(), $__LOCONST_CONVERT_TWIPS_UM)) : ($iPaperWidth)
-			$tSize.Height = ($iPaperWidth = Null) ? (__LO_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Height(), $__LOCONST_CONVERT_TWIPS_UM)) : ($iPaperHeight)
+			$tSize.Width = ($iPaperWidth = Null) ? (_LO_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Width(), $LO_CONVERT_UNIT_TWIPS_100THMM)) : ($iPaperWidth)
+			$tSize.Height = ($iPaperWidth = Null) ? (_LO_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Height(), $LO_CONVERT_UNIT_TWIPS_100THMM)) : ($iPaperHeight)
 			$aoSetting[0] = __LO_SetPropertyValue("PaperSize", $tSize)
 			$oDoc.setPrinter($aoSetting)
 
-			$iError = ($iPaperWidth = Null) ? ($iError) : (__LO_IntIsBetween(__LO_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Width(), $__LOCONST_CONVERT_TWIPS_UM), $iPaperWidth - 2, $iPaperWidth + 2)) ? ($iError) : (BitOR($iError, 2))
-			$iError = ($iPaperHeight = Null) ? ($iError) : (__LO_IntIsBetween(__LO_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Height(), $__LOCONST_CONVERT_TWIPS_UM), $iPaperHeight - 2, $iPaperHeight + 2)) ? ($iError) : (BitOR($iError, 4))
+			$iError = ($iPaperWidth = Null) ? ($iError) : (__LO_IntIsBetween(_LO_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Width(), $LO_CONVERT_UNIT_TWIPS_100THMM), $iPaperWidth - 2, $iPaperWidth + 2)) ? ($iError) : (BitOR($iError, 2))
+			$iError = ($iPaperHeight = Null) ? ($iError) : (__LO_IntIsBetween(_LO_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Height(), $LO_CONVERT_UNIT_TWIPS_100THMM), $iPaperHeight - 2, $iPaperHeight + 2)) ? ($iError) : (BitOR($iError, 4))
 
 		Else
 

@@ -20,10 +20,9 @@
 ; _LO_ComError_UserFunction
 ; _LO_ConvertColorFromLong
 ; _LO_ConvertColorToLong
-; _LO_ConvertFromMicrometer
-; _LO_ConvertToMicrometer
 ; _LO_InitializePortable
 ; _LO_PathConvert
+; _LO_UnitConvert
 ; _LO_VersionGet
 ; ===============================================================================================================================
 
@@ -426,159 +425,6 @@ Func _LO_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $vVal4 
 EndFunc   ;==>_LO_ConvertColorToLong
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LO_ConvertFromMicrometer
-; Description ...: Convert from Micrometer to Inch, Centimeter, Millimeter, or Printer's Points.
-; Syntax ........: _LO_ConvertFromMicrometer([$nInchOut = Null[, $nCentimeterOut = Null[, $nMillimeterOut = Null[, $nPointsOut = Null]]]])
-; Parameters ....: $nInchOut            - [optional] a general number value. Default is Null. The Micrometers to convert to Inches. See remarks.
-;                  $nCentimeterOut      - [optional] a general number value. Default is Null. The Micrometers to convert to Centimeters. See remarks.
-;                  $nMillimeterOut      - [optional] a general number value. Default is Null. The Micrometers to convert to Millimeters. See remarks.
-;                  $nPointsOut          - [optional] a general number value. Default is Null. The Micrometers to convert to Printer's Points. See remarks.
-; Return values .: Success: Number
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $nInchOut not a number.
-;                  @Error 1 @Extended 2 Return 0 = $nCentimeterOut not a number.
-;                  @Error 1 @Extended 3 Return 0 = $nMillimeterOut not a number.
-;                  @Error 1 @Extended 4 Return 0 = $nPointsOut not a number.
-;                  @Error 1 @Extended 5 Return 0 = No parameters set to other than Null.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error converting from Micrometers to Inch.
-;                  @Error 3 @Extended 2 Return 0 = Error converting from Micrometers to Centimeter.
-;                  @Error 3 @Extended 3 Return 0 = Error converting from Micrometers to Millimeter.
-;                  @Error 3 @Extended 4 Return 0 = Error converting from Micrometers to Printer's Points.
-;                  --Success--
-;                  @Error 0 @Extended 1 Return Number = Converted from Micrometers to Inch.
-;                  @Error 0 @Extended 2 Return Number = Converted from Micrometers to Centimeter.
-;                  @Error 0 @Extended 3 Return Number = Converted from Micrometers to Millimeter.
-;                  @Error 0 @Extended 4 Return Number = Converted from Micrometers to Printer's Points.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: To skip a parameter, set it to Null.
-;                  If you are converting to Inches, place the Micrometers in $nInchOut, if converting to Millimeters, $nInchOut and $nCentimeter are set to Null, and $nMillimetersOut is set.
-;                  A Micrometer is 1000th of a centimeter, and is used in almost all Libre Office functions that contain a measurement parameter.
-; Related .......: _LO_ConvertToMicrometer
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LO_ConvertFromMicrometer($nInchOut = Null, $nCentimeterOut = Null, $nMillimeterOut = Null, $nPointsOut = Null)
-	Local $nReturnValue
-
-	If ($nInchOut <> Null) Then
-		If Not IsNumber($nInchOut) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-
-		$nReturnValue = __LO_UnitConvert($nInchOut, $__LOCONST_CONVERT_UM_INCH)
-		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-		Return SetError($__LO_STATUS_SUCCESS, 1, $nReturnValue)
-	EndIf
-
-	If ($nCentimeterOut <> Null) Then
-		If Not IsNumber($nCentimeterOut) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-		$nReturnValue = __LO_UnitConvert($nCentimeterOut, $__LOCONST_CONVERT_UM_CM)
-		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-		Return SetError($__LO_STATUS_SUCCESS, 2, $nReturnValue)
-	EndIf
-
-	If ($nMillimeterOut <> Null) Then
-		If Not IsNumber($nMillimeterOut) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
-		$nReturnValue = __LO_UnitConvert($nMillimeterOut, $__LOCONST_CONVERT_UM_MM)
-		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-
-		Return SetError($__LO_STATUS_SUCCESS, 3, $nReturnValue)
-	EndIf
-
-	If ($nPointsOut <> Null) Then
-		If Not IsNumber($nPointsOut) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-
-		$nReturnValue = __LO_UnitConvert($nPointsOut, $__LOCONST_CONVERT_UM_PT)
-		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
-
-		Return SetError($__LO_STATUS_SUCCESS, 4, $nReturnValue)
-	EndIf
-
-	Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; NO Unit set.
-EndFunc   ;==>_LO_ConvertFromMicrometer
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LO_ConvertToMicrometer
-; Description ...: Convert from Inch, Centimeter, Millimeter, or Printer's Points to Micrometer.
-; Syntax ........: _LO_ConvertToMicrometer([$nInchIn = Null[, $nCentimeterIn = Null[, $nMillimeterIn = Null[, $nPointsIn = Null]]]])
-; Parameters ....: $nInchIn             - [optional] a general number value. Default is Null. The Inches to convert to Micrometers. See remarks.
-;                  $nCentimeterIn       - [optional] a general number value. Default is Null. The Centimeters to convert to Micrometers. See remarks.
-;                  $nMillimeterIn       - [optional] a general number value. Default is Null. The Millimeters to convert to Micrometers. See remarks.
-;                  $nPointsIn           - [optional] a general number value. Default is Null. The Printer's Points to convert to Micrometers. See remarks.
-; Return values .: Success: Integer
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $nInchIn not a number.
-;                  @Error 1 @Extended 2 Return 0 = $nCentimeterIn not a number.
-;                  @Error 1 @Extended 3 Return 0 = $nMillimeterIn not a number.
-;                  @Error 1 @Extended 4 Return 0 = $nPointsIn not a number.
-;                  @Error 1 @Extended 5 Return 0 = No parameters set to other than Null.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error converting from Inches to Micrometers.
-;                  @Error 3 @Extended 2 Return 0 = Error converting from Centimeters to Micrometers.
-;                  @Error 3 @Extended 3 Return 0 = Error converting from Millimeters to Micrometers.
-;                  @Error 3 @Extended 4 Return 0 = Error converting from Printer's Points to Micrometers.
-;                  --Success--
-;                  @Error 0 @Extended 1 Return Integer = Converted Inches to Micrometers.
-;                  @Error 0 @Extended 2 Return Integer = Converted Centimeters to Micrometers.
-;                  @Error 0 @Extended 3 Return Integer = Converted Millimeters to Micrometers.
-;                  @Error 0 @Extended 4 Return Integer = Converted Printer's Points to Micrometers.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: To skip a parameter, set it to Null. If you are converting from Inches, call inches in $nInchIn, if converting from Centimeters, $nInchIn is called with Null, and $nCentimeters is set.
-;                  A Micrometer is 1000th of a centimeter, and is used in almost all Libre Office functions that contain a measurement parameter.
-; Related .......: _LO_ConvertFromMicrometer
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LO_ConvertToMicrometer($nInchIn = Null, $nCentimeterIn = Null, $nMillimeterIn = Null, $nPointsIn = Null)
-	Local $nReturnValue
-
-	If ($nInchIn <> Null) Then
-		If Not IsNumber($nInchIn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-
-		$nReturnValue = __LO_UnitConvert($nInchIn, $__LOCONST_CONVERT_INCH_UM)
-		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-		Return SetError($__LO_STATUS_SUCCESS, 1, $nReturnValue)
-	EndIf
-
-	If ($nCentimeterIn <> Null) Then
-		If Not IsNumber($nCentimeterIn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-		$nReturnValue = __LO_UnitConvert($nCentimeterIn, $__LOCONST_CONVERT_CM_UM)
-		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-		Return SetError($__LO_STATUS_SUCCESS, 2, $nReturnValue)
-	EndIf
-
-	If ($nMillimeterIn <> Null) Then
-		If Not IsNumber($nMillimeterIn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
-		$nReturnValue = __LO_UnitConvert($nMillimeterIn, $__LOCONST_CONVERT_MM_UM)
-		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-
-		Return SetError($__LO_STATUS_SUCCESS, 3, $nReturnValue)
-	EndIf
-
-	If ($nPointsIn <> Null) Then
-		If Not IsNumber($nPointsIn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-
-		$nReturnValue = __LO_UnitConvert($nPointsIn, $__LOCONST_CONVERT_PT_UM)
-		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
-
-		Return SetError($__LO_STATUS_SUCCESS, 4, $nReturnValue)
-	EndIf
-
-	Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; NO Unit set.
-EndFunc   ;==>_LO_ConvertToMicrometer
-
-; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LO_InitializePortable
 ; Description ...: Setup Portable LibreOffice (Or Open Office) for use in this UDF. See remarks.
 ; Syntax ........: _LO_InitializePortable($sOfficePortablePath)
@@ -716,6 +562,121 @@ Func _LO_PathConvert($sFilePath, $iReturnMode = $LO_PATHCONV_AUTO_RETURN)
 			Return SetError($__LO_STATUS_SUCCESS, 1, $sFilePath)
 	EndSwitch
 EndFunc   ;==>_LO_PathConvert
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LO_UnitConvert
+; Description ...: For converting measurement units.
+; Syntax ........: _LO_UnitConvert($nValue, $iReturnType)
+; Parameters ....: $nValue              - a general number value. The Number to be converted.
+;                  $iReturnType         - an Integer value. The conversion type to perform on $nValue. See Constants, $LO_CONVERT_UNIT_* as defined in LibreOffice_Constants.au3.
+; Return values .: Success: Integer or Number.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $nValue is not a Number.
+;                  @Error 1 @Extended 2 Return 0 = $iReturnType is not a Integer, less than 0 or greater than 10. See Constants, $LO_CONVERT_UNIT_* as defined in LibreOffice_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $iReturnType does not match constants, See Constants, $LO_CONVERT_UNIT_* as defined in LibreOffice_Constants.au3.
+;                  --Success--
+;                  @Error 0 @Extended 1 Return Number = Returns Number converted from TWIPS to Centimeters.
+;                  @Error 0 @Extended 2 Return Number = Returns Number converted from TWIPS to Inches.
+;                  @Error 0 @Extended 3 Return Integer = Returns Number converted from Millimeters to 1/100th of a Millimeter.
+;                  @Error 0 @Extended 4 Return Number = Returns Number converted from 1/100th of a Millimeter to MM
+;                  @Error 0 @Extended 5 Return Integer = Returns Number converted from Centimeters To 1/100th of a Millimeter
+;                  @Error 0 @Extended 6 Return Number = Returns Number converted from 1/100th of a Millimeter To CM
+;                  @Error 0 @Extended 7 Return Integer = Returns Number converted from Inches to 1/100th of a Millimeter.
+;                  @Error 0 @Extended 8 Return Number = Returns Number converted from 1/100th of a Millimeter to Inches.
+;                  @Error 0 @Extended 9 Return Integer = Returns Number converted from TWIPS to 1/100th of a Millimeter.
+;                  @Error 0 @Extended 10 Return Integer = Returns Number converted from Point to 1/100th of a Millimeter.
+;                  @Error 0 @Extended 11 Return Number = Returns Number converted from 1/100th of a Millimeter to Point.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: 1/100th of a Millimeter, and is used in almost all LibreOffice functions that contain a measurement parameter.
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func _LO_UnitConvert($nValue, $iReturnType)
+	Local $i100thMM, $iMM, $iCM, $iInch
+
+	If Not IsNumber($nValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LO_IntIsBetween($iReturnType, $LO_CONVERT_UNIT_TWIPS_CM, $LO_CONVERT_UNIT_100THMM_PT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	Switch $iReturnType
+		Case $LO_CONVERT_UNIT_TWIPS_CM ; TWIPS TO CM
+			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
+			$iInch = ($nValue / 20 / 72)
+			; 1 Inch = 2.54 CM
+			$iCM = Round(Round($iInch * 2.54, 3), 2)
+
+			Return SetError($__LO_STATUS_SUCCESS, 1, Number($iCM))
+
+		Case $LO_CONVERT_UNIT_TWIPS_INCH ; TWIPS to Inch
+			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
+			$iInch = ($nValue / 20 / 72)
+			$iInch = Round(Round($iInch, 3), 2)
+
+			Return SetError($__LO_STATUS_SUCCESS, 2, Number($iInch))
+
+		Case $LO_CONVERT_UNIT_MM_100THMM ; Millimeter to 1/100th of a Millimeter.
+			$i100thMM = ($nValue * 100)
+			$i100thMM = Round(Round($i100thMM, 1))
+
+			Return SetError($__LO_STATUS_SUCCESS, 3, Number($i100thMM))
+
+		Case $LO_CONVERT_UNIT_100THMM_MM ; 1/100th of a Millimeter to Millimeter
+			$iMM = ($nValue / 100)
+			$iMM = Round(Round($iMM, 3), 2)
+
+			Return SetError($__LO_STATUS_SUCCESS, 4, Number($iMM))
+
+		Case $LO_CONVERT_UNIT_CM_100THMM ; Centimeter to 1/100th of a Millimeter
+			$i100thMM = ($nValue * 1000)
+			$i100thMM = Round(Round($i100thMM, 1))
+
+			Return SetError($__LO_STATUS_SUCCESS, 5, Int($i100thMM))
+
+		Case $LO_CONVERT_UNIT_100THMM_CM ; 1/100th of a Millimeter to Centimeter
+			$iCM = ($nValue / 1000)
+			$iCM = Round(Round($iCM, 3), 2)
+
+			Return SetError($__LO_STATUS_SUCCESS, 6, Number($iCM))
+
+		Case $LO_CONVERT_UNIT_INCH_100THMM ; Inch to 1/100th of a Millimeter
+			; 1 Inch - 2.54 Cm; 1/100th of a Millimeter = 1/1000 CM
+			$i100thMM = ($nValue * 2.54) * 1000
+			$i100thMM = Round(Round($i100thMM, 1))
+
+			Return SetError($__LO_STATUS_SUCCESS, 7, Int($i100thMM))
+
+		Case $LO_CONVERT_UNIT_100THMM_INCH ; 1/100th of a Millimeter to Inch
+			; 1 Inch - 2.54 Cm; 1/100th of a Millimeter = 1/1000 CM
+			$iInch = ($nValue / 1000) / 2.54
+			$iInch = Round(Round($iInch, 3), 2)
+
+			Return SetError($__LO_STATUS_SUCCESS, 8, $iInch)
+
+		Case $LO_CONVERT_UNIT_TWIPS_100THMM ; TWIPS to 1/100th of a Millimeter
+			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
+			$iInch = (($nValue / 20) / 72)
+			$iInch = Round(Round($iInch, 3), 2)
+			; 1 Inch = 25.4 MM; 100 1/100th of a Millimeter = 1 MM
+			$i100thMM = Round($iInch * 25.4 * 100)
+
+			Return SetError($__LO_STATUS_SUCCESS, 9, Int($i100thMM))
+
+		Case $LO_CONVERT_UNIT_PT_100THMM
+			; 1 pt = 35 1/100th of a Millimeter
+
+			Return ($nValue = 0) ? (SetError($__LO_STATUS_SUCCESS, 10, 0)) : (SetError($__LO_STATUS_SUCCESS, 10, Round(($nValue * 35.2778))))
+
+		Case $LO_CONVERT_UNIT_100THMM_PT
+
+			Return ($nValue = 0) ? (SetError($__LO_STATUS_SUCCESS, 11, 0)) : (SetError($__LO_STATUS_SUCCESS, 11, Round(($nValue / 35.2778), 2)))
+
+		Case Else
+
+			Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	EndSwitch
+EndFunc   ;==>_LO_UnitConvert
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LO_VersionGet
