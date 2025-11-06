@@ -189,11 +189,11 @@ EndFunc   ;==>_LOCalc_PageStyleBorderColor
 ; Description ...: Set or retrieve the Page Style Border Padding settings.
 ; Syntax ........: _LOCalc_PageStyleBorderPadding(ByRef $oPageStyle[, $iAll = Null[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOCalc_PageStyleCreate, or _LOCalc_PageStyleGetObj function.
-;                  $iAll                - [optional] an integer value. Default is Null. Set all four padding distances to one distance in Micrometers (uM).
-;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Distance between the Border and Page contents in Micrometers(uM).
-;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Distance between the Border and Page contents in Micrometers(uM).
-;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Distance between the Border and Page contents in Micrometers(uM).
-;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Distance between the Border and Page contents in Micrometers(uM).
+;                  $iAll                - [optional] an integer value. Default is Null. Set all four padding distances to one distance in Hundredths of a Millimeter (100th MM).
+;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Distance between the Border and Page contents in Hundredths of a Millimeter (100th MM).
+;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Distance between the Border and Page contents in Hundredths of a Millimeter (100th MM).
+;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Distance between the Border and Page contents in Hundredths of a Millimeter (100th MM).
+;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Distance between the Border and Page contents in Hundredths of a Millimeter (100th MM).
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -218,7 +218,7 @@ EndFunc   ;==>_LOCalc_PageStyleBorderColor
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOCalc_PageStyleBorderWidth, _LOCalc_PageStyleBorderStyle, _LOCalc_PageStyleBorderColor
+; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LO_UnitConvert, _LOCalc_PageStyleBorderWidth, _LOCalc_PageStyleBorderStyle, _LOCalc_PageStyleBorderColor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -342,10 +342,10 @@ EndFunc   ;==>_LOCalc_PageStyleBorderStyle
 ; Description ...: Set or Retrieve the Page Style Border Line Width. Libre Office Version 3.6 and Up.
 ; Syntax ........: _LOCalc_PageStyleBorderWidth(ByRef $oPageStyle[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOCalc_PageStyleCreate, or _LOCalc_PageStyleGetObj function.
-;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Border Line width of the Page in Micrometers. Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Border Line Width of the Page in Micrometers. Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Border Line width of the Page in Micrometers. Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Border Line Width of the Page in Micrometers. Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Border Line width of the Page in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Border Line Width of the Page in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Border Line width of the Page in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Border Line Width of the Page in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -370,7 +370,7 @@ EndFunc   ;==>_LOCalc_PageStyleBorderStyle
 ; Remarks .......: To "Turn Off" Borders, set Width to 0
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOCalc_PageStyleBorderStyle, _LOCalc_PageStyleBorderColor, _LOCalc_PageStyleBorderPadding
+; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LO_UnitConvert, _LOCalc_PageStyleBorderStyle, _LOCalc_PageStyleBorderColor, _LOCalc_PageStyleBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -536,10 +536,10 @@ EndFunc   ;==>_LOCalc_PageStyleExists
 ;                  $bFooterOn           - [optional] a boolean value. Default is Null. If True, adds a footer to the page style.
 ;                  $bSameLeftRight      - [optional] a boolean value. Default is Null. If True, Even and odd pages share the same content.
 ;                  $bSameOnFirst        - [optional] a boolean value. Default is Null. If True, First and even/odd pages share the same content. LibreOffice 4.0 and up.
-;                  $iLeftMargin         - [optional] an integer value. Default is Null. The amount of space to leave between the left edge of the page and the left edge of the footer. Set in Micrometers.
-;                  $iRightMargin        - [optional] an integer value. Default is Null. The amount of space to leave between the right edge of the page and the right edge of the footer. Set in Micrometers.
-;                  $iSpacing            - [optional] an integer value. Default is Null. The amount of space that you want to maintain between the bottom edge of the document text and the top edge of the footer. Set in Micrometers.
-;                  $iHeight             - [optional] an integer value. Default is Null. The height of the footer. Set in Micrometers.
+;                  $iLeftMargin         - [optional] an integer value. Default is Null. The amount of space to leave between the left edge of the page and the left edge of the footer. Set in Hundredths of a Millimeter (100th MM).
+;                  $iRightMargin        - [optional] an integer value. Default is Null. The amount of space to leave between the right edge of the page and the right edge of the footer. Set in Hundredths of a Millimeter (100th MM).
+;                  $iSpacing            - [optional] an integer value. Default is Null. The amount of space that you want to maintain between the bottom edge of the document text and the top edge of the footer. Set in Hundredths of a Millimeter (100th MM).
+;                  $iHeight             - [optional] an integer value. Default is Null. The height of the footer. Set in Hundredths of a Millimeter (100th MM).
 ;                  $bAutoHeight         - [optional] a boolean value. Default is Null. If True, automatically adjusts the height of the footer to fit the contents.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -573,7 +573,7 @@ EndFunc   ;==>_LOCalc_PageStyleExists
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
+; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LO_UnitConvert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -790,11 +790,11 @@ EndFunc   ;==>_LOCalc_PageStyleFooterBorderColor
 ; Description ...: Set or retrieve the Footer Border Padding settings.
 ; Syntax ........: _LOCalc_PageStyleFooterBorderPadding(ByRef $oPageStyle[, $iAll = Null[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOCalc_PageStyleCreate, or _LOCalc_PageStyleGetObj function.
-;                  $iAll                - [optional] an integer value. Default is Null. Set all four padding distances to one distance in Micrometers (uM).
-;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Distance between the Border and Page contents in Micrometers(uM).
-;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Distance between the Border and Page contents in Micrometers(uM).
-;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Distance between the Border and Page contents in Micrometers(uM).
-;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Distance between the Border and Page contents in Micrometers(uM).
+;                  $iAll                - [optional] an integer value. Default is Null. Set all four padding distances to one distance in Hundredths of a Millimeter (100th MM).
+;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Distance between the Border and Page contents in Hundredths of a Millimeter (100th MM).
+;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Distance between the Border and Page contents in Hundredths of a Millimeter (100th MM).
+;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Distance between the Border and Page contents in Hundredths of a Millimeter (100th MM).
+;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Distance between the Border and Page contents in Hundredths of a Millimeter (100th MM).
 ; Return values .: Success: 1 or Array, see Remarks.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -821,7 +821,7 @@ EndFunc   ;==>_LOCalc_PageStyleFooterBorderColor
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOCalc_PageStyleFooterBorderWidth, _LOCalc_PageStyleFooterBorderStyle, _LOCalc_PageStyleFooterBorderColor
+; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LO_UnitConvert, _LOCalc_PageStyleFooterBorderWidth, _LOCalc_PageStyleFooterBorderStyle, _LOCalc_PageStyleFooterBorderColor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -946,10 +946,10 @@ EndFunc   ;==>_LOCalc_PageStyleFooterBorderStyle
 ; Description ...: Set and retrieve the Page Style Footer Border Line Width.
 ; Syntax ........: _LOCalc_PageStyleFooterBorderWidth(ByRef $oPageStyle[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOCalc_PageStyleCreate, or _LOCalc_PageStyleGetObj function.
-;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Border Line width of the Page Style in Micrometers. Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Border Line Width of the Page Style in Micrometers. Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Border Line width of the Page Style in Micrometers. Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Border Line Width of the Page Style in Micrometers. Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Border Line width of the Page Style in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Border Line Width of the Page Style in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Border Line width of the Page Style in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Border Line Width of the Page Style in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -973,7 +973,7 @@ EndFunc   ;==>_LOCalc_PageStyleFooterBorderStyle
 ; Remarks .......: To "Turn Off" Borders, set Width to 0.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOCalc_PageStyleFooterBorderStyle, _LOCalc_PageStyleFooterBorderColor, _LOCalc_PageStyleFooterBorderPadding
+; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LO_UnitConvert, _LOCalc_PageStyleFooterBorderStyle, _LOCalc_PageStyleFooterBorderColor, _LOCalc_PageStyleFooterBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1153,7 +1153,7 @@ EndFunc   ;==>_LOCalc_PageStyleFooterObj
 ; Description ...: Set or Retrieve the shadow settings for a Page Style Footer.
 ; Syntax ........: _LOCalc_PageStyleFooterShadow(ByRef $oPageStyle[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null]]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOCalc_PageStyleCreate, or _LOCalc_PageStyleGetObj function.
-;                  $iWidth              - [optional] an integer value. Default is Null. The Shadow Width of the footer, set in Micrometers.
+;                  $iWidth              - [optional] an integer value. Default is Null. The Shadow Width of the footer, set in Hundredths of a Millimeter (100th MM).
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The Color of the Footer shadow, set in Long Integer format, can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the Footer Shadow is transparent.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. The Location of the Footer Shadow. See Constants, $LOC_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
@@ -1183,8 +1183,8 @@ EndFunc   ;==>_LOCalc_PageStyleFooterObj
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                  LibreOffice may change the shadow width +/- a Micrometer.
-; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
+;                  LibreOffice may change the shadow width +/- a Hundredth of a Millimeter (100th MM).
+; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_UnitConvert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1293,10 +1293,10 @@ EndFunc   ;==>_LOCalc_PageStyleGetObj
 ;                  $bHeaderOn           - [optional] a boolean value. Default is Null. If True, adds a Header to the page style.
 ;                  $bSameLeftRight      - [optional] a boolean value. Default is Null. If True, Even and odd pages share the same content.
 ;                  $bSameOnFirst        - [optional] a boolean value. Default is Null. If True, First and even/odd pages share the same content. LibreOffice 4.0 and up.
-;                  $iLeftMargin         - [optional] an integer value. Default is Null. The amount of space to leave between the left edge of the page and the left edge of the Header. Set in Micrometers.
-;                  $iRightMargin        - [optional] an integer value. Default is Null. The amount of space to leave between the right edge of the page and the right edge of the Header. Set in Micrometers.
-;                  $iSpacing            - [optional] an integer value. Default is Null. The amount of space to maintain between the Top edge of the document text and the bottom edge of the Header. Set in Micrometers.
-;                  $iHeight             - [optional] an integer value. Default is Null. The height for the Header. Set in Micrometers.
+;                  $iLeftMargin         - [optional] an integer value. Default is Null. The amount of space to leave between the left edge of the page and the left edge of the Header. Set in Hundredths of a Millimeter (100th MM).
+;                  $iRightMargin        - [optional] an integer value. Default is Null. The amount of space to leave between the right edge of the page and the right edge of the Header. Set in Hundredths of a Millimeter (100th MM).
+;                  $iSpacing            - [optional] an integer value. Default is Null. The amount of space to maintain between the Top edge of the document text and the bottom edge of the Header. Set in Hundredths of a Millimeter (100th MM).
+;                  $iHeight             - [optional] an integer value. Default is Null. The height for the Header. Set in Hundredths of a Millimeter (100th MM).
 ;                  $bAutoHeight         - [optional] a boolean value. Default is Null. If True, Automatically adjusts the height of the Header to fit the contents.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1330,7 +1330,7 @@ EndFunc   ;==>_LOCalc_PageStyleGetObj
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
+; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LO_UnitConvert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1547,11 +1547,11 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderBorderColor
 ; Description ...: Set or retrieve the Header Border Padding settings.
 ; Syntax ........: _LOCalc_PageStyleHeaderBorderPadding(ByRef $oPageStyle[, $iAll = Null[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOCalc_PageStyleCreate, or _LOCalc_PageStyleGetObj function.
-;                  $iAll                - [optional] an integer value. Default is Null. Set all four padding distances to one distance in Micrometers (uM).
-;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Distance between the Border and Page Header contents in Micrometers(uM).
-;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Distance between the Border and Page Header contents in Micrometers(uM).
-;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Distance between the Border and Page Header contents in Micrometers(uM).
-;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Distance between the Border and Page Header contents in Micrometers(uM).
+;                  $iAll                - [optional] an integer value. Default is Null. Set all four padding distances to one distance in Hundredths of a Millimeter (100th MM).
+;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Distance between the Border and Page Header contents in Hundredths of a Millimeter (100th MM).
+;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Distance between the Border and Page Header contents in Hundredths of a Millimeter (100th MM).
+;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Distance between the Border and Page Header contents in Hundredths of a Millimeter (100th MM).
+;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Distance between the Border and Page Header contents in Hundredths of a Millimeter (100th MM).
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1578,7 +1578,7 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderBorderColor
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOCalc_PageStyleHeaderBorderWidth, _LOCalc_PageStyleHeaderBorderStyle, _LOCalc_PageStyleHeaderBorderColor
+; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LO_UnitConvert, _LOCalc_PageStyleHeaderBorderWidth, _LOCalc_PageStyleHeaderBorderStyle, _LOCalc_PageStyleHeaderBorderColor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1702,10 +1702,10 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderBorderStyle
 ; Description ...: Set and retrieve the Page Style Header Border Line Width.
 ; Syntax ........: _LOCalc_PageStyleHeaderBorderWidth(ByRef $oPageStyle[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOCalc_PageStyleCreate, or _LOCalc_PageStyleGetObj function.
-;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Border Line width of the Page Style in Micrometers. Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Border Line Width of the Page Style in Micrometers. Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Border Line width of the Page Style in Micrometers. Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Border Line Width of the Page Style in Micrometers. Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Border Line width of the Page Style in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Border Line Width of the Page Style in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Border Line width of the Page Style in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Border Line Width of the Page Style in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1729,7 +1729,7 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderBorderStyle
 ; Remarks .......: To "Turn Off" Borders, set Width to 0.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOCalc_PageStyleHeaderBorderStyle, _LOCalc_PageStyleHeaderBorderColor, _LOCalc_PageStyleHeaderBorderPadding
+; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LO_UnitConvert, _LOCalc_PageStyleHeaderBorderStyle, _LOCalc_PageStyleHeaderBorderColor, _LOCalc_PageStyleHeaderBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1909,7 +1909,7 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderObj
 ; Description ...: Set or Retrieve the shadow settings for a Page Style Header.
 ; Syntax ........: _LOCalc_PageStyleHeaderShadow(ByRef $oPageStyle[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null]]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOCalc_PageStyleCreate, or _LOCalc_PageStyleGetObj function.
-;                  $iWidth              - [optional] an integer value. Default is Null. The Shadow Width of the Header, set in Micrometers.
+;                  $iWidth              - [optional] an integer value. Default is Null. The Shadow Width of the Header, set in Hundredths of a Millimeter (100th MM).
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The Color of the Header shadow, set in Long Integer format, can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the Header Shadow is transparent.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. The Location of the Header Shadow. See constants, $LOC_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
@@ -1940,8 +1940,8 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderObj
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                  LibreOffice may change the shadow width +/- a Micrometer.
-; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
+;                  LibreOffice may change the shadow width +/- a Hundredth of a Millimeter (100th MM).
+; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_UnitConvert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2104,10 +2104,10 @@ EndFunc   ;==>_LOCalc_PageStyleLayout
 ; Description ...: Modify or retrieve the margin settings for a Page Style.
 ; Syntax ........: _LOCalc_PageStyleMargins(ByRef $oPageStyle[, $iLeft = Null[, $iRight = Null[, $iTop = Null[, $iBottom = Null]]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOCalc_PageStyleCreate, or _LOCalc_PageStyleGetObj function.
-;                  $iLeft               - [optional] an integer value. Default is Null. The amount of space to leave between the left edge of the page and the document text. If you are using the Mirrored page layout, enter the amount of space to leave between the inner text margin and the inner edge of the page. Set in Micrometers.
-;                  $iRight              - [optional] an integer value. Default is Null. The amount of space to leave between the right edge of the page and the document text. If you are using the Mirrored page layout, enter the amount of space to leave between the outer text margin and the outer edge of the page. Set in Micrometers.
-;                  $iTop                - [optional] an integer value. Default is Null. The amount of space to leave between the upper edge of the page and the document text. Set in Micrometers.
-;                  $iBottom             - [optional] an integer value. Default is Null. The amount of space to leave between the lower edge of the page and the document text. Set in Micrometers.
+;                  $iLeft               - [optional] an integer value. Default is Null. The amount of space to leave between the left edge of the page and the document text. If you are using the Mirrored page layout, enter the amount of space to leave between the inner text margin and the inner edge of the page. Set in Hundredths of a Millimeter (100th MM).
+;                  $iRight              - [optional] an integer value. Default is Null. The amount of space to leave between the right edge of the page and the document text. If you are using the Mirrored page layout, enter the amount of space to leave between the outer text margin and the outer edge of the page. Set in Hundredths of a Millimeter (100th MM).
+;                  $iTop                - [optional] an integer value. Default is Null. The amount of space to leave between the upper edge of the page and the document text. Set in Hundredths of a Millimeter (100th MM).
+;                  $iBottom             - [optional] an integer value. Default is Null. The amount of space to leave between the lower edge of the page and the document text. Set in Hundredths of a Millimeter (100th MM).
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2130,7 +2130,7 @@ EndFunc   ;==>_LOCalc_PageStyleLayout
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
+; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LO_UnitConvert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2261,8 +2261,8 @@ EndFunc   ;==>_LOCalc_PageStyleOrganizer
 ; Description ...: Modify or retrieve the paper format settings for a Page Style.
 ; Syntax ........: _LOCalc_PageStylePaperFormat(ByRef $oPageStyle[, $iWidth = Null[, $iHeight = Null[, $bLandscape = Null]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOCalc_PageStyleCreate, or _LOCalc_PageStyleGetObj function.
-;                  $iWidth              - [optional] an integer value. Default is Null. The Width of the page, may be a custom value in Micrometers, or one of the constants, $LOC_PAPER_WIDTH_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iHeight             - [optional] an integer value. Default is Null. The Height of the page, may be a custom value in Micrometers, or one of the constants, $LOC_PAPER_HEIGHT_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iWidth              - [optional] an integer value. Default is Null. The Width of the page, may be a custom value in Hundredths of a Millimeter (100th MM), or one of the constants, $LOC_PAPER_WIDTH_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iHeight             - [optional] an integer value. Default is Null. The Height of the page, may be a custom value in Hundredths of a Millimeter (100th MM), or one of the constants, $LOC_PAPER_HEIGHT_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $bLandscape          - [optional] a boolean value. Default is Null. If true, displays the page in Landscape layout.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -2284,7 +2284,7 @@ EndFunc   ;==>_LOCalc_PageStyleOrganizer
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
+; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LO_UnitConvert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2460,7 +2460,7 @@ EndFunc   ;==>_LOCalc_PageStylesGetNames
 ; Description ...: Set or Retrieve the shadow settings for a Page Style.
 ; Syntax ........: _LOCalc_PageStyleShadow(ByRef $oPageStyle[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null]]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOCalc_PageStyleCreate, or _LOCalc_PageStyleGetObj function.
-;                  $iWidth              - [optional] an integer value. Default is Null. The Shadow Width of the Page, set in Micrometers.
+;                  $iWidth              - [optional] an integer value. Default is Null. The Shadow Width of the Page, set in Hundredths of a Millimeter (100th MM).
 ;                  $iColor              - [optional] an integer value. Default is Null. The shadow Color of the Page, set in Long Integer format, can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the Page Shadow is transparent.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. The Location of the Page Shadow. See constants, $LOC_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
@@ -2489,8 +2489,8 @@ EndFunc   ;==>_LOCalc_PageStylesGetNames
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                  LibreOffice may change the shadow width +/- a Micrometer.
-; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
+;                  LibreOffice may change the shadow width +/- a Hundredth of a Millimeter (100th MM).
+; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_UnitConvert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================

@@ -165,11 +165,11 @@ EndFunc   ;==>_LOCalc_CellStyleBorderColor
 ; Description ...: Set or retrieve the Cell Style Border Padding settings.
 ; Syntax ........: _LOCalc_CellStyleBorderPadding(ByRef $oCellStyle[, $iAll = Null[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]]])
 ; Parameters ....: $oCellStyle          - [in/out] an object. A Cell Style object returned by a previous _LOCalc_CellStyleCreate, or _LOCalc_CellStyleGetObj function.
-;                  $iAll                - [optional] an integer value. Default is Null. Set all four padding distances to one distance in Micrometers (uM).
-;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Distance between the Border and Cell contents, in Micrometers(uM).
-;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Distance between the Border and Cell contents, in Micrometers(uM).
-;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Distance between the Border and Cell contents, in Micrometers(uM).
-;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Distance between the Border and Cell contents, in Micrometers(uM).
+;                  $iAll                - [optional] an integer value. Default is Null. Set all four padding distances to one distance in Hundredths of a Millimeter (100th MM).
+;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Distance between the Border and Cell contents, in Hundredths of a Millimeter (100th MM).
+;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Distance between the Border and Cell contents, in Hundredths of a Millimeter (100th MM).
+;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Distance between the Border and Cell contents, in Hundredths of a Millimeter (100th MM).
+;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Distance between the Border and Cell contents, in Hundredths of a Millimeter (100th MM).
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -285,12 +285,12 @@ EndFunc   ;==>_LOCalc_CellStyleBorderStyle
 ; Description ...: Set and retrieve the Cell Style Border Line Width settings. Libre Office Version 3.6 and Up.
 ; Syntax ........: _LOCalc_CellStyleBorderWidth(ByRef $oCellStyle[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null[, $iTLBRDiag = Null[, $iBLTRDiag = Null]]]]]])
 ; Parameters ....: $oCellStyle          - [in/out] an object. A Cell Style object returned by a previous _LOCalc_CellStyleCreate, or _LOCalc_CellStyleGetObj function.
-;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Border Line width of the Cell Style in Micrometers. Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Border Line width of the Cell Style in Micrometers. Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Border Line width of the Cell Style in Micrometers. Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Border Line width of the Cell Style in Micrometers. Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iTLBRDiag           - [optional] an integer value. Default is Null. Set the Top-Left to Bottom-Right Diagonal Border Line width of the Cell Style in Micrometers. Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iBLTRDiag           - [optional] an integer value. Default is Null. Set the Bottom-Left to Top-Right Diagonal Border Line width of the Cell Style in Micrometers. Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Border Line width of the Cell Style in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Border Line width of the Cell Style in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Border Line width of the Cell Style in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Border Line width of the Cell Style in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iTLBRDiag           - [optional] an integer value. Default is Null. Set the Top-Left to Bottom-Right Diagonal Border Line width of the Cell Style in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iBLTRDiag           - [optional] an integer value. Default is Null. Set the Bottom-Left to Top-Right Diagonal Border Line width of the Cell Style in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1019,7 +1019,7 @@ EndFunc   ;==>_LOCalc_CellStylesGetNames
 ; Description ...: Set or Retrieve the Shadow settings for a Cell style.
 ; Syntax ........: _LOCalc_CellStyleShadow(ByRef $oCellStyle[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null]]]])
 ; Parameters ....: $oCellStyle          - [in/out] an object. A Cell Style object returned by a previous _LOCalc_CellStyleCreate, or _LOCalc_CellStyleGetObj function.
-;                  $iWidth              - [optional] an integer value (0-5009). Default is Null. The shadow width, set in Micrometers.
+;                  $iWidth              - [optional] an integer value (0-5009). Default is Null. The shadow width, set in Hundredths of a Millimeter (100th MM).
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The color of the shadow, set in Long Integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the shadow is transparent.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. The location of the shadow compared to the Cell. See Constants, $LOC_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
@@ -1048,7 +1048,7 @@ EndFunc   ;==>_LOCalc_CellStylesGetNames
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                  LibreOffice may change the shadow width +/- a Micrometer.
+;                  LibreOffice may change the shadow width +/- a Hundredth of a Millimeter (100th MM).
 ; Related .......: _LO_ConvertColorToLong, _LO_ConvertColorFromLong, _LOCalc_CellShadow
 ; Link ..........:
 ; Example .......: Yes
@@ -1121,7 +1121,7 @@ EndFunc   ;==>_LOCalc_CellStyleStrikeOut
 ; Parameters ....: $oCellStyle          - [in/out] an object. A Cell Style object returned by a previous _LOCalc_CellStyleCreate, or _LOCalc_CellStyleGetObj function.
 ;                  $iHoriAlign          - [optional] an integer value (0-6). Default is Null. The Horizontal alignment of the text. See Constants, $LOC_CELL_ALIGN_HORI_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-5). Default is Null. The Vertical alignment of the text. See Constants, $LOC_CELL_ALIGN_VERT_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iIndent             - [optional] an integer value. Default is Null. The amount of indentation from the left side of the cell, in micrometers.
+;                  $iIndent             - [optional] an integer value. Default is Null. The amount of indentation from the left side of the cell, in Hundredths of a Millimeter (100th MM).
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--

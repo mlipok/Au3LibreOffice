@@ -330,11 +330,11 @@ EndFunc   ;==>__LOCalc_CellBorder
 ; Description ...: Internal function to Set or retrieve the Cell, Cell Range, or Cell Style Border Padding settings.
 ; Syntax ........: __LOCalc_CellBorderPadding(ByRef $oObj, $iAll, $iTop, $iBottom, $iLeft, $iRight)
 ; Parameters ....: $oObj                - [in/out] an object. A Cell, Cell Range or Cell Style Object returned from an applicable function.
-;                  $iAll                - an integer value. Set all four padding distances to one distance in Micrometers (uM).
-;                  $iTop                - an integer value. Set the Top Distance between the Border and Cell contents, in Micrometers(uM).
-;                  $iBottom             - an integer value. Set the Bottom Distance between the Border and Cell contents, in Micrometers(uM).
-;                  $iLeft               - an integer value. Set the Left Distance between the Border and Cell contents, in Micrometers(uM).
-;                  $iRight              - an integer value. Set the Right Distance between the Border and Cell contents, in Micrometers(uM).
+;                  $iAll                - an integer value. Set all four padding distances to one distance in Hundredths of a Millimeter (100th MM).
+;                  $iTop                - an integer value. Set the Top Distance between the Border and Cell contents, in Hundredths of a Millimeter (100th MM).
+;                  $iBottom             - an integer value. Set the Bottom Distance between the Border and Cell contents, in Hundredths of a Millimeter (100th MM).
+;                  $iLeft               - an integer value. Set the Left Distance between the Border and Cell contents, in Hundredths of a Millimeter (100th MM).
+;                  $iRight              - an integer value. Set the Right Distance between the Border and Cell contents, in Hundredths of a Millimeter (100th MM).
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -844,7 +844,7 @@ EndFunc   ;==>__LOCalc_CellProtection
 ; Description ...: Internal function to Set or Retrieve the Shadow settings for a Cell, Cell Range, or Cell style.
 ; Syntax ........: __LOCalc_CellShadow(ByRef $oObj, $iWidth, $iColor, $bTransparent, $iLocation)
 ; Parameters ....: $oObj                - [in/out] an object. A Cell, Cell Range or Cell Style Object returned from an applicable function.
-;                  $iWidth              - an integer value (0-5009). The shadow width, set in Micrometers.
+;                  $iWidth              - an integer value (0-5009). The shadow width, set in Hundredths of a Millimeter (100th MM).
 ;                  $iColor              - an integer value (0-16777215). The color of the shadow, set in Long Integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bTransparent        - a boolean value. If True, the shadow is transparent.
 ;                  $iLocation           - an integer value (0-4). The location of the shadow compared to the Cell. See Constants, $LOC_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
@@ -1141,7 +1141,7 @@ EndFunc   ;==>__LOCalc_CellStyleBorder
 ; Parameters ....: $oObj                - [in/out] an object. A Cell, Cell Range or Cell Style Object returned from an applicable function.
 ;                  $iHoriAlign          - an integer value (0-6). The Horizontal alignment of the text. See Constants, $LOC_CELL_ALIGN_HORI_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $iVertAlign          - an integer value (0-5). The Vertical alignment of the text. See Constants, $LOC_CELL_ALIGN_VERT_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iIndent             - an integer value. The amount of indentation from the left side of the cell, in micrometers.
+;                  $iIndent             - an integer value. The amount of indentation from the left side of the cell, in Hundredths of a Millimeter (100th MM).
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1597,11 +1597,10 @@ EndFunc   ;==>__LOCalc_CharPosition
 ; Modified ......:
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                  When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User Display, however the internal setting is measured in Micrometers. They will be automatically converted from Points to Micrometers and back for retrieval of settings.
-;                  The acceptable values for $nKerning are from -2 Pt to 928.8 Pt.
-;                  The values can be directly converted easily, however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative Micrometers internally from 928.9 up to 1000 Pt (Max setting).
-;                  For example, 928.8Pt is the last correct value, which equals 32766 uM (Micrometers), after this LibreOffice reports the following: ;928.9 Pt = -32766 uM; 929 Pt = -32763 uM; 929.1 = -32759; 1000 pt = -30258. Attempting to set Libre's kerning value to anything over 32768 uM causes a COM exception, and attempting to set the kerning to any of these negative numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the max settable kerning is -2.0 Pt to 928.8 Pt.
-; Related .......: _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
+;                  When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User Display, however the internal setting is measured in Hundredths of a Millimeter (100th MM). They will be automatically converted from Points to Hundredths of a Millimeter and back for retrieval of settings.
+;                  The acceptable values for $nKerning are from -2 Pt to 928.8 Pt. The values can be directly converted easily, however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative Hundredths of a Millimeter internally from 928.9 up to 1000 Pt (Max setting).
+;                  For example, 928.8Pt is the last correct value, which equals 32766 Hundredths of a Millimeter (100th MM), after this LibreOffice reports the following: 928.9 Pt = -32766 100th MM; 929 Pt = -32763 100th MM; 929.1 = -32759; 1000 pt = -30258. Attempting to set Libre's kerning value to anything over 32768 100th MM causes a COM exception, and attempting to set the kerning to any of these negative numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the max settable kerning is -2.0 Pt to 928.8 Pt.
+; Related .......: _LO_UnitConvert
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
@@ -1615,7 +1614,7 @@ Func __LOCalc_CharSpacing(ByRef $oObj, $bAutoKerning, $nKerning)
 	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	If __LO_VarsAreNull($bAutoKerning, $nKerning) Then
-		$nKerning = __LO_UnitConvert($oObj.CharKerning(), $__LOCONST_CONVERT_UM_PT)
+		$nKerning = _LO_UnitConvert($oObj.CharKerning(), $LO_CONVERT_UNIT_100THMM_PT)
 		__LO_ArrayFill($avKerning, $oObj.CharAutoKerning(), (($nKerning > 928.8) ? (1000) : ($nKerning)))
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avKerning)
@@ -1631,7 +1630,7 @@ Func __LOCalc_CharSpacing(ByRef $oObj, $bAutoKerning, $nKerning)
 	If ($nKerning <> Null) Then
 		If Not __LO_NumIsBetween($nKerning, -2, 928.8) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
-		$nKerning = __LO_UnitConvert($nKerning, $__LOCONST_CONVERT_PT_UM)
+		$nKerning = _LO_UnitConvert($nKerning, $LO_CONVERT_UNIT_PT_100THMM)
 		$oObj.CharKerning = $nKerning
 		$iError = ($oObj.CharKerning() = $nKerning) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -1645,7 +1644,7 @@ EndFunc   ;==>__LOCalc_CharSpacing
 ; Syntax ........: __LOCalc_CommentAreaShadowModify($oAnnotationShape[, $iLocation = Null[, $iDistance = Null]])
 ; Parameters ....: $oAnnotationShape    - an object. A Annotation Shape Object retrieved from a Comment.
 ;                  $iLocation           - [optional] an integer value. Default is Null. The Location of the Shadow, must be one of the Constants, $LOC_COMMENT_SHADOW_* as defined in LibreOfficeCalc_Constants.au3..
-;                  $iDistance           - [optional] an integer value. Default is Null. The distance of the Shadow from the Comment box, set in Micrometers.
+;                  $iDistance           - [optional] an integer value. Default is Null. The distance of the Shadow from the Comment box, set in Hundredths of a Millimeter (100th MM).
 ; Return values .: Success: 1 or Integer
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
