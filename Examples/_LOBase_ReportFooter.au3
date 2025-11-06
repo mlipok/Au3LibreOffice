@@ -56,7 +56,7 @@ Func Example()
 			"Will a new page be created before/after this section? If so, when? (See UDF Constants): " & $avReport[2] & @CRLF & _
 			"Will the content be prevented from spreading across more than one page? True/False: " & $avReport[3] & @CRLF & _
 			"Is the section visible? True/False: " & $avReport[4] & @CRLF & _
-			"The Height of the section is, in Micrometers: " & $avReport[5] & @CRLF & _
+			"The Height of the section is, in Hundredths of a Millimeter (100th MM): " & $avReport[5] & @CRLF & _
 			"The Conditional Print statement is: " & $avReport[6] & @CRLF & _
 			"The Background color is, as a Long Integer: " & $avReport[7])
 
