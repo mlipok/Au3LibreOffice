@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oFrameStyle, $oViewCursor, $oFrame
-	Local $iMicrometers, $iMicrometers2
+	Local $i100thMM, $i100thMM2
 	Local $avSettings
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -33,16 +33,16 @@ Func Example()
 	_LOWriter_FrameStyleBorderWidth($oFrameStyle, $LOW_BORDERWIDTH_MEDIUM, $LOW_BORDERWIDTH_MEDIUM, $LOW_BORDERWIDTH_MEDIUM, $LOW_BORDERWIDTH_MEDIUM)
 	If @error Then _ERROR($oDoc, "Failed to modify Frame Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Convert 1/8" to Micrometers
-	$iMicrometers = _LO_ConvertToMicrometer(.125)
-	If @error Then _ERROR($oDoc, "Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1/8" to Hundredths of a Millimeter (100th MM)
+	$i100thMM = _LO_UnitConvert(.125, $LO_CONVERT_UNIT_INCH_100THMM)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Convert 1/4" to Micrometers
-	$iMicrometers2 = _LO_ConvertToMicrometer(.25)
-	If @error Then _ERROR($oDoc, "Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1/4" to Hundredths of a Millimeter (100th MM)
+	$i100thMM2 = _LO_UnitConvert(.25, $LO_CONVERT_UNIT_INCH_100THMM)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Modify the Frame Style Border Padding Width settings to: 1/8" in all sides, and then 1/4" on the bottom.
-	_LOWriter_FrameStyleBorderPadding($oFrameStyle, $iMicrometers, Null, $iMicrometers2)
+	_LOWriter_FrameStyleBorderPadding($oFrameStyle, $i100thMM, Null, $i100thMM2)
 	If @error Then _ERROR($oDoc, "Failed to set Frame Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current Frame Style settings. Return will be an array in order of function parameters.
@@ -50,11 +50,11 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve Frame Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Frame style's current Border Padding Width settings are as follows: " & @CRLF & _
-			"The ""All"" Border Padding Width is, in Micrometers, (see UDF constants): " & $avSettings[0] & @CRLF & _
-			"The Top Border Padding Width is, in Micrometers, (see UDF constants): " & $avSettings[1] & @CRLF & _
-			"The Bottom Border Padding Width is, in Micrometers, (see UDF constants): " & $avSettings[2] & @CRLF & _
-			"The Left Border Padding Width is, in Micrometers, (see UDF constants): " & $avSettings[3] & @CRLF & _
-			"The Right Border Padding Width is, in Micrometers, (see UDF constants): " & $avSettings[4])
+			"The ""All"" Border Padding Width is, in Hundredths of a Millimeter (100th MM), (see UDF constants): " & $avSettings[0] & @CRLF & _
+			"The Top Border Padding Width is, in Hundredths of a Millimeter (100th MM), (see UDF constants): " & $avSettings[1] & @CRLF & _
+			"The Bottom Border Padding Width is, in Hundredths of a Millimeter (100th MM), (see UDF constants): " & $avSettings[2] & @CRLF & _
+			"The Left Border Padding Width is, in Hundredths of a Millimeter (100th MM), (see UDF constants): " & $avSettings[3] & @CRLF & _
+			"The Right Border Padding Width is, in Hundredths of a Millimeter (100th MM), (see UDF constants): " & $avSettings[4])
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

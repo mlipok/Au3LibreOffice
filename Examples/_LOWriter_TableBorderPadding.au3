@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oViewCursor, $oTable
-	Local $iMicrometers
+	Local $i100thMM
 	Local $aiPadding
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -29,12 +29,12 @@ Func Example()
 	_LOWriter_TableBorderWidth($oTable, $LOW_BORDERWIDTH_MEDIUM, $LOW_BORDERWIDTH_MEDIUM, $LOW_BORDERWIDTH_MEDIUM, $LOW_BORDERWIDTH_MEDIUM)
 	If @error Then _ERROR($oDoc, "Failed to set Table Border width settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Convert 1/2 Inch to Micrometers.
-	$iMicrometers = _LO_ConvertToMicrometer(0.5)
-	If @error Then _ERROR($oDoc, "Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1/2 Inch to Hundredths of a Millimeter (100th MM).
+	$i100thMM = _LO_UnitConvert(0.5, $LO_CONVERT_UNIT_INCH_100THMM)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set the Table padding to 1/2"
-	_LOWriter_TableBorderPadding($oTable, $iMicrometers, $iMicrometers, $iMicrometers, $iMicrometers)
+	_LOWriter_TableBorderPadding($oTable, $i100thMM, $i100thMM, $i100thMM, $i100thMM)
 	If @error Then _ERROR($oDoc, "Failed to set Table Border Padding settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve Table Border Padding settings. Return will be an Array, with values in order of function parameters.
@@ -42,10 +42,10 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve Table Border Padding settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Table Border padding values are as follows: " & @CRLF & _
-			"Top = " & $aiPadding[0] & " Micrometers" & @CRLF & _
-			"Bottom = " & $aiPadding[1] & " Micrometers" & @CRLF & _
-			"Left = " & $aiPadding[2] & " Micrometers" & @CRLF & _
-			"Right = " & $aiPadding[3] & " Micrometers")
+			"Top = " & $aiPadding[0] & " Hundredths of a Millimeter (100th MM)" & @CRLF & _
+			"Bottom = " & $aiPadding[1] & " Hundredths of a Millimeter (100th MM)" & @CRLF & _
+			"Left = " & $aiPadding[2] & " Hundredths of a Millimeter (100th MM)" & @CRLF & _
+			"Right = " & $aiPadding[3] & " Hundredths of a Millimeter (100th MM)")
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

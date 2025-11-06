@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oViewCursor
-	Local $iMicrometers
+	Local $i100thMM
 	Local $avSettings
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -33,12 +33,12 @@ Func Example()
 	_LOWriter_CursorMove($oViewCursor, $LOW_VIEWCUR_GO_RIGHT, 11, True)
 	If @error Then _ERROR($oDoc, "Failed to move ViewCursor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Convert 1/4" to Micrometers
-	$iMicrometers = _LO_ConvertToMicrometer(0.25)
-	If @error Then _ERROR($oDoc, "Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1/4" to Hundredths of a Millimeter (100th MM)
+	$i100thMM = _LO_UnitConvert(0.25, $LO_CONVERT_UNIT_INCH_100THMM)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set the selected text's Shadow to 1/4" wide, Color to $LO_COLOR_PURPLE, Transparent to false, and location to $LOW_SHADOW_TOP_LEFT
-	_LOWriter_DirFrmtCharShadow($oViewCursor, $iMicrometers, $LO_COLOR_PURPLE, False, $LOW_SHADOW_TOP_LEFT)
+	_LOWriter_DirFrmtCharShadow($oViewCursor, $i100thMM, $LO_COLOR_PURPLE, False, $LOW_SHADOW_TOP_LEFT)
 	If @error Then _ERROR($oDoc, "Failed to set the Selected text's settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
@@ -46,7 +46,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the selected text's settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The selected text's current Character Shadow settings are as follows: " & @CRLF & _
-			"Shadow width, in Micrometers: " & $avSettings[0] & @CRLF & _
+			"Shadow width, in Hundredths of a Millimeter (100th MM): " & $avSettings[0] & @CRLF & _
 			"Shadow color in long color format: " & $avSettings[1] & @CRLF & _
 			"Is shadow color transparent? True/False: " & $avSettings[2] & @CRLF & _
 			"Shadow location, (see UDF Constants): " & $avSettings[3] & @CRLF & @CRLF & _

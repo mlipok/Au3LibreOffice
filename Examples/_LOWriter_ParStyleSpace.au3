@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oViewCursor, $oParStyle
-	Local $iMicrometers, $iMicrometers2
+	Local $i100thMM, $i100thMM2
 	Local $avParStyleSettings
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -25,17 +25,17 @@ Func Example()
 	$oParStyle = _LOWriter_ParStyleGetObj($oDoc, "Default Paragraph Style")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Paragraph style object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Convert 1/4" to Micrometers
-	$iMicrometers = _LO_ConvertToMicrometer(0.25)
-	If @error Then _ERROR($oDoc, "Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1/4" to Hundredths of a Millimeter (100th MM)
+	$i100thMM = _LO_UnitConvert(0.25, $LO_CONVERT_UNIT_INCH_100THMM)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Convert 1/2" to Micrometers
-	$iMicrometers2 = _LO_ConvertToMicrometer(0.5)
-	If @error Then _ERROR($oDoc, "Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1/2" to Hundredths of a Millimeter (100th MM)
+	$i100thMM2 = _LO_UnitConvert(0.5, $LO_CONVERT_UNIT_INCH_100THMM)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set "Default Paragraph Style" line space settings to, 1/4" above paragraph, 1/4" below paragraph, AddSpace = True, Line space mode =
 	; $LOW_LINE_SPC_MODE_FIX, Line space height = 1/2",  and Page Line Space = False.
-	_LOWriter_ParStyleSpace($oParStyle, $iMicrometers, $iMicrometers, True, $LOW_LINE_SPC_MODE_FIX, $iMicrometers2, False)
+	_LOWriter_ParStyleSpace($oParStyle, $i100thMM, $i100thMM, True, $LOW_LINE_SPC_MODE_FIX, $i100thMM2, False)
 	If @error Then _ERROR($oDoc, "Failed to set the Paragraph style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
@@ -43,11 +43,11 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Paragraph style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Paragraph's current line Spacing settings are as follows: " & @CRLF & _
-			"Spacing above the paragraph, in Micrometers: " & $avParStyleSettings[0] & @CRLF & _
-			"Spacing below the paragraph, in Micrometers: " & $avParStyleSettings[1] & @CRLF & _
+			"Spacing above the paragraph, in Hundredths of a Millimeter (100th MM): " & $avParStyleSettings[0] & @CRLF & _
+			"Spacing below the paragraph, in Hundredths of a Millimeter (100th MM): " & $avParStyleSettings[1] & @CRLF & _
 			"Do not apply spacing if above and/or below paragraph are the same style? True/False: " & $avParStyleSettings[2] & @CRLF & _
 			"Line spacing mode, (See UDF constants): " & $avParStyleSettings[3] & @CRLF & _
-			"Line spacing distance, in micrometers except for $LOW_LINE_SPC_MODE_PROP(0), which is a percentage: " & $avParStyleSettings[4])
+			"Line spacing distance, in Hundredths of a Millimeter (100th MM) except for $LOW_LINE_SPC_MODE_PROP(0), which is a percentage: " & $avParStyleSettings[4])
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

@@ -49,10 +49,10 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Character style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Character style's current Border width settings are as follows: " & @CRLF & _
-			"Top width, in Micrometers: " & $avCharStyleSettings[0] & @CRLF & _
-			"Bottom width, in Micrometers: " & $avCharStyleSettings[1] & @CRLF & _
-			"Left width, in Micrometers: " & $avCharStyleSettings[2] & @CRLF & _
-			"Right width, in Micrometers: " & $avCharStyleSettings[3])
+			"Top width, in Hundredths of a Millimeter (100th MM): " & $avCharStyleSettings[0] & @CRLF & _
+			"Bottom width, in Hundredths of a Millimeter (100th MM): " & $avCharStyleSettings[1] & @CRLF & _
+			"Left width, in Hundredths of a Millimeter (100th MM): " & $avCharStyleSettings[2] & @CRLF & _
+			"Right width, in Hundredths of a Millimeter (100th MM): " & $avCharStyleSettings[3])
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

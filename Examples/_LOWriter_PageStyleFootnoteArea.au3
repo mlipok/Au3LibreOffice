@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oPageStyle
-	Local $iMicrometers
+	Local $i100thMM
 	Local $avPageStyleSettings
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -17,12 +17,12 @@ Func Example()
 	$oPageStyle = _LOWriter_PageStyleGetObj($oDoc, "Default Page Style")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Page Style Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Convert 1/4" to Micrometers
-	$iMicrometers = _LO_ConvertToMicrometer(.25)
-	If @error Then _ERROR($oDoc, "Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1/4" to Hundredths of a Millimeter (100th MM)
+	$i100thMM = _LO_UnitConvert(.25, $LO_CONVERT_UNIT_INCH_100THMM)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set Page style Footnote area settings to Footnote height = 0, which is "Not larger than Page area", and Space to text to 1/4"
-	_LOWriter_PageStyleFootnoteArea($oPageStyle, 0, $iMicrometers)
+	_LOWriter_PageStyleFootnoteArea($oPageStyle, 0, $i100thMM)
 	If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
@@ -30,8 +30,8 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Page style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Page Style's current Footnote area settings are as follows: " & @CRLF & _
-			"The current maximum Footnote area height, in Micrometers, is: " & $avPageStyleSettings[0] & @CRLF & _
-			"The distance between the text body and the footnote body, in Micrometers, is: " & $avPageStyleSettings[1])
+			"The current maximum Footnote area height, in Hundredths of a Millimeter (100th MM), is: " & $avPageStyleSettings[0] & @CRLF & _
+			"The distance between the text body and the footnote body, in Hundredths of a Millimeter (100th MM), is: " & $avPageStyleSettings[1])
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

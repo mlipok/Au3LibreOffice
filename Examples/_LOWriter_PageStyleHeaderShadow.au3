@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oPageStyle
-	Local $iMicrometers
+	Local $i100thMM
 	Local $avPageStyleSettings
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -17,16 +17,16 @@ Func Example()
 	$oPageStyle = _LOWriter_PageStyleGetObj($oDoc, "Default Page Style")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Page Style Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Convert 1/8" to Micrometers
-	$iMicrometers = _LO_ConvertToMicrometer(.125)
-	If @error Then _ERROR($oDoc, "Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1/8" to Hundredths of a Millimeter (100th MM)
+	$i100thMM = _LO_UnitConvert(.125, $LO_CONVERT_UNIT_INCH_100THMM)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Turn Header on.
 	_LOWriter_PageStyleHeader($oPageStyle, True)
 	If @error Then _ERROR($oDoc, "Failed to turn Page Style headers on. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set Page style Header Shadow settings to: Width = 1/8", Color = $LO_COLOR_RED, Transparent = False, Location = $LOW_SHADOW_TOP_LEFT
-	_LOWriter_PageStyleHeaderShadow($oPageStyle, $iMicrometers, $LO_COLOR_RED, False, $LOW_SHADOW_TOP_LEFT)
+	_LOWriter_PageStyleHeaderShadow($oPageStyle, $i100thMM, $LO_COLOR_RED, False, $LOW_SHADOW_TOP_LEFT)
 	If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings. Return will be an array with elements in order of function parameters.
@@ -34,7 +34,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Page style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Page Style's current Header Shadow settings are as follows: " & @CRLF & _
-			"The shadow width is, is Micrometers: " & $avPageStyleSettings[0] & @CRLF & _
+			"The shadow width is, in Hundredths of a Millimeter (100th MM): " & $avPageStyleSettings[0] & @CRLF & _
 			"The Shadow color is, in Long Color format: " & $avPageStyleSettings[1] & @CRLF & _
 			"Is the Color transparent? True/False: " & $avPageStyleSettings[2] & @CRLF & _
 			"The Shadow location is, (see UDF Constants): " & $avPageStyleSettings[3])

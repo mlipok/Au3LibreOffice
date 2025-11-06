@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oPageStyle
-	Local $iMicrometers
+	Local $i100thMM
 	Local $avPageStyleSettings
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -17,16 +17,16 @@ Func Example()
 	$oPageStyle = _LOWriter_PageStyleGetObj($oDoc, "Default Page Style")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Page Style Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Convert 1/4" to Micrometers
-	$iMicrometers = _LO_ConvertToMicrometer(.25)
-	If @error Then _ERROR($oDoc, "Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1/4" to Hundredths of a Millimeter (100th MM)
+	$i100thMM = _LO_UnitConvert(.25, $LO_CONVERT_UNIT_INCH_100THMM)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set Page style Column count to 4.
 	_LOWriter_PageStyleColumnSettings($oPageStyle, 4)
 	If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set Page style Column size settings for column 3, set auto width to False, and spacing for this specific column to 1/4"
-	_LOWriter_PageStyleColumnSize($oPageStyle, 3, True, Null, $iMicrometers)
+	_LOWriter_PageStyleColumnSize($oPageStyle, 3, True, Null, $i100thMM)
 	If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings. Return will be an array with elements in order of function parameters.
@@ -35,9 +35,9 @@ Func Example()
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Page Style's current Column size settings are as follows: " & @CRLF & _
 			"Is Column width automatically adjusted? True/False: " & $avPageStyleSettings[0] & @CRLF & _
-			"The Global Spacing value for the entire table, in Micrometers (If there is one): " & $avPageStyleSettings[1] & @CRLF & _
-			"The Spacing value between this column and the next column to the right is, in Micrometers: " & $avPageStyleSettings[2] & @CRLF & _
-			"The width of this column, in Micrometers: " & $avPageStyleSettings[3] & @CRLF & _
+			"The Global Spacing value for the entire table, in Hundredths of a Millimeter (100th MM) (If there is one): " & $avPageStyleSettings[1] & @CRLF & _
+			"The Spacing value between this column and the next column to the right is, in Hundredths of a Millimeter (100th MM): " & $avPageStyleSettings[2] & @CRLF & _
+			"The width of this column, in Hundredths of a Millimeter (100th MM): " & $avPageStyleSettings[3] & @CRLF & _
 			"Note: This value will be different from the UI value, even when converted to Inches or Centimeters, because the returned width value is a " & _
 			"relative width, not a metric width, which is why I don't know how to set this value appropriately.")
 

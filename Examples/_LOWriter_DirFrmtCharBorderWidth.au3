@@ -41,10 +41,10 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the selected text's settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The selected text's current character Border width settings are as follows: " & @CRLF & _
-			"Top width, in Micrometers: " & $avSettings[0] & @CRLF & _
-			"Bottom width, in Micrometers: " & $avSettings[1] & @CRLF & _
-			"Left width, in Micrometers: " & $avSettings[2] & @CRLF & _
-			"Right width, in Micrometers: " & $avSettings[3] & @CRLF & @CRLF & _
+			"Top width, in Hundredths of a Millimeter (100th MM): " & $avSettings[0] & @CRLF & _
+			"Bottom width, in Hundredths of a Millimeter (100th MM): " & $avSettings[1] & @CRLF & _
+			"Left width, in Hundredths of a Millimeter (100th MM): " & $avSettings[2] & @CRLF & _
+			"Right width, in Hundredths of a Millimeter (100th MM): " & $avSettings[3] & @CRLF & @CRLF & _
 			"Press ok to remove direct formatting.")
 
 	; Remove Direct formatting.

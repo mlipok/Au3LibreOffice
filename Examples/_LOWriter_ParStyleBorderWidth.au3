@@ -33,10 +33,10 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Paragraph style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Paragraph's current Border width settings are as follows: " & @CRLF & _
-			"Top width, in Micrometers: " & $avParStyleSettings[0] & @CRLF & _
-			"Bottom width, in Micrometers: " & $avParStyleSettings[1] & @CRLF & _
-			"Left width, in Micrometers: " & $avParStyleSettings[2] & @CRLF & _
-			"Right width, in Micrometers: " & $avParStyleSettings[3] & @CRLF & _
+			"Top width, in Hundredths of a Millimeter (100th MM): " & $avParStyleSettings[0] & @CRLF & _
+			"Bottom width, in Hundredths of a Millimeter (100th MM): " & $avParStyleSettings[1] & @CRLF & _
+			"Left width, in Hundredths of a Millimeter (100th MM): " & $avParStyleSettings[2] & @CRLF & _
+			"Right width, in Hundredths of a Millimeter (100th MM): " & $avParStyleSettings[3] & @CRLF & _
 			"Connect Paragraph Borders if the settings are identical? True/False: " & $avParStyleSettings[4])
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")

@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oNumStyle, $oViewCursor
-	Local $iMicrometers, $iMicrometers2, $iMicrometers3
+	Local $i100thMM, $i100thMM2, $i100thMM3
 	Local $aavSettings
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -30,21 +30,21 @@ Func Example()
 			"Line 2" & @LF & "Line 2.1" & @LF & "Line 2.2" & @CR & "Line 3" & @LF & "Line 3.1" & @LF & "Line 3.2")
 	If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Convert 1/2" to Micrometers
-	$iMicrometers = _LO_ConvertToMicrometer(.5)
-	If @error Then _ERROR($oDoc, "Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1/2" to Hundredths of a Millimeter (100th MM)
+	$i100thMM = _LO_UnitConvert(.5, $LO_CONVERT_UNIT_INCH_100THMM)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Convert 3/4" to Micrometers
-	$iMicrometers2 = _LO_ConvertToMicrometer(.75)
-	If @error Then _ERROR($oDoc, "Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 3/4" to Hundredths of a Millimeter (100th MM)
+	$i100thMM2 = _LO_UnitConvert(.75, $LO_CONVERT_UNIT_INCH_100THMM)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Convert 1" to Micrometers
-	$iMicrometers3 = _LO_ConvertToMicrometer(1)
-	If @error Then _ERROR($oDoc, "Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1" to Hundredths of a Millimeter (100th MM)
+	$i100thMM3 = _LO_UnitConvert(1, $LO_CONVERT_UNIT_INCH_100THMM)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Modify the Numbering Style position settings: Modify all Levels (0), Aligned at = 1/2", Numbering Align = $LOW_ORIENT_HORI_CENTER,
 	; Followed by = $LOW_FOLLOW_BY_TABSTOP, TabStop = 3/4", Indent = 1"
-	_LOWriter_NumStylePosition($oDoc, $oNumStyle, 0, $iMicrometers, $LOW_ORIENT_HORI_CENTER, $LOW_FOLLOW_BY_TABSTOP, $iMicrometers2, $iMicrometers3)
+	_LOWriter_NumStylePosition($oDoc, $oNumStyle, 0, $i100thMM, $LOW_ORIENT_HORI_CENTER, $LOW_FOLLOW_BY_TABSTOP, $i100thMM2, $i100thMM3)
 	If @error Then _ERROR($oDoc, "Failed to set Numbering Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current Numbering Style settings for all levels. Return will be an array containing arrays with values in order of function parameters.
@@ -53,11 +53,11 @@ Func Example()
 
 	For $i = 0 To UBound($aavSettings) - 1
 		MsgBox($MB_OK + $MB_TOPMOST, Default, "The Numbering style's current Position settings for level " & ($i + 1) & " are as follows: " & @CRLF & _
-				"The First line indent is, in Micrometers: " & ($aavSettings[$i])[0] & @CRLF & _
+				"The First line indent is, in Hundredths of a Millimeter (100th MM): " & ($aavSettings[$i])[0] & @CRLF & _
 				"The Numbering symbols are aligned to, (see UDF constants): " & ($aavSettings[$i])[1] & @CRLF & _
 				"The Numbering Symbol is followed by, (see UDF Constants): " & ($aavSettings[$i])[2] & @CRLF & _
-				"The Tab Stop size following the Numbering symbols is, in Micrometers: " & ($aavSettings[$i])[3] & @CRLF & _
-				"The indent from the left page margin to the Numbering symbols is, in micrometers: " & ($aavSettings[$i])[4])
+				"The Tab Stop size following the Numbering symbols is, in Hundredths of a Millimeter (100th MM): " & ($aavSettings[$i])[3] & @CRLF & _
+				"The indent from the left page margin to the Numbering symbols is, in Hundredths of a Millimeter (100th MM): " & ($aavSettings[$i])[4])
 	Next
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
