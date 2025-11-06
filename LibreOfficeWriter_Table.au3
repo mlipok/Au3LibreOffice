@@ -132,10 +132,10 @@ EndFunc   ;==>_LOWriter_TableBorderColor
 ; Description ...: Set or retrieve the Border Padding (spacing between the Table text and border) settings.
 ; Syntax ........: _LOWriter_TableBorderPadding(ByRef $oTable[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
 ; Parameters ....: $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
-;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Distance between the Border and Table contents in Micrometers(uM).
-;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Distance between the Border and Table contents in Micrometers(uM).
-;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Distance between the Border and Table contents in Micrometers(uM).
-;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Distance between the Border and Table contents in Micrometers(uM).
+;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Distance between the Border and Table contents in Hundredths of a Millimeter (100th MM).
+;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Distance between the Border and Table contents in Hundredths of a Millimeter (100th MM).
+;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Distance between the Border and Table contents in Hundredths of a Millimeter (100th MM).
+;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Distance between the Border and Table contents in Hundredths of a Millimeter (100th MM).
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -294,12 +294,12 @@ EndFunc   ;==>_LOWriter_TableBorderStyle
 ; Description ...: Set and Retrieve the Table Border Line Width. Libre Office Version 3.6 and Up.
 ; Syntax ........: _LOWriter_TableBorderWidth(ByRef $oTable[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null[, $iVert = Null[, $iHori = Null]]]]]])
 ; Parameters ....: $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
-;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Border Line width of the Table in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Border Line Width of the Table in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Border Line width of the Table in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Border Line Width of the Table in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iVert               - [optional] an integer value. Default is Null. Set the Internal Vertical Border Line width of the Table in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iHori               - [optional] an integer value. Default is Null. Set the Internal Horizontal Border Line width of the Table in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Border Line width of the Table in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Border Line Width of the Table in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Border Line width of the Table in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Border Line Width of the Table in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iVert               - [optional] an integer value. Default is Null. Set the Internal Vertical Border Line width of the Table in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iHori               - [optional] an integer value. Default is Null. Set the Internal Horizontal Border Line width of the Table in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1382,10 +1382,10 @@ EndFunc   ;==>_LOWriter_TableInsert
 ; Description ...: Set and retrieve the Table Margins.
 ; Syntax ........: _LOWriter_TableMargin(ByRef $oTable[, $iTopMargin = Null[, $iBottomMargin = Null[, $iLeftMargin = Null[, $iRightMargin = Null]]]])
 ; Parameters ....: $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
-;                  $iTopMargin          - [optional] an integer value. Default is Null. The top table margin in Micrometers.
-;                  $iBottomMargin       - [optional] an integer value. Default is Null. The Bottom table margin in Micrometers.
-;                  $iLeftMargin         - [optional] an integer value. Default is Null. The Left table margin in Micrometers. See Remarks
-;                  $iRightMargin        - [optional] an integer value. Default is Null. The Right table margin in Micrometers. See Remarks.
+;                  $iTopMargin          - [optional] an integer value. Default is Null. The top table margin in Hundredths of a Millimeter (100th MM).
+;                  $iBottomMargin       - [optional] an integer value. Default is Null. The Bottom table margin in Hundredths of a Millimeter (100th MM).
+;                  $iLeftMargin         - [optional] an integer value. Default is Null. The Left table margin in Hundredths of a Millimeter (100th MM). See Remarks
+;                  $iRightMargin        - [optional] an integer value. Default is Null. The Right table margin in Hundredths of a Millimeter (100th MM). See Remarks.
 ; Return values .: Success: Integer or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1979,7 +1979,7 @@ EndFunc   ;==>_LOWriter_TablesGetNames
 ; Description ...: Set or Retrieve the shadow settings for a Table Border.
 ; Syntax ........: _LOWriter_TableShadow(ByRef $oTable[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null]]]])
 ; Parameters ....: $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
-;                  $iWidth              - [optional] an integer value. Default is Null. The Shadow Width of the Table, set in Micrometers.
+;                  $iWidth              - [optional] an integer value. Default is Null. The Shadow Width of the Table, set in Hundredths of a Millimeter (100th MM).
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The Color of the Table shadow, set in Long Integer format, can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the Table Shadow is transparent.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. The Location of the Table Shadow. See constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
@@ -2007,7 +2007,7 @@ EndFunc   ;==>_LOWriter_TablesGetNames
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                  LibreOffice may change the shadow width +/- a Micrometer.
+;                  LibreOffice may change the shadow width +/- a Hundredth of a Millimeter (100th MM).
 ; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_UnitConvert
 ; Link ..........:
 ; Example .......: Yes
@@ -2071,7 +2071,7 @@ EndFunc   ;==>_LOWriter_TableShadow
 ; Description ...: Set and retrieve the Width of a inserted table.
 ; Syntax ........: _LOWriter_TableWidth(ByRef $oTable[, $iWidth = Null[, $iRelativeWidth = Null]])
 ; Parameters ....: $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
-;                  $iWidth              - [optional] an integer value. Default is Null. The absolute table width in Micrometers. See Remarks.
+;                  $iWidth              - [optional] an integer value. Default is Null. The absolute table width in Hundredths of a Millimeter (100th MM). See Remarks.
 ;                  $iRelativeWidth      - [optional] an integer value. Default is Null. The width of the table relative to its environment, in percentage, without a percent sign. See Remarks.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -2093,7 +2093,7 @@ EndFunc   ;==>_LOWriter_TableShadow
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Relative Width and Width cannot be set until the Table Horizontal orientation is set to other than $LOW_ORIENT_HORI_FULL(6), which is LibeOffice's default setting.
-;                  Width may change +/- 1 Micrometer once set due to Libre Office.
+;                  Width may change +/- a Hundredth of a Millimeter (100th MM) once set due to Libre Office.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LO_UnitConvert

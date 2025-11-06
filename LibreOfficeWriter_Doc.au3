@@ -3674,8 +3674,8 @@ EndFunc   ;==>_LOWriter_DocPrintPageSettings
 ; Syntax ........: _LOWriter_DocPrintSizeSettings(ByRef $oDoc[, $iPaperFormat = Null[, $iPaperWidth = Null[, $iPaperHeight = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $iPaperFormat        - [optional] an integer value (0-8). Default is Null. Specifies a predefined paper size or if the paper size is a user-defined size. See constants, $LOW_PAPER_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iPaperWidth         - [optional] an integer value. Default is Null. Specifies the size of the paper in micrometers. Can be a custom value or one of the constants, $LOW_PAPER_WIDTH_* as defined in LibreOfficeWriter_Constants.au3. See remarks.
-;                  $iPaperHeight        - [optional] an integer value. Default is Null. Specifies the size of the paper in micrometers. Can be a custom value or one of the constants, $LOW_PAPER_HEIGHT_* as defined in LibreOfficeWriter_Constants.au3. See remarks.
+;                  $iPaperWidth         - [optional] an integer value. Default is Null. Specifies the size of the paper in Hundredths of a Millimeter (100th MM). Can be a custom value or one of the constants, $LOW_PAPER_WIDTH_* as defined in LibreOfficeWriter_Constants.au3. See remarks.
+;                  $iPaperHeight        - [optional] an integer value. Default is Null. Specifies the size of the paper in Hundredths of a Millimeter (100th MM). Can be a custom value or one of the constants, $LOW_PAPER_HEIGHT_* as defined in LibreOfficeWriter_Constants.au3. See remarks.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -3754,7 +3754,7 @@ Func _LOWriter_DocPrintSizeSettings(ByRef $oDoc, $iPaperFormat = Null, $iPaperWi
 			If Not IsInt($iPaperWidth) And ($iPaperWidth <> Null) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 			If Not IsInt($iPaperHeight) And ($iPaperHeight <> Null) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-			; Set in uM but retrieved in TWIPS
+			; Set in Hundredths of a Millimeter (100th MM) but retrieved in TWIPS
 			$tSize = __LO_CreateStruct("com.sun.star.awt.Size")
 			If Not IsObj($tSize) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
@@ -4712,7 +4712,7 @@ EndFunc   ;==>_LOWriter_DocUndoReset
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocViewCursorGetPosition
-; Description ...: Retrieve View Cursor position in Micrometers.
+; Description ...: Retrieve View Cursor position in Hundredths of a Millimeter (100th MM).
 ; Syntax ........: _LOWriter_DocViewCursorGetPosition(ByRef $oCursor)
 ; Parameters ....: $oCursor             - [in/out] an object. A View Cursor Object returned by _LOWriter_DocGetViewCursor function.
 ; Return values .: Success: Integer.
@@ -4723,7 +4723,7 @@ EndFunc   ;==>_LOWriter_DocUndoReset
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error determining Cursor type.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return Integer = Success. Current Cursor Coordinate position relative to the top-left of the first page of the document is returned. @Extended is the "X" coordinate, and Return value is the "Y" Coordinate. In Micrometers.
+;                  @Error 0 @Extended ? Return Integer = Success. Current Cursor Coordinate position relative to the top-left of the first page of the document is returned. @Extended is the "X" coordinate, and Return value is the "Y" Coordinate. In Hundredths of a Millimeter (100th MM).
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:

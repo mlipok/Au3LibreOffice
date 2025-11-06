@@ -4375,10 +4375,10 @@ EndFunc   ;==>_LOWriter_FormConImageControlGeneral
 ; Syntax ........: _LOWriter_FormConInsert(ByRef $oParentForm, $iControl, $iX, $iY, $iWidth, $iHeight[, $sName = ""])
 ; Parameters ....: $oParentForm         - [in/out] an object. A Form object returned by a previous _LOWriter_FormAdd, _LOWriter_FormGetObjByIndex or _LOWriter_FormsGetList function.
 ;                  $iControl            - an integer value (1-524288). The control type to insert. See Constants $LOW_FORM_CON_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iX                  - an integer value. The X Coordinate, in Micrometers.
-;                  $iY                  - an integer value. The Y Coordinate, in Micrometers.
-;                  $iWidth              - an integer value. The Width of the control, in Micrometers.
-;                  $iHeight             - an integer value. The Height of the control, in Micrometers.
+;                  $iX                  - an integer value. The X Coordinate, in Hundredths of a Millimeter (100th MM).
+;                  $iY                  - an integer value. The Y Coordinate, in Hundredths of a Millimeter (100th MM).
+;                  $iWidth              - an integer value. The Width of the control, in Hundredths of a Millimeter (100th MM).
+;                  $iHeight             - an integer value. The Height of the control, in Hundredths of a Millimeter (100th MM).
 ;                  $sName               - [optional] a string value. Default is "". The name of the control, if set to "", a name is automatically given it.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -7258,8 +7258,8 @@ EndFunc   ;==>_LOWriter_FormConPatternFieldValue
 ; Description ...: Set or Retrieve the Control's position settings.
 ; Syntax ........: _LOWriter_FormConPosition(ByRef $oControl[, $iX = Null[, $iY = Null[, $iAnchor = Null[, $bProtectPos = Null]]]])
 ; Parameters ....: $oControl            - [in/out] an object. A Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
-;                  $iX                  - [optional] an integer value. Default is Null. The X position from the insertion point, in Micrometers.
-;                  $iY                  - [optional] an integer value. Default is Null. The Y position from the insertion point, in Micrometers.
+;                  $iX                  - [optional] an integer value. Default is Null. The X position from the insertion point, in Hundredths of a Millimeter (100th MM).
+;                  $iY                  - [optional] an integer value. Default is Null. The Y position from the insertion point, in Hundredths of a Millimeter (100th MM).
 ;                  $iAnchor             - [optional] an integer value(0-4). Default is Null. The anchoring position for the Control. See Constants, $LOW_ANCHOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bProtectPos         - [optional] a boolean value. Default is Null. If True, the Shape's position is locked.
 ; Return values .: Success: 1 or Array.
@@ -8055,8 +8055,8 @@ EndFunc   ;==>_LOWriter_FormConsGetList
 ; Description ...: Set or Retrieve Control Size related settings.
 ; Syntax ........: _LOWriter_FormConSize(ByRef $oControl[, $iWidth = Null[, $iHeight = Null[, $bProtectSize = Null]]])
 ; Parameters ....: $oControl            - [in/out] an object. A Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
-;                  $iWidth              - [optional] an integer value. Default is Null. The width of the Shape, in Micrometers(uM). Min. 51.
-;                  $iHeight             - [optional] an integer value. Default is Null. The height of the Shape, in Micrometers(uM). Min. 51.
+;                  $iWidth              - [optional] an integer value. Default is Null. The width of the Shape, in Hundredths of a Millimeter (100th MM). Min. 51.
+;                  $iHeight             - [optional] an integer value. Default is Null. The height of the Shape, in Hundredths of a Millimeter (100th MM). Min. 51.
 ;                  $bProtectSize        - [optional] a boolean value. Default is Null. If True, Locks the size of the Shape.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -8209,7 +8209,7 @@ EndFunc   ;==>_LOWriter_FormConTableConCheckBoxData
 ;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
 ;                  $iDefaultState       - [optional] an integer value (0-2). Default is Null. The Default state of the Checkbox, $LOW_FORM_CON_CHKBX_STATE_NOT_DEFINED is only available if $bTriState is True. See Constants $LOW_FORM_CON_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Micrometers.
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (100th MM).
 ;                  $iStyle              - [optional] an integer value (1-2). Default is Null. The display style of the checkbox. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bWordBreak          - [optional] a boolean value. Default is Null. If True, line breaks are allowed to be used.
@@ -8278,7 +8278,7 @@ Func _LOWriter_FormConTableConCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $
 
 	If __LO_VarsAreNull($sName, $sLabel, $iTxtDir, $bEnabled, $iDefaultState, $iWidth, $iStyle, $iAlign, $bWordBreak, $bTriState, $sAddInfo, $sHelpText, $sHelpURL) Then
 		__LO_ArrayFill($avControl, $oCheckBox.Name(), $oCheckBox.Label(), $oCheckBox.WritingMode(), $oCheckBox.Enabled(), _
-				$oCheckBox.DefaultState(), Int($oCheckBox.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				$oCheckBox.DefaultState(), Int($oCheckBox.Width() * 10), _ ; Multiply width by 10 to get the Hundredths of a Millimeter value.
 				$oCheckBox.VisualEffect(), $oCheckBox.Align(), $oCheckBox.MultiLine(), $oCheckBox.TriState(), _
 				$oCheckBox.Tag(), $oCheckBox.HelpText(), $oCheckBox.HelpURL())
 
@@ -8341,7 +8341,7 @@ Func _LOWriter_FormConTableConCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $
 	ElseIf ($iWidth <> Null) Then
 		If Not __LO_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
-		$oCheckBox.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
+		$oCheckBox.Width = Round($iWidth / 10) ; Divide the Hundredths of a Millimeter value by 10 to obtain 10th MM.
 		$iError = ($oCheckBox.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
@@ -8733,7 +8733,7 @@ EndFunc   ;==>_LOWriter_FormConTableConComboBoxData
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
 ;                  $bReadOnly           - [optional] a boolean value. Default is Null. If True, the control is Read-Only.
 ;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Micrometers.
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (100th MM).
 ;                  $asList              - [optional] an array of strings. Default is Null. An array of entries. See remarks.
 ;                  $sDefaultTxt         - [optional] a string value. Default is Null. The default text of the combo Box.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
@@ -8811,7 +8811,7 @@ Func _LOWriter_FormConTableConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $
 	If __LO_VarsAreNull($sName, $sLabel, $iTxtDir, $iMaxLen, $bEnabled, $bReadOnly, $iMouseScroll, $iWidth, $asList, $sDefaultTxt, $iAlign, $iLines, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
 		__LO_ArrayFill($avControl, $oComboBox.Name(), $oComboBox.Label(), $oComboBox.WritingMode(), $oComboBox.MaxTextLen(), _
 				$oComboBox.Enabled(), $oComboBox.ReadOnly(), $oComboBox.MouseWheelBehavior(), _
-				Int($oComboBox.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				Int($oComboBox.Width() * 10), _ ; Multiply width by 10 to get Hundredths of a Millimeter value.
 				$oComboBox.StringItemList(), $oComboBox.DefaultText(), _
 				$oComboBox.Align(), $oComboBox.LineCount(), $oComboBox.HideInactiveSelection(), _
 				$oComboBox.Tag(), $oComboBox.HelpText(), _
@@ -8896,7 +8896,7 @@ Func _LOWriter_FormConTableConComboBoxGeneral(ByRef $oComboBox, $sName = Null, $
 	ElseIf ($iWidth <> Null) Then
 		If Not __LO_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
-		$oComboBox.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
+		$oComboBox.Width = Round($iWidth / 10) ; Divide Hundredths of a Millimeter value by 10 to obtain 10th MM.
 		$iError = ($oComboBox.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
@@ -9077,7 +9077,7 @@ EndFunc   ;==>_LOWriter_FormConTableConCurrencyFieldData
 ;                  $bSpin               - [optional] a boolean value. Default is Null. If True, the field will act as a spin button.
 ;                  $bRepeat             - [optional] a boolean value. Default is Null. If True, the button action will repeat if the button is clicked and held down.
 ;                  $iDelay              - [optional] an integer value (0-2147483647). Default is Null. The delay between button repeats, set in milliseconds.
-;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Micrometers.
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (100th MM).
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
@@ -9171,7 +9171,7 @@ Func _LOWriter_FormConTableConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName
 				$oCurrencyField.ValueMin(), $oCurrencyField.ValueMax(), $oCurrencyField.ValueStep(), $oCurrencyField.DefaultValue(), _
 				$oCurrencyField.DecimalAccuracy(), $oCurrencyField.ShowThousandsSeparator(), $oCurrencyField.CurrencySymbol(), _
 				$oCurrencyField.PrependCurrencySymbol(), $oCurrencyField.Spin(), $oCurrencyField.Repeat(), $oCurrencyField.RepeatDelay(), _
-				Int($oCurrencyField.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				Int($oCurrencyField.Width() * 10), _ ; Multiply width by 10 to get Hundredths of a Millimeter value.
 				$oCurrencyField.Align(), $oCurrencyField.HideInactiveSelection(), $oCurrencyField.Tag(), _
 				$oCurrencyField.HelpText(), $oCurrencyField.HelpURL())
 
@@ -9364,7 +9364,7 @@ Func _LOWriter_FormConTableConCurrencyFieldGeneral(ByRef $oCurrencyField, $sName
 	ElseIf ($iWidth <> Null) Then
 		If Not __LO_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 
-		$oCurrencyField.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
+		$oCurrencyField.Width = Round($iWidth / 10) ; Divide Hundredths of a Millimeter value by 10 to obtain 10th MM.
 		$iError = ($oCurrencyField.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 262144))
 	EndIf
 
@@ -9506,7 +9506,7 @@ EndFunc   ;==>_LOWriter_FormConTableConDateFieldData
 ;                  $bSpin               - [optional] a boolean value. Default is Null. If True, the field will act as a spin button.
 ;                  $bRepeat             - [optional] a boolean value. Default is Null. If True, the button action will repeat if the button is clicked and held down.
 ;                  $iDelay              - [optional] an integer value (0-2147483647). Default is Null. The delay between button repeats, set in milliseconds.
-;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Micrometers.
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (100th MM).
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bDropdown           - [optional] a boolean value. Default is Null. If True, the field will behave as a dropdown control.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
@@ -9631,7 +9631,7 @@ Func _LOWriter_FormConTableConDateFieldGeneral(ByRef $oDateField, $sName = Null,
 		__LO_ArrayFill($avControl, $oDateField.Name(), $oDateField.Label(), $oDateField.WritingMode(), $oDateField.StrictFormat(), _
 				$oDateField.Enabled(), $oDateField.ReadOnly(), $oDateField.MouseWheelBehavior(), _
 				$tCurMin, $tCurMax, $oDateField.DateFormat(), $tCurDefault, $oDateField.Spin(), _
-				$oDateField.Repeat(), $oDateField.RepeatDelay(), Int($oDateField.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				$oDateField.Repeat(), $oDateField.RepeatDelay(), Int($oDateField.Width() * 10), _ ; Multiply width by 10 to get Hundredths of a Millimeter value.
 				$oDateField.Align(), _
 				$oDateField.Dropdown(), _
 				$oDateField.HideInactiveSelection(), $oDateField.Tag(), $oDateField.HelpText(), $oDateField.HelpURL())
@@ -9806,7 +9806,7 @@ Func _LOWriter_FormConTableConDateFieldGeneral(ByRef $oDateField, $sName = Null,
 	ElseIf ($iWidth <> Null) Then
 		If Not __LO_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 
-		$oDateField.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
+		$oDateField.Width = Round($iWidth / 10) ; Divide Hundredths of a Millimeter value by 10 to obtain 10th MM.
 		$iError = ($oDateField.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 16384))
 	EndIf
 
@@ -9979,7 +9979,7 @@ EndFunc   ;==>_LOWriter_FormConTableConFormattedFieldData
 ;                  $bSpin               - [optional] a boolean value. Default is Null. If True, the field will act as a spin button.
 ;                  $bRepeat             - [optional] a boolean value. Default is Null. If True, the button action will repeat if the button is clicked and held down.
 ;                  $iDelay              - [optional] an integer value (0-2147483647). Default is Null. The delay between button repeats, set in milliseconds.
-;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Micrometers.
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (100th MM).
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
@@ -10065,7 +10065,7 @@ Func _LOWriter_FormConTableConFormattedFieldGeneral(ByRef $oFormatField, $sName 
 				$oFormatField.Enabled(), $oFormatField.ReadOnly(), _
 				$oFormatField.MouseWheelBehavior(), $oFormatField.EffectiveMin(), _
 				$oFormatField.EffectiveMax(), $oFormatField.EffectiveDefault(), $oFormatField.FormatKey(), $oFormatField.Spin(), _
-				$oFormatField.Repeat(), $oFormatField.RepeatDelay(), Int($oFormatField.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				$oFormatField.Repeat(), $oFormatField.RepeatDelay(), Int($oFormatField.Width() * 10), _ ; Multiply width by 10 to get Hundredths of a Millimeter value.
 				$oFormatField.Align(), _
 				$oFormatField.HideInactiveSelection(), $oFormatField.Tag(), $oFormatField.HelpText(), $oFormatField.HelpURL())
 
@@ -10227,7 +10227,7 @@ Func _LOWriter_FormConTableConFormattedFieldGeneral(ByRef $oFormatField, $sName 
 	ElseIf ($iWidth <> Null) Then
 		If Not __LO_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 
-		$oFormatField.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
+		$oFormatField.Width = Round($iWidth / 10) ; Divide Hundredths of a Millimeter value by 10 to obtain 10th MM.
 		$iError = ($oFormatField.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 16384))
 	EndIf
 
@@ -10297,7 +10297,7 @@ EndFunc   ;==>_LOWriter_FormConTableConFormattedFieldGeneral
 ;                  $bTabStop            - [optional] a boolean value. Default is Null. If True, the control can be selected with the Tab key.
 ;                  $iTabOrder           - [optional] an integer value (0-2147483647). Default is Null. The order the control is focused by the Tab key.
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
-;                  $nRowHeight          - [optional] a general number value (-21474836.48-21474836.48). Default is Null. The Row height, set in Micrometers.
+;                  $nRowHeight          - [optional] a general number value (-21474836.48-21474836.48). Default is Null. The Row height, set in Hundredths of a Millimeter (100th MM).
 ;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
 ;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
@@ -10669,7 +10669,7 @@ EndFunc   ;==>_LOWriter_FormConTableConListBoxData
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
 ;                  $bReadOnly           - [optional] a boolean value. Default is Null. If True, the control is Read-Only.
 ;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Micrometers.
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (100th MM).
 ;                  $asList              - [optional] an array of strings. Default is Null. An array of List entries. See remarks.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iLines              - [optional] an integer value (-2147483648-2147483647). Default is Null. If $bDropdown is True, $iLines specifies how many lines are shown in the dropdown list.
@@ -10745,7 +10745,7 @@ Func _LOWriter_FormConTableConListBoxGeneral(ByRef $oListBox, $sName = Null, $sL
 
 	If __LO_VarsAreNull($sName, $sLabel, $iTxtDir, $bEnabled, $bReadOnly, $iMouseScroll, $iWidth, $asList, $iAlign, $iLines, $aiDefaultSel, $sAddInfo, $sHelpText, $sHelpURL) Then
 		__LO_ArrayFill($avControl, $oListBox.Name(), $oListBox.Label(), $oListBox.WritingMode(), $oListBox.Enabled(), _
-				$oListBox.ReadOnly(), $oListBox.MouseWheelBehavior(), Int($oListBox.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				$oListBox.ReadOnly(), $oListBox.MouseWheelBehavior(), Int($oListBox.Width() * 10), _ ; Multiply width by 10 to get Hundredths of a Millimeter value.
 				$oListBox.StringItemList(), $oListBox.Align(), $oListBox.LineCount(), _
 				$oListBox.DefaultSelection(), $oListBox.Tag(), $oListBox.HelpText(), $oListBox.HelpURL())
 
@@ -10818,7 +10818,7 @@ Func _LOWriter_FormConTableConListBoxGeneral(ByRef $oListBox, $sName = Null, $sL
 	ElseIf ($iWidth <> Null) Then
 		If Not __LO_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
-		$oListBox.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
+		$oListBox.Width = Round($iWidth / 10) ; Divide Hundredths of a Millimeter value by 10 to obtain 10th MM.
 		$iError = ($oListBox.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
@@ -10993,7 +10993,7 @@ EndFunc   ;==>_LOWriter_FormConTableConNumericFieldData
 ;                  $bSpin               - [optional] a boolean value. Default is Null. If True, the field will act as a spin button.
 ;                  $bRepeat             - [optional] a boolean value. Default is Null. If True, the button action will repeat if the button is clicked and held down.
 ;                  $iDelay              - [optional] an integer value (0-2147483647). Default is Null. The delay between button repeats, set in milliseconds.
-;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Micrometers.
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (100th MM).
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
@@ -11088,7 +11088,7 @@ Func _LOWriter_FormConTableConNumericFieldGeneral(ByRef $oNumericField, $sName =
 				$oNumericField.MouseWheelBehavior(), $oNumericField.ValueMin(), _
 				$oNumericField.ValueMax(), $oNumericField.ValueStep(), $oNumericField.DefaultValue(), $oNumericField.DecimalAccuracy(), _
 				$oNumericField.ShowThousandsSeparator(), $oNumericField.Spin(), $oNumericField.Repeat(), $oNumericField.RepeatDelay(), _
-				Int($oNumericField.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				Int($oNumericField.Width() * 10), _ ; Multiply width by 10 to get Hundredths of a Millimeter value.
 				$oNumericField.Align(), $oNumericField.HideInactiveSelection(), $oNumericField.Tag(), _
 				$oNumericField.HelpText(), $oNumericField.HelpURL())
 
@@ -11261,7 +11261,7 @@ Func _LOWriter_FormConTableConNumericFieldGeneral(ByRef $oNumericField, $sName =
 	ElseIf ($iWidth <> Null) Then
 		If Not __LO_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 
-		$oNumericField.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
+		$oNumericField.Width = Round($iWidth / 10) ; Divide Hundredths of a Millimeter value by 10 to obtain 10th MM.
 		$iError = ($oNumericField.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 65536))
 	EndIf
 
@@ -11420,7 +11420,7 @@ EndFunc   ;==>_LOWriter_FormConTableConPatternFieldData
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
 ;                  $bReadOnly           - [optional] a boolean value. Default is Null. If True, the control is Read-Only.
 ;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Micrometers.
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (100th MM).
 ;                  $sDefaultTxt         - [optional] a string value. Default is Null. The default text to display in the field.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
@@ -11498,7 +11498,7 @@ Func _LOWriter_FormConTableConPatternFieldGeneral(ByRef $oPatternField, $sName =
 		__LO_ArrayFill($avControl, $oPatternField.Name(), $oPatternField.Label(), $oPatternField.WritingMode(), _
 				$oPatternField.MaxTextLen(), $oPatternField.EditMask(), $oPatternField.LiteralMask(), $oPatternField.StrictFormat(), _
 				$oPatternField.Enabled(), $oPatternField.ReadOnly(), _
-				$oPatternField.MouseWheelBehavior(), Int($oPatternField.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				$oPatternField.MouseWheelBehavior(), Int($oPatternField.Width() * 10), _ ; Multiply width by 10 to get Hundredths of a Millimeter value.
 				$oPatternField.DefaultText(), _
 				$oPatternField.Align(), $oPatternField.HideInactiveSelection(), $oPatternField.Tag(), _
 				$oPatternField.HelpText(), $oPatternField.HelpURL())
@@ -11612,7 +11612,7 @@ Func _LOWriter_FormConTableConPatternFieldGeneral(ByRef $oPatternField, $sName =
 	ElseIf ($iWidth <> Null) Then
 		If Not __LO_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 
-		$oPatternField.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
+		$oPatternField.Width = Round($iWidth / 10) ; Divide Hundredths of a Millimeter value by 10 to obtain 10th MM.
 		$iError = ($oPatternField.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 1024))
 	EndIf
 
@@ -11777,7 +11777,7 @@ EndFunc   ;==>_LOWriter_FormConTableConTextBoxData
 ;                  $iMaxLen             - [optional] an integer value (-1-2147483647). Default is Null. The max length of text that can be entered. 0 = unlimited.
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
 ;                  $bReadOnly           - [optional] a boolean value. Default is Null. If True, the control is Read-Only.
-;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Micrometers.
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (100th MM).
 ;                  $sDefaultTxt         - [optional] a string value. Default is Null. The default text to display in the control.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bMultiLine          - [optional] a boolean value. Default is Null. If True, the text may contain multiple lines.
@@ -11854,7 +11854,7 @@ Func _LOWriter_FormConTableConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $sL
 	If __LO_VarsAreNull($sName, $sLabel, $iTxtDir, $iMaxLen, $bEnabled, $bReadOnly, $iWidth, $sDefaultTxt, $iAlign, $bMultiLine, $bEndWithLF, $bHideSel, $sAddInfo, $sHelpText, $sHelpURL) Then
 		__LO_ArrayFill($avControl, $oTextBox.Name(), $oTextBox.Label(), $oTextBox.WritingMode(), $oTextBox.MaxTextLen(), _
 				$oTextBox.Enabled(), $oTextBox.ReadOnly(), _
-				Int($oTextBox.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				Int($oTextBox.Width() * 10), _ ; Multiply width by 10 to get Hundredths of a Millimeter value.
 				$oTextBox.DefaultText(), $oTextBox.Align(), $oTextBox.MultiLine(), _
 				(($oTextBox.LineEndFormat() = $__LOW_FORM_CONTROL_LINE_END_LF) ? (True) : (False)), _ ; Line Ending format
 				$oTextBox.HideInactiveSelection(), $oTextBox.Tag(), $oTextBox.HelpText(), $oTextBox.HelpURL())
@@ -11928,7 +11928,7 @@ Func _LOWriter_FormConTableConTextBoxGeneral(ByRef $oTextBox, $sName = Null, $sL
 	ElseIf ($iWidth <> Null) Then
 		If Not __LO_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
-		$oTextBox.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
+		$oTextBox.Width = Round($iWidth / 10) ; Divide Hundredths of a Millimeter value by 10 to obtain 10th MM.
 		$iError = ($oTextBox.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
@@ -12106,7 +12106,7 @@ EndFunc   ;==>_LOWriter_FormConTableConTimeFieldData
 ;                  $bSpin               - [optional] a boolean value. Default is Null. If True, the field will act as a spin button.
 ;                  $bRepeat             - [optional] a boolean value. Default is Null. If True, the button action will repeat if the button is clicked and held down.
 ;                  $iDelay              - [optional] an integer value (0-2147483647). Default is Null. The delay between button repeats, set in milliseconds.
-;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Micrometers.
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (100th MM).
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
@@ -12234,7 +12234,7 @@ Func _LOWriter_FormConTableConTimeFieldGeneral(ByRef $oTimeField, $sName = Null,
 		__LO_ArrayFill($avControl, $oTimeField.Name(), $oTimeField.Label(), $oTimeField.WritingMode(), $oTimeField.StrictFormat(), _
 				$oTimeField.Enabled(), $oTimeField.ReadOnly(), $oTimeField.MouseWheelBehavior(), _
 				$tCurMin, $tCurMax, $oTimeField.TimeFormat(), $tCurDefault, $oTimeField.Spin(), _
-				$oTimeField.Repeat(), $oTimeField.RepeatDelay(), Int($oTimeField.Width() * 10), _ ; Multiply width by 10 to get Micrometer value.
+				$oTimeField.Repeat(), $oTimeField.RepeatDelay(), Int($oTimeField.Width() * 10), _ ; Multiply width by 10 to get Hundredths of a Millimeter value.
 				$oTimeField.Align(), $oTimeField.HideInactiveSelection(), $oTimeField.Tag(), $oTimeField.HelpText(), $oTimeField.HelpURL())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
@@ -12413,7 +12413,7 @@ Func _LOWriter_FormConTableConTimeFieldGeneral(ByRef $oTimeField, $sName = Null,
 	ElseIf ($iWidth <> Null) Then
 		If Not __LO_IntIsBetween($iWidth, 100, 200000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 
-		$oTimeField.Width = Round($iWidth / 10) ; Divide Micrometer value by 10 to obtain 10th MM.
+		$oTimeField.Width = Round($iWidth / 10) ; Divide Hundredths of a Millimeter value by 10 to obtain 10th MM.
 		$iError = ($oTimeField.Width() = Round($iWidth / 10)) ? ($iError) : (BitOR($iError, 16384))
 	EndIf
 
