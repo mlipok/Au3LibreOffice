@@ -543,7 +543,7 @@ EndFunc   ;==>_LOCalc_CommentAreaGradientMulticolor
 ; Parameters ....: $oComment            - [in/out] an object. A Comment object returned by a previous _LOCalc_CommentsGetList, _LOCalc_CommentGetObjByCell, or _LOCalc_CommentGetObjByIndex function.
 ;                  $bShadow             - [optional] a boolean value. Default is Null. If True, a Shadow is present for the Comment.
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The Shadow color, set in Long Integer format, can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $iDistance           - [optional] an integer value. Default is Null. The distance of the Shadow from the Comment box, set in Micrometers.
+;                  $iDistance           - [optional] an integer value. Default is Null. The distance of the Shadow from the Comment box, set in Hundredths of a Millimeter (100th MM).
 ;                  $iTransparency       - [optional] an integer value (0-100). Default is Null. The percentage of Shadow transparency. 100% means completely transparent.
 ;                  $iBlur               - [optional] an integer value (0-150). Default is Null. The amount of blur applied to the Shadow, set in Printer's Points.
 ;                  $iLocation           - [optional] an integer value (0-8). Default is Null. The Location of the Shadow, must be one of the Constants, $LOC_COMMENT_SHADOW_* as defined in LibreOfficeCalc_Constants.au3..
@@ -555,7 +555,7 @@ EndFunc   ;==>_LOCalc_CommentAreaGradientMulticolor
 ;                  @Error 1 @Extended 3 Return 0 = $iColor not an Integer, less than 0, or greater than 16777215.
 ;                  @Error 1 @Extended 4 Return 0 = $iDistance not an Integer, or less than 0.
 ;                  @Error 1 @Extended 5 Return 0 = $iTransparency not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 6 Return 0 = $iBlur not an Integer, less than 0, or greater than 150 Printer's Points (0-5292 Micrometers).
+;                  @Error 1 @Extended 6 Return 0 = $iBlur not an Integer, less than 0, or greater than 150 Printer's Points.
 ;                  @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, less than 0, or greater than 8. See Constants, $LOC_COMMENT_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Annotation Shape Object.
@@ -577,9 +577,9 @@ EndFunc   ;==>_LOCalc_CommentAreaGradientMulticolor
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                  LibreOffice may change the shadow distance +/- a Micrometer.
+;                  LibreOffice may change the shadow distance +/- a Hundredth of a Millimeter (100th MM).
 ;                  Presently only location settings applying the Shadow to the bottom, right, or bottom-right corners of the Comment visually work, both in LibreOffice and using this function. Though it still can be set to the other locations.
-; Related .......: _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
+; Related .......: _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_UnitConvert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -602,7 +602,7 @@ Func _LOCalc_CommentAreaShadow(ByRef $oComment, $bShadow = Null, $iColor = Null,
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		__LO_ArrayFill($avShadow, $oAnnotationShape.Shadow(), $oAnnotationShape.ShadowColor(), $iInternalDistance, $oAnnotationShape.ShadowTransparence(), _
-				__LO_UnitConvert($oAnnotationShape.ShadowBlur(), $__LOCONST_CONVERT_UM_PT), $iInternalLocation)
+				_LO_UnitConvert($oAnnotationShape.ShadowBlur(), $LO_CONVERT_UNIT_100THMM_PT), $iInternalLocation)
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avShadow)
 	EndIf
@@ -642,10 +642,10 @@ Func _LOCalc_CommentAreaShadow(ByRef $oComment, $bShadow = Null, $iColor = Null,
 	EndIf
 
 	If ($iBlur <> Null) Then
-		If Not __LO_IntIsBetween($iBlur, 0, 150) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; 0 - 5292 max Micrometers.
+		If Not __LO_IntIsBetween($iBlur, 0, 150) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; 0 - 5292 max Hundredths of a Millimeter (100th MM).
 
-		$oAnnotationShape.ShadowBlur = __LO_UnitConvert($iBlur, $__LOCONST_CONVERT_PT_UM)
-		$iError = ($oAnnotationShape.ShadowBlur() = __LO_UnitConvert($iBlur, $__LOCONST_CONVERT_PT_UM)) ? ($iError) : (BitOR($iError, 16))
+		$oAnnotationShape.ShadowBlur = _LO_UnitConvert($iBlur, $LO_CONVERT_UNIT_PT_100THMM)
+		$iError = ($oAnnotationShape.ShadowBlur() = _LO_UnitConvert($iBlur, $LO_CONVERT_UNIT_PT_100THMM)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($iLocation <> Null) Then
@@ -1026,23 +1026,23 @@ EndFunc   ;==>_LOCalc_CommentAreaTransparencyGradientMulti
 ; Syntax ........: _LOCalc_CommentCallout(ByRef $oComment[, $iCalloutStyle = Null[, $iSpacing = Null[, $iExtension = Null[, $iExtendBy = Null[, $bOptimal = Null[, $iLength = Null]]]]]])
 ; Parameters ....: $oComment            - [in/out] an object. A Comment object returned by a previous _LOCalc_CommentsGetList, _LOCalc_CommentGetObjByCell, or _LOCalc_CommentGetObjByIndex function.
 ;                  $iCalloutStyle       - [optional] an integer value (0-2). Default is Null. The Style of Callout connector line. See Constants $LOC_COMMENT_CALLOUT_STYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iSpacing            - [optional] an integer value (0-240005). Default is Null. The amount of space between the Callout connector line end and the comment box, in Micrometers.
+;                  $iSpacing            - [optional] an integer value (0-240005). Default is Null. The amount of space between the Callout connector line end and the comment box, in Hundredths of a Millimeter (100th MM).
 ;                  $iExtension          - [optional] an integer value (0-4). Default is Null. The position to extend the Callout line from. See Constants $LOC_COMMENT_CALLOUT_EXT_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iExtendBy           - [optional] an integer value (0-240005;0,5000,10000). Default is Null. The length to extend the Callout line, in Micrometers, or the alignment of the line depending on the current setting of $iExtension. See remarks. See Constants $LOC_COMMENT_CALLOUT_EXT_ALIGN_HORI_*, or $LOC_COMMENT_CALLOUT_EXT_ALIGN_VERT_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iExtendBy           - [optional] an integer value (0-240005;0,5000,10000). Default is Null. The length to extend the Callout line, in Hundredths of a Millimeter (100th MM), or the alignment of the line depending on the current setting of $iExtension. See remarks. See Constants $LOC_COMMENT_CALLOUT_EXT_ALIGN_HORI_*, or $LOC_COMMENT_CALLOUT_EXT_ALIGN_VERT_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $bOptimal            - [optional] a boolean value. Default is Null. If True a angled line will be used optimally.
-;                  $iLength             - [optional] an integer value (0-240005). Default is Null. The length of the callout line, in Micrometers.
+;                  $iLength             - [optional] an integer value (0-240005). Default is Null. The length of the callout line, in Hundredths of a Millimeter (100th MM).
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oComment not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iCalloutStyle not an Integer, less than 0 or greater than 2. See Constants $LOC_COMMENT_CALLOUT_STYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 3 Return 0 = $iSpacing not an Integer, less than 0 or greater than 240,005 Micrometers.
+;                  @Error 1 @Extended 3 Return 0 = $iSpacing not an Integer, less than 0 or greater than 240,005.
 ;                  @Error 1 @Extended 4 Return 0 = $iExtension not an Integer, less than 0 or greater than 4. See Constants $LOC_COMMENT_CALLOUT_EXT_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 5 Return 0 = $iExtendBy not an Integer, not equal to 0, 5,000, or 10,000. See Constants $LOC_COMMENT_CALLOUT_EXT_ALIGN_HORI_*, as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 6 Return 0 = $iExtendBy not an Integer, not equal to 0, 5,000, or 10,000. See Constants $LOC_COMMENT_CALLOUT_EXT_ALIGN_VERT_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 7 Return 0 = $iExtendBy not an Integer, less than 0 or greater than 240,005 Micrometers.
+;                  @Error 1 @Extended 7 Return 0 = $iExtendBy not an Integer, less than 0 or greater than 240,005.
 ;                  @Error 1 @Extended 8 Return 0 = $bOptimal not a Boolean.
-;                  @Error 1 @Extended 9 Return 0 = $iLength not an Integer, less than 0 or greater than 240,005 Micrometers.
+;                  @Error 1 @Extended 9 Return 0 = $iLength not an Integer, less than 0 or greater than 240,005.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Annotation Shape Object.
 ;                  --Property Setting Errors--
@@ -1059,11 +1059,11 @@ EndFunc   ;==>_LOCalc_CommentAreaTransparencyGradientMulti
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If $iExtension is set to $LOC_COMMENT_CALLOUT_EXT_HORI, or $LOC_COMMENT_CALLOUT_EXT_VERT, $iExtendBy will be set to the alignment value of either constants $LOC_COMMENT_CALLOUT_EXT_ALIGN_HORI_*, or $LOC_COMMENT_CALLOUT_EXT_ALIGN_VERT_*.
-;                  If $iExtension is set to $LOC_COMMENT_CALLOUT_EXT_OPTIMAL, $LOC_COMMENT_CALLOUT_EXT_FROM_LEFT, or $LOC_COMMENT_CALLOUT_EXT_FROM_TOP, $iExtendBy will be set to the length to extend the Callout line from the Comment box, in Micrometers.
+;                  If $iExtension is set to $LOC_COMMENT_CALLOUT_EXT_OPTIMAL, $LOC_COMMENT_CALLOUT_EXT_FROM_LEFT, or $LOC_COMMENT_CALLOUT_EXT_FROM_TOP, $iExtendBy will be set to the length to extend the Callout line from the Comment box, in Hundredths of a Millimeter (100th MM).
 ;                  If $iCalloutStyle is not set to $LOC_COMMENT_CALLOUT_STYLE_ANGLED_CONNECTOR, both $bOptimal and $iLength, are not used/unavailable for setting.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
+; Related .......: _LO_UnitConvert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1429,11 +1429,11 @@ EndFunc   ;==>_LOCalc_CommentGetObjByIndex
 ; Syntax ........: _LOCalc_CommentLineArrowStyles(ByRef $oComment[, $vStartStyle = Null[, $iStartWidth = Null[, $bStartCenter = Null[, $bSync = Null[, $vEndStyle = Null[, $iEndWidth = Null[, $bEndCenter = Null]]]]]]])
 ; Parameters ....: $oComment            - [in/out] an object. A Comment object returned by a previous _LOCalc_CommentsGetList, _LOCalc_CommentGetObjByCell, or _LOCalc_CommentGetObjByIndex function.
 ;                  $vStartStyle         - [optional] a variant value (0-32, or String). Default is Null. The Arrow head to apply to the start of the line. Can be a Custom Arrowhead name, or one of the constants, $LOC_COMMENT_LINE_ARROW_TYPE_* as defined in LibreOfficeCalc_Constants.au3. See remarks.
-;                  $iStartWidth         - [optional] an integer value (0-5004). Default is Null. The Width of the Starting Arrowhead, in Micrometers.
+;                  $iStartWidth         - [optional] an integer value (0-5004). Default is Null. The Width of the Starting Arrowhead, in Hundredths of a Millimeter (100th MM).
 ;                  $bStartCenter        - [optional] a boolean value. Default is Null. If True, Places the center of the Start arrowhead on the endpoint of the line.
 ;                  $bSync               - [optional] a boolean value. Default is Null. If True, Synchronizes the Start Arrowhead settings with the end Arrowhead settings. See remarks.
 ;                  $vEndStyle           - [optional] a variant value (0-32, or String). Default is Null. The Arrow head to apply to the end of the line. Can be a Custom Arrowhead name, or one of the constants, $LOC_COMMENT_LINE_ARROW_TYPE_* as defined in LibreOfficeCalc_Constants.au3. See remarks.
-;                  $iEndWidth           - [optional] an integer value (0-5004). Default is Null. The Width of the Ending Arrowhead, in Micrometers.
+;                  $iEndWidth           - [optional] an integer value (0-5004). Default is Null. The Width of the Ending Arrowhead, in Hundredths of a Millimeter (100th MM).
 ;                  $bEndCenter          - [optional] a boolean value. Default is Null. If True, Places the center of the End arrowhead on the endpoint of the line.
 ; Return values .: Success: Integer or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1582,7 +1582,7 @@ EndFunc   ;==>_LOCalc_CommentLineArrowStyles
 ; Parameters ....: $oComment            - [in/out] an object. A Comment object returned by a previous _LOCalc_CommentsGetList, _LOCalc_CommentGetObjByCell, or _LOCalc_CommentGetObjByIndex function.
 ;                  $vStyle              - [optional] a variant value (0-31, or String). Default is Null. The Line Style to use. Can be a Custom Line Style name, or one of the constants, $LOC_COMMENT_LINE_STYLE_* as defined in LibreOfficeCalc_Constants.au3. See remarks.
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The Line color, set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $iWidth              - [optional] an integer value (0-5004). Default is Null. The line Width, set in Micrometers.
+;                  $iWidth              - [optional] an integer value (0-5004). Default is Null. The line Width, set in Hundredths of a Millimeter (100th MM).
 ;                  $iTransparency       - [optional] an integer value (0-100). Default is Null. The Line transparency percentage. 100% = fully transparent.
 ;                  $iCornerStyle        - [optional] an integer value (0,2-4). Default is Null. The Line Corner Style. See Constants $LOC_COMMENT_LINE_JOINT_* as defined in LibreOfficeCalc_Constants.au3
 ;                  $iCapStyle           - [optional] an integer value (0-2). Default is Null. The Line Cap Style. See Constants $LOC_COMMENT_LINE_CAP_* as defined in LibreOfficeCalc_Constants.au3
@@ -1729,8 +1729,8 @@ EndFunc   ;==>_LOCalc_CommentLineProperties
 ; Description ...: Set or Retrieve the Comment's position settings.
 ; Syntax ........: _LOCalc_CommentPosition(ByRef $oComment[, $iX = Null[, $iY = Null[, $bProtectPos = Null]]])
 ; Parameters ....: $oComment            - [in/out] an object. A Comment object returned by a previous _LOCalc_CommentsGetList, _LOCalc_CommentGetObjByCell, or _LOCalc_CommentGetObjByIndex function.
-;                  $iX                  - [optional] an integer value. Default is Null. The X position from the insertion point, in Micrometers.
-;                  $iY                  - [optional] an integer value. Default is Null. The Y position from the insertion point, in Micrometers.
+;                  $iX                  - [optional] an integer value. Default is Null. The X position from the insertion point, in Hundredths of a Millimeter (100th MM).
+;                  $iY                  - [optional] an integer value. Default is Null. The Y position from the insertion point, in Hundredths of a Millimeter (100th MM).
 ;                  $bProtectPos         - [optional] a boolean value. Default is Null. If True, the Comment's position is locked.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1753,7 +1753,7 @@ EndFunc   ;==>_LOCalc_CommentLineProperties
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The X Coordinate seems to be measured from the right hand edge of the Comment Box, and the Y Coordinate seems to be measured from the top of the comment box.
-; Related .......: _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOCalc_CommentRotate, _LOCalc_CommentSize
+; Related .......: _LO_UnitConvert, _LOCalc_CommentRotate, _LOCalc_CommentSize
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1948,8 +1948,8 @@ EndFunc   ;==>_LOCalc_CommentsGetList
 ; Description ...: Set or Retrieve Comment Size related settings.
 ; Syntax ........: _LOCalc_CommentSize(ByRef $oComment[, $iWidth = Null[, $iHeight = Null[, $bProtectSize = Null]]])
 ; Parameters ....: $oComment            - [in/out] an object. A Comment object returned by a previous _LOCalc_CommentsGetList, _LOCalc_CommentGetObjByCell, or _LOCalc_CommentGetObjByIndex function.
-;                  $iWidth              - [optional] an integer value. Default is Null. The width of the Comment, in Micrometers(uM). Min. 51.
-;                  $iHeight             - [optional] an integer value. Default is Null. The height of the Comment, in Micrometers(uM). Min. 51.
+;                  $iWidth              - [optional] an integer value. Default is Null. The width of the Comment, in Hundredths of a Millimeter (100th MM). Min. 51.
+;                  $iHeight             - [optional] an integer value. Default is Null. The height of the Comment, in Hundredths of a Millimeter (100th MM). Min. 51.
 ;                  $bProtectSize        - [optional] a boolean value. Default is Null. If True, Locks the size of the Comment.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1974,7 +1974,7 @@ EndFunc   ;==>_LOCalc_CommentsGetList
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  I have skipped "Keep Ratio, as there is no built in setting for it for Comments, so I would have to formulate a custom function for this purpose.
-; Related .......: _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer, _LOCalc_CommentPosition
+; Related .......: _LO_UnitConvert, _LOCalc_CommentPosition
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2259,7 +2259,7 @@ EndFunc   ;==>_LOCalc_CommentTextAnchor
 ;                  $bVisibleOnExit      - [optional] a boolean value. Default is Null. If True, the text is visible inside the Comment when the animation ends.
 ;                  $iCycles             - [optional] an integer value (0-100). Default is Null. The number of times to repeat the animation. 0 = continuous.
 ;                  $iPixelIncrement     - [optional] an integer value (0-100). Default is Null. The increment value measured in pixels. See remarks.
-;                  $iIncrement          - [optional] an integer value (0-25400). Default is Null. The increment value measured in Micrometers. See remarks.
+;                  $iIncrement          - [optional] an integer value (0-25400). Default is Null. The increment value measured in Hundredths of a Millimeter (100th MM). See remarks.
 ;                  $iDelay              - [optional] an integer value (0-30000). Default is Null. The delay between animation repeats, in milliseconds. 0 = Automatic.
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -2290,12 +2290,12 @@ EndFunc   ;==>_LOCalc_CommentTextAnchor
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: The Increment value can be set in either Pixels or Micrometers, but internally it uses the same property. To make setting this easier, I have made two separate parameters to set, depending on if you wish to set increment using pixels ($iPixelIncrement) or Micrometers ($iIncrement). Only one should be used, otherwise $iIncrement will overwrite $iPixelIncrement.
+; Remarks .......: The Increment value can be set in either Pixels or Hundredths of a Millimeter (100th MM), but internally it uses the same property. To make setting this easier, I have made two separate parameters to set, depending on if you wish to set increment using pixels ($iPixelIncrement) or Hundredths of a Millimeter ($iIncrement). Only one should be used, otherwise $iIncrement will overwrite $iPixelIncrement.
 ;                  When either $iPixelIncrement or $iIncrement is not set, meaning if you are setting the Increment value in pixels, or not, one or the other value will return 0 when retrieving the current settings.
 ;                  $iIncrement in the L.O. UI allows for 10" max, however this produces an erroneous value internally, and switches back to using pixels, even in the UI, if you set $iIncrement to the max value, it will most likely cause a property setting error.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
+; Related .......: _LO_UnitConvert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2388,7 +2388,7 @@ EndFunc   ;==>_LOCalc_CommentTextAnimation
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $oComment            - [in/out] an object. A Comment object returned by a previous _LOCalc_CommentsGetList, _LOCalc_CommentGetObjByCell, or _LOCalc_CommentGetObjByIndex function.
 ;                  $iColumns            - [optional] an integer value (1-16). Default is Null. The number of columns to break the text area into.
-;                  $iSpacing            - [optional] an integer value. Default is Null. The amount of spacing between the columns, in Micrometers.
+;                  $iSpacing            - [optional] an integer value. Default is Null. The amount of spacing between the columns, in Hundredths of a Millimeter (100th MM).
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2412,7 +2412,7 @@ EndFunc   ;==>_LOCalc_CommentTextAnimation
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
+; Related .......: _LO_UnitConvert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2477,11 +2477,11 @@ EndFunc   ;==>_LOCalc_CommentTextColumns
 ;                  $bFitWidth           - [optional] a boolean value. Default is Null. If True, the comment box width will expand to fit text content.
 ;                  $bFitHeight          - [optional] a boolean value. Default is Null. If True, the comment box height will expand to fit text content.
 ;                  $bFitToFrame         - [optional] a boolean value. Default is Null. If True text will be resized to fit the frame.
-;                  $iSpacingAll         - [optional] an integer value (-100000-100000). Default is Null. Set the spacing around the text between the text and the Comment borders, in Micrometers.
-;                  $iLeft               - [optional] an integer value (-100000-100000). Default is Null. Set the spacing on the Left side of the text between the text and the Comment border, in Micrometers.
-;                  $iRight              - [optional] an integer value (-100000-100000). Default is Null. Set the spacing on the Right side of the text between the text and the Comment border, in Micrometers.
-;                  $iTop                - [optional] an integer value (-100000-100000). Default is Null. Set the spacing on the Top side of the text between the text and the Comment border, in Micrometers.
-;                  $iBottom             - [optional] an integer value (-100000-100000). Default is Null. Set the spacing on the Bottom side of the text between the text and the Comment border, in Micrometers.
+;                  $iSpacingAll         - [optional] an integer value (-100000-100000). Default is Null. Set the spacing around the text between the text and the Comment borders, in Hundredths of a Millimeter (100th MM).
+;                  $iLeft               - [optional] an integer value (-100000-100000). Default is Null. Set the spacing on the Left side of the text between the text and the Comment border, in Hundredths of a Millimeter (100th MM).
+;                  $iRight              - [optional] an integer value (-100000-100000). Default is Null. Set the spacing on the Right side of the text between the text and the Comment border, in Hundredths of a Millimeter (100th MM).
+;                  $iTop                - [optional] an integer value (-100000-100000). Default is Null. Set the spacing on the Top side of the text between the text and the Comment border, in Hundredths of a Millimeter (100th MM).
+;                  $iBottom             - [optional] an integer value (-100000-100000). Default is Null. Set the spacing on the Bottom side of the text between the text and the Comment border, in Hundredths of a Millimeter (100th MM).
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2515,7 +2515,7 @@ EndFunc   ;==>_LOCalc_CommentTextColumns
 ;                  If spacing values on all sides do not match, $iSpacingAll will return 0.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
+; Related .......: _LO_UnitConvert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================

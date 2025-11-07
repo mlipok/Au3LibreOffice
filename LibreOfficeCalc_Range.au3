@@ -537,7 +537,7 @@ EndFunc   ;==>_LOCalc_RangeColumnVisible
 ; Syntax ........: _LOCalc_RangeColumnWidth(ByRef $oColumn[, $bOptimal = Null[, $iWidth = Null]])
 ; Parameters ....: $oColumn             - an object. A Column object returned by a previous _LOCalc_RangeColumnGetObjByPosition, or _LOCalc_RangeColumnGetObjByName function.
 ;                  $bOptimal            - [optional] a boolean value. Default is Null. If True, the Optimal width is automatically chosen. See Remarks.
-;                  $iWidth              - [optional] an integer value (0-34464). Default is Null. The Width of the Column, set in Micrometers.
+;                  $iWidth              - [optional] an integer value (0-34464). Default is Null. The Width of the Column, set in Hundredths of a Millimeter (100th MM).
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -555,7 +555,7 @@ EndFunc   ;==>_LOCalc_RangeColumnVisible
 ; Modified ......:
 ; Remarks .......: $bOptimal only accepts True. False will return an error. Calling True again returns the cell to optimal width, setting a custom width essentially disables it.
 ;                  I am presently unable to find a setting for Optimal Width "Add" Value.
-; Related .......: _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
+; Related .......: _LO_UnitConvert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4883,7 +4883,7 @@ EndFunc   ;==>_LOCalc_RangeRowGetObjByPosition
 ; Syntax ........: _LOCalc_RangeRowHeight(ByRef $oRow[, $bOptimal = Null[, $iHeight = Null]])
 ; Parameters ....: $oRow                - an object. A Row object returned by a previous _LOCalc_RangeRowGetObjByPosition function.
 ;                  $bOptimal            - [optional] a boolean value. Default is Null. If True, the Optimal height is automatically chosen.
-;                  $iHeight             - [optional] an integer value (0-34464). Default is Null. The Height of the row, set in Micrometers.
+;                  $iHeight             - [optional] an integer value (0-34464). Default is Null. The Height of the row, set in Hundredths of a Millimeter (100th MM).
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -4900,7 +4900,7 @@ EndFunc   ;==>_LOCalc_RangeRowGetObjByPosition
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: I am presently unable to find a setting for Optimal Height "Add" Value.
-; Related .......: _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
+; Related .......: _LO_UnitConvert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -5267,7 +5267,7 @@ Func _LOCalc_RangeSort(ByRef $oDoc, ByRef $oRange, ByRef $tSortField, $bSortColu
 		EndSwitch
 	Next
 
-	;~ $oRange.Sort($avSortDesc); This doesn't sort properly, thus a work around method is required.
+;~ $oRange.Sort($avSortDesc); This doesn't sort properly, thus a work around method is required.
 
 	$sMacro = "REM Macro for Performing a Sort Function. Created By an AutoIt Script." & @CR & _ ; Just a description of the Macro
 			"Sub AU3LibreOffice_Sort(oRange, avSortDesc, atField)" & @CR & _ ; Macro header, Parameters, oRange = Range to Sort, avSortDesc = The array of Sort Descriptor settings,  atField = Sort Descriptor Column/Row settings.

@@ -7,7 +7,7 @@ Example()
 Func Example()
 	Local $oDoc, $oCellStyle
 	Local $avSettings[0]
-	Local $iMicrometers, $iMicrometers2
+	Local $i100thMM, $i100thMM2
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOCalc_DocCreate(True, False)
@@ -21,38 +21,38 @@ Func Example()
 	_LOCalc_CellStyleBorderWidth($oCellStyle, $LOC_BORDERWIDTH_THICK, $LOC_BORDERWIDTH_THICK, $LOC_BORDERWIDTH_THICK, $LOC_BORDERWIDTH_THICK)
 	If @error Then _ERROR($oDoc, "Failed to set the Cell Style's settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Convert 1/4" to Micrometers
-	$iMicrometers = _LO_ConvertToMicrometer(0.25)
-	If @error Then _ERROR($oDoc, "Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1/4" to Hundredths of a Millimeter (100th MM)
+	$i100thMM = _LO_UnitConvert(0.25, $LO_CONVERT_UNIT_INCH_100THMM)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set "Default" Cell Style Border padding to 1/4"
-	_LOCalc_CellStyleBorderPadding($oCellStyle, $iMicrometers)
+	_LOCalc_CellStyleBorderPadding($oCellStyle, $i100thMM)
 	If @error Then _ERROR($oDoc, "Failed to set Cell style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avSettings = _LOCalc_CellStyleBorderPadding($oCellStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Cell Style's current settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "Default Cell Style's Border Padding settings are as follows (in Micrometers): " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Default Cell Style's Border Padding settings are as follows (in Hundredths of a Millimeter (100th MM)): " & @CRLF & _
 			"The ""All"" value is: " & $avSettings[0] & @CRLF & _
 			"Top Border Width is: " & $avSettings[1] & @CRLF & _
 			"Bottom Border Width is: " & $avSettings[2] & @CRLF & _
 			"Left Border Width is: " & $avSettings[3] & @CRLF & _
 			"Right Border Width is: " & $avSettings[4])
 
-	; Convert 1/2" to Micrometers
-	$iMicrometers2 = _LO_ConvertToMicrometer(0.5)
-	If @error Then _ERROR($oDoc, "Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1/2" to Hundredths of a Millimeter (100th MM)
+	$i100thMM2 = _LO_UnitConvert(0.5, $LO_CONVERT_UNIT_INCH_100THMM)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set "Default" Cell Style Border padding to, Top and Right, 1/4", Bottom and left, 1/2".
-	_LOCalc_CellStyleBorderPadding($oCellStyle, Null, $iMicrometers, $iMicrometers2, $iMicrometers2, $iMicrometers)
+	_LOCalc_CellStyleBorderPadding($oCellStyle, Null, $i100thMM, $i100thMM2, $i100thMM2, $i100thMM)
 	If @error Then _ERROR($oDoc, "Failed to set Cell style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avSettings = _LOCalc_CellStyleBorderPadding($oCellStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Cell Style's current settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "Default Cell Style's Border Padding settings are as follows (in Micrometers): " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Default Cell Style's Border Padding settings are as follows (in Hundredths of a Millimeter (100th MM)): " & @CRLF & _
 			"The ""All"" value is: " & $avSettings[0] & @CRLF & _
 			"Top Border Width is: " & $avSettings[1] & @CRLF & _
 			"Bottom Border Width is: " & $avSettings[2] & @CRLF & _
