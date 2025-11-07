@@ -11,14 +11,14 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 |    Version       |    Changes                         |    Download                 |     Released   |    Compare on GitHub       |
 |:-----------------|:----------------------------------:|:---------------------------:|:--------------:|:---------------------------|
-|    **v0.10.0**   | [Change Log](#0100---2024-04-)     | [v0.10.0][v0.10.0]          | _Unreleased_   | [Compare][v0.10.0-Compare] |
+|    **v0.10.0**   | [Change Log](#0100---2025)     | [v0.10.0][v0.10.0]          | _Unreleased_   | [Compare][v0.10.0-Compare] |
 |    **v0.9.1**    | [Change Log](#091---2023-10-28)    | [v0.9.1][v0.9.1]            | 2023-10-28     | [Compare][v0.9.1-Compare]  |
 |    **v0.9.0**    | [Change Log](#090---2023-10-28)    | [v0.9.0][v0.9.0]            | 2023-10-28     | [Compare][v0.9.0-Compare]  |
 |    **v0.0.0.3**  | [Change Log](#0003---2023-08-10)   | [v0.0.0.3][v0.0.0.3]        | 2023-08-10     | [Compare][v0.0.0.3-Compare]|
 |    **v0.0.0.2**  | [Change Log](#0002---2023-07-16)   | [v0.0.0.2][v0.0.0.2]        | 2023-07-16     | [Compare][v0.0.0.2-Compare]|
 |    **v0.0.0.1**  | [Change Log](#0001---2023-07-02)   | [v0.0.0.1][v0.0.0.1]        | 2023-07-02     |                            |
 
-## [0.10.0] - 2024-04-
+## [0.10.0] - 2025
 
 ### Project
 
@@ -113,6 +113,313 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - $__LOCONST_CONVERT_* Internal Constant.
 - `__LO_UnitConvert` Internal Function.
 - `_LO_ConvertFromMicrometer` and `_LO_ConvertToMicrometer` internal functions.
+
+> [!NOTE]
+> **LibreOfficeBase**
+
+### Added
+
+- Main Base File
+	- LibreOfficeBase.au3
+- Individual Base Element Files
+	- LibreOfficeBase_Constants.au3
+	- LibreOfficeBase_Database.au3
+	- LibreOfficeBase_Doc.au3
+	- LibreOfficeBase_Form.au3
+	- LibreOfficeBase_Helper.au3
+	- LibreOfficeBase_Internal.au3
+	- LibreOfficeBase_Query.au3
+	- LibreOfficeBase_Report.au3
+	- LibreOfficeBase_SQLStatement.au3
+	- LibreOfficeBase_Table.au3
+
+- Constants
+	- $LOB_ALIGN_VERT_*
+	- $LOB_CASEMAP_*
+	- ~~$LOB_COLOR_*~~
+	- $LOB_DATA_SET_TYPE_*
+	- $LOB_DATA_TYPE_*
+	- $LOB_DBASE_BEST_ROW_SCOPE_*
+	- $LOB_DBASE_META_*
+	- $LOB_DBASE_RESULT_SET_CONCURRENCY_*
+	- $LOB_DBASE_TRANSACTION_ISOLATION_*
+	- $LOB_FORMAT_KEYS_*
+	- ~~$LOB_PATHCONV_*~~
+	- $LOB_POSTURE_*
+	- $LOB_RELIEF_*
+	- $LOB_REP_CON_IMG_BTN_SCALE_*
+	- $LOB_REP_CON_LINE_*
+	- $LOB_REP_CON_TYPE_*
+	- $LOB_REP_CONTENT_TYPE_*
+	- $LOB_REP_FORCE_PAGE_*
+	- $LOB_REP_GROUP_ON_*
+	- $LOB_REP_KEEP_TOG_*
+	- $LOB_REP_OUTPUT_TYPE_*
+	- $LOB_REP_PAGE_PRINT_OPT_*
+	- $LOB_REP_SECTION_TYPE_*
+	- $LOB_RESULT_CURSOR_MOVE_*
+	- $LOB_RESULT_CURSOR_QUERY_*
+	- $LOB_RESULT_METADATA_COLUMN_*
+	- $LOB_RESULT_METADATA_QUERY_*
+	- $LOB_RESULT_ROW_MOD_*
+	- $LOB_RESULT_ROW_QUERY_IS_ROW_*
+	- $LOB_RESULT_ROW_READ_*
+	- $LOB_RESULT_ROW_UPDATE_*
+	- $LOB_RESULT_TYPE_*
+	- $LOB_STRIKEOUT_*
+	- $LOB_SUB_COMP_TYPE_*
+	- $LOB_TXT_ALIGN_HORI_*
+	- $LOB_UNDERLINE_*
+	- $LOB_WEIGHT_*
+
+- Database functions
+	- _LOBase_DatabaseAutoCommit
+	- _LOBase_DatabaseCommit
+	- _LOBase_DatabaseConnectionClose
+	- _LOBase_DatabaseConnectionGet
+	- _LOBase_DatabaseGetDefaultQuote
+	- _LOBase_DatabaseGetObjByDoc
+	- _LOBase_DatabaseGetObjByURL
+	- _LOBase_DatabaseIsReadOnly
+	- _LOBase_DatabaseMetaDataQuery
+	- _LOBase_DatabaseName
+	- _LOBase_DatabaseRegisteredAdd
+	- _LOBase_DatabaseRegisteredExists
+	- _LOBase_DatabaseRegisteredGetNames
+	- _LOBase_DatabaseRegisteredRemoveByName
+	- _LOBase_DatabaseRequiresPassword
+	- _LOBase_DatabaseRollback
+
+- Doc functions
+	- _LOBase_DocClose
+	- _LOBase_DocConnect
+	- _LOBase_DocCreate
+	- _LOBase_DocDatabaseType
+	- _LOBase_DocGetName
+	- _LOBase_DocGetPath
+	- _LOBase_DocHasPath
+	- _LOBase_DocIsActive
+	- _LOBase_DocIsModified
+	- _LOBase_DocMaximize
+	- _LOBase_DocMinimize
+	- _LOBase_DocOpen
+	- _LOBase_DocSave
+	- _LOBase_DocSaveAs
+	- _LOBase_DocSaveCopy
+	- _LOBase_DocSubComponentsClose
+	- _LOBase_DocSubComponentsGetList
+	- _LOBase_DocVisible
+
+- Form Functions
+	- _LOBase_FormClose
+	- _LOBase_FormConnect
+	- _LOBase_FormCopy
+	- _LOBase_FormCreate
+	- _LOBase_FormDelete
+	- _LOBase_FormDocVisible
+	- _LOBase_FormExists
+	- _LOBase_FormFolderCopy
+	- _LOBase_FormFolderCreate
+	- _LOBase_FormFolderDelete
+	- _LOBase_FormFolderExists
+	- _LOBase_FormFolderRename
+	- _LOBase_FormFoldersGetCount
+	- _LOBase_FormFoldersGetNames
+	- _LOBase_FormIsModified
+	- _LOBase_FormOpen
+	- _LOBase_FormRename
+	- _LOBase_FormSave
+	- _LOBase_FormsGetCount
+	- _LOBase_FormsGetNames
+
+- Helper functions
+	- _LOBase_ComError_UserFunction
+	- ~~_LOBase_ConvertFromMicrometer~~
+	- ~~_LOBase_ConvertToMicrometer~~
+	- ~~_LOBase_ConvertColorFromLong~~
+	- ~~_LOBase_ConvertColorToLong~~
+	- _LOBase_DateStructCreate
+	- _LOBase_DateStructModify
+	- _LOBase_FontDescCreate
+	- _LOBase_FontDescEdit
+	- _LOBase_FontExists
+	- _LOBase_FontsGetNames
+	- _LOBase_FormatKeyCreate
+	- _LOBase_FormatKeyDelete
+	- _LOBase_FormatKeyExists
+	- _LOBase_FormatKeyGetStandard
+	- _LOBase_FormatKeyGetString
+	- _LOBase_FormatKeyList
+	- ~~_LOBase_PathConvert~~
+	- ~~_LOBase_VersionGet~~
+
+- Internal functions
+	- ~~__LOBase_AddTo1DArray~~
+	- ~~__LOBase_ArrayFill~~
+	- __LOBase_ColTransferProps
+	- __LOBase_ColTypeName
+	- __LOBase_CreateStruct
+	- __LOBase_DatabaseMetaGetQuery
+	- __LOBase_InternalComErrorHandler
+	- ~~__LOBase_IntIsBetween~~
+	- __LOBase_ReportConIdentify
+	- __LOBase_ReportConSetGetFontDesc
+	- ~~__LOBase_SetPropertyValue~~
+	- ~~__LOBase_UnitConvert~~
+	- ~~__LOBase_VarsAreNull~~
+	- ~~__LOBase_VersionCheck~~
+
+- Query functions
+	- _LOBase_QueriesGetCount
+	- _LOBase_QueriesGetNames
+	- _LOBase_QueryAddByName
+	- _LOBase_QueryAddBySQL
+	- _LOBase_QueryDelete
+	- _LOBase_QueryExists
+	- _LOBase_QueryFieldGetObjByIndex
+	- _LOBase_QueryFieldGetObjByName
+	- _LOBase_QueryFieldModify
+	- _LOBase_QueryFieldsGetCount
+	- _LOBase_QueryFieldsGetNames
+	- _LOBase_QueryGetObjByIndex
+	- _LOBase_QueryGetObjByName
+	- _LOBase_QueryName
+	- _LOBase_QuerySQLCommand
+	- _LOBase_QueryUIClose
+	- _LOBase_QueryUIConnect
+	- _LOBase_QueryUIGetRowSet
+	- _LOBase_QueryUIOpenByName
+	- _LOBase_QueryUIOpenByObject
+	- _LOBase_QueryUIVisible
+
+- Report functions
+	- _LOBase_ReportClose
+	- _LOBase_ReportConDelete
+	- _LOBase_ReportConFormattedFieldData
+	- _LOBase_ReportConFormattedFieldGeneral
+	- _LOBase_ReportConImageConData
+	- _LOBase_ReportConImageConGeneral
+	- _LOBase_ReportConInsert
+	- _LOBase_ReportConLabelGeneral
+	- _LOBase_ReportConLineGeneral
+	- _LOBase_ReportConnect
+	- _LOBase_ReportConPosition
+	- _LOBase_ReportConsGetList
+	- _LOBase_ReportConSize
+	- _LOBase_ReportCopy
+	- _LOBase_ReportCreate
+	- _LOBase_ReportData
+	- _LOBase_ReportDelete
+	- _LOBase_ReportDetail
+	- _LOBase_ReportDocVisible
+	- _LOBase_ReportExists
+	- _LOBase_ReportFolderCopy
+	- _LOBase_ReportFolderCreate
+	- _LOBase_ReportFolderDelete
+	- _LOBase_ReportFolderExists
+	- _LOBase_ReportFolderRename
+	- _LOBase_ReportFoldersGetCount
+	- _LOBase_ReportFoldersGetNames
+	- _LOBase_ReportFooter
+	- _LOBase_ReportGeneral
+	- _LOBase_ReportGroupAdd
+	- _LOBase_ReportGroupDeleteByIndex
+	- _LOBase_ReportGroupDeleteByObj
+	- _LOBase_ReportGroupFooter
+	- _LOBase_ReportGroupGetByIndex
+	- _LOBase_ReportGroupHeader
+	- _LOBase_ReportGroupPosition
+	- _LOBase_ReportGroupsGetCount
+	- _LOBase_ReportGroupSort
+	- _LOBase_ReportHeader
+	- _LOBase_ReportIsModified
+	- _LOBase_ReportOpen
+	- _LOBase_ReportPageFooter
+	- _LOBase_ReportPageHeader
+	- _LOBase_ReportRename
+	- _LOBase_ReportSave
+	- _LOBase_ReportSectionGetObj
+	- _LOBase_ReportsGetCount
+	- _LOBase_ReportsGetNames
+
+- SQL Statement functions
+	- _LOBase_SQLResultColumnMetaDataQuery
+	- _LOBase_SQLResultColumnsGetCount
+	- _LOBase_SQLResultColumnsGetNames
+	- _LOBase_SQLResultCursorMove
+	- _LOBase_SQLResultCursorQuery
+	- _LOBase_SQLResultRowModify
+	- _LOBase_SQLResultRowQuery
+	- _LOBase_SQLResultRowRead
+	- _LOBase_SQLResultRowRefresh
+	- _LOBase_SQLResultRowUpdate
+	- _LOBase_SQLStatementCreate
+	- _LOBase_SQLStatementExecuteQuery
+	- _LOBase_SQLStatementExecuteUpdate
+	- _LOBase_SQLStatementPreparedSetData
+
+- Table functions
+	- _LOBase_TableAdd
+	- _LOBase_TableColAdd
+	- _LOBase_TableColDefinition
+	- _LOBase_TableColDelete
+	- _LOBase_TableColGetObjByIndex
+	- _LOBase_TableColGetObjByName
+	- _LOBase_TableColProperties
+	- _LOBase_TableColsGetCount
+	- _LOBase_TableColsGetNames
+	- _LOBase_TableDelete
+	- _LOBase_TableExists
+	- _LOBase_TableGetObjByIndex
+	- _LOBase_TableGetObjByName
+	- _LOBase_TableIndexAdd
+	- _LOBase_TableIndexDelete
+	- _LOBase_TableIndexesGetCount
+	- _LOBase_TableIndexesGetNames
+	- _LOBase_TableIndexModify
+	- _LOBase_TableName
+	- _LOBase_TablePrimaryKey
+	- _LOBase_TablesGetCount
+	- _LOBase_TablesGetNames
+	- _LOBase_TableUIClose
+	- _LOBase_TableUIConnect
+	- _LOBase_TableUIGetRowSet
+	- _LOBase_TableUIOpenByName
+	- _LOBase_TableUIOpenByObject
+	- _LOBase_TableUIVisible
+
+### Changed
+
+- Renamed _LOBase_TableIndexesCount-->_LOBase_TableIndexesGetCount
+- Added Private connection option to _LOBase_DatabaseConnectionGet.
+- Renamed Functions to be consistent when retrieving arrays of names or objects:
+	- _LOBase_FormatKeyList-->_LOBase_FormatKeysGetList
+- Removed requirement of $oDoc in _LOBase_FontsGetNames
+- Added optional $oDoc parameter to _LOBase_FontExists for potential quicker execution.
+
+### Removed
+
+- $__LO_STATUS_DOC_ERROR Error Constant and renumber all after errors.
+- Centralized some internal functions. Thus removing the following individual Functions:
+	- __LOBase_ArrayFill
+	- __LOBase_AddTo1DArray
+	- __LOBase_CreateStruct
+	- __LOBase_IntIsBetween
+	- __LOBase_NumIsBetween
+	- __LOBase_SetPropertyValue
+	- __LOBase_UnitConvert
+	- __LOBase_VarsAreNull
+	- __LOBase_VersionCheck
+- Centralized some Helper functions. Thus removing the following individual Functions:
+	- _LOBase_ConvertColorFromLong
+	- _LOBase_ConvertColorToLong
+	- _LOBase_ConvertFromMicrometer
+	- _LOBase_ConvertToMicrometer
+	- _LOBase_PathConvert
+	- _LOBase_VersionGet
+- Centralized some Constants. Thus removing the following individual Constants:
+	- $LOB_PATHCONV_*
+	- $LOB_COLOR_*
 
 > [!NOTE]
 > **LibreOfficeCalc**
