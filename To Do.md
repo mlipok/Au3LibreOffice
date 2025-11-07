@@ -6,9 +6,10 @@ The following is a basic list of things needing done, added to, or looked at, in
 
 Things pertaining to the **entire UDF**, or **equally to all sub-Components**.
 
-- When MultiColor Gradients (MCGR) are implemented in the UI, (Writer, Calc, etc?) I will need to modify how I made gradients work with Color stops, because there could be multiple stops, not just 2.
 - Add Hatch Background option
-- Add Macros functions? Plus Integrate with all FUnctions that can activate a Macro?
+- Add Macros functions? Plus Integrate with all Functions that can activate a Macro?
+- Null Variables called in Close and Delete functions.
+- Make a global Open/connectAll/connectCurrentCreate func
 - Is it important to use "Get" / "set"? e.g. getText, etc? Instead of Text()?
 	- <https://ask.libreoffice.org/t/calc-named-range-err-508/> See comment by JohnSUN
 	- OOME 4.1 pg 306
@@ -35,11 +36,18 @@ Things pertaining to **Base**.
 
 Things pertaining to **Impress**.
 
-- Begin development on Impress
+- Can't set animation event duration and delay, see StackOverflow "LibreOffice Impress macro to read a slide's animation event duration and delay times"
+- Move _LOImpress_CursorInsertString to somewhere other than Helper.
+- Can I help this? -- Warning! For some reason this function doesn't seem to set the modified status to True. Changes could be inadvertently lost due to this, if the user closes without saving.
+- Affine Matrix transformation DOES NOT seem to work using Transformation. Setting it to known values retrieved from LO doesn't return the shape to correct positioning.
+- This note is in ConnectorModify: Currently, it seems to be not possible to disconnect a shape from the Start or End programatically.
+- Add DrawShape glue point modify etc
+
 - For future reference:  The PresentationDocument service implements the DrawingDocument service. This means that every presentation document looks like a drawing document. To distinguish between the two document types, you must first check for a presentation (Impress) document and then check for a drawing document. OOME 4.1. Pg 562
 
 ## Draw
 
 Things pertaining to **Draw**.
 
+- Implement Draw.
 - For future reference:  The PresentationDocument service implements the DrawingDocument service. This means that every presentation document looks like a drawing document. To distinguish between the two document types, you must first check for a presentation (Impress) document and then check for a drawing document. OOME 4.1. Pg 562
