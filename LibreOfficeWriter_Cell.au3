@@ -44,7 +44,7 @@
 ; Description ...: Set and Retrieve the Background color of a Cell or Cell Range.
 ; Syntax ........: _LOWriter_CellBackColor(ByRef $oCell[, $iBackColor = Null[, $bBackTransparent = Null]])
 ; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned by a previous _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition function.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. Specify the Cell background color as a Long Integer. See Remarks. Set to $LO_COLOR_OFF(-1) to disable Background color. Can also be one of the constants $LO_COLOR_* as defined in LibreOffice_Constants.au3
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. Specify the Cell background color as a RGB Color Integer. Set to $LO_COLOR_OFF(-1) to disable Background color. Can also be one of the constants $LO_COLOR_* as defined in LibreOffice_Constants.au3
 ;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -62,7 +62,7 @@
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                  Call any optional parameter with Null keyword to skip it. $iBackColor is set using Long integer.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition, _LO_ConvertColorFromLong, _LO_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
@@ -105,10 +105,10 @@ EndFunc   ;==>_LOWriter_CellBackColor
 ; Description ...: Set the Cell or Cell Range Border Line Color. Libre Office Version 3.4 and Up.
 ; Syntax ........: _LOWriter_CellBorderColor(ByRef $oCell[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
 ; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned by a previous _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition function.
-;                  $iTop                - [optional] an integer value (0-16777215). Default is Null. Sets the Top Border Line Color of the Cell in Long Color code format. A custom value or one of the constants $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $iBottom             - [optional] an integer value (0-16777215). Default is Null. Sets the Bottom Border Line Color of the Cell in Long Color code format. A custom value or one of the constants $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $iLeft               - [optional] an integer value (0-16777215). Default is Null. Sets the Left Border Line Color of the Cell in Long Color code format. A custom value or one of the constants $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. Sets the Right Border Line Color of the Cell in Long Color code format. A custom value or one of the constants $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iTop                - [optional] an integer value (0-16777215). Default is Null. Set the Top Border Line Color of the Cell, as a RGB Color Integer. A custom value or one of the constants $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBottom             - [optional] an integer value (0-16777215). Default is Null. Set the Bottom Border Line Color of the Cell, as a RGB Color Integer. A custom value or one of the constants $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iLeft               - [optional] an integer value (0-16777215). Default is Null. Set the Left Border Line Color of the Cell, as a RGB Color Integer. A custom value or one of the constants $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. Set the Right Border Line Color of the Cell, as a RGB Color Integer. A custom value or one of the constants $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--

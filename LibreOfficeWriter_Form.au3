@@ -275,7 +275,7 @@ EndFunc   ;==>_LOWriter_FormConCheckBoxData
 ;                  $iStyle              - [optional] an integer value (1-2). Default is Null. The display style of the checkbox. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bWordBreak          - [optional] a boolean value. Default is Null. If True, line breaks are allowed to be used.
 ;                  $sGraphics           - [optional] a string value. Default is Null. The path to an Image file.
 ;                  $iGraphicAlign       - [optional] an integer value (0-12). Default is Null. The Alignment of the Image. See Constants $LOW_FORM_CON_IMG_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
@@ -773,9 +773,9 @@ EndFunc   ;==>_LOWriter_FormConComboBoxData
 ;                  $sDefaultTxt         - [optional] a string value. Default is Null. The default text of the combo Box.
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bDropdown           - [optional] a boolean value. Default is Null. If True, the Combo Box will behave like a dropdown.
 ;                  $iLines              - [optional] an integer value. Default is Null. If $bDropdown is True, $iLines specifies how many lines are shown in the dropdown list.
 ;                  $bAutoFill           - [optional] a boolean value. Default is Null. If True, the Autofill function is enabled.
@@ -1295,9 +1295,9 @@ EndFunc   ;==>_LOWriter_FormConCurrencyFieldData
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
 ;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
@@ -1890,9 +1890,9 @@ EndFunc   ;==>_LOWriter_FormConDateFieldData
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bDropdown           - [optional] a boolean value. Default is Null. If True, the field will behave as a dropdown control.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
@@ -2490,9 +2490,9 @@ EndFunc   ;==>_LOWriter_FormConDelete
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
 ;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
@@ -2944,9 +2944,9 @@ EndFunc   ;==>_LOWriter_FormConFormattedFieldData
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
 ;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
@@ -3649,9 +3649,9 @@ EndFunc   ;==>_LOWriter_FormConGroupBoxGeneral
 ;                  $bPrintable          - [optional] a boolean value. Default is Null. If True, the control will be displayed when printed.
 ;                  $bTabStop            - [optional] a boolean value. Default is Null. If True, the control can be selected with the Tab key.
 ;                  $iTabOrder           - [optional] an integer value (0-2147483647). Default is Null. The order the control is focused by the Tab key.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iAction             - [optional] an integer value (0-12). Default is Null. The action that occurs when the button is pushed. See Constants $LOW_FORM_CON_PUSH_CMD_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $sURL                - [optional] a string value. Default is Null. The URL or Document path to open.
 ;                  $sFrame              - [optional] a string value. Default is Null. The frame to open the URL in. See Constants, $LOW_FRAME_TARGET_* as defined in LibreOfficeWriter_Constants.au3.
@@ -4107,9 +4107,9 @@ EndFunc   ;==>_LOWriter_FormConImageControlData
 ;                  $bPrintable          - [optional] a boolean value. Default is Null. If True, the control will be displayed when printed.
 ;                  $bTabStop            - [optional] a boolean value. Default is Null. If True, the control can be selected with the Tab key.
 ;                  $iTabOrder           - [optional] an integer value (0-2147483647). Default is Null. The order the control is focused by the Tab key.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $sGraphics           - [optional] a string value. Default is Null. The path to an Image file.
 ;                  $iScale              - [optional] an integer value (0-2). Default is Null. How to scale the image to fit the button. See Constants $LOW_FORM_CON_IMG_BTN_SCALE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
@@ -4559,9 +4559,9 @@ EndFunc   ;==>_LOWriter_FormConInsert
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bWordBreak          - [optional] a boolean value. Default is Null. If True, line breaks are allowed to be used.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
 ;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
@@ -4923,9 +4923,9 @@ EndFunc   ;==>_LOWriter_FormConListBoxData
 ;                  $asList              - [optional] an array of strings. Default is Null. An array of List entries. See remarks.
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bDropdown           - [optional] a boolean value. Default is Null. If True, the List Box will behave like a dropdown.
 ;                  $iLines              - [optional] an integer value (-2147483648-2147483647). Default is Null. If $bDropdown is True, $iLines specifies how many lines are shown in the dropdown list.
 ;                  $bMultiSel           - [optional] a boolean value. Default is Null. If True, more than one selection can be made in a list box.
@@ -5406,7 +5406,7 @@ EndFunc   ;==>_LOWriter_FormConListBoxSelection
 ;                  $iTabOrder           - [optional] an integer value (0-2147483647). Default is Null. The order the control is focused by the Tab key.
 ;                  $iDelay              - [optional] an integer value (0-2147483647). Default is Null. The delay between button repeats, set in milliseconds.
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
 ;                  $bSmallIcon          - [optional] a boolean value. Default is Null. If True, small Icon sizing is used.
 ;                  $bShowPos            - [optional] a boolean value. Default is Null. If True, positioning items are shown.
@@ -5774,9 +5774,9 @@ EndFunc   ;==>_LOWriter_FormConNumericFieldData
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
 ;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
@@ -6344,7 +6344,7 @@ EndFunc   ;==>_LOWriter_FormConOptionButtonData
 ;                  $iStyle              - [optional] an integer value (1-2). Default is Null. The display style of the Option button. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bWordBreak          - [optional] a boolean value. Default is Null. If True, line breaks are allowed to be used.
 ;                  $sGraphics           - [optional] a string value. Default is Null. The path to an Image file.
 ;                  $iGraphicAlign       - [optional] an integer value (0-12). Default is Null. The Alignment of the Image. See Constants $LOW_FORM_CON_IMG_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
@@ -6835,9 +6835,9 @@ EndFunc   ;==>_LOWriter_FormConPatternFieldData
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
 ;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
@@ -7364,7 +7364,7 @@ EndFunc   ;==>_LOWriter_FormConPosition
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bWordBreak          - [optional] a boolean value. Default is Null. If True, line breaks are allowed to be used.
 ;                  $iAction             - [optional] an integer value (0-12). Default is Null. The action that occurs when the button is pushed. See Constants $LOW_FORM_CON_PUSH_CMD_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $sURL                - [optional] a string value. Default is Null. The URL or Document path to open.
@@ -10298,9 +10298,9 @@ EndFunc   ;==>_LOWriter_FormConTableConFormattedFieldGeneral
 ;                  $iTabOrder           - [optional] an integer value (0-2147483647). Default is Null. The order the control is focused by the Tab key.
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $nRowHeight          - [optional] a general number value (-21474836.48-21474836.48). Default is Null. The Row height, set in Hundredths of a Millimeter (100th MM).
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bNavBar             - [optional] a boolean value. Default is Null. If True, the Navigation Bar is displayed on the lower border of the Table control.
 ;                  $bRecordMarker       - [optional] a boolean value. Default is Null. If True, a record marker is displayed.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
@@ -12615,9 +12615,9 @@ EndFunc   ;==>_LOWriter_FormConTextBoxData
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iTextType           - [optional] an integer value (0-2). Default is Null. The text type. See Constants $LOW_FORM_CON_TXT_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bEndWithLF          - [optional] a boolean value. Default is Null. If True, the line ends will be a Line-Feed type, else a Carriage-Return plus a Line-Feed.
 ;                  $iScrollbars         - [optional] an integer value (0-3). Default is Null. The Scrollbars to use, if any. See Constants $LOW_FORM_CON_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
@@ -13118,9 +13118,9 @@ EndFunc   ;==>_LOWriter_FormConTimeFieldData
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
 ;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.

@@ -90,7 +90,7 @@
 ; Description ...: Set or Retrieve background color settings for a Frame.
 ; Syntax ........: _LOWriter_FrameAreaColor(ByRef $oFrame[, $iBackColor = Null[, $bBackTransparent = Null]])
 ; Parameters ....: $oFrame              - [in/out] an object. A Frame object returned by a previous _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, or _LOWriter_FrameGetObjByCursor function.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The color to make the background. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for "None".
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for "None".
 ;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -200,8 +200,8 @@ EndFunc   ;==>_LOWriter_FrameAreaFillStyle
 ;                  $iYCenter            - [optional] an integer value (0-100). Default is Null. The vertical offset for the gradient, where 0% corresponds to the current vertical location of the endpoint color in the gradient. The endpoint color is the color that is selected in the "To Color" Setting. Set in percentage. $iType must be other than "Linear", or "Axial".
 ;                  $iAngle              - [optional] an integer value (0-359). Default is Null. The rotation angle for the gradient. Set in degrees. $iType must be other than "Radial".
 ;                  $iTransitionStart    - [optional] an integer value (0-100). Default is Null. The amount by which you want to adjust the transparent area of the gradient. Set in percentage.
-;                  $iFromColor          - [optional] an integer value (0-16777215). Default is Null. A color for the beginning point of the gradient, set in Long Color Integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $iToColor            - [optional] an integer value (0-16777215). Default is Null. A color for the endpoint of the gradient, set in Long Color Integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iFromColor          - [optional] an integer value (0-16777215). Default is Null. A color for the beginning point of the gradient, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iToColor            - [optional] an integer value (0-16777215). Default is Null. A color for the endpoint of the gradient, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iFromIntense        - [optional] an integer value (0-100). Default is Null. Enter the intensity for the color in the "From Color", where 0% corresponds to black, and 100 % to the selected color.
 ;                  $iToIntense          - [optional] an integer value (0-100). Default is Null. Enter the intensity for the color in the "To Color", where 0% corresponds to black, and 100 % to the selected color.
 ; Return values .: Success: Integer or Array.
@@ -447,7 +447,7 @@ EndFunc   ;==>_LOWriter_FrameAreaGradient
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Starting with version 7.6 LibreOffice introduced an option to have multiple color stops in a Gradient rather than just a beginning and an ending color, but as of yet, the option is not available in the User Interface. However it has been made available in the API.
-;                  The returned array will contain two columns, the first column will contain the ColorStop offset values, a number between 0 and 1.0. The second column will contain an Integer, the color value, in Long integer format.
+;                  The returned array will contain two columns, the first column will contain the ColorStop offset values, a number between 0 and 1.0. The second column will contain an Integer, the color value, as a RGB Color Integer.
 ;                  $avColorStops expects an array as described above.
 ;                  ColorStop offsets are sorted in ascending order, you can have more than one of the same value. There must be a minimum of two ColorStops. The first and last ColorStop offsets do not need to have an offset value of 0 and 1 respectively.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -870,10 +870,10 @@ EndFunc   ;==>_LOWriter_FrameAreaTransparencyGradientMulti
 ; Description ...: Set or retrieve the Frame Border Line Color. Libre Office Version 3.4 and Up.
 ; Syntax ........: _LOWriter_FrameBorderColor(ByRef $oFrame[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
 ; Parameters ....: $oFrame              - [in/out] an object. A Frame object returned by a previous _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, or _LOWriter_FrameGetObjByCursor function.
-;                  $iTop                - [optional] an integer value (0-16777215). Default is Null. Set the Top Border Line Color of the Frame in Long Color code format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $iBottom             - [optional] an integer value (0-16777215). Default is Null. Set the Bottom Border Line Color of the Frame in Long Color code format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $iLeft               - [optional] an integer value (0-16777215). Default is Null. Set the Left Border Line Color of the Frame in Long Color code format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. Set the Right Border Line Color of the Frame in Long Color code format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iTop                - [optional] an integer value (0-16777215). Default is Null. The Top Border Line Color of the Frame, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBottom             - [optional] an integer value (0-16777215). Default is Null. The Bottom Border Line Color of the Frame, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iLeft               - [optional] an integer value (0-16777215). Default is Null. The Left Border Line Color of the Frame, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. The Right Border Line Color of the Frame, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1130,7 +1130,7 @@ EndFunc   ;==>_LOWriter_FrameBorderWidth
 ;                  $bSeparatorOn        - [optional] a boolean value. Default is Null. If true, add a separator line between two or more columns.
 ;                  $iStyle              - [optional] an integer value (0-3). Default is Null. The formatting style for the column separator line. See Constants, $LOW_LINE_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iWidth              - [optional] an integer value (5-180). Default is Null. The width of the separator line. Set in Hundredths of a Millimeter (100th MM).
-;                  $iColor              - [optional] an integer value (0-16777215. Default is Null. The color for the separator line. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iColor              - [optional] an integer value (0-16777215. Default is Null. The separator line color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iHeight             - [optional] an integer value (0-100). Default is Null. The length of the separator line as a percentage of the height of the column area.
 ;                  $iPosition           - [optional] an integer value (0-2). Default is Null. Select the vertical alignment of the separator line. This option is only available if Height value of the line is less than 100%. See Constants, $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
@@ -2132,7 +2132,7 @@ EndFunc   ;==>_LOWriter_FramesGetNames
 ; Syntax ........: _LOWriter_FrameShadow(ByRef $oFrame[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null]]]])
 ; Parameters ....: $oFrame              - [in/out] an object. A Frame object returned by a previous _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, or _LOWriter_FrameGetObjByCursor function.
 ;                  $iWidth              - [optional] an integer value. Default is Null. The Width of the Frame Shadow set in Hundredths of a Millimeter (100th MM).
-;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The Color of the Frame shadow, set in Long Integer format, can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3..
+;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The Color of the Frame shadow, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3..
 ;                  $bTransparent        - [optional] a boolean value. Default is Null. Whether the Frame Shadow is transparent or not.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. The Location of the Frame Shadow, must be one of the Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3..
 ; Return values .: Success: 1 or Array.
@@ -2225,7 +2225,7 @@ EndFunc   ;==>_LOWriter_FrameShadow
 ; Description ...: Set or Retrieve background color settings for a Frame style.
 ; Syntax ........: _LOWriter_FrameStyleAreaColor(ByRef $oFrameStyle[, $iBackColor = Null[, $bBackTransparent = Null]])
 ; Parameters ....: $oFrameStyle         - [in/out] an object. A Frame Style object returned by a previous _LOWriter_FrameStyleCreate, or _LOWriter_FrameStyleGetObj function.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The color to make the background. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for "None".
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for "None".
 ;                  $bBackTransparent    - [optional] a boolean value. Default is Null. Whether the background color is transparent or not. True = visible.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -2337,8 +2337,8 @@ EndFunc   ;==>_LOWriter_FrameStyleAreaFillStyle
 ;                  $iYCenter            - [optional] an integer value. Default is Null. The vertical offset for the gradient, where 0% corresponds to the current vertical location of the endpoint color in the gradient. The endpoint color is the color that is selected in the "To Color" Setting. Set in percentage, Min. 0%, Max 100%. $iType must be other than "Linear", or "Axial".
 ;                  $iAngle              - [optional] an integer value. Default is Null. The rotation angle for the gradient. Set in degrees, min 0, max 359 degrees. $iType must be other than "Radial".
 ;                  $iTransitionStart    - [optional] an integer value. Default is Null. The amount by which you want to adjust the transparent area of the gradient. Set in percentage. Minimum is 0, Maximum is 100%.
-;                  $iFromColor          - [optional] an integer value (0-16777215). Default is Null. A color for the beginning point of the gradient, set in Long Color Integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $iToColor            - [optional] an integer value (0-16777215). Default is Null. A color for the endpoint of the gradient, set in Long Color Integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iFromColor          - [optional] an integer value (0-16777215). Default is Null. A color for the beginning point of the gradient, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iToColor            - [optional] an integer value (0-16777215). Default is Null. A color for the endpoint of the gradient, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iFromIntense        - [optional] an integer value. Default is Null. Enter the intensity for the color in the "From Color", where 0% corresponds to black, and 100 % to the selected color. Min. 0%, Max 100%
 ;                  $iToIntense          - [optional] an integer value. Default is Null . Enter the intensity for the color in the "To Color", where 0% corresponds to black, and 100 % to the selected color. Min. 0%, Max 100%
 ; Return values .: Success: Integer or Array.
@@ -2587,7 +2587,7 @@ EndFunc   ;==>_LOWriter_FrameStyleAreaGradient
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Starting with version 7.6 LibreOffice introduced an option to have multiple color stops in a Gradient rather than just a beginning and an ending color, but as of yet, the option is not available in the User Interface. However it has been made available in the API.
-;                  The returned array will contain two columns, the first column will contain the ColorStop offset values, a number between 0 and 1.0. The second column will contain an Integer, the color value, in Long integer format.
+;                  The returned array will contain two columns, the first column will contain the ColorStop offset values, a number between 0 and 1.0. The second column will contain an Integer, the color value, as a RGB Color Integer.
 ;                  $avColorStops expects an array as described above.
 ;                  ColorStop offsets are sorted in ascending order, you can have more than one of the same value. There must be a minimum of two ColorStops. The first and last ColorStop offsets do not need to have an offset value of 0 and 1 respectively.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -3017,10 +3017,10 @@ EndFunc   ;==>_LOWriter_FrameStyleAreaTransparencyGradientMulti
 ; Description ...: Set or retrieve the Frame Style Border Line Color. Libre Office Version 3.4 and Up.
 ; Syntax ........: _LOWriter_FrameStyleBorderColor(ByRef $oFrameStyle[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
 ; Parameters ....: $oFrameStyle         - [in/out] an object. A Frame Style object returned by a previous _LOWriter_FrameStyleCreate, or _LOWriter_FrameStyleGetObj function.
-;                  $iTop                - [optional] an integer value (0-16777215). Default is Null. Sets the Top Border Line Color of the Frame in Long Color code format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $iBottom             - [optional] an integer value (0-16777215). Default is Null. Sets the Bottom Border Line Color of the Frame in Long Color code format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $iLeft               - [optional] an integer value (0-16777215). Default is Null. Sets the Left Border Line Color of the Frame in Long Color code format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. Sets the Right Border Line Color of the Frame in Long Color code format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iTop                - [optional] an integer value (0-16777215). Default is Null. The Top Border Line Color of the Frame, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBottom             - [optional] an integer value (0-16777215). Default is Null. The Bottom Border Line Color of the Frame, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iLeft               - [optional] an integer value (0-16777215). Default is Null. The Left Border Line Color of the Frame, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. The Right Border Line Color of the Frame, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -3285,7 +3285,7 @@ EndFunc   ;==>_LOWriter_FrameStyleBorderWidth
 ;                  $bSeparatorOn        - [optional] a boolean value. Default is Null. If true, add a separator line between two or more columns.
 ;                  $iStyle              - [optional] an integer value (0-3). Default is Null. The formatting style for the column separator line. See Constants, $LOW_LINE_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iWidth              - [optional] an integer value (5-180). Default is Null. The width of the separator line. Set in Hundredths of a Millimeter (100th MM).
-;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The color for the separator line. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The separator line color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iHeight             - [optional] an integer value (0-100). Default is Null. The length of the separator line as a percentage of the height of the column area.
 ;                  $iPosition           - [optional] an integer value (0-2). Default is Null. Select the vertical alignment of the separator line. This option is only available if Height value of the line is less than 100%. See Constants, $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
@@ -4126,7 +4126,7 @@ EndFunc   ;==>_LOWriter_FrameStylesGetNames
 ; Syntax ........: _LOWriter_FrameStyleShadow(ByRef $oFrameStyle[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null]]]])
 ; Parameters ....: $oFrameStyle         - [in/out] an object. A Frame Style object returned by a previous _LOWriter_FrameStyleCreate, or _LOWriter_FrameStyleGetObj function.
 ;                  $iWidth              - [optional] an integer value. Default is Null. The Width of the Frame Shadow set in Hundredths of a Millimeter (100th MM).
-;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The Color of the Frame shadow, set in Long Integer format, can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The Color of the Frame shadow, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the Frame Shadow is transparent.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. The Location of the Frame Shadow, must be one of the Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.

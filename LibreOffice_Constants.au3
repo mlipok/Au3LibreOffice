@@ -21,7 +21,7 @@
 ; Set to 0 for no pause in a loop.
 Global Const $__LOCONST_SLEEP_DIV = 0
 
-; Color in Long Color Format
+; RGB Color Integers
 Global Const _
 		$LO_COLOR_OFF = -1, _                    ; Turn Color off, or to automatic mode.
 		$LO_COLOR_BLACK = 0, _                   ; Black color.

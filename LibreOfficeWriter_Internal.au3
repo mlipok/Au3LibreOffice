@@ -638,9 +638,9 @@ EndFunc   ;==>__LOWriter_CharFont
 ; Description ...: Set or retrieve the font color, transparency and highlighting values.
 ; Syntax ........: __LOWriter_CharFontColor(ByRef $oObj, $iFontColor, $iTransparency, $iHighlight)
 ; Parameters ....: $oObj                - [in/out] an object. An Object that supports "com.sun.star.text.Paragraph" Or "com.sun.star.text.TextPortion" services, such as a Cursor with data selected or paragraph section.
-;                  $iFontColor          - an integer value (-1-16777215). The desired font Color value in Long Integer format, can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for Auto color.
+;                  $iFontColor          - an integer value (-1-16777215). The font Color value, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for Auto color.
 ;                  $iTransparency       - an integer value (0-100). Transparency percentage. 0 is visible, 100 is invisible. Available for Libre Office 7.0 and up.
-;                  $iHighlight          - an integer value (-1-16777215). The highlight Color value in Long Integer format, can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for No color.
+;                  $iHighlight          - an integer value (-1-16777215). The highlight Color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for No color.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -731,7 +731,7 @@ EndFunc   ;==>__LOWriter_CharFontColor
 ;                  $bWordOnly           - a boolean value. If true, white spaces are not Overlined.
 ;                  $iOverLineStyle      - an integer value (0-18). The line style of the Overline, see constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
 ;                  $bOLHasColor         - a boolean value. If True, the Overline is colored, must be set to true in order to set the Overline color.
-;                  $iOLColor            - an integer value (-1-16777215). The color of the Overline, set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for automatic color mode.
+;                  $iOLColor            - an integer value (-1-16777215). The color of the Overline, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for automatic color mode.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -982,7 +982,7 @@ EndFunc   ;==>__LOWriter_CharRotateScale
 ; Syntax ........: __LOWriter_CharShadow(ByRef $oObj, $iWidth, $iColor, $bTransparent, $iLocation)
 ; Parameters ....: $oObj                - [in/out] an object. An Object that supports "com.sun.star.text.Paragraph" Or "com.sun.star.text.TextPortion" services, such as a Cursor with data selected or paragraph section.
 ;                  $iWidth              - an integer value. The Shadow width, set in Hundredths of a Millimeter (100th MM).
-;                  $iColor              - an integer value (0-16777215). The Shadow color. See Remarks. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iColor              - an integer value (0-16777215). The Shadow color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bTransparent        - a boolean value. If True, the shadow is transparent.
 ;                  $iLocation           - an integer value (0-4). Location of the shadow compared to the characters. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
@@ -1009,7 +1009,6 @@ EndFunc   ;==>__LOWriter_CharRotateScale
 ; Modified ......:
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;                  LibreOffice may adjust the set width +/- a Hundredth of a Millimeter (100th MM) after setting.
-;                  Color is set in Long Integer format.
 ; Related .......: _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_UnitConvert
 ; Link ..........:
 ; Example .......: No
@@ -1260,7 +1259,7 @@ EndFunc   ;==>__LOWriter_CharStyleNameToggle
 ;                  $bWordOnly           - [optional] a boolean value. Default is Null. If true, white spaces are not underlined.
 ;                  $iUnderLineStyle     - [optional] an integer value (0-18). Default is Null. The line style of the Underline, see constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bULHasColor         - [optional] a boolean value. Default is Null. If True, the underline is colored, must be set to true in order to set the underline color.
-;                  $iULColor            - [optional] an integer value (-1-16777215). Default is Null. The color of the underline, set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for automatic color mode.
+;                  $iULColor            - [optional] an integer value (-1-16777215). Default is Null. The underline color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for automatic color mode.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1334,16 +1333,16 @@ EndFunc   ;==>__LOWriter_CharUnderLine
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_ColorRemoveAlpha
-; Description ...: Remove the Alpha value from a Long color value.
+; Description ...: Remove the Alpha value from a RGB Color Integer.
 ; Syntax ........: __LOWriter_ColorRemoveAlpha($iColor)
-; Parameters ....: $iColor              - an integer value. A Long Color value to remove Alpha from.
+; Parameters ....: $iColor              - an integer value. A RGB Color Integer to remove Alpha from.
 ; Return values .: Success: Integer
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return $iColor = $iColor not an Integer. Returning $iColor to be sure not to lose the value.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Integer = Success. Color already has no Alpha value, returning same color.
-;                  @Error 0 @Extended 1 Return Integer = Success. Removed Alpha value from Long Color value, returning new Color value.
+;                  @Error 0 @Extended 1 Return Integer = Success. Removed Alpha value from the RGB Color Integer, returning new Color value.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: In functions which return the current color value, generally background colors, if Transparency (alpha) is set, the background color value is not the literal color set, but also includes the transparency value added to it. This functions removes that value for simpler color values.
@@ -4236,7 +4235,7 @@ EndFunc   ;==>__LOWriter_ParAlignment
 ; Description ...: Set or Retrieve background color settings.
 ; Syntax ........: __LOWriter_ParBackColor(ByRef $oObj, $iBackColor, $bBackTransparent)
 ; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
-;                  $iBackColor          - an integer value (-1-16777215). The background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for "None".
+;                  $iBackColor          - an integer value (-1-16777215). The background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for "None".
 ;                  $bBackTransparent    - a boolean value. If True, the background color is transparent
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -4871,7 +4870,7 @@ EndFunc   ;==>__LOWriter_ParPageBreak
 ; Syntax ........: __LOWriter_ParShadow(ByRef $oObj, $iWidth, $iColor, $bTransparent, $iLocation)
 ; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
 ;                  $iWidth              - an integer value. The shadow width in Hundredths of a Millimeter (100th MM).
-;                  $iColor              - an integer value (0-16777215). The shadow color, set in Long Integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iColor              - an integer value (0-16777215). The shadow color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bTransparent        - a boolean value. If True, the shadow is transparent.
 ;                  $iLocation           - an integer value (0-4). The location of the shadow compared to the paragraph. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
@@ -8661,15 +8660,15 @@ EndFunc   ;==>__LOWriter_TextCursorMove
 ; Name ..........: __LOWriter_TransparencyGradientConvert
 ; Description ...: Convert a Transparency Gradient percentage value to a color value or from a color value to a percentage.
 ; Syntax ........: __LOWriter_TransparencyGradientConvert([$iPercentToLong = Null[, $iLongToPercent = Null]])
-; Parameters ....: $iPercentToLong      - [optional] an integer value. Default is Null. The percentage to convert to Long color integer value.
-;                  $iLongToPercent      - [optional] an integer value. Default is Null. The Long color integer value to convert to percentage.
+; Parameters ....: $iPercentToLong      - [optional] an integer value. Default is Null. The percentage to convert to a RGB Color Integer.
+;                  $iLongToPercent      - [optional] an integer value. Default is Null. The RGB Color Integer to convert to percentage.
 ; Return values .: Success: Integer.
 ;                  Failure: Null and sets the @Error and @Extended flags to non-zero.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return Null = No values called in parameters.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Integer = Success. The requested Integer value converted from percentage to Long color format.
-;                  @Error 0 @Extended 1 Return Integer = Success. The requested Integer value from Long color format to percentage.
+;                  @Error 0 @Extended 0 Return Integer = Success. The requested Integer value converted from percentage to a RGB Color Integer.
+;                  @Error 0 @Extended 1 Return Integer = Success. The requested Integer value from a RGB Color Integer to percentage.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:

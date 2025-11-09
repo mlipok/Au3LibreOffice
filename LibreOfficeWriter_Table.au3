@@ -66,12 +66,12 @@
 ; Description ...: Set and Retrieve the Table Border Line Color. Libre Office Version 3.6 and Up.
 ; Syntax ........: _LOWriter_TableBorderColor(ByRef $oTable[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null[, $iVert = Null[, $iHori = Null]]]]]])
 ; Parameters ....: $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
-;                  $iTop                - [optional] an integer value (0-16777215). Default is Null. Set the Top Border Line Color of the Table in Long Color code format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $iBottom             - [optional] an integer value (0-16777215). Default is Null. Set the Bottom Border Line Color of the Table in Long Color code format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $iLeft               - [optional] an integer value (0-16777215). Default is Null. Set the Left Border Line Color of the Table in Long Color code format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. Set the Right Border Line Color of the Table in Long Color code format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $iVert               - [optional] an integer value (0-16777215). Default is Null. Set the Vertical Border Line Color of the Table in Long Color code format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $iHori               - [optional] an integer value (0-16777215). Default is Null. Set the Horizontal Border Line Color of the Table in Long Color code format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iTop                - [optional] an integer value (0-16777215). Default is Null. The Top Border Line Color of the Table, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBottom             - [optional] an integer value (0-16777215). Default is Null. The Bottom Border Line Color of the Table, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iLeft               - [optional] an integer value (0-16777215). Default is Null. The Left Border Line Color of the Table, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. The Right Border Line Color of the Table, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iVert               - [optional] an integer value (0-16777215). Default is Null. The Vertical Border Line Color of the Table, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iHori               - [optional] an integer value (0-16777215). Default is Null. The Horizontal Border Line Color of the Table, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -464,7 +464,7 @@ EndFunc   ;==>_LOWriter_TableCellsGetNames
 ; Description ...: Set and retrieve the Background color settings of a Table.
 ; Syntax ........: _LOWriter_TableColor(ByRef $oTable[, $iBackColor = Null[, $bBackTransparent = Null]])
 ; Parameters ....: $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Table background color, as a Long Integer. See Remarks. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for no background color.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Table background color, as a RGB Color Integer. See Remarks. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for no background color.
 ;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -659,7 +659,7 @@ EndFunc   ;==>_LOWriter_TableColumnInsert
 ;                  $iRows               - [optional] an integer value. Default is 3. The number of rows to create the table with.
 ;                  $iColumns            - [optional] an integer value. Default is 2. The number of columns to create the table with.
 ;                  $bSplit              - [optional] a boolean value. Default is Null. If False, the table will not split across two pages.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Table background color as a Long Integer. See Remarks. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF (-1) for no background color.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Table background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF (-1) for no background color.
 ;                  $sTableName          - [optional] a string value. Default is "". The table name. See Remarks.
 ; Return values .: Success: Object.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1597,7 +1597,7 @@ EndFunc   ;==>_LOWriter_TableProperties
 ; Syntax ........: _LOWriter_TableRowColor(ByRef $oTable, $iRow[, $iBackColor = Null[, $bBackTransparent = Null]])
 ; Parameters ....: $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
 ;                  $iRow                - an integer value. The row number to set the background color for. Rows are 0 based.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Table background color as a Long Integer. See Remarks. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) to disable background color.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Row background color, as a RGB Color Integer. See Remarks. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) to disable background color.
 ;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1980,7 +1980,7 @@ EndFunc   ;==>_LOWriter_TablesGetNames
 ; Syntax ........: _LOWriter_TableShadow(ByRef $oTable[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null]]]])
 ; Parameters ....: $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
 ;                  $iWidth              - [optional] an integer value. Default is Null. The Shadow Width of the Table, set in Hundredths of a Millimeter (100th MM).
-;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The Color of the Table shadow, set in Long Integer format, can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The Table shadow Color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the Table Shadow is transparent.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. The Location of the Table Shadow. See constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
