@@ -383,9 +383,9 @@ EndFunc   ;==>_LOBase_DateStructModify
 ;                  $iWeight             - [optional] an integer value (0-200). Default is $LOB_WEIGHT_DONT_KNOW. The Font weight. See Constants $LOB_WEIGHT_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $iSlant              - [optional] an integer value (0-5). Default is $LOB_POSTURE_DONTKNOW. The Font italic setting. See Constants $LOB_POSTURE_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $nSize               - [optional] a general number value. Default is 0. The Font size.
-;                  $iColor              - [optional] an integer value (-1-16777215). Default is $LO_COLOR_OFF. The Font Color in Long Integer format, can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for Auto color.
+;                  $iColor              - [optional] an integer value (-1-16777215). Default is $LO_COLOR_OFF. The Font Color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for Auto color.
 ;                  $iUnderlineStyle     - [optional] an integer value (0-18). Default is $LOB_UNDERLINE_DONT_KNOW. The Font underline Style. See Constants $LOB_UNDERLINE_* as defined in LibreOfficeBase_Constants.au3.
-;                  $iUnderlineColor     - [optional] an integer value (-1-16777215). Default is $LO_COLOR_OFF. The Font Underline color in Long Integer format, can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for Auto color.
+;                  $iUnderlineColor     - [optional] an integer value (-1-16777215). Default is $LO_COLOR_OFF. The Font Underline color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for Auto color.
 ;                  $iStrikelineStyle    - [optional] an integer value (0-6). Default is $LOB_STRIKEOUT_DONT_KNOW. The Strikeout line style. See Constants $LOB_STRIKEOUT_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $bIndividualWords    - [optional] a boolean value. Default is False. If True, only individual words are underlined.
 ;                  $iRelief             - [optional] an integer value (0-2). Default is $LOB_RELIEF_NONE. The Font relief style. See Constants $LOB_RELIEF_* as defined in LibreOfficeBase_Constants.au3.
@@ -469,7 +469,7 @@ EndFunc   ;==>_LOBase_FontDescCreate
 ;                  $iWeight             - [optional] an integer value (0-200). Default is Null. The Font weight. See Constants $LOB_WEIGHT_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $iSlant              - [optional] an integer value (0-5). Default is Null. The Font italic setting. See Constants $LOB_POSTURE_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $nSize               - [optional] a general number value. Default is Null. The Font size.
-;                  $iColor              - [optional] an integer value (-1-16777215). Default is Null. The Font Color in Long Integer format, can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for Auto color.
+;                  $iColor              - [optional] an integer value (-1-16777215). Default is Null. The Font Color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for Auto color.
 ;                  $iUnderlineStyle     - [optional] an integer value (0-18). Default is Null. The Font underline Style. See Constants $LOB_UNDERLINE_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $iUnderlineColor     - [optional] an integer value (-1-16777215). Default is Null.
 ;                  $iStrikelineStyle    - [optional] an integer value (0-6). Default is Null. The Strikeout line style. See Constants $LOB_STRIKEOUT_* as defined in LibreOfficeBase_Constants.au3.
