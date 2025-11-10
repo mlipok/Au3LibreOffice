@@ -2090,7 +2090,7 @@ EndFunc   ;==>_LOCalc_DocUndoReset
 ;                  $bValueHighlight     - [optional] a boolean value. Default is Null. If True, Cell contents are displayed in different colors, depending on the content type of the cell.
 ;                  $bAnchors            - [optional] a boolean value. Default is Null. If True, the Anchor icon is displayed when a graphic or other object is selected.
 ;                  $bGrid               - [optional] a boolean value. Default is Null. If True, Gridlines are displayed.
-;                  $iGridColor          - [optional] an integer value (0-16777215). Default is Null. Set the Grid line color in Long Color format. Can be one of the constants $LO_COLOR_* as defined in LibreOffice_Constants.au3 or a custom value.
+;                  $iGridColor          - [optional] an integer value (0-16777215). Default is Null. Set the Grid line color, as a RGB Color Integer. Can be one of the constants $LO_COLOR_* as defined in LibreOffice_Constants.au3 or a custom value.
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--

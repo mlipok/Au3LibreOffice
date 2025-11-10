@@ -1516,7 +1516,7 @@ EndFunc   ;==>_LOCalc_SheetsGetNames
 ; Description ...: Set or Retrieve a Sheet's Tab Color.
 ; Syntax ........: _LOCalc_SheetTabColor(ByRef $oSheet[, $iColor = Null])
 ; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
-;                  $iColor              - [optional] an integer value (-1-16777215). Default is Null. The tab color in Long Color format. Set to $LO_COLOR_OFF(-1) to set to Default color setting. Can also be one of the constants $LO_COLOR_* as defined in LibreOffice_Constants.au3
+;                  $iColor              - [optional] an integer value (-1-16777215). Default is Null. The tab color, as a RGB Color Integer. Set to $LO_COLOR_OFF(-1) to set to Default color setting. Can also be one of the constants $LO_COLOR_* as defined in LibreOffice_Constants.au3
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--

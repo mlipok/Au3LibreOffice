@@ -100,7 +100,7 @@ EndFunc   ;==>__LOCalc_CellAddressIsSame
 ; Description ...: Internal function to Set or Retrieve the background color setting for a Cell, Cell Range, or Cell Style.
 ; Syntax ........: __LOCalc_CellBackColor(ByRef $oObj, $iBackColor, $bBackTransparent)
 ; Parameters ....: $oObj                - [in/out] an object. A Cell, Cell Range or Cell Style Object returned from an applicable function.
-;                  $iBackColor          - an integer value (-1-16777215). The background color. Set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1), to turn Background color off.
+;                  $iBackColor          - an integer value (-1-16777215). The background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1), to turn Background color off.
 ;                  $bBackTransparent    - a boolean value. If True, the background color is transparent.
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -579,7 +579,7 @@ EndFunc   ;==>__LOCalc_CellFont
 ; Description ...: Internal function to Set or Retrieve the Font Color for a Cell, Cell Range, or Cell Style.
 ; Syntax ........: __LOCalc_CellFontColor(ByRef $oObj, $iFontColor)
 ; Parameters ....: $oObj                - [in/out] an object. A Cell, Cell Range or Cell Style Object returned from an applicable function.
-;                  $iFontColor          - an integer value (-1-16777215). The Color value in Long Integer format to make the font, can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for Auto color.
+;                  $iFontColor          - an integer value (-1-16777215). The Font Color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for Auto color.
 ; Return values .: Success: 1 or Integer.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -676,7 +676,7 @@ EndFunc   ;==>__LOCalc_CellNumberFormat
 ;                  $bWordOnly           - a boolean value. If true, white spaces are not Overlined.
 ;                  $iOverLineStyle      - an integer value (0-18). The style of the Overline line, see constants, $LOC_UNDERLINE_* as defined in LibreOfficeCalc_Constants.au3. See Remarks.
 ;                  $bOLHasColor         - a boolean value. If True, the Overline is colored, must be set to true in order to set the Overline color.
-;                  $iOLColor            - an integer value (-1-16777215). The Overline color, set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for automatic color mode.
+;                  $iOLColor            - an integer value (-1-16777215). The Overline color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for automatic color mode.
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -845,7 +845,7 @@ EndFunc   ;==>__LOCalc_CellProtection
 ; Syntax ........: __LOCalc_CellShadow(ByRef $oObj, $iWidth, $iColor, $bTransparent, $iLocation)
 ; Parameters ....: $oObj                - [in/out] an object. A Cell, Cell Range or Cell Style Object returned from an applicable function.
 ;                  $iWidth              - an integer value (0-5009). The shadow width, set in Hundredths of a Millimeter (100th MM).
-;                  $iColor              - an integer value (0-16777215). The color of the shadow, set in Long Integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iColor              - an integer value (0-16777215). The color of the shadow, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bTransparent        - a boolean value. If True, the shadow is transparent.
 ;                  $iLocation           - an integer value (0-4). The location of the shadow compared to the Cell. See Constants, $LOC_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
 ; Return values .: Success: 1 or Array.
@@ -1404,7 +1404,7 @@ EndFunc   ;==>__LOCalc_CellTextProperties
 ;                  $bWordOnly           - a boolean value. If true, white spaces are not underlined.
 ;                  $iUnderLineStyle     - an integer value (0-18). The Underline line style, see constants, $LOC_UNDERLINE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $bULHasColor         - a boolean value. If True, the underline is colored, must be set to true in order to set the underline color.
-;                  $iULColor            - an integer value (-1-16777215). The color of the underline, set in Long integer format. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for automatic color mode.
+;                  $iULColor            - an integer value (-1-16777215). The underline color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for automatic color mode.
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2982,15 +2982,15 @@ EndFunc   ;==>__LOCalc_TextCursorMove
 ; Name ..........: __LOCalc_TransparencyGradientConvert
 ; Description ...: Convert a Transparency Gradient percentage value to a color value or from a color value to a percentage.
 ; Syntax ........: __LOCalc_TransparencyGradientConvert([$iPercentToLong = Null[, $iLongToPercent = Null]])
-; Parameters ....: $iPercentToLong      - [optional] an integer value. Default is Null. The percentage to convert to Long color integer value.
-;                  $iLongToPercent      - [optional] an integer value. Default is Null. The Long color integer value to convert to percentage.
+; Parameters ....: $iPercentToLong      - [optional] an integer value. Default is Null. The percentage to convert to a RGB Color Integer.
+;                  $iLongToPercent      - [optional] an integer value. Default is Null. The RGB Color Integer to convert to percentage.
 ; Return values .: Success: Integer.
 ;                  Failure: Null and sets the @Error and @Extended flags to non-zero.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return Null = No values called in parameters.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Integer = Success. The requested Integer value converted from percentage to Long color format.
-;                  @Error 0 @Extended 1 Return Integer = Success. The requested Integer value from Long color format to percentage.
+;                  @Error 0 @Extended 0 Return Integer = Success. The requested Integer value converted from percentage to a RGB Color Integer.
+;                  @Error 0 @Extended 1 Return Integer = Success. The requested Integer value from a RGB Color Integer to percentage.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
