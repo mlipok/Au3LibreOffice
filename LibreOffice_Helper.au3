@@ -109,12 +109,12 @@ EndFunc   ;==>_LO_ComError_UserFunction
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LO_ConvertColorFromLong
-; Description ...: Convert Long color code to Hex, RGB, HSB or CMYK.
+; Description ...: Convert a RGB Color Integer to Hex, RGB, HSB or CMYK.
 ; Syntax ........: _LO_ConvertColorFromLong([$iHex = Null[, $iRGB = Null[, $iHSB = Null[, $iCMYK = Null]]]])
-; Parameters ....: $iHex                - [optional] an integer value. Default is Null. Convert Long Color Integer to Hexadecimal.
-;                  $iRGB                - [optional] an integer value. Default is Null. Convert Long Color Integer to R.G.B.
-;                  $iHSB                - [optional] an integer value. Default is Null. Convert Long Color Integer to H.S.B.
-;                  $iCMYK               - [optional] an integer value. Default is Null. Convert Long Color Integer to C.M.Y.K.
+; Parameters ....: $iHex                - [optional] an integer value. Default is Null. Convert a RGB Color Integer to Hexadecimal.
+;                  $iRGB                - [optional] an integer value. Default is Null. Convert a RGB Color Integer to R.G.B.
+;                  $iHSB                - [optional] an integer value. Default is Null. Convert a RGB Color Integer to H.S.B.
+;                  $iCMYK               - [optional] an integer value. Default is Null. Convert a RGB Color Integer to C.M.Y.K.
 ; Return values .: Success: String or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -127,7 +127,7 @@ EndFunc   ;==>_LO_ComError_UserFunction
 ;                  @Error 0 @Extended 4 Return Array = Array containing Long integer converted To Cyan, Magenta, Yellow, Black, (CMYK). $Array[0] = C, $Array[1] = M, etc.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: To retrieve a Hexadecimal color value, call the Long Color code in $iHex, To retrieve a R(ed)G(reen)B(lue) color value, call Null in $iHex, and call the Long color code into $iRGB, etc. for the other color types.
+; Remarks .......: To retrieve a Hexadecimal color value, call the RGB Color Integer in $iHex, To retrieve a R(ed)G(reen)B(lue) color value, call Null in $iHex, and call the RGB Color Integer into $iRGB, etc. for the other color types.
 ;                  Hex returns as a string variable, all others (RGB, HSB, CMYK) return an array.
 ;                  The Hexadecimal figure returned doesn't contain the usual "0x", as LibeOffice does not implement it in its numbering system.
 ; Related .......: _LO_ConvertColorToLong
@@ -255,7 +255,7 @@ EndFunc   ;==>_LO_ConvertColorFromLong
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LO_ConvertColorToLong
-; Description ...: Convert Hex, RGB, HSB or CMYK to Long color code.
+; Description ...: Convert Hex, RGB, HSB or CMYK to a RGB Color Integer.
 ; Syntax ........: _LO_ConvertColorToLong([$vVal1 = Null[, $vVal2 = Null[, $vVal3 = Null[, $vVal4 = Null]]]])
 ; Parameters ....: $vVal1               - [optional] a variant value. Default is Null. See remarks.
 ;                  $vVal2               - [optional] a variant value. Default is Null. See remarks.
@@ -275,10 +275,10 @@ EndFunc   ;==>_LO_ConvertColorFromLong
 ;                  @Error 1 @Extended 9 Return 0 = Four parameters called but not all Integers(CMYK).
 ;                  @Error 1 @Extended 10 Return 0 = Too many or too few parameters called.
 ;                  --Success--
-;                  @Error 0 @Extended 1 Return Integer = Long Int. Color code converted from Hexadecimal.
-;                  @Error 0 @Extended 2 Return Integer = Long Int. Color code converted from Red, Green, Blue, (RGB).
-;                  @Error 0 @Extended 3 Return Integer = Long Int. Color code converted from (H)ue, (S)aturation, (B)rightness,
-;                  @Error 0 @Extended 4 Return Integer = Long Int. Color code converted from (C)yan, (M)agenta, (Y)ellow, Blac(k)
+;                  @Error 0 @Extended 1 Return Integer = RGB Color Integer converted from Hexadecimal.
+;                  @Error 0 @Extended 2 Return Integer = RGB Color Integer converted from Red, Green, Blue, (RGB).
+;                  @Error 0 @Extended 3 Return Integer = RGB Color Integer converted from (H)ue, (S)aturation, (B)rightness,
+;                  @Error 0 @Extended 4 Return Integer = RGB Color Integer converted from (C)yan, (M)agenta, (Y)ellow, Blac(k)
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To Convert a Hex(adecimal) color code, call the Hex code in $vVal1 in String Format.
