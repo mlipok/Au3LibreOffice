@@ -58,7 +58,7 @@ Func Example()
 			"Is the section visible? True/False: " & $avReport[4] & @CRLF & _
 			"The Height of the section is, in Hundredths of a Millimeter (100th MM): " & $avReport[5] & @CRLF & _
 			"The Conditional Print statement is: " & $avReport[6] & @CRLF & _
-			"The Background color is, as a Long Integer: " & $avReport[7])
+			"The Background color is (as a RGB Color Integer): " & $avReport[7])
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to close the document.")
 

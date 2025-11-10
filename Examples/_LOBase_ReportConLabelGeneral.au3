@@ -73,7 +73,7 @@ Func Example()
 			"The Conditional Print statement is: " & $avControl[2] & @CRLF & _
 			"Are repeated values printed? True/False: " & $avControl[3] & @CRLF & _
 			"Are repeated values printed on Group changes? True/False: " & $avControl[4] & @CRLF & _
-			"The Long Integer background color is: " & $avControl[5] & @CRLF & _
+			"The background color is (as a RGB Color Integer): " & $avControl[5] & @CRLF & _
 			"This is the current Font settings. I'll just check if it is a Map. " & IsMap($avControl[6]) & @CRLF & _
 			"The Horizontal Alignment is (See UDF Constants): " & $avControl[7] & @CRLF & _
 			"The Vertical Alignment is (See UDF Constants): " & $avControl[8])

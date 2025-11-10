@@ -71,7 +71,7 @@ Func Example()
 			"Is the Group Footer visible? True/False: " & $avGroup[5] & @CRLF & _
 			"The Height of the Group Footer is, in Hundredths of a Millimeter (100th MM): " & $avGroup[6] & @CRLF & _
 			"The Conditional Print statement is: " & $avGroup[7] & @CRLF & _
-			"The Background color is, as a Long Integer: " & $avGroup[8])
+			"The Background color is (as a RGB Color Integer): " & $avGroup[8])
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to close the document.")
 
