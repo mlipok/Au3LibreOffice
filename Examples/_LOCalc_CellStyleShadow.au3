@@ -51,7 +51,7 @@ Func Example()
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Cell Style's Shadow settings are as follows: " & @CRLF & _
 			"Shadow width, in Hundredths of a Millimeter (100th MM): " & $avSettings[0] & @CRLF & _
-			"Shadow color in long color format: " & $avSettings[1] & @CRLF & _
+			"Shadow color is (as a RGB Color Integer): " & $avSettings[1] & @CRLF & _
 			"Is shadow color transparent? True/False: " & $avSettings[2] & @CRLF & _
 			"Shadow location, (see UDF Constants): " & $avSettings[3])
 

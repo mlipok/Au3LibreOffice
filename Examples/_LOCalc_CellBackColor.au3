@@ -40,9 +40,9 @@ Func Example()
 	$avColor2 = _LOCalc_CellBackColor($oCellRange)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Background color. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "Cell B5's Background color is, in Long integer format: " & $avColor[0] & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Cell B5's Background color is (as a RGB Color Integer): " & $avColor[0] & @CRLF & _
 			"Is Cell B5's Background color transparent? True/False: " & $avColor[1] & @CRLF & _
-			"Cell Range A1-A6's Background color is, in Long integer format: " & $avColor2[0] & @CRLF & _
+			"Cell Range A1-A6's Background color is (as a RGB Color Integer): " & $avColor2[0] & @CRLF & _
 			"Is Cell Range A1-A6's Background color transparent? True/False: " & $avColor2[1])
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")

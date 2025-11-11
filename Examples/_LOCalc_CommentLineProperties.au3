@@ -39,7 +39,7 @@ Func Example()
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Comment's Line Style settings are as follows: " & @CRLF & _
 			"The Line style is (See UDF Constants): " & $avSettings[0] & @CRLF & _
-			"The Line Color is, in Long Color format: " & $avSettings[1] & @CRLF & _
+			"The Line Color is (as a RGB Color Integer): " & $avSettings[1] & @CRLF & _
 			"The Line Width is, in Hundredths of a Millimeter (100th MM): " & $avSettings[2] & @CRLF & _
 			"The Percentage of Line Transparency is: " & $avSettings[3] & @CRLF & _
 			"The Line corner style is (See UDF Constants): " & $avSettings[4] & @CRLF & _

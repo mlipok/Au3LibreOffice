@@ -29,7 +29,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Page style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Page Style's current Footer Background color settings are as follows: " & @CRLF & _
-			"The Background color is, in Long Color format: " & $avPageStyleSettings[0] & @CRLF & _
+			"The Background color is (as a RGB Color Integer): " & $avPageStyleSettings[0] & @CRLF & _
 			"Is the background color transparent? True/False: " & $avPageStyleSettings[1])
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
