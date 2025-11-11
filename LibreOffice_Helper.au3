@@ -568,7 +568,7 @@ EndFunc   ;==>_LO_PathConvert
 ; Description ...: For converting measurement units.
 ; Syntax ........: _LO_UnitConvert($nValue, $iReturnType)
 ; Parameters ....: $nValue              - a general number value. The Number to be converted.
-;                  $iReturnType         - an Integer value. The conversion type to perform on $nValue. See Constants, $LO_CONVERT_UNIT_* as defined in LibreOffice_Constants.au3.
+;                  $iReturnType         - an Integer value (0-10). The conversion type to perform on $nValue. See Constants, $LO_CONVERT_UNIT_* as defined in LibreOffice_Constants.au3.
 ; Return values .: Success: Integer or Number.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
