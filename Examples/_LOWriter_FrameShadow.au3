@@ -35,7 +35,7 @@ Func Example()
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Frame's Shadow settings are as follows: " & @CRLF & _
 			"The shadow width is, in Hundredths of a Millimeter (100th MM): " & $avSettings[0] & @CRLF & _
-			"The Shadow color is, in Long Color format: " & $avSettings[1] & @CRLF & _
+			"The Shadow color is (as a RGB Color Integer): " & $avSettings[1] & @CRLF & _
 			"Is the Color transparent? True/False: " & $avSettings[2] & @CRLF & _
 			"The Shadow location is, (see UDF Constants): " & $avSettings[3])
 

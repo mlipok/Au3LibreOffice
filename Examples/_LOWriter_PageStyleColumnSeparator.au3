@@ -38,7 +38,7 @@ Func Example()
 			"Is Column separated by a line? True/False: " & $avPageStyleSettings[0] & @CRLF & _
 			"The Separator Line style is, (see UDF constants): " & $avPageStyleSettings[1] & @CRLF & _
 			"The Separator Line width is, in Hundredths of a Millimeter (100th MM): " & $avPageStyleSettings[2] & @CRLF & _
-			"The Separator Line color is, in Long color format: " & $avPageStyleSettings[3] & @CRLF & _
+			"The Separator Line color is (as a RGB Color Integer): " & $avPageStyleSettings[3] & @CRLF & _
 			"The Separator Line length percentage is: " & $avPageStyleSettings[4] & @CRLF & _
 			"The Separator Line position is, (see UDF constants): " & $avPageStyleSettings[5])
 

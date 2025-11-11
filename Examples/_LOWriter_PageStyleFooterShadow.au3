@@ -35,7 +35,7 @@ Func Example()
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Page Style's current Footer Shadow settings are as follows: " & @CRLF & _
 			"The shadow width is, in Hundredths of a Millimeter (100th MM): " & $avPageStyleSettings[0] & @CRLF & _
-			"The Shadow color is, in Long Color format: " & $avPageStyleSettings[1] & @CRLF & _
+			"The Shadow color is (as a RGB Color Integer): " & $avPageStyleSettings[1] & @CRLF & _
 			"Is the Color transparent? True/False: " & $avPageStyleSettings[2] & @CRLF & _
 			"The Shadow location is, (see UDF Constants): " & $avPageStyleSettings[3])
 

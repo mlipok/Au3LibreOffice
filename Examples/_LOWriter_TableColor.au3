@@ -33,7 +33,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve Text Table settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Current Text Table color settings are: " & @CRLF & _
-			"Table background color: " & $avTableProps[0] & @CRLF & _
+			"Table background color is (as a RGB Color Integer): " & $avTableProps[0] & @CRLF & _
 			"Background is transparent? True/False: " & $avTableProps[1])
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")

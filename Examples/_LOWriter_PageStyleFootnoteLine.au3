@@ -34,7 +34,7 @@ Func Example()
 			"The Separator line Position is, (see UDF Constants): " & $avPageStyleSettings[0] & @CRLF & _
 			"The Separator line Style is, (see UDF Constants): " & $avPageStyleSettings[1] & @CRLF & _
 			"The Separator line's thickness is, in Printer's Points: " & $avPageStyleSettings[2] & @CRLF & _
-			"The Separator line's Color is, in Long Color Code format: " & $avPageStyleSettings[3] & @CRLF & _
+			"The Separator line's Color is (as a RGB Color Integer): " & $avPageStyleSettings[3] & @CRLF & _
 			"The percentage of the Separator line's length, is: " & $avPageStyleSettings[4] & @CRLF & _
 			"The distance between the Footnote body and the separator line, in Hundredths of a Millimeter (100th MM), is: " & $avPageStyleSettings[5])
 

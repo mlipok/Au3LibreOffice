@@ -33,7 +33,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the selected text's settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Paragraph Shadow settings are as follows: " & @CRLF & _
-			"The current background color, in Long Color format: " & $avSettings[0] & @CRLF & _
+			"The current background color is (as a RGB Color Integer): " & $avSettings[0] & @CRLF & _
 			"Is the background color transparent? True/False: " & $avSettings[1] & @CRLF & @CRLF & _
 			"Press ok to remove direct formatting.")
 

@@ -53,7 +53,7 @@ Func Example()
 			"Underline words only? True/False: " & $avCharStyleSettings[0] & @CRLF & _
 			"Underline style (See UDF constants): " & $avCharStyleSettings[1] & @CRLF & _
 			"Underline has color? True/False: " & $avCharStyleSettings[2] & @CRLF & _
-			"Underline color, in long color format: " & $avCharStyleSettings[3])
+			"Underline color is (as a RGB Color Integer): " & $avCharStyleSettings[3])
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

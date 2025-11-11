@@ -40,7 +40,7 @@ Func Example()
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Table shadow values are as follows: " & @CRLF & _
 			"Width = " & $avShadow[0] & " Hundredths of a Millimeter (100th MM)." & @CRLF & _
-			"Color = " & $avShadow[1] & " Long color format." & @CRLF & _
+			"Color = " & $avShadow[1] & " (as a RGB Color Integer)." & @CRLF & _
 			"Is Color Transparent? True/False = " & $avShadow[2] & @CRLF & _
 			"Shadow Location (See constants) = " & $avShadow[3])
 

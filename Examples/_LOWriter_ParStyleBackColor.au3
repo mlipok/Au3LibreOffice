@@ -33,7 +33,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Paragraph style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Paragraph's current Background color settings are as follows: " & @CRLF & _
-			"The current background color, in Long Color format: " & $avParStyleSettings[0] & @CRLF & _
+			"The background color is (_LOWriter_ParStyleBackColor): " & $avParStyleSettings[0] & @CRLF & _
 			"Is the background color transparent? True/False: " & $avParStyleSettings[1])
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")

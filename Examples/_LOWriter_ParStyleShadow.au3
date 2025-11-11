@@ -39,7 +39,7 @@ Func Example()
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Paragraph's current shadow settings are as follows: " & @CRLF & _
 			"Shadow width, in Hundredths of a Millimeter (100th MM): " & $avParStyleSettings[0] & @CRLF & _
-			"Shadow color, in long color format: " & $avParStyleSettings[1] & @CRLF & _
+			"Shadow color is (as a RGB Color Integer): " & $avParStyleSettings[1] & @CRLF & _
 			"Is color transparent? True/False: " & $avParStyleSettings[2] & @CRLF & _
 			"Shadow location, (see UDF constants): " & $avParStyleSettings[3])
 

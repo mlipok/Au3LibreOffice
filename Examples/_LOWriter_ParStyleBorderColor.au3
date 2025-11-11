@@ -37,10 +37,10 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Paragraph style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Paragraph's current Border color settings are as follows: " & @CRLF & _
-			"Top color, in Long Color format: " & $avParStyleSettings[0] & @CRLF & _
-			"Bottom color, in Long Color format: " & $avParStyleSettings[1] & @CRLF & _
-			"Left color, in Long Color format: " & $avParStyleSettings[2] & @CRLF & _
-			"Right color, in Long Color format: " & $avParStyleSettings[3])
+			"Top color is (as a RGB Color Integer): " & $avParStyleSettings[0] & @CRLF & _
+			"Bottom color is (as a RGB Color Integer): " & $avParStyleSettings[1] & @CRLF & _
+			"Left color is (as a RGB Color Integer): " & $avParStyleSettings[2] & @CRLF & _
+			"Right color is (as a RGB Color Integer): " & $avParStyleSettings[3])
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

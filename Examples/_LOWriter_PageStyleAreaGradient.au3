@@ -32,8 +32,8 @@ Func Example()
 			"The vertical offset percentage for the gradient is: " & $avPageStyleSettings[4] & @CRLF & _
 			"The rotation angle for the gradient is, in degrees: " & $avPageStyleSettings[5] & @CRLF & _
 			"The percentage of area not covered by the ending color is: " & $avPageStyleSettings[6] & @CRLF & _
-			"The starting color is, in Long Color format: " & $avPageStyleSettings[7] & @CRLF & _
-			"The ending color is, in Long Color format: " & $avPageStyleSettings[8] & @CRLF & _
+			"The starting color is (as a RGB Color Integer): " & $avPageStyleSettings[7] & @CRLF & _
+			"The ending color is (as a RGB Color Integer): " & $avPageStyleSettings[8] & @CRLF & _
 			"The starting color intensity percentage is: " & $avPageStyleSettings[9] & @CRLF & _
 			"The ending color intensity percentage is: " & $avPageStyleSettings[10])
 

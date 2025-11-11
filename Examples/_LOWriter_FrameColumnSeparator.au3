@@ -42,7 +42,7 @@ Func Example()
 			"Is Column separated by a line? True/False: " & $avSettings[0] & @CRLF & _
 			"The Separator Line style is, (see UDF constants): " & $avSettings[1] & @CRLF & _
 			"The Separator Line width is, in Hundredths of a Millimeter (100th MM): " & $avSettings[2] & @CRLF & _
-			"The Separator Line color is, in Long color format: " & $avSettings[3] & @CRLF & _
+			"The Separator Line color is (as a RGB Color Integer): " & $avSettings[3] & @CRLF & _
 			"The Separator Line length percentage is: " & $avSettings[4] & @CRLF & _
 			"The Separator Line position is, (see UDF constants): " & $avSettings[5])
 
