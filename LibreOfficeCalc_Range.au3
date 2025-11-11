@@ -1649,7 +1649,7 @@ EndFunc   ;==>_LOCalc_RangeFindAll
 ;                  @Error 1 @Extended 2 Return 0 = $oSrchDescript not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $oSrchDescript not a Search Descriptor Object.
 ;                  @Error 1 @Extended 4 Return 0 = $sSearchString not a String.
-;                  @Error 1 @Extended 5 Return 0 = $oLastFind not an Object and not set to Null, or failed to retrieve starting position from $oRange.
+;                  @Error 1 @Extended 5 Return 0 = $oLastFind not an Object, or failed to retrieve starting position from $oRange.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Search was successful but found no matches.
 ;                  @Error 0 @Extended 1 Return Object = Success. Search was successful, returning the resulting Object.
@@ -1887,7 +1887,7 @@ EndFunc   ;==>_LOCalc_RangeGetAddressAsPosition
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sFromCellName not a String.
-;                  @Error 1 @Extended 3 Return 0 = $sToCellName not set to Null, and not a String.
+;                  @Error 1 @Extended 3 Return 0 = $sToCellName not a String.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve requested Cell or Cell Range Object.
 ;                  --Success--
@@ -5141,8 +5141,8 @@ EndFunc   ;==>_LOCalc_RangeRowVisible
 ;                  @Error 1 @Extended 5 Return 0 = $bHasHeader not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $bBindFormat not a Boolean.
 ;                  @Error 1 @Extended 7 Return 0 = $bCopyOutput not a Boolean.
-;                  @Error 1 @Extended 8 Return 0 = $tSortField2 not set to Null, and not an Object.
-;                  @Error 1 @Extended 9 Return 0 = $tSortField3 not set to Null, and not an Object.
+;                  @Error 1 @Extended 8 Return 0 = $tSortField2 not an Object.
+;                  @Error 1 @Extended 9 Return 0 = $tSortField3 not an Object.
 ;                  @Error 1 @Extended 10 Return 0 = $bCopyOutput set to True, but $oCellOutput not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create a Sort Descriptor.
@@ -5334,8 +5334,8 @@ EndFunc   ;==>_LOCalc_RangeSort
 ;                  @Error 1 @Extended 7 Return 0 = $bNaturalOrder not a Boolean.
 ;                  @Error 1 @Extended 8 Return 0 = $bIncludeComments not a Boolean.
 ;                  @Error 1 @Extended 9 Return 0 = $bIncludeImages not a Boolean.
-;                  @Error 1 @Extended 10 Return 0 = $tSortField2 not set to Null, and not an Object.
-;                  @Error 1 @Extended 11 Return 0 = $tSortField3 not set to Null, and not an Object.
+;                  @Error 1 @Extended 10 Return 0 = $tSortField2 not an Object.
+;                  @Error 1 @Extended 11 Return 0 = $tSortField3 not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "Col1" Property.
 ;                  @Error 2 @Extended 2 Return 0 = Failed to create "Ascending1" Property.

@@ -154,7 +154,7 @@ EndFunc   ;==>_LOCalc_ComError_UserFunction
 ;                  @Error 1 @Extended 5 Return 0 = $bUseRegExp not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $bHeaders not a Boolean.
 ;                  @Error 1 @Extended 7 Return 0 = $bCopyOutput not a Boolean.
-;                  @Error 1 @Extended 8 Return 0 = $oCopyOutput not an Object and not set to Null.
+;                  @Error 1 @Extended 8 Return 0 = $oCopyOutput not an Object.
 ;                  @Error 1 @Extended 9 Return 0 = $bSaveCriteria not a Boolean.
 ;                  @Error 1 @Extended 10 Return ? = $atFilterField contains an element that is not an Object. Returning the element number containing the error.
 ;                  @Error 1 @Extended 11 Return 0 = $bCopyOutput set to True, but $oCopyOutput not an Object.
