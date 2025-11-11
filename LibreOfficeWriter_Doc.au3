@@ -967,18 +967,18 @@ EndFunc   ;==>_LOWriter_DocCreateTextCursor
 ; Description ...: Set or Retrieve Document Description properties.
 ; Syntax ........: _LOWriter_DocDescription(ByRef $oDoc[, $sTitle = Null[, $sSubject = Null[, $asKeywords = Null[, $sComments = Null[, $asContributor = Null[, $sCoverage = Null[, $sIdentifier = Null[, $asPublisher = Null[, $asRelation = Null[, $sRights = Null[, $sSource = Null[, $sType = Null]]]]]]]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or_LOWriter_DocCreate function.
-;                  $sTitle              - [optional] a string value. Default is Null. Set the Document's "Title" Property. See Remarks.
-;                  $sSubject            - [optional] a string value. Default is Null. Set the Document's "Subject" Property.
-;                  $asKeywords          - [optional] an array of strings. Default is Null. Set the Document's "Keywords" Property. Input must be a single dimension Array, which will overwrite any keywords previously set. Accepts numbers also. See Remarks.
-;                  $sComments           - [optional] a string value. Default is Null. Set the Document's "Comments" Property.
-;                  $asContributor       - [optional] an array of strings. Default is Null. Set the Document's "Contributor" Property. Input must be a single dimension Array, which will overwrite any values previously set. See Remarks. L.O. 24.2+
-;                  $sCoverage           - [optional] a string value. Default is Null. Set the Document's "Coverage" Property. L.O. 24.2+
-;                  $sIdentifier         - [optional] a string value. Default is Null. Set the Document's "Identifier" Property. L.O. 24.2+
-;                  $asPublisher         - [optional] an array of strings. Default is Null. Set the Document's "Publisher" Property. Input must be a single dimension Array, which will overwrite any values previously set. See Remarks. L.O. 24.2+
-;                  $asRelation          - [optional] an array of strings. Default is Null. Set the Document's "Relation" Property. Input must be a single dimension Array, which will overwrite any values previously set. See Remarks. L.O. 24.2+
-;                  $sRights             - [optional] a string value. Default is Null. Set the Document's "Rights" Property. L.O. 24.2+
-;                  $sSource             - [optional] a string value. Default is Null. Set the Document's "Source" Property. L.O. 24.2+
-;                  $sType               - [optional] a string value. Default is Null. Set the Document's "Type" Property. L.O. 24.2+
+;                  $sTitle              - [optional] a string value. Default is Null. The Document's "Title" Property. See Remarks.
+;                  $sSubject            - [optional] a string value. Default is Null. The Document's "Subject" Property.
+;                  $asKeywords          - [optional] an array of strings. Default is Null. The Document's "Keywords" Property. Input must be a single dimension Array, which will overwrite any keywords previously set. Accepts numbers also. See Remarks.
+;                  $sComments           - [optional] a string value. Default is Null. The Document's "Comments" Property.
+;                  $asContributor       - [optional] an array of strings. Default is Null. The Document's "Contributor" Property. Input must be a single dimension Array, which will overwrite any values previously set. See Remarks. L.O. 24.2+
+;                  $sCoverage           - [optional] a string value. Default is Null. The Document's "Coverage" Property. L.O. 24.2+
+;                  $sIdentifier         - [optional] a string value. Default is Null. The Document's "Identifier" Property. L.O. 24.2+
+;                  $asPublisher         - [optional] an array of strings. Default is Null. The Document's "Publisher" Property. Input must be a single dimension Array, which will overwrite any values previously set. See Remarks. L.O. 24.2+
+;                  $asRelation          - [optional] an array of strings. Default is Null. The Document's "Relation" Property. Input must be a single dimension Array, which will overwrite any values previously set. See Remarks. L.O. 24.2+
+;                  $sRights             - [optional] a string value. Default is Null. The Document's "Rights" Property. L.O. 24.2+
+;                  $sSource             - [optional] a string value. Default is Null. The Document's "Source" Property. L.O. 24.2+
+;                  $sType               - [optional] a string value. Default is Null. The Document's "Type" Property. L.O. 24.2+
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2055,7 +2055,7 @@ EndFunc   ;==>_LOWriter_DocGenPropCreation
 ; Description ...: Set or Retrieve a Document's General Modification Properties.
 ; Syntax ........: _LOWriter_DocGenPropModification(ByRef $oDoc[, $sModifiedBy = Null[, $tDateStruct = Null]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $sModifiedBy         - [optional] a string value. Default is Null. Set the name of the last user who modified the document.
+;                  $sModifiedBy         - [optional] a string value. Default is Null. The name of the last user who modified the document.
 ;                  $tDateStruct         - [optional] a dll struct value. Default is Null. The date to display, created previously by _LOWriter_DateStructCreate.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -3448,7 +3448,7 @@ EndFunc   ;==>_LOWriter_DocPrintIncludedSettings
 ; Syntax ........: _LOWriter_DocPrintMiscSettings(ByRef $oDoc[, $iPaperOrient = Null[, $sPrinterName = Null[, $iCommentsMode = Null[, $bBrochure = Null[, $bBrochureRTL = Null[, $bReversed = Null]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $iPaperOrient        - [optional] an integer value (0-1). Default is Null. The orientation of the paper. See Constants, $LOW_PAPER_ORIENT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $sPrinterName        - [optional] a string value. Default is Null. Set the name of the printer to send print jobs to.
+;                  $sPrinterName        - [optional] a string value. Default is Null. The name of the printer to send print jobs to.
 ;                  $iCommentsMode       - [optional] an integer value (0-3). Default is Null. If and where to print comments in the document. See Constants, $LOW_PRINT_NOTES_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bBrochure           - [optional] a boolean value. Default is Null. If True, prints the document in brochure format.
 ;                  $bBrochureRTL        - [optional] a boolean value. Default is Null. If True, prints the document in brochure Right to Left format.

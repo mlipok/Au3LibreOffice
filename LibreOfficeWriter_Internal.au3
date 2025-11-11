@@ -375,10 +375,10 @@ EndFunc   ;==>__LOWriter_CharBorder
 ; Syntax ........: __LOWriter_CharBorderPadding(ByRef $oObj, $iAll, $iTop, $iBottom, $iLeft, $iRight)
 ; Parameters ....: $oObj                - [in/out] an object. An Object that supports "com.sun.star.text.Paragraph" Or "com.sun.star.text.TextPortion" services, such as a Cursor with data selected or paragraph section.
 ;                  $iAll                - an integer value. Set all four padding values to the same value. When used, all other parameters are ignored. In Hundredths of a Millimeter (100th MM).
-;                  $iTop                - an integer value. Set the Top border distance in Hundredths of a Millimeter (100th MM).
-;                  $iBottom             - an integer value. Set the Bottom border distance in Hundredths of a Millimeter (100th MM).
-;                  $iLeft               - an integer value. Set the left border distance in Hundredths of a Millimeter (100th MM).
-;                  $iRight              - an integer value. Set the Right border distance in Hundredths of a Millimeter (100th MM).
+;                  $iTop                - an integer value. The Top border distance in Hundredths of a Millimeter (100th MM).
+;                  $iBottom             - an integer value. The Bottom border distance in Hundredths of a Millimeter (100th MM).
+;                  $iLeft               - an integer value. The left border distance in Hundredths of a Millimeter (100th MM).
+;                  $iRight              - an integer value. The Right border distance in Hundredths of a Millimeter (100th MM).
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -4296,10 +4296,10 @@ EndFunc   ;==>__LOWriter_ParBackColor
 ; Syntax ........: __LOWriter_ParBorderPadding(ByRef $oObj, $iAll, $iTop, $iBottom, $iLeft, $iRight)
 ; Parameters ....: $oObj                - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iAll                - an integer value. Set all four padding distances to one distance in Hundredths of a Millimeter (100th MM).
-;                  $iTop                - an integer value. Set the Top Distance between the Border and Paragraph in Hundredths of a Millimeter (100th MM).
-;                  $iBottom             - an integer value. Set the Bottom Distance between the Border and Paragraph in Hundredths of a Millimeter (100th MM).
-;                  $iLeft               - an integer value. Set the Left Distance between the Border and Paragraph in Hundredths of a Millimeter (100th MM).
-;                  $iRight              - an integer value. Set the Right Distance between the Border and Paragraph in Hundredths of a Millimeter (100th MM).
+;                  $iTop                - an integer value. The Top Distance between the Border and Paragraph in Hundredths of a Millimeter (100th MM).
+;                  $iBottom             - an integer value. The Bottom Distance between the Border and Paragraph in Hundredths of a Millimeter (100th MM).
+;                  $iLeft               - an integer value. The Left Distance between the Border and Paragraph in Hundredths of a Millimeter (100th MM).
+;                  $iRight              - an integer value. The Right Distance between the Border and Paragraph in Hundredths of a Millimeter (100th MM).
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
