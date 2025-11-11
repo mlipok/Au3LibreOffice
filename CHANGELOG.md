@@ -97,6 +97,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_FormPropertiesData
 	- _LOWriter_ImageInsert
 	- _LOWriter_VersionGet
+- Reworded Color terminology.
+- Reworded measurement terminology.
 
 #### Fixed
 
