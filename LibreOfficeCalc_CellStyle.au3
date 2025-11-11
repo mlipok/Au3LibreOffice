@@ -98,12 +98,12 @@ EndFunc   ;==>_LOCalc_CellStyleBackColor
 ; Description ...: Set and Retrieve the Cell Style Border Line Color. Libre Office Version 3.6 and Up.
 ; Syntax ........: _LOCalc_CellStyleBorderColor(ByRef $oCellStyle[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null[, $iTLBRDiag = Null[, $iBLTRDiag = Null]]]]]])
 ; Parameters ....: $oCellStyle          - [in/out] an object. A Cell Style object returned by a previous _LOCalc_CellStyleCreate, or _LOCalc_CellStyleGetObj function.
-;                  $iTop                - [optional] an integer value (0-16777215). Default is Null. Set the Top Border Line Color of the Cell Style, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $iBottom             - [optional] an integer value (0-16777215). Default is Null. Set the Bottom Border Line Color of the Cell Style, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $iLeft               - [optional] an integer value (0-16777215). Default is Null. Set the Left Border Line Color of the Cell Style, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. Set the Right Border Line Color of the Cell Style, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $iTLBRDiag           - [optional] an integer value (0-16777215). Default is Null. Set the Top-Left to Bottom-Right Diagonal Border Line Color of the Cell Style, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $iBLTRDiag           - [optional] an integer value (0-16777215). Default is Null. Set the Bottom-Left to Top-Right Diagonal Border Line Color of the Cell Style, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iTop                - [optional] an integer value (0-16777215). Default is Null. The Top Border Line Color of the Cell Style, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBottom             - [optional] an integer value (0-16777215). Default is Null. The Bottom Border Line Color of the Cell Style, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iLeft               - [optional] an integer value (0-16777215). Default is Null. The Left Border Line Color of the Cell Style, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. The Right Border Line Color of the Cell Style, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iTLBRDiag           - [optional] an integer value (0-16777215). Default is Null. The Top-Left to Bottom-Right Diagonal Border Line Color of the Cell Style, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
+;                  $iBLTRDiag           - [optional] an integer value (0-16777215). Default is Null. The Bottom-Left to Top-Right Diagonal Border Line Color of the Cell Style, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -166,10 +166,10 @@ EndFunc   ;==>_LOCalc_CellStyleBorderColor
 ; Syntax ........: _LOCalc_CellStyleBorderPadding(ByRef $oCellStyle[, $iAll = Null[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]]])
 ; Parameters ....: $oCellStyle          - [in/out] an object. A Cell Style object returned by a previous _LOCalc_CellStyleCreate, or _LOCalc_CellStyleGetObj function.
 ;                  $iAll                - [optional] an integer value. Default is Null. Set all four padding distances to one distance in Hundredths of a Millimeter (100th MM).
-;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Distance between the Border and Cell contents, in Hundredths of a Millimeter (100th MM).
-;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Distance between the Border and Cell contents, in Hundredths of a Millimeter (100th MM).
-;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Distance between the Border and Cell contents, in Hundredths of a Millimeter (100th MM).
-;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Distance between the Border and Cell contents, in Hundredths of a Millimeter (100th MM).
+;                  $iTop                - [optional] an integer value. Default is Null. The Top Distance between the Border and Cell contents, in Hundredths of a Millimeter (100th MM).
+;                  $iBottom             - [optional] an integer value. Default is Null. The Bottom Distance between the Border and Cell contents, in Hundredths of a Millimeter (100th MM).
+;                  $iLeft               - [optional] an integer value. Default is Null. The Left Distance between the Border and Cell contents, in Hundredths of a Millimeter (100th MM).
+;                  $iRight              - [optional] an integer value. Default is Null. The Right Distance between the Border and Cell contents, in Hundredths of a Millimeter (100th MM).
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -218,12 +218,12 @@ EndFunc   ;==>_LOCalc_CellStyleBorderPadding
 ; Description ...: Set and retrieve the Cell Style Border Line style. Libre Office Version 3.6 and Up.
 ; Syntax ........: _LOCalc_CellStyleBorderStyle(ByRef $oCellStyle[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null[, $iTLBRDiag = Null[, $iBLTRDiag = Null]]]]]])
 ; Parameters ....: $oCellStyle          - [in/out] an object. A Cell Style object returned by a previous _LOCalc_CellStyleCreate, or _LOCalc_CellStyleGetObj function.
-;                  $iTop                - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Top Border Line Style of the Cell Style using one of the line style constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iBottom             - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Bottom Border Line Style of the Cell Style using one of the line style constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iLeft               - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Left Border Line Style of the Cell Style using one of the line style constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iRight              - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Right Border Line Style of the Cell Style using one of the line style constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iTLBRDiag           - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Top-Left to Bottom-Right Diagonal Border Line Style of the Cell Style using one of the line style constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iBLTRDiag           - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Bottom-Left to Top-Right Diagonal Border Line Style of the Cell Style using one of the line style constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iTop                - [optional] an integer value (0x7FFF,0-17). Default is Null. The Top Border Line Style of the Cell Style. See Constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iBottom             - [optional] an integer value (0x7FFF,0-17). Default is Null. The Bottom Border Line Style of the Cell Style. See Constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iLeft               - [optional] an integer value (0x7FFF,0-17). Default is Null. The Left Border Line Style of the Cell Style. See Constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iRight              - [optional] an integer value (0x7FFF,0-17). Default is Null. The Right Border Line Style of the Cell Style. See Constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iTLBRDiag           - [optional] an integer value (0x7FFF,0-17). Default is Null. The Top-Left to Bottom-Right Diagonal Border Line Style of the Cell Style. See Constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iBLTRDiag           - [optional] an integer value (0x7FFF,0-17). Default is Null. The Bottom-Left to Top-Right Diagonal Border Line Style of the Cell Style. See Constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -285,12 +285,12 @@ EndFunc   ;==>_LOCalc_CellStyleBorderStyle
 ; Description ...: Set and retrieve the Cell Style Border Line Width settings. Libre Office Version 3.6 and Up.
 ; Syntax ........: _LOCalc_CellStyleBorderWidth(ByRef $oCellStyle[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null[, $iTLBRDiag = Null[, $iBLTRDiag = Null]]]]]])
 ; Parameters ....: $oCellStyle          - [in/out] an object. A Cell Style object returned by a previous _LOCalc_CellStyleCreate, or _LOCalc_CellStyleGetObj function.
-;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Border Line width of the Cell Style in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Border Line width of the Cell Style in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Border Line width of the Cell Style in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Border Line width of the Cell Style in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iTLBRDiag           - [optional] an integer value. Default is Null. Set the Top-Left to Bottom-Right Diagonal Border Line width of the Cell Style in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iBLTRDiag           - [optional] an integer value. Default is Null. Set the Bottom-Left to Top-Right Diagonal Border Line width of the Cell Style in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iTop                - [optional] an integer value. Default is Null. The Top Border Line width of the Cell Style in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iBottom             - [optional] an integer value. Default is Null. The Bottom Border Line width of the Cell Style in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iLeft               - [optional] an integer value. Default is Null. The Left Border Line width of the Cell Style in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iRight              - [optional] an integer value. Default is Null. The Right Border Line width of the Cell Style in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iTLBRDiag           - [optional] an integer value. Default is Null. The Top-Left to Bottom-Right Diagonal Border Line width of the Cell Style in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iBLTRDiag           - [optional] an integer value. Default is Null. The Bottom-Left to Top-Right Diagonal Border Line width of the Cell Style in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--

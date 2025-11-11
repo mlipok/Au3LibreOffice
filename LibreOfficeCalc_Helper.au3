@@ -1140,7 +1140,7 @@ EndFunc   ;==>_LOCalc_GradientMulticolorModify
 ;                  $bBackwards          - [optional] a boolean value. Default is False. If True, the document is searched backwards.
 ;                  $bSearchRows         - [optional] a boolean value. Default is True. If True, Search is performed left to right along the rows, else if False, the search is performed top to bottom along the columns.
 ;                  $bMatchCase          - [optional] a boolean value. Default is False. If True, the case of the letters is important for the Search.
-;                  $iSearchIn           - [optional] an integer value (0-2). Default is $LOC_SEARCH_IN_FORMULAS. Set the Cell data type to search in. See Constants $LOC_SEARCH_IN_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iSearchIn           - [optional] an integer value (0-2). Default is $LOC_SEARCH_IN_FORMULAS. The Cell data type to search in. See Constants $LOC_SEARCH_IN_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $bEntireCell         - [optional] a boolean value. Default is False. If True, Searches for whole words or cells that are identical to the search text.
 ;                  $bRegExp             - [optional] a boolean value. Default is False. If True, the search string is evaluated as a regular expression.
 ;                  $bWildcards          - [optional] a boolean value. Default is False. If True, the search string is considered to contain wildcards (* ?). A Backslash can be used to escape a wildcard.
@@ -1213,7 +1213,7 @@ EndFunc   ;==>_LOCalc_SearchDescriptorCreate
 ;                  $bBackwards          - [optional] a boolean value. Default is Null. If True, the document is searched backwards.
 ;                  $bSearchRows         - [optional] a boolean value. Default is Null. If True, Search is performed left to right along the rows, else if False, the search is performed top to bottom along the columns.
 ;                  $bMatchCase          - [optional] a boolean value. Default is Null. If True, the case of the letters is important for the Search.
-;                  $iSearchIn           - [optional] an integer value (0-2). Default is Null. Set the Cell data type to search in. See Constants $LOC_SEARCH_IN_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iSearchIn           - [optional] an integer value (0-2). Default is Null. The Cell data type to search in. See Constants $LOC_SEARCH_IN_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $bEntireCell         - [optional] a boolean value. Default is Null. If True, Searches for whole words or cells that are identical to the search text.
 ;                  $bRegExp             - [optional] a boolean value. Default is Null. If True, the search string is evaluated as a regular expression.
 ;                  $bWildcards          - [optional] a boolean value. Default is Null. If True, the search string is considered to contain wildcards (* ?). A Backslash can be used to escape a wildcard.

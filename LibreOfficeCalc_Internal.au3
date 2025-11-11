@@ -331,10 +331,10 @@ EndFunc   ;==>__LOCalc_CellBorder
 ; Syntax ........: __LOCalc_CellBorderPadding(ByRef $oObj, $iAll, $iTop, $iBottom, $iLeft, $iRight)
 ; Parameters ....: $oObj                - [in/out] an object. A Cell, Cell Range or Cell Style Object returned from an applicable function.
 ;                  $iAll                - an integer value. Set all four padding distances to one distance in Hundredths of a Millimeter (100th MM).
-;                  $iTop                - an integer value. Set the Top Distance between the Border and Cell contents, in Hundredths of a Millimeter (100th MM).
-;                  $iBottom             - an integer value. Set the Bottom Distance between the Border and Cell contents, in Hundredths of a Millimeter (100th MM).
-;                  $iLeft               - an integer value. Set the Left Distance between the Border and Cell contents, in Hundredths of a Millimeter (100th MM).
-;                  $iRight              - an integer value. Set the Right Distance between the Border and Cell contents, in Hundredths of a Millimeter (100th MM).
+;                  $iTop                - an integer value. The Top Distance between the Border and Cell contents, in Hundredths of a Millimeter (100th MM).
+;                  $iBottom             - an integer value. The Bottom Distance between the Border and Cell contents, in Hundredths of a Millimeter (100th MM).
+;                  $iLeft               - an integer value. The Left Distance between the Border and Cell contents, in Hundredths of a Millimeter (100th MM).
+;                  $iRight              - an integer value. The Right Distance between the Border and Cell contents, in Hundredths of a Millimeter (100th MM).
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--

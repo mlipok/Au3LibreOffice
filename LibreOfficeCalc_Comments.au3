@@ -2477,11 +2477,11 @@ EndFunc   ;==>_LOCalc_CommentTextColumns
 ;                  $bFitWidth           - [optional] a boolean value. Default is Null. If True, the comment box width will expand to fit text content.
 ;                  $bFitHeight          - [optional] a boolean value. Default is Null. If True, the comment box height will expand to fit text content.
 ;                  $bFitToFrame         - [optional] a boolean value. Default is Null. If True text will be resized to fit the frame.
-;                  $iSpacingAll         - [optional] an integer value (-100000-100000). Default is Null. Set the spacing around the text between the text and the Comment borders, in Hundredths of a Millimeter (100th MM).
-;                  $iLeft               - [optional] an integer value (-100000-100000). Default is Null. Set the spacing on the Left side of the text between the text and the Comment border, in Hundredths of a Millimeter (100th MM).
-;                  $iRight              - [optional] an integer value (-100000-100000). Default is Null. Set the spacing on the Right side of the text between the text and the Comment border, in Hundredths of a Millimeter (100th MM).
-;                  $iTop                - [optional] an integer value (-100000-100000). Default is Null. Set the spacing on the Top side of the text between the text and the Comment border, in Hundredths of a Millimeter (100th MM).
-;                  $iBottom             - [optional] an integer value (-100000-100000). Default is Null. Set the spacing on the Bottom side of the text between the text and the Comment border, in Hundredths of a Millimeter (100th MM).
+;                  $iSpacingAll         - [optional] an integer value (-100000-100000). Default is Null. The spacing around the text between the text and the Comment borders, in Hundredths of a Millimeter (100th MM).
+;                  $iLeft               - [optional] an integer value (-100000-100000). Default is Null. The spacing on the Left side of the text between the text and the Comment border, in Hundredths of a Millimeter (100th MM).
+;                  $iRight              - [optional] an integer value (-100000-100000). Default is Null. The spacing on the Right side of the text between the text and the Comment border, in Hundredths of a Millimeter (100th MM).
+;                  $iTop                - [optional] an integer value (-100000-100000). Default is Null. The spacing on the Top side of the text between the text and the Comment border, in Hundredths of a Millimeter (100th MM).
+;                  $iBottom             - [optional] an integer value (-100000-100000). Default is Null. The spacing on the Bottom side of the text between the text and the Comment border, in Hundredths of a Millimeter (100th MM).
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
