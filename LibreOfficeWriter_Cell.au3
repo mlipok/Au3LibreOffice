@@ -51,7 +51,7 @@
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iBackColor not an Integer, set less than -1 or greater than 16777215.
-;                  @Error 1 @Extended 3 Return 0 = $bBackTransparent not a Boolean and not set to Null.
+;                  @Error 1 @Extended 3 Return 0 = $bBackTransparent not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iBackColor
@@ -379,7 +379,7 @@ EndFunc   ;==>_LOWriter_CellCreateTextCursor
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $sFormula not a String and not set to Null keyword.
+;                  @Error 1 @Extended 2 Return 0 = $sFormula not a String.
 ;                  @Error 1 @Extended 3 Return 0 = $oCell is a CellRange not an individual cell.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Formula was successfully set.
@@ -586,7 +586,7 @@ EndFunc   ;==>_LOWriter_CellString
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $nValue not a Number and not set to Null keyword.
+;                  @Error 1 @Extended 2 Return 0 = $nValue not a Number.
 ;                  @Error 1 @Extended 3 Return 0 = $oCell is a CellRange not an individual cell.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Successfully set cell value.

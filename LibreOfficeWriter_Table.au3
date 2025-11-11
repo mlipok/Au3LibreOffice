@@ -667,8 +667,8 @@ EndFunc   ;==>_LOWriter_TableColumnInsert
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iRows not an integer, or less than 1.
 ;                  @Error 1 @Extended 3 Return 0 = $iColumns not an integer, or less than 1.
-;                  @Error 1 @Extended 4 Return 0 = $bSplit not a Boolean, or not set to Null.
-;                  @Error 1 @Extended 5 Return 0 = $iBackColor not an integer, Or set to less than -1 or higher than 16777215, or not set to Null
+;                  @Error 1 @Extended 4 Return 0 = $bSplit not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $iBackColor not an integer, less than -1 or higher than 16777215.
 ;                  @Error 1 @Extended 6 Return 0 = $sTableName not a String.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failure Creating Object com.sun.star.text.TextTable.

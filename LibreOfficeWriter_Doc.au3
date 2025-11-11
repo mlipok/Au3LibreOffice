@@ -1394,7 +1394,7 @@ EndFunc   ;==>_LOWriter_DocFindAll
 ;                  @Error 1 @Extended 2 Return 0 = $oSrchDescript not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $oSrchDescript not a Search Descriptor Object.
 ;                  @Error 1 @Extended 4 Return 0 = $sSearchString not a String.
-;                  @Error 1 @Extended 5 Return 0 = $oRange not set to Null and not an Object.
+;                  @Error 1 @Extended 5 Return 0 = $oRange not an Object.
 ;                  @Error 1 @Extended 6 Return 0 = $oRange has no data selected.
 ;                  @Error 1 @Extended 7 Return 0 = $atFindFormat not an Array.
 ;                  @Error 1 @Extended 8 Return 0 = First element in $atFindFormat not an Object.
@@ -1508,9 +1508,9 @@ EndFunc   ;==>_LOWriter_DocFindAllInRange
 ;                  @Error 1 @Extended 4 Return 0 = $sSearchString not a String.
 ;                  @Error 1 @Extended 5 Return 0 = $atFindFormat not an Array.
 ;                  @Error 1 @Extended 6 Return 0 = First element in $atFindFormat not an Object.
-;                  @Error 1 @Extended 7 Return 0 = $oRange not set to Null and not an Object.
+;                  @Error 1 @Extended 7 Return 0 = $oRange not an Object.
 ;                  @Error 1 @Extended 8 Return 0 = $oRange has no data selected.
-;                  @Error 1 @Extended 9 Return 0 = $oLastFind not an Object and not set to Null, or failed to retrieve starting position from $oRange.
+;                  @Error 1 @Extended 9 Return 0 = $oLastFind not an Object, or failed to retrieve starting position from $oRange.
 ;                  @Error 1 @Extended 10 Return 0 = $oLastFind incorrect Object type.
 ;                  @Error 1 @Extended 11 Return 0 = $bExhaustive not a Boolean.
 ;                  --Success--

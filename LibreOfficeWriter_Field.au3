@@ -5682,7 +5682,7 @@ EndFunc   ;==>_LOWriter_FieldStatTemplateModify
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object
-;                  @Error 1 @Extended 2 Return 0 = $oField not set to Null, and not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oField not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $bForceUpdate not a Boolean.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve enumeration of all fields.
