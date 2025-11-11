@@ -672,7 +672,7 @@ EndFunc   ;==>_LOBase_SQLResultRowUpdate
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oConnection not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = Object called in $oConnection not a Connection Object.
-;                  @Error 1 @Extended 3 Return 0 = $sSQL not a String and not set to Null.
+;                  @Error 1 @Extended 3 Return 0 = $sSQL not a String.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create a prepared Statement.
 ;                  @Error 2 @Extended 2 Return 0 = Failed to create a Statement.
