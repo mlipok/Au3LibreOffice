@@ -831,7 +831,7 @@ EndFunc   ;==>_LOBase_ReportConLabelGeneral
 ; Parameters ....: $oLine               - [in/out] an object. A Line Control object returned by a previous _LOBase_ReportConInsert or _LOBase_ReportConsGetList function.
 ;                  $sName               - [optional] a string value. Default is Null. The name of the control.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOB_ALIGN_VERT_* as defined in LibreOfficeBase_Constants.au3.
-;                  $iOrient             - [optional] an integer value. Default is Null. The orientation of the line. See Constants $LOB_REP_CON_LINE_* as defined in LibreOfficeBase_Constants.au3.
+;                  $iOrient             - [optional] an integer value (0-1). Default is Null. The orientation of the line. See Constants $LOB_REP_CON_LINE_* as defined in LibreOfficeBase_Constants.au3.
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--

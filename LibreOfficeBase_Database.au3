@@ -405,7 +405,7 @@ EndFunc   ;==>_LOBase_DatabaseIsReadOnly
 ; Description ...: Query a Database's MetaData.
 ; Syntax ........: _LOBase_DatabaseMetaDataQuery(ByRef $oConnection, $iQuery[, $vParam1 = Null[, $vParam2 = Null[, $vParam3 = Null[, $vParam4 = Null[, $vParam5 = Null[, $vParam6 = Null]]]]]])
 ; Parameters ....: $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
-;                  $iQuery              - an integer value. The query to perform. See Constants, $LOB_DBASE_META_* as defined in LibreOfficeBase_Constants.au3.
+;                  $iQuery              - an integer value (0-148). The query to perform. See Constants, $LOB_DBASE_META_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $vParam1             - [optional] a variant value. Default is Null. The first Parameter required by the Query. See remarks for the queries that have parameters.
 ;                  $vParam2             - [optional] a variant value. Default is Null. The second Parameter required by the Query. See remarks for the queries that have parameters.
 ;                  $vParam3             - [optional] a variant value. Default is Null. The third Parameter required by the Query. See remarks for the queries that have parameters.

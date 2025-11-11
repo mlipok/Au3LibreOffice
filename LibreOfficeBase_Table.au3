@@ -60,7 +60,7 @@
 ; Parameters ....: $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
 ;                  $sName               - a string value. The Unique name of the table to create.
 ;                  $sColName            - a string value. The Name for the first column.
-;                  $iColType            - [optional] an integer value (-16-2014. Default is $LOB_DATA_TYPE_VARCHAR. The new Column's data type. See Constants, $LOB_DATA_TYPE_* as defined in LibreOfficeBase_Constants.au3.
+;                  $iColType            - [optional] an integer value (-16-2014). Default is $LOB_DATA_TYPE_VARCHAR. The new Column's data type. See Constants, $LOB_DATA_TYPE_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $sColTypeName        - [optional] a string value. Default is "". If the column type is a user-defined type, then a fully-qualified type name will be entered here.
 ;                  $sColDesc            - [optional] a string value. Default is "". The description text of the new column.
 ; Return values .: Success: Object

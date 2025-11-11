@@ -226,7 +226,7 @@ EndFunc   ;==>__LOBase_ColTypeName
 ; Name ..........: __LOBase_DatabaseMetaGetQuery
 ; Description ...: Return the Query command from a Constant value.
 ; Syntax ........: __LOBase_DatabaseMetaGetQuery($iQuery)
-; Parameters ....: $iQuery              - an integer value. The Query to retrieve the command for. See Constants, $LOB_DBASE_META_* as defined in LibreOfficeBase_Constants.au3.
+; Parameters ....: $iQuery              - an integer value (0-148). The Query to retrieve the command for. See Constants, $LOB_DBASE_META_* as defined in LibreOfficeBase_Constants.au3.
 ; Return values .: Success: String
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
