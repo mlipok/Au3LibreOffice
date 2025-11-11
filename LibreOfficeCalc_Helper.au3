@@ -1140,7 +1140,7 @@ EndFunc   ;==>_LOCalc_GradientMulticolorModify
 ;                  $bBackwards          - [optional] a boolean value. Default is False. If True, the document is searched backwards.
 ;                  $bSearchRows         - [optional] a boolean value. Default is True. If True, Search is performed left to right along the rows, else if False, the search is performed top to bottom along the columns.
 ;                  $bMatchCase          - [optional] a boolean value. Default is False. If True, the case of the letters is important for the Search.
-;                  $iSearchIn           - [optional] an integer value. Default is $LOC_SEARCH_IN_FORMULAS. Set the Cell data type to search in. See Constants $LOC_SEARCH_IN_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iSearchIn           - [optional] an integer value (0-2). Default is $LOC_SEARCH_IN_FORMULAS. Set the Cell data type to search in. See Constants $LOC_SEARCH_IN_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $bEntireCell         - [optional] a boolean value. Default is False. If True, Searches for whole words or cells that are identical to the search text.
 ;                  $bRegExp             - [optional] a boolean value. Default is False. If True, the search string is evaluated as a regular expression.
 ;                  $bWildcards          - [optional] a boolean value. Default is False. If True, the search string is considered to contain wildcards (* ?). A Backslash can be used to escape a wildcard.
@@ -1213,7 +1213,7 @@ EndFunc   ;==>_LOCalc_SearchDescriptorCreate
 ;                  $bBackwards          - [optional] a boolean value. Default is Null. If True, the document is searched backwards.
 ;                  $bSearchRows         - [optional] a boolean value. Default is Null. If True, Search is performed left to right along the rows, else if False, the search is performed top to bottom along the columns.
 ;                  $bMatchCase          - [optional] a boolean value. Default is Null. If True, the case of the letters is important for the Search.
-;                  $iSearchIn           - [optional] an integer value. Default is Null. Set the Cell data type to search in. See Constants $LOC_SEARCH_IN_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iSearchIn           - [optional] an integer value (0-2). Default is Null. Set the Cell data type to search in. See Constants $LOC_SEARCH_IN_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $bEntireCell         - [optional] a boolean value. Default is Null. If True, Searches for whole words or cells that are identical to the search text.
 ;                  $bRegExp             - [optional] a boolean value. Default is Null. If True, the search string is evaluated as a regular expression.
 ;                  $bWildcards          - [optional] a boolean value. Default is Null. If True, the search string is considered to contain wildcards (* ?). A Backslash can be used to escape a wildcard.
@@ -1459,7 +1459,7 @@ EndFunc   ;==>_LOCalc_SortFieldCreate
 ; Syntax ........: _LOCalc_SortFieldModify(ByRef $tSortField[, $iIndex = Null[, $iDataType = Null[, $bAscending = Null[, $bCaseSensitive = Null]]]])
 ; Parameters ....: $tSortField          - [in/out] a dll struct value. A Sort Field Struct created by a previous _LOCalc_SortFieldCreate function.
 ;                  $iIndex              - [optional] an integer value. Default is Null. The Column or Row to perform the sort upon. 0 Based. 0 is the first Column/Row in the Cell Range.
-;                  $iDataType           - [optional] an integer value. Default is Null. The type of data that will be sorted. See Constants $LOC_SORT_DATA_TYPE_* as defined in LibreOfficeCalc_Constants.au3
+;                  $iDataType           - [optional] an integer value (0-2). Default is Null. The type of data that will be sorted. See Constants $LOC_SORT_DATA_TYPE_* as defined in LibreOfficeCalc_Constants.au3
 ;                  $bAscending          - [optional] a boolean value. Default is Null. If True, data will be sorted into ascending order.
 ;                  $bCaseSensitive      - [optional] a boolean value. Default is Null. If True, sort will be case sensitive.
 ; Return values .: Success: 1

@@ -2021,7 +2021,7 @@ EndFunc   ;==>_LOCalc_RangeGetSheet
 ; Description ...: Group or Ungroup cells in a Range.
 ; Syntax ........: _LOCalc_RangeGroup(ByRef $oRange[, $iOrientation = $LOC_GROUP_ORIENT_ROWS[, $bGroup = True]])
 ; Parameters ....: $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
-;                  $iOrientation        - [optional] an integer value. Default is $LOC_GROUP_ORIENT_ROWS. Whether to Group Rows or Columns. See Constants $LOC_GROUP_ORIENT_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iOrientation        - [optional] an integer value (0-1). Default is $LOC_GROUP_ORIENT_ROWS. Whether to Group Rows or Columns. See Constants $LOC_GROUP_ORIENT_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $bGroup              - [optional] a boolean value. Default is True. If True Cells are Grouped, if False, cells are Ungrouped.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -2808,7 +2808,7 @@ EndFunc   ;==>_LOCalc_RangeOutlineClearAll
 ; Syntax ........: _LOCalc_RangeOutlineShow(ByRef $oSheet, $iLevel[, $iOrientation = $LOC_GROUP_ORIENT_ROWS])
 ; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
 ;                  $iLevel              - an integer value. The level of Outlines to show, beginning at 1 and continuing to the level input. Call 0 to collapse them all.
-;                  $iOrientation        - [optional] an integer value. Default is $LOC_GROUP_ORIENT_ROWS. The orientation of the Outlines. See Constants $LOC_GROUP_ORIENT_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iOrientation        - [optional] an integer value (0-1). Default is $LOC_GROUP_ORIENT_ROWS. The orientation of the Outlines. See Constants $LOC_GROUP_ORIENT_* as defined in LibreOfficeCalc_Constants.au3.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -5493,13 +5493,13 @@ EndFunc   ;==>_LOCalc_RangeSortAlt
 ; Description ...: Set or Retrieve Validation settings for a Range.
 ; Syntax ........: _LOCalc_RangeValidation(ByRef $oRange[, $iType = Null[, $iCondition = Null[, $sValue1 = Null[, $sValue2 = Null[, $oBaseCell = Null[, $bIgnoreBlanks = Null[, $iShowList = Null]]]]]]])
 ; Parameters ....: $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
-;                  $iType               - [optional] an integer value. Default is Null. The Validity check type. See Constants $LOC_VALIDATION_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iCondition          - [optional] an integer value. Default is Null. The Condition to check the cell data with. See Constants $LOC_VALIDATION_COND_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iType               - [optional] an integer value (0-7). Default is Null. The Validity check type. See Constants $LOC_VALIDATION_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iCondition          - [optional] an integer value (0-9). Default is Null. The Condition to check the cell data with. See Constants $LOC_VALIDATION_COND_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $sValue1             - [optional] a string value. Default is Null. If Condition is such that it requires a value, enter it here as a string.
 ;                  $sValue2             - [optional] a string value. Default is Null. If Condition is such that it requires a second value, enter it here as a string.
 ;                  $oBaseCell           - [optional] an object. Default is Null. The Cell that is used as a base for relative references in the formulas.
 ;                  $bIgnoreBlanks       - [optional] a boolean value. Default is Null. If True, empty cells are allowed, and not marked as invalid.
-;                  $iShowList           - [optional] an integer value. Default is Null. If $iType is set to $LOC_VALIDATION_TYPE_LIST, $iShowList determines the visibility of the list. See Constants $LOC_VALIDATION_LIST_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iShowList           - [optional] an integer value (0-2). Default is Null. If $iType is set to $LOC_VALIDATION_TYPE_LIST, $iShowList determines the visibility of the list. See Constants $LOC_VALIDATION_LIST_* as defined in LibreOfficeCalc_Constants.au3.
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -5634,7 +5634,7 @@ EndFunc   ;==>_LOCalc_RangeValidation
 ;                  $sInputTitle         - [optional] a string value. Default is Null. If $bInputMsg is True, the Title of the Input tip to display.
 ;                  $sInputMsg           - [optional] a string value. Default is Null. If $bInputMsg is True, the Message of the Input tip to display.
 ;                  $bErrorMsg           - [optional] a boolean value. Default is Null. If True, a error message is displayed when invalid data is entered into a cell.
-;                  $iErrorStyle         - [optional] an integer value. Default is Null. The Error alert style. See Constants $LOC_VALIDATION_ERROR_ALERT_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iErrorStyle         - [optional] an integer value (0-3). Default is Null. The Error alert style. See Constants $LOC_VALIDATION_ERROR_ALERT_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $sErrorTitle         - [optional] a string value. Default is Null. If $bErrorMsg is True, the Title of the error alert to display.
 ;                  $sErrorMsg           - [optional] a string value. Default is Null. If $bErrorMsg is True, the Message of the error alert to display.
 ; Return values .: Success: 1 or Array

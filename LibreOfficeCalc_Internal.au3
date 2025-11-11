@@ -1643,7 +1643,7 @@ EndFunc   ;==>__LOCalc_CharSpacing
 ; Description ...: Internal function for setting or retrieving Comment Shadow Location and Distance settings.
 ; Syntax ........: __LOCalc_CommentAreaShadowModify($oAnnotationShape[, $iLocation = Null[, $iDistance = Null]])
 ; Parameters ....: $oAnnotationShape    - an object. A Annotation Shape Object retrieved from a Comment.
-;                  $iLocation           - [optional] an integer value. Default is Null. The Location of the Shadow, must be one of the Constants, $LOC_COMMENT_SHADOW_* as defined in LibreOfficeCalc_Constants.au3..
+;                  $iLocation           - [optional] an integer value (0-8). Default is Null. The Location of the Shadow, must be one of the Constants, $LOC_COMMENT_SHADOW_* as defined in LibreOfficeCalc_Constants.au3..
 ;                  $iDistance           - [optional] an integer value. Default is Null. The distance of the Shadow from the Comment box, set in Hundredths of a Millimeter (100th MM).
 ; Return values .: Success: 1 or Integer
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1928,7 +1928,7 @@ EndFunc   ;==>__LOCalc_CommentGetObjByCell
 ; Name ..........: __LOCalc_CommentLineStyleName
 ; Description ...: Convert a Line Style Constant to the corresponding name or reverse.
 ; Syntax ........: __LOCalc_CommentLineStyleName([$iLineStyle = Null[, $sLineStyle = Null]])
-; Parameters ....: $iLineStyle          - [optional] an integer value. Default is Null. The Line Style Constant to convert to its corresponding name. See $LOC_COMMENT_LINE_STYLE_* as defined in LibreOfficeCalc_Constants.au3
+; Parameters ....: $iLineStyle          - [optional] an integer value (0-31). Default is Null. The Line Style Constant to convert to its corresponding name. See $LOC_COMMENT_LINE_STYLE_* as defined in LibreOfficeCalc_Constants.au3
 ;                  $sLineStyle          - [optional] a string value. Default is Null. The Line Style Name to convert to the corresponding constant if found.
 ; Return values .: Success: String or Integer
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
