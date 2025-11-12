@@ -217,10 +217,10 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderPadding
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, less than 0 or greater than 17 but not equal to 0x7FFF.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, less than 0 or greater than 17 but not equal to 0x7FFF.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, less than 0 or greater than 17 but not equal to 0x7FFF.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, less than 0 or greater than 17 but not equal to 0x7FFF.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
@@ -1213,10 +1213,10 @@ EndFunc   ;==>_LOWriter_DirFrmtParBackColor
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0 or higher than 16,777,215.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0 or higher than 16,777,215.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0 or higher than 16,777,215.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0 or higher than 16,777,215.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, less than 0 or higher than 16,777,215.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, less than 0 or higher than 16,777,215.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, less than 0 or higher than 16,777,215.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, less than 0 or higher than 16,777,215.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
@@ -1348,10 +1348,10 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderPadding
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--

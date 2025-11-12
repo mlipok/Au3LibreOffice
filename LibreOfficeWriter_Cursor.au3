@@ -75,9 +75,9 @@ EndFunc   ;==>_LOWriter_CursorGetDataType
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCursor not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iFlag not an Integer.
-;                  @Error 1 @Extended 3 Return 0 = $iFlag set to flag not available for "Text" cursor.
-;                  @Error 1 @Extended 4 Return 0 = $iFlag set to flag not available for "Table" cursor.
-;                  @Error 1 @Extended 5 Return 0 = $iFlag set to flag not available for "View" cursor.
+;                  @Error 1 @Extended 3 Return 0 = Flag called in $iFlag not available for "Text" cursor.
+;                  @Error 1 @Extended 4 Return 0 = Flag called in $iFlag not available for "Table" cursor.
+;                  @Error 1 @Extended 5 Return 0 = Flag called in $iFlag not available for "View" cursor.
 ;                  @Error 1 @Extended 6 Return 0 = $oCursor unknown cursor type.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Cursor Type.

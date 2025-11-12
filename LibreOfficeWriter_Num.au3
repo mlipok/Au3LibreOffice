@@ -119,7 +119,7 @@ EndFunc   ;==>_LOWriter_NumStyleCreate
 ;                  @Error 1 @Extended 7 Return 0 = $sCharStyle not a string.
 ;                  @Error 1 @Extended 8 Return 0 = Character Style called in $sCharStyle, not found in document.
 ;                  @Error 1 @Extended 9 Return 0 = $iSubLevels not an Integer, less than 1, or greater than 10.
-;                  @Error 1 @Extended 10 Return 0 = $iLevel set to 0 (all levels) And $iSubLevels greater than 1.
+;                  @Error 1 @Extended 10 Return 0 = $iLevel called with 0 (all levels) And $iSubLevels greater than 1.
 ;                  @Error 1 @Extended 11 Return 0 = $iSubLevels greater than $iLevel.
 ;                  @Error 1 @Extended 12 Return 0 = $sSepBefore not a string.
 ;                  @Error 1 @Extended 13 Return 0 = $sSepAfter not a string.

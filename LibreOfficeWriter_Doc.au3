@@ -2569,7 +2569,7 @@ EndFunc   ;==>_LOWriter_DocHeaderGetTextCursor
 ;                  @Error 1 @Extended 3 Return 0 = $sLinkText not a String.
 ;                  @Error 1 @Extended 4 Return 0 = $sLinkAddress not a String.
 ;                  @Error 1 @Extended 5 Return 0 = $bInsertAtViewCursor not a Boolean.
-;                  @Error 1 @Extended 6 Return 0 = $oCursor is set to an Object variable, and $bInsertAtViewCursor is set to True. Change $oCursor to Default or set $bInsertAtViewCursor to False.
+;                  @Error 1 @Extended 6 Return 0 = $oCursor is set to an Object, and $bInsertAtViewCursor is set to True. Change $oCursor to Default or set $bInsertAtViewCursor to False.
 ;                  @Error 1 @Extended 7 Return 0 = $bOverwrite not a Boolean.
 ;                  @Error 1 @Extended 8 Return 0 = $oCursor is a TableCursor, and is not supported.
 ;                  --Initialization Errors--

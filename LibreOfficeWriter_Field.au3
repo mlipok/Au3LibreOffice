@@ -3924,7 +3924,7 @@ EndFunc   ;==>_LOWriter_FieldRefEndnoteInsert
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oEndNoteRefField not an Object.
-;                  @Error 1 @Extended 3 Return 0 = Optional Parameters set to null, but $oEndNoteRefField object is not a listed as an Endnote Reference type field.
+;                  @Error 1 @Extended 3 Return 0 = Optional Parameters set to null, but object called in $oEndNoteRefField not set as an Endnote Reference type field.
 ;                  @Error 1 @Extended 4 Return 0 = $oEndNote not an Object.
 ;                  @Error 1 @Extended 5 Return 0 = $iRefUsing not an Integer, less than 0, or greater than 4.
 ;                  --Processing Errors--
@@ -4067,7 +4067,7 @@ EndFunc   ;==>_LOWriter_FieldRefFootnoteInsert
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oFootNoteRefField not an Object.
-;                  @Error 1 @Extended 3 Return 0 = Optional Parameters set to null, but $oFootNoteRefField object is not a listed as a Footnote Reference type field.
+;                  @Error 1 @Extended 3 Return 0 = Optional Parameters set to null, but object called in $oFootNoteRefField not set as a Footnote Reference type field.
 ;                  @Error 1 @Extended 4 Return 0 = $oFootNote not an Object.
 ;                  @Error 1 @Extended 5 Return 0 = $iRefUsing not an Integer, less than 0, or greater than 4.
 ;                  --Processing Errors--
