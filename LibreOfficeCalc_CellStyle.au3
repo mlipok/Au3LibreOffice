@@ -109,12 +109,12 @@ EndFunc   ;==>_LOCalc_CellStyleBackColor
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCellStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oCellStyle is not a Cell Style object.
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0, or greater than 16,777,215.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0, or greater than 16,777,215.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0, or greater than 16,777,215.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0, or greater than 16,777,215.
-;                  @Error 1 @Extended 7 Return 0 = $iTLBRDiag not an integer, or set to less than 0, or greater than 16,777,215.
-;                  @Error 1 @Extended 8 Return 0 = $iBLTRDiag not an integer, or set to less than 0, or greater than 16,777,215.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, less than 0, or greater than 16,777,215.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, less than 0, or greater than 16,777,215.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, less than 0, or greater than 16,777,215.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, less than 0, or greater than 16,777,215.
+;                  @Error 1 @Extended 7 Return 0 = $iTLBRDiag not an integer, less than 0, or greater than 16,777,215.
+;                  @Error 1 @Extended 8 Return 0 = $iBLTRDiag not an integer, less than 0, or greater than 16,777,215.
 ;                  @Error 1 @Extended 9 Return 0 = Variable passed to internal function not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
@@ -229,12 +229,12 @@ EndFunc   ;==>_LOCalc_CellStyleBorderPadding
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCellStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oCellStyle is not a Cell Style object.
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to higher than 17, and not equal to 0x7FFF, or less than 0. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to higher than 17, and not equal to 0x7FFF, or less than 0. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to higher than 17, and not equal to 0x7FFF, or less than 0. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to higher than 17, and not equal to 0x7FFF, or less than 0. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 7 Return 0 = $iTLBRDiag not an integer, or set to higher than 17, and not equal to 0x7FFF, or less than 0. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 8 Return 0 = $iBLTRDiag not an integer, or set to higher than 17, and not equal to 0x7FFF, or less than 0. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, less than 0 or higher than 17, but not equal to 0x7FFF. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, less than 0 or higher than 17, but not equal to 0x7FFF. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, less than 0 or higher than 17, but not equal to 0x7FFF. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, less than 0 or higher than 17, but not equal to 0x7FFF. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 7 Return 0 = $iTLBRDiag not an integer, less than 0 or higher than 17, but not equal to 0x7FFF. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 8 Return 0 = $iBLTRDiag not an integer, less than 0 or higher than 17, but not equal to 0x7FFF. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 9 Return 0 = Variable passed to internal function not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"

@@ -138,10 +138,10 @@ EndFunc   ;==>_LOCalc_PageStyleAreaColor
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0, or greater than 16,777,215.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0, or greater than 16,777,215.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0, or greater than 16,777,215.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0, or greater than 16,777,215.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, less than 0, or greater than 16,777,215.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, less than 0, or greater than 16,777,215.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, less than 0, or greater than 16,777,215.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, less than 0, or greater than 16,777,215.
 ;                  @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
@@ -291,10 +291,10 @@ EndFunc   ;==>_LOCalc_PageStyleBorderPadding
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to higher than 17, and not equal to 0x7FFF, or less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to higher than 17, and not equal to 0x7FFF, or less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to higher than 17, and not equal to 0x7FFF, or less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to higher than 17, and not equal to 0x7FFF, or less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, less than 0 or higher than 17, but not equal to 0x7FFF. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, less than 0 or higher than 17, but not equal to 0x7FFF. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, less than 0 or higher than 17, but not equal to 0x7FFF. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, less than 0 or higher than 17, but not equal to 0x7FFF. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
@@ -351,10 +351,10 @@ EndFunc   ;==>_LOCalc_PageStyleBorderStyle
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or less than 0.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or less than 0.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or less than 0.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or less than 0.
 ;                  @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
@@ -895,10 +895,10 @@ EndFunc   ;==>_LOCalc_PageStyleFooterBorderPadding
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, set to higher than 17, and not equal to 0x7FFF, Or is set to less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, set to higher than 17, and not equal to 0x7FFF, Or is set to less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, set to higher than 17, and not equal to 0x7FFF, Or is set to less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, set to higher than 17, and not equal to 0x7FFF, Or is set to less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, less than 0 or higher than 17, but not equal to 0x7FFF. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, less than 0 or higher than 17, but not equal to 0x7FFF. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, less than 0 or higher than 17, but not equal to 0x7FFF. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, less than 0 or higher than 17, but not equal to 0x7FFF. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
@@ -1077,7 +1077,7 @@ EndFunc   ;==>_LOCalc_PageStyleFooterCreateTextCursor
 ;                  @Error 1 @Extended 2 Return 0 = $oFirstPage not a keyword (Null or Default) and not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $oRightPage not a keyword (Null or Default) and not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $oLeftPage not a keyword (Null or Default) and not an Object.
-;                  @Error 1 @Extended 5 Return 0 = None of the Parameters ($oFirstPage, $oRightPage, $oLeftPage) are set to other than Null.
+;                  @Error 1 @Extended 5 Return 0 = None of the Parameters ($oFirstPage, $oRightPage, $oLeftPage) are called with other than Null.
 ;                  @Error 1 @Extended 6 Return 0 = Object called in $oFirstPage not a Header/Footer Object.
 ;                  @Error 1 @Extended 7 Return 0 = Object called in $oRightPage not a Header/Footer Object.
 ;                  @Error 1 @Extended 8 Return 0 = Object called in $oLeftPage not a Header/Footer Object.
@@ -1496,10 +1496,10 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderAreaColor
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0, or greater than 16,777,215.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0, or greater than 16,777,215.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0, or greater than 16,777,215.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0, or greater than 16,777,215.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, less than 0, or greater than 16,777,215.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, less than 0, or greater than 16,777,215.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, less than 0, or greater than 16,777,215.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, less than 0, or greater than 16,777,215.
 ;                  @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
@@ -1711,10 +1711,10 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderBorderStyle
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or less than 0.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or less than 0.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or less than 0.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or less than 0.
 ;                  @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
@@ -1833,7 +1833,7 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderCreateTextCursor
 ;                  @Error 1 @Extended 2 Return 0 = $oFirstPage not a keyword (Null or Default) and not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $oRightPage not a keyword (Null or Default) and not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $oLeftPage not a keyword (Null or Default) and not an Object.
-;                  @Error 1 @Extended 5 Return 0 = None of the Parameters ($oFirstPage, $oRightPage, $oLeftPage) are set to other than Null.
+;                  @Error 1 @Extended 5 Return 0 = None of the Parameters ($oFirstPage, $oRightPage, $oLeftPage) are called with other than Null.
 ;                  @Error 1 @Extended 6 Return 0 = Object called in $oFirstPage not a Header/Footer Object.
 ;                  @Error 1 @Extended 7 Return 0 = Object called in $oRightPage not a Header/Footer Object.
 ;                  @Error 1 @Extended 8 Return 0 = Object called in $oLeftPage not a Header/Footer Object.
