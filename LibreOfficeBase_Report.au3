@@ -195,7 +195,7 @@ EndFunc   ;==>_LOBase_ReportConDelete
 ;                  |                               1 = Error setting $sDataField
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were set to Null, returning current setting as a String.
+;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were called with Null, returning current setting as a String.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -276,7 +276,7 @@ EndFunc   ;==>_LOBase_ReportConFormattedFieldData
 ;                  |                               256 = Error setting $iFormat
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 10 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 10 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -402,7 +402,7 @@ EndFunc   ;==>_LOBase_ReportConFormattedFieldGeneral
 ;                  |                               1 = Error setting $sDataField
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were set to Null, returning current setting as a String.
+;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were called with Null, returning current setting as a String.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -481,7 +481,7 @@ EndFunc   ;==>_LOBase_ReportConImageConData
 ;                  |                               256 = Error setting $iScale
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 9 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 9 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -728,7 +728,7 @@ EndFunc   ;==>_LOBase_ReportConInsert
 ;                  |                               256 = Error setting $iVertAlign
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 9 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 9 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -849,7 +849,7 @@ EndFunc   ;==>_LOBase_ReportConLabelGeneral
 ;                  |                               4 = Error setting $iOrient
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -1009,7 +1009,7 @@ EndFunc   ;==>_LOBase_ReportConnect
 ;                  |                               2 = Error setting $iY
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1139,7 +1139,7 @@ EndFunc   ;==>_LOBase_ReportConsGetList
 ;                  |                               4 = Error setting $bAutoGrow
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -1393,7 +1393,7 @@ EndFunc   ;==>_LOBase_ReportCreate
 ;                  |                               32 = Error setting $bSuppress
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 6 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -1552,7 +1552,7 @@ EndFunc   ;==>_LOBase_ReportDelete
 ;                  |                               64 = Error setting $iBackColor
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 7 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The minimum height of a Section is 1753 Hundredths of a Millimeter (100th MM), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
@@ -2397,7 +2397,7 @@ EndFunc   ;==>_LOBase_ReportFoldersGetNames
 ;                  |                               128 = Error setting $iBackColor
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 8 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Report Footer must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Footer is disabled, the return values will be Null, except for the Boolean value of $bEnabled.
@@ -2555,7 +2555,7 @@ EndFunc   ;==>_LOBase_ReportFooter
 ;                  |                               16 = Error setting $bPrintRep
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -2807,7 +2807,7 @@ EndFunc   ;==>_LOBase_ReportGroupDeleteByObj
 ;                  |                               256 = Error setting $iBackColor
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 9 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 9 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Group Footer must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Footer is disabled, the return values will be Null, except for the Boolean value of $bFooterOn.
@@ -3028,7 +3028,7 @@ EndFunc   ;==>_LOBase_ReportGroupGetByIndex
 ;                  |                               256 = Error setting $iBackColor
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 9 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 9 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Group Header must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Header is disabled, the return values will be Null, except for the Boolean value of $bHeaderOn.
@@ -3189,7 +3189,7 @@ EndFunc   ;==>_LOBase_ReportGroupHeader
 ;                  @Error 3 @Extended 5 Return 0 = Failed to delete old Group.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Group was successfully moved.
-;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current Position as an Integer.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current Position as an Integer.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Group will be moved to the position before that called in $iPos. Thus to move a Group to the end of the list call $iPos with the total count of Groups, i.e., index of the last Group + 1.
@@ -3309,7 +3309,7 @@ EndFunc   ;==>_LOBase_ReportGroupsGetCount
 ;                  |                               16 = Error setting $iKeepTogether
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -3412,7 +3412,7 @@ EndFunc   ;==>_LOBase_ReportGroupSort
 ;                  |                               128 = Error setting $iBackColor
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 8 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Report Header must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Header is disabled, the return values will be Null, except for the Boolean value of $bEnabled.
@@ -3659,7 +3659,7 @@ EndFunc   ;==>_LOBase_ReportOpen
 ;                  |                               32 = Error setting $iBackColor
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 6 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Page Header must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Footer is disabled, the return values will be Null, except for the Boolean value of $bEnabled.
@@ -3795,7 +3795,7 @@ EndFunc   ;==>_LOBase_ReportPageFooter
 ;                  |                               32 = Error setting $iBackColor
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 6 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Page Header must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Header is disabled, the return values will be Null, except for the Boolean value of $bEnabled.

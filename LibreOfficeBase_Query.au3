@@ -484,7 +484,7 @@ EndFunc   ;==>_LOBase_QueryFieldGetObjByName
 ;                  |                               2 = Error setting $bVisible
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $sRealName modifies nothing, but is an indicator of where the Query Field's Real name (The name without an Alias) will be returned when returning the current settings.
@@ -1084,7 +1084,7 @@ EndFunc   ;==>_LOBase_QueryUIOpenByObject
 ;                  |                               1 = Error setting $bVisible
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Boolean = Success. All optional parameters were set to Null, returning current visibility setting.
+;                  @Error 0 @Extended 1 Return Boolean = Success. All optional parameters were called with Null, returning current visibility setting.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.

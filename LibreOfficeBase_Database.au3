@@ -58,7 +58,7 @@
 ;                  |                               1 = Error setting $bAutoCommit
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Boolean = Success. All optional parameters were set to Null, returning current AutoCommit setting as a Boolean value.
+;                  @Error 0 @Extended 1 Return Boolean = Success. All optional parameters were called with Null, returning current AutoCommit setting as a Boolean value.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: By default, new connections have auto-commit active.

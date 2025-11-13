@@ -323,7 +323,7 @@ EndFunc   ;==>_LOBase_TableColAdd
 ;                  |                               8 = Error setting $sDescription
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 or 4 Element Array with values in order of function parameters. See remarks.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 3 or 4 Element Array with values in order of function parameters. See remarks.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -586,7 +586,7 @@ EndFunc   ;==>_LOBase_TableColGetObjByName
 ;                  |                               64 = Error setting $iAlign
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 7 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: For $sDefaultVal, enter any numerical values as strings.
@@ -1179,7 +1179,7 @@ EndFunc   ;==>_LOBase_TableIndexesGetNames
 ;                  |                               2 = Error setting $bIsUnique
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Array called in $avColumns needs to be a 2 Column array, the Column name must be placed in the first (0th) column, and a Boolean value indicating whether the Column should should be sorted Ascending (True) or Descending (False) be found in the second (1st) column.
@@ -1850,7 +1850,7 @@ EndFunc   ;==>_LOBase_TableUIOpenByObject
 ;                  |                               1 = Error setting $bVisible
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Boolean = Success. All optional parameters were set to Null, returning current visibility setting.
+;                  @Error 0 @Extended 1 Return Boolean = Success. All optional parameters were called with Null, returning current visibility setting.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
