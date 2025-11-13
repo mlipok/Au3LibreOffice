@@ -123,7 +123,7 @@ EndFunc   ;==>_LOCalc_CellBackColor
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
 ;                  @Error 3 @Extended 2 Return 0 = Error Retrieving TableBorder2 Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Top Border width not set.
@@ -257,7 +257,7 @@ EndFunc   ;==>_LOCalc_CellBorderPadding
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
 ;                  @Error 3 @Extended 2 Return 0 = Error Retrieving TableBorder2 Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Top Border width not set.
@@ -336,7 +336,7 @@ EndFunc   ;==>_LOCalc_CellBorderStyle
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
 ;                  @Error 3 @Extended 2 Return 0 = Error Retrieving TableBorder2 Object.
 ;                  --Version Related Errors--
 ;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.

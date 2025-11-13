@@ -157,7 +157,7 @@ EndFunc   ;==>_LOCalc_ComError_UserFunction
 ;                  @Error 1 @Extended 8 Return 0 = $oCopyOutput not an Object.
 ;                  @Error 1 @Extended 9 Return 0 = $bSaveCriteria not a Boolean.
 ;                  @Error 1 @Extended 10 Return ? = $atFilterField contains an element that is not an Object. Returning the element number containing the error.
-;                  @Error 1 @Extended 11 Return 0 = $bCopyOutput set to True, but $oCopyOutput not an Object.
+;                  @Error 1 @Extended 11 Return 0 = $bCopyOutput called with True, but $oCopyOutput not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create a Filter Descriptor Object.
 ;                  @Error 2 @Extended 2 Return 0 = Failed to create a "com.sun.star.table.CellAddress" Struct.
@@ -257,7 +257,7 @@ EndFunc   ;==>_LOCalc_FilterDescriptorCreate
 ;                  @Error 1 @Extended 7 Return 0 = $bUseRegExp not a Boolean.
 ;                  @Error 1 @Extended 8 Return 0 = $bHeaders not a Boolean.
 ;                  @Error 1 @Extended 9 Return 0 = $bCopyOutput not a Boolean.
-;                  @Error 1 @Extended 10 Return 0 = $bCopyOutput set to True, but $oCopyOutput not an Object.
+;                  @Error 1 @Extended 10 Return 0 = $bCopyOutput called with True, but $oCopyOutput not an Object.
 ;                  @Error 1 @Extended 11 Return 0 = $oCopyOutput not an Object.
 ;                  @Error 1 @Extended 12 Return 0 = $bSaveCriteria not a Boolean.
 ;                  --Initialization Errors--
@@ -1157,7 +1157,7 @@ EndFunc   ;==>_LOCalc_GradientMulticolorModify
 ;                  @Error 1 @Extended 7 Return 0 = $bRegExp not a Boolean.
 ;                  @Error 1 @Extended 8 Return 0 = $bWildcards not a Boolean.
 ;                  @Error 1 @Extended 9 Return 0 = $bStyles not a Boolean.
-;                  @Error 1 @Extended 10 Return 0 = Both $bRegExp and $bWildcards are set to True, only one can be True at one time.
+;                  @Error 1 @Extended 10 Return 0 = Both $bRegExp and $bWildcards are called with True, only one can be True at one time.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create Search Descriptor.
 ;                  --Success--
@@ -1332,7 +1332,7 @@ EndFunc   ;==>_LOCalc_SearchDescriptorModify
 ;                  @Error 1 @Extended 2 Return 0 = $oSrchDescript Object not a Search Descriptor Object.
 ;                  @Error 1 @Extended 3 Return 0 = $bSimilarity not a Boolean.
 ;                  @Error 1 @Extended 4 Return 0 = $bCombine not a Boolean.
-;                  @Error 1 @Extended 5 Return 0 = $iRemove, $iAdd, or $iExchange set to a value, but $bSimilarity not set to True.
+;                  @Error 1 @Extended 5 Return 0 = $iRemove, $iAdd, or $iExchange set to a value, but $bSimilarity not called with True.
 ;                  @Error 1 @Extended 6 Return 0 = $iRemove not an Integer.
 ;                  @Error 1 @Extended 7 Return 0 = $iAdd not an Integer.
 ;                  @Error 1 @Extended 8 Return 0 = $iExchange not an Integer.

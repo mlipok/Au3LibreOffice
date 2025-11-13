@@ -146,7 +146,7 @@ EndFunc   ;==>_LOCalc_PageStyleAreaColor
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Top Border width not set.
 ;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
@@ -299,7 +299,7 @@ EndFunc   ;==>_LOCalc_PageStyleBorderPadding
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Top Border width not set.
 ;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Bottom Border width not set.
@@ -359,7 +359,7 @@ EndFunc   ;==>_LOCalc_PageStyleBorderStyle
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
 ;                  --Version Related Errors--
 ;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
 ;                  --Success--
@@ -747,7 +747,7 @@ EndFunc   ;==>_LOCalc_PageStyleFooterAreaColor
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
 ;                  @Error 3 @Extended 2 Return 0 = Footers are not enabled for this Page Style.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Top Border width not set.
@@ -903,7 +903,7 @@ EndFunc   ;==>_LOCalc_PageStyleFooterBorderPadding
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
 ;                  @Error 3 @Extended 2 Return 0 = Footers are not enabled for this Page Style.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Top Border width not set.
@@ -963,7 +963,7 @@ EndFunc   ;==>_LOCalc_PageStyleFooterBorderStyle
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
 ;                  @Error 3 @Extended 2 Return 0 = Footers are not enabled for this Page Style.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
@@ -1014,7 +1014,7 @@ EndFunc   ;==>_LOCalc_PageStyleFooterBorderWidth
 ;                  @Error 1 @Extended 4 Return 0 = $bLeftArea not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $bCenterArea not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $bRightArea not a Boolean.
-;                  @Error 1 @Extended 7 Return 0 = Either more than one of the following are set to True, or all are False, $bLeftArea, $bCenterArea, $bRightArea.
+;                  @Error 1 @Extended 7 Return 0 = Either more than one of the following are called with True, or all are False, $bLeftArea, $bCenterArea, $bRightArea.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create a Text Cursor.
 ;                  --Success--
@@ -1087,7 +1087,7 @@ EndFunc   ;==>_LOCalc_PageStyleFooterCreateTextCursor
 ;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Left Page Footer Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Object = Success. One of the three parameters ($oFirstPage, $oRightPage, $oLeftPage) was set to Default keyword, returning the specified Footer Object.
+;                  @Error 0 @Extended 1 Return Object = Success. One of the three parameters ($oFirstPage, $oRightPage, $oLeftPage) was called with Default keyword, returning the specified Footer Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Libre Office Calc Footers are set up in a way that you must retrieve the Object for the one you wish to modify the content of, modify it, and then re-insert the modified object.
@@ -1504,7 +1504,7 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderAreaColor
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
 ;                  @Error 3 @Extended 2 Return 0 = Headers are not enabled for this Page Style.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Top Border width not set.
@@ -1659,7 +1659,7 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderBorderPadding
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
 ;                  @Error 3 @Extended 2 Return 0 = Headers are not enabled for this Page Style.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style Top when Border width not set.
@@ -1719,7 +1719,7 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderBorderStyle
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
 ;                  @Error 3 @Extended 2 Return 0 = Headers are not enabled for this Page Style.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
@@ -1770,7 +1770,7 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderBorderWidth
 ;                  @Error 1 @Extended 4 Return 0 = $bLeftArea not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $bCenterArea not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $bRightArea not a Boolean.
-;                  @Error 1 @Extended 7 Return 0 = Either more than one of the following are set to True, or all are False, $bLeftArea, $bCenterArea, $bRightArea.
+;                  @Error 1 @Extended 7 Return 0 = Either more than one of the following are called with True, or all are False, $bLeftArea, $bCenterArea, $bRightArea.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create a Text Cursor.
 ;                  --Success--
@@ -1843,7 +1843,7 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderCreateTextCursor
 ;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Left Page Header Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Object = Success. One of the three parameters ($oFirstPage, $oRightPage, $oLeftPage) was set to Default keyword, returning the specified Header Object.
+;                  @Error 0 @Extended 1 Return Object = Success. One of the three parameters ($oFirstPage, $oRightPage, $oLeftPage) was called with Default keyword, returning the specified Header Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Libre Office Calc Headers are set up in a way that you must retrieve the Object for the one you wish to modify the content of, modify it, and then re-insert the modified object.

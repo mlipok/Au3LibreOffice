@@ -178,7 +178,7 @@ EndFunc   ;==>__LOCalc_CellBackColor
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
 ;                  @Error 3 @Extended 2 Return 0 = Error Retrieving TableBorder2 Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style/Color when Top Border width not set.
@@ -1019,7 +1019,7 @@ EndFunc   ;==>__LOCalc_CellStrikeOut
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style/Color when Top Border width not set.
 ;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style/Color when Bottom Border width not set.
@@ -1655,7 +1655,7 @@ EndFunc   ;==>__LOCalc_CharSpacing
 ;                  |                               2 = Error setting $iDistance
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully set the settings.
-;                  @Error 0 @Extended ? Return Integer = Success. $iLocation and $iDistance set to Null, returning current Values. Return will be current distance, and @Extended will be the current Location.
+;                  @Error 0 @Extended ? Return Integer = Success. $iLocation and $iDistance called with Null, returning current Values. Return will be current distance, and @Extended will be the current Location.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1883,7 +1883,7 @@ EndFunc   ;==>__LOCalc_CommentArrowStyleName
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Cell Address.
 ;                  @Error 3 @Extended 3 Return 0 = Failed to find comment for specified cell.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Integer = Success. $bReturnIndex set to True, returning Comment's Index number.
+;                  @Error 0 @Extended 0 Return Integer = Success. $bReturnIndex Called with True, returning Comment's Index number.
 ;                  @Error 0 @Extended ? Return Object = Success. Returning Comment's Object. @Extended set to Comment's Index number.
 ; Author ........: donnyh13
 ; Modified ......:
@@ -2112,7 +2112,7 @@ EndFunc   ;==>__LOCalc_FieldGetObj
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $iFieldType not an Integer.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Array = Success. $iFieldType set to All, returning full regular Field Service list String Array.
+;                  @Error 0 @Extended 0 Return Array = Success. $iFieldType called with All, returning full regular Field Service list String Array.
 ;                  @Error 0 @Extended 1 Return Array = Success. $iFieldType BitOr'd together, determining which flags are called from the Array. Returning Field Service String list Array.
 ; Author ........: donnyh13
 ; Modified ......:
@@ -2441,7 +2441,7 @@ EndFunc   ;==>__LOCalc_NamedRangeGetScopeObj
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style/Color when Top Border width not set.
 ;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style/Color when Bottom Border width not set.
@@ -2550,7 +2550,7 @@ EndFunc   ;==>__LOCalc_PageStyleBorder
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style/Color when Top Border width not set.
 ;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style/Color when Bottom Border width not set.
@@ -2659,7 +2659,7 @@ EndFunc   ;==>__LOCalc_PageStyleFooterBorder
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style/Color when Top Border width not set.
 ;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style/Color when Bottom Border width not set.

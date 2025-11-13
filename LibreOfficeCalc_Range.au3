@@ -745,10 +745,10 @@ EndFunc   ;==>_LOCalc_RangeCreateCursor
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $aavData not an Array.
 ;                  @Error 1 @Extended 3 Return 0 = $bStrictSize not a Boolean.
-;                  @Error 1 @Extended 4 Return 0 = $bStrictSize set to True, and $aavData array contains less or more elements than number of rows contained in the cell range.
+;                  @Error 1 @Extended 4 Return 0 = $bStrictSize called with True, and $aavData array contains less or more elements than number of rows contained in the cell range.
 ;                  @Error 1 @Extended 5 Return ? = Element of $aavData does not contain an array. Returning array element number of $aavData containing error.
-;                  @Error 1 @Extended 6 Return ? = $bStrictSize set to True, and Array contained in $aavData has less or more elements than number of columns in the cell range. Returning array element number of $aavData containing faulty array.
-;                  @Error 1 @Extended 7 Return ? = $bStrictSize set to False, and Array contained in $aavData has less or more elements than first Array contained in $aavData. Returning array element number of $aavData containing faulty array.
+;                  @Error 1 @Extended 6 Return ? = $bStrictSize called with True, and Array contained in $aavData has less or more elements than number of columns in the cell range. Returning array element number of $aavData containing faulty array.
+;                  @Error 1 @Extended 7 Return ? = $bStrictSize called with False, and Array contained in $aavData has less or more elements than first Array contained in $aavData. Returning array element number of $aavData containing faulty array.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve array of Formula Data contained in the Cell Range.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Start of Row from Cell Range.
@@ -761,7 +761,7 @@ EndFunc   ;==>_LOCalc_RangeCreateCursor
 ;                  @Error 3 @Extended 9 Return 0 = Failed to re-size Cell Range Columns.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Data was successfully set for the cell range.
-;                  @Error 0 @Extended 1 Return Array of Arrays = Success. $aavData set to Null, returning an array containing arrays, which contain any data content contained in the cell range.
+;                  @Error 0 @Extended 1 Return Array of Arrays = Success. $aavData called with Null, returning an array containing arrays, which contain any data content contained in the cell range.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function will return Strings and Numbers contained in the cell range when $aavData is called with Null keyword. Array will be an array of arrays. The internal arrays will contain numerical or string data, depending on cell content.
@@ -1597,7 +1597,7 @@ EndFunc   ;==>_LOCalc_RangeFilterClear
 ;                  @Error 3 @Extended 1 Return 0 = Search did not return an Object, something went wrong.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Search was Successful, but found no results.
-;                  @Error 0 @Extended ? Return Array = Success. Search was Successful, returning 1 dimensional array containing the objects to each match, @Exteneded is set to the number of matches.
+;                  @Error 0 @Extended ? Return Array = Success. Search was Successful, returning 1 dimensional array containing the objects to each match, @Extended is set to the number of matches.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Objects returned are Ranges and can be used in any of the functions accepting a Range Object etc., to modify their properties or even the text itself.
@@ -1704,10 +1704,10 @@ EndFunc   ;==>_LOCalc_RangeFindNext
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $aasFormulas not an Array.
 ;                  @Error 1 @Extended 3 Return 0 = $bStrictSize not a Boolean.
-;                  @Error 1 @Extended 4 Return 0 = $bStrictSize set to True, and $aasFormulas array contains less or more elements than number of rows contained in the cell range.
+;                  @Error 1 @Extended 4 Return 0 = $bStrictSize called with True, and $aasFormulas array contains less or more elements than number of rows contained in the cell range.
 ;                  @Error 1 @Extended 5 Return ? = Element of $aasFormulas does not contain an array. Returning array element number of $aasFormulas containing error.
-;                  @Error 1 @Extended 6 Return ? = $bStrictSize set to True, and Array contained in $aasFormulas has less or more elements than number of columns in the cell range. Returning array element number of $aasFormulas containing faulty array.
-;                  @Error 1 @Extended 7 Return ? = $bStrictSize set to False, and Array contained in $aasFormulas has less or more elements than first Array contained in $aasFormulas. Returning array element number of $aasFormulas containing faulty array.
+;                  @Error 1 @Extended 6 Return ? = $bStrictSize called with True, and Array contained in $aasFormulas has less or more elements than number of columns in the cell range. Returning array element number of $aasFormulas containing faulty array.
+;                  @Error 1 @Extended 7 Return ? = $bStrictSize called with False, and Array contained in $aasFormulas has less or more elements than first Array contained in $aasFormulas. Returning array element number of $aasFormulas containing faulty array.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve array of Formula Data contained in the Cell Range.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Start of Row from Cell Range.
@@ -1720,7 +1720,7 @@ EndFunc   ;==>_LOCalc_RangeFindNext
 ;                  @Error 3 @Extended 9 Return 0 = Failed to re-size Cell Range Columns.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Formulas were successfully set for the cell range.
-;                  @Error 0 @Extended 1 Return Array of Arrays = Success. $aasFormulas set to Null, returning an array containing arrays, which contain any Formula content contained in the cell range.
+;                  @Error 0 @Extended 1 Return Array of Arrays = Success. $aasFormulas called with Null, returning an array containing arrays, which contain any Formula content contained in the cell range.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function will return only formulas contained in the cell range when $aasFormulas is called with Null keyword. Array will be an array of arrays. The internal arrays will contain blank cells or formula strings, depending on cell content.
@@ -2677,10 +2677,10 @@ EndFunc   ;==>_LOCalc_RangeNamedModify
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $aanNumbers not an Array.
 ;                  @Error 1 @Extended 3 Return 0 = $bStrictSize not a Boolean.
-;                  @Error 1 @Extended 4 Return 0 = $bStrictSize set to True, and $aanNumbers array contains less or more elements than number of rows contained in the cell range.
+;                  @Error 1 @Extended 4 Return 0 = $bStrictSize called with True, and $aanNumbers array contains less or more elements than number of rows contained in the cell range.
 ;                  @Error 1 @Extended 5 Return ? = Element of $aanNumbers does not contain an array. Returning array element number of $aanNumbers containing error.
-;                  @Error 1 @Extended 6 Return ? = $bStrictSize set to True, and Array contained in $aanNumbers has less or more elements than number of columns in the cell range. Returning array element number of $aanNumbers containing faulty array.
-;                  @Error 1 @Extended 7 Return ? = $bStrictSize set to False, and Array contained in $aanNumbers has less or more elements than first Array contained in $aanNumbers. Returning array element number of $aanNumbers containing faulty array.
+;                  @Error 1 @Extended 6 Return ? = $bStrictSize called with True, and Array contained in $aanNumbers has less or more elements than number of columns in the cell range. Returning array element number of $aanNumbers containing faulty array.
+;                  @Error 1 @Extended 7 Return ? = $bStrictSize called with False, and Array contained in $aanNumbers has less or more elements than first Array contained in $aanNumbers. Returning array element number of $aanNumbers containing faulty array.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve array of Formula Data contained in the Cell Range.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Start of Row from Cell Range.
@@ -2693,7 +2693,7 @@ EndFunc   ;==>_LOCalc_RangeNamedModify
 ;                  @Error 3 @Extended 9 Return 0 = Failed to re-size Cell Range Columns.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Values were successfully set for the cell range.
-;                  @Error 0 @Extended 1 Return Array of Arrays = Success. $aanNumbers set to Null, returning an array containing arrays, which contain any numerical content contained in the cell range.
+;                  @Error 0 @Extended 1 Return Array of Arrays = Success. $aanNumbers called with Null, returning an array containing arrays, which contain any numerical content contained in the cell range.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function will return only numbers contained in the cell range when $aanNumbers is called with Null keyword. Array will be an array of arrays. The internal arrays will contain blank cells or numbers, depending on cell content.
@@ -3280,7 +3280,7 @@ EndFunc   ;==>_LOCalc_RangePivotFieldsDataGetNames
 ;                  @Error 1 @Extended 5 Return 0 = $iDisplayType not an Integer, less than 0 or greater than 8. See Constants $LOC_PIVOT_TBL_FIELD_DISP_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 6 Return 0 = $sBaseField not a String.
 ;                  @Error 1 @Extended 7 Return 0 = $iBaseItem not an Integer, less than 0 or greater than 2. See Constants $LOC_PIVOT_TBL_FIELD_BASE_ITEM_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 8 Return 0 = $iBaseItem set to $LOC_PIVOT_TBL_FIELD_BASE_ITEM_NAMED, and $sBaseItem is not set and no previous value is set.
+;                  @Error 1 @Extended 8 Return 0 = $iBaseItem set to $LOC_PIVOT_TBL_FIELD_BASE_ITEM_NAMED, and $sBaseItem is not called and no previous value is set.
 ;                  @Error 1 @Extended 9 Return 0 = $sBaseItem not a String.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.sheet.DataPilotFieldReference" Struct.
@@ -5143,7 +5143,7 @@ EndFunc   ;==>_LOCalc_RangeRowVisible
 ;                  @Error 1 @Extended 7 Return 0 = $bCopyOutput not a Boolean.
 ;                  @Error 1 @Extended 8 Return 0 = $tSortField2 not an Object.
 ;                  @Error 1 @Extended 9 Return 0 = $tSortField3 not an Object.
-;                  @Error 1 @Extended 10 Return 0 = $bCopyOutput set to True, but $oCellOutput not an Object.
+;                  @Error 1 @Extended 10 Return 0 = $bCopyOutput called with True, but $oCellOutput not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create a Sort Descriptor.
 ;                  @Error 2 @Extended 2 Return 0 = Failed to create a "com.sun.star.table.CellAddress" Struct.

@@ -1606,7 +1606,7 @@ EndFunc   ;==>_LOCalc_SheetUnprotect
 ;                  |                               1 = Error setting $bVisiblee
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Sheet Visibility setting was successfully set.
-;                  @Error 0 @Extended 1 Return Boolean = Success. $bVisible set to Null, returning current visibility setting. True indicates the Sheet is currently visible.
+;                  @Error 0 @Extended 1 Return Boolean = Success. $bVisible called with Null, returning current visibility setting. True indicates the Sheet is currently visible.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
