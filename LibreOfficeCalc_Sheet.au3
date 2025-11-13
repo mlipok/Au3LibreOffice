@@ -862,7 +862,7 @@ EndFunc   ;==>_LOCalc_SheetLink
 ;                  |                               4 = Error setting $iLinkMode
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -1016,7 +1016,7 @@ EndFunc   ;==>_LOCalc_SheetMove
 ;                  |                               1 = Error setting $sName
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Sheet's new name was successfully set.
-;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were set to Null, returning the Sheet's current name.
+;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were called with Null, returning the Sheet's current name.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -1073,7 +1073,7 @@ EndFunc   ;==>_LOCalc_SheetName
 ;                  |                               2 = Error setting $bRepeatColumns
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call $oRange with the Default keyword to reset the Column Range to none.
@@ -1169,7 +1169,7 @@ EndFunc   ;==>_LOCalc_SheetPrintColumnsRepeat
 ;                  |                               1 = Error setting $aoRange
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Print Range was successfully set.
-;                  @Error 0 @Extended ? Return Array = Success. All optional parameters were set to Null, returning Array of Range Objects set to be printed. @extended set to number of Ranges. See remarks.
+;                  @Error 0 @Extended ? Return Array = Success. All optional parameters were called with Null, returning Array of Range Objects set to be printed. @extended set to number of Ranges. See remarks.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call $aoRange with an empty Array (local $aArray[0]) to set the whole sheet to be printed (default), instead of a specific range.
@@ -1236,7 +1236,7 @@ EndFunc   ;==>_LOCalc_SheetPrintRangeModify
 ;                  |                               2 = Error setting $bRepeatRows
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call $oRange with the Default keyword to reset the Row Range to none.
@@ -1527,7 +1527,7 @@ EndFunc   ;==>_LOCalc_SheetsGetNames
 ;                  |                               1 = Error setting $iColor
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current Tab Color as an Integer
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current Tab Color as an Integer
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.

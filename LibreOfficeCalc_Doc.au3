@@ -569,7 +569,7 @@ EndFunc   ;==>_LOCalc_DocExport
 ;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version less than 7.4.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current Formula Bar Height as an Integer.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current Formula Bar Height as an Integer.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -1000,7 +1000,7 @@ EndFunc   ;==>_LOCalc_DocOpen
 ;                  |                               8 = Error setting $iHeight
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: X & Y, on my computer at least, seem to go no lower than 8(X) and 30(Y), if you enter lower than this, it will cause a "property setting Error".
@@ -2119,7 +2119,7 @@ EndFunc   ;==>_LOCalc_DocUndoReset
 ;                  |                               256 = Error setting $iGridColor
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 9 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 9 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -2253,7 +2253,7 @@ EndFunc   ;==>_LOCalc_DocViewDisplaySettings
 ;                  |                               128 = Error setting $bObjects
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 8 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -2400,7 +2400,7 @@ EndFunc   ;==>_LOCalc_DocVisible
 ;                  |                               1 = Error setting $iColumn
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. First visible Column was successfully set.
-;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning the first visible column number as an Integer.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning the first visible column number as an Integer.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -2440,7 +2440,7 @@ EndFunc   ;==>_LOCalc_DocWindowFirstColumn
 ;                  |                               1 = Error setting $iRow
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. First visible Row was successfully set.
-;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning the first visible row number as an Integer.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning the first visible row number as an Integer.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -2515,8 +2515,8 @@ EndFunc   ;==>_LOCalc_DocWindowIsSplit
 ;                  @Error 1 @Extended 4 Return 0 = $iY not an Integer.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in Pixels, in a 2 Element Array with values in order of function parameters.
-;                  @Error 0 @Extended 2 Return Array = Success. All optional parameters were set to Null, returning current settings in Column/Row values, in a 2 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in Pixels, in a 2 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 2 Return Array = Success. All optional parameters were called with Null, returning current settings in Column/Row values, in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To remove the split view, set both $iX and $iY to 0.
@@ -2618,7 +2618,7 @@ EndFunc   ;==>_LOCalc_DocWindowVisibleRange
 ;                  |                               1 = Error setting $iZoom
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Zoom type always has the value of $LOC_ZOOMTYPE_BY_VALUE(3), when using the other zoom types, the value stays the same, but the zoom level is modified. Consequently, I have not added an error check for the Zoom Type property being correctly set.

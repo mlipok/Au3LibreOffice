@@ -412,7 +412,7 @@ EndFunc   ;==>_LOCalc_RangeColumnInsert
 ;                  |                               2 = Error setting $bStartOfPageBreak
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Setting $bStartOfPageBreak to True will insert a Manual Page Break, the same as setting $bManualPageBreak to True would.
@@ -505,7 +505,7 @@ EndFunc   ;==>_LOCalc_RangeColumnsGetCount
 ;                  |                               1 = Error setting $bVisible
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Boolean = Success. All optional parameters were set to Null, returning Column's current visibility setting.
+;                  @Error 0 @Extended 1 Return Boolean = Success. All optional parameters were called with Null, returning Column's current visibility setting.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -550,7 +550,7 @@ EndFunc   ;==>_LOCalc_RangeColumnVisible
 ;                  |                               2 = Error setting $iWidth
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $bOptimal only accepts True. False will return an error. Calling True again returns the cell to optimal width, setting a custom width essentially disables it.
@@ -1134,7 +1134,7 @@ EndFunc   ;==>_LOCalc_RangeDatabaseGetObjByName
 ;                  |                               128 = Error setting $bAutoFilter
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 8 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -2568,7 +2568,7 @@ EndFunc   ;==>_LOCalc_RangeNamedGetObjByName
 ;                  |                               4 = Error setting $iOptions
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $vRange can be a string representation of the Range covered by the NamedRange, i.e., $Sheet1.$A$1:$C$14, or a Formula, such as A1+A2, or a Cell Range Object.
@@ -2917,7 +2917,7 @@ EndFunc   ;==>_LOCalc_RangePivotDelete
 ;                  |                               1 = Error setting $oDestRange
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Object = Success. All optional parameters were set to Null, returning current destination Range Object.
+;                  @Error 0 @Extended 1 Return Object = Success. All optional parameters were called with Null, returning current destination Range Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: I was unable to find a setting for "Show Expand/Collapse buttons", therefore the current setting will be lost, because to change the output range, the entire Pivot Table needs to be copied over and re-inserted.
@@ -3297,7 +3297,7 @@ EndFunc   ;==>_LOCalc_RangePivotFieldsDataGetNames
 ;                  |                               64 = Error setting $sBaseItem
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 7 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: It is the user's responsibility to ensure the a Base Item's name is correct, and exists, also field names etc.
@@ -3604,7 +3604,7 @@ EndFunc   ;==>_LOCalc_RangePivotFieldsUnusedGetNames
 ;                  |                               8 = Error setting $bUseRegExp
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -3913,7 +3913,7 @@ EndFunc   ;==>_LOCalc_RangePivotInsert
 ;                  |                               1 = Error setting $sName
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Name was successfully set.
-;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were set to Null, returning Pivot Table's current Name as a string.
+;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were called with Null, returning Pivot Table's current Name as a string.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -4006,7 +4006,7 @@ EndFunc   ;==>_LOCalc_RangePivotRefresh
 ;                  |                               32 = Error setting $bEnableDrill
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 6 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: I was unable to find a setting for "Show Expand/Collapse buttons", therefore it is not settable currently.
@@ -4177,7 +4177,7 @@ EndFunc   ;==>_LOCalc_RangePivotsGetNames
 ;                  |                               1 = Error setting $oSourceRange
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Source Range was successfully set.
-;                  @Error 0 @Extended 1 Return Object = Success. All optional parameters were set to Null, returning current source Range Object.
+;                  @Error 0 @Extended 1 Return Object = Success. All optional parameters were called with Null, returning current source Range Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -4896,7 +4896,7 @@ EndFunc   ;==>_LOCalc_RangeRowGetObjByPosition
 ;                  |                               2 = Error setting $iHeight
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: I am presently unable to find a setting for Optimal Height "Add" Value.
@@ -4998,7 +4998,7 @@ EndFunc   ;==>_LOCalc_RangeRowInsert
 ;                  |                               2 = Error setting $bStartOfPageBreak
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -5091,7 +5091,7 @@ EndFunc   ;==>_LOCalc_RangeRowsGetCount
 ;                  |                               1 = Error setting $bVisible
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Boolean = Success. All optional parameters were set to Null, returning Row's current visibility setting.
+;                  @Error 0 @Extended 1 Return Boolean = Success. All optional parameters were called with Null, returning Row's current visibility setting.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -5527,7 +5527,7 @@ EndFunc   ;==>_LOCalc_RangeSortAlt
 ;                  |                               64 = Error setting $iShowList
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 7 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -5661,7 +5661,7 @@ EndFunc   ;==>_LOCalc_RangeValidation
 ;                  |                               64 = Error setting $sErrorMsg
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 7 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
