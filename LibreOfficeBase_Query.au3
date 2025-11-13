@@ -702,7 +702,7 @@ EndFunc   ;==>_LOBase_QueryGetObjByName
 ;                  |                               1 = Error setting $sName
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return String = Success. $sName set to Null, returning current Query Name.
+;                  @Error 0 @Extended 1 Return String = Success. $sName called with Null, returning current Query Name.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function does not check if the new name already exists in Tables or Queries.
@@ -744,7 +744,7 @@ EndFunc   ;==>_LOBase_QueryName
 ;                  |                               1 = Error setting $sSQL_Command
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return String = Success. $sSQL_Command set to Null, returning current Query SQL Command.
+;                  @Error 0 @Extended 1 Return String = Success. $sSQL_Command called with Null, returning current Query SQL Command.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.

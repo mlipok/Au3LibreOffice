@@ -59,7 +59,7 @@
 ;                  @Error 1 @Extended 3 Return 0 = $sSaveName not a String.
 ;                  @Error 1 @Extended 4 Return 0 = $bDeliverOwnership not a Boolean.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = $bSaveChanges set to True, and Document hasn't been assigned a Database type yet. Set it using _LOBase_DocDatabaseType.
+;                  @Error 3 @Extended 1 Return 0 = $bSaveChanges called with True, and Document hasn't been assigned a Database type yet. Set it using _LOBase_DocDatabaseType.
 ;                  @Error 3 @Extended 2 Return 0 = Document hasn't been assigned a Database type yet. Set it using _LOBase_DocDatabaseType.
 ;                  @Error 3 @Extended 3 Return 0 = Path Conversion to L.O. URL Failed.
 ;                  @Error 3 @Extended 4 Return 0 = Error while setting Filter Name properties.
@@ -295,7 +295,7 @@ EndFunc   ;==>_LOBase_DocConnect
 ;                  @Error 1 @Extended 1 Return 0 = $bForceNew not a Boolean.
 ;                  @Error 1 @Extended 2 Return 0 = $bHidden not a Boolean.
 ;                  @Error 1 @Extended 3 Return 0 = $bWizard not a Boolean.
-;                  @Error 1 @Extended 4 Return 0 = $bWizar and $bHidden both set to True.
+;                  @Error 1 @Extended 4 Return 0 = $bWizar and $bHidden both called with True.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failure Creating Object com.sun.star.ServiceManager.
 ;                  @Error 2 @Extended 2 Return 0 = Failure Creating Object com.sun.star.frame.Desktop.
@@ -384,13 +384,13 @@ EndFunc   ;==>_LOBase_DocCreate
 ;                  @Error 1 @Extended 3 Return 0 = $bOverwrite not a Boolean.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve current Database type.
-;                  @Error 3 @Extended 2 Return 0 = $bOverwrite is set to False, and Document's Database type is already set.
+;                  @Error 3 @Extended 2 Return 0 = $bOverwrite is called with False, and Document's Database type is already set.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $sType
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return String = Success. $sType set to Null, returning current Database type as a String.
+;                  @Error 0 @Extended 1 Return String = Success. $sType called with Null, returning current Database type as a String.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: I have not investigated the various settings for each Database type therefore I have no checks for right or wrong values, if you know the appropriate string to use you can set $sType to the desired setting, but make sure you know what you are doing. "sdbc:embedded:hsqldb" is the default setting for LibreOffice, which creates an embedded HSQLDB Base Document. The Type format is as follows jdbc:subprotocol:subname or sdbc:subprotocol:subname.
@@ -602,7 +602,7 @@ EndFunc   ;==>_LOBase_DocIsModified
 ;                  @Error 1 @Extended 2 Return 0 = $bMaximize not a Boolean.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Document was successfully maximized.
-;                  @Error 0 @Extended 1 Return Boolean = Success. $bMaximize set to Null, returning boolean indicating if Document is currently maximized (True) or not (False).
+;                  @Error 0 @Extended 1 Return Boolean = Success. $bMaximize called with Null, returning boolean indicating if Document is currently maximized (True) or not (False).
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If $bMaximize is set to Null, returns a Boolean indicating if document is currently maximized (True).
@@ -638,7 +638,7 @@ EndFunc   ;==>_LOBase_DocMaximize
 ;                  @Error 1 @Extended 2 Return 0 = $bMinimize not a Boolean.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Document was successfully minimized.
-;                  @Error 0 @Extended 1 Return Boolean = Success. $bMinimize set to Null, returning boolean indicating if Document is currently minimized (True) or not (False).
+;                  @Error 0 @Extended 1 Return Boolean = Success. $bMinimize called with Null, returning boolean indicating if Document is currently minimized (True) or not (False).
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If $bMinimize is set to Null, returns a Boolean indicating if document is currently minimized (True).

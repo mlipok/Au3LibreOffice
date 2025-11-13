@@ -328,12 +328,12 @@ EndFunc   ;==>_LOBase_SQLResultCursorQuery
 ;                  @Error 1 @Extended 2 Return 0 = Object called in $oResult not a Result Set object.
 ;                  @Error 1 @Extended 3 Return 0 = $iModify not an Integer, less than 0 or greater than 12. See Constants, $LOB_RESULT_ROW_MOD_* as defined in LibreOfficeBase_Constants.au3.
 ;                  @Error 1 @Extended 4 Return 0 = $iColumn not an Integer or less than 1.
-;                  @Error 1 @Extended 5 Return 0 = $iModify set to $LOB_RESULT_ROW_MOD_BOOL and $vValue not a Boolean.
-;                  @Error 1 @Extended 6 Return 0 = $iModify set to $LOB_RESULT_ROW_MOD_SHORT, $LOB_RESULT_ROW_MOD_INT, or $LOB_RESULT_ROW_MOD_LONG and $vValue not an Integer.
-;                  @Error 1 @Extended 7 Return 0 = $iModify set to $LOB_RESULT_ROW_MOD_FLOAT, or $LOB_RESULT_ROW_MOD_DOUBLE and $vValue not a Number.
-;                  @Error 1 @Extended 8 Return 0 = $iModify set to $LOB_RESULT_ROW_MOD_STRING and $vValue not a String.
-;                  @Error 1 @Extended 9 Return 0 = $iModify set to $LOB_RESULT_ROW_MOD_DATE, $LOB_RESULT_ROW_MOD_TIME, or $LOB_RESULT_ROW_MOD_TIMESTAMP and $vValue not an Object.
-;                  @Error 1 @Extended 10 Return 0 = $iModify set to $LOB_RESULT_ROW_MOD_BYTE, or $LOB_RESULT_ROW_MOD_BYTES and $vValue not a Binary value.
+;                  @Error 1 @Extended 5 Return 0 = $iModify called with $LOB_RESULT_ROW_MOD_BOOL and $vValue not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $iModify called with $LOB_RESULT_ROW_MOD_SHORT, $LOB_RESULT_ROW_MOD_INT, or $LOB_RESULT_ROW_MOD_LONG and $vValue not an Integer.
+;                  @Error 1 @Extended 7 Return 0 = $iModify called with $LOB_RESULT_ROW_MOD_FLOAT, or $LOB_RESULT_ROW_MOD_DOUBLE and $vValue not a Number.
+;                  @Error 1 @Extended 8 Return 0 = $iModify called with $LOB_RESULT_ROW_MOD_STRING and $vValue not a String.
+;                  @Error 1 @Extended 9 Return 0 = $iModify called with $LOB_RESULT_ROW_MOD_DATE, $LOB_RESULT_ROW_MOD_TIME, or $LOB_RESULT_ROW_MOD_TIMESTAMP and $vValue not an Object.
+;                  @Error 1 @Extended 10 Return 0 = $iModify called with $LOB_RESULT_ROW_MOD_BYTE, or $LOB_RESULT_ROW_MOD_BYTES and $vValue not a Binary value.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create a "com.sun.star.util.Date" Struct.
 ;                  @Error 2 @Extended 2 Return 0 = Failed to create a "com.sun.star.util.Time" Struct.
@@ -839,12 +839,12 @@ EndFunc   ;==>_LOBase_SQLStatementExecuteUpdate
 ;                  @Error 1 @Extended 2 Return 0 = Object called in $oStatement not a Statement or Prepared Statement Object.
 ;                  @Error 1 @Extended 3 Return 0 = $iCommand not an Integer, or less than 1.
 ;                  @Error 1 @Extended 4 Return 0 = $iSetType not an Integer, less than 0 or greater than 16. See Constants, $LOB_DATA_SET_TYPE_* as defined in LibreOfficeBase_Constants.au3.
-;                  @Error 1 @Extended 5 Return 0 = $iSetType set to $LOB_DATA_SET_TYPE_BOOL and $vValue is not a Boolean.
-;                  @Error 1 @Extended 6 Return 0 = $iSetType set to $LOB_DATA_SET_TYPE_BYTE or $LOB_DATA_SET_TYPE_BYTES and $vValue is not a Binary value.
-;                  @Error 1 @Extended 7 Return 0 = $iSetType set to $LOB_DATA_SET_TYPE_SHORT, $LOB_DATA_SET_TYPE_INT, or $LOB_DATA_SET_TYPE_LONG and $vValue is not an Integer.
-;                  @Error 1 @Extended 8 Return 0 = $iSetType set to $LOB_DATA_SET_TYPE_FLOAT, or $LOB_DATA_SET_TYPE_DOUBLE and $vValue is not a Number.
-;                  @Error 1 @Extended 9 Return 0 = $iSetType set to $LOB_DATA_SET_TYPE_STRING and $vValue is not a String.
-;                  @Error 1 @Extended 10 Return 0 = $iSetType set to $LOB_DATA_SET_TYPE_DATE, $LOB_DATA_SET_TYPE_TIME, or $LOB_DATA_SET_TYPE_TIMESTAMP and $vValue is not an Object.
+;                  @Error 1 @Extended 5 Return 0 = $iSetType called with $LOB_DATA_SET_TYPE_BOOL and $vValue is not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $iSetType called with $LOB_DATA_SET_TYPE_BYTE or $LOB_DATA_SET_TYPE_BYTES and $vValue is not a Binary value.
+;                  @Error 1 @Extended 7 Return 0 = $iSetType called with $LOB_DATA_SET_TYPE_SHORT, $LOB_DATA_SET_TYPE_INT, or $LOB_DATA_SET_TYPE_LONG and $vValue is not an Integer.
+;                  @Error 1 @Extended 8 Return 0 = $iSetType called with $LOB_DATA_SET_TYPE_FLOAT, or $LOB_DATA_SET_TYPE_DOUBLE and $vValue is not a Number.
+;                  @Error 1 @Extended 9 Return 0 = $iSetType called with $LOB_DATA_SET_TYPE_STRING and $vValue is not a String.
+;                  @Error 1 @Extended 10 Return 0 = $iSetType called with $LOB_DATA_SET_TYPE_DATE, $LOB_DATA_SET_TYPE_TIME, or $LOB_DATA_SET_TYPE_TIMESTAMP and $vValue is not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create a "com.sun.star.util.Date" Struct.
 ;                  @Error 2 @Extended 2 Return 0 = Failed to create a "com.sun.star.util.Time" Struct.

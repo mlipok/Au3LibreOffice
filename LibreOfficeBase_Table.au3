@@ -1329,7 +1329,7 @@ EndFunc   ;==>_LOBase_TableIndexModify
 ;                  |                               1 = Error setting $sName
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return String = Success. $sName set to Null, returning current Table Name.
+;                  @Error 0 @Extended 1 Return String = Success. $sName called with Null, returning current Table Name.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function does not check if the new name already exists in Tables or Queries.
