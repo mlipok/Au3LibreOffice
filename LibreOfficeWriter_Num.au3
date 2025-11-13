@@ -126,9 +126,9 @@ EndFunc   ;==>_LOWriter_NumStyleCreate
 ;                  @Error 1 @Extended 14 Return 0 = $bConsecutiveNum not a Boolean.
 ;                  @Error 1 @Extended 15 Return 0 = $sBulletFont not a string.
 ;                  @Error 1 @Extended 16 Return 0 = Font style called in $sBulletFont not found in document.
-;                  @Error 1 @Extended 17 Return 0 = $sBulletFont is set and Number Format not set to $LOW_NUM_STYLE_CHAR_SPECIAL.
+;                  @Error 1 @Extended 17 Return 0 = $sBulletFont was called and Number Format not set to $LOW_NUM_STYLE_CHAR_SPECIAL.
 ;                  @Error 1 @Extended 18 Return 0 = $iCharDecimal not an Integer.
-;                  @Error 1 @Extended 19 Return 0 = $iCharDecimal is set and Number Format not set to $LOW_NUM_STYLE_CHAR_SPECIAL.
+;                  @Error 1 @Extended 19 Return 0 = $iCharDecimal was called and Number Format not set to $LOW_NUM_STYLE_CHAR_SPECIAL.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Numbering Rules Object.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving Numbering Rule Array for level.

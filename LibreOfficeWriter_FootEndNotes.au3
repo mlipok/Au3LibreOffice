@@ -220,8 +220,8 @@ EndFunc   ;==>_LOWriter_EndnoteInsert
 ;                  @Error 4 @Extended 1 Return 0 = $sLabel was not set successfully.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Endnote settings were successfully modified.
-;                  @Error 0 @Extended 1 Return String = Success. $sLabel set to Null, current Endnote Label returned.
-;                  @Error 0 @Extended 2 Return String = Success. $sLabel set to Null, current Endnote Auto-Numbering number returned.
+;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were called with Null, current Endnote Label returned.
+;                  @Error 0 @Extended 2 Return String = Success. All optional parameters were called with Null, current Endnote Auto-Numbering number returned.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -655,8 +655,8 @@ EndFunc   ;==>_LOWriter_FootnoteInsert
 ;                  @Error 4 @Extended 1 Return 0 = Failed to set $sLabel.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Footnote settings were successfully modified.
-;                  @Error 0 @Extended 1 Return String = Success. $sLabel set to Null, current Footnote Custom Label returned.
-;                  @Error 0 @Extended 2 Return String = Success. $sLabel set to Null, current Footnote AutoNumbering number returned.
+;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were called with Null, current Footnote Custom Label returned.
+;                  @Error 0 @Extended 2 Return String = Success. All optional parameters were called with Null, current Footnote AutoNumbering number returned.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.

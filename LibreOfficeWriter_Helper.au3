@@ -335,7 +335,7 @@ EndFunc   ;==>_LOWriter_DateFormatKeyGetString
 ;                  @Error 1 @Extended 3 Return 0 = $bUserOnly not a Boolean.
 ;                  @Error 1 @Extended 4 Return 0 = $bDateOnly not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $bTimeOnly not a Boolean.
-;                  @Error 1 @Extended 6 Return 0 = Both $bDateOnly and $bTimeOnly set to True. Set one or both to false.
+;                  @Error 1 @Extended 6 Return 0 = Both $bDateOnly and $bTimeOnly called with True. Call one or both with false.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.lang.Locale" Object.
 ;                  --Processing Errors--
@@ -2762,7 +2762,7 @@ EndFunc   ;==>_LOWriter_SearchDescriptorCreate
 ;                  @Error 1 @Extended 7 Return 0 = $bStyles not a Boolean.
 ;                  @Error 1 @Extended 8 Return 0 = $bSearchPropValues not a Boolean.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = $bRegExp is set to True while Similarity Search is also set to True.
+;                  @Error 3 @Extended 1 Return 0 = $bRegExp is called with True while Similarity Search is set to True.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Returns 1 after directly modifying Search Descriptor Object.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 6 Element Array with values in order of function parameters.
@@ -2848,12 +2848,12 @@ EndFunc   ;==>_LOWriter_SearchDescriptorModify
 ;                  @Error 1 @Extended 2 Return 0 = $oSrchDescript Object not a Search Descriptor Object.
 ;                  @Error 1 @Extended 3 Return 0 = $bSimilarity not a Boolean.
 ;                  @Error 1 @Extended 4 Return 0 = $bCombine not a Boolean.
-;                  @Error 1 @Extended 5 Return 0 = $iRemove, $iAdd, or $iExchange set to a value, but $bSimilarity not set to True.
+;                  @Error 1 @Extended 5 Return 0 = $iRemove, $iAdd, or $iExchange set to a value, but $bSimilarity not called with True.
 ;                  @Error 1 @Extended 6 Return 0 = $iRemove not an Integer.
 ;                  @Error 1 @Extended 7 Return 0 = $iAdd not an Integer.
 ;                  @Error 1 @Extended 8 Return 0 = $iExchange not an Integer.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = $bSimilarity is set to True while Regular Expression Search is also set to True.
+;                  @Error 3 @Extended 1 Return 0 = $bSimilarity is called with True while Regular Expression Search is set to True.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Returns 1 after directly modifying Search Descriptor Object.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 5 Element Array with values in order of function parameters.

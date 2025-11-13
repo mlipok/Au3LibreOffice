@@ -120,7 +120,7 @@ EndFunc   ;==>_LOWriter_CellBackColor
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating "com.sun.star.table.BorderLine2" Object
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Top Border width not set.
 ;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
@@ -255,7 +255,7 @@ EndFunc   ;==>_LOWriter_CellBorderPadding
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Top Border width not set.
 ;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Bottom Border width not set.
@@ -310,7 +310,7 @@ EndFunc   ;==>_LOWriter_CellBorderStyle
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
 ;                  --Version Related Errors--
 ;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
 ;                  --Success--
@@ -513,7 +513,7 @@ EndFunc   ;==>_LOWriter_CellGetName
 ;                  @Error 4 @Extended 1 Return 0 = Failed to set Write-Protect property.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Successfully set Cell Protect setting.
-;                  @Error 0 @Extended 0 Return Boolean = Success. $bProtect is set to Null, return will be the current setting of write-protection for the cell.
+;                  @Error 0 @Extended 0 Return Boolean = Success. All optional parameters were called with Null, return will be the current setting of write-protection for the cell.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Calling $bProtect with Null keyword returns the current WriteProtection setting of the cell. (True or False)
@@ -551,7 +551,7 @@ EndFunc   ;==>_LOWriter_CellProtect
 ;                  @Error 1 @Extended 3 Return 0 = $oCell is a CellRange not an individual cell.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Successfully set the cell String.
-;                  @Error 0 @Extended 1 Return String = Success. $sString set to Null, returning current string.
+;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were called with Null, returning current string.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: String can only be set for an individual cell, not a range.
@@ -590,7 +590,7 @@ EndFunc   ;==>_LOWriter_CellString
 ;                  @Error 1 @Extended 3 Return 0 = $oCell is a CellRange not an individual cell.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Successfully set cell value.
-;                  @Error 0 @Extended 1 Return String = Success. $nValue set to Null, returning current cell value.
+;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were called with Null, returning current cell value.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Value can only be set for an individual cell, not a range.
@@ -631,7 +631,7 @@ EndFunc   ;==>_LOWriter_CellValue
 ;                  @Error 4 @Extended 1 Return 0 = Failed to set Cell Vertical Orientation property.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Successfully set Vertical Orientation.
-;                  @Error 0 @Extended 0 Return Integer = Success. $iVertOrient is set to Null, returning current Cell Vertical orientation, see constants $LOW_ORIENT_VERT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 0 @Extended 0 Return Integer = Success. All optional parameters were called with Null, returning current Cell Vertical orientation, see constants $LOW_ORIENT_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If $iVertOrient is set to Null the current setting is returned.
