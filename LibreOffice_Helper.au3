@@ -30,7 +30,7 @@
 ; Name ..........: _LO_ComError_UserFunction
 ; Description ...: Set a UserFunction to receive the Fired COM Error Error outside of the UDF.
 ; Syntax ........: _LO_ComError_UserFunction([$vUserFunction = Default[, $vParam1 = Null[, $vParam2 = Null[, $vParam3 = Null[, $vParam4 = Null[, $vParam5 = Null]]]]]])
-; Parameters ....: $vUserFunction       - [optional] a Function or Keyword. Default value is Default. Accepts a Function, or the Keyword Default and Null. If set to a User function, the function may have up to 5 required parameters.
+; Parameters ....: $vUserFunction       - [optional] a Function or Keyword. Default value is Default. Accepts a Function, or the Keyword Default and Null. If called with a User function, the function may have up to 5 required parameters.
 ;                  $vParam1             - [optional] a variant value. Default is Null. Any optional parameter to be called with the user function.
 ;                  $vParam2             - [optional] a variant value. Default is Null. Any optional parameter to be called with the user function.
 ;                  $vParam3             - [optional] a variant value. Default is Null. Any optional parameter to be called with the user function.
@@ -119,7 +119,7 @@ EndFunc   ;==>_LO_ComError_UserFunction
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = No parameters set.
-;                  @Error 1 @Extended 2 Return 0 = No parameters set to an integer.
+;                  @Error 1 @Extended 2 Return 0 = No parameters called with an integer.
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return String = Long integer converted To Hexadecimal (as a String). (Without the "0x" prefix)
 ;                  @Error 0 @Extended 2 Return Array = Array containing Long integer converted To Red, Green, Blue,(RGB). $Array[0] = R, $Array[1] = G, etc.
