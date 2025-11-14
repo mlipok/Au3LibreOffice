@@ -327,7 +327,7 @@ EndFunc   ;==>_LOWriter_DocBookmarkInsert
 ;                  @Error 0 @Extended 0 Return String = Success. All optional parameters were called with Null, returning current Bookmark name.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  A Bookmark name cannot contain the following characters: / \ @ : * ? " ; , . #
 ;                  If the document already contains a Bookmark by the same name, Libre Office adds a digit after the name, such as Bookmark 1, Bookmark 2 etc.
@@ -1020,7 +1020,7 @@ EndFunc   ;==>_LOWriter_DocCreateTextCursor
 ; Modified ......:
 ; Remarks .......: "Title" is the Title as found in File>Properties, not the Document's Title as set when saving it.
 ;                  Any array error checking only checks to make sure the input array, and the set Array of values is the same size, it does not check that each element is the same.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
@@ -1229,7 +1229,7 @@ EndFunc   ;==>_LOWriter_DocExecuteDispatch
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sFilePath           - a string value. Full path to save the document to, including Filename and extension. See Remarks.
 ;                  $bSamePath           - [optional] a boolean value. Default is False. If True, uses the path of the current document to export to. See Remarks
-;                  $sFilterName         - [optional] a string value. Default is "". Filter name. If set to "" (blank string), Filter is chosen automatically based on the file extension. If no extension is present, or if not matched to the list of extensions in this UDF, the .odt extension is used instead, with the filter name of "writer8".
+;                  $sFilterName         - [optional] a string value. Default is "". Filter name. If called with "" (blank string), Filter is chosen automatically based on the file extension. If no extension is present, or if not matched to the list of extensions in this UDF, the .odt extension is used instead, with the filter name of "writer8".
 ;                  $bOverwrite          - [optional] a boolean value. Default is Null. If True, file will be overwritten.
 ;                  $sPassword           - [optional] a string value. Default is Null. Password String to set for the document. (Not all file formats can have a Password set). "" (blank string) or Null = No Password.
 ; Return values .: Success: String
@@ -1254,7 +1254,7 @@ EndFunc   ;==>_LOWriter_DocExecuteDispatch
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Does not alter the original save path (if there was one), saves a copy of the document to the new path, in the new file format if one is chosen.
-;                  If $bSamePath is set to True, the same save path as the current document is used. You must still fill in "sFilePath" with the desired File Name and new extension, but you do not need to enter the file path.
+;                  If $bSamePath is called with True, the same save path as the current document is used. You must still fill in "sFilePath" with the desired File Name and new extension, but you do not need to enter the file path.
 ; Related .......: _LOWriter_DocSave, _LOWriter_DocSaveAs
 ; Link ..........:
 ; Example .......: Yes
@@ -1495,9 +1495,9 @@ EndFunc   ;==>_LOWriter_DocFindAllInRange
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oSrchDescript       - [in/out] an object. A Search Descriptor Object returned from _LOWriter_SearchDescriptorCreate function.
 ;                  $sSearchString       - a string value. A String of text or a regular expression to search for.
-;                  $atFindFormat        - [optional] an array of dll structs. Default is Null. Set to Null to skip. An Array of Formatting properties to search for, either by value or simply by existence, depending on the current setting of "Value Search".
+;                  $atFindFormat        - [optional] an array of dll structs. Default is Null. Call with Null to skip. An Array of Formatting properties to search for, either by value or simply by existence, depending on the current setting of "Value Search".
 ;                  $oRange              - [optional] an object. Default is Null. A Range, such as a cursor with Data selected, to perform the search within. If Null, the entire document is searched.
-;                  $oLastFind           - [optional] an object. Default is Null. The last returned Object by a previous call to this function to begin the search from, if set to Null, the search begins at the start of the Document or selection, depending on if a Range is provided.
+;                  $oLastFind           - [optional] an object. Default is Null. The last returned Object by a previous call to this function to begin the search from, if called with Null, the search begins at the start of the Document or selection, depending on if a Range is provided.
 ;                  $bExhaustive         - [optional] a boolean value. Default is False. If True, tests whether every result found in a document is contained in the selection or not. See remarks.
 ; Return values .: Success: Object or 1.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1519,7 +1519,7 @@ EndFunc   ;==>_LOWriter_DocFindAllInRange
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: When a search is performed inside of a selection, the search may miss any footnotes/ Endnotes/ Frames contained in that selection as the text of these are counted as being located at the very end/beginning of a Document, thus if you are searching in the center of a document, the search will begin in the center, reach the end of the selection, and stop, never reaching the foot/Endnotes etc.
-;                  If $bExhaustive is set to True, the search continues until the whole document has been searched, but, if the search has many hits, this could slow the search considerably. There is no use setting this to True in a full document search.
+;                  If $bExhaustive is called with True, the search continues until the whole document has been searched, but, if the search has many hits, this could slow the search considerably. There is no use setting this to True in a full document search.
 ; Related .......: _LOWriter_SearchDescriptorCreate, _LOWriter_DocFindAll, _LOWriter_DocFindAllInRange, _LOWriter_DocReplaceAll, _LOWriter_DocReplaceAllInRange, _LOWriter_FindFormatModifyAlignment, _LOWriter_FindFormatModifyEffects, _LOWriter_FindFormatModifyFont, _LOWriter_FindFormatModifyHyphenation, _LOWriter_FindFormatModifyIndent, _LOWriter_FindFormatModifyOverline, _LOWriter_FindFormatModifyPageBreak, _LOWriter_FindFormatModifyPosition, _LOWriter_FindFormatModifyRotateScaleSpace, _LOWriter_FindFormatModifySpacing, _LOWriter_FindFormatModifyStrikeout, _LOWriter_FindFormatModifyTxtFlowOpt, _LOWriter_FindFormatModifyUnderline.
 ; Link ..........:
 ; Example .......: Yes
@@ -1646,7 +1646,7 @@ EndFunc   ;==>_LOWriter_DocFindNext
 ;                  @Error 0 @Extended 1 Return Object = Success. See Remarks.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: If more than one parameter is set to true, an array is returned with the requested objects in the order that the True parameters are listed. Else the requested object is returned.
+; Remarks .......: If more than one parameter is called with true, an array is returned with the requested objects in the order that the True parameters are listed. Else the requested object is returned.
 ;                  If same content on left and right and first pages is active for the requested page style, you only need to use the $bFooter parameter, the others are only for when same content on first page or same content on left and right pages is deactivated.
 ; Related .......: _LOWriter_PageStyleGetObj, _LOWriter_PageStyleCreate, _LOWriter_DocInsertString
 ; Link ..........:
@@ -1716,7 +1716,7 @@ EndFunc   ;==>_LOWriter_DocFooterGetTextCursor
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  In order to determine current values for $bFormDesignMode and $bUseControlWizards, a Macro is temporarily injected into the document, and subsequently deleted.
 ; Related .......:
@@ -1881,7 +1881,7 @@ EndFunc   ;==>_LOWriter_DocFormSettings
 ; Description ...: Set, Retrieve, or reset a Document's General Properties.
 ; Syntax ........: _LOWriter_DocGenProp(ByRef $oDoc[, $sNewAuthor = Null[, $iRevisions = Null[, $iEditDuration = Null[, $bApplyUserData = Null[, $bResetUserData = False]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $sNewAuthor          - [optional] a string value. Default is Null. The new author of the document, can be set separately, but must be set to a string if $bResetUserData is set to True.
+;                  $sNewAuthor          - [optional] a string value. Default is Null. The new author of the document, can be set separately, but must be set to a string if $bResetUserData is called with True.
 ;                  $iRevisions          - [optional] an integer value. Default is Null. How often the document was edited and saved.
 ;                  $iEditDuration       - [optional] an integer value. Default is Null. The total time of editing the document (in seconds).
 ;                  $bApplyUserData      - [optional] a boolean value. Default is Null. If True, the user-specific settings saved within a document will be loaded with the document.
@@ -1911,7 +1911,7 @@ EndFunc   ;==>_LOWriter_DocFormSettings
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 4 Element Array with values in order of function parameters, except $bResetUserData, as it is not a setting.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Setting $bResetUserData to True resets several attributes at once, as follows:
 ;                  - Author is set to $sNewAuthor parameter, ($sNewAuthor MUST be set to a string).
@@ -2008,7 +2008,7 @@ EndFunc   ;==>_LOWriter_DocGenProp
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_DateStructCreate
 ; Link ..........:
@@ -2074,7 +2074,7 @@ EndFunc   ;==>_LOWriter_DocGenPropCreation
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_DateStructCreate, _LOWriter_DateStructModify
 ; Link ..........:
@@ -2140,7 +2140,7 @@ EndFunc   ;==>_LOWriter_DocGenPropModification
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_DateStructCreate, _LOWriter_DateStructModify
 ; Link ..........:
@@ -2210,7 +2210,7 @@ EndFunc   ;==>_LOWriter_DocGenPropPrint
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_DateStructCreate, _LOWriter_DateStructModify
 ; Link ..........:
@@ -2509,7 +2509,7 @@ EndFunc   ;==>_LOWriter_DocHasPath
 ;                  @Error 0 @Extended 1 Return Object = Success. See Remarks.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: If more than one parameter is set to true, an array is returned with the requested objects in the order that the True parameters are listed. Else the requested object is returned.
+; Remarks .......: If more than one parameter is called with true, an array is returned with the requested objects in the order that the True parameters are listed. Else the requested object is returned.
 ;                  If same content on left and right and first pages is active for the requested page style, you only need to use the $bHeader parameter, the others are only for when same content on first page or same content on left and right pages is deactivated.
 ; Related .......: _LOWriter_PageStyleGetObj, _LOWriter_PageStyleCreate, _LOWriter_DocInsertString
 ; Link ..........:
@@ -2803,7 +2803,7 @@ EndFunc   ;==>_LOWriter_DocIsModified
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocIsReadOnly
-; Description ...: Tests whether a document is currently set to ReadOnly.
+; Description ...: Tests whether a document is opened in ReadOnly mode.
 ; Syntax ........: _LOWriter_DocIsReadOnly(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ; Return values .: Success: Boolean
@@ -2844,7 +2844,7 @@ EndFunc   ;==>_LOWriter_DocIsReadOnly
 ;                  @Error 0 @Extended 1 Return Boolean = Success. $bMaximize called with Null, returning boolean indicating if Document is currently maximized (True) or not (False).
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: If $bMaximize is set to Null, returns a Boolean indicating if document is currently maximized (True).
+; Remarks .......: If $bMaximize is called with Null, returns a Boolean indicating if document is currently maximized (True).
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -2880,7 +2880,7 @@ EndFunc   ;==>_LOWriter_DocMaximize
 ;                  @Error 0 @Extended 1 Return Boolean = Success. $bMinimize called with Null, returning boolean indicating if Document is currently minimized (True) or not (False).
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: If $bMinimize is set to Null, returns a Boolean indicating if document is currently minimized (True).
+; Remarks .......: If $bMinimize is called with Null, returns a Boolean indicating if document is currently minimized (True).
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -3050,7 +3050,7 @@ EndFunc   ;==>_LOWriter_DocOpen
 ; Modified ......:
 ; Remarks .......: X & Y, on my computer at least, seem to go no lower than 8(X) and 30(Y), if you enter lower than this, it will cause a "property setting Error".
 ;                  If you want more accurate functionality, use the "WinMove" AutoIt function.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
@@ -3378,7 +3378,7 @@ EndFunc   ;==>_LOWriter_DocPrintersGetNames
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_DocPrintSizeSettings, _LOWriter_DocPrintPageSettings, _LOWriter_DocPrintMiscSettings
 ; Link ..........:
@@ -3482,7 +3482,7 @@ EndFunc   ;==>_LOWriter_DocPrintIncludedSettings
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 6 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_DocPrintSizeSettings, _LOWriter_DocPrintPageSettings, _LOWriter_DocPrintIncludedSettings
 ; Link ..........:
@@ -3604,7 +3604,7 @@ EndFunc   ;==>_LOWriter_DocPrintMiscSettings
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If both $bLeftOnly and $bRightOnly are True, both Left and Right pages are printed.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_DocPrintSizeSettings, _LOWriter_DocPrintMiscSettings, _LOWriter_DocPrintIncludedSettings
 ; Link ..........:
@@ -3703,7 +3703,7 @@ EndFunc   ;==>_LOWriter_DocPrintPageSettings
 ; Modified ......:
 ; Remarks .......: Due to slight inaccuracies in unit conversion, there may be false errors thrown while attempting to set paper size.
 ;                  For some reason, setting $iPaperWidth and $iPaperHeight modifies the document page size also.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LO_UnitConvert, _LOWriter_DocPrintPageSettings, _LOWriter_DocPrintMiscSettings, _LOWriter_DocPrintIncludedSettings
 ; Link ..........:
@@ -3964,7 +3964,7 @@ EndFunc   ;==>_LOWriter_DocRedoIsPossible
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: In order for $atReplaceFormat to be applied to replacements, $bSearchPropValues must be True in the Search descriptor. I'm not sure why.
-;                  Having $bBackwards set to True can cause issues with Find and Replace using formats, perhaps other things as well.
+;                  Calling $bBackwards with True can cause issues with Find and Replace using formats, perhaps other things as well.
 ; Related .......: _LOWriter_SearchDescriptorCreate, _LOWriter_DocFindAll, _LOWriter_DocFindNext, _LOWriter_DocFindAllInRange, _LOWriter_DocReplaceAllInRange, _LOWriter_FindFormatModifyAlignment, _LOWriter_FindFormatModifyEffects, _LOWriter_FindFormatModifyFont, _LOWriter_FindFormatModifyHyphenation, _LOWriter_FindFormatModifyIndent, _LOWriter_FindFormatModifyOverline, _LOWriter_FindFormatModifyPageBreak, _LOWriter_FindFormatModifyPosition, _LOWriter_FindFormatModifyRotateScaleSpace, _LOWriter_FindFormatModifySpacing, _LOWriter_FindFormatModifyStrikeout, _LOWriter_FindFormatModifyTxtFlowOpt, _LOWriter_FindFormatModifyUnderline.
 ; Link ..........:
 ; Example .......: Yes
@@ -4039,7 +4039,7 @@ EndFunc   ;==>_LOWriter_DocReplaceAll
 ;                  If formatting is not being search or applied, I use a dispatch command to Find and Replace. However if formatting is being searched or added, A second method is used, which begins with the "FindAllInRange" function to find all matching results, then temporarily applies a normally unused property to the applicable results (CharFlash or CharShadingValue), and then add that temporary property to the Formatting array to search for, then Replace all results. And finally removing the temporary property value again.
 ;                  Replacing Paragraph Styles doesn't work with a dispatch command, so I use the "FindAllInRange" function, and then manually apply the new Paragraph Style.
 ;                  In order for $atReplaceFormat to be applied to replacements, $bSearchPropValues must be True in the Search descriptor. I'm not sure why.
-;                  Having $bBackwards set to True can cause issues with Find and Replace using formats, perhaps other things as well.
+;                  Calling $bBackwards with True can cause issues with Find and Replace using formats, perhaps other things as well.
 ; Related .......: _LOWriter_SearchDescriptorCreate, _LOWriter_DocFindAll, _LOWriter_DocFindNext, _LOWriter_DocFindAllInRange, _LOWriter_DocReplaceAll, _LOWriter_FindFormatModifyAlignment, _LOWriter_FindFormatModifyEffects, _LOWriter_FindFormatModifyFont, _LOWriter_FindFormatModifyHyphenation, _LOWriter_FindFormatModifyIndent, _LOWriter_FindFormatModifyOverline, _LOWriter_FindFormatModifyPageBreak, _LOWriter_FindFormatModifyPosition, _LOWriter_FindFormatModifyRotateScaleSpace, _LOWriter_FindFormatModifySpacing, _LOWriter_FindFormatModifyStrikeout, _LOWriter_FindFormatModifyTxtFlowOpt, _LOWriter_FindFormatModifyUnderline.
 ; Link ..........:
 ; Example .......: Yes

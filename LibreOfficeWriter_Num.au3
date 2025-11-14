@@ -101,7 +101,7 @@ EndFunc   ;==>_LOWriter_NumStyleCreate
 ;                  $iNumFormat          - [optional] an integer value (0-71). Default is Null. The numbering scheme for the selected levels. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iStartAt            - [optional] an integer value. Default is Null. A new starting number for the current level
 ;                  $sCharStyle          - [optional] a string value. Default is Null. The Character Style that you want to use in an ordered list.
-;                  $iSubLevels          - [optional] an integer value (1-10). Default is Null. Enter the number of previous levels to include in the outline format. For example, if you enter "2" and the previous level uses the "A, B, C..." numbering scheme, the numbering scheme for the current level becomes: "A.1". Maximum value, if $iLevel is set to 0, is 1.
+;                  $iSubLevels          - [optional] an integer value (1-10). Default is Null. Enter the number of previous levels to include in the outline format. See remarks.
 ;                  $sSepBefore          - [optional] a string value. Default is Null. A character or the text to display in front of the number in the list
 ;                  $sSepAfter           - [optional] a string value. Default is Null. A character or the text to display behind the number in the list.
 ;                  $bConsecutiveNum     - [optional] a boolean value. Default is Null. Increases the numbering by one as you go down each level in the list hierarchy.
@@ -151,10 +151,12 @@ EndFunc   ;==>_LOWriter_NumStyleCreate
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function should work just fine as the others do for modifying styles, but for setting Numbering Style settings, it would seem that the Array of Setting Objects passed by AutoIt is not recognized as an appropriate array/sequence by LibreOffice, and consequently causes a com.sun.star.lang.IllegalArgumentException COM error. See __LOWriter_NumStyleModify function for a more detailed explanation. This function can still be used to set and retrieve, setting values, however now, this function either inserts a temporary macro into $oDoc for performing the needed procedure, or if that fails, it invisibly opens an .odt Libre document and inserts a macro, see __LOWriter_NumStyleInitiateDocument which is then called with the necessary parameters to set.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings. You can request setting values for one numbering level at a time, or all at once (see below). If Current numbering type is set to Bullet, the returned array will contain 9 elements, in the order of parameters, if the current numbering type is other than bullet style, a 7 element array will be returned, with the last two parameters excluded.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
+;                  You can request setting values for one numbering level at a time, or all at once (see below). If Current numbering type is set to Bullet, the returned array will contain 9 elements, in the order of parameters, if the current numbering type is other than bullet style, a 7 element array will be returned, with the last two parameters excluded.
 ;                  If you retrieve the current settings for all levels (by calling $iLevel with 0), the return will be a 10 element array containing an array of settings for each Numbering Level.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  When a lot of settings are set, especially for all levels, this function can be a bit slow.
+;                  For $iSubLevels, if you enter "2" and the previous level uses the "A, B, C..." numbering scheme, the numbering scheme for the current level becomes: "A.1". The Maximum value, if $iLevel is set to 0, is 1.
 ; Related .......: _LOWriter_NumStyleCreate, _LOWriter_NumStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
@@ -474,7 +476,7 @@ EndFunc   ;==>_LOWriter_NumStyleGetObj
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 1 or 2 Element Array with values in order of function parameters. If the Libre Office version is below 4.0, the Array will contain 1 element because $bHidden is not available.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_NumStyleCreate, _LOWriter_NumStyleGetObj
 ; Link ..........:
@@ -563,7 +565,7 @@ EndFunc   ;==>_LOWriter_NumStyleOrganizer
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function should work just fine as the others do for modifying styles, but for setting Numbering Style settings, it would seem that the Array of Setting Objects passed by AutoIt is not recognized as an appropriate array/Sequence by LibreOffice, and consequently causes a com.sun.star.lang.IllegalArgumentException COM error. See __LOWriter_NumStyleModify function for a more detailed explanation. This function can still be used to set and retrieve, setting values, however now, this function either inserts a temporary macro into $oDoc for performing the needed procedure, or if that fails, it invisibly opens an .odt Libre document and inserts a macro, (see __LOWriter_NumStyleInitiateDocument), which is then called with the necessary parameters to set.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings. You can request setting values for one numbering level at a time, or all at once (see below).
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings. You can request setting values for one numbering level at a time, or all at once (see below).
 ;                  If you retrieve the current settings for all levels (by calling $iLevel with 0), the return will be a 10 element array containing an array of settings for each Numbering Level.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_NumStyleCreate, _LOWriter_NumStyleGetObj, _LO_UnitConvert
@@ -714,7 +716,7 @@ EndFunc   ;==>_LOWriter_NumStyleSet
 ; Description ...: Set the numbering style level for a paragraph by Cursor or paragraph Object.
 ; Syntax ........: _LOWriter_NumStyleSetLevel(ByRef $oObj[, $iLevel = Null])
 ; Parameters ....: $oObj                - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object returned from _LOWriter_ParObjCreateList function.
-;                  $iLevel              - [optional] an integer value (1-10). Default is Null. The Numbering Style level to set the paragraph to. Set to Null to retrieve the current level set.
+;                  $iLevel              - [optional] an integer value (1-10). Default is Null. The Numbering Style level to set the paragraph to.
 ; Return values .: Success: 1 or Integer
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -727,7 +729,7 @@ EndFunc   ;==>_LOWriter_NumStyleSet
 ;                  @Error 0 @Extended 0 Return 1 = Success. Numbering Style successfully set.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:
+; Remarks .......: Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ParObjCreateList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
@@ -769,8 +771,8 @@ EndFunc   ;==>_LOWriter_NumStyleSetLevel
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If Only a Document object is input, all available Numbering styles will be returned.
-;                  Else if $bUserOnly is set to True, only User-Created Numbering Styles are returned.
-;                  Else if $bAppliedOnly is set to True, only Applied Numbering Styles are returned.
+;                  Else if $bUserOnly is called with True, only User-Created Numbering Styles are returned.
+;                  Else if $bAppliedOnly is called with True, only Applied Numbering Styles are returned.
 ;                  If Both are true then only User-Created Numbering styles that are applied are returned.
 ; Related .......: _LOWriter_NumStyleGetObj
 ; Link ..........:

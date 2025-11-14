@@ -210,7 +210,7 @@ EndFunc   ;==>_LOWriter_EndnoteInsert
 ; Description ...: Modify a Specific Endnote's settings.
 ; Syntax ........: _LOWriter_EndnoteModifyAnchor(ByRef $oEndNote[, $sLabel = Null])
 ; Parameters ....: $oEndNote            - [in/out] an object. A Endnote Object from a previous _LOWriter_EndnoteInsert, or _LOWriter_EndnotesGetList function.
-;                  $sLabel              - [optional] a string value. Default is Null. A custom anchor label for the Endnote. Set to "" for automatic numbering.
+;                  $sLabel              - [optional] a string value. Default is Null. A custom anchor label for the Endnote. Call with "" for automatic numbering.
 ; Return values .: Success: 1 or String.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -224,7 +224,7 @@ EndFunc   ;==>_LOWriter_EndnoteInsert
 ;                  @Error 0 @Extended 2 Return String = Success. All optional parameters were called with Null, current Endnote Auto-Numbering number returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Calling $sLabel with Null will either return the current Label, or the current auto-numbering number, depending on if auto-numbering is active.
 ; Related .......: _LOWriter_EndnotesGetList, _LOWriter_EndnoteInsert
@@ -367,7 +367,7 @@ EndFunc   ;==>_LOWriter_EndnoteSettingsAutoNumber
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ParStylesGetNames, _LOWriter_CharStylesGetNames, _LOWriter_PageStylesGetNames
 ; Link ..........:
@@ -645,7 +645,7 @@ EndFunc   ;==>_LOWriter_FootnoteInsert
 ; Description ...: Modify a Footnote's Anchor Character.
 ; Syntax ........: _LOWriter_FootnoteModifyAnchor(ByRef $oFootNote[, $sLabel = Null])
 ; Parameters ....: $oFootNote           - [in/out] an object. A Footnote Object from a previous _LOWriter_FootnoteInsert, Or _LOWriter_FootnotesGetList function.
-;                  $sLabel              - [optional] a string value. Default is Null. A custom anchor label for the Footnote. Set to "" for automatic numbering.
+;                  $sLabel              - [optional] a string value. Default is Null. A custom anchor label for the Footnote. Call with "" for automatic numbering.
 ; Return values .: Success: 1 or String.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -659,7 +659,7 @@ EndFunc   ;==>_LOWriter_FootnoteInsert
 ;                  @Error 0 @Extended 2 Return String = Success. All optional parameters were called with Null, current Footnote AutoNumbering number returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Calling $sLabel with Null will either return the current Label, or the current auto-numbering number, depending on if auto-numbering is active.
 ; Related .......: _LOWriter_FootnoteInsert, _LOWriter_FootnotesGetList
@@ -723,7 +723,7 @@ EndFunc   ;==>_LOWriter_FootnoteModifyAnchor
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 6 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
@@ -814,7 +814,7 @@ EndFunc   ;==>_LOWriter_FootnoteSettingsAutoNumber
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
@@ -884,7 +884,7 @@ EndFunc   ;==>_LOWriter_FootnoteSettingsContinuation
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ParStylesGetNames, _LOWriter_PageStylesGetNames, _LOWriter_CharStylesGetNames
 ; Link ..........:

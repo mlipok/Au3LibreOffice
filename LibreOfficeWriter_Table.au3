@@ -103,7 +103,7 @@
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Error values for Initialization and Processing, are passed from the internal border setting function.
 ; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LOWriter_TableBorderWidth, _LOWriter_TableBorderStyle, _LOWriter_TableBorderPadding
@@ -159,7 +159,7 @@ EndFunc   ;==>_LOWriter_TableBorderColor
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LO_UnitConvert, _LOWriter_TableBorderWidth, _LOWriter_TableBorderStyle, _LOWriter_TableBorderColor
 ; Link ..........:
@@ -265,7 +265,7 @@ EndFunc   ;==>_LOWriter_TableBorderPadding
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Error values for Initialization and Processing are passed from the internal border setting function.
 ; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_TableBorderWidth, _LOWriter_TableBorderColor, _LOWriter_TableBorderPadding
@@ -324,7 +324,7 @@ EndFunc   ;==>_LOWriter_TableBorderStyle
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To "Turn Off" Borders, set them to 0
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Error values for Initialization and Processing, are passed from the internal border setting function.
 ; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LO_UnitConvert, _LOWriter_TableBorderStyle, _LOWriter_TableBorderColor, _LOWriter_TableBorderPadding
@@ -378,7 +378,7 @@ EndFunc   ;==>_LOWriter_TableBorderWidth
 ; Modified ......:
 ; Remarks .......: Break Type must be set before Page Style will be able to be set, and page style needs set before $iPgNumOffSet can be set.
 ;                  LibreOffice doesn't directly show in its User interface options for Break type constants #3 and #6 (Column both) and (Page both), but doesn't throw an error when being set to either one, so they are included here, though I'm not sure if they will work correctly.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_PageStylesGetNames
 ; Link ..........:
@@ -464,7 +464,7 @@ EndFunc   ;==>_LOWriter_TableCellsGetNames
 ; Description ...: Set and retrieve the Background color settings of a Table.
 ; Syntax ........: _LOWriter_TableColor(ByRef $oTable[, $iBackColor = Null[, $bBackTransparent = Null]])
 ; Parameters ....: $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Table background color, as a RGB Color Integer. See Remarks. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for no background color.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Table background color, as a RGB Color Integer. See Remarks. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) for no background color.
 ;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -481,7 +481,7 @@ EndFunc   ;==>_LOWriter_TableCellsGetNames
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LO_ConvertColorFromLong, _LO_ConvertColorToLong
 ; Link ..........:
@@ -659,7 +659,7 @@ EndFunc   ;==>_LOWriter_TableColumnInsert
 ;                  $iRows               - [optional] an integer value. Default is 3. The number of rows to create the table with.
 ;                  $iColumns            - [optional] an integer value. Default is 2. The number of columns to create the table with.
 ;                  $bSplit              - [optional] a boolean value. Default is Null. If False, the table will not split across two pages.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Table background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF (-1) for no background color.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Table background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF (-1) for no background color.
 ;                  $sTableName          - [optional] a string value. Default is "". The table name. See Remarks.
 ; Return values .: Success: Object.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -746,7 +746,8 @@ EndFunc   ;==>_LOWriter_TableCreate
 ;                  @Error 0 @Extended 0 Return Object = Success, TableCursor object was created successfully. Returning Table Cursor Object for further Table manipulation functions.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $oTable can be either set to a Table object, or Null Keyword with $oCursor set to a Cursor object, $oCursor can be either set to a cursor object currently located in a Table (such as a ViewCursor)/ or a TextCursor located in a table. $sCellName can be left blank, which will place the TextTableCursor at the first cell (Typically "A1") if $oTable is called with an Object, else if $oCursor is used, the cell the cursor is currently located in is used.
+; Remarks .......: $oTable can be either called with a Table object, or Null Keyword with $oCursor called with a Cursor object, $oCursor can be either called with a cursor object currently located in a Table (such as a ViewCursor) or a TextCursor located in a table.
+;                  $sCellName can be left blank, which will place the TextTableCursor at the first cell (Typically "A1") if $oTable is called with an Object, else if $oCursor is used, the cell the cursor is currently located in is used.
 ; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_TableCellsGetNames, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor
 ; Link ..........:
 ; Example .......: Yes
@@ -1411,7 +1412,7 @@ EndFunc   ;==>_LOWriter_TableInsert
 ; Modified ......:
 ; Remarks .......: Left Margin cannot be set unless Table Orientation is set to other than $LOW_ORIENT_HORI_FULL(6), or $LOW_ORIENT_HORI_LEFT(3).
 ;                  Right Margin cannot be set unless the table orientation is set to $LOW_ORIENT_HORI_NONE(0), or $LOW_ORIENT_HORI_LEFT(3).
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LO_UnitConvert
 ; Link ..........:
@@ -1507,7 +1508,7 @@ EndFunc   ;==>_LOWriter_TableMargin
 ;                  @Error 0 @Extended 2 Return Array = Success. All optional parameters were called with Null, If the Table is already inserted into the document, returning current settings in a 7 Element Array with values in order of function parameters. $bSplitRows, $RepeatHeadline, and $iHeaderRows will be returned in the 5th, 6th, and 7th elements, respectively, as the Table is inserted into the Document.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  $bSplitRows and $bRepeatHeading can only be set for Tables currently in the document, not for Tables Created with _LOWriter_TableCreate, and not inserted.
 ;                  $bSplitRows will return 0 instead of a boolean if the Table's rows have different settings for $bSplitRows.
@@ -1597,7 +1598,7 @@ EndFunc   ;==>_LOWriter_TableProperties
 ; Syntax ........: _LOWriter_TableRowColor(ByRef $oTable, $iRow[, $iBackColor = Null[, $bBackTransparent = Null]])
 ; Parameters ....: $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
 ;                  $iRow                - an integer value. The row number to set the background color for. Rows are 0 based.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Row background color, as a RGB Color Integer. See Remarks. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) to disable background color.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Row background color, as a RGB Color Integer. See Remarks. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) to disable background color.
 ;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1619,7 +1620,7 @@ EndFunc   ;==>_LOWriter_TableProperties
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LOWriter_TableRowGetCount
 ; Link ..........:
@@ -1831,7 +1832,7 @@ EndFunc   ;==>_LOWriter_TableRowInsert
 ; Modified ......:
 ; Remarks .......: The First row number contained in a table is 0.
 ;                  None of these properties can be set if the Table is not inserted yet.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_TableRowGetCount
 ; Link ..........:
@@ -2005,7 +2006,7 @@ EndFunc   ;==>_LOWriter_TablesGetNames
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  LibreOffice may change the shadow width +/- a Hundredth of a Millimeter (100th MM).
 ; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_UnitConvert
@@ -2094,7 +2095,7 @@ EndFunc   ;==>_LOWriter_TableShadow
 ; Modified ......:
 ; Remarks .......: Relative Width and Width cannot be set until the Table Horizontal orientation is set to other than $LOW_ORIENT_HORI_FULL(6), which is LibeOffice's default setting.
 ;                  Width may change +/- a Hundredth of a Millimeter (100th MM) once set due to Libre Office.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LO_UnitConvert
 ; Link ..........:

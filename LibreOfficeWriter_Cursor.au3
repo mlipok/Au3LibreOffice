@@ -266,7 +266,7 @@ EndFunc   ;==>_LOWriter_CursorGoToRange
 ;                  @Error 0 @Extended ? Return Boolean = Success, Cursor object movement was processed successfully. Returns True if the full count of movements were successful, else false if none or only partially successful. @Extended set to number of successful movements. Or Page Number for "gotoPage" command. See Remarks
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $iMove may be set to any of the following constants depending on the Cursor type you are intending to move.
+; Remarks .......: $iMove may be called with any of the following constants depending on the Cursor type you are intending to move.
 ;                  Only some movements accept movement amounts (such as "goRight" 2) etc. Also only some accept creating/ extending a selection of text/ data. They will be specified below.
 ;                  To Clear /Unselect a current selection, you can input a move such as "goRight", 0, False.
 ;                  #Cursor Movement Constants which accept Number of Moves and Selecting:
