@@ -326,7 +326,7 @@ EndFunc   ;==>_LOBase_TableColAdd
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 3 or 4 Element Array with values in order of function parameters. See remarks.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Column Objects retrieved for primary keys do not support a Description text, thus if a Primary Key Column is called in $oColumn, that parameter will be omitted from the returned array when retrieving the settings.
 ; Related .......: _LOBase_TableColProperties
@@ -592,7 +592,7 @@ EndFunc   ;==>_LOBase_TableColGetObjByName
 ; Remarks .......: For $sDefaultVal, enter any numerical values as strings.
 ;                  Not all column types support all of these settings. It is the user's responsibility to know which are valid or not.
 ;                  There seems to be Constant value for Default, Justified and Filled settings for $iAlign.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOBase_TableColDefinition
 ; Link ..........:
@@ -1185,7 +1185,7 @@ EndFunc   ;==>_LOBase_TableIndexesGetNames
 ; Remarks .......: The Array called in $avColumns needs to be a 2 Column array, the Column name must be placed in the first (0th) column, and a Boolean value indicating whether the Column should should be sorted Ascending (True) or Descending (False) be found in the second (1st) column.
 ;                  An example of creating an Array for $avColumns would be: Local $avColumns[1][2] = [["ColumnName", [True]]. This would sort the Column named "ColumnName" in Ascending order.
 ;                  When retrieving the current settings, the returned array will be as described above for the $avColumns value.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  The error checking for newly set Columns or Ascending/Descending values doesn't check the content of the Index's columns vs those called in $avColumns, only the number of Columns.
 ;                  According to LibreOffice SDK API, some databases ignore the Ascending/Descending settings. In my limited testing, embedded HSQLDB seems to always be set to Ascending.
@@ -1334,7 +1334,7 @@ EndFunc   ;==>_LOBase_TableIndexModify
 ; Modified ......:
 ; Remarks .......: This function does not check if the new name already exists in Tables or Queries.
 ;                  According to LibreOffice SDK API IDL XRename Interface, It would seem some Database types don't support the renaming of Tables.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ; Related .......: _LOBase_TableExists
 ; Link ..........:
 ; Example .......: Yes
@@ -1853,7 +1853,7 @@ EndFunc   ;==>_LOBase_TableUIOpenByObject
 ;                  @Error 0 @Extended 1 Return Boolean = Success. All optional parameters were called with Null, returning current visibility setting.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes

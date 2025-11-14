@@ -395,7 +395,7 @@ EndFunc   ;==>_LOBase_DocCreate
 ; Modified ......:
 ; Remarks .......: I have not investigated the various settings for each Database type therefore I have no checks for right or wrong values, if you know the appropriate string to use you can set $sType to the desired setting, but make sure you know what you are doing. "sdbc:embedded:hsqldb" is the default setting for LibreOffice, which creates an embedded HSQLDB Base Document. The Type format is as follows jdbc:subprotocol:subname or sdbc:subprotocol:subname.
 ;                  I am not knowledgeable enough to know if changing Database types works, or if it is advisable, therefore I made the setting $bOverwrite. If $bOverwrite is False it prevents the user from setting the Database type if one is already set for the document.
-;                  Call this function with $sType set to Null to get the current Database type.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword) to get the current Database type.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -605,7 +605,7 @@ EndFunc   ;==>_LOBase_DocIsModified
 ;                  @Error 0 @Extended 1 Return Boolean = Success. $bMaximize called with Null, returning boolean indicating if Document is currently maximized (True) or not (False).
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: If $bMaximize is set to Null, returns a Boolean indicating if document is currently maximized (True).
+; Remarks .......: If $bMaximize is called with Null, returns a Boolean indicating if document is currently maximized (True).
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -641,7 +641,7 @@ EndFunc   ;==>_LOBase_DocMaximize
 ;                  @Error 0 @Extended 1 Return Boolean = Success. $bMinimize called with Null, returning boolean indicating if Document is currently minimized (True) or not (False).
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: If $bMinimize is set to Null, returns a Boolean indicating if document is currently minimized (True).
+; Remarks .......: If $bMinimize is called with Null, returns a Boolean indicating if document is currently minimized (True).
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes

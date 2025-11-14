@@ -683,7 +683,7 @@ EndFunc   ;==>_LOBase_SQLResultRowUpdate
 ;                  @Error 0 @Extended 1 Return Object = Success. Returning the created Statement Object.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: If you leave $sSQL set to NULL, a Statement will be created. If you call $sSQL with a SQL string, a Prepared Statement will be created.
+; Remarks .......: If $sSQL is called with NULL, a Statement will be created. If you call $sSQL with a SQL string, a Prepared Statement will be created.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes

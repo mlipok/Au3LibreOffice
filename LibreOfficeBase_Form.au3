@@ -953,7 +953,7 @@ EndFunc   ;==>_LOBase_FormFolderRename
 ;                  @Error 0 @Extended 0 Return Integer = Success. Returning count of Form Folders contained in the Document as an Integer.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $sFolder can be left as a blank string "", which will either return only the count of main level Folders (not located in folders), or if $bExhaustive is set to True, it will return a count of all Folders contained in the document.
+; Remarks .......: $sFolder can be left as a blank string "", which will either return only the count of main level Folders (not located in folders), or if $bExhaustive is called with True, it will return a count of all Folders contained in the document.
 ;                  You can narrow the Folder count down to a specific folder by calling the appropriate path for the folder, separated by forward slashes (/), e.g. to get a count of Folders contained in folder 3, which is located in Folder 2, which is located inside folder 1, you would call $sFolder with the following path: Folder1/Folder2/Folder3
 ; Related .......: _LOBase_FormFoldersGetNames
 ; Link ..........:
@@ -1057,7 +1057,7 @@ EndFunc   ;==>_LOBase_FormFoldersGetCount
 ;                  @Error 0 @Extended ? Return Array = Success. Returning Array of Folder names contained in this Document. @Extended is set to number of results.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $sFolder can be left as a blank string "", which will either return only an array of main level Folder names (not located in sub-folders), or if $bExhaustive is set to True, it will return an array of all folders contained in the document.
+; Remarks .......: $sFolder can be left as a blank string "", which will either return only an array of main level Folder names (not located in sub-folders), or if $bExhaustive is called with True, it will return an array of all folders contained in the document.
 ;                  You can narrow the Folder name return down to a specific folder by calling the appropriate path for the folder, separated by forward slashes (/), e.g. to get an array of Folders contained in folder 3, which is located in Folder 2, which is located inside folder 1, you would call $sFolder with the following path: Folder1/Folder2/Folder3
 ;                  All Folders located in sub-folders will have the folder path prefixed to the Folder name, separated by forward slashes (/). e.g. Folder1/Folder2/Folder3.
 ;                  Calling $bExhaustive with True when searching inside a Folder, will get all Folder names from inside that folder, and all sub-folders.
@@ -1353,7 +1353,7 @@ EndFunc   ;==>_LOBase_FormSave
 ;                  @Error 0 @Extended 0 Return Integer = Success. Returning count of Forms contained in the Document as an Integer.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $sFolder can be left as a blank string "", which will either return only the count of main level Forms (not located in folders), or if $bExhaustive is set to True, the return will be a count of all forms contained in the document.
+; Remarks .......: $sFolder can be left as a blank string "", which will either return only the count of main level Forms (not located in folders), or if $bExhaustive is called with True, the return will be a count of all forms contained in the document.
 ;                  You can narrow the Form count down to a specific folder by calling the appropriate path for the folder, separated by forward slashes (/), e.g. to get a count of forms contained in folder 3, which is located in Folder 2, which is located inside folder 1, you would call $sFolder with the following path: Folder1/Folder2/Folder3
 ; Related .......: _LOBase_FormsGetNames
 ; Link ..........:
@@ -1461,7 +1461,7 @@ EndFunc   ;==>_LOBase_FormsGetCount
 ;                  @Error 0 @Extended ? Return Array = Success. Returning Array of Form names contained in this Document. @Extended is set to number of results.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $sFolder can be left as a blank string "", which will either return only an array of main level Form names (not located in folders), or if $bExhaustive is set to True, it will return an array of all forms contained in the document.
+; Remarks .......: $sFolder can be left as a blank string "", which will either return only an array of main level Form names (not located in folders), or if $bExhaustive is called with True, it will return an array of all forms contained in the document.
 ;                  You can narrow the Form name return down to a specific folder by calling the appropriate path for the folder, separated by forward slashes (/), e.g. to get an array of forms contained in folder 3, which is located in Folder 2, which is located inside folder 1, you would call $sFolder with the following path: Folder1/Folder2/Folder3
 ;                  All forms located in folders will have the folder path prefixed to the Form name, separated by forward slashes (/). e.g. Folder1/Folder2/Folder3/FormXYZ.
 ;                  Calling $bExhaustive with True when searching inside a Folder, will get all Form names from inside that folder, and all sub-folders.

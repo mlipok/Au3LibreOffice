@@ -43,7 +43,7 @@
 ; Name ..........: _LOBase_ComError_UserFunction
 ; Description ...: Set a UserFunction to receive the Fired COM Error Error outside of the UDF.
 ; Syntax ........: _LOBase_ComError_UserFunction([$vUserFunction = Default[, $vParam1 = Null[, $vParam2 = Null[, $vParam3 = Null[, $vParam4 = Null[, $vParam5 = Null]]]]]])
-; Parameters ....: $vUserFunction       - [optional] a Function or Keyword. Default value is Default. Accepts a Function, or the Keyword Default and Null. If set to a User function, the function may have up to 5 required parameters.
+; Parameters ....: $vUserFunction       - [optional] a Function or Keyword. Default value is Default. Accepts a Function, or the Keyword Default and Null. If called with a User function, the function may have up to 5 required parameters.
 ;                  $vParam1             - [optional] a variant value. Default is Null. Any optional parameter to be called with the user function.
 ;                  $vParam2             - [optional] a variant value. Default is Null. Any optional parameter to be called with the user function.
 ;                  $vParam3             - [optional] a variant value. Default is Null. Any optional parameter to be called with the user function.
@@ -125,8 +125,8 @@ EndFunc   ;==>_LOBase_ComError_UserFunction
 ; Description ...: Create a Date Structure for inserting a Date into certain other functions.
 ; Syntax ........: _LOBase_DateStructCreate([$iYear = Null[, $iMonth = Null[, $iDay = Null[, $iHours = Null[, $iMinutes = Null[, $iSeconds = Null[, $iNanoSeconds = Null[, $bIsUTC = Null]]]]]]]])
 ; Parameters ....: $iYear               - [optional] an integer value. Default is Null. The Year, in 4 digit integer format.
-;                  $iMonth              - [optional] an integer value (0-12). Default is Null. The Month, in 2 digit integer format. Set to 0 for Void date.
-;                  $iDay                - [optional] an integer value (0-31). Default is Null. The Day, in 2 digit integer format. Set to 0 for Void date.
+;                  $iMonth              - [optional] an integer value (0-12). Default is Null. The Month, in 2 digit integer format. Call with 0 for Void date.
+;                  $iDay                - [optional] an integer value (0-31). Default is Null. The Day, in 2 digit integer format. Call with 0 for Void date.
 ;                  $iHours              - [optional] an integer value (0-23). Default is Null. The Hour, in 2 digit integer format.
 ;                  $iMinutes            - [optional] an integer value (0-59). Default is Null. Minutes, in 2 digit integer format.
 ;                  $iSeconds            - [optional] an integer value (0-59). Default is Null. Seconds, in 2 digit integer format.
@@ -249,8 +249,8 @@ EndFunc   ;==>_LOBase_DateStructCreate
 ; Syntax ........: _LOBase_DateStructModify(ByRef $tDateStruct[, $iYear = Null[, $iMonth = Null[, $iDay = Null[, $iHours = Null[, $iMinutes = Null[, $iSeconds = Null[, $iNanoSeconds = Null[, $bIsUTC = Null]]]]]]]])
 ; Parameters ....: $tDateStruct         - [in/out] a dll struct value. The Date Structure to modify, returned from a _LOBase_DateStructCreate, or setting retrieval function. Structure will be directly modified.
 ;                  $iYear               - [optional] an integer value. Default is Null. The Year, in 4 digit integer format.
-;                  $iMonth              - [optional] an integer value (0-12). Default is Null. The Month, in 2 digit integer format. Set to 0 for Void date.
-;                  $iDay                - [optional] an integer value (0-31). Default is Null. The Day, in 2 digit integer format. Set to 0 for Void date.
+;                  $iMonth              - [optional] an integer value (0-12). Default is Null. The Month, in 2 digit integer format. Call with 0 for Void date.
+;                  $iDay                - [optional] an integer value (0-31). Default is Null. The Day, in 2 digit integer format. Call with 0 for Void date.
 ;                  $iHours              - [optional] an integer value (0-23). Default is Null. The Hour, in 2 digit integer format.
 ;                  $iMinutes            - [optional] an integer value (0-59). Default is Null. Minutes, in 2 digit integer format.
 ;                  $iSeconds            - [optional] an integer value (0-59). Default is Null. Seconds, in 2 digit integer format.
@@ -286,7 +286,7 @@ EndFunc   ;==>_LOBase_DateStructCreate
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 7 or 8 Element Array with values in order of function parameters. If current Libre Office version is less than 4.1, the Array will contain 7 elements, as $bIsUTC will be eliminated.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOBase_DateStructCreate
 ; Link ..........:
@@ -383,9 +383,9 @@ EndFunc   ;==>_LOBase_DateStructModify
 ;                  $iWeight             - [optional] an integer value (0-200). Default is $LOB_WEIGHT_DONT_KNOW. The Font weight. See Constants $LOB_WEIGHT_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $iSlant              - [optional] an integer value (0-5). Default is $LOB_POSTURE_DONTKNOW. The Font italic setting. See Constants $LOB_POSTURE_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $nSize               - [optional] a general number value. Default is 0. The Font size.
-;                  $iColor              - [optional] an integer value (-1-16777215). Default is $LO_COLOR_OFF. The Font Color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for Auto color.
+;                  $iColor              - [optional] an integer value (-1-16777215). Default is $LO_COLOR_OFF. The Font Color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) for Auto color.
 ;                  $iUnderlineStyle     - [optional] an integer value (0-18). Default is $LOB_UNDERLINE_DONT_KNOW. The Font underline Style. See Constants $LOB_UNDERLINE_* as defined in LibreOfficeBase_Constants.au3.
-;                  $iUnderlineColor     - [optional] an integer value (-1-16777215). Default is $LO_COLOR_OFF. The Font Underline color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for Auto color.
+;                  $iUnderlineColor     - [optional] an integer value (-1-16777215). Default is $LO_COLOR_OFF. The Font Underline color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) for Auto color.
 ;                  $iStrikelineStyle    - [optional] an integer value (0-6). Default is $LOB_STRIKEOUT_DONT_KNOW. The Strikeout line style. See Constants $LOB_STRIKEOUT_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $bIndividualWords    - [optional] a boolean value. Default is False. If True, only individual words are underlined.
 ;                  $iRelief             - [optional] an integer value (0-2). Default is $LOB_RELIEF_NONE. The Font relief style. See Constants $LOB_RELIEF_* as defined in LibreOfficeBase_Constants.au3.
@@ -469,7 +469,7 @@ EndFunc   ;==>_LOBase_FontDescCreate
 ;                  $iWeight             - [optional] an integer value (0-200). Default is Null. The Font weight. See Constants $LOB_WEIGHT_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $iSlant              - [optional] an integer value (0-5). Default is Null. The Font italic setting. See Constants $LOB_POSTURE_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $nSize               - [optional] a general number value. Default is Null. The Font size.
-;                  $iColor              - [optional] an integer value (-1-16777215). Default is Null. The Font Color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF(-1) for Auto color.
+;                  $iColor              - [optional] an integer value (-1-16777215). Default is Null. The Font Color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) for Auto color.
 ;                  $iUnderlineStyle     - [optional] an integer value (0-18). Default is Null. The Font underline Style. See Constants $LOB_UNDERLINE_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $iUnderlineColor     - [optional] an integer value (-1-16777215). Default is Null.
 ;                  $iStrikelineStyle    - [optional] an integer value (0-6). Default is Null. The Strikeout line style. See Constants $LOB_STRIKEOUT_* as defined in LibreOfficeBase_Constants.au3.
@@ -503,7 +503,7 @@ EndFunc   ;==>_LOBase_FontDescCreate
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 14 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
@@ -1078,7 +1078,7 @@ EndFunc   ;==>_LOBase_FormatKeyGetString
 ; Modified ......:
 ; Remarks .......: Column One (Array[0][0]) will contain the Format Key integer,
 ;                  Column two (Array[0][1]) will contain the Format Key String,
-;                  If $bIsUser is set to True, Column Three (Array[0][2]) will contain a Boolean, True if the Format Key is User created, else false.
+;                  If $bIsUser is called with True, Column Three (Array[0][2]) will contain a Boolean, True if the Format Key is User created, else false.
 ; Related .......: _LOBase_FormatKeyDelete, _LOBase_FormatKeyGetString, _LOBase_FormatKeyGetStandard
 ; Link ..........:
 ; Example .......: Yes

@@ -198,7 +198,7 @@ EndFunc   ;==>_LOBase_ReportConDelete
 ;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were called with Null, returning current setting as a String.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  $sDataField is not checked to make sure it exists in the referenced Database, it is the user's responsibility to do this.
 ;                  DataField is a String that determines the content to be shown. The entry format is either of the following:
 ;                  - To display the value of a column, you would call $sDataField with field:[??] where "??" represents the column's name. e.g. field:[Unique_ID].
@@ -240,7 +240,7 @@ EndFunc   ;==>_LOBase_ReportConFormattedFieldData
 ;                  $sCondPrint          - [optional] a string value. Default is Null. The conditional print expression, prefixed by "rpt:".
 ;                  $bPrintRep           - [optional] a boolean value. Default is Null. If True, repeated values will be printed.
 ;                  $bPrintRepOnGroup    - [optional] a boolean value. Default is Null. If True, repeated values will be printed on group change.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
 ;                  $mFont               - [optional] a map. Default is Null. A Font descriptor Map returned by a previous _LOBase_FontDescCreate or _LOBase_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOB_TXT_ALIGN_HORI_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOB_ALIGN_VERT_* as defined in LibreOfficeBase_Constants.au3.
@@ -279,7 +279,7 @@ EndFunc   ;==>_LOBase_ReportConFormattedFieldData
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 10 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  I could not find a property to set the TextDirection or Visible settings.
 ;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LO_COLOR_OFF to set Background Transparent to True.
@@ -405,7 +405,7 @@ EndFunc   ;==>_LOBase_ReportConFormattedFieldGeneral
 ;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were called with Null, returning current setting as a String.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  $sDataField is not checked to make sure it exists in the referenced Database, it is the user's responsibility to do this.
 ;                  DataField is a String that determines the content to be shown. The entry format is either of the following:
 ;                  - To display the value of a column, you would call $sDataField with field:[??] where "??" represents the column's name. e.g. field:[Unique_ID].
@@ -448,7 +448,7 @@ EndFunc   ;==>_LOBase_ReportConImageConData
 ;                  $sCondPrint          - [optional] a string value. Default is Null. The conditional print expression, prefixed by "rpt:".
 ;                  $bPrintRep           - [optional] a boolean value. Default is Null. If True, repeated values will be printed.
 ;                  $bPrintRepOnGroup    - [optional] a boolean value. Default is Null. If True, repeated values will be printed on group change.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOB_ALIGN_VERT_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $sGraphics           - [optional] a string value. Default is Null. The path to an Image file.
 ;                  $iScale              - [optional] an integer value (0-2). Default is Null. How to scale the image to fit the button. See Constants $LOB_REP_CON_IMG_BTN_SCALE_* as defined in LibreOfficeBase_Constants.au3.
@@ -484,7 +484,7 @@ EndFunc   ;==>_LOBase_ReportConImageConData
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 9 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  I could not find a property to set the TextDirection or Visible settings.
 ;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LO_COLOR_OFF to set Background Transparent to True.
@@ -587,7 +587,7 @@ EndFunc   ;==>_LOBase_ReportConImageConGeneral
 ;                  $iY                  - an integer value. The Y Coordinate, in Hundredths of a Millimeter (100th MM).
 ;                  $iWidth              - an integer value. The Width of the control, in Hundredths of a Millimeter (100th MM).
 ;                  $iHeight             - an integer value. The Height of the control, in Hundredths of a Millimeter (100th MM).
-;                  $sName               - [optional] a string value. Default is "". The name of the control, if set to "", a name is automatically given it.
+;                  $sName               - [optional] a string value. Default is "". The name of the control, if called with "", a name is automatically given it.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -695,7 +695,7 @@ EndFunc   ;==>_LOBase_ReportConInsert
 ;                  $sCondPrint          - [optional] a string value. Default is Null. The conditional print expression, prefixed by "rpt:".
 ;                  $bPrintRep           - [optional] a boolean value. Default is Null. If True, repeated values will be printed.
 ;                  $bPrintRepOnGroup    - [optional] a boolean value. Default is Null. If True, repeated values will be printed on group change.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
 ;                  $mFont               - [optional] a map. Default is Null. A Font descriptor Map returned by a previous _LOBase_FontDescCreate or _LOBase_FontDescEdit function.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOB_TXT_ALIGN_HORI_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-2). Default is Null. The Vertical alignment of the text. See Constants $LOB_ALIGN_VERT_* as defined in LibreOfficeBase_Constants.au3.
@@ -731,7 +731,7 @@ EndFunc   ;==>_LOBase_ReportConInsert
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 9 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  I could not find a property to set the TextDirection or Visible settings.
 ;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LO_COLOR_OFF to set Background Transparent to True.
@@ -852,7 +852,7 @@ EndFunc   ;==>_LOBase_ReportConLabelGeneral
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  I could not find a property to set "Visible" setting.
 ; Related .......:
@@ -1142,7 +1142,7 @@ EndFunc   ;==>_LOBase_ReportConsGetList
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LO_UnitConvert, _LOBase_ReportConPosition
 ; Link ..........:
@@ -1396,10 +1396,10 @@ EndFunc   ;==>_LOBase_ReportCreate
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 6 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Modifying $iContentType and $sContent  will open the "Add a Field" dialog unless it is suppressed.
-;                  When $bSuppress is True, changing $iContentType and $sContent, either in the UI or via AutoIt, will not activate the "Add a Field" dialog, until the report is re-opened again, or $bSuppress is set to False again.
+;                  When $bSuppress is True, changing $iContentType and $sContent, either in the UI or via AutoIt, will not activate the "Add a Field" dialog, until the report is re-opened again, or $bSuppress is called with False again.
 ;                  Setting $bSuppress to False will activate the "Add a Field" dialog, regardless if any settings are changed.
 ; Related .......: _LOBase_ReportGeneral
 ; Link ..........:
@@ -1528,7 +1528,7 @@ EndFunc   ;==>_LOBase_ReportDelete
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
 ;                  $iHeight             - [optional] an integer value (1753-??). Default is Null. The height of the Section, in Hundredths of a Millimeter (100th MM). See remarks.
 ;                  $sCondPrint          - [optional] a string value. Default is Null. The Conditional Print Statement.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1557,7 +1557,7 @@ EndFunc   ;==>_LOBase_ReportDelete
 ; Modified ......:
 ; Remarks .......: The minimum height of a Section is 1753 Hundredths of a Millimeter (100th MM), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
 ;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LO_COLOR_OFF to set Background Transparent to True.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOBase_ReportPageFooter, _LOBase_ReportPageHeader, _LOBase_ReportFooter, _LOBase_ReportHeader, _LOBase_ReportGroupFooter, _LOBase_ReportGroupHeader, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_UnitConvert
 ; Link ..........:
@@ -2166,7 +2166,7 @@ EndFunc   ;==>_LOBase_ReportFolderRename
 ;                  @Error 0 @Extended 0 Return Integer = Success. Returning count of Report Folders contained in the Document as an Integer.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $sFolder can be left as a blank string "", which will either return only the count of main level Folders (not located in folders), or if $bExhaustive is set to True, it will return a count of all Folders contained in the document.
+; Remarks .......: $sFolder can be left as a blank string "", which will either return only the count of main level Folders (not located in folders), or if $bExhaustive is called with True, it will return a count of all Folders contained in the document.
 ;                  You can narrow the Folder count down to a specific folder by calling the appropriate path for the folder, separated by forward slashes (/), e.g. to get a count of Folders contained in folder 3, which is located in Folder 2, which is located inside folder 1, you would call $sFolder with the following path: Folder1/Folder2/Folder3
 ; Related .......: _LOBase_ReportFoldersGetNames
 ; Link ..........:
@@ -2270,7 +2270,7 @@ EndFunc   ;==>_LOBase_ReportFoldersGetCount
 ;                  @Error 0 @Extended ? Return Array = Success. Returning Array of Folder names contained in this Document. @Extended is set to number of results.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $sFolder can be left as a blank string "", which will either return only an array of main level Folder names (not located in sub-folders), or if $bExhaustive is set to True, it will return an array of all folders contained in the document.
+; Remarks .......: $sFolder can be left as a blank string "", which will either return only an array of main level Folder names (not located in sub-folders), or if $bExhaustive is called with True, it will return an array of all folders contained in the document.
 ;                  You can narrow the Folder name return down to a specific folder by calling the appropriate path for the folder, separated by forward slashes (/), e.g. to get an array of Folders contained in folder 3, which is located in Folder 2, which is located inside folder 1, you would call $sFolder with the following path: Folder1/Folder2/Folder3
 ;                  All Folders located in sub-folders will have the folder path prefixed to the Folder name, separated by forward slashes (/). e.g. Folder1/Folder2/Folder3.
 ;                  Calling $bExhaustive with True when searching inside a Folder, will get all Folder names from inside that folder, and all sub-folders.
@@ -2371,7 +2371,7 @@ EndFunc   ;==>_LOBase_ReportFoldersGetNames
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
 ;                  $iHeight             - [optional] an integer value (1753-??). Default is Null. The height of the Section, in Hundredths of a Millimeter (100th MM). See remarks.
 ;                  $sCondPrint          - [optional] a string value. Default is Null. The Conditional Print Statement.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2403,7 +2403,7 @@ EndFunc   ;==>_LOBase_ReportFoldersGetNames
 ; Remarks .......: The Report Footer must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Footer is disabled, the return values will be Null, except for the Boolean value of $bEnabled.
 ;                  The minimum height of a Section is 1753 Hundredths of a Millimeter (100th MM), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
 ;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LO_COLOR_OFF to set Background Transparent to True.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOBase_ReportPageFooter, _LOBase_ReportPageHeader, _LOBase_ReportHeader, _LOBase_ReportDetail, _LOBase_ReportGroupFooter, _LOBase_ReportGroupHeader, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_UnitConvert
 ; Link ..........:
@@ -2558,7 +2558,7 @@ EndFunc   ;==>_LOBase_ReportFooter
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOBase_ReportData
 ; Link ..........:
@@ -2779,7 +2779,7 @@ EndFunc   ;==>_LOBase_ReportGroupDeleteByObj
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
 ;                  $iHeight             - [optional] an integer value (1753-??). Default is Null. The height of the Section, in Hundredths of a Millimeter (100th MM). See remarks.
 ;                  $sCondPrint          - [optional] a string value. Default is Null. The Conditional Print Statement.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2813,7 +2813,7 @@ EndFunc   ;==>_LOBase_ReportGroupDeleteByObj
 ; Remarks .......: The Group Footer must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Footer is disabled, the return values will be Null, except for the Boolean value of $bFooterOn.
 ;                  The minimum height of a Section is 1753 Hundredths of a Millimeter (100th MM), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
 ;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LO_COLOR_OFF to set Background Transparent to True.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOBase_ReportPageFooter, _LOBase_ReportPageHeader, _LOBase_ReportFooter, _LOBase_ReportHeader, _LOBase_ReportDetail, _LOBase_ReportGroupHeader, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_UnitConvert
 ; Link ..........:
@@ -3000,7 +3000,7 @@ EndFunc   ;==>_LOBase_ReportGroupGetByIndex
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
 ;                  $iHeight             - [optional] an integer value (1753-??). Default is Null. The height of the Section, in Hundredths of a Millimeter (100th MM). See remarks.
 ;                  $sCondPrint          - [optional] a string value. Default is Null. The Conditional Print Statement.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -3034,7 +3034,7 @@ EndFunc   ;==>_LOBase_ReportGroupGetByIndex
 ; Remarks .......: The Group Header must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Header is disabled, the return values will be Null, except for the Boolean value of $bHeaderOn.
 ;                  The minimum height of a Section is 1753 Hundredths of a Millimeter (100th MM), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
 ;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LO_COLOR_OFF to set Background Transparent to True.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOBase_ReportPageFooter, _LOBase_ReportPageHeader, _LOBase_ReportFooter, _LOBase_ReportHeader, _LOBase_ReportDetail, _LOBase_ReportGroupFooter, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_UnitConvert
 ; Link ..........:
@@ -3193,7 +3193,7 @@ EndFunc   ;==>_LOBase_ReportGroupHeader
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Group will be moved to the position before that called in $iPos. Thus to move a Group to the end of the list call $iPos with the total count of Groups, i.e., index of the last Group + 1.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current Position.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current Position.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -3312,7 +3312,7 @@ EndFunc   ;==>_LOBase_ReportGroupsGetCount
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  It is the User's responsibility for the accuracy of names etc called in $sField, i.e. Column name, etc.
 ;                  It is the User's responsibility to use appropriate values for $iGroupOn based upon the type of field.
@@ -3386,7 +3386,7 @@ EndFunc   ;==>_LOBase_ReportGroupSort
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
 ;                  $iHeight             - [optional] an integer value (1753-??). Default is Null. The height of the Section, in Hundredths of a Millimeter (100th MM). See remarks.
 ;                  $sCondPrint          - [optional] a string value. Default is Null. The Conditional Print Statement.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -3418,7 +3418,7 @@ EndFunc   ;==>_LOBase_ReportGroupSort
 ; Remarks .......: The Report Header must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Header is disabled, the return values will be Null, except for the Boolean value of $bEnabled.
 ;                  The minimum height of a Section is 1753 Hundredths of a Millimeter (100th MM), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
 ;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LO_COLOR_OFF to set Background Transparent to True.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOBase_ReportPageFooter, _LOBase_ReportPageHeader, _LOBase_ReportFooter, _LOBase_ReportDetail, _LOBase_ReportGroupFooter, _LOBase_ReportGroupHeader, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_UnitConvert
 ; Link ..........:
@@ -3637,7 +3637,7 @@ EndFunc   ;==>_LOBase_ReportOpen
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
 ;                  $iHeight             - [optional] an integer value. Default is Null. (1753-??). Default is Null. The height of the Section, in Hundredths of a Millimeter (100th MM). See remarks.
 ;                  $sCondPrint          - [optional] a string value. Default is Null. The Conditional Print Statement.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -3665,7 +3665,7 @@ EndFunc   ;==>_LOBase_ReportOpen
 ; Remarks .......: The Page Header must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Footer is disabled, the return values will be Null, except for the Boolean value of $bEnabled.
 ;                  The minimum height of a Section is 1753 Hundredths of a Millimeter (100th MM), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
 ;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LO_COLOR_OFF to set Background Transparent to True.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOBase_ReportPageHeader, _LOBase_ReportFooter, _LOBase_ReportHeader, _LOBase_ReportDetail, _LOBase_ReportGroupFooter, _LOBase_ReportGroupHeader, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_UnitConvert
 ; Link ..........:
@@ -3773,7 +3773,7 @@ EndFunc   ;==>_LOBase_ReportPageFooter
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
 ;                  $iHeight             - [optional] an integer value. Default is Null. (1753-??). Default is Null. The height of the Section, in Hundredths of a Millimeter (100th MM). See remarks.
 ;                  $sCondPrint          - [optional] a string value. Default is Null. The Conditional Print Statement.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Set to $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -3801,7 +3801,7 @@ EndFunc   ;==>_LOBase_ReportPageFooter
 ; Remarks .......: The Page Header must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Header is disabled, the return values will be Null, except for the Boolean value of $bEnabled.
 ;                  The minimum height of a Section is 1753 Hundredths of a Millimeter (100th MM), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
 ;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LO_COLOR_OFF to set Background Transparent to True.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOBase_ReportPageFooter, _LOBase_ReportFooter, _LOBase_ReportHeader, _LOBase_ReportDetail, _LOBase_ReportGroupFooter, _LOBase_ReportGroupHeader, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_UnitConvert
 ; Link ..........:
@@ -4083,7 +4083,7 @@ EndFunc   ;==>_LOBase_ReportSectionGetObj
 ;                  @Error 0 @Extended 0 Return Integer = Success. Returning count of Reports contained in the Document, as an Integer.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $sFolder can be left as a blank string "", which will either return only the count of main level Reports (not located in folders), or if $bExhaustive is set to True, the return will be a count of all Reports contained in the document.
+; Remarks .......: $sFolder can be left as a blank string "", which will either return only the count of main level Reports (not located in folders), or if $bExhaustive is called with True, the return will be a count of all Reports contained in the document.
 ;                  You can narrow the Report count down to a specific folder by calling the appropriate path for the folder, separated by forward slashes (/), e.g. to get a count of Reports contained in folder 3, which is located in Folder 2, which is located inside folder 1, you would call $sFolder with the following path: Folder1/Folder2/Folder3
 ; Related .......: _LOBase_ReportsGetNames
 ; Link ..........:
@@ -4191,7 +4191,7 @@ EndFunc   ;==>_LOBase_ReportsGetCount
 ;                  @Error 0 @Extended ? Return Array = Success. Returning Array of Report names contained in this Document. @Extended is set to number of results.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $sFolder can be left as a blank string "", which will either return only an array of main level Report names (not located in folders), or if $bExhaustive is set to True, it will return an array of all Reports contained in the document.
+; Remarks .......: $sFolder can be left as a blank string "", which will either return only an array of main level Report names (not located in folders), or if $bExhaustive is called with True, it will return an array of all Reports contained in the document.
 ;                  You can narrow the Report name return down to a specific folder by calling the appropriate path for the folder, separated by forward slashes (/), e.g. to get an array of Reports contained in folder 3, which is located in Folder 2, which is located inside folder 1, you would call $sFolder with the following path: Folder1/Folder2/Folder3
 ;                  All Reports located in folders will have the folder path prefixed to the Report name, separated by forward slashes (/). e.g. Folder1/Folder2/Folder3/ReportXYZ.
 ;                  Calling $bExhaustive with True when searching inside a Folder, will get all Report names from inside that folder, and all sub-folders.
