@@ -865,7 +865,7 @@ EndFunc   ;==>_LOCalc_SheetLink
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  The Return for $oNewDoc is the File path of the linked Document.
 ;                  If you set $oNewDoc, you must set $sSheetName and $iLinkMode also.
@@ -1019,7 +1019,7 @@ EndFunc   ;==>_LOCalc_SheetMove
 ;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were called with Null, returning the Sheet's current name.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ; Related .......: _LOCalc_SheetExists
 ; Link ..........:
 ; Example .......: Yes
@@ -1077,7 +1077,7 @@ EndFunc   ;==>_LOCalc_SheetName
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call $oRange with the Default keyword to reset the Column Range to none.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  The Return for $oRange will be a Cell Range or Cell Object, if no Column is set, the return will always be the first cell (A1) of the Sheet.
 ; Related .......: _LOCalc_SheetPrintRowsRepeat
@@ -1174,7 +1174,7 @@ EndFunc   ;==>_LOCalc_SheetPrintColumnsRepeat
 ; Modified ......:
 ; Remarks .......: Call $aoRange with an empty Array (local $aArray[0]) to set the whole sheet to be printed (default), instead of a specific range.
 ;                  Likewise, when retrieving the current print range, if the returned array is empty, that means the entire sheet (all of the used cells) is set to be printed.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  If you set a Print Range for one sheet, any other Sheet without a Print Range set will NOT be printed.
 ; Related .......:
 ; Link ..........:
@@ -1240,7 +1240,7 @@ EndFunc   ;==>_LOCalc_SheetPrintRangeModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call $oRange with the Default keyword to reset the Row Range to none.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  The Return for $oRange will be a Cell Range or Cell Object, if no Row is set, the return will always be the first cell (A1) of the Sheet.
 ; Related .......: _LOCalc_SheetPrintColumnsRepeat
@@ -1516,7 +1516,7 @@ EndFunc   ;==>_LOCalc_SheetsGetNames
 ; Description ...: Set or Retrieve a Sheet's Tab Color.
 ; Syntax ........: _LOCalc_SheetTabColor(ByRef $oSheet[, $iColor = Null])
 ; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
-;                  $iColor              - [optional] an integer value (-1-16777215). Default is Null. The tab color, as a RGB Color Integer. Set to $LO_COLOR_OFF(-1) to set to Default color setting. Can also be one of the constants $LO_COLOR_* as defined in LibreOffice_Constants.au3
+;                  $iColor              - [optional] an integer value (-1-16777215). Default is Null. The tab color, as a RGB Color Integer. Call with $LO_COLOR_OFF(-1) for "Default" color setting. Can also be one of the constants $LO_COLOR_* as defined in LibreOffice_Constants.au3
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1530,7 +1530,7 @@ EndFunc   ;==>_LOCalc_SheetsGetNames
 ;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current Tab Color as an Integer
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ; Related .......: _LO_ConvertColorFromLong, _LO_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
@@ -1609,7 +1609,7 @@ EndFunc   ;==>_LOCalc_SheetUnprotect
 ;                  @Error 0 @Extended 1 Return Boolean = Success. $bVisible called with Null, returning current visibility setting. True indicates the Sheet is currently visible.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes

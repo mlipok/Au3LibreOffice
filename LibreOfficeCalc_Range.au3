@@ -416,8 +416,8 @@ EndFunc   ;==>_LOCalc_RangeColumnInsert
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Setting $bStartOfPageBreak to True will insert a Manual Page Break, the same as setting $bManualPageBreak to True would.
-;                  $bStartOfPageBreak setting is available more for indicating where Calc is inserting Page Breaks rather than for applying a setting. You can retrieve the settings for each Column, and check if this value is set to True or not. If the Page break is an automatically inserted one, the value for $bManualPageBreak would be false.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  $bStartOfPageBreak setting is available more for indicating where Calc is inserting Page Breaks rather than for applying a setting. You can retrieve the settings for each Column, and check if this value is True or not. If the Page break is an automatically inserted one, the value for $bManualPageBreak would be false.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
@@ -765,7 +765,7 @@ EndFunc   ;==>_LOCalc_RangeCreateCursor
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function will return Strings and Numbers contained in the cell range when $aavData is called with Null keyword. Array will be an array of arrays. The internal arrays will contain numerical or string data, depending on cell content.
-;                  $aavData must be an array containing arrays. If $bStrictSize is set to True, the main Array's element count must match the row count contained in the Cell Range, and each internal Array's element count must match the column count of the Cell Range it is to fill. All internal arrays must be the same size.
+;                  $aavData must be an array containing arrays. If $bStrictSize is called with True, the main Array's element count must match the row count contained in the Cell Range, and each internal Array's element count must match the column count of the Cell Range it is to fill. All internal arrays must be the same size.
 ;                  Any data previously contained in the Cell Range will be overwritten.
 ;                  All array elements must contain appropriate data, strings or numbers.
 ;                  Formulas will be inserted as strings only, and will not be valid.
@@ -1137,7 +1137,7 @@ EndFunc   ;==>_LOCalc_RangeDatabaseGetObjByName
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 8 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  When retrieving the settings, $oRange will be a Range Object.
 ; Related .......: _LOCalc_RangeDatabaseGetObjByName, _LOCalc_RangeDatabaseAdd
@@ -1354,7 +1354,7 @@ EndFunc   ;==>_LOCalc_RangeFill
 ; Parameters ....: $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
 ;                  $nMin                - [optional] a general number value (-2^31-2^31). Default is 0.0000. The minimum number value. Max is -2^31-2^31.
 ;                  $nMax                - [optional] a general number value (-2^31-2^31). Default is 1.0000. The maximum number value. Max is -2^31-2^31.
-;                  $iDecPlc             - [optional] an integer value (0-255). Default is 15. The decimal place to round the value to. Set to 0 to fill with integer only.
+;                  $iDecPlc             - [optional] an integer value (0-255). Default is 15. The decimal place to round the value to. Call with 0 to fill with integers only.
 ;                  $nSeed               - [optional] a general number value. Default is Null. A seed to use for generating the Random number. Null means no seed is used.
 ;                  $bFillByRows         - [optional] a boolean value. Default is True. If True, the range is filled top to bottom, left to right. If False, the range is filled left to right, top to bottom.
 ; Return values .: Success: 1
@@ -1641,7 +1641,7 @@ EndFunc   ;==>_LOCalc_RangeFindAll
 ; Parameters ....: $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
 ;                  $oSrchDescript       - [in/out] an object. A Search Descriptor Object returned from _LOCalc_SearchDescriptorCreate function.
 ;                  $sSearchString       - a string value. A String of text or a regular expression to search for.
-;                  $oLastFind           - [optional] an object. Default is Null. The last returned Object by a previous call to this function to begin the search from, if set to Null, the search begins at the start of the Range.
+;                  $oLastFind           - [optional] an object. Default is Null. The last returned Object by a previous call to this function to begin the search from, if called with Null, the search begins at the start of the Range.
 ; Return values .: Success: Object or 1.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1724,7 +1724,7 @@ EndFunc   ;==>_LOCalc_RangeFindNext
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function will return only formulas contained in the cell range when $aasFormulas is called with Null keyword. Array will be an array of arrays. The internal arrays will contain blank cells or formula strings, depending on cell content.
-;                  $aasFormulas must be an array containing arrays. If $bStrictSize is set to True, the main Array's element count must match the row count contained in the Cell Range, and each internal Array's element count must match the column count of the Cell Range it is to fill. All internal arrays must be the same size.
+;                  $aasFormulas must be an array containing arrays. If $bStrictSize is called with True, the main Array's element count must match the row count contained in the Cell Range, and each internal Array's element count must match the column count of the Cell Range it is to fill. All internal arrays must be the same size.
 ;                  Any data previously contained in the Cell Range will be overwritten.
 ;                  All array elements must contain strings, blank or otherwise.
 ; Related .......:
@@ -2204,7 +2204,7 @@ EndFunc   ;==>_LOCalc_RangeMerge
 ; Modified ......:
 ; Remarks .......: The Object called in $oObj determines the scope you are inserting the new Named Range in, either Globally (Document Object), or locally (Sheet Object).
 ;                  $vRange can be a string representation of the Range covered by the NamedRange, i.e., $Sheet1.$A$1:$C$14, or a Formula, such as A1+A2, or a Cell Range Object.
-;                  If $vRange is a String, $oRefCell must be set to the Cell Object of either the first cell of the desired Range, or the reference cell for the formula. See explanation below.
+;                  If $vRange is a String, $oRefCell must be called with the Cell Object of either the first cell of the desired Range, or the reference cell for the formula. See explanation below.
 ;                  $oRefCell "acts as the base address for cells referenced in a relative way. If the cell range is not specified as an absolute address, the referenced range will be different based on where in the spreadsheet the range is used."
 ;                  Or in the case of a formula, an example would if we created a "named range 'AddLeft', which refers to the equation A3+B3 with C3 as the reference cell. The cells A3 and B3 are the two cells directly to the left of C3, so, the equation =AddLeft calculates the sum of the two cells directly to the left of the cell that contains the equation. Changing the reference cell to C4, which is below A3 and B3, causes the AddLeft equation to calculate the sum of the two cells that are to the left on the previous row."
 ;                  [Both quotations above are adapted from Andrew Pitonyak's book OOME 4.1, pdf Page 523, book page 519]
@@ -2572,11 +2572,11 @@ EndFunc   ;==>_LOCalc_RangeNamedGetObjByName
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $vRange can be a string representation of the Range covered by the NamedRange, i.e., $Sheet1.$A$1:$C$14, or a Formula, such as A1+A2, or a Cell Range Object.
-;                  If $vRange is a String, $oRefCell must be set to the Cell Object of either the first cell of the desired Range, or the reference cell for the formula. See explanation below.
+;                  If $vRange is a String, $oRefCell must be called with the Cell Object of either the first cell of the desired Range, or the reference cell for the formula. See explanation below.
 ;                  $oRefCell "acts as the base address for cells referenced in a relative way. If the cell range is not specified as an absolute address, the referenced range will be different based on where in the spreadsheet the range is used."
 ;                  Or in the case of a formula, an example would if we created a "named range 'AddLeft', which refers to the equation A3+B3 with C3 as the reference cell. The cells A3 and B3 are the two cells directly to the left of C3, so, the equation =AddLeft calculates the sum of the two cells directly to the left of the cell that contains the equation. Changing the reference cell to C4, which is below A3 and B3, causes the AddLeft equation to calculate the sum of the two cells that are to the left on the previous row."
 ;                  [Both quotations above are adapted from Andrew Pitonyak's book OOME 4.1, pdf Page 523, book page 519.]
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  When retrieving the settings, $vRange will be in a String format, either being a formula or Range Address String, i.e. $Sheet1.$A$1:$C$14.
 ;                  When retrieving the settings, $oRefCell will be a Cell Object.
@@ -2697,7 +2697,7 @@ EndFunc   ;==>_LOCalc_RangeNamedModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function will return only numbers contained in the cell range when $aanNumbers is called with Null keyword. Array will be an array of arrays. The internal arrays will contain blank cells or numbers, depending on cell content.
-;                  $aanNumbers must be an array containing arrays. If $bStrictSize is set to True, the main Array's element count must match the row count contained in the Cell Range, and each internal Array's element count must match the column count of the Cell Range it is to fill. All internal arrays must be the same size.
+;                  $aanNumbers must be an array containing arrays. If $bStrictSize is called with True, the main Array's element count must match the row count contained in the Cell Range, and each internal Array's element count must match the column count of the Cell Range it is to fill. All internal arrays must be the same size.
 ;                  Any data previously contained in the Cell Range will be overwritten.
 ;                  All array elements must contain numbers.
 ; Related .......:
@@ -2921,7 +2921,7 @@ EndFunc   ;==>_LOCalc_RangePivotDelete
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: I was unable to find a setting for "Show Expand/Collapse buttons", therefore the current setting will be lost, because to change the output range, the entire Pivot Table needs to be copied over and re-inserted.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Any existing data within the Destination range will be overwritten.
 ; Related .......:
@@ -3302,7 +3302,7 @@ EndFunc   ;==>_LOCalc_RangePivotFieldsDataGetNames
 ; Modified ......:
 ; Remarks .......: It is the user's responsibility to ensure the a Base Item's name is correct, and exists, also field names etc.
 ;                  If $iBaseItem is set to $LOC_PIVOT_TBL_FIELD_BASE_ITEM_NAMED, you must fill in $sBaseItem also.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
@@ -3607,7 +3607,7 @@ EndFunc   ;==>_LOCalc_RangePivotFieldsUnusedGetNames
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOCalc_RangePivotFilterClear, _LOCalc_FilterFieldCreate
 ; Link ..........:
@@ -3916,7 +3916,7 @@ EndFunc   ;==>_LOCalc_RangePivotInsert
 ;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were called with Null, returning Pivot Table's current Name as a string.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -4010,7 +4010,7 @@ EndFunc   ;==>_LOCalc_RangePivotRefresh
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: I was unable to find a setting for "Show Expand/Collapse buttons", therefore it is not settable currently.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
@@ -4180,7 +4180,7 @@ EndFunc   ;==>_LOCalc_RangePivotsGetNames
 ;                  @Error 0 @Extended 1 Return Object = Success. All optional parameters were called with Null, returning current source Range Object.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -5001,10 +5001,10 @@ EndFunc   ;==>_LOCalc_RangeRowInsert
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Setting $bStartOfPageBreak to True will insert a Manual Page Break, the same as setting $bManualPageBreak to True would.
-;                  $bStartOfPageBreak setting is available more for indicating where Calc is inserting Page Breaks rather than for applying a setting. You can retrieve the settings for each row, and check if this value is set to True or not. If the Page break is an automatically inserted one, the value for $bManualPageBreak would be false.
+;                  $bStartOfPageBreak setting is available more for indicating where Calc is inserting Page Breaks rather than for applying a setting. You can retrieve the settings for each row, and check if this value is True or not. If the Page break is an automatically inserted one, the value for $bManualPageBreak would be false.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -5530,10 +5530,10 @@ EndFunc   ;==>_LOCalc_RangeSortAlt
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 7 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                  When $iType is set to $LOC_VALIDATION_TYPE_LIST, $sValue1 is set to a single string of words that constitute the list, each word needs to be surrounded by quotations, and separated by semicolons, such as: "abc";"def";"ghi"
-;                  When $iType is set to $LOC_VALIDATION_TYPE_LIST, set $iCondition to $LOC_VALIDATION_COND_EQUAL.
+;                  When $iType is set to $LOC_VALIDATION_TYPE_LIST, $sValue1 is set to a single string of words that constitute the list, each word needs to be surrounded by quotations, and separated by semicolons, such as: '"abc";"def";"ghi"'
+;                  When $iType is set to $LOC_VALIDATION_TYPE_LIST, call $iCondition with $LOC_VALIDATION_COND_EQUAL.
 ;                  The return for $oBaseCell will always be a cell object, whether or not it is currently set or not. If it has never been set before, it will generally be cell A1.
 ; Related .......: _LOCalc_RangeValidationSettings
 ; Link ..........:
@@ -5664,9 +5664,9 @@ EndFunc   ;==>_LOCalc_RangeValidation
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 7 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                  When $iErrorStyle is set to $LOC_VALIDATION_ERROR_ALERT_MACRO, $sErrorTitle is set to the macro address to execute, the macro address will look similar to the following, filling in the data between the"<>", including the last parameter for location, which will be either application, or document: "vnd.sun.star.script:<LibraryName>.<ModuleName>.<MacroName>?language=Basic&location=<application|document>"
+;                  When $iErrorStyle is set to $LOC_VALIDATION_ERROR_ALERT_MACRO, $sErrorTitle is called with the macro address to execute, the macro address will look similar to the following, filling in the data between the"<>", including the last parameter for location, which will be either application, or document: "vnd.sun.star.script:<LibraryName>.<ModuleName>.<MacroName>?language=Basic&location=<application|document>"
 ;                  At this time I have no functions for locating or creating macros. They may be added later.
 ; Related .......: _LOCalc_RangeValidation
 ; Link ..........:

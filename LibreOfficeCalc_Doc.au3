@@ -196,7 +196,7 @@ EndFunc   ;==>_LOCalc_DocColumnsRowsAreFrozen
 ; Description ...: Set Columns and/or Rows of a document to be frozen in view.
 ; Syntax ........: _LOCalc_DocColumnsRowsFreeze(ByRef $oDoc[, $iColumns = 0[, $iRows = 0]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
-;                  $iColumns            - [optional] an integer value. Default is 0. The number of Columns to freeze. Set to 0 to skip. See remarks.
+;                  $iColumns            - [optional] an integer value. Default is 0. The number of Columns to freeze. Call with 0 to skip. See remarks.
 ;                  $iRows               - [optional] an integer value. Default is 0. The number of Rows to freeze. See remarks.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -461,7 +461,7 @@ EndFunc   ;==>_LOCalc_DocCreate
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $sFilePath           - a string value. Full path to save the document to, including Filename and extension. See Remarks.
 ;                  $bSamePath           - [optional] a boolean value. Default is False. If True, uses the path of the current document to export to. See Remarks
-;                  $sFilterName         - [optional] a string value. Default is "". Filter name. If set to "" (blank string), Filter is chosen automatically based on the file extension. If no extension is present, or if not matched to the list of extensions in this UDF, the .ods extension is used instead, with the filter name of "calc8".
+;                  $sFilterName         - [optional] a string value. Default is "". Filter name. If called with "" (blank string), Filter is chosen automatically based on the file extension. If no extension is present, or if not matched to the list of extensions in this UDF, the .ods extension is used instead, with the filter name of "calc8".
 ;                  $bOverwrite          - [optional] a boolean value. Default is Null. If True, file will be overwritten.
 ;                  $sPassword           - [optional] a string value. Default is Null. Password String to set for the document. (Not all file formats can have a Password set). "" (blank string) or Null = No Password.
 ; Return values .: Success: String
@@ -486,7 +486,7 @@ EndFunc   ;==>_LOCalc_DocCreate
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Does not alter the original save path (if there was one), saves a copy of the document to the new path, in the new file format if one is chosen.
-;                  If $bSamePath is set to True, the same save path as the current document is used. You must still fill in "$sFilePath" with the desired File Name and new extension, but you do not need to enter the file path.
+;                  If $bSamePath is called with True, the same save path as the current document is used. You must still fill in "$sFilePath" with the desired File Name and new extension, but you do not need to enter the file path.
 ; Related .......: _LOCalc_DocSave, _LOCalc_DocSaveAs
 ; Link ..........:
 ; Example .......: Yes
@@ -572,7 +572,7 @@ EndFunc   ;==>_LOCalc_DocExport
 ;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current Formula Bar Height as an Integer.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -758,7 +758,7 @@ EndFunc   ;==>_LOCalc_DocIsModified
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocIsReadOnly
-; Description ...: Tests whether a document is currently set to Read Only.
+; Description ...: Tests whether a document is opened in Read Only mode.
 ; Syntax ........: _LOCalc_DocIsReadOnly(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ; Return values .: Success: Boolean
@@ -799,7 +799,7 @@ EndFunc   ;==>_LOCalc_DocIsReadOnly
 ;                  @Error 0 @Extended 1 Return Boolean = Success. $bMaximize called with Null, returning boolean indicating if Document is currently maximized (True) or not (False).
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: If $bMaximize is set to Null, returns a Boolean indicating if document is currently maximized (True).
+; Remarks .......: If $bMaximize is called with Null, returns a Boolean indicating if document is currently maximized (True).
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -835,7 +835,7 @@ EndFunc   ;==>_LOCalc_DocMaximize
 ;                  @Error 0 @Extended 1 Return Boolean = Success. $bMinimize called with Null, returning boolean indicating if Document is currently minimized (True) or not (False).
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: If $bMinimize is set to Null, returns a Boolean indicating if document is currently minimized (True).
+; Remarks .......: If $bMinimize is called with Null, returns a Boolean indicating if document is currently minimized (True).
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -1005,7 +1005,7 @@ EndFunc   ;==>_LOCalc_DocOpen
 ; Modified ......:
 ; Remarks .......: X & Y, on my computer at least, seem to go no lower than 8(X) and 30(Y), if you enter lower than this, it will cause a "property setting Error".
 ;                  If you want more accurate functionality, use the "WinMove" AutoIt function.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
@@ -2122,7 +2122,7 @@ EndFunc   ;==>_LOCalc_DocUndoReset
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 9 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOCalc_DocViewWindowSettings, _LO_ConvertColorToLong, _LO_ConvertColorFromLong
 ; Link ..........:
@@ -2256,7 +2256,7 @@ EndFunc   ;==>_LOCalc_DocViewDisplaySettings
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 8 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
@@ -2403,7 +2403,7 @@ EndFunc   ;==>_LOCalc_DocVisible
 ;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning the first visible column number as an Integer.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  This will fail if there are currently any frozen Columns.
 ; Related .......:
 ; Link ..........:
@@ -2443,7 +2443,7 @@ EndFunc   ;==>_LOCalc_DocWindowFirstColumn
 ;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning the first visible row number as an Integer.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  This will fail if there are currently any frozen Rows.
 ; Related .......:
 ; Link ..........:
@@ -2503,8 +2503,8 @@ EndFunc   ;==>_LOCalc_DocWindowIsSplit
 ; Description ...: Split a Document's View either Horizontally, Vertically, or both, or retrieve the current split settings.
 ; Syntax ........: _LOCalc_DocWindowSplit(ByRef $oDoc[, $iX = Null[, $iY = Null[, $bReturnPixels = True]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
-;                  $iX                  - [optional] an integer value. Default is Null. See remarks. The Horizontal (X) position to split the View, in pixels. Set to 0 for no Horizontal split.
-;                  $iY                  - [optional] an integer value. Default is Null. See remarks. The Vertical (Y) position to split the View, in pixels. Set to 0 to skip.
+;                  $iX                  - [optional] an integer value. Default is Null. See remarks. The Horizontal (X) position to split the View, in pixels. Call with 0 for no Horizontal split.
+;                  $iY                  - [optional] an integer value. Default is Null. See remarks. The Vertical (Y) position to split the View, in pixels. Call with 0 to skip.
 ;                  $bReturnPixels       - [optional] a boolean value. Default is True. See remarks. If True, return value will be in pixels, Else, return value will be Column Number (X), and Row Number (Y).
 ; Return values .: Success: 1, 2 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -2521,7 +2521,7 @@ EndFunc   ;==>_LOCalc_DocWindowIsSplit
 ; Modified ......:
 ; Remarks .......: To remove the split view, set both $iX and $iY to 0.
 ;                  $bReturnPixels changes only the return value type, it doesn't change the type of input values to use for $iX and $iY.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
@@ -2622,7 +2622,7 @@ EndFunc   ;==>_LOCalc_DocWindowVisibleRange
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Zoom type always has the value of $LOC_ZOOMTYPE_BY_VALUE(3), when using the other zoom types, the value stays the same, but the zoom level is modified. Consequently, I have not added an error check for the Zoom Type property being correctly set.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:

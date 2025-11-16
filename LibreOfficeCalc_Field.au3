@@ -351,7 +351,7 @@ EndFunc   ;==>_LOCalc_FieldHyperlinkInsert
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
@@ -522,7 +522,7 @@ EndFunc   ;==>_LOCalc_FieldPageNumberInsert
 ;                  @Error 0 @Extended ? Return Array = Success. Returning Array of maps containing Text Field Objects with @Extended set to number of results. See Remarks for Array sizing.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: The Array can vary in the number of columns, if $bFieldTypeNum is set to False, the Array will be a single column. If $bFieldTypeNum is set to True, a column will be added to the array. First column will always be the amp containing the Field's Object.
+; Remarks .......: The Array can vary in the number of columns, if $bFieldTypeNum is called with False, the Array will be a single column. If $bFieldTypeNum is called with True, a column will be added to the array. First column will always be the map containing the Field's Object.
 ;                  Setting $bFieldTypeNum to True will add a Field type Number column, matching the constants, $LOC_FIELD_TYPE_* as defined in LibreOfficeCalc_Constants.au3 for the found Field.
 ;                  This function may fail to identify Fields if text has been inserted recently using the same Cursor.
 ;                  The reason I use a Map to contain the Field's object is that Calc Fields are a little buggy currently, therefore I need two Objects in order to do certain functions with the Field, such as deleteing, or retrieving the Field's display. It is easier and more accurate to identify and retrieve the Objects now, rather than later.

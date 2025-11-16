@@ -126,7 +126,7 @@ EndFunc   ;==>_LOCalc_CommentAdd
 ;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current setting as an Integer value.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current setting.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current setting.
 ; Related .......: _LO_ConvertColorFromLong, _LO_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
@@ -244,7 +244,7 @@ EndFunc   ;==>_LOCalc_CommentAreaFillStyle
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 11 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Gradient Name has no use other than for applying a pre-existing preset gradient.
 ; Related .......: _LO_ConvertColorFromLong, _LO_ConvertColorToLong
@@ -457,7 +457,7 @@ EndFunc   ;==>_LOCalc_CommentAreaGradient
 ;                  The returned array will contain two columns, the first column will contain the ColorStop offset values, a number between 0 and 1.0. The second column will contain an Integer, the color value, as a RGB Color Integer.
 ;                  $avColorStops expects an array as described above.
 ;                  ColorStop offsets are sorted in ascending order, you can have more than one of the same value. There must be a minimum of two ColorStops. The first and last ColorStop offsets do not need to have an offset value of 0 and 1 respectively.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ; Related .......: _LOCalc_GradientMulticolorAdd, _LOCalc_GradientMulticolorDelete, _LOCalc_GradientMulticolorModify, _LOCalc_CommentAreaTransparencyGradientMulti
 ; Link ..........:
 ; Example .......: Yes
@@ -575,10 +575,10 @@ EndFunc   ;==>_LOCalc_CommentAreaGradientMulticolor
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 6 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  LibreOffice may change the shadow distance +/- a Hundredth of a Millimeter (100th MM).
-;                  Presently only location settings applying the Shadow to the bottom, right, or bottom-right corners of the Comment visually work, both in LibreOffice and using this function. Though it still can be set to the other locations.
+;                  Presently only the location settings applying the Shadow to the bottom, right, or bottom-right corners of the Comment visually work, both in LibreOffice and using this function. Though it still can be set to the other locations.
 ; Related .......: _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_UnitConvert
 ; Link ..........:
 ; Example .......: Yes
@@ -685,7 +685,7 @@ EndFunc   ;==>_LOCalc_CommentAreaShadow
 ;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current setting for Transparency in integer format.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -719,7 +719,7 @@ EndFunc   ;==>_LOCalc_CommentAreaTransparency
 ; Syntax ........: _LOCalc_CommentAreaTransparencyGradient(ByRef $oDoc, ByRef $oComment[, $iType = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iTransitionStart = Null[, $iStart = Null[, $iEnd = Null]]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $oComment            - [in/out] an object. A Comment object returned by a previous _LOCalc_CommentsGetList, _LOCalc_CommentGetObjByCell, or _LOCalc_CommentGetObjByIndex function.
-;                  $iType               - [optional] an integer value (-1-5). Default is Null. The type of transparency gradient to apply. See Constants, $LOC_GRAD_TYPE_* as defined in LibreOfficeCalc_Constants.au3. Set to $LOC_GRAD_TYPE_OFF to turn Transparency Gradient off.
+;                  $iType               - [optional] an integer value (-1-5). Default is Null. The type of transparency gradient to apply. See Constants, $LOC_GRAD_TYPE_* as defined in LibreOfficeCalc_Constants.au3. Call with $LOC_GRAD_TYPE_OFF to turn Transparency Gradient off.
 ;                  $iXCenter            - [optional] an integer value (0-100). Default is Null. The horizontal offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
 ;                  $iYCenter            - [optional] an integer value (0-100). Default is Null. The vertical offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
 ;                  $iAngle              - [optional] an integer value (0-359). Default is Null. The rotation angle for the gradient. Set in degrees. $iType must be other than "Radial".
@@ -760,7 +760,7 @@ EndFunc   ;==>_LOCalc_CommentAreaTransparency
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 7 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
@@ -941,7 +941,7 @@ EndFunc   ;==>_LOCalc_CommentAreaTransparencyGradient
 ;                  The returned array will contain two columns, the first column will contain the ColorStop offset values, a number between 0 and 1.0. The second column will contain an Integer, the Transparency percentage value between 0 and 100%.
 ;                  $avColorStops expects an array as described above.
 ;                  ColorStop offsets are sorted in ascending order, you can have more than one of the same value. There must be a minimum of two ColorStops. The first and last ColorStop offsets do not need to have an offset value of 0 and 1 respectively.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ; Related .......: _LOCalc_TransparencyGradientMultiModify, _LOCalc_TransparencyGradientMultiDelete, _LOCalc_TransparencyGradientMultiAdd, _LOCalc_CommentAreaGradientMulticolor
 ; Link ..........:
 ; Example .......: Yes
@@ -1061,7 +1061,7 @@ EndFunc   ;==>_LOCalc_CommentAreaTransparencyGradientMulti
 ; Remarks .......: If $iExtension is set to $LOC_COMMENT_CALLOUT_EXT_HORI, or $LOC_COMMENT_CALLOUT_EXT_VERT, $iExtendBy will be set to the alignment value of either constants $LOC_COMMENT_CALLOUT_EXT_ALIGN_HORI_*, or $LOC_COMMENT_CALLOUT_EXT_ALIGN_VERT_*.
 ;                  If $iExtension is set to $LOC_COMMENT_CALLOUT_EXT_OPTIMAL, $LOC_COMMENT_CALLOUT_EXT_FROM_LEFT, or $LOC_COMMENT_CALLOUT_EXT_FROM_TOP, $iExtendBy will be set to the length to extend the Callout line from the Comment box, in Hundredths of a Millimeter (100th MM).
 ;                  If $iCalloutStyle is not set to $LOC_COMMENT_CALLOUT_STYLE_ANGLED_CONNECTOR, both $bOptimal and $iLength, are not used/unavailable for setting.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LO_UnitConvert
 ; Link ..........:
@@ -1469,7 +1469,7 @@ EndFunc   ;==>_LOCalc_CommentGetObjByIndex
 ;                  When retrieving the current settings, $bSync will be a Boolean value of whether the Start Arrowhead settings are currently equal to the End Arrowhead setting values.
 ;                  Both $vStartStyle and $vEndStyle accept a String or an Integer because there is the possibility of a custom Arrowhead being available the user may want to use.
 ;                  When retrieving the current settings, both $vStartStyle and $vEndStyle could be either an integer or a String. It will be a String if the current Arrowhead is a custom Arrowhead, else an Integer, corresponding to one of the constants, $LOC_COMMENT_LINE_ARROW_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOCalc_CommentLineProperties
 ; Link ..........:
@@ -1615,7 +1615,7 @@ EndFunc   ;==>_LOCalc_CommentLineArrowStyles
 ; Modified ......:
 ; Remarks .......: $vStyle accepts a String or an Integer because there is the possibility of a custom Line Style being available that the user may want to use.
 ;                  When retrieving the current settings, $vStyle could be either an integer or a String. It will be a String if the current Line Style is a custom Line Style, else an Integer, corresponding to one of the constants, $LOC_COMMENT_LINE_STYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LOCalc_CommentLineArrowStyles
 ; Link ..........:
@@ -1831,7 +1831,7 @@ EndFunc   ;==>_LOCalc_CommentPosition
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function uses the deprecated Libre Office method RotateAngle and may stop working in future Libre Office versions, after 7.3.4.2.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ; Related .......: _LOCalc_CommentPosition, _LOCalc_CommentSize
 ; Link ..........:
 ; Example .......: Yes
@@ -1971,7 +1971,7 @@ EndFunc   ;==>_LOCalc_CommentsGetList
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  I have skipped "Keep Ratio, as there is no built in setting for it for Comments, so I would have to formulate a custom function for this purpose.
 ; Related .......: _LO_UnitConvert, _LOCalc_CommentPosition
@@ -2051,7 +2051,7 @@ EndFunc   ;==>_LOCalc_CommentSize
 ;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were called with Null, returning current text contained in Comment, as a String.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current text content of the comment.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current text content of the comment.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -2104,7 +2104,7 @@ EndFunc   ;==>_LOCalc_CommentText
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
@@ -2293,7 +2293,7 @@ EndFunc   ;==>_LOCalc_CommentTextAnchor
 ; Remarks .......: The Increment value can be set in either Pixels or Hundredths of a Millimeter (100th MM), but internally it uses the same property. To make setting this easier, I have made two separate parameters to set, depending on if you wish to set increment using pixels ($iPixelIncrement) or Hundredths of a Millimeter ($iIncrement). Only one should be used, otherwise $iIncrement will overwrite $iPixelIncrement.
 ;                  When either $iPixelIncrement or $iIncrement is not set, meaning if you are setting the Increment value in pixels, or not, one or the other value will return 0 when retrieving the current settings.
 ;                  $iIncrement in the L.O. UI allows for 10" max, however this produces an erroneous value internally, and switches back to using pixels, even in the UI, if you set $iIncrement to the max value, it will most likely cause a property setting error.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LO_UnitConvert
 ; Link ..........:
@@ -2410,7 +2410,7 @@ EndFunc   ;==>_LOCalc_CommentTextAnimation
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LO_UnitConvert
 ; Link ..........:
@@ -2513,7 +2513,7 @@ EndFunc   ;==>_LOCalc_CommentTextColumns
 ; Modified ......:
 ; Remarks .......: If either $bFitWidth or $bFitHeight is set to True, $bFitToFrame cannot be set to True, and vice versa.
 ;                  If spacing values on all sides do not match, $iSpacingAll will return 0.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LO_UnitConvert
 ; Link ..........:
@@ -2634,7 +2634,7 @@ EndFunc   ;==>_LOCalc_CommentTextSettings
 ;                  @Error 0 @Extended 1 Return Boolean = Success. All optional parameters were called with Null, returning current setting as a Boolean value.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current setting.
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current setting.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
