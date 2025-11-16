@@ -1018,7 +1018,7 @@ EndFunc   ;==>_LOCalc_RangeDatabaseExists
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Database Ranges Object.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return Array = Success. Returning an array of Database Ranges contained in the document. @extended set to number of results.
+;                  @Error 0 @Extended ? Return Array = Success. Returning an array of Database Ranges contained in the document. @Extended set to number of results.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -2462,7 +2462,7 @@ EndFunc   ;==>_LOCalc_RangeNamedExists
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Named Ranges Object.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return Array = Success. Returning an array of Named Ranges contained in the called scope. @extended set to number of results.
+;                  @Error 0 @Extended ? Return Array = Success. Returning an array of Named Ranges contained in the called scope. @Extended set to number of results.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Object called in $oObj determines the scope you are retrieving the array of names for, either Globally (Document Object), or locally (Sheet Object).
