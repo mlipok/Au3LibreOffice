@@ -124,13 +124,13 @@ EndFunc   ;==>_LOBase_ComError_UserFunction
 ; Name ..........: _LOBase_DateStructCreate
 ; Description ...: Create a Date Structure for inserting a Date into certain other functions.
 ; Syntax ........: _LOBase_DateStructCreate([$iYear = Null[, $iMonth = Null[, $iDay = Null[, $iHours = Null[, $iMinutes = Null[, $iSeconds = Null[, $iNanoSeconds = Null[, $bIsUTC = Null]]]]]]]])
-; Parameters ....: $iYear               - [optional] an integer value. Default is Null. The Year, in 4 digit integer format.
-;                  $iMonth              - [optional] an integer value (0-12). Default is Null. The Month, in 2 digit integer format. Call with 0 for Void date.
-;                  $iDay                - [optional] an integer value (0-31). Default is Null. The Day, in 2 digit integer format. Call with 0 for Void date.
-;                  $iHours              - [optional] an integer value (0-23). Default is Null. The Hour, in 2 digit integer format.
-;                  $iMinutes            - [optional] an integer value (0-59). Default is Null. Minutes, in 2 digit integer format.
-;                  $iSeconds            - [optional] an integer value (0-59). Default is Null. Seconds, in 2 digit integer format.
-;                  $iNanoSeconds        - [optional] an integer value (0-999,999,999). Default is Null. Nano-Second, in integer format. Min 0, Max 999,999,999.
+; Parameters ....: $iYear               - [optional] an integer value. Default is Null. The Year, as a 4 digit integer.
+;                  $iMonth              - [optional] an integer value (0-12). Default is Null. The Month, as a 2 digit integer. Call with 0 for Void date.
+;                  $iDay                - [optional] an integer value (0-31). Default is Null. The Day, as a 2 digit integer. Call with 0 for Void date.
+;                  $iHours              - [optional] an integer value (0-23). Default is Null. The Hour, as a 2 digit integer.
+;                  $iMinutes            - [optional] an integer value (0-59). Default is Null. Minutes, as a 2 digit integer.
+;                  $iSeconds            - [optional] an integer value (0-59). Default is Null. Seconds, as a 2 digit integer.
+;                  $iNanoSeconds        - [optional] an integer value (0-999,999,999). Default is Null. Nano-Second, as an integer.
 ;                  $bIsUTC              - [optional] a boolean value. Default is Null. If true: time zone is UTC Else false: unknown time zone. Libre Office version 4.1 and up.
 ; Return values .: Success: Structure.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -248,13 +248,13 @@ EndFunc   ;==>_LOBase_DateStructCreate
 ; Description ...: Set or retrieve Date Structure settings.
 ; Syntax ........: _LOBase_DateStructModify(ByRef $tDateStruct[, $iYear = Null[, $iMonth = Null[, $iDay = Null[, $iHours = Null[, $iMinutes = Null[, $iSeconds = Null[, $iNanoSeconds = Null[, $bIsUTC = Null]]]]]]]])
 ; Parameters ....: $tDateStruct         - [in/out] a dll struct value. The Date Structure to modify, returned from a _LOBase_DateStructCreate, or setting retrieval function. Structure will be directly modified.
-;                  $iYear               - [optional] an integer value. Default is Null. The Year, in 4 digit integer format.
-;                  $iMonth              - [optional] an integer value (0-12). Default is Null. The Month, in 2 digit integer format. Call with 0 for Void date.
-;                  $iDay                - [optional] an integer value (0-31). Default is Null. The Day, in 2 digit integer format. Call with 0 for Void date.
-;                  $iHours              - [optional] an integer value (0-23). Default is Null. The Hour, in 2 digit integer format.
-;                  $iMinutes            - [optional] an integer value (0-59). Default is Null. Minutes, in 2 digit integer format.
-;                  $iSeconds            - [optional] an integer value (0-59). Default is Null. Seconds, in 2 digit integer format.
-;                  $iNanoSeconds        - [optional] an integer value (0-999,999,999). Default is Null. Nano-Second, in integer format.
+;                  $iYear               - [optional] an integer value. Default is Null. The Year, as a 4 digit integer.
+;                  $iMonth              - [optional] an integer value (0-12). Default is Null. The Month, as a 2 digit integer. Call with 0 for Void date.
+;                  $iDay                - [optional] an integer value (0-31). Default is Null. The Day, as a 2 digit integer. Call with 0 for Void date.
+;                  $iHours              - [optional] an integer value (0-23). Default is Null. The Hour, as a 2 digit integer.
+;                  $iMinutes            - [optional] an integer value (0-59). Default is Null. Minutes, as a 2 digit integer.
+;                  $iSeconds            - [optional] an integer value (0-59). Default is Null. Seconds, as a 2 digit integer.
+;                  $iNanoSeconds        - [optional] an integer value (0-999,999,999). Default is Null. Nano-Second, as an integer.
 ;                  $bIsUTC              - [optional] a boolean value. Default is Null. If true: time zone is UTC Else false: unknown time zone. Libre Office version 4.1 and up.
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
