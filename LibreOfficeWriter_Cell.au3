@@ -450,7 +450,7 @@ EndFunc   ;==>_LOWriter_CellGetDataType
 ;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oCell is a CellRange not an individual cell.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Integer = Success. The Cell formula error code in Integer format.
+;                  @Error 0 @Extended 0 Return Integer = Success. The Cell formula error code as an Integer.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If the cell is not a formula, the error value is zero.
