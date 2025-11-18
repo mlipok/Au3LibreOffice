@@ -280,7 +280,7 @@ EndFunc   ;==>_LOWriter_FieldAuthorModify
 ;                  @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $oCursor is a Table Cursor, and is not supported.
 ;                  @Error 1 @Extended 4 Return 0 = $bOverwrite not a Boolean.
-;                  @Error 1 @Extended 5 Return 0 = $iChapFrmt not an integer, less than 0 or greater than 4. See Constants, $LOW_FIELD_CHAP_FRMT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iChapFrmt not an Integer, less than 0 or greater than 4. See Constants, $LOW_FIELD_CHAP_FRMT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 6 Return 0 = $iLevel not an Integer, less than 1 or greater than 10.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.text.TextField.Chapter" Object.
@@ -337,7 +337,7 @@ EndFunc   ;==>_LOWriter_FieldChapterInsert
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oChapField not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iChapFrmt not an integer, less than 0 or greater than 4. See Constants, $LOW_FIELD_CHAP_FRMT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 2 Return 0 = $iChapFrmt not an Integer, less than 0 or greater than 4. See Constants, $LOW_FIELD_CHAP_FRMT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 3 Return 0 = $iLevel not an Integer, less than 1 or greater than 10.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
@@ -5429,9 +5429,9 @@ EndFunc   ;==>_LOWriter_FieldShowVarModify
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $oCursor is a Table Cursor, and is not supported.
-;                  @Error 1 @Extended 4 Return 0 = $iCountType not an integer, less than 0 or greater than 6. See Constants, $LOW_FIELD_COUNT_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iCountType not an Integer, less than 0 or greater than 6. See Constants, $LOW_FIELD_COUNT_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 5 Return 0 = $bOverwrite not a Boolean.
-;                  @Error 1 @Extended 6 Return 0 = $iNumFormat not an integer, less than 0 or greater than 71. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $iNumFormat not an Integer, less than 0 or greater than 71. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create requested Count Field Object.
 ;                  --Processing Errors--
@@ -5493,8 +5493,8 @@ EndFunc   ;==>_LOWriter_FieldStatCountInsert
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oCountField not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $iCountType not an integer, less than 0 or greater than 6. See Constants, $LOW_FIELD_COUNT_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 4 Return 0 = $iNumFormat not an integer, less than 0 or greater than 71. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $iCountType not an Integer, less than 0 or greater than 6. See Constants, $LOW_FIELD_COUNT_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iNumFormat not an Integer, less than 0 or greater than 71. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create requested Count Field Object.
 ;                  --Processing Errors--
@@ -5587,7 +5587,7 @@ EndFunc   ;==>_LOWriter_FieldStatCountModify
 ;                  @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $oCursor is a Table Cursor, and is not supported.
 ;                  @Error 1 @Extended 4 Return 0 = $bOverwrite not a Boolean.
-;                  @Error 1 @Extended 5 Return 0 = $iFormat not an integer, less than 0 or greater than 5. See Constants, $LOW_FIELD_FILENAME_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iFormat not an Integer, less than 0 or greater than 5. See Constants, $LOW_FIELD_FILENAME_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.text.TextField.TemplateName" Object.
 ;                  --Success--
@@ -5636,7 +5636,7 @@ EndFunc   ;==>_LOWriter_FieldStatTemplateInsert
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oTemplateField not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iFormat not an integer, less than 0 or greater than 5. See Constants, $LOW_FIELD_FILENAME_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 2 Return 0 = $iFormat not an Integer, less than 0 or greater than 5. See Constants, $LOW_FIELD_FILENAME_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iFormat
@@ -5888,7 +5888,7 @@ EndFunc   ;==>_LOWriter_FieldVarSetPageModify
 ;                  @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $oCursor is a Table Cursor, and is not supported.
 ;                  @Error 1 @Extended 4 Return 0 = $bOverwrite not a Boolean.
-;                  @Error 1 @Extended 5 Return 0 = $iNumFormat not an integer, less than 0 or greater than 71. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iNumFormat not an Integer, less than 0 or greater than 71. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.text.TextField.ReferencePageGet" Object.
 ;                  --Success--
@@ -5940,7 +5940,7 @@ EndFunc   ;==>_LOWriter_FieldVarShowPageInsert
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oPageShowField not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iNumFormat not an integer, less than 0 or greater than 71. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 2 Return 0 = $iNumFormat not an Integer, less than 0 or greater than 71. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iNumFormat

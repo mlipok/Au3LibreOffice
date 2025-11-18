@@ -256,7 +256,7 @@ EndFunc   ;==>_LOWriter_CursorGoToRange
 ;                  @Error 1 @Extended 1 Return 0 = $oCursor not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iMove not an Integer.
 ;                  @Error 1 @Extended 3 Return 0 = $iMove mismatch with Cursor type. See Cursor Type/Move Type Constants, $LOW_VIEWCUR_, $LOW_TEXTCUR_, $LOW_TABLECUR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 4 Return 0 = $iCount not an integer or is a negative.
+;                  @Error 1 @Extended 4 Return 0 = $iCount not an Integer or is a negative.
 ;                  @Error 1 @Extended 5 Return 0 = $bSelect not a Boolean.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error determining cursor type.

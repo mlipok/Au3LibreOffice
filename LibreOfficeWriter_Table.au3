@@ -76,12 +76,12 @@
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iTop not an integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 3 Return 0 = $iBottom not an integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 4 Return 0 = $iLeft not an integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 5 Return 0 = $iRight not an integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 6 Return 0 = $iVert not an integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 7 Return 0 = $iHori not an integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 2 Return 0 = $iTop not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 3 Return 0 = $iBottom not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 4 Return 0 = $iLeft not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 5 Return 0 = $iRight not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 6 Return 0 = $iVert not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 7 Return 0 = $iHori not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 8 Return 0 = Table called in $oTable is a Table that has not been inserted into the document yet.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
@@ -238,12 +238,12 @@ EndFunc   ;==>_LOWriter_TableBorderPadding
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iTop not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
-;                  @Error 1 @Extended 3 Return 0 = $iBottom not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
-;                  @Error 1 @Extended 4 Return 0 = $iLeft not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
-;                  @Error 1 @Extended 5 Return 0 = $iRight not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
-;                  @Error 1 @Extended 6 Return 0 = $iVert not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
-;                  @Error 1 @Extended 7 Return 0 = $iHori not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 2 Return 0 = $iTop not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 3 Return 0 = $iBottom not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 4 Return 0 = $iLeft not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 5 Return 0 = $iRight not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 6 Return 0 = $iVert not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 7 Return 0 = $iHori not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF.
 ;                  @Error 1 @Extended 8 Return 0 = $oTable references a Table that has not been inserted into the document yet.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
@@ -304,12 +304,12 @@ EndFunc   ;==>_LOWriter_TableBorderStyle
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iTop not an integer, or less than 0.
-;                  @Error 1 @Extended 3 Return 0 = $iBottom not an integer, or less than 0.
-;                  @Error 1 @Extended 4 Return 0 = $iLeft not an integer, or less than 0.
-;                  @Error 1 @Extended 5 Return 0 = $iRight not an integer, or less than 0.
-;                  @Error 1 @Extended 6 Return 0 = $iVert not an integer, or less than 0.
-;                  @Error 1 @Extended 7 Return 0 = $iHori not an integer, or less than 0.
+;                  @Error 1 @Extended 2 Return 0 = $iTop not an Integer, or less than 0.
+;                  @Error 1 @Extended 3 Return 0 = $iBottom not an Integer, or less than 0.
+;                  @Error 1 @Extended 4 Return 0 = $iLeft not an Integer, or less than 0.
+;                  @Error 1 @Extended 5 Return 0 = $iRight not an Integer, or less than 0.
+;                  @Error 1 @Extended 6 Return 0 = $iVert not an Integer, or less than 0.
+;                  @Error 1 @Extended 7 Return 0 = $iHori not an Integer, or less than 0.
 ;                  @Error 1 @Extended 8 Return 0 = Table called in $oTable is a Table that has not been inserted into the document yet.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
@@ -365,7 +365,7 @@ EndFunc   ;==>_LOWriter_TableBorderWidth
 ;                  @Error 1 @Extended 3 Return 0 = $iBreakType not an Integer, less than 0 or greater than 6. See Constants, $LOW_BREAK_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 4 Return 0 = $sPageStyle not a String.
 ;                  @Error 1 @Extended 5 Return 0 = $sPageStyle not found in current document.
-;                  @Error 1 @Extended 6 Return 0 = $iPgNumOffSet not an integer, or less than 0.
+;                  @Error 1 @Extended 6 Return 0 = $iPgNumOffSet not an Integer, or less than 0.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iBreakType
@@ -531,7 +531,7 @@ EndFunc   ;==>_LOWriter_TableColor
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = Table called in $oTable not inserted into Document yet.
-;                  @Error 1 @Extended 3 Return 0 = $iColumn not an integer, or less than 0.
+;                  @Error 1 @Extended 3 Return 0 = $iColumn not an Integer, or less than 0.
 ;                  @Error 1 @Extended 4 Return 0 = $iCount not an Integer, or less than 1.
 ;                  @Error 1 @Extended 5 Return 0 = Requested column greater than number of columns contained in table.
 ;                  --Success--
@@ -616,7 +616,7 @@ EndFunc   ;==>_LOWriter_TableColumnGetCount
 ;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = Table called in $oTable not inserted into Document yet.
 ;                  @Error 1 @Extended 3 Return 0 = $iCount not an Integer, or less than 1.
-;                  @Error 1 @Extended 4 Return 0 = $iColumn not an integer, or less than -1.
+;                  @Error 1 @Extended 4 Return 0 = $iColumn not an Integer, or less than -1.
 ;                  @Error 1 @Extended 5 Return 0 = Column called in $iColumn greater than number of columns contained in table.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to insert columns.
@@ -665,10 +665,10 @@ EndFunc   ;==>_LOWriter_TableColumnInsert
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iRows not an integer, or less than 1.
-;                  @Error 1 @Extended 3 Return 0 = $iColumns not an integer, or less than 1.
+;                  @Error 1 @Extended 2 Return 0 = $iRows not an Integer, or less than 1.
+;                  @Error 1 @Extended 3 Return 0 = $iColumns not an Integer, or less than 1.
 ;                  @Error 1 @Extended 4 Return 0 = $bSplit not a Boolean.
-;                  @Error 1 @Extended 5 Return 0 = $iBackColor not an integer, less than -1 or greater than 16777215.
+;                  @Error 1 @Extended 5 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
 ;                  @Error 1 @Extended 6 Return 0 = $sTableName not a String.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failure Creating Object com.sun.star.text.TextTable.
@@ -808,7 +808,7 @@ EndFunc   ;==>_LOWriter_TableCreateCursor
 ;                  @Error 1 @Extended 2 Return 0 = $oCursor not a Table Cursor.
 ;                  @Error 1 @Extended 3 Return 0 = $sGoToCellByName not a String.
 ;                  @Error 1 @Extended 4 Return 0 = $bSelect not a Boolean.
-;                  @Error 1 @Extended 5 Return 0 = $iSplitRangeInto not an integer, or less than 1.
+;                  @Error 1 @Extended 5 Return 0 = $iSplitRangeInto not an Integer, or less than 1.
 ;                  @Error 1 @Extended 6 Return 0 = $bSplitRangeHori not a Boolean.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended ? Return 0 = Some commands were not successfully completed. Use BitAND to test @Extended for the following values:
@@ -1080,17 +1080,17 @@ EndFunc   ;==>_LOWriter_TableGetCellObjByName
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iColumn not an integer, or less than 0.
-;                  @Error 1 @Extended 3 Return 0 = $iRow not an integer, or less than 0.
-;                  @Error 1 @Extended 4 Return 0 = $iToColumn not an integer, or less than 0.
-;                  @Error 1 @Extended 5 Return 0 = $iToRow not an integer, or less than 0.
+;                  @Error 1 @Extended 2 Return 0 = $iColumn not an Integer, or less than 0.
+;                  @Error 1 @Extended 3 Return 0 = $iRow not an Integer, or less than 0.
+;                  @Error 1 @Extended 4 Return 0 = $iToColumn not an Integer, or less than 0.
+;                  @Error 1 @Extended 5 Return 0 = $iToRow not an Integer, or less than 0.
 ;                  @Error 1 @Extended 6 Return 0 = Table called in $oTable references a Table not currently inserted in the document.
 ;                  @Error 1 @Extended 7 Return 0 = Table does not contain sufficient number of columns for column called in $iColumn.
 ;                  @Error 1 @Extended 8 Return 0 = Table does not contain sufficient number of columns for column called in $iToColumn.
 ;                  @Error 1 @Extended 9 Return 0 = Table does not contain sufficient number of Row for Row called in $iRow.
 ;                  @Error 1 @Extended 10 Return 0 = Table does not contain sufficient number of Row for Row called in $iToRow.
-;                  @Error 1 @Extended 11 Return 0 = $iToColumn lower integer than $iColumn.
-;                  @Error 1 @Extended 12 Return 0 = $iToRow lower integer than $iRow.
+;                  @Error 1 @Extended 11 Return 0 = $iToColumn lower Integer than $iColumn.
+;                  @Error 1 @Extended 12 Return 0 = $iToRow lower Integer than $iRow.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Cell Object.
 ;                  --Success--
@@ -1491,7 +1491,7 @@ EndFunc   ;==>_LOWriter_TableMargin
 ;                  @Error 1 @Extended 7 Return 0 = $oTable not inserted in Document, cannot set $bSplitRows.
 ;                  @Error 1 @Extended 8 Return 0 = $bRepeatHeading not a Boolean.
 ;                  @Error 1 @Extended 9 Return 0 = $oTable not inserted in Document, cannot set $bRepeatHeading.
-;                  @Error 1 @Extended 10 Return 0 = $iHeaderRows not an integer, less than 0 or greater than number of rows in table.
+;                  @Error 1 @Extended 10 Return 0 = $iHeaderRows not an Integer, less than 0 or greater than number of rows in table.
 ;                  @Error 1 @Extended 11 Return 0 = $oTable not inserted in Document, cannot set $iHeaderRows.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
@@ -1605,7 +1605,7 @@ EndFunc   ;==>_LOWriter_TableProperties
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = Table called in $oTable not inserted into Document yet.
-;                  @Error 1 @Extended 3 Return 0 = $iRow not an integer, or less than 0.
+;                  @Error 1 @Extended 3 Return 0 = $iRow not an Integer, or less than 0.
 ;                  @Error 1 @Extended 4 Return 0 = Requested row greater than number of rows contained in Table.
 ;                  @Error 1 @Extended 5 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
 ;                  @Error 1 @Extended 6 Return 0 = $bBackTransparent not a Boolean.
@@ -1678,7 +1678,7 @@ EndFunc   ;==>_LOWriter_TableRowColor
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = Table called in $oTable not inserted into Document yet.
-;                  @Error 1 @Extended 3 Return 0 = $iRow not an integer, or less than 0.
+;                  @Error 1 @Extended 3 Return 0 = $iRow not an Integer, or less than 0.
 ;                  @Error 1 @Extended 4 Return 0 = $iCount not an Integer, or less than 1.
 ;                  @Error 1 @Extended 5 Return 0 = Requested row greater than number of rows contained in table.
 ;                  --Success--
@@ -1763,7 +1763,7 @@ EndFunc   ;==>_LOWriter_TableRowGetCount
 ;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = Table called in $oTable not inserted into Document yet.
 ;                  @Error 1 @Extended 3 Return 0 = $iCount not an Integer, or less than 1.
-;                  @Error 1 @Extended 4 Return 0 = $iRow not an integer, or less than -1.
+;                  @Error 1 @Extended 4 Return 0 = $iRow not an Integer, or less than -1.
 ;                  @Error 1 @Extended 5 Return 0 = Requested Row greater than number of Rows contained in table.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to insert Rows.
@@ -1989,7 +1989,7 @@ EndFunc   ;==>_LOWriter_TablesGetNames
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oTable not inserted into the Document.
-;                  @Error 1 @Extended 3 Return 0 = $iWidth not an integer, or less than 0.
+;                  @Error 1 @Extended 3 Return 0 = $iWidth not an Integer, or less than 0.
 ;                  @Error 1 @Extended 4 Return 0 = $iColor not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 5 Return 0 = $bTransparent not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.

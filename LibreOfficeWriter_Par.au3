@@ -375,9 +375,9 @@ EndFunc   ;==>_LOWriter_ParObjSelect
 ;                  @Error 1 @Extended 1 Return 0 = $oParStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oParStyle not a Paragraph Object.
 ;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                  @Error 1 @Extended 4 Return 0 = $iHorAlign not an integer, less than 0 or greater than 3. See constants, $LOW_PAR_ALIGN_HOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 5 Return 0 = $iVertAlign not an integer, less than 0 or greater than 4. See constants, $LOW_PAR_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 6 Return 0 = $iLastLineAlign not an integer, less than 0 or greater than 3. See constants, $LOW_PAR_LAST_LINE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iHorAlign not an Integer, less than 0 or greater than 3. See constants, $LOW_PAR_ALIGN_HOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iVertAlign not an Integer, less than 0 or greater than 4. See constants, $LOW_PAR_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $iLastLineAlign not an Integer, less than 0 or greater than 3. See constants, $LOW_PAR_LAST_LINE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 7 Return 0 = $bExpandSingleWord not a Boolean.
 ;                  @Error 1 @Extended 8 Return 0 = $bSnapToGrid not a Boolean.
 ;                  @Error 1 @Extended 9 Return 0 = $iTxtDirection not an Integer, less than 0 or greater than 5. See constants, $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
@@ -429,7 +429,7 @@ EndFunc   ;==>_LOWriter_ParStyleAlignment
 ;                  @Error 1 @Extended 1 Return 0 = $oParStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oParStyle not a Paragraph Object.
 ;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                  @Error 1 @Extended 4 Return 0 = $iBackColor not an integer, less than -1 or greater than 16777215.
+;                  @Error 1 @Extended 4 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
 ;                  @Error 1 @Extended 5 Return 0 = $bBackTransparent not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
@@ -474,10 +474,10 @@ EndFunc   ;==>_LOWriter_ParStyleBackColor
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oParStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oParStyle not a Paragraph Object.
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an Integer, less than 0 or greater than 16777215.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
@@ -587,10 +587,10 @@ EndFunc   ;==>_LOWriter_ParStyleBorderPadding
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oParStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oParStyle not a Paragraph Object.
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
@@ -648,10 +648,10 @@ EndFunc   ;==>_LOWriter_ParStyleBorderStyle
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oParStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oParStyle not a Paragraph Object.
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or less than 0.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or less than 0.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or less than 0.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or less than 0.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an Integer, or less than 0.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an Integer, or less than 0.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an Integer, or less than 0.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an Integer, or less than 0.
 ;                  @Error 1 @Extended 7 Return 0 = $bConnectBorder not a Boolean.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
@@ -835,7 +835,7 @@ EndFunc   ;==>_LOWriter_ParStyleDelete
 ;                  @Error 1 @Extended 3 Return 0 = $oParStyle not a Paragraph Object.
 ;                  @Error 1 @Extended 4 Return 0 = Character Style called in $sCharStyle not found in document.
 ;                  @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
-;                  @Error 1 @Extended 6 Return 0 = $iNumChar not an integer, less than 0 or greater than 9.
+;                  @Error 1 @Extended 6 Return 0 = $iNumChar not an Integer, less than 0 or greater than 9.
 ;                  @Error 1 @Extended 7 Return 0 = $iLines not an Integer, less than 0, equal to 1, or greater than 9
 ;                  @Error 1 @Extended 8 Return 0 = $iSpaceTxt not an Integer, or less than 0.
 ;                  @Error 1 @Extended 9 Return 0 = $bWholeWord not a Boolean.
@@ -894,8 +894,8 @@ EndFunc   ;==>_LOWriter_ParStyleDropCaps
 ;                  @Error 1 @Extended 1 Return 0 = $oParStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oParStyle not a Paragraph Object.
 ;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                  @Error 1 @Extended 4 Return 0 = $iRelief not an integer, less than 0 or greater than 2. See Constants, $LOW_RELIEF_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 5 Return 0 = $iCase not an integer, less than 0 or greater than 4. See Constants, $LOW_CASEMAP_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iRelief not an Integer, less than 0 or greater than 2. See Constants, $LOW_RELIEF_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iCase not an Integer, less than 0 or greater than 4. See Constants, $LOW_CASEMAP_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 6 Return 0 = $bHidden not a Boolean.
 ;                  @Error 1 @Extended 7 Return 0 = $bOutline not a Boolean.
 ;                  @Error 1 @Extended 8 Return 0 = $bShadow not a Boolean.
@@ -1031,9 +1031,9 @@ EndFunc   ;==>_LOWriter_ParStyleFont
 ;                  @Error 1 @Extended 1 Return 0 = $oParStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oParStyle not a Paragraph Object.
 ;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                  @Error 1 @Extended 4 Return 0 = $iFontColor not an integer, less than -1 or greater than 16777215.
+;                  @Error 1 @Extended 4 Return 0 = $iFontColor not an Integer, less than -1 or greater than 16777215.
 ;                  @Error 1 @Extended 5 Return 0 = $iTransparency not an Integer, less than 0 or greater than 100%.
-;                  @Error 1 @Extended 6 Return 0 = $iHighlight not an integer, less than -1 or greater than 16777215.
+;                  @Error 1 @Extended 6 Return 0 = $iHighlight not an Integer, less than -1 or greater than 16777215.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve old Transparency value.
 ;                  --Property Setting Errors--
@@ -1178,9 +1178,9 @@ EndFunc   ;==>_LOWriter_ParStyleHyphenation
 ;                  @Error 1 @Extended 1 Return 0 = $oParStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oParStyle not a Paragraph Object.
 ;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                  @Error 1 @Extended 4 Return 0 = $iBeforeText not an integer, less than -9998989 or greater than 17094.
-;                  @Error 1 @Extended 5 Return 0 = $iAfterText not an integer, less than -9998989 or greater than 17094.
-;                  @Error 1 @Extended 6 Return 0 = $iFirstLine not an integer, less than -57785 or greater than 17094.
+;                  @Error 1 @Extended 4 Return 0 = $iBeforeText not an Integer, less than -9998989 or greater than 17094.
+;                  @Error 1 @Extended 5 Return 0 = $iAfterText not an Integer, less than -9998989 or greater than 17094.
+;                  @Error 1 @Extended 6 Return 0 = $iFirstLine not an Integer, less than -57785 or greater than 17094.
 ;                  @Error 1 @Extended 7 Return 0 = $bAutoFirstLine not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
@@ -1349,7 +1349,7 @@ EndFunc   ;==>_LOWriter_ParStyleOrganizer
 ;                  @Error 1 @Extended 3 Return 0 = $oParStyle not a Paragraph Object.
 ;                  @Error 1 @Extended 4 Return 0 = Numbering Style called in $sNumStyle not found in current document.
 ;                  @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
-;                  @Error 1 @Extended 6 Return 0 = $iOutline not an integer, less than 0 or greater than 10. See constants, $LOW_OUTLINE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $iOutline not an Integer, less than 0 or greater than 10. See constants, $LOW_OUTLINE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 7 Return 0 = $sNumStyle not a String.
 ;                  @Error 1 @Extended 8 Return 0 = $bParLineCount not a Boolean.
 ;                  @Error 1 @Extended 9 Return 0 = $iLineCountVal not an Integer, or less than 0.
@@ -1454,7 +1454,7 @@ EndFunc   ;==>_LOWriter_ParStyleOverLine
 ;                  @Error 1 @Extended 3 Return 0 = $oParStyle not a Paragraph Object.
 ;                  @Error 1 @Extended 4 Return 0 = Page Style called in $sPageStyle not found in current document.
 ;                  @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
-;                  @Error 1 @Extended 6 Return 0 = $iBreakType not an integer, less than 0 or greater than 6. See constants, $LOW_BREAK_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $iBreakType not an Integer, less than 0 or greater than 6. See constants, $LOW_BREAK_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 7 Return 0 = $sPageStyle not a String.
 ;                  @Error 1 @Extended 8 Return 0 = $iPgNumOffSet not an Integer, or less than 0.
 ;                  --Property Setting Errors--
@@ -1510,9 +1510,9 @@ EndFunc   ;==>_LOWriter_ParStylePageBreak
 ;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $bAutoSuper not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $bAutoSub not a Boolean.
-;                  @Error 1 @Extended 6 Return 0 = $iSuperScript not an integer, less than 0 or greater than 100, but not 14000.
-;                  @Error 1 @Extended 7 Return 0 = $iSubScript not an integer, less than -100 or greater than 100, but not 14000 or -14000.
-;                  @Error 1 @Extended 8 Return 0 = $iRelativeSize not an integer, less than 1 or greater than 100.
+;                  @Error 1 @Extended 6 Return 0 = $iSuperScript not an Integer, less than 0 or greater than 100, but not 14000.
+;                  @Error 1 @Extended 7 Return 0 = $iSubScript not an Integer, less than -100 or greater than 100, but not 14000 or -14000.
+;                  @Error 1 @Extended 8 Return 0 = $iRelativeSize not an Integer, less than 1 or greater than 100.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iSuperScript
@@ -1721,8 +1721,8 @@ EndFunc   ;==>_LOWriter_ParStylesGetNames
 ;                  @Error 1 @Extended 1 Return 0 = $oParStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oParStyle not a Paragraph Object.
 ;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                  @Error 1 @Extended 4 Return 0 = $iWidth not an integer, or less than 0.
-;                  @Error 1 @Extended 5 Return 0 = $iColor not an integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 4 Return 0 = $iWidth not an Integer, or less than 0.
+;                  @Error 1 @Extended 5 Return 0 = $iColor not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 6 Return 0 = $bTransparent not a Boolean.
 ;                  @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Processing Errors--
@@ -1777,10 +1777,10 @@ EndFunc   ;==>_LOWriter_ParStyleShadow
 ;                  @Error 1 @Extended 1 Return 0 = $oParStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oParStyle not a Paragraph Object.
 ;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                  @Error 1 @Extended 4 Return 0 = $iAbovePar not an integer, less than 0 or greater than 10008.
-;                  @Error 1 @Extended 5 Return 0 = $iBelowPar not an integer, less than 0 or greater than 10008.
+;                  @Error 1 @Extended 4 Return 0 = $iAbovePar not an Integer, less than 0 or greater than 10008.
+;                  @Error 1 @Extended 5 Return 0 = $iBelowPar not an Integer, less than 0 or greater than 10008.
 ;                  @Error 1 @Extended 6 Return 0 = $bAddSpc not a Boolean.
-;                  @Error 1 @Extended 7 Return 0 = $iLineSpcMode not an integer, less than 0 or greater than 3. See Constants, $LOW_LINE_SPC_MODE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 7 Return 0 = $iLineSpcMode not an Integer, less than 0 or greater than 3. See Constants, $LOW_LINE_SPC_MODE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 8 Return 0 = $iLineSpcHeight not an Integer.
 ;                  @Error 1 @Extended 9 Return 0 = $iLineSpcMode set to 0(Proportional) and $iLineSpcHeight less than 6(%) or greater than 65535(%).
 ;                  @Error 1 @Extended 10 Return 0 = $iLineSpcMode set to 1, or 2 (Minimum, or Leading) and $iLineSpcHeight less than 0 or greater than 10008.

@@ -1892,8 +1892,8 @@ EndFunc   ;==>_LOWriter_DocFormSettings
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sNewAuthor not a String and $bResetUserData called with True.
 ;                  @Error 1 @Extended 3 Return 0 = $sNewAuthor not a String.
-;                  @Error 1 @Extended 4 Return 0 = $iRevisions not an integer.
-;                  @Error 1 @Extended 5 Return 0 = $iEditDuration not an integer.
+;                  @Error 1 @Extended 4 Return 0 = $iRevisions not an Integer.
+;                  @Error 1 @Extended 5 Return 0 = $iEditDuration not an Integer.
 ;                  @Error 1 @Extended 6 Return 0 = $bApplyUserData not a Boolean.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error retrieving Document Settings Object.
@@ -2275,7 +2275,7 @@ EndFunc   ;==>_LOWriter_DocGenPropTemplate
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Document Statistics Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Array = Success. A 1 dimension, 0 based, 9 row Array of integers, in the order described in remarks.
+;                  @Error 0 @Extended 0 Return Array = Success. A 1 dimension, 0 based, 9 row Array of Integers, in the order described in remarks.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Returns a 1 dimension array with the following counts in this order: Page count; Line Count; Paragraph Count; Word Count; Character Count; NonWhiteSpace Character Count; Table Count; Image Count; Object Count.
@@ -3457,9 +3457,9 @@ EndFunc   ;==>_LOWriter_DocPrintIncludedSettings
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iPaperOrient not an integer, less than 0 or greater than 1. See Constants, $LOW_PAPER_ORIENT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 2 Return 0 = $iPaperOrient not an Integer, less than 0 or greater than 1. See Constants, $LOW_PAPER_ORIENT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 3 Return 0 = $sPrinterName not a string.
-;                  @Error 1 @Extended 4 Return 0 = $iCommentsMode not an integer, less than 0 or greater than 3. See Constants, $LOW_PRINT_NOTES_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iCommentsMode not an Integer, less than 0 or greater than 3. See Constants, $LOW_PRINT_NOTES_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 5 Return 0 = $bBrochure not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $bBrochureRTL not a Boolean.
 ;                  @Error 1 @Extended 7 Return 0 = $bReversed not a Boolean.
@@ -3680,9 +3680,9 @@ EndFunc   ;==>_LOWriter_DocPrintPageSettings
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iPaperFormat not an integer, less than 0 or greater than 8. See constants, $LOW_PAPER_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 3 Return 0 = $iPaperWidth not an integer.
-;                  @Error 1 @Extended 4 Return 0 = $iPaperHeight not an integer.
+;                  @Error 1 @Extended 2 Return 0 = $iPaperFormat not an Integer, less than 0 or greater than 8. See constants, $LOW_PAPER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $iPaperWidth not an Integer.
+;                  @Error 1 @Extended 4 Return 0 = $iPaperHeight not an Integer.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.awt.Size" Object.
 ;                  --Processing Errors--

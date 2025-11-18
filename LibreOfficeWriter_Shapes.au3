@@ -62,7 +62,7 @@
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iColor not an integer, less than -1 or greater than 16777215.
+;                  @Error 1 @Extended 2 Return 0 = $iColor not an Integer, less than -1 or greater than 16777215.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve old Transparency value.
 ;                  --Property Setting Errors--
@@ -70,7 +70,7 @@
 ;                  |                               1 = Error setting $iColor
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current Fill color as an integer.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current Fill color as an Integer.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
@@ -497,7 +497,7 @@ EndFunc   ;==>_LOWriter_ShapeAreaGradientMulticolor
 ;                  |                               1 = Error setting $iTransparency
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
-;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current setting for Transparency as an integer.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current setting for Transparency as an Integer.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
@@ -2788,8 +2788,8 @@ EndFunc   ;==>_LOWriter_ShapeTextBox
 ;                  @Error 1 @Extended 3 Return 0 = $iHorPos not an Integer.
 ;                  @Error 1 @Extended 4 Return 0 = $iHorRelation not an Integer, less than 0 or greater than 8. See Constants, $LOW_RELATIVE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 5 Return 0 = $bMirror not a Boolean.
-;                  @Error 1 @Extended 6 Return 0 = $iVertAlign not an integer, less than 0 or greater than 9. See Constants, $LOW_ORIENT_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 7 Return 0 = $iVertPos not an integer.
+;                  @Error 1 @Extended 6 Return 0 = $iVertAlign not an Integer, less than 0 or greater than 9. See Constants, $LOW_ORIENT_VERT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 7 Return 0 = $iVertPos not an Integer.
 ;                  @Error 1 @Extended 8 Return 0 = $iVertRelation not an Integer, Less than -1 or greater than 9. See Constants, $LOW_RELATIVE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 9 Return 0 = $bKeepInside not a Boolean.
 ;                  @Error 1 @Extended 10 Return 0 = $iAnchorPos not an Integer, or not equal to 0, 1 or 4. See Constants, $LOW_ANCHOR_* as defined in LibreOfficeWriter_Constants.au3.

@@ -93,7 +93,7 @@
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iBackColor not an integer, less than -1 or greater than 16777215.
+;                  @Error 1 @Extended 3 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
 ;                  @Error 1 @Extended 4 Return 0 = $bBackTransparent not a Boolean.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve old Transparency value.
@@ -543,7 +543,7 @@ EndFunc   ;==>_LOWriter_PageStyleAreaGradientMulticolor
 ;                  |                               1 = Error setting $iTransparency
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
-;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current setting for Transparency as an integer.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current setting for Transparency as an Integer.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
@@ -886,10 +886,10 @@ EndFunc   ;==>_LOWriter_PageStyleAreaTransparencyGradientMulti
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an Integer, less than 0 or greater than 16777215.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
@@ -1038,10 +1038,10 @@ EndFunc   ;==>_LOWriter_PageStyleBorderPadding
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
@@ -1097,10 +1097,10 @@ EndFunc   ;==>_LOWriter_PageStyleBorderStyle
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or less than 0.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or less than 0.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or less than 0.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or less than 0.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an Integer, or less than 0.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an Integer, or less than 0.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an Integer, or less than 0.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an Integer, or less than 0.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
@@ -1259,7 +1259,7 @@ EndFunc   ;==>_LOWriter_PageStyleColumnSeparator
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iColumns not an integer, or less than 1.
+;                  @Error 1 @Extended 3 Return 0 = $iColumns not an Integer, or less than 1.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Text Columns Object.
 ;                  --Property Setting Errors--
@@ -1760,7 +1760,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooter
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iBackColor not an integer, less than -1 or greater than 16777215.
+;                  @Error 1 @Extended 3 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
 ;                  @Error 1 @Extended 4 Return 0 = $bBackTransparent not a Boolean.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
@@ -2216,7 +2216,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterAreaGradientMulticolor
 ;                  |                               1 = Error setting $iTransparency
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
-;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current setting for Transparency as an integer.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current setting for Transparency as an Integer.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
@@ -2562,10 +2562,10 @@ EndFunc   ;==>_LOWriter_PageStyleFooterAreaTransparencyGradientMulti
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an Integer, less than 0 or greater than 16777215.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
@@ -2717,10 +2717,10 @@ EndFunc   ;==>_LOWriter_PageStyleFooterBorderPadding
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
@@ -2776,10 +2776,10 @@ EndFunc   ;==>_LOWriter_PageStyleFooterBorderStyle
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or less than 0.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or less than 0.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or less than 0.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or less than 0.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an Integer, or less than 0.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an Integer, or less than 0.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an Integer, or less than 0.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an Integer, or less than 0.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
@@ -2830,7 +2830,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterBorderWidth
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iWidth not an integer, or less than 0.
+;                  @Error 1 @Extended 3 Return 0 = $iWidth not an Integer, or less than 0.
 ;                  @Error 1 @Extended 4 Return 0 = $iColor not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 5 Return 0 = $bTransparent not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
@@ -3280,7 +3280,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeader
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iBackColor not an integer, less than -1 or greater than 16777215.
+;                  @Error 1 @Extended 3 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
 ;                  @Error 1 @Extended 4 Return 0 = $bBackTransparent not a Boolean.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
@@ -3736,7 +3736,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderAreaGradientMulticolor
 ;                  |                               1 = Error setting $iTransparency
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
-;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current setting for Transparency as an integer.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current setting for Transparency as an Integer.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
@@ -4082,10 +4082,10 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderAreaTransparencyGradientMulti
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an Integer, less than 0 or greater than 16777215.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
@@ -4237,10 +4237,10 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderBorderPadding
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
@@ -4296,10 +4296,10 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderBorderStyle
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or less than 0.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or less than 0.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or less than 0.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or less than 0.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an Integer, or less than 0.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an Integer, or less than 0.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an Integer, or less than 0.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an Integer, or less than 0.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
@@ -4975,7 +4975,7 @@ EndFunc   ;==>_LOWriter_PageStylesGetNames
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iWidth not an integer, or less than 0.
+;                  @Error 1 @Extended 3 Return 0 = $iWidth not an Integer, or less than 0.
 ;                  @Error 1 @Extended 4 Return 0 = $iColor not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 5 Return 0 = $bTransparent not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.

@@ -62,10 +62,10 @@
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCharStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oCharStyle not a Character Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an Integer, less than 0 or greater than 16777215.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
@@ -179,10 +179,10 @@ EndFunc   ;==>_LOWriter_CharStyleBorderPadding
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCharStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oCharStyle not a Character Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
@@ -239,10 +239,10 @@ EndFunc   ;==>_LOWriter_CharStyleBorderStyle
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCharStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oCharStyle not a Character Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or less than 0.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or less than 0.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or less than 0.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or less than 0.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an Integer, or less than 0.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an Integer, or less than 0.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an Integer, or less than 0.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an Integer, or less than 0.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
@@ -412,8 +412,8 @@ EndFunc   ;==>_LOWriter_CharStyleDelete
 ;                  @Error 1 @Extended 1 Return 0 = $oCharStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oCharStyle not a Character Style Object.
 ;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                  @Error 1 @Extended 4 Return 0 = $iRelief not an integer, less than 0 or greater than 2. See Constants, $LOW_RELIEF_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 5 Return 0 = $iCase not an integer, less than 0 or greater than 4. See Constants, $LOW_CASEMAP_* as defined in LibreOfficeWriter_Constants.au3
+;                  @Error 1 @Extended 4 Return 0 = $iRelief not an Integer, less than 0 or greater than 2. See Constants, $LOW_RELIEF_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iCase not an Integer, less than 0 or greater than 4. See Constants, $LOW_CASEMAP_* as defined in LibreOfficeWriter_Constants.au3
 ;                  @Error 1 @Extended 6 Return 0 = $bHidden not a Boolean.
 ;                  @Error 1 @Extended 7 Return 0 = $bOutline not a Boolean.
 ;                  @Error 1 @Extended 8 Return 0 = $bShadow not a Boolean.
@@ -549,9 +549,9 @@ EndFunc   ;==>_LOWriter_CharStyleFont
 ;                  @Error 1 @Extended 1 Return 0 = $oCharStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oCharStyle not a Character Style Object.
 ;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                  @Error 1 @Extended 4 Return 0 = $iFontColor not an integer, less than -1 or greater than 16777215.
+;                  @Error 1 @Extended 4 Return 0 = $iFontColor not an Integer, less than -1 or greater than 16777215.
 ;                  @Error 1 @Extended 5 Return 0 = $iTransparency not an Integer, less than 0 or greater than 100%.
-;                  @Error 1 @Extended 6 Return 0 = $iHighlight not an integer, less than -1 or greater than 16777215.
+;                  @Error 1 @Extended 6 Return 0 = $iHighlight not an Integer, less than -1 or greater than 16777215.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve old Transparency value.
 ;                  --Property Setting Errors--
@@ -785,9 +785,9 @@ EndFunc   ;==>_LOWriter_CharStyleOverLine
 ;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $bAutoSuper not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $bAutoSub not a Boolean.
-;                  @Error 1 @Extended 6 Return 0 = $iSuperScript not an integer, less than 0 or greater than 100, but not 14000.
-;                  @Error 1 @Extended 7 Return 0 = $iSubScript not an integer, less than -100 or greater than 100, but not 14000 or -14000.
-;                  @Error 1 @Extended 8 Return 0 = $iRelativeSize not an integer, less than 1 or greater than 100.
+;                  @Error 1 @Extended 6 Return 0 = $iSuperScript not an Integer, less than 0 or greater than 100, but not 14000.
+;                  @Error 1 @Extended 7 Return 0 = $iSubScript not an Integer, less than -100 or greater than 100, but not 14000 or -14000.
+;                  @Error 1 @Extended 8 Return 0 = $iRelativeSize not an Integer, less than 1 or greater than 100.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iSuperScript

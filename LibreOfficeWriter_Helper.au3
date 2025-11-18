@@ -165,8 +165,8 @@ EndFunc   ;==>_LOWriter_ComError_UserFunction
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Number Formats Object.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to Create or Retrieve the Format key.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Integer = Success. Format Key was successfully created, returning Format Key integer.
-;                  @Error 0 @Extended 1 Return Integer = Success. Format Key already existed, returning Format Key integer.
+;                  @Error 0 @Extended 0 Return Integer = Success. Format Key was successfully created, returning Format Key Integer.
+;                  @Error 0 @Extended 1 Return Integer = Success. Format Key already existed, returning Format Key Integer.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -677,9 +677,9 @@ EndFunc   ;==>_LOWriter_DateStructModify
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $atFormat not an Array or contains more than 1 column.
-;                  @Error 1 @Extended 2 Return 0 = $iHorAlign not an integer, less than 0 or greater than 3. See Constants, $LOW_PAR_ALIGN_HOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 3 Return 0 = $iVertAlign not an integer, less than 0 or greater than 4. See Constants, $LOW_PAR_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 4 Return 0 = $iLastLineAlign not an integer, less than 0 or greater than 3. See Constants, $LOW_PAR_LAST_LINE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 2 Return 0 = $iHorAlign not an Integer, less than 0 or greater than 3. See Constants, $LOW_PAR_ALIGN_HOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $iVertAlign not an Integer, less than 0 or greater than 4. See Constants, $LOW_PAR_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iLastLineAlign not an Integer, less than 0 or greater than 3. See Constants, $LOW_PAR_LAST_LINE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 5 Return 0 = $bExpandSingleWord not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $bSnapToGrid not a Boolean.
 ;                  @Error 1 @Extended 7 Return 0 = $iTxtDirection not an Integer, less than 0 or greater than 5. See Constants, $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
@@ -782,8 +782,8 @@ EndFunc   ;==>_LOWriter_FindFormatModifyAlignment
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $atFormat not an Array or contains more than 1 column.
-;                  @Error 1 @Extended 2 Return 0 = $iRelief not an integer, less than 0 or greater than 2. See Constants, $LOW_RELIEF_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 3 Return 0 = $iCase not an integer, less than 0 or greater than 4. See Constants, $LOW_CASEMAP_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 2 Return 0 = $iRelief not an Integer, less than 0 or greater than 2. See Constants, $LOW_RELIEF_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $iCase not an Integer, less than 0 or greater than 4. See Constants, $LOW_CASEMAP_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 4 Return 0 = $bOutline not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $bShadow not a Boolean.
 ;                  --Success--
@@ -1089,9 +1089,9 @@ EndFunc   ;==>_LOWriter_FindFormatModifyHyphenation
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $atFormat not an Array or contains more than 1 column.
-;                  @Error 1 @Extended 2 Return 0 = $iBeforeText not an integer, less than -9998989, or more than 17094.
-;                  @Error 1 @Extended 3 Return 0 = $iAfterText not an integer, less than -9998989, or more than 17094.
-;                  @Error 1 @Extended 4 Return 0 = $iFirstLine not an integer, less than -57785, or more than 17094.
+;                  @Error 1 @Extended 2 Return 0 = $iBeforeText not an Integer, less than -9998989 or greater than 17094.
+;                  @Error 1 @Extended 3 Return 0 = $iAfterText not an Integer, less than -9998989 or greater than 17094.
+;                  @Error 1 @Extended 4 Return 0 = $iFirstLine not an Integer, less than -57785 or greater than 17094.
 ;                  @Error 1 @Extended 5 Return 0 = $bAutoFirstLine not a Boolean.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. FindFormat Array of Settings was successfully modified.
@@ -1254,7 +1254,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyOverline
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $atFormat not an Array or contains more than 1 column.
-;                  @Error 1 @Extended 2 Return 0 = $iBreakType not an integer, less than 0 or greater than 6. See constants, $LOW_BREAK_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 2 Return 0 = $iBreakType not an Integer, less than 0 or greater than 6. See constants, $LOW_BREAK_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 3 Return 0 = $sPageStyle not a String.
 ;                  @Error 1 @Extended 4 Return 0 = Page Style defined in $sPageStyle not found in current document.
 ;                  @Error 1 @Extended 5 Return 0 = $iPgNumOffSet not an Integer, or less than 0.
@@ -1331,9 +1331,9 @@ EndFunc   ;==>_LOWriter_FindFormatModifyPageBreak
 ;                  @Error 1 @Extended 1 Return 0 = $atFormat not an Array or contains more than 1 column.
 ;                  @Error 1 @Extended 2 Return 0 = $bAutoSuper not a Boolean.
 ;                  @Error 1 @Extended 3 Return 0 = $bAutoSub not a Boolean.
-;                  @Error 1 @Extended 4 Return 0 = $iSuperScript not an integer, less than 0 or greater than 100, but not 14000.
-;                  @Error 1 @Extended 5 Return 0 = $iSubScript not an integer, less than -100 or greater than 100, but not (-)14000.
-;                  @Error 1 @Extended 6 Return 0 = $iRelativeSize not an integer, less than 1 or greater than 100.
+;                  @Error 1 @Extended 4 Return 0 = $iSuperScript not an Integer, less than 0 or greater than 100, but not 14000.
+;                  @Error 1 @Extended 5 Return 0 = $iSubScript not an Integer, less than -100 or greater than 100, but not (-)14000.
+;                  @Error 1 @Extended 6 Return 0 = $iRelativeSize not an Integer, less than 1 or greater than 100.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. FindFormat Array of Settings was successfully modified.
 ; Author ........: donnyh13
@@ -1433,7 +1433,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyPosition
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $atFormat not an Array or contains more than 1 column.
 ;                  @Error 1 @Extended 2 Return 0 = $iRotation not an Integer or not equal to 0, 90 or 270 degrees.
-;                  @Error 1 @Extended 3 Return 0 = $iScaleWidth not an integer, less than 1 or greater than 100.
+;                  @Error 1 @Extended 3 Return 0 = $iScaleWidth not an Integer, less than 1 or greater than 100.
 ;                  @Error 1 @Extended 4 Return 0 = $bAutoKerning not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $nKerning not a number, less than -2 or greater than 928.8 Points.
 ;                  --Success--
@@ -1521,11 +1521,11 @@ EndFunc   ;==>_LOWriter_FindFormatModifyRotateScaleSpace
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $atFormat not an Array or contains more than 1 column.
-;                  @Error 1 @Extended 2 Return 0 = $iAbovePar not an integer, less than 0 or greater than 10008.
-;                  @Error 1 @Extended 3 Return 0 = $iBelowPar not an integer, less than 0 or greater than 10008.
+;                  @Error 1 @Extended 2 Return 0 = $iAbovePar not an Integer, less than 0 or greater than 10008.
+;                  @Error 1 @Extended 3 Return 0 = $iBelowPar not an Integer, less than 0 or greater than 10008.
 ;                  @Error 1 @Extended 4 Return 0 = $bAddSpace not a Boolean.
-;                  @Error 1 @Extended 5 Return 0 = $iLineSpcMode not an integer, less than 0 or greater than 3. See Constants, $LOW_LINE_SPC_MODE_* as defined in LibreOfficeWriter_Constants.au3..
-;                  @Error 1 @Extended 6 Return 0 = $iLineSpcHeight not an integer.
+;                  @Error 1 @Extended 5 Return 0 = $iLineSpcMode not an Integer, less than 0 or greater than 3. See Constants, $LOW_LINE_SPC_MODE_* as defined in LibreOfficeWriter_Constants.au3..
+;                  @Error 1 @Extended 6 Return 0 = $iLineSpcHeight not an Integer.
 ;                  @Error 1 @Extended 7 Return 0 = $iLineSpcMode set to 0(Proportional) and $iLineSpcHeight less than 6(%) or greater than 65535(%).
 ;                  @Error 1 @Extended 8 Return 0 = $iLineSpcMode set to 1 or 2(Minimum, or Leading) and $iLineSpcHeight less than 0 or greater than 10008.
 ;                  @Error 1 @Extended 9 Return 0 = $iLineSpcMode set to 3(Fixed) and $iLineSpcHeight less than 51 or greater than 10008.
@@ -2221,8 +2221,8 @@ EndFunc   ;==>_LOWriter_FontsGetNames
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Number Formats Object.
 ;                  @Error 3 @Extended 2 Return 0 = Attempted to Create or Retrieve the Format key, but failed.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Integer = Success. Format Key was successfully created, returning Format Key integer.
-;                  @Error 0 @Extended 1 Return Integer = Success. Format Key already existed, returning Format Key integer.
+;                  @Error 0 @Extended 0 Return Integer = Success. Format Key was successfully created, returning Format Key Integer.
+;                  @Error 0 @Extended 1 Return Integer = Success. Format Key already existed, returning Format Key Integer.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:

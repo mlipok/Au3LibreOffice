@@ -617,7 +617,7 @@ EndFunc   ;==>_LOWriter_FormConCheckBoxGeneral
 ;                  |                               1 = Error setting $iState
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current Check Box State as an integer, matching one of the constants $LOW_FORM_CON_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current Check Box State as an Integer, matching one of the constants $LOW_FORM_CON_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current check box state.
@@ -5326,8 +5326,8 @@ EndFunc   ;==>_LOWriter_FormConListBoxGetCount
 ;                  @Error 1 @Extended 2 Return 0 = Object called in $oListBox not a List Box Control.
 ;                  @Error 1 @Extended 3 Return 0 = $bReturnValue not a Boolean.
 ;                  @Error 1 @Extended 4 Return 0 = $aiSelection not an array.
-;                  @Error 1 @Extended 5 Return ? = Array called in $aiSelection contains an element with a non-integer value. Returning problem element position.
-;                  @Error 1 @Extended 6 Return ? = Array called in $aiSelection contains an element with an integer value less than 0 or greater than number of List Box entries. Returning problem element position.
+;                  @Error 1 @Extended 5 Return ? = Array called in $aiSelection contains an element with a non-Integer value. Returning problem element position.
+;                  @Error 1 @Extended 6 Return ? = Array called in $aiSelection contains an element with an Integer value less than 0 or greater than number of List Box entries. Returning problem element position.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to identify control type.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve current selection.
@@ -6686,7 +6686,7 @@ EndFunc   ;==>_LOWriter_FormConOptionButtonGeneral
 ;                  |                               1 = Error setting $iState
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current Option Button State as an integer, matching one of the constants $LOW_FORM_CON_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current Option Button State as an Integer, matching one of the constants $LOW_FORM_CON_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current Option Button state.
@@ -7873,7 +7873,7 @@ EndFunc   ;==>_LOWriter_FormConPushButtonGeneral
 ;                  |                               1 = Error setting $iState
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current Push Button State as an integer, matching one of the constants $LOW_FORM_CON_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current Push Button State as an Integer, matching one of the constants $LOW_FORM_CON_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current Push Button state.
