@@ -854,10 +854,10 @@ EndFunc   ;==>_LOWriter_ImageAreaTransparencyGradientMulti
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oImage not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iTop not an integer, less than 0 or greater than 16,777,215.
-;                  @Error 1 @Extended 3 Return 0 = $iBottom not an integer, less than 0 or greater than 16,777,215.
-;                  @Error 1 @Extended 4 Return 0 = $iLeft not an integer, less than 0 or greater than 16,777,215.
-;                  @Error 1 @Extended 5 Return 0 = $iRight not an integer, less than 0 or greater than 16,777,215.
+;                  @Error 1 @Extended 2 Return 0 = $iTop not an integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 3 Return 0 = $iBottom not an integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 4 Return 0 = $iLeft not an integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 5 Return 0 = $iRight not an integer, less than 0 or greater than 16777215.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
