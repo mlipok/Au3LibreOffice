@@ -196,7 +196,7 @@ EndFunc   ;==>_LOCalc_TextCursorCharPosition
 ;                  @Error 1 @Extended 2 Return 0 = $oTextCursor does not support Character properties.
 ;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $bAutoKerning not a Boolean.
-;                  @Error 1 @Extended 5 Return 0 = $nKerning not a number, or less than -2 or greater than 928.8 Points.
+;                  @Error 1 @Extended 5 Return 0 = $nKerning not a number, less than -2 or greater than 928.8 Points.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create Text Cursor for Paragraph Object.
 ;                  --Property Setting Errors--

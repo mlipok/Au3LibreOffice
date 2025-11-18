@@ -2395,7 +2395,7 @@ EndFunc   ;==>_LOCalc_CommentTextAnimation
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oComment not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $iColumns not an Integer, less than 0 or greater than 16.
-;                  @Error 1 @Extended 4 Return 0 = $iSpacing not an Integer or less than 0.
+;                  @Error 1 @Extended 4 Return 0 = $iSpacing not an integer, or less than 0.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.text.TextColumns" Object.
 ;                  --Processing Errors--

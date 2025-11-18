@@ -2813,7 +2813,7 @@ EndFunc   ;==>_LOCalc_RangeOutlineClearAll
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iLevel not an Integer or less than 0.
+;                  @Error 1 @Extended 2 Return 0 = $iLevel not an integer, or less than 0.
 ;                  @Error 1 @Extended 3 Return 0 = $iOrientation not an Integer, less than 0 or greater than 1. See Constants $LOC_GROUP_ORIENT_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. command was successfully processed for the Sheet.
