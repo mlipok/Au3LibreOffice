@@ -114,11 +114,11 @@ EndFunc   ;==>_LOWriter_NumStyleCreate
 ;                  @Error 1 @Extended 2 Return 0 = $oNumStyle not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $oNumStyle not a Numbering Style Object.
 ;                  @Error 1 @Extended 4 Return 0 = $iLevel not between 0 - 10.
-;                  @Error 1 @Extended 5 Return 0 = $iNumFormat not an integer, less than 0, or greater than 71, see Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iNumFormat not an integer, less than 0 or greater than 71. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 6 Return 0 = $iStartAt not an integer.
 ;                  @Error 1 @Extended 7 Return 0 = $sCharStyle not a string.
 ;                  @Error 1 @Extended 8 Return 0 = Character Style called in $sCharStyle, not found in document.
-;                  @Error 1 @Extended 9 Return 0 = $iSubLevels not an Integer, less than 1, or greater than 10.
+;                  @Error 1 @Extended 9 Return 0 = $iSubLevels not an Integer, less than 1 or greater than 10.
 ;                  @Error 1 @Extended 10 Return 0 = $iLevel called with 0 (all levels) And $iSubLevels greater than 1.
 ;                  @Error 1 @Extended 11 Return 0 = $iSubLevels greater than $iLevel.
 ;                  @Error 1 @Extended 12 Return 0 = $sSepBefore not a string.
@@ -543,8 +543,8 @@ EndFunc   ;==>_LOWriter_NumStyleOrganizer
 ;                  @Error 1 @Extended 3 Return 0 = $oNumStyle not a Numbering Style Object.
 ;                  @Error 1 @Extended 4 Return 0 = $iLevel not between 0 - 10.
 ;                  @Error 1 @Extended 5 Return 0 = $iAlignedAt not an integer.
-;                  @Error 1 @Extended 6 Return 0 = $iNumAlign not an integer, less than 1, or higher than 3. See Constants, $LOW_ORIENT_HORI_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 7 Return 0 = $iFollowedBy not an integer, less than 0, or higher than 2. See Constants, $LOW_FOLLOW_BY_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $iNumAlign not an integer, less than 1 or greater than 3. See Constants, $LOW_ORIENT_HORI_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 7 Return 0 = $iFollowedBy not an integer, less than 0 or greater than 2. See Constants, $LOW_FOLLOW_BY_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 8 Return 0 = $iTabstop not an Integer.
 ;                  @Error 1 @Extended 9 Return 0 = $iIndent not an Integer.
 ;                  --Processing Errors--
@@ -722,7 +722,7 @@ EndFunc   ;==>_LOWriter_NumStyleSet
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oObj not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oObj does not support Paragraph Properties Service.
-;                  @Error 1 @Extended 3 Return 0 = $iLevel not an Integer, less than 1, or greater than 10.
+;                  @Error 1 @Extended 3 Return 0 = $iLevel not an Integer, less than 1 or greater than 10.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended 1 Return 0 = Error setting Numbering Style level.
 ;                  --Success--

@@ -2654,7 +2654,7 @@ EndFunc   ;==>_LOWriter_DocHyperlinkInsert
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $iConChar not an Integer, less than 0 or higher than 5. See Constants, $LOW_CON_CHAR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $iConChar not an Integer, less than 0 or greater than 5. See Constants, $LOW_CON_CHAR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 4 Return 0 = $bOverwrite not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $oCursor is a TableCursor. Can only use View Cursor or Text Cursor.
 ;                  --Processing Errors--
@@ -3459,7 +3459,7 @@ EndFunc   ;==>_LOWriter_DocPrintIncludedSettings
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iPaperOrient not an integer, less than 0 or greater than 1. See Constants, $LOW_PAPER_ORIENT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 3 Return 0 = $sPrinterName not a string.
-;                  @Error 1 @Extended 4 Return 0 = $iCommentsMode not an integer, less than 0, or greater than 3. See Constants, $LOW_PRINT_NOTES_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iCommentsMode not an integer, less than 0 or greater than 3. See Constants, $LOW_PRINT_NOTES_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 5 Return 0 = $bBrochure not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $bBrochureRTL not a Boolean.
 ;                  @Error 1 @Extended 7 Return 0 = $bReversed not a Boolean.
