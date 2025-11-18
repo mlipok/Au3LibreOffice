@@ -130,9 +130,9 @@ EndFunc   ;==>_LOCalc_SheetCursorMove
 ;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $bAutoSuper not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $bAutoSub not a Boolean.
-;                  @Error 1 @Extended 6 Return 0 = $iSuperScript not an integer, or less than 0, higher than 100 and Not 14000.
-;                  @Error 1 @Extended 7 Return 0 = $iSubScript not an integer, or less than -100, higher than 100 and Not 14000 or -14000.
-;                  @Error 1 @Extended 8 Return 0 = $iRelativeSize not an integer, or less than 1, higher than 100.
+;                  @Error 1 @Extended 6 Return 0 = $iSuperScript not an integer, less than 0 or greater than 100, but not 14000.
+;                  @Error 1 @Extended 7 Return 0 = $iSubScript not an integer, less than -100 or greater than 100, but not 14000 or -14000.
+;                  @Error 1 @Extended 8 Return 0 = $iRelativeSize not an integer, less than 1 or greater than 100.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create Text Cursor for Paragraph Object.
 ;                  --Property Setting Errors--
@@ -324,7 +324,7 @@ EndFunc   ;==>_LOCalc_TextCursorEffect
 ;                  @Error 1 @Extended 4 Return 0 = Variable passed to internal function not an Object.
 ;                  @Error 1 @Extended 5 Return 0 = $sFontName not a String.
 ;                  @Error 1 @Extended 6 Return 0 = $nFontSize not a number.
-;                  @Error 1 @Extended 7 Return 0 = $iPosture not an Integer, less than 0, or greater than 5. See Constants, $LOC_POSTURE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 7 Return 0 = $iPosture not an Integer, less than 0 or greater than 5. See Constants, $LOC_POSTURE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 8 Return 0 = $iWeight not an Integer, less than 50 but not equal to 0, or greater than 200. See Constants, $LOC_WEIGHT_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create Text Cursor for Paragraph Object.
@@ -386,7 +386,7 @@ EndFunc   ;==>_LOCalc_TextCursorFont
 ;                  @Error 1 @Extended 1 Return 0 = $oTextCursor not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oTextCursor does not support Character properties.
 ;                  @Error 1 @Extended 3 Return 0 = Variable passed to internal function not an Object.
-;                  @Error 1 @Extended 4 Return 0 = $iFontColor not an Integer, less than 0, or greater than 16777215.
+;                  @Error 1 @Extended 4 Return 0 = $iFontColor not an Integer, less than 0 or greater than 16777215.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create Text Cursor for Paragraph Object.
 ;                  --Property Setting Errors--
@@ -676,9 +676,9 @@ EndFunc   ;==>_LOCalc_TextCursorMove
 ;                  @Error 1 @Extended 2 Return 0 = $oTextCursor does not support Character properties.
 ;                  @Error 1 @Extended 3 Return 0 = Variable passed to internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $bWordOnly not a Boolean.
-;                  @Error 1 @Extended 5 Return 0 = $iOverLineStyle not an Integer, less than 0, or greater than 18. See constants, $LOC_UNDERLINE_* as defined in LibreOfficeCalc_Constants.au3. See Remarks.
+;                  @Error 1 @Extended 5 Return 0 = $iOverLineStyle not an Integer, less than 0 or greater than 18. See constants, $LOC_UNDERLINE_* as defined in LibreOfficeCalc_Constants.au3. See Remarks.
 ;                  @Error 1 @Extended 6 Return 0 = $bOLHasColor not a Boolean.
-;                  @Error 1 @Extended 7 Return 0 = $iOLColor not an Integer, less than -1, or greater than 16777215.
+;                  @Error 1 @Extended 7 Return 0 = $iOLColor not an Integer, less than -1 or greater than 16777215.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create Text Cursor for Paragraph Object.
 ;                  --Property Setting Errors--
@@ -918,9 +918,9 @@ EndFunc   ;==>_LOCalc_TextCursorStrikeOut
 ;                  @Error 1 @Extended 2 Return 0 = $oTextCursor does not support Character properties.
 ;                  @Error 1 @Extended 3 Return 0 = Variable passed to internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $bWordOnly not a Boolean.
-;                  @Error 1 @Extended 5 Return 0 = $iUnderLineStyle not an Integer, less than 0, or greater than 18. See constants, $LOC_UNDERLINE_* as defined in LibreOfficeCalc_Constants.au3. See Remarks.
+;                  @Error 1 @Extended 5 Return 0 = $iUnderLineStyle not an Integer, less than 0 or greater than 18. See constants, $LOC_UNDERLINE_* as defined in LibreOfficeCalc_Constants.au3. See Remarks.
 ;                  @Error 1 @Extended 6 Return 0 = $bULHasColor not a Boolean.
-;                  @Error 1 @Extended 7 Return 0 = $iULColor not an Integer, less than -1, or greater than 16777215.
+;                  @Error 1 @Extended 7 Return 0 = $iULColor not an Integer, less than -1 or greater than 16777215.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create Text Cursor for Paragraph Object.
 ;                  --Property Setting Errors--

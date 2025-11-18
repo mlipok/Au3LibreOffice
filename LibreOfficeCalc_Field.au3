@@ -505,7 +505,7 @@ EndFunc   ;==>_LOCalc_FieldPageNumberInsert
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oTextCursor not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iType not an Integer, less than 1, or greater than 255. (The total of all Constants added together.) See Constants, $LOC_FIELD_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 2 Return 0 = $iType not an Integer, less than 1 or greater than 255. (The total of all Constants added together.) See Constants, $LOC_FIELD_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 3 Return 0 = $bFieldTypeNum not a Boolean.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create enumeration of paragraphs in Cell.

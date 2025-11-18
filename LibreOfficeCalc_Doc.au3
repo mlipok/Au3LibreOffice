@@ -2394,7 +2394,7 @@ EndFunc   ;==>_LOCalc_DocVisible
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iColumn not an Integer, or less than 0, or greater than number of columns contained in the document.
+;                  @Error 1 @Extended 2 Return 0 = $iColumn not an Integer, less than 0 or greater than number of columns contained in the document.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $iColumn
@@ -2434,7 +2434,7 @@ EndFunc   ;==>_LOCalc_DocWindowFirstColumn
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iRow not an Integer, or less than 0, or greater than number of Rows contained in the document.
+;                  @Error 1 @Extended 2 Return 0 = $iRow not an Integer, less than 0 or greater than number of Rows contained in the document.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $iRow

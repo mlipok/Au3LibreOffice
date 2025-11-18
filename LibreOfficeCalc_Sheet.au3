@@ -168,7 +168,7 @@ EndFunc   ;==>_LOCalc_SheetAdd
 ;                  @Error 1 @Extended 2 Return 0 = $oSheet not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $sNewName not a String.
 ;                  @Error 1 @Extended 4 Return 0 = Document already contains a Sheet with the same name as called in $sNewName.
-;                  @Error 1 @Extended 5 Return 0 = $iPosition not an Integer, less than 0, or greater than number of Sheets contained in the document.
+;                  @Error 1 @Extended 5 Return 0 = $iPosition not an Integer, less than 0 or greater than number of Sheets contained in the document.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve original Sheet's name.
@@ -769,7 +769,7 @@ EndFunc   ;==>_LOCalc_SheetIsProtected
 ;                  @Error 1 @Extended 1 Return 0 = $oSourceDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oDestDoc not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $sSheetName not a String.
-;                  @Error 1 @Extended 4 Return 0 = $iLinkMode not an Integer, less than 0, or greater than 2. See Constants $LOC_SHEET_LINK_MODE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iLinkMode not an Integer, less than 0 or greater than 2. See Constants $LOC_SHEET_LINK_MODE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 5 Return 0 = Document called in $oSourceDoc has no save location.
 ;                  @Error 1 @Extended 6 Return 0 = Document called in $oSourceDoc does not have a Sheet with the name called in $sSheetName.
 ;                  @Error 1 @Extended 7 Return 0 = $bInsertAfter not a Boolean.
@@ -847,7 +847,7 @@ EndFunc   ;==>_LOCalc_SheetLink
 ;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oNewDoc not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $sSheetName not a String.
-;                  @Error 1 @Extended 4 Return 0 = $iLinkMode not an Integer, less than 0, or greater than 2. See Constants $LOC_SHEET_LINK_MODE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iLinkMode not an Integer, less than 0 or greater than 2. See Constants $LOC_SHEET_LINK_MODE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 5 Return 0 = Document called in $oNewDoc has no save location.
 ;                  @Error 1 @Extended 6 Return 0 = Document called in $oNewDoc does not have a Sheet with the name called in $sSheetName.
 ;                  @Error 1 @Extended 7 Return 0 = Document currently set as source does not contain a Sheet with the name as called in $sSheetName.

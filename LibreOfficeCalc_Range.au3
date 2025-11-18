@@ -167,7 +167,7 @@ EndFunc   ;==>_LOCalc_RangeAutoOutline
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iFlags not an Integer, less than 1, or greater than 1023. See Constants $LOC_CELL_FLAG_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 2 Return 0 = $iFlags not an Integer, less than 1 or greater than 1023. See Constants $LOC_CELL_FLAG_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Contents specified was successfully cleared from the cell range.
 ; Author ........: donnyh13
@@ -200,7 +200,7 @@ EndFunc   ;==>_LOCalc_RangeClearContents
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iColumns not an Integer or less than 0, or greater than number of Columns contained in the Range.
+;                  @Error 1 @Extended 2 Return 0 = $iColumns not an integer, less than 0 or greater than number of Columns contained in the Range.
 ;                  @Error 1 @Extended 3 Return 0 = $iCount not an Integer, or less than 1.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Columns Object.
@@ -319,7 +319,7 @@ EndFunc   ;==>_LOCalc_RangeColumnGetObjByName
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iColumn not an Integer, or less than 0, or greater than number of columns contained in the Range.
+;                  @Error 1 @Extended 2 Return 0 = $iColumn not an Integer, less than 0 or greater than number of columns contained in the Range.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Columns Object.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Column Object.
@@ -361,7 +361,7 @@ EndFunc   ;==>_LOCalc_RangeColumnGetObjByPosition
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iColumn not an Integer or less than 0, or greater than number of Columns contained in the Range.
+;                  @Error 1 @Extended 2 Return 0 = $iColumn not an integer, less than 0 or greater than number of Columns contained in the Range.
 ;                  @Error 1 @Extended 3 Return 0 = $iCount not an Integer, or less than 1.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Columns Object.
@@ -1238,7 +1238,7 @@ EndFunc   ;==>_LOCalc_RangeDatabaseModify
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oRange not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $iMode not an Integer, less than 0, or greater than 4. See Constants $LOC_CELL_DELETE_MODE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $iMode not an Integer, less than 0 or greater than 4. See Constants $LOC_CELL_DELETE_MODE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Range Address Struct from $oRange.
 ;                  --Success--
@@ -1363,7 +1363,7 @@ EndFunc   ;==>_LOCalc_RangeFill
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $nMin not a number, less than -2^31 or greater then 2^31.
 ;                  @Error 1 @Extended 3 Return 0 = $nMax not a number, less than -2^31 or greater then 2^31.
-;                  @Error 1 @Extended 4 Return 0 = $iDecPlc not an integer, less than 0, or greater than 255.
+;                  @Error 1 @Extended 4 Return 0 = $iDecPlc not an integer, less than 0 or greater than 255.
 ;                  @Error 1 @Extended 5 Return 0 = $nSeed not a number, less than -2^31 or greater then 2^31.
 ;                  @Error 1 @Extended 6 Return 0 = $bFillByRows not a boolean.
 ;                  --Success--
@@ -1931,10 +1931,10 @@ EndFunc   ;==>_LOCalc_RangeGetCellByName
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iColumn not an Integer, or less than 0, or greater than number of Columns contained in the Range.
-;                  @Error 1 @Extended 3 Return 0 = $iRow not an Integer, or less than 0, or greater than number of Rows contained in the Range.
-;                  @Error 1 @Extended 4 Return 0 = $iToColumn not an Integer, or less than 0, or greater than number of Columns contained in the Range.
-;                  @Error 1 @Extended 5 Return 0 = $iToRow not an Integer, or less than 0, or greater than number of Rows contained in the Range.
+;                  @Error 1 @Extended 2 Return 0 = $iColumn not an Integer, less than 0 or greater than number of Columns contained in the Range.
+;                  @Error 1 @Extended 3 Return 0 = $iRow not an Integer, less than 0 or greater than number of Rows contained in the Range.
+;                  @Error 1 @Extended 4 Return 0 = $iToColumn not an Integer, less than 0 or greater than number of Columns contained in the Range.
+;                  @Error 1 @Extended 5 Return 0 = $iToRow not an Integer, less than 0 or greater than number of Rows contained in the Range.
 ;                  @Error 1 @Extended 6 Return 0 = $iToColumn less than $iColumn.
 ;                  @Error 1 @Extended 7 Return 0 = $iToRow less than $iRow.
 ;                  --Processing Errors--
@@ -2075,7 +2075,7 @@ EndFunc   ;==>_LOCalc_RangeGroup
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oRange not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $iMode not an Integer, less than 0, or greater than 4. See Constants $LOC_CELL_INSERT_MODE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $iMode not an Integer, less than 0 or greater than 4. See Constants $LOC_CELL_INSERT_MODE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Range Address Struct from $oRange.
 ;                  --Success--
@@ -3796,8 +3796,8 @@ EndFunc   ;==>_LOCalc_RangePivotGetObjByName
 ;                  @Error 1 @Extended 2 Return 0 = $oDestRange not an object.
 ;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
 ;                  @Error 1 @Extended 4 Return 0 = $sField not a String.
-;                  @Error 1 @Extended 5 Return 0 = $iFieldType not an Integer, less than 0, or greater than 4. See Constants $LOC_PIVOT_TBL_FIELD_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 6 Return 0 = $iFunc not an Integer, less than 0, or greater than 12. See Constants $LOC_COMPUTE_FUNC_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iFieldType not an Integer, less than 0 or greater than 4. See Constants $LOC_PIVOT_TBL_FIELD_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $iFunc not an Integer, less than 0 or greater than 12. See Constants $LOC_COMPUTE_FUNC_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 7 Return 0 = Pivot Table name called in $sName or automatically generated name, already exists in Sheet.
 ;                  @Error 1 @Extended 8 Return 0 = Range called in $oDestRange is within the source range.
 ;                  @Error 1 @Extended 9 Return 0 = Field name called in $sField not found in available fields for Pivot Table.
@@ -4429,7 +4429,7 @@ EndFunc   ;==>_LOCalc_RangeQueryEmpty
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iResultType not an Integer, less than 1, or greater than 7. See Constants $LOC_FORMULA_RESULT_TYPE_* as defined in LibreOfficeCalc_Constants.au3
+;                  @Error 1 @Extended 2 Return 0 = $iResultType not an Integer, less than 1 or greater than 7. See Constants $LOC_FORMULA_RESULT_TYPE_* as defined in LibreOfficeCalc_Constants.au3
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to query cell formula results.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve query result cell addresses.
@@ -4803,7 +4803,7 @@ EndFunc   ;==>_LOCalc_RangeReplaceAll
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iRow not an Integer or less than 0, or greater than number of Rows contained in the Range.
+;                  @Error 1 @Extended 2 Return 0 = $iRow not an integer, less than 0 or greater than number of Rows contained in the Range.
 ;                  @Error 1 @Extended 3 Return 0 = $iCount not an Integer, or less than 1.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Rows Object.
@@ -4845,7 +4845,7 @@ EndFunc   ;==>_LOCalc_RangeRowDelete
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iRow not an Integer or less than 0, or greater than number of Rows contained in the Range.
+;                  @Error 1 @Extended 2 Return 0 = $iRow not an integer, less than 0 or greater than number of Rows contained in the Range.
 ;                  @Error 1 @Extended 3 Return 0 = $iCount not an Integer, or less than 1.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Rows Object.
@@ -4947,7 +4947,7 @@ EndFunc   ;==>_LOCalc_RangeRowHeight
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iRow not an Integer or less than 0, or greater than number of Rows contained in the Range.
+;                  @Error 1 @Extended 2 Return 0 = $iRow not an integer, less than 0 or greater than number of Rows contained in the Range.
 ;                  @Error 1 @Extended 3 Return 0 = $iCount not an Integer, or less than 1.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Rows Object.

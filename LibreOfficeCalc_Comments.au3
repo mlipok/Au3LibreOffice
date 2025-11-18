@@ -210,16 +210,16 @@ EndFunc   ;==>_LOCalc_CommentAreaFillStyle
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oComment not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sGradientName not a String.
-;                  @Error 1 @Extended 3 Return 0 = $iType not an Integer, less than -1, or greater than 5. See Constants, $LOC_GRAD_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $iType not an Integer, less than -1 or greater than 5. See Constants, $LOC_GRAD_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 4 Return 0 = $iIncrement not an Integer, less than 3, but not 0, or greater than 256.
-;                  @Error 1 @Extended 5 Return 0 = $iXCenter not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 6 Return 0 = $iYCenter not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 7 Return 0 = $iAngle not an Integer, less than 0, or greater than 359.
-;                  @Error 1 @Extended 8 Return 0 = $iTransitionStart not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 9 Return 0 = $iFromColor not an Integer, less than 0, or greater than 16777215.
-;                  @Error 1 @Extended 10 Return 0 = $iToColor not an Integer, less than 0, or greater than 16777215.
-;                  @Error 1 @Extended 11 Return 0 = $iFromIntense not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 12 Return 0 = $iToIntense not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 5 Return 0 = $iXCenter not an Integer, less than 0 or greater than 100.
+;                  @Error 1 @Extended 6 Return 0 = $iYCenter not an Integer, less than 0 or greater than 100.
+;                  @Error 1 @Extended 7 Return 0 = $iAngle not an Integer, less than 0 or greater than 359.
+;                  @Error 1 @Extended 8 Return 0 = $iTransitionStart not an Integer, less than 0 or greater than 100.
+;                  @Error 1 @Extended 9 Return 0 = $iFromColor not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 10 Return 0 = $iToColor not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 11 Return 0 = $iFromIntense not an Integer, less than 0 or greater than 100.
+;                  @Error 1 @Extended 12 Return 0 = $iToIntense not an Integer, less than 0 or greater than 100.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Annotation Shape Object.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving "FillGradient" Object.
@@ -552,11 +552,11 @@ EndFunc   ;==>_LOCalc_CommentAreaGradientMulticolor
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oComment not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $bShadow not a Boolean.
-;                  @Error 1 @Extended 3 Return 0 = $iColor not an Integer, less than 0, or greater than 16777215.
+;                  @Error 1 @Extended 3 Return 0 = $iColor not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 4 Return 0 = $iDistance not an Integer, or less than 0.
-;                  @Error 1 @Extended 5 Return 0 = $iTransparency not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 6 Return 0 = $iBlur not an Integer, less than 0, or greater than 150 Printer's Points.
-;                  @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, less than 0, or greater than 8. See Constants, $LOC_COMMENT_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iTransparency not an Integer, less than 0 or greater than 100.
+;                  @Error 1 @Extended 6 Return 0 = $iBlur not an Integer, less than 0 or greater than 150 Printer's Points.
+;                  @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, less than 0 or greater than 8. See Constants, $LOC_COMMENT_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Annotation Shape Object.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve current Distance and Location Values.
@@ -674,7 +674,7 @@ EndFunc   ;==>_LOCalc_CommentAreaShadow
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oComment not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iTransparency not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 2 Return 0 = $iTransparency not an Integer, less than 0 or greater than 100.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Annotation Shape Object.
 ;                  --Property Setting Errors--
@@ -731,13 +731,13 @@ EndFunc   ;==>_LOCalc_CommentAreaTransparency
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oComment not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $iType Not an Integer, less than -1, or greater than 5, see constants, $LOC_GRAD_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 4 Return 0 = $iXCenter Not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 5 Return 0 = $iYCenter Not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 6 Return 0 = $iAngle Not an Integer, less than 0, or greater than 359.
-;                  @Error 1 @Extended 7 Return 0 = $iTransitionStart Not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 8 Return 0 = $iStart Not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 9 Return 0 = $iEnd Not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 3 Return 0 = $iType Not an Integer, less than -1 or greater than 5. See constants, $LOC_GRAD_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iXCenter Not an Integer, less than 0 or greater than 100.
+;                  @Error 1 @Extended 5 Return 0 = $iYCenter Not an Integer, less than 0 or greater than 100.
+;                  @Error 1 @Extended 6 Return 0 = $iAngle Not an Integer, less than 0 or greater than 359.
+;                  @Error 1 @Extended 7 Return 0 = $iTransitionStart Not an Integer, less than 0 or greater than 100.
+;                  @Error 1 @Extended 8 Return 0 = $iStart Not an Integer, less than 0 or greater than 100.
+;                  @Error 1 @Extended 9 Return 0 = $iEnd Not an Integer, less than 0 or greater than 100.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Annotation Shape Object.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving "FillTransparenceGradient" Object.
@@ -1386,7 +1386,7 @@ EndFunc   ;==>_LOCalc_CommentGetObjByCell
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iComment not an Integer.
-;                  @Error 1 @Extended 3 Return 0 = Index number called in $iComment less than 0, or greater than number of Comments contained in Sheet.
+;                  @Error 1 @Extended 3 Return 0 = Index number called in $iComment less than 0 or greater than number of Comments contained in Sheet.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Annotations Object.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve total count of Comments.
@@ -1440,13 +1440,13 @@ EndFunc   ;==>_LOCalc_CommentGetObjByIndex
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oComment not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $vStartStyle not a String, and not an Integer.
-;                  @Error 1 @Extended 3 Return 0 = $vStartStyle is an Integer, but less than 0, or greater than 32. See constants $LOC_COMMENT_LINE_ARROW_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 4 Return 0 = $iStartWidth not an Integer, less than 0, or greater than 5004.
+;                  @Error 1 @Extended 3 Return 0 = $vStartStyle is an Integer, but less than 0 or greater than 32. See constants $LOC_COMMENT_LINE_ARROW_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iStartWidth not an Integer, less than 0 or greater than 5004.
 ;                  @Error 1 @Extended 5 Return 0 = $bStartCenter not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $bSync not a Boolean.
 ;                  @Error 1 @Extended 7 Return 0 = $vEndStyle not a String, and not an Integer.
-;                  @Error 1 @Extended 8 Return 0 = $vSEndStyle is an Integer, but less than 0, or greater than 32. See constants $LOC_COMMENT_LINE_ARROW_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 9 Return 0 = $iEndWidth not an Integer, less than 0, or greater than 5004.
+;                  @Error 1 @Extended 8 Return 0 = $vSEndStyle is an Integer, but less than 0 or greater than 32. See constants $LOC_COMMENT_LINE_ARROW_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 9 Return 0 = $iEndWidth not an Integer, less than 0 or greater than 5004.
 ;                  @Error 1 @Extended 10 Return 0 = $bEndCenter not a Boolean.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Annotation Shape Object.
@@ -1591,12 +1591,12 @@ EndFunc   ;==>_LOCalc_CommentLineArrowStyles
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oComment not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $vStyle not a String, and not an Integer.
-;                  @Error 1 @Extended 3 Return 0 = $vStyle is an Integer, but less than 0, or greater than 31. See constants $LOC_COMMENT_LINE_STYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 4 Return 0 = $iColor not an Integer, less than 0, or greater than 16777215.
-;                  @Error 1 @Extended 5 Return 0 = $iWidth not an Integer, less than 0, or greater than 5004.
-;                  @Error 1 @Extended 6 Return 0 = $iTransparency not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 3 Return 0 = $vStyle is an Integer, but less than 0 or greater than 31. See constants $LOC_COMMENT_LINE_STYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iColor not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 5 Return 0 = $iWidth not an Integer, less than 0 or greater than 5004.
+;                  @Error 1 @Extended 6 Return 0 = $iTransparency not an Integer, less than 0 or greater than 100.
 ;                  @Error 1 @Extended 7 Return 0 = $iCornerStyle not an Integer, not equal to 0, equal to 1, not equal to 2 or greater than 4. See Constants $LOC_COMMENT_LINE_JOINT_* as defined in LibreOfficeCalc_Constants.au3
-;                  @Error 1 @Extended 8 Return 0 = $iCapStyle is an Integer, but less than 0, or greater than 2. See constants $LOC_COMMENT_LINE_CAP_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 8 Return 0 = $iCapStyle is an Integer, but less than 0 or greater than 2. See constants $LOC_COMMENT_LINE_CAP_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Annotation Shape Object.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to convert Constant to Line Style name.
@@ -1819,7 +1819,7 @@ EndFunc   ;==>_LOCalc_CommentPosition
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oComment not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $nRotate not a Number, less than 0, or greater than 359.99.
+;                  @Error 1 @Extended 2 Return 0 = $nRotate not a Number, less than 0 or greater than 359.99.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Annotation Shape Object.
 ;                  --Property Setting Errors--

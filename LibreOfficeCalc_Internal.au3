@@ -507,7 +507,7 @@ EndFunc   ;==>__LOCalc_CellEffect
 ;                  @Error 1 @Extended 4 Return 0 = Variable passed to internal function not an Object.
 ;                  @Error 1 @Extended 5 Return 0 = $sFontName not a String.
 ;                  @Error 1 @Extended 6 Return 0 = $nFontSize not a number.
-;                  @Error 1 @Extended 7 Return 0 = $iPosture not an Integer, less than 0, or greater than 5. See Constants, $LOC_POSTURE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 7 Return 0 = $iPosture not an Integer, less than 0 or greater than 5. See Constants, $LOC_POSTURE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 8 Return 0 = $iWeight not an Integer, less than 50 but not equal to 0, or greater than 200. See Constants, $LOC_WEIGHT_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
@@ -584,7 +584,7 @@ EndFunc   ;==>__LOCalc_CellFont
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 3 Return 0 = Variable passed to internal function not an Object.
-;                  @Error 1 @Extended 4 Return 0 = $iFontColor not an Integer, less than 0, or greater than 16777215.
+;                  @Error 1 @Extended 4 Return 0 = $iFontColor not an Integer, less than 0 or greater than 16777215.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $iFontColor
@@ -682,9 +682,9 @@ EndFunc   ;==>__LOCalc_CellNumberFormat
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 3 Return 0 = Variable passed to internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $bWordOnly not a Boolean.
-;                  @Error 1 @Extended 5 Return 0 = $iOverLineStyle not an Integer, less than 0, or greater than 18. See constants, $LOC_UNDERLINE_* as defined in LibreOfficeCalc_Constants.au3. See Remarks.
+;                  @Error 1 @Extended 5 Return 0 = $iOverLineStyle not an Integer, less than 0 or greater than 18. See constants, $LOC_UNDERLINE_* as defined in LibreOfficeCalc_Constants.au3. See Remarks.
 ;                  @Error 1 @Extended 6 Return 0 = $bOLHasColor not a Boolean.
-;                  @Error 1 @Extended 7 Return 0 = $iOLColor not an Integer, less than -1, or greater than 16777215.
+;                  @Error 1 @Extended 7 Return 0 = $iOLColor not an Integer, less than -1 or greater than 16777215.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $bWordOnly
@@ -852,10 +852,10 @@ EndFunc   ;==>__LOCalc_CellProtection
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 3 Return 0 = Variable passed to internal function not an Object.
-;                  @Error 1 @Extended 4 Return 0 = $iWidth not an Integer, less than 0, or greater than 5009.
-;                  @Error 1 @Extended 5 Return 0 = $iColor not an Integer, less than 0, or greater than 16,777,215.
+;                  @Error 1 @Extended 4 Return 0 = $iWidth not an Integer, less than 0 or greater than 5009.
+;                  @Error 1 @Extended 5 Return 0 = $iColor not an Integer, less than 0 or greater than 16,777,215.
 ;                  @Error 1 @Extended 6 Return 0 = $bTransparent not a Boolean.
-;                  @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, less than 0, or greater than 4. See Constants, $LOC_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants, $LOC_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Shadow Format Structure.
 ;                  --Property Setting Errors--
@@ -1146,8 +1146,8 @@ EndFunc   ;==>__LOCalc_CellStyleBorder
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 3 Return 0 = Variable passed to internal function not an Object.
-;                  @Error 1 @Extended 4 Return 0 = $iHoriAlign not an Integer, less than 0, or greater than 6. See Constants, $LOC_CELL_ALIGN_HORI_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 5 Return 0 = $iVertAlign not an Integer, less than 0, or greater than 5. See Constants, $LOC_CELL_ALIGN_VERT_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iHoriAlign not an Integer, less than 0 or greater than 6. See Constants, $LOC_CELL_ALIGN_HORI_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iVertAlign not an Integer, less than 0 or greater than 5. See Constants, $LOC_CELL_ALIGN_VERT_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 6 Return 0 = $iIndent not an Integer.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
@@ -1238,8 +1238,8 @@ EndFunc   ;==>__LOCalc_CellTextAlign
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 3 Return 0 = Variable passed to internal function not an Object.
-;                  @Error 1 @Extended 4 Return 0 = $iRotate not an Integer, less than 0, or greater than 359.
-;                  @Error 1 @Extended 5 Return 0 = $iReference not an Integer, less than 0, or greater than 1 but not equal to 3. See Constants $LOC_CELL_ROTATE_REF_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iRotate not an Integer, less than 0 or greater than 359.
+;                  @Error 1 @Extended 5 Return 0 = $iReference not an Integer, less than 0 or greater than 1, but not equal to 3. See Constants $LOC_CELL_ROTATE_REF_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 6 Return 0 = $bVerticalStack not a Boolean.
 ;                  @Error 1 @Extended 7 Return 0 = $bAsianLayout not a Boolean.
 ;                  --Property Setting Errors--
@@ -1332,7 +1332,7 @@ EndFunc   ;==>__LOCalc_CellTextOrient
 ;                  @Error 1 @Extended 4 Return 0 = $bAutoWrapText not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $bHyphen not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $bShrinkToFitnot a Boolean.
-;                  @Error 1 @Extended 7 Return 0 = $iTextDirection not an Integer, less than 0, or greater than 1 but not equal to 4. See Constants, $LOC_TXT_DIR_* as defined in LibreOfficeCalc_Constants.au3. [Libre Office Default is 4]
+;                  @Error 1 @Extended 7 Return 0 = $iTextDirection not an Integer, less than 0 or greater than 1, but not equal to 4. See Constants, $LOC_TXT_DIR_* as defined in LibreOfficeCalc_Constants.au3. [Libre Office Default is 4]
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $bAutoWrapText
@@ -1410,9 +1410,9 @@ EndFunc   ;==>__LOCalc_CellTextProperties
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 3 Return 0 = Variable passed to internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $bWordOnly not a Boolean.
-;                  @Error 1 @Extended 5 Return 0 = $iUnderLineStyle not an Integer, less than 0, or greater than 18. See constants, $LOC_UNDERLINE_* as defined in LibreOfficeCalc_Constants.au3. See Remarks.
+;                  @Error 1 @Extended 5 Return 0 = $iUnderLineStyle not an Integer, less than 0 or greater than 18. See constants, $LOC_UNDERLINE_* as defined in LibreOfficeCalc_Constants.au3. See Remarks.
 ;                  @Error 1 @Extended 6 Return 0 = $bULHasColor not a Boolean.
-;                  @Error 1 @Extended 7 Return 0 = $iULColor not an Integer, less than -1, or greater than 16777215.
+;                  @Error 1 @Extended 7 Return 0 = $iULColor not an Integer, less than -1 or greater than 16777215.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $bWordOnly
@@ -1492,9 +1492,9 @@ EndFunc   ;==>__LOCalc_CellUnderLine
 ;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $bAutoSuper not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $bAutoSub not a Boolean.
-;                  @Error 1 @Extended 6 Return 0 = $iSuperScript not an integer, less than 0, higher than 100 and Not 14000.
-;                  @Error 1 @Extended 7 Return 0 = $iSubScript not an integer, less than -100, higher than 100 and Not 14000.
-;                  @Error 1 @Extended 8 Return 0 = $iRelativeSize not an integer, or less than 1, higher than 100.
+;                  @Error 1 @Extended 6 Return 0 = $iSuperScript not an integer, less than 0 or greater than 100, but not 14000.
+;                  @Error 1 @Extended 7 Return 0 = $iSubScript not an integer, less than -100 or greater than 100, but not 14000.
+;                  @Error 1 @Extended 8 Return 0 = $iRelativeSize not an integer, less than 1 or greater than 100.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iSuperScript
@@ -1793,7 +1793,7 @@ EndFunc   ;==>__LOCalc_CommentAreaShadowModify
 ; Return values .: Success: String or Integer
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $iArrowStyle not an Integer, less than 0, or greater than Arrow type constants. See $LOC_COMMENT_LINE_ARROW_TYPE_* as defined in LibreOfficeCalc_Constants.au3
+;                  @Error 1 @Extended 1 Return 0 = $iArrowStyle not an Integer, less than 0 or greater than Arrow type constants. See $LOC_COMMENT_LINE_ARROW_TYPE_* as defined in LibreOfficeCalc_Constants.au3
 ;                  @Error 1 @Extended 2 Return 0 = $sArrowStyle not a String.
 ;                  @Error 1 @Extended 3 Return 0 = Both $iArrowStyle and $sArrowStyle called with Null.
 ;                  --Success--
@@ -1933,7 +1933,7 @@ EndFunc   ;==>__LOCalc_CommentGetObjByCell
 ; Return values .: Success: String or Integer
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $iLineStyle not an Integer, less than 0, or greater than Line Style constants. See $LOC_COMMENT_LINE_STYLE_* as defined in LibreOfficeCalc_Constants.au3
+;                  @Error 1 @Extended 1 Return 0 = $iLineStyle not an Integer, less than 0 or greater than Line Style constants. See $LOC_COMMENT_LINE_STYLE_* as defined in LibreOfficeCalc_Constants.au3
 ;                  @Error 1 @Extended 2 Return 0 = $sLineStyle not a String.
 ;                  @Error 1 @Extended 3 Return 0 = Both $iLineStyle and $sLineStyle called with Null.
 ;                  --Success--
@@ -2016,7 +2016,7 @@ EndFunc   ;==>__LOCalc_CommentLineStyleName
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oTextCursor not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iType not an Integer, less than 1, or greater than 255. (The total of all Constants added together.) See Constants, $LOC_FIELD_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 2 Return 0 = $iType not an Integer, less than 1 or greater than 255. (The total of all Constants added together.) See Constants, $LOC_FIELD_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create enumeration of paragraphs in Cell.
 ;                  @Error 2 @Extended 2 Return 0 = Failed to create enumeration of Text Portions in Paragraph.
