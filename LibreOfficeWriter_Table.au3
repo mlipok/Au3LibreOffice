@@ -362,7 +362,7 @@ EndFunc   ;==>_LOWriter_TableBorderWidth
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oTable not an Object
-;                  @Error 1 @Extended 3 Return 0 = $iBreakType not an Integer, less than 0, or Greater than 6. See Constants, $LOW_BREAK_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $iBreakType not an Integer, less than 0, or greater than 6. See Constants, $LOW_BREAK_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 4 Return 0 = $sPageStyle not a String.
 ;                  @Error 1 @Extended 5 Return 0 = $sPageStyle not found in current document.
 ;                  @Error 1 @Extended 6 Return 0 = $iPgNumOffSet not an Integer or less than 0.
