@@ -4955,7 +4955,7 @@ EndFunc   ;==>_LOWriter_FieldSetVarMasterDelete
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve MasterFields Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Success. If the document contains a MasterField called in $sMasterFieldName, then True is returned, Else false.
+;                  @Error 0 @Extended 0 Return Boolean = Success. If the document contains a MasterField called in $sMasterFieldName, then True is returned, Else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -5688,7 +5688,7 @@ EndFunc   ;==>_LOWriter_FieldStatTemplateModify
 ;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve enumeration of all fields.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully updated requested field.
-;                  @Error 0 @Extended 1 Return 1 = Success. Requested field is set to Fixed and $bForceUpdate is called with false, Field was not updated.
+;                  @Error 0 @Extended 1 Return 1 = Success. Requested field is set to Fixed and $bForceUpdate is called with False, Field was not updated.
 ;                  @Error 0 @Extended ? Return 1 = Success. Successfully updated all fields, @Extended set to number of fields updated.
 ; Author ........: donnyh13
 ; Modified ......:

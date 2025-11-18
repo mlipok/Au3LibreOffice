@@ -355,7 +355,7 @@ EndFunc   ;==>_LOWriter_CharStyleCreate
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving "CharacterStyles" Object.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving Character Style Name.
 ;                  @Error 3 @Extended 3 Return 0 = $sCharStyle is not a User-Created Character Style and cannot be deleted.
-;                  @Error 3 @Extended 4 Return 0 = $sCharStyle is in use and $bForceDelete is false.
+;                  @Error 3 @Extended 4 Return 0 = $sCharStyle is in use and $bForceDelete is False.
 ;                  @Error 3 @Extended 5 Return 0 = $sCharStyle still exists after deletion attempt.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Requested Character Style was successfully deleted.

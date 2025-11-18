@@ -2099,7 +2099,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopCreate
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to identify and delete TabStop in Paragraph.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Returning true if the TabStop was successfully deleted.
+;                  @Error 0 @Extended 0 Return Boolean = Returning True if the TabStop was successfully deleted.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $iTabStop refers to the position, or essentially the "length" of a TabStop from the edge of a page margin. This is the only reliable way to identify a Tabstop to be able to interact with it, as there can only be one of a certain length per paragraph.

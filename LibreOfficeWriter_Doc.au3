@@ -152,7 +152,7 @@ EndFunc   ;==>_LOWriter_DocBookmarkDelete
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Bookmarks Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Success. If the document contains a Bookmark by the called name, then True is returned, Else false.
+;                  @Error 0 @Extended 0 Return Boolean = Success. If the document contains a Bookmark by the called name, then True is returned, Else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -4761,7 +4761,7 @@ EndFunc   ;==>_LOWriter_DocViewCursorGetPosition
 ;                  @Error 4 @Extended 1 Return 0 = Error setting $bVisible.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. $bVisible successfully set.
-;                  @Error 0 @Extended 1 Return Boolean = Success. Returning current visibility state of the Document, True if visible, false if invisible.
+;                  @Error 0 @Extended 1 Return Boolean = Success. Returning current visibility state of the Document, True if visible, False if invisible.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call $bVisible with Null to return the current visibility setting.

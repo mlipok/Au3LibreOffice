@@ -3680,7 +3680,7 @@ EndFunc   ;==>_LOWriter_FrameStyleCreate
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving "FrameStyles" Object.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving Frame Style Name.
 ;                  @Error 3 @Extended 3 Return 0 = $sFrameStyle is not a User-Created Frame Style and cannot be deleted.
-;                  @Error 3 @Extended 4 Return 0 = $sFrameStyle is in use and $bForceDelete is false.
+;                  @Error 3 @Extended 4 Return 0 = $sFrameStyle is in use and $bForceDelete is False.
 ;                  @Error 3 @Extended 5 Return 0 = $sFrameStyle still exists after deletion attempt.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Frame Style called in $sFrameStyle was successfully deleted.

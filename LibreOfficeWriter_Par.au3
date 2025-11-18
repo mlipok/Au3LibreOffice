@@ -775,7 +775,7 @@ EndFunc   ;==>_LOWriter_ParStyleCreate
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving "ParagraphStyles" Object.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving Paragraph Style Name.
 ;                  @Error 3 @Extended 3 Return 0 = $oParStyle is not a User-Created Paragraph Style and cannot be deleted.
-;                  @Error 3 @Extended 4 Return 0 = $oParStyle is in use and $bForceDelete is false.
+;                  @Error 3 @Extended 4 Return 0 = $oParStyle is in use and $bForceDelete is False.
 ;                  @Error 3 @Extended 5 Return 0 = $oParStyle still exists after deletion attempt.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Paragraph Style called in $oParStyle was successfully deleted.
@@ -2004,7 +2004,7 @@ EndFunc   ;==>_LOWriter_ParStyleTabStopCreate
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to identify and delete TabStop in Paragraph.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Returning true if TabStop was successfully deleted.
+;                  @Error 0 @Extended 0 Return Boolean = Returning True if TabStop was successfully deleted.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page margin.

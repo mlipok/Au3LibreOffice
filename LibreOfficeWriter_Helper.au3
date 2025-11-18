@@ -335,7 +335,7 @@ EndFunc   ;==>_LOWriter_DateFormatKeyGetString
 ;                  @Error 1 @Extended 3 Return 0 = $bUserOnly not a Boolean.
 ;                  @Error 1 @Extended 4 Return 0 = $bDateOnly not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $bTimeOnly not a Boolean.
-;                  @Error 1 @Extended 6 Return 0 = Both $bDateOnly and $bTimeOnly called with True. Call one or both with false.
+;                  @Error 1 @Extended 6 Return 0 = Both $bDateOnly and $bTimeOnly called with True. Call one or both with False.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.lang.Locale" Object.
 ;                  --Processing Errors--
