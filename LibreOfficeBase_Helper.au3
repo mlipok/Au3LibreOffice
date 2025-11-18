@@ -631,7 +631,7 @@ EndFunc   ;==>_LOBase_FontDescEdit
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Font list.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if the Font is available, else False.
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returning True if the Font is available, else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function may cause a processor usage spike for a moment or two. If you wish to eliminate this, comment out the current sleep function and place a sleep(10) in its place.
@@ -704,7 +704,7 @@ EndFunc   ;==>_LOBase_FontExists
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Font list.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return Array = Success. Returns a 4 Column Array, @Extended is set to the number of results. See remarks
+;                  @Error 0 @Extended ? Return Array = Success. Returning a 4 Column Array, @Extended is set to the number of results. See remarks
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $oDoc is optional, if not called, a Writer Document is created invisibly to retrieve the list.

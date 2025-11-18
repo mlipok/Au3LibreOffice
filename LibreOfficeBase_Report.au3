@@ -3551,7 +3551,7 @@ EndFunc   ;==>_LOBase_ReportHeader
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oReportDoc not an Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if the Report has been modified since last being saved.
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returning True if the Report has been modified since last being saved.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
