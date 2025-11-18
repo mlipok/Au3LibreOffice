@@ -200,7 +200,7 @@ EndFunc   ;==>_LOCalc_RangeClearContents
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iColumns not an integer, less than 0 or greater than number of Columns contained in the Range.
+;                  @Error 1 @Extended 2 Return 0 = $iColumns not an Integer, less than 0 or greater than number of Columns contained in the Range.
 ;                  @Error 1 @Extended 3 Return 0 = $iCount not an Integer, or less than 1.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Columns Object.
@@ -361,7 +361,7 @@ EndFunc   ;==>_LOCalc_RangeColumnGetObjByPosition
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iColumn not an integer, less than 0 or greater than number of Columns contained in the Range.
+;                  @Error 1 @Extended 2 Return 0 = $iColumn not an Integer, less than 0 or greater than number of Columns contained in the Range.
 ;                  @Error 1 @Extended 3 Return 0 = $iCount not an Integer, or less than 1.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Columns Object.
@@ -1363,7 +1363,7 @@ EndFunc   ;==>_LOCalc_RangeFill
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $nMin not a number, less than -2^31 or greater then 2^31.
 ;                  @Error 1 @Extended 3 Return 0 = $nMax not a number, less than -2^31 or greater then 2^31.
-;                  @Error 1 @Extended 4 Return 0 = $iDecPlc not an integer, less than 0 or greater than 255.
+;                  @Error 1 @Extended 4 Return 0 = $iDecPlc not an Integer, less than 0 or greater than 255.
 ;                  @Error 1 @Extended 5 Return 0 = $nSeed not a number, less than -2^31 or greater then 2^31.
 ;                  @Error 1 @Extended 6 Return 0 = $bFillByRows not a boolean.
 ;                  --Success--
@@ -2813,7 +2813,7 @@ EndFunc   ;==>_LOCalc_RangeOutlineClearAll
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iLevel not an integer, or less than 0.
+;                  @Error 1 @Extended 2 Return 0 = $iLevel not an Integer, or less than 0.
 ;                  @Error 1 @Extended 3 Return 0 = $iOrientation not an Integer, less than 0 or greater than 1. See Constants $LOC_GROUP_ORIENT_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. command was successfully processed for the Sheet.
@@ -4803,7 +4803,7 @@ EndFunc   ;==>_LOCalc_RangeReplaceAll
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iRow not an integer, less than 0 or greater than number of Rows contained in the Range.
+;                  @Error 1 @Extended 2 Return 0 = $iRow not an Integer, less than 0 or greater than number of Rows contained in the Range.
 ;                  @Error 1 @Extended 3 Return 0 = $iCount not an Integer, or less than 1.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Rows Object.
@@ -4845,7 +4845,7 @@ EndFunc   ;==>_LOCalc_RangeRowDelete
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iRow not an integer, less than 0 or greater than number of Rows contained in the Range.
+;                  @Error 1 @Extended 2 Return 0 = $iRow not an Integer, less than 0 or greater than number of Rows contained in the Range.
 ;                  @Error 1 @Extended 3 Return 0 = $iCount not an Integer, or less than 1.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Rows Object.
@@ -4947,7 +4947,7 @@ EndFunc   ;==>_LOCalc_RangeRowHeight
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iRow not an integer, less than 0 or greater than number of Rows contained in the Range.
+;                  @Error 1 @Extended 2 Return 0 = $iRow not an Integer, less than 0 or greater than number of Rows contained in the Range.
 ;                  @Error 1 @Extended 3 Return 0 = $iCount not an Integer, or less than 1.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Rows Object.

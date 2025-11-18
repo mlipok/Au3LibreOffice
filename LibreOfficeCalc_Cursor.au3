@@ -57,9 +57,9 @@
 ;                  @Error 1 @Extended 1 Return 0 = $oCursor not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iMove not an Integer.
 ;                  @Error 1 @Extended 3 Return 0 = $iMove less than 0 or greater than highest move Constant. See Move Constants, $LOC_TEXTCUR_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 4 Return 0 = $iColumns not an integer.
-;                  @Error 1 @Extended 5 Return 0 = $iRows not an integer.
-;                  @Error 1 @Extended 6 Return 0 = $iCount not an integer or is a negative.
+;                  @Error 1 @Extended 4 Return 0 = $iColumns not an Integer.
+;                  @Error 1 @Extended 5 Return 0 = $iRows not an Integer.
+;                  @Error 1 @Extended 6 Return 0 = $iCount not an Integer or is a negative.
 ;                  @Error 1 @Extended 7 Return 0 = $bSelect not a Boolean.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error determining cursor type.
@@ -130,9 +130,9 @@ EndFunc   ;==>_LOCalc_SheetCursorMove
 ;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $bAutoSuper not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $bAutoSub not a Boolean.
-;                  @Error 1 @Extended 6 Return 0 = $iSuperScript not an integer, less than 0 or greater than 100, but not 14000.
-;                  @Error 1 @Extended 7 Return 0 = $iSubScript not an integer, less than -100 or greater than 100, but not 14000 or -14000.
-;                  @Error 1 @Extended 8 Return 0 = $iRelativeSize not an integer, less than 1 or greater than 100.
+;                  @Error 1 @Extended 6 Return 0 = $iSuperScript not an Integer, less than 0 or greater than 100, but not 14000.
+;                  @Error 1 @Extended 7 Return 0 = $iSubScript not an Integer, less than -100 or greater than 100, but not 14000 or -14000.
+;                  @Error 1 @Extended 8 Return 0 = $iRelativeSize not an Integer, less than 1 or greater than 100.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create Text Cursor for Paragraph Object.
 ;                  --Property Setting Errors--
@@ -614,7 +614,7 @@ EndFunc   ;==>_LOCalc_TextCursorIsCollapsed
 ;                  @Error 1 @Extended 1 Return 0 = $oCursor not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iMove not an Integer.
 ;                  @Error 1 @Extended 3 Return 0 = $iMove less than 0 or greater than highest move Constant. See Move Constants, $LOC_TEXTCUR_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 4 Return 0 = $iCount not an integer or is a negative.
+;                  @Error 1 @Extended 4 Return 0 = $iCount not an Integer or is a negative.
 ;                  @Error 1 @Extended 5 Return 0 = $bSelect not a Boolean.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error determining cursor type.

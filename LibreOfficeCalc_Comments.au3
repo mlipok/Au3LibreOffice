@@ -682,7 +682,7 @@ EndFunc   ;==>_LOCalc_CommentAreaShadow
 ;                  |                               1 = Error setting $iTransparency
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
-;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current setting for Transparency as an integer.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current setting for Transparency as an Integer.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
@@ -2395,7 +2395,7 @@ EndFunc   ;==>_LOCalc_CommentTextAnimation
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oComment not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $iColumns not an Integer, less than 0 or greater than 16.
-;                  @Error 1 @Extended 4 Return 0 = $iSpacing not an integer, or less than 0.
+;                  @Error 1 @Extended 4 Return 0 = $iSpacing not an Integer, or less than 0.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.text.TextColumns" Object.
 ;                  --Processing Errors--

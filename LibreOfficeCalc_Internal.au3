@@ -1492,9 +1492,9 @@ EndFunc   ;==>__LOCalc_CellUnderLine
 ;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $bAutoSuper not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $bAutoSub not a Boolean.
-;                  @Error 1 @Extended 6 Return 0 = $iSuperScript not an integer, less than 0 or greater than 100, but not 14000.
-;                  @Error 1 @Extended 7 Return 0 = $iSubScript not an integer, less than -100 or greater than 100, but not 14000.
-;                  @Error 1 @Extended 8 Return 0 = $iRelativeSize not an integer, less than 1 or greater than 100.
+;                  @Error 1 @Extended 6 Return 0 = $iSuperScript not an Integer, less than 0 or greater than 100, but not 14000.
+;                  @Error 1 @Extended 7 Return 0 = $iSubScript not an Integer, less than -100 or greater than 100, but not 14000.
+;                  @Error 1 @Extended 8 Return 0 = $iRelativeSize not an Integer, less than 1 or greater than 100.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iSuperScript
@@ -2801,9 +2801,9 @@ EndFunc   ;==>__LOCalc_RangeAddressIsSame
 ;                  @Error 1 @Extended 1 Return 0 = $oCursor not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iMove not an Integer.
 ;                  @Error 1 @Extended 3 Return 0 = $iMove less than 0 or greater than highest move Constant. See Constants, $LOC_SHEETCUR* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 4 Return 0 = $iColumns not an integer.
-;                  @Error 1 @Extended 5 Return 0 = $iRows not an integer.
-;                  @Error 1 @Extended 6 Return 0 = $iCount not an integer or is a negative.
+;                  @Error 1 @Extended 4 Return 0 = $iColumns not an Integer.
+;                  @Error 1 @Extended 5 Return 0 = $iRows not an Integer.
+;                  @Error 1 @Extended 6 Return 0 = $iCount not an Integer or is a negative.
 ;                  @Error 1 @Extended 7 Return 0 = $bSelect not a Boolean.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 2 Return 0 = Error processing cursor move.
@@ -2909,7 +2909,7 @@ EndFunc   ;==>__LOCalc_SheetCursorMove
 ;                  @Error 1 @Extended 1 Return 0 = $oCursor not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iMove not an Integer.
 ;                  @Error 1 @Extended 3 Return 0 = $iMove less than 0 or greater than highest move Constant. See Constants, $LOC_TEXTCUR_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 4 Return 0 = $iCount not an integer or is a negative.
+;                  @Error 1 @Extended 4 Return 0 = $iCount not an Integer or is a negative.
 ;                  @Error 1 @Extended 5 Return 0 = $bSelect not a Boolean.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 2 Return 0 = Error processing cursor move.

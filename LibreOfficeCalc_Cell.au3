@@ -111,14 +111,14 @@ EndFunc   ;==>_LOCalc_CellBackColor
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties, or Table Column, or Table Row service.
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 7 Return 0 = $iVert not an integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 8 Return 0 = $iHori not an integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 9 Return 0 = $iTLBRDiag not an integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 10 Return 0 = $iBLTRDiag not an integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 7 Return 0 = $iVert not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 8 Return 0 = $iHori not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 9 Return 0 = $iTLBRDiag not an Integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 10 Return 0 = $iBLTRDiag not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 11 Return 0 = Variable passed to internal function not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
@@ -245,14 +245,14 @@ EndFunc   ;==>_LOCalc_CellBorderPadding
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties, or Table Column, or Table Row service.
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, less than 0 or greater than 17, but not equal to 0x7FFF. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, less than 0 or greater than 17, but not equal to 0x7FFF. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, less than 0 or greater than 17, but not equal to 0x7FFF. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, less than 0 or greater than 17, but not equal to 0x7FFF. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 7 Return 0 = $iVert not an integer, less than 0 or greater than 17, but not equal to 0x7FFF. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 8 Return 0 = $iHori not an integer, less than 0 or greater than 17, but not equal to 0x7FFF. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 9 Return 0 = $iTLBRDiag not an integer, less than 0 or greater than 17, but not equal to 0x7FFF. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 10 Return 0 = $iBLTRDiag not an integer, less than 0 or greater than 17, but not equal to 0x7FFF. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 7 Return 0 = $iVert not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 8 Return 0 = $iHori not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 9 Return 0 = $iTLBRDiag not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 10 Return 0 = $iBLTRDiag not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 11 Return 0 = Variable passed to internal function not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
@@ -324,14 +324,14 @@ EndFunc   ;==>_LOCalc_CellBorderStyle
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties, or Table Column, or Table Row service.
-;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or less than 0.
-;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or less than 0.
-;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or less than 0.
-;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or less than 0.
-;                  @Error 1 @Extended 7 Return 0 = $iVert not an integer, or less than 0.
-;                  @Error 1 @Extended 8 Return 0 = $iHori not an integer, or less than 0.
-;                  @Error 1 @Extended 9 Return 0 = $iTLBRDiag not an integer, or less than 0.
-;                  @Error 1 @Extended 10 Return 0 = $iBLTRDiag not an integer, or less than 0.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an Integer, or less than 0.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an Integer, or less than 0.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an Integer, or less than 0.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an Integer, or less than 0.
+;                  @Error 1 @Extended 7 Return 0 = $iVert not an Integer, or less than 0.
+;                  @Error 1 @Extended 8 Return 0 = $iHori not an Integer, or less than 0.
+;                  @Error 1 @Extended 9 Return 0 = $iTLBRDiag not an Integer, or less than 0.
+;                  @Error 1 @Extended 10 Return 0 = $iBLTRDiag not an Integer, or less than 0.
 ;                  @Error 1 @Extended 11 Return 0 = Variable passed to internal function not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
