@@ -2015,7 +2015,7 @@ EndFunc   ;==>_LOWriter_ShapePointsAdd
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to Retrieve Array of Point Type Flags.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Integer = Success. Returns total number of points present in a shape.
+;                  @Error 0 @Extended 0 Return Integer = Success. Returning total number of points present in a shape.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Only $LOW_SHAPE_TYPE_LINE_* type shapes have Points that can be added to, removed, or modified.

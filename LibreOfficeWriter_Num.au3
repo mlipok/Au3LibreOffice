@@ -389,7 +389,7 @@ EndFunc   ;==>_LOWriter_NumStyleDelete
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sNumStyle not a String.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if Numbering Style exists in the document, else False.
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returning True if Numbering Style exists in the document, else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:

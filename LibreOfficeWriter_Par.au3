@@ -123,7 +123,7 @@ EndFunc   ;==>_LOWriter_ParObjCopy
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create Enumeration of Paragraphs.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return Array = Success. Returns an Array of Paragraph Objects, @Extended is set to the number of results.
+;                  @Error 0 @Extended ? Return Array = Success. Returning an Array of Paragraph Objects, @Extended is set to the number of results.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $oCursor can be either a ViewCursor or a TextCursor, the paragraphs are enumerated for the area the cursor is currently within, for example, the ViewCursor is currently in a Table, the enumeration of paragraphs would be for the Cell the cursor was presently in.
@@ -2004,7 +2004,7 @@ EndFunc   ;==>_LOWriter_ParStyleTabStopCreate
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to identify and delete TabStop in Paragraph.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Returns true if TabStop was successfully deleted.
+;                  @Error 0 @Extended 0 Return Boolean = Returning true if TabStop was successfully deleted.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page margin.

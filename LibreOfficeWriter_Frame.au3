@@ -1687,7 +1687,7 @@ EndFunc   ;==>_LOWriter_FrameGetAnchor
 ;                  @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $oCursor not located in a Frame.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object = Success, Returns an Object for the requested Frame.
+;                  @Error 0 @Extended 0 Return Object = Success, Returning an Object for the requested Frame.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -3733,7 +3733,7 @@ EndFunc   ;==>_LOWriter_FrameStyleDelete
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sFrameStyle not a String.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if the Document contains a Frame style matching the input name, else False.
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returning True if the Document contains a Frame style matching the input name, else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:

@@ -1532,7 +1532,7 @@ EndFunc   ;==>__LOWriter_DateStructCompare
 ;                  $bCheckSelection     - [optional] a boolean value. Default is False. If True, check for whether the cursor object is collapsed (no data selected).
 ; Return values .: Success: Boolean.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True, if called Object is fit for Direct Formatting use, else False.
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returning True, if called Object is fit for Direct Formatting use, else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1824,8 +1824,8 @@ EndFunc   ;==>__LOWriter_FieldTypeServices
 ;                  @Error 1 @Extended 2 Return 0 = $bExportFilters not a Boolean.
 ;                  @Error 1 @Extended 3 Return 0 = $sDocSavePath is not a correct path or URL.
 ;                  --Success--
-;                  @Error 0 @Extended 1 Return String = Success. Returns required filtername from "SaveAs" FilterNames.
-;                  @Error 0 @Extended 2 Return String = Success. Returns required filtername from "Export" FilterNames.
+;                  @Error 0 @Extended 1 Return String = Success. Returning required filtername from "SaveAs" FilterNames.
+;                  @Error 0 @Extended 2 Return String = Success. Returning required filtername from "Export" FilterNames.
 ;                  @Error 0 @Extended 3 Return String = FilterName not found for given file extension, defaulting to .odt file format and updating save path accordingly.
 ; Author ........: donnyh13
 ; Modified ......:
@@ -2448,8 +2448,8 @@ EndFunc   ;==>__LOWriter_GetPrinterSetting
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve DrawPage object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return String = Success. Document contained no shapes, returns the Shape name with a "1" appended.
-;                  @Error 0 @Extended 1 Return String = Success. Returns the unique Shape name to use.
+;                  @Error 0 @Extended 0 Return String = Success. Document contained no shapes, returning the Shape name with a "1" appended.
+;                  @Error 0 @Extended 1 Return String = Success. Returning the unique Shape name to use.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function adds a digit after the shape name, incrementing it until that name hasn't been used yet in L.O.
@@ -3450,7 +3450,7 @@ EndFunc   ;==>__LOWriter_ImageGetSuggestedSize
 ;                  @Error 3 @Extended 5 Return 0 = Unable to identify Foot/EndNote.
 ;                  @Error 3 @Extended 6 Return 0 = Cursor in unknown DataType
 ;                  --Success--
-;                  @Error 0 @Extended ? Return Object = Success, If $bReturnObject is True, returns an object used for creating a Text Object, @Extended is set to one of the constants, $LOW_CURDATA_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 0 @Extended ? Return Object = Success, If $bReturnObject is True, returning an object used for creating a Text Object, @Extended is set to one of the constants, $LOW_CURDATA_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 0 @Extended 0 Return Integer = Success, If $bReturnObject is False, Return value will be one of constants, $LOW_CURDATA_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:
@@ -5271,7 +5271,7 @@ EndFunc   ;==>__LOWriter_ParTabStopCreate
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to identify and delete TabStop in Paragraph.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Returns true if TabStop was successfully deleted.
+;                  @Error 0 @Extended 0 Return Boolean = Returning true if TabStop was successfully deleted.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page margin. This is the only reliable way to identify a Tabstop to be able to interact with it, as there can only be one of a certain length per paragraph style.
@@ -8311,7 +8311,7 @@ EndFunc   ;==>__LOWriter_TableBorder
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 2 Return 0 = Error processing cursor move.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return Boolean = Success, Cursor object movement was processed successfully. Returns True if the full count of movements were successful, else false if none or only partially successful. @Extended set to number of successful movements. Or Page Number for "gotoPage" command. See Remarks
+;                  @Error 0 @Extended ? Return Boolean = Success, Cursor object movement was processed successfully. Returning True if the full count of movements were successful, else false if none or only partially successful. @Extended set to number of successful movements. Or Page Number for "gotoPage" command. See Remarks
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $iMove may be called with any of the following constants. Only some movements accept movement amounts (such as "goRight" 2) etc. Also only some accept creating/ extending a selection of text/ data. They will be specified below.
@@ -8551,7 +8551,7 @@ EndFunc   ;==>__LOWriter_TableRowSplitToggle
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 2 Return 0 = Error processing cursor move.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return Boolean = Success, Cursor object movement was processed successfully. Returns True if the full count of movements were successful, else false if none or only partially successful. @Extended set to number of successful movements. Or Page Number for "gotoPage" command. See Remarks
+;                  @Error 0 @Extended ? Return Boolean = Success, Cursor object movement was processed successfully. Returning True if the full count of movements were successful, else false if none or only partially successful. @Extended set to number of successful movements. Or Page Number for "gotoPage" command. See Remarks
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $iMove may be called with any of the following constants.
@@ -8784,7 +8784,7 @@ EndFunc   ;==>__LOWriter_TransparencyGradientNameInsert
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 2 Return 0 = Error processing cursor move.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return Boolean = Success, Cursor object movement was processed successfully. Returns True if the full count of movements were successful, else false if none or only partially successful. @Extended set to number of successful movements. Or Page Number for "gotoPage" command. See Remarks
+;                  @Error 0 @Extended ? Return Boolean = Success, Cursor object movement was processed successfully. Returning True if the full count of movements were successful, else false if none or only partially successful. @Extended set to number of successful movements. Or Page Number for "gotoPage" command. See Remarks
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $iMove may be called with any of the following constants.

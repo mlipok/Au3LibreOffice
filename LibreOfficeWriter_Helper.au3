@@ -2067,7 +2067,7 @@ EndFunc   ;==>_LOWriter_FontDescEdit
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Font list.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if the Font is available, else False.
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returning True if the Font is available, else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function may cause a processor usage spike for a moment or two. If you wish to eliminate this, comment out the current sleep function and place a sleep(10) in its place.
@@ -2140,7 +2140,7 @@ EndFunc   ;==>_LOWriter_FontExists
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Font list.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return Array = Success. Returns a 4 Column Array, @Extended is set to the number of results. See remarks
+;                  @Error 0 @Extended ? Return Array = Success. Returning a 4 Column Array, @Extended is set to the number of results. See remarks
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $oDoc is optional, if not called, a Writer Document is created invisibly to retrieve the list.
@@ -2700,7 +2700,7 @@ EndFunc   ;==>_LOWriter_GradientMulticolorModify
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create Search Descriptor.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object = Success. Returns a Search Descriptor Object for setting Search options.
+;                  @Error 0 @Extended 0 Return Object = Success. Returning a Search Descriptor Object for setting Search options.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $bSearchPropValues is equivalent to the difference in selecting "Format" options in Libre Office's search box and "Attributes".
@@ -2764,7 +2764,7 @@ EndFunc   ;==>_LOWriter_SearchDescriptorCreate
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = $bRegExp is called with True while Similarity Search is set to True.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Returns 1 after directly modifying Search Descriptor Object.
+;                  @Error 0 @Extended 0 Return 1 = Success. Returning 1 after directly modifying Search Descriptor Object.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 6 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
@@ -2856,7 +2856,7 @@ EndFunc   ;==>_LOWriter_SearchDescriptorModify
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = $bSimilarity is called with True while Regular Expression Search is set to True.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Returns 1 after directly modifying Search Descriptor Object.
+;                  @Error 0 @Extended 0 Return 1 = Success. Returning 1 after directly modifying Search Descriptor Object.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
