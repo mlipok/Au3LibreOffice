@@ -52,8 +52,8 @@
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oResult not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oResult not a Result Set Object.
-;                  @Error 1 @Extended 3 Return 0 = $iColumn not an Integer, less than 1, or greater than number of Columns contained in Result Set.
-;                  @Error 1 @Extended 4 Return 0 = $iQuery not an Integer, less than 0, or greater than 18. See Constants, $LOB_RESULT_METADATA_QUERY_* as defined in LibreOfficeBase_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $iColumn not an Integer, less than 1 or greater than number of Columns contained in Result Set.
+;                  @Error 1 @Extended 4 Return 0 = $iQuery not an Integer, less than 0 or greater than 18. See Constants, $LOB_RESULT_METADATA_QUERY_* as defined in LibreOfficeBase_Constants.au3.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Column Count.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to Execute Query.

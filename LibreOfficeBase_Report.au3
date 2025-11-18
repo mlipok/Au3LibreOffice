@@ -1067,7 +1067,7 @@ EndFunc   ;==>_LOBase_ReportConPosition
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oSection not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = Called Object not a Section Object.
-;                  @Error 1 @Extended 3 Return 0 = $iType not an Integer, less than 1, or greater than 63. See Constants $LOB_REP_CON_TYPE_* as defined in LibreOfficeBase_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $iType not an Integer, less than 1 or greater than 63. See Constants $LOB_REP_CON_TYPE_* as defined in LibreOfficeBase_Constants.au3.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Control Object.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to identify Control type.

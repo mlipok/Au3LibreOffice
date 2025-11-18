@@ -70,7 +70,7 @@
 ;                  @Error 1 @Extended 2 Return 0 = $oConnection not a Connection Object.
 ;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
 ;                  @Error 1 @Extended 4 Return 0 = $sColName not a String.
-;                  @Error 1 @Extended 5 Return 0 = $iColType not an Integer, less than -16, or greater than 2014
+;                  @Error 1 @Extended 5 Return 0 = $iColType not an Integer, less than -16 or greater than 2014
 ;                  @Error 1 @Extended 6 Return 0 = $sColTypeName not a String.
 ;                  @Error 1 @Extended 7 Return 0 = $sColDesc not a String.
 ;                  @Error 1 @Extended 8 Return 0 = Table name called in $sName already used as a Table name.
@@ -885,7 +885,7 @@ EndFunc   ;==>_LOBase_TableExists
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oConnection not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oConnection not a Connection Object.
-;                  @Error 1 @Extended 3 Return 0 = $iTable not an Integer, less than 0, or greater than number of Tables contained in the Database.
+;                  @Error 1 @Extended 3 Return 0 = $iTable not an Integer, less than 0 or greater than number of Tables contained in the Database.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Connection called in $oConnection is closed.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Tables Object.

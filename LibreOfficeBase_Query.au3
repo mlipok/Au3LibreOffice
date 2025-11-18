@@ -390,7 +390,7 @@ EndFunc   ;==>_LOBase_QueryExists
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oQuery not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iField not an Integer, less than 0, or greater than number of Fields contained in the query.
+;                  @Error 1 @Extended 2 Return 0 = $iField not an Integer, less than 0 or greater than number of Fields contained in the query.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Columns Object.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Column Object.
@@ -605,7 +605,7 @@ EndFunc   ;==>_LOBase_QueryFieldsGetNames
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oConnection not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = Object called in $oConnection not a Connection Object.
-;                  @Error 1 @Extended 3 Return 0 = $iQuery not an Integer, less than 0, or greater than number of Queries contained in the Database.
+;                  @Error 1 @Extended 3 Return 0 = $iQuery not an Integer, less than 0 or greater than number of Queries contained in the Database.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Connection called in $oConnection is closed.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Queries Object.
