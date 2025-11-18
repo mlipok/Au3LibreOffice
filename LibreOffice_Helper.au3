@@ -576,17 +576,17 @@ EndFunc   ;==>_LO_PathConvert
 ;                  @Error 1 @Extended 2 Return 0 = $iReturnType is not a Integer, less than 0 or greater than 10. See Constants, $LO_CONVERT_UNIT_* as defined in LibreOffice_Constants.au3.
 ;                  @Error 1 @Extended 3 Return 0 = $iReturnType does not match constants, See Constants, $LO_CONVERT_UNIT_* as defined in LibreOffice_Constants.au3.
 ;                  --Success--
-;                  @Error 0 @Extended 1 Return Number = Returns Number converted from TWIPS to Centimeters.
-;                  @Error 0 @Extended 2 Return Number = Returns Number converted from TWIPS to Inches.
-;                  @Error 0 @Extended 3 Return Integer = Returns Number converted from Millimeters to 1/100th of a Millimeter.
-;                  @Error 0 @Extended 4 Return Number = Returns Number converted from 1/100th of a Millimeter to MM
-;                  @Error 0 @Extended 5 Return Integer = Returns Number converted from Centimeters To 1/100th of a Millimeter
-;                  @Error 0 @Extended 6 Return Number = Returns Number converted from 1/100th of a Millimeter To CM
-;                  @Error 0 @Extended 7 Return Integer = Returns Number converted from Inches to 1/100th of a Millimeter.
-;                  @Error 0 @Extended 8 Return Number = Returns Number converted from 1/100th of a Millimeter to Inches.
-;                  @Error 0 @Extended 9 Return Integer = Returns Number converted from TWIPS to 1/100th of a Millimeter.
-;                  @Error 0 @Extended 10 Return Integer = Returns Number converted from Point to 1/100th of a Millimeter.
-;                  @Error 0 @Extended 11 Return Number = Returns Number converted from 1/100th of a Millimeter to Point.
+;                  @Error 0 @Extended 1 Return Number = Returning Number converted from TWIPS to Centimeters.
+;                  @Error 0 @Extended 2 Return Number = Returning Number converted from TWIPS to Inches.
+;                  @Error 0 @Extended 3 Return Integer = Returning Number converted from Millimeters to 1/100th of a Millimeter.
+;                  @Error 0 @Extended 4 Return Number = Returning Number converted from 1/100th of a Millimeter to MM
+;                  @Error 0 @Extended 5 Return Integer = Returning Number converted from Centimeters To 1/100th of a Millimeter
+;                  @Error 0 @Extended 6 Return Number = Returning Number converted from 1/100th of a Millimeter To CM
+;                  @Error 0 @Extended 7 Return Integer = Returning Number converted from Inches to 1/100th of a Millimeter.
+;                  @Error 0 @Extended 8 Return Number = Returning Number converted from 1/100th of a Millimeter to Inches.
+;                  @Error 0 @Extended 9 Return Integer = Returning Number converted from TWIPS to 1/100th of a Millimeter.
+;                  @Error 0 @Extended 10 Return Integer = Returning Number converted from Point to 1/100th of a Millimeter.
+;                  @Error 0 @Extended 11 Return Number = Returning Number converted from 1/100th of a Millimeter to Point.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: 1/100th of a Millimeter, and is used in almost all LibreOffice functions that contain a measurement parameter.
@@ -695,7 +695,7 @@ EndFunc   ;==>_LO_UnitConvert
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error setting property value.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return String = Success. Returns the Office version in String format.
+;                  @Error 0 @Extended 0 Return String = Success. Returning the Office version in String format.
 ; Author ........: Laurent Godard as found in Andrew Pitonyak's book; Zizi64 as found on OpenOffice forum.
 ; Modified ......: donnyh13, modified for AutoIt compatibility and error checking.
 ; Remarks .......: From Macro code by Zizi64 found at: https://forum.openoffice.org/en/forum/viewtopic.php?t=91542&sid=7f452d65e58ac1cd3cc6063350b5ada0
