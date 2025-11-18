@@ -1230,7 +1230,7 @@ EndFunc   ;==>_LOWriter_TableGetData
 ;                  @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $oCursor not located in a Table.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object = Success, Returning Table Object.
+;                  @Error 0 @Extended 0 Return Object = Success. Returning Table Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1262,7 +1262,7 @@ EndFunc   ;==>_LOWriter_TableGetObjByCursor
 ;                  @Error 1 @Extended 2 Return 0 = $sTableName not a String.
 ;                  @Error 1 @Extended 3 Return 0 = No table matching $sTableName found in Document.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object = Success, Returning an Object for the requested Table.
+;                  @Error 0 @Extended 0 Return Object = Success. Returning an Object for the requested Table.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:

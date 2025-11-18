@@ -955,7 +955,7 @@ EndFunc   ;==>_LOWriter_ShapeGetAnchor
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Draw Page Object.
 ;                  @Error 3 @Extended 2 Return 0 = Shape requested in $sShapeName not found in document.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object = Success, Returning the requested Shape Object.
+;                  @Error 0 @Extended 0 Return Object = Success. Returning the requested Shape Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:

@@ -3528,7 +3528,7 @@ EndFunc   ;==>__LOWriter_Internal_CursorGetDataType
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Unknown Cursor type.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Integer = Success, Return value will be one of the constants, $LOW_CURTYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 0 @Extended 0 Return Integer = Success. Return value will be one of the constants, $LOW_CURTYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Returns what type of cursor the input Object is, such as a Table Cursor, Text Cursor or a View Cursor. Can also be a Paragraph or Text Portion.

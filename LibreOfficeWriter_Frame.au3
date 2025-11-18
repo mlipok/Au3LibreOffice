@@ -1687,7 +1687,7 @@ EndFunc   ;==>_LOWriter_FrameGetAnchor
 ;                  @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $oCursor not located in a Frame.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object = Success, Returning an Object for the requested Frame.
+;                  @Error 0 @Extended 0 Return Object = Success. Returning an Object for the requested Frame.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
