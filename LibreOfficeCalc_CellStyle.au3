@@ -414,7 +414,7 @@ EndFunc   ;==>_LOCalc_CellStyleCreate
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving "CellStyles" Object.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving Cell Style Name.
 ;                  @Error 3 @Extended 3 Return 0 = $oCellStyle is not a User-Created Cell Style and cannot be deleted.
-;                  @Error 3 @Extended 4 Return 0 = $oCellStyle is in use and $bForceDelete is false.
+;                  @Error 3 @Extended 4 Return 0 = $oCellStyle is in use and $bForceDelete is False.
 ;                  @Error 3 @Extended 5 Return 0 = $oCellStyle still exists after deletion attempt.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Cell Style called in $oCellStyle was successfully deleted.

@@ -306,7 +306,7 @@ EndFunc   ;==>_LOCalc_SheetDetectiveClear
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve called Cell's Address.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to process Show/Hide Dependent function.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Success. Returning True if Dependents were marked/cleared one level, else false.
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returning True if Dependents were marked/cleared one level, else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Each time that $bShow is called with True, another level of Dependents is marked with arrows.
@@ -390,7 +390,7 @@ EndFunc   ;==>_LOCalc_SheetDetectiveInvalidData
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve called Cell's Address.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to process Show/Hide Precedent function.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Success. Returning True if precedents were marked/cleared one level, else false.
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returning True if precedents were marked/cleared one level, else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Each time that $bShow is called with True, another level of precedents is marked with arrows.

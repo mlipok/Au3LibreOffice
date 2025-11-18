@@ -774,7 +774,7 @@ EndFunc   ;==>_LOCalc_FormatKeyDelete
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Number Formats Object.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to obtain Array of Date/Time Formats.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Success. If the Format Key exists in document, True is returned, else false.
+;                  @Error 0 @Extended 0 Return Boolean = Success. If the Format Key exists in document, True is returned, else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
