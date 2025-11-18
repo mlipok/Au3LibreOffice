@@ -203,7 +203,7 @@ EndFunc   ;==>_LOBase_TableAdd
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
-;                  @Error 1 @Extended 3 Return 0 = $iType not an integer, less than -16 or greater than 2014. See Constants, $LOB_DATA_TYPE_* as defined in LibreOfficeBase_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $iType not an Integer, less than -16 or greater than 2014. See Constants, $LOB_DATA_TYPE_* as defined in LibreOfficeBase_Constants.au3.
 ;                  @Error 1 @Extended 4 Return 0 = $sTypeName not a String.
 ;                  @Error 1 @Extended 5 Return 0 = $sDescription not a String.
 ;                  @Error 1 @Extended 6 Return 0 = Column with the same name as called in $sName already exists.
@@ -304,7 +304,7 @@ EndFunc   ;==>_LOBase_TableColAdd
 ;                  @Error 1 @Extended 2 Return 0 = $oColumn not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
 ;                  @Error 1 @Extended 4 Return 0 = Column with the same name as called in $sName already exists.
-;                  @Error 1 @Extended 5 Return 0 = $iType not an integer, less than -16 or greater than 2014. See Constants, $LOB_DATA_TYPE_* as defined in LibreOfficeBase_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iType not an Integer, less than -16 or greater than 2014. See Constants, $LOB_DATA_TYPE_* as defined in LibreOfficeBase_Constants.au3.
 ;                  @Error 1 @Extended 6 Return 0 = $sTypeName not a String.
 ;                  @Error 1 @Extended 7 Return 0 = $sDescription not a String.
 ;                  @Error 1 @Extended 8 Return 0 = Column called in $oColumn not a Table Column and does not support a description. See Remarks.
