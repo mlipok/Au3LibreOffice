@@ -979,7 +979,7 @@ EndFunc   ;==>_LOCalc_RangeDatabaseDelete
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Database Ranges Object.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to query whether document contains the called name.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if the document contains a Database Range by the called name. Else False.
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returning True if the document contains a Database Range by the called name. Else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -2423,7 +2423,7 @@ EndFunc   ;==>_LOCalc_RangeNamedDelete
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Named Ranges Object.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to query whether Scope contains the called name.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if the Scope contains a Named Range by the called name. Else False.
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returning True if the Scope contains a Named Range by the called name. Else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Object called in $oObj determines the scope you are searching in for the Named Range specified, either Globally (Document Object), or locally (Sheet Object).

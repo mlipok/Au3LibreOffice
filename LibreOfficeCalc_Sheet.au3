@@ -306,7 +306,7 @@ EndFunc   ;==>_LOCalc_SheetDetectiveClear
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve called Cell's Address.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to process Show/Hide Dependent function.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if Dependents were marked/cleared one level, else false.
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returning True if Dependents were marked/cleared one level, else false.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Each time that $bShow is called with True, another level of Dependents is marked with arrows.
@@ -352,7 +352,7 @@ EndFunc   ;==>_LOCalc_SheetDetectiveDependent
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to process Invalid Data function.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if invalid data was marked, else False.
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returning True if invalid data was marked, else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Validity rules must be set up for Cell(s) before invalid data will be marked.
@@ -390,7 +390,7 @@ EndFunc   ;==>_LOCalc_SheetDetectiveInvalidData
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve called Cell's Address.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to process Show/Hide Precedent function.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if precedents were marked/cleared one level, else false.
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returning True if precedents were marked/cleared one level, else false.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Each time that $bShow is called with True, another level of precedents is marked with arrows.
@@ -438,7 +438,7 @@ EndFunc   ;==>_LOCalc_SheetDetectivePrecedent
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve called Cell's Address.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to process Trace Error function.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if Errors were marked, else False.
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returning True if Errors were marked, else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:

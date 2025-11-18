@@ -526,7 +526,7 @@ EndFunc   ;==>_LOCalc_FilterFieldModify
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Font list.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if the Font is available, else False.
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returning True if the Font is available, else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $oDoc is optional, if not called, a Calc Document is created invisibly to perform the check.
@@ -597,7 +597,7 @@ EndFunc   ;==>_LOCalc_FontExists
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Font list.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return Array = Success. Returns a 4 Column Array, @Extended is set to the number of results. See remarks
+;                  @Error 0 @Extended ? Return Array = Success. Returning a 4 Column Array, @Extended is set to the number of results. See remarks
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $oDoc is optional, if not called, a Calc Document is created invisibly to perform the check.
@@ -1161,7 +1161,7 @@ EndFunc   ;==>_LOCalc_GradientMulticolorModify
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create Search Descriptor.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object = Success. Returns a Search Descriptor Object for setting Search options.
+;                  @Error 0 @Extended 0 Return Object = Success. Returning a Search Descriptor Object for setting Search options.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The returned Search Descriptor is only good for the Document that contained the Range it was created by, it WILL NOT work for other Documents.
@@ -1232,7 +1232,7 @@ EndFunc   ;==>_LOCalc_SearchDescriptorCreate
 ;                  @Error 1 @Extended 9 Return 0 = $bWildcards not a Boolean.
 ;                  @Error 1 @Extended 10 Return 0 = $bStyles not a Boolean.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Returns 1 after directly modifying Search Descriptor Object.
+;                  @Error 0 @Extended 0 Return 1 = Success. Returning 1 after directly modifying Search Descriptor Object.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 8 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
@@ -1337,7 +1337,7 @@ EndFunc   ;==>_LOCalc_SearchDescriptorModify
 ;                  @Error 1 @Extended 7 Return 0 = $iAdd not an Integer.
 ;                  @Error 1 @Extended 8 Return 0 = $iExchange not an Integer.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Returns 1 after directly modifying Search Descriptor Object.
+;                  @Error 0 @Extended 0 Return 1 = Success. Returning 1 after directly modifying Search Descriptor Object.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
