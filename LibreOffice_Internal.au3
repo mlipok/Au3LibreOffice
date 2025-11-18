@@ -44,7 +44,7 @@
 ;                  @Error 1 @Extended 1 Return 0 = $aArray not an Array
 ;                  @Error 1 @Extended 2 Return 0 = $bCountinFirst not a Boolean.
 ;                  @Error 1 @Extended 3 Return 0 = $aArray contains too many columns.
-;                  @Error 1 @Extended 4 Return 0 = $aArray[0] contains non-integer data or is not empty, and $bCountInFirst is called with True.
+;                  @Error 1 @Extended 4 Return 0 = $aArray[0] contains non-Integer data or is not empty, and $bCountInFirst is called with True.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Array item was successfully added.
 ; Author ........: donnyh13

@@ -119,12 +119,12 @@ EndFunc   ;==>_LO_ComError_UserFunction
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = No parameters set.
-;                  @Error 1 @Extended 2 Return 0 = No parameters called with an integer.
+;                  @Error 1 @Extended 2 Return 0 = No parameters called with an Integer.
 ;                  --Success--
-;                  @Error 0 @Extended 1 Return String = Long integer converted To Hexadecimal (as a String). (Without the "0x" prefix)
-;                  @Error 0 @Extended 2 Return Array = Array containing Long integer converted To Red, Green, Blue,(RGB). $Array[0] = R, $Array[1] = G, etc.
-;                  @Error 0 @Extended 3 Return Array = Array containing Long integer converted To Hue, Saturation, Brightness, (HSB). $Array[0] = H, $Array[1] = S, etc.
-;                  @Error 0 @Extended 4 Return Array = Array containing Long integer converted To Cyan, Magenta, Yellow, Black, (CMYK). $Array[0] = C, $Array[1] = M, etc.
+;                  @Error 0 @Extended 1 Return String = RGB Integer converted To Hexadecimal (as a String). (Without the "0x" prefix)
+;                  @Error 0 @Extended 2 Return Array = Array containing RGB Integer converted To Red, Green, Blue,(RGB). $Array[0] = R, $Array[1] = G, etc.
+;                  @Error 0 @Extended 3 Return Array = Array containing RGB Integer converted To Hue, Saturation, Brightness, (HSB). $Array[0] = H, $Array[1] = S, etc.
+;                  @Error 0 @Extended 4 Return Array = Array containing RGB Integer converted To Cyan, Magenta, Yellow, Black, (CMYK). $Array[0] = C, $Array[1] = M, etc.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To retrieve a Hexadecimal color value, call the RGB Color Integer in $iHex, To retrieve a R(ed)G(reen)B(lue) color value, call Null in $iHex, and call the RGB Color Integer into $iRGB, etc. for the other color types.
