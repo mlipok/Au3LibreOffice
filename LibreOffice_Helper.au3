@@ -498,7 +498,7 @@ EndFunc   ;==>_LO_InitializePortable
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $sFilePath is not a string
-;                  @Error 1 @Extended 2 Return 0 = $iReturnMode not a Integer, less than 0, or greater than 2, see constants, $LO_PATHCONV_* as defined in LibreOffice_Constants.au3..
+;                  @Error 1 @Extended 2 Return 0 = $iReturnMode not a Integer, less than 0 or greater than 2. See constants, $LO_PATHCONV_* as defined in LibreOffice_Constants.au3..
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return String = Returning converted File Path from Libre Office URL.
 ;                  @Error 0 @Extended 2 Return String = Returning converted path from File Path to Libre Office URL.
