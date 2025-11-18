@@ -853,7 +853,7 @@ EndFunc   ;==>__LOCalc_CellProtection
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 3 Return 0 = Variable passed to internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $iWidth not an Integer, less than 0 or greater than 5009.
-;                  @Error 1 @Extended 5 Return 0 = $iColor not an Integer, less than 0 or greater than 16,777,215.
+;                  @Error 1 @Extended 5 Return 0 = $iColor not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 6 Return 0 = $bTransparent not a Boolean.
 ;                  @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants, $LOC_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  --Processing Errors--
