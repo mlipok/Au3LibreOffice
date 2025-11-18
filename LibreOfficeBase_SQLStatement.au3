@@ -327,7 +327,7 @@ EndFunc   ;==>_LOBase_SQLResultCursorQuery
 ;                  @Error 1 @Extended 1 Return 0 = $oResult not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = Object called in $oResult not a Result Set object.
 ;                  @Error 1 @Extended 3 Return 0 = $iModify not an Integer, less than 0 or greater than 12. See Constants, $LOB_RESULT_ROW_MOD_* as defined in LibreOfficeBase_Constants.au3.
-;                  @Error 1 @Extended 4 Return 0 = $iColumn not an Integer or less than 1.
+;                  @Error 1 @Extended 4 Return 0 = $iColumn not an integer, or less than 1.
 ;                  @Error 1 @Extended 5 Return 0 = $iModify called with $LOB_RESULT_ROW_MOD_BOOL and $vValue not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $iModify called with $LOB_RESULT_ROW_MOD_SHORT, $LOB_RESULT_ROW_MOD_INT, or $LOB_RESULT_ROW_MOD_LONG and $vValue not an Integer.
 ;                  @Error 1 @Extended 7 Return 0 = $iModify called with $LOB_RESULT_ROW_MOD_FLOAT, or $LOB_RESULT_ROW_MOD_DOUBLE and $vValue not a Number.
@@ -503,7 +503,7 @@ EndFunc   ;==>_LOBase_SQLResultRowQuery
 ;                  @Error 1 @Extended 1 Return 0 = $oResult not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = Object called in $oResult not a Result Set object.
 ;                  @Error 1 @Extended 3 Return 0 = $iRead not an Integer, less than 0 or greater than 12. See Constants, $LOB_RESULT_ROW_READ_* as defined in LibreOfficeBase_Constants.au3.
-;                  @Error 1 @Extended 4 Return 0 = $iColumn not an Integer or less than 1.
+;                  @Error 1 @Extended 4 Return 0 = $iColumn not an integer, or less than 1.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create a "com.sun.star.util.DateTime" Struct.
 ;                  --Processing Errors--

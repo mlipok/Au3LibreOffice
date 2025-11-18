@@ -2791,7 +2791,7 @@ EndFunc   ;==>_LOBase_ReportGroupDeleteByObj
 ;                  @Error 1 @Extended 6 Return 0 = $bKeepTogether not a Boolean.
 ;                  @Error 1 @Extended 7 Return 0 = $bRepeatSec not a Boolean.
 ;                  @Error 1 @Extended 8 Return 0 = $bVisible not a Boolean.
-;                  @Error 1 @Extended 9 Return 0 = $iHeight not an Integer or less than 1753.
+;                  @Error 1 @Extended 9 Return 0 = $iHeight not an integer, or less than 1753.
 ;                  @Error 1 @Extended 10 Return 0 = $sCondPrint not a String.
 ;                  @Error 1 @Extended 11 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
 ;                  --Property Setting Errors--
@@ -3012,7 +3012,7 @@ EndFunc   ;==>_LOBase_ReportGroupGetByIndex
 ;                  @Error 1 @Extended 6 Return 0 = $bKeepTogether not a Boolean.
 ;                  @Error 1 @Extended 7 Return 0 = $bRepeatSec not a Boolean.
 ;                  @Error 1 @Extended 8 Return 0 = $bVisible not a Boolean.
-;                  @Error 1 @Extended 9 Return 0 = $iHeight not an Integer or less than 1753.
+;                  @Error 1 @Extended 9 Return 0 = $iHeight not an integer, or less than 1753.
 ;                  @Error 1 @Extended 10 Return 0 = $sCondPrint not a String.
 ;                  @Error 1 @Extended 11 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
 ;                  --Property Setting Errors--
