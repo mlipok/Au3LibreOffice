@@ -365,7 +365,7 @@ EndFunc   ;==>_LOWriter_TableBorderWidth
 ;                  @Error 1 @Extended 3 Return 0 = $iBreakType not an Integer, less than 0 or greater than 6. See Constants, $LOW_BREAK_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 4 Return 0 = $sPageStyle not a String.
 ;                  @Error 1 @Extended 5 Return 0 = $sPageStyle not found in current document.
-;                  @Error 1 @Extended 6 Return 0 = $iPgNumOffSet not an Integer or less than 0.
+;                  @Error 1 @Extended 6 Return 0 = $iPgNumOffSet not an integer, or less than 0.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iBreakType
@@ -808,7 +808,7 @@ EndFunc   ;==>_LOWriter_TableCreateCursor
 ;                  @Error 1 @Extended 2 Return 0 = $oCursor not a Table Cursor.
 ;                  @Error 1 @Extended 3 Return 0 = $sGoToCellByName not a String.
 ;                  @Error 1 @Extended 4 Return 0 = $bSelect not a Boolean.
-;                  @Error 1 @Extended 5 Return 0 = $iSplitRangeInto not an Integer or less than 1.
+;                  @Error 1 @Extended 5 Return 0 = $iSplitRangeInto not an integer, or less than 1.
 ;                  @Error 1 @Extended 6 Return 0 = $bSplitRangeHori not a Boolean.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended ? Return 0 = Some commands were not successfully completed. Use BitAND to test @Extended for the following values:
@@ -1989,7 +1989,7 @@ EndFunc   ;==>_LOWriter_TablesGetNames
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oTable not inserted into the Document.
-;                  @Error 1 @Extended 3 Return 0 = $iWidth not an Integer or less than 0.
+;                  @Error 1 @Extended 3 Return 0 = $iWidth not an integer, or less than 0.
 ;                  @Error 1 @Extended 4 Return 0 = $iColor not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 5 Return 0 = $bTransparent not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.

@@ -267,7 +267,7 @@ EndFunc   ;==>_LOWriter_EndnoteModifyAnchor
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iNumFormat not an Integer, or Less than 0 or greater than 71. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 2 Return 0 = $iNumFormat not an Integer, Less than 0 or greater than 71. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 3 Return 0 = $iStartAt not an integer, less than 1 or greater than 9999.
 ;                  @Error 1 @Extended 4 Return 0 = $sBefore not a String.
 ;                  @Error 1 @Extended 5 Return 0 = $sAfter not a String.

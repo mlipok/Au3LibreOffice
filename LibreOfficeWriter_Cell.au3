@@ -303,10 +303,10 @@ EndFunc   ;==>_LOWriter_CellBorderStyle
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCell Variable not Object type variable.
-;                  @Error 1 @Extended 2 Return 0 = $iTop not an integer or less than 0.
-;                  @Error 1 @Extended 3 Return 0 = $iBottom not an integer or less than 0.
-;                  @Error 1 @Extended 4 Return 0 = $iLeft not an integer or less than 0.
-;                  @Error 1 @Extended 5 Return 0 = $iRight not an integer or less than 0.
+;                  @Error 1 @Extended 2 Return 0 = $iTop not an integer, or less than 0.
+;                  @Error 1 @Extended 3 Return 0 = $iBottom not an integer, or less than 0.
+;                  @Error 1 @Extended 4 Return 0 = $iLeft not an integer, or less than 0.
+;                  @Error 1 @Extended 5 Return 0 = $iRight not an integer, or less than 0.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
@@ -626,7 +626,7 @@ EndFunc   ;==>_LOWriter_CellValue
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iVertOrient not an integer, or less than 0 or greater than 3. See constants, $LOW_ORIENT_VERT_* as defined in LibreOfficeWriter_Constants.au3
+;                  @Error 1 @Extended 2 Return 0 = $iVertOrient not an integer, less than 0 or greater than 3. See constants, $LOW_ORIENT_VERT_* as defined in LibreOfficeWriter_Constants.au3
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended 1 Return 0 = Failed to set Cell Vertical Orientation property.
 ;                  --Success--

@@ -1991,7 +1991,7 @@ EndFunc   ;==>_LOWriter_ImagesGetNames
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oImage not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iWidth not an Integer or less than 0.
+;                  @Error 1 @Extended 2 Return 0 = $iWidth not an integer, or less than 0.
 ;                  @Error 1 @Extended 3 Return 0 = $iColor not an Integer, less than -1 or greater than 16777215.
 ;                  @Error 1 @Extended 4 Return 0 = $bTransparent not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.

@@ -1079,7 +1079,7 @@ EndFunc   ;==>__LOWriter_CharShadow
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $bAutoKerning not a Boolean.
-;                  @Error 1 @Extended 5 Return 0 = $nKerning not a number, or less than -2 or greater than 928.8 Points.
+;                  @Error 1 @Extended 5 Return 0 = $nKerning not a number, less than -2 or greater than 928.8 Points.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $bAutoKerning
@@ -4725,7 +4725,7 @@ EndFunc   ;==>__LOWriter_ParIndent
 ;                  @Error 1 @Extended 6 Return 0 = $iOutline not an integer, less than 0 or greater than 10. See constants, $LOW_OUTLINE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 7 Return 0 = $sNumStyle not a String.
 ;                  @Error 1 @Extended 8 Return 0 = $bParLineCount not a Boolean.
-;                  @Error 1 @Extended 9 Return 0 = $iLineCountVal not an Integer or less than 0.
+;                  @Error 1 @Extended 9 Return 0 = $iLineCountVal not an integer, or less than 0.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iOutline
@@ -4804,7 +4804,7 @@ EndFunc   ;==>__LOWriter_ParOutLineAndList
 ;                  @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
 ;                  @Error 1 @Extended 6 Return 0 = $iBreakType not an integer, less than 0 or greater than 6. See Constants, $LOW_BREAK_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 7 Return 0 = $sPageStyle not a String.
-;                  @Error 1 @Extended 8 Return 0 = $iPgNumOffSet not an Integer or less than 0.
+;                  @Error 1 @Extended 8 Return 0 = $iPgNumOffSet not an integer, or less than 0.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iBreakType
@@ -4875,7 +4875,7 @@ EndFunc   ;==>__LOWriter_ParPageBreak
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                  @Error 1 @Extended 4 Return 0 = $iWidth not an integer or less than 0.
+;                  @Error 1 @Extended 4 Return 0 = $iWidth not an integer, or less than 0.
 ;                  @Error 1 @Extended 5 Return 0 = $iColor not an integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 6 Return 0 = $bTransparent not a Boolean.
 ;                  @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
