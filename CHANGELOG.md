@@ -414,7 +414,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- LibreOfficeCalc.au3
 - Individual Calc Element Files
 	- LibreOfficeCalc_Cell.au3
-	- LibreOfficeCalc_CellStyle.au3
+	- ~~LibreOfficeCalc_CellStyle.au3~~
 	- LibreOfficeCalc_Comments.au3
 	- LibreOfficeCalc_Constants.au3
 	- LibreOfficeCalc_Cursor.au3
@@ -443,6 +443,30 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_CellShadow
 	- _LOCalc_CellStrikeOut
 	- _LOCalc_CellString
+	- _LOCalc_CellStyleBackColor
+	- _LOCalc_CellStyleBorderColor
+	- _LOCalc_CellStyleBorderPadding
+	- _LOCalc_CellStyleBorderStyle
+	- _LOCalc_CellStyleBorderWidth
+	- _LOCalc_CellStyleCreate
+	- _LOCalc_CellStyleDelete
+	- _LOCalc_CellStyleEffect
+	- _LOCalc_CellStyleExists
+	- _LOCalc_CellStyleFont
+	- _LOCalc_CellStyleFontColor
+	- _LOCalc_CellStyleGetObj
+	- _LOCalc_CellStyleNumberFormat
+	- _LOCalc_CellStyleOrganizer
+	- _LOCalc_CellStyleOverline
+	- _LOCalc_CellStyleProtection
+	- _LOCalc_CellStyleSet
+	- _LOCalc_CellStylesGetNames
+	- _LOCalc_CellStyleShadow
+	- _LOCalc_CellStyleStrikeOut
+	- _LOCalc_CellStyleTextAlign
+	- _LOCalc_CellStyleTextOrient
+	- _LOCalc_CellStyleTextProperties
+	- _LOCalc_CellStyleUnderline
 	- _LOCalc_CellTextAlign
 	- _LOCalc_CellTextOrient
 	- _LOCalc_CellTextProperties
@@ -545,31 +569,6 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangeSortAlt
 	- _LOCalc_RangeValidation
 	- _LOCalc_RangeValidationSettings
-- Cell Style Formatting Functions and Examples
-	- _LOCalc_CellStyleBackColor
-	- _LOCalc_CellStyleBorderColor
-	- _LOCalc_CellStyleBorderPadding
-	- _LOCalc_CellStyleBorderStyle
-	- _LOCalc_CellStyleBorderWidth
-	- _LOCalc_CellStyleCreate
-	- _LOCalc_CellStyleDelete
-	- _LOCalc_CellStyleEffect
-	- _LOCalc_CellStyleExists
-	- _LOCalc_CellStyleFont
-	- _LOCalc_CellStyleFontColor
-	- _LOCalc_CellStyleGetObj
-	- _LOCalc_CellStyleNumberFormat
-	- _LOCalc_CellStyleOrganizer
-	- _LOCalc_CellStyleOverline
-	- _LOCalc_CellStyleProtection
-	- _LOCalc_CellStyleSet
-	- _LOCalc_CellStylesGetNames
-	- _LOCalc_CellStyleShadow
-	- _LOCalc_CellStyleStrikeOut
-	- _LOCalc_CellStyleTextAlign
-	- _LOCalc_CellStyleTextOrient
-	- _LOCalc_CellStyleTextProperties
-	- _LOCalc_CellStyleUnderline
 - Comment Functions and Examples.
 	- _LOCalc_CommentAdd
 	- _LOCalc_CommentAreaColor
@@ -946,6 +945,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_CommentSize
 - `_LOCalc_DocRedoCurActionTitle` to only have one Success return, either with an empty String or the Current Redo Action Title.
 - `_LOCalc_DocUndoCurActionTitle` to only have one Success return, either with an empty String or the Current Undo Action Title.
+- Merged LibreOfficeCalc_CellStyle into LibreOfficeCalc_Cell.
 
 #### Removed
 
