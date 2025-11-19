@@ -1306,6 +1306,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Made Shape insertion work better.
 - `_LOWriter_DocRedoCurActionTitle` to only have one Success return, either with an empty String or the Current Redo Action Title.
 - `_LOWriter_DocUndoCurActionTitle` to only have one Success return, either with an empty String or the Current Undo Action Title.
+- Combined several Gradient examples.
 
 #### Fixed
 
