@@ -4998,7 +4998,7 @@ EndFunc   ;==>_LOWriter_FormConListBoxData
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The array called for $asList should be a single dimension array, with one List entry as a String, per array element.
-;                  The array called for $aiDefaultSel should be a single dimension array, with one integer value, corresponding to the position in the $asList array, per array element, to indicate which value(s) is/are default.
+;                  The array called for $aiDefaultSel should be a single dimension array, with one Integer value, corresponding to the position in the $asList array, per array element, to indicate which value(s) is/are default.
 ;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
@@ -5339,8 +5339,8 @@ EndFunc   ;==>_LOWriter_FormConListBoxGetCount
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current selection(s) of the List Box. See remarks.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: The array called for $aiSelection should be a single dimension array, with one integer value, corresponding to the position in the List box value array, per array element, to indicate which value(s) is/are selected.
-;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current Selection(s) of the List Box. If $bReturnValue is false, the return will be a single dimension array with each element containing an integer indicating which List Box value is selected, else if $bReturnValue is True, a single dimension array will be returned, with each element containing a selected value.
+; Remarks .......: The array called for $aiSelection should be a single dimension array, with one Integer value, corresponding to the position in the List box value array, per array element, to indicate which value(s) is/are selected.
+;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current Selection(s) of the List Box. If $bReturnValue is False, the return will be a single dimension array with each element containing an Integer indicating which List Box value is selected, else if $bReturnValue is True, a single dimension array will be returned, with each element containing a selected value.
 ;                  Call $aiSelection with Default keyword to reset the value to default.
 ; Related .......: _LOWriter_FormConListBoxGeneral, _LOWriter_FormConListBoxData, _LOWriter_FormConListBoxGetCount
 ; Link ..........:
@@ -10723,7 +10723,7 @@ EndFunc   ;==>_LOWriter_FormConTableConListBoxData
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The array called for $asList should be a single dimension array, with one List entry as a String, per array element.
-;                  The array called for $aiDefaultSel should be a single dimension array, with one integer value, corresponding to the position in the $asList array, per array element, to indicate which value(s) is/are default.
+;                  The array called for $aiDefaultSel should be a single dimension array, with one Integer value, corresponding to the position in the $asList array, per array element, to indicate which value(s) is/are default.
 ;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.

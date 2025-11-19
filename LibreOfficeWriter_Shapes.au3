@@ -1260,7 +1260,7 @@ EndFunc   ;==>_LOWriter_ShapeInsert
 ; Remarks .......: Libre Office has no setting for $bSync, so I have made a manual version of it in this function. It only accepts True, and must be called with True each time you want it to synchronize.
 ;                  When retrieving the current settings, $bSync will be a Boolean value of whether the Start Arrowhead settings are currently equal to the End Arrowhead setting values.
 ;                  Both $vStartStyle and $vEndStyle accept a String or an Integer because there is the possibility of a custom Arrowhead being available the user may want to use.
-;                  When retrieving the current settings, both $vStartStyle and $vEndStyle could be either an integer or a String. It will be a String if the current Arrowhead is a custom Arrowhead, else an Integer, corresponding to one of the constants, $LOW_SHAPE_LINE_ARROW_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  When retrieving the current settings, both $vStartStyle and $vEndStyle could be either an Integer or a String. It will be a String if the current Arrowhead is a custom Arrowhead, else an Integer, corresponding to one of the constants, $LOW_SHAPE_LINE_ARROW_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......:
@@ -1401,7 +1401,7 @@ EndFunc   ;==>_LOWriter_ShapeLineArrowStyles
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $vStyle accepts a String or an Integer because there is the possibility of a custom Line Style being available that the user may want to use.
-;                  When retrieving the current settings, $vStyle could be either an integer or a String. It will be a String if the current Line Style is a custom Line Style, else an Integer, corresponding to one of the constants, $LOW_SHAPE_LINE_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  When retrieving the current settings, $vStyle could be either an Integer or a String. It will be a String if the current Line Style is a custom Line Style, else an Integer, corresponding to one of the constants, $LOW_SHAPE_LINE_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ShapeInsert, _LOWriter_ShapeGetObjByName, _LO_ConvertColorFromLong, _LO_ConvertColorToLong

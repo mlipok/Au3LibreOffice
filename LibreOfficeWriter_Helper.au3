@@ -345,9 +345,9 @@ EndFunc   ;==>_LOWriter_DateFormatKeyGetString
 ;                  @Error 0 @Extended ? Return Array = Success. Returning a 2 or three column Array, depending on current $bIsUser setting. See remarks. @Extended is set to the number of Keys returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Column One (Array[0][0]) will contain the Format Key integer,
+; Remarks .......: Column One (Array[0][0]) will contain the Format Key Integer,
 ;                  Column two (Array[0][1]) will contain the Format String
-;                  And if $bIsUser is called with True, Column Three (Array[0][2]) will contain a Boolean, True if the Format Key is User created, else false.
+;                  And if $bIsUser is called with True, Column Three (Array[0][2]) will contain a Boolean, True if the Format Key is User created, else False.
 ; Related .......: _LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeyDelete, _LOWriter_DateFormatKeyGetString
 ; Link ..........:
 ; Example .......: Yes
@@ -411,14 +411,14 @@ EndFunc   ;==>_LOWriter_DateFormatKeysGetList
 ; Name ..........: _LOWriter_DateStructCreate
 ; Description ...: Create a Date Structure for inserting a Date into certain other functions.
 ; Syntax ........: _LOWriter_DateStructCreate([$iYear = Null[, $iMonth = Null[, $iDay = Null[, $iHours = Null[, $iMinutes = Null[, $iSeconds = Null[, $iNanoSeconds = Null[, $bIsUTC = Null]]]]]]]])
-; Parameters ....: $iYear               - [optional] an integer value. Default is Null. The Year, as a 4 digit integer.
-;                  $iMonth              - [optional] an integer value (0-12). Default is Null. The Month, as a 2 digit integer. Call with 0 for Void date.
-;                  $iDay                - [optional] an integer value (0-31). Default is Null. The Day, as a 2 digit integer. Call with 0 for Void date.
-;                  $iHours              - [optional] an integer value (0-23). Default is Null. The Hour, as a 2 digit integer.
-;                  $iMinutes            - [optional] an integer value (0-59). Default is Null. Minutes, as a 2 digit integer.
-;                  $iSeconds            - [optional] an integer value (0-59). Default is Null. Seconds, as a 2 digit integer.
-;                  $iNanoSeconds        - [optional] an integer value (0-999,999,999). Default is Null. Nano-Second, as an integer.
-;                  $bIsUTC              - [optional] a boolean value. Default is Null. If true: time zone is UTC Else false: unknown time zone. Libre Office version 4.1 and up.
+; Parameters ....: $iYear               - [optional] an integer value. Default is Null. The Year, as a 4 digit Integer.
+;                  $iMonth              - [optional] an integer value (0-12). Default is Null. The Month, as a 2 digit Integer. Call with 0 for Void date.
+;                  $iDay                - [optional] an integer value (0-31). Default is Null. The Day, as a 2 digit Integer. Call with 0 for Void date.
+;                  $iHours              - [optional] an integer value (0-23). Default is Null. The Hour, as a 2 digit Integer.
+;                  $iMinutes            - [optional] an integer value (0-59). Default is Null. Minutes, as a 2 digit Integer.
+;                  $iSeconds            - [optional] an integer value (0-59). Default is Null. Seconds, as a 2 digit Integer.
+;                  $iNanoSeconds        - [optional] an integer value (0-999,999,999). Default is Null. Nano-Second, as an Integer.
+;                  $bIsUTC              - [optional] a boolean value. Default is Null. If True: time zone is UTC Else False: unknown time zone. Libre Office version 4.1 and up.
 ; Return values .: Success: Structure.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -535,14 +535,14 @@ EndFunc   ;==>_LOWriter_DateStructCreate
 ; Description ...: Set or retrieve Date Structure settings.
 ; Syntax ........: _LOWriter_DateStructModify(ByRef $tDateStruct[, $iYear = Null[, $iMonth = Null[, $iDay = Null[, $iHours = Null[, $iMinutes = Null[, $iSeconds = Null[, $iNanoSeconds = Null[, $bIsUTC = Null]]]]]]]])
 ; Parameters ....: $tDateStruct         - [in/out] a dll struct value. The Date Structure to modify, returned from a _LOWriter_DateStructCreate, or setting retrieval function. Structure will be directly modified.
-;                  $iYear               - [optional] an integer value. Default is Null. The Year, as a 4 digit integer.
-;                  $iMonth              - [optional] an integer value (0-12). Default is Null. The Month, as a 2 digit integer. Call with 0 for Void date.
-;                  $iDay                - [optional] an integer value (0-31). Default is Null. The Day, as a 2 digit integer. Call with 0 for Void date.
-;                  $iHours              - [optional] an integer value (0-23). Default is Null. The Hour, as a 2 digit integer.
-;                  $iMinutes            - [optional] an integer value (0-59). Default is Null. Minutes, as a 2 digit integer.
-;                  $iSeconds            - [optional] an integer value (0-59). Default is Null. Seconds, as a 2 digit integer.
-;                  $iNanoSeconds        - [optional] an integer value (0-999,999,999). Default is Null. Nano-Second, as an integer.
-;                  $bIsUTC              - [optional] a boolean value. Default is Null. If true: time zone is UTC Else false: unknown time zone. Libre Office version 4.1 and up.
+;                  $iYear               - [optional] an integer value. Default is Null. The Year, as a 4 digit Integer.
+;                  $iMonth              - [optional] an integer value (0-12). Default is Null. The Month, as a 2 digit Integer. Call with 0 for Void date.
+;                  $iDay                - [optional] an integer value (0-31). Default is Null. The Day, as a 2 digit Integer. Call with 0 for Void date.
+;                  $iHours              - [optional] an integer value (0-23). Default is Null. The Hour, as a 2 digit Integer.
+;                  $iMinutes            - [optional] an integer value (0-59). Default is Null. Minutes, as a 2 digit Integer.
+;                  $iSeconds            - [optional] an integer value (0-59). Default is Null. Seconds, as a 2 digit Integer.
+;                  $iNanoSeconds        - [optional] an integer value (0-999,999,999). Default is Null. Nano-Second, as an Integer.
+;                  $bIsUTC              - [optional] a boolean value. Default is Null. If True: time zone is UTC Else False: unknown time zone. Libre Office version 4.1 and up.
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1165,8 +1165,8 @@ EndFunc   ;==>_LOWriter_FindFormatModifyIndent
 ; Syntax ........: _LOWriter_FindFormatModifyOverline(ByRef $atFormat[, $iOverLineStyle = Null[, $bWordOnly = Null[, $bOLHasColor = Null[, $iOLColor = Null]]]])
 ; Parameters ....: $atFormat            - [in/out] an array of structs. A Find Format Array of Settings to modify. Array will be directly modified.
 ;                  $iOverLineStyle      - [optional] an integer value (0-18). Default is Null. The style of the Overline line, see constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3. See remarks. Overline style must be set before any of the other parameters can be searched for.
-;                  $bWordOnly           - [optional] a boolean value. Default is Null. If true, white spaces are not Overlined. See remarks.
-;                  $bOLHasColor         - [optional] a boolean value. Default is Null. If True, the Overline is colored, must be set to true in order to set the Overline color.
+;                  $bWordOnly           - [optional] a boolean value. Default is Null. If True, white spaces are not Overlined. See remarks.
+;                  $bOLHasColor         - [optional] a boolean value. Default is Null. If True, the Overline is colored, must be set to True in order to set the Overline color.
 ;                  $iOLColor            - [optional] an integer value (-1-16777215). Default is Null. The color of the Overline, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1183,7 +1183,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyIndent
 ; Remarks .......: Call any optional parameter with Null keyword to skip it.
 ;                  Call any parameter you wish to delete from an already existing Find Format Array with the Default Keyword.
 ;                  If you do not have a pre-existing FindFormat Array, create and pass an Array with 0 elements. (Local $aArray[0])
-;                  $bWordOnly applies to Underline, Overline and Strikeout, regardless of which is set to true, one setting applies to all.
+;                  $bWordOnly applies to Underline, Overline and Strikeout, regardless of which is set to True, one setting applies to all.
 ;                  Underline Constants are used for Overline line style.
 ; Related .......: _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LOWriter_DocFindAll, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll, _LOWriter_DocReplaceAllInRange
 ; Link ..........:
@@ -1344,8 +1344,8 @@ EndFunc   ;==>_LOWriter_FindFormatModifyPageBreak
 ;                  0 is the normal $iSubScript or $iSuperScript setting.
 ;                  The way LibreOffice is set up Super/Subscript are set in the same setting, Superscript is a positive number from 1 to 100 (percentage), Subscript is a negative number set to -1 to -100 percentage.
 ;                  For the user's convenience this function accepts both positive and negative numbers for Subscript, if a positive number is called for Subscript, it is automatically changed to a negative.
-;                  Automatic Superscript has a integer value of 14000, Auto Subscript has a integer value of -14000. There is no settable setting of Automatic Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two separate parameters to be able to determine if the user wants to automatically set Superscript or Subscript.
-;                  If you set both Auto Superscript to True and Auto Subscript to True, or $iSuperScript to an integer and $iSubScript to an integer, Subscript will be set as it is the last in the line to be set in this function, and thus will over-write any Superscript settings.
+;                  Automatic Superscript has a Integer value of 14000, Auto Subscript has a Integer value of -14000. There is no settable setting of Automatic Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two separate parameters to be able to determine if the user wants to automatically set Superscript or Subscript.
+;                  If you set both Auto Superscript to True and Auto Subscript to True, or $iSuperScript to an Integer and $iSubScript to an Integer, Subscript will be set as it is the last in the line to be set in this function, and thus will over-write any Superscript settings.
 ; Related .......: _LOWriter_DocFindAll, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll _LOWriter_DocReplaceAllInRange
 ; Link ..........:
 ; Example .......: Yes
@@ -1514,7 +1514,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyRotateScaleSpace
 ; Parameters ....: $atFormat            - [in/out] an array of structs. A Find Format Array of Settings to modify. Array will be directly modified.
 ;                  $iAbovePar           - [optional] an integer value (0-10008). Default is Null. The Space above a paragraph, in Hundredths of a Millimeter (100th MM).
 ;                  $iBelowPar           - [optional] an integer value (0-10008). Default is Null. The Space below a paragraph, in Hundredths of a Millimeter (100th MM).
-;                  $bAddSpace           - [optional] a boolean value. Default is Null. If true, the top and bottom margins of the paragraph should not be applied when the previous and next paragraphs have the same style. Libre Office version 3.6 and up.
+;                  $bAddSpace           - [optional] a boolean value. Default is Null. If True, the top and bottom margins of the paragraph should not be applied when the previous and next paragraphs have the same style. Libre Office version 3.6 and up.
 ;                  $iLineSpcMode        - [optional] an integer value (0-3). Default is Null. The type of line spacing of a paragraph. See Constants, $LOW_LINE_SPC_MODE_* as defined in LibreOfficeWriter_Constants.au3, also notice min and max values for each. Must set both $iLineSpcMode and $iLineSpcHeight to be able to search either.
 ;                  $iLineSpcHeight      - [optional] an integer value. Default is Null. This value specifies the spacing of the lines. See Remarks for Minimum and Max values. Must set both $iLineSpcMode and $iLineSpcHeight to be able to search either.
 ; Return values .: Success: 1
@@ -1634,7 +1634,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifySpacing
 ; Description ...: Modify or Add Find Format Strikeout Settings.
 ; Syntax ........: _LOWriter_FindFormatModifyStrikeout(ByRef $atFormat[, $bWordOnly = Null[, $bStrikeOut = Null[, $iStrikeLineStyle = Null]]])
 ; Parameters ....: $atFormat            - [in/out] an array of structs. A Find Format Array of Settings to modify. Array will be directly modified.
-;                  $bWordOnly           - [optional] a boolean value. Default is Null. If true, white spaces are not Overlined. See remarks.
+;                  $bWordOnly           - [optional] a boolean value. Default is Null. If True, white spaces are not Overlined. See remarks.
 ;                  $bStrikeOut          - [optional] a boolean value. Default is Null. If True, a strikeout is applied to characters.
 ;                  $iStrikeLineStyle    - [optional] an integer value (0-6). Default is Null. The Strikeout Line Style, see constants, $LOW_STRIKEOUT_* as defined in LibreOfficeWriter_Constants.au3..
 ; Return values .: Success: 1
@@ -1651,7 +1651,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifySpacing
 ; Remarks .......: Call any optional parameter with Null keyword to skip it.
 ;                  Call any parameter you wish to delete from an already existing Find Format Array with the Default Keyword.
 ;                  If you do not have a pre-existing FindFormat Array, create and pass an Array with 0 elements. (Local $aArray[0])
-;                  $bWordOnly applies to Underline, Overline and Strikeout, regardless of which is set to true, one setting applies to all.
+;                  $bWordOnly applies to Underline, Overline and Strikeout, regardless of which is set to True, one setting applies to all.
 ; Related .......: _LOWriter_DocFindAll, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll _LOWriter_DocReplaceAllInRange
 ; Link ..........:
 ; Example .......: Yes
@@ -1785,8 +1785,8 @@ EndFunc   ;==>_LOWriter_FindFormatModifyTxtFlowOpt
 ; Syntax ........: _LOWriter_FindFormatModifyUnderline(ByRef $atFormat[, $iUnderLineStyle = Null[, $bWordOnly = Null[, $bULHasColor = Null[, $iULColor = Null]]]])
 ; Parameters ....: $atFormat            - [in/out] an array of structs. A Find Format Array of Settings to modify. Array will be directly modified.
 ;                  $iUnderLineStyle     - [optional] an integer value (0-18). Default is Null. The line style of the Underline, see constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3. Underline style must be set before any of the other parameters can be searched for.
-;                  $bWordOnly           - [optional] a boolean value. Default is Null. If true, white spaces are not underlined. See remarks.
-;                  $bULHasColor         - [optional] a boolean value. Default is Null. If True, the underline is colored, must be set to true in order to set the underline color.
+;                  $bWordOnly           - [optional] a boolean value. Default is Null. If True, white spaces are not underlined. See remarks.
+;                  $bULHasColor         - [optional] a boolean value. Default is Null. If True, the underline is colored, must be set to True in order to set the underline color.
 ;                  $iULColor            - [optional] an integer value (-1-16777215). Default is Null. The color of the underline, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.. $LO_COLOR_OFF(-1) is automatic color mode.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1803,7 +1803,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyTxtFlowOpt
 ; Remarks .......: Call any optional parameter with Null keyword to skip it.
 ;                  Call any parameter you wish to delete from an already existing Find Format Array with the Default Keyword.
 ;                  If you do not have a pre-existing FindFormat Array, create and pass an Array with 0 elements. (Local $aArray[0])
-;                  $bWordOnly applies to Underline, Overline and Strikeout, regardless of which is set to true, one setting applies to all.
+;                  $bWordOnly applies to Underline, Overline and Strikeout, regardless of which is set to True, one setting applies to all.
 ; Related .......: _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LOWriter_DocFindAll, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll, _LOWriter_DocReplaceAllInRange
 ; Link ..........:
 ; Example .......: Yes
@@ -2466,9 +2466,9 @@ EndFunc   ;==>_LOWriter_FormatKeyGetString
 ;                  @Error 0 @Extended ? Return Array = Success. Returning a 2 or three column Array, depending on current $bIsUser setting. See remarks. @Extended is set to the number of Keys returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Column One (Array[0][0]) will contain the Format Key integer,
+; Remarks .......: Column One (Array[0][0]) will contain the Format Key Integer,
 ;                  Column two (Array[0][1]) will contain the Format Key String,
-;                  If $bIsUser is called with True, Column Three (Array[0][2]) will contain a Boolean, True if the Format Key is User created, else false.
+;                  If $bIsUser is called with True, Column Three (Array[0][2]) will contain a Boolean, True if the Format Key is User created, else False.
 ; Related .......: _LOWriter_FormatKeyDelete, _LOWriter_FormatKeyGetString, _LOWriter_FormatKeyGetStandard
 ; Link ..........:
 ; Example .......: Yes
@@ -2686,7 +2686,7 @@ EndFunc   ;==>_LOWriter_GradientMulticolorModify
 ;                  $bWholeWord          - [optional] a boolean value. Default is False. If True, only complete words will be found.
 ;                  $bRegExp             - [optional] a boolean value. Default is False. If True, the search string is evaluated as a regular expression.
 ;                  $bStyles             - [optional] a boolean value. Default is False. If True, the string is considered a Paragraph Style name, and the search will return any paragraph utilizing the specified name, EXCEPT if you input Format properties to search for, then setting this to True causes the search to search both for direct formatting matching those properties and also Paragraph/Character styles that contain matching properties.
-;                  $bSearchPropValues   - [optional] a boolean value. Default is False. If True, any formatting properties searched for are matched based on their value, else if false, the search only looks for their existence. See Remarks.
+;                  $bSearchPropValues   - [optional] a boolean value. Default is False. If True, any formatting properties searched for are matched based on their value, else if False, the search only looks for their existence. See Remarks.
 ; Return values .: Success: Object.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2704,7 +2704,7 @@ EndFunc   ;==>_LOWriter_GradientMulticolorModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $bSearchPropValues is equivalent to the difference in selecting "Format" options in Libre Office's search box and "Attributes".
-;                  Calling $bSearchPropValues with True, means that the search will look for matches using the specified property AND having the specified value, such as Character Weight, Bold, only matches that have Character weight of Bold will be returned, whereas if $bSearchPropValues is called with False, the search only looks for matches that have the specified property, regardless of its value. Such as Character weight, would match Bold, Semi-Bold, etc. From my understanding, the search is based on anything directly formatted unless $bStyles is also true.
+;                  Calling $bSearchPropValues with True, means that the search will look for matches using the specified property AND having the specified value, such as Character Weight, Bold, only matches that have Character weight of Bold will be returned, whereas if $bSearchPropValues is called with False, the search only looks for matches that have the specified property, regardless of its value. Such as Character weight, would match Bold, Semi-Bold, etc. From my understanding, the search is based on anything directly formatted unless $bStyles is also True.
 ;                  The returned Search Descriptor is only good for the Document it was created by, it WILL NOT work for other documents.
 ; Related .......: _LOWriter_SearchDescriptorModify, _LOWriter_SearchDescriptorSimilarityModify
 ; Link ..........:
@@ -2749,7 +2749,7 @@ EndFunc   ;==>_LOWriter_SearchDescriptorCreate
 ;                  $bWholeWord          - [optional] a boolean value. Default is False. If True, only complete words will be found.
 ;                  $bRegExp             - [optional] a boolean value. Default is False. If True, the search string is evaluated as a regular expression. Cannot be called with True if Similarity Search is set to True.
 ;                  $bStyles             - [optional] a boolean value. Default is False. If True, the string is considered a Paragraph Style name, and the search will return any paragraph utilizing the specified name, EXCEPT if you input Format properties to search for, then setting this to True causes the search to search both for direct formatting matching those properties and also Paragraph/Character styles that contain matching properties.
-;                  $bSearchPropValues   - [optional] a boolean value. Default is False. If True, any formatting properties searched for are matched based on their value, else if false, the search only looks for their existence. See Remarks.
+;                  $bSearchPropValues   - [optional] a boolean value. Default is False. If True, any formatting properties searched for are matched based on their value, else if False, the search only looks for their existence. See Remarks.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2769,7 +2769,7 @@ EndFunc   ;==>_LOWriter_SearchDescriptorCreate
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $bSearchPropValues is equivalent to the difference in selecting "Format" options in Libre Office's search box and "Attributes".
-;                  Calling $bSearchPropValues with True, means that the search will look for matches using the specified property AND having the specified value, such as Character Weight, Bold, only matches that have Character weight of Bold will be returned, whereas if $bSearchPropValues is called with False, the search only looks for matches that have the specified property, regardless of its value. Such as Character weight, would match Bold, Semi-Bold, etc. From my understanding, the search is based on anything directly formatted unless $bStyles is also true.
+;                  Calling $bSearchPropValues with True, means that the search will look for matches using the specified property AND having the specified value, such as Character Weight, Bold, only matches that have Character weight of Bold will be returned, whereas if $bSearchPropValues is called with False, the search only looks for matches that have the specified property, regardless of its value. Such as Character weight, would match Bold, Semi-Bold, etc. From my understanding, the search is based on anything directly formatted unless $bStyles is also True.
 ;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_SearchDescriptorCreate, _LOWriter_SearchDescriptorSimilarityModify

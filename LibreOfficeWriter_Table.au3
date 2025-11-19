@@ -1101,8 +1101,8 @@ EndFunc   ;==>_LOWriter_TableGetCellObjByName
 ;                  If Both $iToColumn and $iToRow are uncalled, a single cell will be returned.
 ;                  Rows and Columns in a Table are 0 based, meaning they start their count at 0. the first cell is row 0 column 0.
 ;                  To retrieve a single cell, only call the $iColumn and $iRow parameters.
-;                  To retrieve a cell range, call $iColumn with the lowest integer value column and then $iToColumn with the highest integer value column desired. Same for $iRow and $iToRow.
-;                  You may request the same row in both $iRow and $iToRow, but neither $iToRow or $iToColumn may be a lower integer value than $iRow and $iColumn respectively.
+;                  To retrieve a cell range, call $iColumn with the lowest Integer value column and then $iToColumn with the highest Integer value column desired. Same for $iRow and $iToRow.
+;                  You may request the same row in both $iRow and $iToRow, but neither $iToRow or $iToColumn may be a lower Integer value than $iRow and $iColumn respectively.
 ; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_TableColumnGetCount, _LOWriter_TableRowGetCount
 ; Link ..........:
 ; Example .......: Yes

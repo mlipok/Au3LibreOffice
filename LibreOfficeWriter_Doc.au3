@@ -393,7 +393,7 @@ EndFunc   ;==>_LOWriter_DocBookmarksGetNames
 ; Description ...: Close an existing Writer Document, returning its save path if applicable.
 ; Syntax ........: _LOWriter_DocClose(ByRef $oDoc[, $bSaveChanges = True[, $sSaveName = ""[, $bDeliverOwnership = True]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $bSaveChanges        - [optional] a boolean value. Default is True. If true, saves changes if any were made before closing. See remarks.
+;                  $bSaveChanges        - [optional] a boolean value. Default is True. If True, saves changes if any were made before closing. See remarks.
 ;                  $sSaveName           - [optional] a string value. Default is "". The file name to save the file as, if the file hasn't been saved before. See Remarks.
 ;                  $bDeliverOwnership   - [optional] a boolean value. Default is True. If True, deliver ownership of the document Object from the script to LibreOffice, recommended is True.
 ; Return values .: Success: String
@@ -413,7 +413,7 @@ EndFunc   ;==>_LOWriter_DocBookmarksGetNames
 ;                  @Error 0 @Extended 3 Return String = Success, Document was successfully closed, document either had no changes to save, or $bSaveChanges was called with False. If document had a save location, or if document was saved to a location, it is returned, else an empty string is returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: If $bSaveChanges is true and the document hasn't been saved yet, the document is saved to the desktop.
+; Remarks .......: If $bSaveChanges is True and the document hasn't been saved yet, the document is saved to the desktop.
 ;                  If $sSaveName is undefined, it is saved as an .odt document to the desktop, named Year-Month-Day_Hour-Minute-Second.odt.
 ;                  $sSaveName may be a name only without an extension, in which case the file will be saved in .odt format. Or you may define your own format by including an extension, such as "Test.docx"
 ; Related .......: _LOWriter_DocOpen, _LOWriter_DocConnect, _LOWriter_DocCreate, _LOWriter_DocSaveAs, _LOWriter_DocSave
@@ -887,7 +887,7 @@ EndFunc   ;==>_LOWriter_DocCreate
 ; Description ...: Create a TextCursor Object for future Textcursor related functional use.
 ; Syntax ........: _LOWriter_DocCreateTextCursor(ByRef $oDoc[, $bCreateAtEnd = True[, $bCreateAtViewCursor = False]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or_LOWriter_DocCreate function.
-;                  $bCreateAtEnd        - [optional] a boolean value. Default is True. If true, creates the new cursor at the end of the Document. Else cursor is created at the beginning.
+;                  $bCreateAtEnd        - [optional] a boolean value. Default is True. If True, creates the new cursor at the end of the Document. Else cursor is created at the beginning.
 ;                  $bCreateAtViewCursor - [optional] a boolean value. Default is False. If True, create the Text cursor at the document's View Cursor. See Remarks
 ; Return values .: Success: Object.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1646,7 +1646,7 @@ EndFunc   ;==>_LOWriter_DocFindNext
 ;                  @Error 0 @Extended 1 Return Object = Success. See Remarks.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: If more than one parameter is called with true, an array is returned with the requested objects in the order that the True parameters are listed. Else the requested object is returned.
+; Remarks .......: If more than one parameter is called with True, an array is returned with the requested objects in the order that the True parameters are listed. Else the requested object is returned.
 ;                  If same content on left and right and first pages is active for the requested page style, you only need to use the $bFooter parameter, the others are only for when same content on first page or same content on left and right pages is deactivated.
 ; Related .......: _LOWriter_PageStyleGetObj, _LOWriter_PageStyleCreate, _LOWriter_DocInsertString
 ; Link ..........:
@@ -2348,7 +2348,7 @@ EndFunc   ;==>_LOWriter_DocGetName
 ; Description ...: Returns a Document's current save path.
 ; Syntax ........: _LOWriter_DocGetPath(ByRef $oDoc[, $bReturnLibreURL = False])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $bReturnLibreURL     - [optional] a boolean value. Default is False. If True, returns a path in Libre Office URL format, else false returns a regular Windows path.
+;                  $bReturnLibreURL     - [optional] a boolean value. Default is False. If True, returns a path in Libre Office URL format, else False returns a regular Windows path.
 ; Return values .: Success: String
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2509,7 +2509,7 @@ EndFunc   ;==>_LOWriter_DocHasPath
 ;                  @Error 0 @Extended 1 Return Object = Success. See Remarks.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: If more than one parameter is called with true, an array is returned with the requested objects in the order that the True parameters are listed. Else the requested object is returned.
+; Remarks .......: If more than one parameter is called with True, an array is returned with the requested objects in the order that the True parameters are listed. Else the requested object is returned.
 ;                  If same content on left and right and first pages is active for the requested page style, you only need to use the $bHeader parameter, the others are only for when same content on first page or same content on left and right pages is deactivated.
 ; Related .......: _LOWriter_PageStyleGetObj, _LOWriter_PageStyleCreate, _LOWriter_DocInsertString
 ; Link ..........:
@@ -2560,7 +2560,7 @@ EndFunc   ;==>_LOWriter_DocHeaderGetTextCursor
 ;                  $sLinkText           - a string value. Link text you want displayed (Insert the URL here too if you want the link inserted raw.)
 ;                  $sLinkAddress        - a string value. A URL.
 ;                  $bInsertAtViewCursor - [optional] a boolean value. Default is False. If True, inserts the hyperlink at the ViewCursor's position. See Remarks.
-;                  $bOverwrite          - [optional] a boolean value. Default is False. If true, overwrites any data selected by the $oCursor.
+;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, overwrites any data selected by the $oCursor.
 ; Return values .: Success: 1.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2833,7 +2833,7 @@ EndFunc   ;==>_LOWriter_DocIsReadOnly
 ; Description ...: Maximize or restore a document.
 ; Syntax ........: _LOWriter_DocMaximize(ByRef $oDoc[, $bMaximize = Null])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $bMaximize           - [optional] a boolean value. Default is Null. If True, document window is maximized, else if false, document is restored to its previous size and location.
+;                  $bMaximize           - [optional] a boolean value. Default is Null. If True, document window is maximized, else if False, document is restored to its previous size and location.
 ; Return values .: Success: 1 or Boolean.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2869,7 +2869,7 @@ EndFunc   ;==>_LOWriter_DocMaximize
 ; Description ...: Minimize or restore a document.
 ; Syntax ........: _LOWriter_DocMinimize(ByRef $oDoc[, $bMinimize = Null])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $bMinimize           - [optional] a boolean value. Default is Null. If True, document window is minimized, else if false, document is restored to its previous size and location.
+;                  $bMinimize           - [optional] a boolean value. Default is Null. If True, document window is minimized, else if False, document is restored to its previous size and location.
 ; Return values .: Success: 1 or Boolean
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2906,10 +2906,10 @@ EndFunc   ;==>_LOWriter_DocMinimize
 ; Syntax ........: _LOWriter_DocOpen($sFilePath[, $bConnectIfOpen = True[, $bHidden = Null[, $bReadOnly = Null[, $sPassword = Null[, $bLoadAsTemplate = Null[, $sFilterName = Null]]]]]])
 ; Parameters ....: $sFilePath           - a string value. Full path and filename of the file to be opened.
 ;                  $bConnectIfOpen      - [optional] a boolean value. Default is True(Connect). Whether to connect to the requested document if it is already open. See remarks.
-;                  $bHidden             - [optional] a boolean value. Default is Null. If true, opens the document invisibly.
-;                  $bReadOnly           - [optional] a boolean value. Default is Null. If true, opens the document as read-only.
+;                  $bHidden             - [optional] a boolean value. Default is Null. If True, opens the document invisibly.
+;                  $bReadOnly           - [optional] a boolean value. Default is Null. If True, opens the document as read-only.
 ;                  $sPassword           - [optional] a string value. Default is Null. The password that was used to read-protect the document, if any.
-;                  $bLoadAsTemplate     - [optional] a boolean value. Default is Null. If true, opens the document as a Template, i.e. an untitled copy of the specified document is made instead of modifying the original document.
+;                  $bLoadAsTemplate     - [optional] a boolean value. Default is Null. If True, opens the document as a Template, i.e. an untitled copy of the specified document is made instead of modifying the original document.
 ;                  $sFilterName         - [optional] a string value. Default is Null. Name of a LibreOffice filter to use to load the specified document. LibreOffice automatically selects which to use by default.
 ; Return values .: Success: Object.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -3578,8 +3578,8 @@ EndFunc   ;==>_LOWriter_DocPrintMiscSettings
 ;                  $bBlackOnly          - [optional] a boolean value. Default is Null. If True, prints all text in black only.
 ;                  $bLeftOnly           - [optional] a boolean value. Default is Null. If True, prints only Left(Even) pages. See remarks.
 ;                  $bRightOnly          - [optional] a boolean value. Default is Null. If True, prints only Right(Odd) pages. See remarks.
-;                  $bBackground         - [optional] a boolean value. Default is Null. If true, prints colors and objects that are inserted to the background of the page.
-;                  $bEmptyPages         - [optional] a boolean value. Default is Null. If true, automatically inserted blank pages are printed.
+;                  $bBackground         - [optional] a boolean value. Default is Null. If True, prints colors and objects that are inserted to the background of the page.
+;                  $bEmptyPages         - [optional] a boolean value. Default is Null. If True, automatically inserted blank pages are printed.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -3701,7 +3701,7 @@ EndFunc   ;==>_LOWriter_DocPrintPageSettings
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Due to slight inaccuracies in unit conversion, there may be false errors thrown while attempting to set paper size.
+; Remarks .......: Due to slight inaccuracies in unit conversion, there may be False errors thrown while attempting to set paper size.
 ;                  For some reason, setting $iPaperWidth and $iPaperHeight modifies the document page size also.
 ;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.

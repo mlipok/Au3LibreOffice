@@ -1142,7 +1142,7 @@ EndFunc   ;==>_LOWriter_PageStyleBorderWidth
 ; Description ...: Modify or retrieve Page Style Column Separator line settings.
 ; Syntax ........: _LOWriter_PageStyleColumnSeparator(ByRef $oPageStyle[, $bSeparatorOn = Null[, $iStyle = Null[, $iWidth = Null[, $iColor = Null[, $iHeight = Null[, $iPosition = Null]]]]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $bSeparatorOn        - [optional] a boolean value. Default is Null. If true, add a separator line between two or more columns.
+;                  $bSeparatorOn        - [optional] a boolean value. Default is Null. If True, add a separator line between two or more columns.
 ;                  $iStyle              - [optional] an integer value (0-3). Default is Null. The formatting style for the column separator line. See Constants, $LOW_LINE_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iWidth              - [optional] an integer value (5-180). Default is Null. The width of the separator line. Set in Hundredths of a Millimeter (100th MM).
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The separator line color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
@@ -1341,7 +1341,7 @@ EndFunc   ;==>_LOWriter_PageStyleColumnSettings
 ; Remarks .......: This function will work fine for setting AutoWidth, and Spacing values, however Width will not work the best, Spacing etc is set in plain Hundredths of a Millimeter (100th MM) values, however width is set in a relative value, and I am unable to find a way to be able to convert a specific value, such as 1" (2540 100th MM) etc, to the appropriate relative value, especially when spacing is set.
 ;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                  To set $bAutoWidth or $iGlobalSpacing you may enter any number in $iColumn as long as you are not setting width or spacing, as AutoWidth is not column specific. If you set a value for $iGlobalSpacing with $bAutoWidth set to false, the value is applied to all the columns still.
+;                  To set $bAutoWidth or $iGlobalSpacing you may enter any number in $iColumn as long as you are not setting width or spacing, as AutoWidth is not column specific. If you set a value for $iGlobalSpacing with $bAutoWidth set to False, the value is applied to all the columns still.
 ; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_UnitConvert
 ; Link ..........:
 ; Example .......: Yes
@@ -4445,7 +4445,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderShadow
 ;                  $sRefStyle           - [optional] a string value. Default is Null. The Paragraph Style to use as a reference for lining up the text on the selected Page style. To disable Page Spacing alignment, call with "".
 ;                  $bGutterOnRight      - [optional] a boolean value. Default is Null. If True, the page gutter will be placed on the right side of the page. Libre 7.2 and up.
 ;                  $bGutterAtTop        - [optional] a boolean value. Default is Null. If False, the current document's gutter will be positioned at the left of the document's pages (L.O. default) or If True, at top of the document's pages when the document is displayed.
-;                  $bBackCoversMargins  - [optional] a boolean value. Default is Null. If true, the background covers the full page, Else only inside the margins. Libre 7.2 and up.
+;                  $bBackCoversMargins  - [optional] a boolean value. Default is Null. If True, the background covers the full page, Else only inside the margins. Libre 7.2 and up.
 ;                  $sPaperTray          - [optional] a string value. Default is Null. The paper source for your printer. See remarks.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -4769,7 +4769,7 @@ EndFunc   ;==>_LOWriter_PageStyleOrganizer
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
 ;                  $iWidth              - [optional] an integer value. Default is Null. The Width of the page, may be a custom value in Hundredths of a Millimeter (100th MM), or one of the constants, $LOW_PAPER_WIDTH_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iHeight             - [optional] an integer value. Default is Null. The Height of the page, may be a custom value in Hundredths of a Millimeter (100th MM), or one of the constants, $LOW_PAPER_HEIGHT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $bLandscape          - [optional] a boolean value. Default is Null. If true, displays the page in Landscape layout.
+;                  $bLandscape          - [optional] a boolean value. Default is Null. If True, displays the page in Landscape layout.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -4911,7 +4911,7 @@ EndFunc   ;==>_LOWriter_PageStyleSet
 ; Remarks .......: If Only a Document object is input, all available Page styles will be returned.
 ;                  Else if $bUserOnly is called with True, only User-Created Page Styles are returned.
 ;                  Else if $bAppliedOnly is called with True, only Applied Page Styles are returned.
-;                  If Both are true then only User-Created Page styles that are applied are returned.
+;                  If Both are True then only User-Created Page styles that are applied are returned.
 ;                  One Page style has two separate names, Default Page Style is also internally called "Standard".
 ;                  Either name works when setting a Page Style, but on certain functions that return a Page Style Name, you may see the alternative name.
 ; Related .......: _LOWriter_PageStyleGetObj

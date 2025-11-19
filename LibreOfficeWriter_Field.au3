@@ -2967,7 +2967,7 @@ EndFunc   ;==>_LOWriter_FieldFuncHiddenParModify
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
 ;                  $sCondition          - [optional] a string value. Default is Null. The Condition to evaluate.
-;                  $sText               - [optional] a string value. Default is Null. The Text to show if the condition evaluates as true.
+;                  $sText               - [optional] a string value. Default is Null. The Text to show if the condition evaluates as True.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -3027,7 +3027,7 @@ EndFunc   ;==>_LOWriter_FieldFuncHiddenTextInsert
 ; Syntax ........: _LOWriter_FieldFuncHiddenTextModify(ByRef $oHidTxtField[, $sCondition = Null[, $sText = Null]])
 ; Parameters ....: $oHidTxtField        - [in/out] an object. A Hidden Text field Object from a previous _LOWriter_FieldFuncHiddenTextInsert, or _LOWriter_FieldsGetList function.
 ;                  $sCondition          - [optional] a string value. Default is Null. The Condition to evaluate.
-;                  $sText               - [optional] a string value. Default is Null. The Text to show if the condition evaluates as true.
+;                  $sText               - [optional] a string value. Default is Null. The Text to show if the condition evaluates as True.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--

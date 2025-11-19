@@ -1127,7 +1127,7 @@ EndFunc   ;==>_LOWriter_FrameBorderWidth
 ; Description ...: Set or retrieve Frame Column Separator line settings.
 ; Syntax ........: _LOWriter_FrameColumnSeparator(ByRef $oFrame[, $bSeparatorOn = Null[, $iStyle = Null[, $iWidth = Null[, $iColor = Null[, $iHeight = Null[, $iPosition = Null]]]]]])
 ; Parameters ....: $oFrame              - [in/out] an object. A Frame object returned by a previous _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, or _LOWriter_FrameGetObjByCursor function.
-;                  $bSeparatorOn        - [optional] a boolean value. Default is Null. If true, add a separator line between two or more columns.
+;                  $bSeparatorOn        - [optional] a boolean value. Default is Null. If True, add a separator line between two or more columns.
 ;                  $iStyle              - [optional] an integer value (0-3). Default is Null. The formatting style for the column separator line. See Constants, $LOW_LINE_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iWidth              - [optional] an integer value (5-180). Default is Null. The width of the separator line. Set in Hundredths of a Millimeter (100th MM).
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The separator line color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
@@ -1321,7 +1321,7 @@ EndFunc   ;==>_LOWriter_FrameColumnSettings
 ; Remarks .......: This function will work fine for setting AutoWidth, and Spacing values, however Width will not work the best, Spacing etc is set in plain Hundredths of a Millimeter (100th MM) values, however width is set in a relative value, and I am unable to find a way to be able to convert a specific value, such as 1" (2540 100th MM) etc, to the appropriate relative value, especially when spacing is set.
 ;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                  To set $bAutoWidth or $iGlobalSpacing you may enter any number in $iColumn as long as you are not setting width or spacing, as AutoWidth is not column specific. If you set a value for $iGlobalSpacing with $bAutoWidth set to false, the value is applied to all the columns still.
+;                  To set $bAutoWidth or $iGlobalSpacing you may enter any number in $iColumn as long as you are not setting width or spacing, as AutoWidth is not column specific. If you set a value for $iGlobalSpacing with $bAutoWidth set to False, the value is applied to all the columns still.
 ; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, _LOWriter_FrameGetObjByCursor, _LO_UnitConvert
 ; Link ..........:
 ; Example .......: Yes
@@ -2068,7 +2068,7 @@ EndFunc   ;==>_LOWriter_FrameOptionsName
 ;                  @Error 0 @Extended ? Return Array = Returning Array of Frame names. @Extended set to number of Frame Names returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: In Docx (and possibly other formats) Frames seem to be saved as "Shapes" instead of "Frames", if this function returns no results, or not the ones you expect, try setting $bSearchShapes to true.
+; Remarks .......: In Docx (and possibly other formats) Frames seem to be saved as "Shapes" instead of "Frames", if this function returns no results, or not the ones you expect, try setting $bSearchShapes to True.
 ; Related .......: _LOWriter_FrameGetObjByName
 ; Link ..........:
 ; Example .......: Yes
@@ -3282,7 +3282,7 @@ EndFunc   ;==>_LOWriter_FrameStyleBorderWidth
 ; Description ...: Modify or retrieve Frame Style Column Separator line settings.
 ; Syntax ........: _LOWriter_FrameStyleColumnSeparator(ByRef $oFrameStyle[, $bSeparatorOn = Null[, $iStyle = Null[, $iWidth = Null[, $iColor = Null[, $iHeight = Null[, $iPosition = Null]]]]]])
 ; Parameters ....: $oFrameStyle         - [in/out] an object. A Frame Style object returned by a previous _LOWriter_FrameStyleCreate, or _LOWriter_FrameStyleGetObj function.
-;                  $bSeparatorOn        - [optional] a boolean value. Default is Null. If true, add a separator line between two or more columns.
+;                  $bSeparatorOn        - [optional] a boolean value. Default is Null. If True, add a separator line between two or more columns.
 ;                  $iStyle              - [optional] an integer value (0-3). Default is Null. The formatting style for the column separator line. See Constants, $LOW_LINE_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iWidth              - [optional] an integer value (5-180). Default is Null. The width of the separator line. Set in Hundredths of a Millimeter (100th MM).
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The separator line color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
@@ -3481,7 +3481,7 @@ EndFunc   ;==>_LOWriter_FrameStyleColumnSettings
 ; Remarks .......: This function will work fine for setting AutoWidth, and Spacing values, however Width will not work the best, Spacing etc is set in plain Hundredths of a Millimeter (100th MM) values, however width is set in a relative value, and I am unable to find a way to be able to convert a specific value, such as 1" (2540 100th MM) etc, to the appropriate relative value, especially when spacing is set.
 ;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                  To set $bAutoWidth or $iGlobalSpacing you may enter any number in $iColumn as long as you are not setting width or spacing, as AutoWidth is not column specific. If you set a value for $iGlobalSpacing with $bAutoWidth set to false, the value is applied to all the columns still.
+;                  To set $bAutoWidth or $iGlobalSpacing you may enter any number in $iColumn as long as you are not setting width or spacing, as AutoWidth is not column specific. If you set a value for $iGlobalSpacing with $bAutoWidth set to False, the value is applied to all the columns still.
 ; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj, _LO_UnitConvert
 ; Link ..........:
 ; Example .......: Yes
@@ -4071,7 +4071,7 @@ EndFunc   ;==>_LOWriter_FrameStyleSet
 ; Remarks .......: If only a Document object is called, all available Frame styles will be returned.
 ;                  Else if $bUserOnly is called with True, only User-Created Frame Styles are returned.
 ;                  Else if $bAppliedOnly is called with True, only Applied Frame Styles are returned.
-;                  If Both are true then only User-Created Frame styles that are applied are returned.
+;                  If Both are True then only User-Created Frame styles that are applied are returned.
 ; Related .......: _LOWriter_FrameStyleGetObj
 ; Link ..........:
 ; Example .......: Yes

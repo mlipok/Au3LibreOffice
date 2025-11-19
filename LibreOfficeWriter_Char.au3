@@ -721,7 +721,7 @@ EndFunc   ;==>_LOWriter_CharStyleOrganizer
 ; Description ...: Set and retrieve the Overline settings for a Character style.
 ; Syntax ........: _LOWriter_CharStyleOverLine(ByRef $oCharStyle[, $bWordOnly = Null[, $iOverLineStyle = Null[, $bOLHasColor = Null[, $iOLColor = Null]]]])
 ; Parameters ....: $oCharStyle          - [in/out] an object. A Character Style object returned by a previous _LOWriter_CharStyleCreate, or _LOWriter_CharStyleGetObj, function.
-;                  $bWordOnly           - [optional] a boolean value. Default is Null. If true, white spaces are not Overlined.
+;                  $bWordOnly           - [optional] a boolean value. Default is Null. If True, white spaces are not Overlined.
 ;                  $iOverLineStyle      - [optional] an integer value (0-18). Default is Null. The style of the Overline line, see constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
 ;                  $bOLHasColor         - [optional] a boolean value. Default is Null. Whether the Overline is colored, must be called with True in order to set the Overline color.
 ;                  $iOLColor            - [optional] an integer value (-1-16777215). Default is Null. The color of the Overline, as a RGB Color Integer. Can be a custom value or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) for automatic color mode.
@@ -803,9 +803,9 @@ EndFunc   ;==>_LOWriter_CharStyleOverLine
 ;                  Set either $iSubScript or $iSuperScript to 0 to return it to the Normal setting.
 ;                  The way LibreOffice is set up Super/Subscript are set in the same setting, Superscript is a positive number from 1 to 100 (percentage), Subscript is a negative number set to -1 to -100 percentage.
 ;                  For the user's convenience this function accepts both positive and negative numbers for Subscript, if a positive number is called for Subscript, it is automatically changed to a negative.
-;                  Automatic Superscript has an integer value of 14000, Auto Subscript has an integer value of -14000.
+;                  Automatic Superscript has an Integer value of 14000, Auto Subscript has an Integer value of -14000.
 ;                  There is no settable setting of Automatic Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two separate parameters to be able to determine if the user wants to automatically set Superscript or Subscript.
-;                  If you call both Auto Superscript and Auto Subscript with True, or $iSuperScript to an integer and $iSubScript to an integer, Subscript will be modified as it is the last in the line to be set in this function, and thus will overwrite any Superscript settings.
+;                  If you call both Auto Superscript and Auto Subscript with True, or $iSuperScript to an Integer and $iSubScript to an Integer, Subscript will be modified as it is the last in the line to be set in this function, and thus will overwrite any Superscript settings.
 ; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate
 ; Link ..........:
 ; Example .......: Yes
@@ -933,7 +933,7 @@ EndFunc   ;==>_LOWriter_CharStyleSet
 ; Remarks .......: If Only a Document object is input, all available Character styles will be returned.
 ;                  Else if $bUserOnly is called with True, only User-Created Character Styles are returned.
 ;                  Else if $bAppliedOnly, only Applied Character Styles are returned.
-;                  If Both are true then only User-Created Character styles that are applied are returned.
+;                  If Both are True then only User-Created Character styles that are applied are returned.
 ;                  Five Character styles have two separate names, either name works when setting a Character Style, but on certain functions that return a Character Style Name, you may see one of these alternative names. The Styles are as follows:
 ;                  --Footnote Characters is also internally called "Footnote Symbol";
 ;                  --Bullets, is internally called "Bullet Symbol";
@@ -1145,7 +1145,7 @@ EndFunc   ;==>_LOWriter_CharStyleStrikeOut
 ; Description ...: Set and retrieve the Underline settings for a Character style.
 ; Syntax ........: _LOWriter_CharStyleUnderLine(ByRef $oCharStyle[, $bWordOnly = Null[, $iUnderLineStyle = Null[, $bULHasColor = Null[, $iULColor = Null]]]])
 ; Parameters ....: $oCharStyle          - [in/out] an object. A Character Style object returned by a previous _LOWriter_CharStyleCreate, or _LOWriter_CharStyleGetObj, function.
-;                  $bWordOnly           - [optional] a boolean value. Default is Null. If true, white spaces are not underlined.
+;                  $bWordOnly           - [optional] a boolean value. Default is Null. If True, white spaces are not underlined.
 ;                  $iUnderLineStyle     - [optional] an integer value (0-18). Default is Null. The style of the Underline line, see constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bULHasColor         - [optional] a boolean value. Default is Null. If True, the underline is colored. See remarks.
 ;                  $iULColor            - [optional] an integer value (-1-16777215). Default is Null. The color of the underline, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) for automatic color mode.
@@ -1172,7 +1172,7 @@ EndFunc   ;==>_LOWriter_CharStyleStrikeOut
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                  $bULHasColor must be set to true in order to set the underline color.
+;                  $bULHasColor must be set to True in order to set the underline color.
 ; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LO_ConvertColorFromLong, _LO_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes

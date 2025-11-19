@@ -728,10 +728,10 @@ EndFunc   ;==>__LOWriter_CharFontColor
 ; Description ...: Set and retrieve the OverLine settings.
 ; Syntax ........: __LOWriter_CharOverLine(ByRef $oObj, $bWordOnly, $iOverLineStyle, $bOLHasColor, $iOLColor)
 ; Parameters ....: $oObj                - [in/out] an object. An Object that supports "com.sun.star.text.Paragraph" Or "com.sun.star.text.TextPortion" services, such as a Cursor with data selected or paragraph section.
-;                  $bWordOnly           - a boolean value. If true, white spaces are not Overlined.
 ;                  $iOverLineStyle      - an integer value (0-18). The line style of the Overline, see constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $bOLHasColor         - a boolean value. If True, the Overline is colored, must be set to true in order to set the Overline color.
 ;                  $iOLColor            - an integer value (-1-16777215). The color of the Overline, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) for automatic color mode.
+;                  $bWordOnly           - a boolean value. If True, white spaces are not Overlined.
+;                  $bOLHasColor         - a boolean value. If True, the Overline is colored, must be set to True in order to set the Overline color.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -838,8 +838,8 @@ EndFunc   ;==>__LOWriter_CharOverLine
 ;                  Set either $iSubScript or $iSuperScript to 0 to return it to Normal setting.
 ;                  The way LibreOffice is set up Super/Subscript are set in the same setting, Super is a positive number from 1 to 100 (percentage), Subscript is a negative number set to 1 to 100 percentage.
 ;                  For the user's convenience this function accepts both positive and negative numbers for Subscript, if a positive number is called for Subscript, it is automatically changed to a negative.
-;                  Automatic Superscript has a integer value of 14000, Auto Subscript has a integer value of -14000. There is no settable setting of Automatic Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two separate parameters to be able to determine if the user wants to automatically set Superscript or Subscript.
-;                  If you set both Auto Superscript to True and Auto Subscript to True, or $iSuperScript to an integer and $iSubScript to an integer, Subscript will be set as it is the last in the line to be set in this function, and thus will over-write any Superscript settings.
+;                  Automatic Superscript has a Integer value of 14000, Auto Subscript has a Integer value of -14000. There is no settable setting of Automatic Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two separate parameters to be able to determine if the user wants to automatically set Superscript or Subscript.
+;                  If you set both Auto Superscript to True and Auto Subscript to True, or $iSuperScript to an Integer and $iSubScript to an Integer, Subscript will be set as it is the last in the line to be set in this function, and thus will over-write any Superscript settings.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -1255,9 +1255,9 @@ EndFunc   ;==>__LOWriter_CharStyleNameToggle
 ; Description ...: Set and retrieve the Underline settings.
 ; Syntax ........: __LOWriter_CharUnderLine(ByRef $oObj, $bWordOnly, $iUnderLineStyle, $bULHasColor, $iULColor)
 ; Parameters ....: $oObj                - [in/out] an object. An Object that supports "com.sun.star.text.Paragraph" Or "com.sun.star.text.TextPortion" services, such as a Cursor with data selected or paragraph section.
-;                  $bWordOnly           - [optional] a boolean value. Default is Null. If true, white spaces are not underlined.
+;                  $bWordOnly           - [optional] a boolean value. Default is Null. If True, white spaces are not underlined.
 ;                  $iUnderLineStyle     - [optional] an integer value (0-18). Default is Null. The line style of the Underline, see constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $bULHasColor         - [optional] a boolean value. Default is Null. If True, the underline is colored, must be set to true in order to set the underline color.
+;                  $bULHasColor         - [optional] a boolean value. Default is Null. If True, the underline is colored, must be set to True in order to set the underline color.
 ;                  $iULColor            - [optional] an integer value (-1-16777215). Default is Null. The underline color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) for automatic color mode.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1564,7 +1564,7 @@ EndFunc   ;==>__LOWriter_DirFrmtCheck
 ; Name ..........: __LOWriter_FieldCountType
 ; Description ...: Determine a Count Field's type.
 ; Syntax ........: __LOWriter_FieldCountType($vInput)
-; Parameters ....: $vInput              - a variant value. Either a Field Object to determine the appropriate integer Constant to return, or a Integer Constant to return the appropriate Field type String. See constants, $LOW_FIELD_COUNT_* as defined in LibreOfficeWriter_Constants.au3.
+; Parameters ....: $vInput              - a variant value. Either a Field Object to determine the appropriate Integer Constant to return, or a Integer Constant to return the appropriate Field type String. See constants, $LOW_FIELD_COUNT_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: String or Integer.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2577,8 +2577,8 @@ EndFunc   ;==>__LOWriter_GradientNameInsert
 ;                  $oObject             - [in/out] an object. The Object to modify the Gradient settings for.
 ;                  $tGradient           - [in/out] an object. The Fill Gradient Object to modify the Gradient settings for.
 ;                  $sGradientName       - a string value. The Gradient Preset name to apply.
-;                  $bFooter             - [optional] a boolean value. Default is False. If True, settings are being set for footer Fill Gradient. If both are false, settings are for The Page itself.
-;                  $bHeader             - [optional] a boolean value. Default is False. If True, settings are being set for Header Fill Gradient. If both are false, settings are for The Page itself.
+;                  $bFooter             - [optional] a boolean value. Default is False. If True, settings are being set for footer Fill Gradient. If both are False, settings are for The Page itself.
+;                  $bHeader             - [optional] a boolean value. Default is False. If True, settings are being set for Header Fill Gradient. If both are False, settings are for The Page itself.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Initialization Errors--
@@ -4963,9 +4963,9 @@ EndFunc   ;==>__LOWriter_ParShadow
 ; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
 ;                  $iAbovePar           - an integer value (0-10008). The Space above a paragraph, in Hundredths of a Millimeter (100th MM).
 ;                  $iBelowPar           - an integer value (0-10008). The Space Below a paragraph, in Hundredths of a Millimeter (100th MM).
-;                  $bAddSpace           - a boolean value. If true, the top and bottom margins of the paragraph should not be applied when the previous and next paragraphs have the same style. Libre Office Version 3.6 and Up.
 ;                  $iLineSpcMode        - an integer value (0-3). The line spacing type of the paragraph. See Constants, $LOW_LINE_SPC_MODE_* as defined in LibreOfficeWriter_Constants.au3, also notice min and max values for each.
 ;                  $iLineSpcHeight      - an integer value. This value specifies the height in regard to Mode. See Remarks.
+;                  $bAddSpace           - a boolean value. If True, the top and bottom margins of the paragraph should not be applied when the previous and next paragraphs have the same style. Libre Office Version 3.6 and Up.
 ;                  $bPageLineSpc        - a boolean value. If True, register mode is applied to a paragraph. See Remarks.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -5525,7 +5525,7 @@ EndFunc   ;==>__LOWriter_ParTabStopsGetList
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: If you do not set ParSplit to True, the rest of the settings will still show to have been set but will not become active until $bParSplit is set to true.
+; Remarks .......: If you do not set ParSplit to True, the rest of the settings will still show to have been set but will not become active until $bParSplit is set to True.
 ;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......:

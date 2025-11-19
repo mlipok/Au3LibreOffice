@@ -1110,7 +1110,7 @@ EndFunc   ;==>_LOWriter_ImageBorderWidth
 ;                  $iContrast           - [optional] an integer value (-100-100). Default is Null. Adjust the contrast of the graphic.
 ;                  $nGamma              - [optional] a general number value (0.1-10). Default is Null. The gamma value of the graphic.
 ;                  $iColorMode          - [optional] an integer value (0-3). Default is Null. The color mode of the graphic. See constants, $LOW_COLORMODE_* as defined in LibreOfficeWriter_Constants.au3
-;                  $bInvert             - [optional] a boolean value. Default is Null. If true, the graphic is displayed in inverted colors. See remarks.
+;                  $bInvert             - [optional] a boolean value. Default is Null. If True, the graphic is displayed in inverted colors. See remarks.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1138,7 +1138,7 @@ EndFunc   ;==>_LOWriter_ImageBorderWidth
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 8 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $bInvert is glitchy to set. The current setting will always be returned as false if set by the user. Setting inverted using this function can be difficult to remove by the user.
+; Remarks .......: $bInvert is glitchy to set. The current setting will always be returned as False if set by the user. Setting inverted using this function can be difficult to remove by the user.
 ;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ImageInsert, _LOWriter_ImageGetObjByName
@@ -1230,7 +1230,7 @@ EndFunc   ;==>_LOWriter_ImageColorAdjust
 ;                  $iRight              - [optional] an integer value. Default is Null. The amount in Hundredths of a Millimeter (100th MM) to either extend the background of the image, (negative numbers), or to crop, (positive numbers) from the Right side.
 ;                  $iTop                - [optional] an integer value. Default is Null. The amount in Hundredths of a Millimeter (100th MM) to either extend the background of the image, (negative numbers), or to crop, (positive numbers) from the Top side.
 ;                  $iBottom             - [optional] an integer value. Default is Null. The amount in Hundredths of a Millimeter (100th MM) to either extend the background of the image, (negative numbers), or to crop, (positive numbers) from the Bottom side.
-;                  $bKeepScale          - [optional] a boolean value. Default is Null. If True, crop amounts are removed or added to the image, while keeping the scaling. If False, crop values are removed or added while retaining the image size. See remarks. This setting is internally static, you do not need to set this each call for as long as the script life, unless you wish to change the value. Default static setting is true.
+;                  $bKeepScale          - [optional] a boolean value. Default is Null. If True, crop amounts are removed or added to the image, while keeping the scaling. If False, crop values are removed or added while retaining the image size. See remarks. This setting is internally static, you do not need to set this each call for as long as the script life, unless you wish to change the value. Default static setting is True.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1572,7 +1572,7 @@ EndFunc   ;==>_LOWriter_ImageHyperlink
 ;                  $sImage              - a string value. The file path to the image to insert.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions. See Remarks.
 ;                  $iAnchorType         - [optional] an integer value (0-2,4). Default is $LOW_ANCHOR_AT_CHARACTER. Specify the anchoring options for the Image. See Constants, $LOW_ANCHOR_* as defined in LibreOfficeWriter_Constants.au3
-;                  $bOverwrite          - [optional] a boolean value. Default is False. If true, any data selected by the cursor is overwritten.
+;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any data selected by the cursor is overwritten.
 ; Return values .: Success: Object.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1665,9 +1665,9 @@ EndFunc   ;==>_LOWriter_ImageInsert
 ; Description ...: Set or retrieve Image modification settings.
 ; Syntax ........: _LOWriter_ImageModify(ByRef $oImage[, $bFlipVert = Null[, $bFlipHoriOnRight = Null[, $bFlipHoriOnLeft = Null[, $nAngle = Null]]]])
 ; Parameters ....: $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
-;                  $bFlipVert           - [optional] a boolean value. Default is Null. If true, the image is flipped vertically.
-;                  $bFlipHoriOnRight    - [optional] a boolean value. Default is Null. If true, the image is flipped horizontally on right (odd) pages. Set both this and $bFlipHoriOnLeft to true to flip on all pages.
-;                  $bFlipHoriOnLeft     - [optional] a boolean value. Default is Null. If true, the image is flipped horizontally on left (even) pages. Set both this and $bFlipHoriOnRight to true to flip on all pages.
+;                  $bFlipVert           - [optional] a boolean value. Default is Null. If True, the image is flipped vertically.
+;                  $bFlipHoriOnRight    - [optional] a boolean value. Default is Null. If True, the image is flipped horizontally on right (odd) pages. Set both this and $bFlipHoriOnLeft to True to flip on all pages.
+;                  $bFlipHoriOnLeft     - [optional] a boolean value. Default is Null. If True, the image is flipped horizontally on left (even) pages. Set both this and $bFlipHoriOnRight to True to flip on all pages.
 ;                  $nAngle              - [optional] a floating point value (0-360). Default is Null. The angle to rotate the image.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -2721,7 +2721,7 @@ EndFunc   ;==>_LOWriter_ImageWrap
 ; Parameters ....: $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ;                  $bFirstPar           - [optional] a boolean value. Default is Null. If True, starts a new paragraph below the Image.
 ;                  $bContour            - [optional] a boolean value. Default is Null. If True, text is wrapped around the shape of the Image. This option is not available for the Through wrap type.
-;                  $bOutsideOnly        - [optional] a boolean value. Default is Null. If true, text is wrapped only around the contour of the Image, but not in open areas within the Image shape. $bContour must be True before this can be set.
+;                  $bOutsideOnly        - [optional] a boolean value. Default is Null. If True, text is wrapped only around the contour of the Image, but not in open areas within the Image shape. $bContour must be True before this can be set.
 ;                  $bInBackground       - [optional] a boolean value. Default is Null. If True, moves the selected Image to the background. This option is only available with the "Through" wrap type.
 ;                  $bAllowOverlap       - [optional] a boolean value. Default is Null. If True, the Image is allowed to overlap another Image. This option has no effect on wrap through Images, which can always overlap.
 ; Return values .: Success: 1 or Array.

@@ -773,7 +773,7 @@ EndFunc   ;==>_LOWriter_NumStyleSetLevel
 ; Remarks .......: If Only a Document object is input, all available Numbering styles will be returned.
 ;                  Else if $bUserOnly is called with True, only User-Created Numbering Styles are returned.
 ;                  Else if $bAppliedOnly is called with True, only Applied Numbering Styles are returned.
-;                  If Both are true then only User-Created Numbering styles that are applied are returned.
+;                  If Both are True then only User-Created Numbering styles that are applied are returned.
 ; Related .......: _LOWriter_NumStyleGetObj
 ; Link ..........:
 ; Example .......: Yes

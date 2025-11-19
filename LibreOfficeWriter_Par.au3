@@ -1391,9 +1391,9 @@ EndFunc   ;==>_LOWriter_ParStyleOutLineAndList
 ; Description ...: Set and retrieve the OverLine settings for a paragraph style.
 ; Syntax ........: _LOWriter_ParStyleOverLine(ByRef $oParStyle[, $bWordOnly = Null[, $iOverLineStyle = Null[, $bOLHasColor = Null[, $iOLColor = Null]]]])
 ; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
-;                  $bWordOnly           - [optional] a boolean value. Default is Null. If true, white spaces are not Overlined.
+;                  $bWordOnly           - [optional] a boolean value. Default is Null. If True, white spaces are not Overlined.
 ;                  $iOverLineStyle      - [optional] an integer value (0-18). Default is Null. The style of the Overline line, see constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $bOLHasColor         - [optional] a boolean value. Default is Null. If True, the Overline is colored, must be set to true in order to set the Overline color.
+;                  $bOLHasColor         - [optional] a boolean value. Default is Null. If True, the Overline is colored, must be set to True in order to set the Overline color.
 ;                  $iOLColor            - [optional] an integer value (-1-16777215). Default is Null. The Overline color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) for automatic color mode.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1527,9 +1527,9 @@ EndFunc   ;==>_LOWriter_ParStylePageBreak
 ;                  Set either $iSubScript or $iSuperScript to 0 to return it to Normal setting.
 ;                  The way LibreOffice is set up Super/Subscript are set in the same setting, Super is a positive number from 1 to 100 (percentage),Subscript is a negative number set to 1 to 100 percentage.
 ;                  For the user's convenience this function accepts both positive and negative numbers for Subscript, if a positive number is called for Subscript, it is automatically changed a negative.
-;                  Automatic Superscript has a integer value of 14000, Auto Subscript has a integer value of -14000.
+;                  Automatic Superscript has a Integer value of 14000, Auto Subscript has a Integer value of -14000.
 ;                  There is no settable setting of Automatic Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two separate parameters to be able to determine if the user wants to automatically set Superscript or Subscript.
-;                  If you set both Auto Superscript to True and Auto Subscript to True, or $iSuperScript to an integer and $iSubScript to an integer, Subscript will be set as it is the last in the line to be set in this function, and thus will over-write any Superscript settings.
+;                  If you set both Auto Superscript to True and Auto Subscript to True, or $iSuperScript to an Integer and $iSubScript to an Integer, Subscript will be set as it is the last in the line to be set in this function, and thus will over-write any Superscript settings.
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
@@ -1656,7 +1656,7 @@ EndFunc   ;==>_LOWriter_ParStyleSet
 ; Remarks .......: If Only a Document object is input, all available Paragraph styles will be returned.
 ;                  Else if $bUserOnly is called with True, only User-Created Paragraph Styles are returned.
 ;                  Else if $bAppliedOnly is called with True, only Applied paragraph Styles are returned.
-;                  If Both are true then only User-Created paragraph styles that are applied are returned.
+;                  If Both are True then only User-Created paragraph styles that are applied are returned.
 ;                  Two paragraph styles have two separate names, Default Paragraph Style is also internally called "Standard" and Complimentary Close, which is internally called "Salutation".
 ;                  Either name works when setting a Paragraph Style, but on certain functions that return a Paragraph Style Name, you may see one of these alternative names.
 ; Related .......: _LOWriter_ParStyleGetObj
@@ -1767,7 +1767,7 @@ EndFunc   ;==>_LOWriter_ParStyleShadow
 ; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iAbovePar           - [optional] an integer value (0-10008). Default is Null. The Space above a paragraph, in Hundredths of a Millimeter (100th MM).
 ;                  $iBelowPar           - [optional] an integer value (0-10008). Default is Null. The Space Below a paragraph, in Hundredths of a Millimeter (100th MM).
-;                  $bAddSpace           - [optional] a boolean value. Default is Null. If true, the top and bottom margins of the paragraph should not be applied when the previous and next paragraphs have the same style. Libre Office Version 3.6 and Up.
+;                  $bAddSpace           - [optional] a boolean value. Default is Null. If True, the top and bottom margins of the paragraph should not be applied when the previous and next paragraphs have the same style. Libre Office Version 3.6 and Up.
 ;                  $iLineSpcMode        - [optional] an integer value (0-3). Default is Null. The line spacing type for the paragraph. See Constants, $LOW_LINE_SPC_MODE_* as defined in LibreOfficeWriter_Constants.au3, also notice min and max values for each.
 ;                  $iLineSpcHeight      - [optional] an integer value. Default is Null. This value specifies the spacing of the lines. See Remarks for Minimum and Max values.
 ;                  $bPageLineSpc        - [optional] a boolean value. Default is Null. If True, register mode is applied to the paragraph. See Remarks.
@@ -2161,7 +2161,7 @@ EndFunc   ;==>_LOWriter_ParStyleTabStopsGetList
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: If you do not set ParSplit to True, the rest of the settings will still show to have been set but will not become active until $bParSplit is set to true.
+; Remarks .......: If you do not set ParSplit to True, the rest of the settings will still show to have been set but will not become active until $bParSplit is set to True.
 ;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj
@@ -2187,9 +2187,9 @@ EndFunc   ;==>_LOWriter_ParStyleTxtFlowOpt
 ; Description ...: Set and retrieve the Underline settings for a paragraph style.
 ; Syntax ........: _LOWriter_ParStyleUnderLine(ByRef $oParStyle[, $bWordOnly = Null[, $iUnderLineStyle = Null[, $bULHasColor = Null[, $iULColor = Null]]]])
 ; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
-;                  $bWordOnly           - [optional] a boolean value. Default is Null. If true, white spaces are not underlined.
+;                  $bWordOnly           - [optional] a boolean value. Default is Null. If True, white spaces are not underlined.
 ;                  $iUnderLineStyle     - [optional] an integer value (0-18). Default is Null. The Underline line style, see constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $bULHasColor         - [optional] a boolean value. Default is Null. If True, the underline is colored, must be set to true in order to set the underline color.
+;                  $bULHasColor         - [optional] a boolean value. Default is Null. If True, the underline is colored, must be set to True in order to set the underline color.
 ;                  $iULColor            - [optional] an integer value (-1-16777215). Default is Null. The underline color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) for automatic color mode.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
