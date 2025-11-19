@@ -2263,7 +2263,7 @@ EndFunc   ;==>_LOCalc_PageStyleOrganizer
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOCalc_PageStyleCreate, or _LOCalc_PageStyleGetObj function.
 ;                  $iWidth              - [optional] an integer value. Default is Null. The Width of the page, may be a custom value in Hundredths of a Millimeter (100th MM), or one of the constants, $LOC_PAPER_WIDTH_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $iHeight             - [optional] an integer value. Default is Null. The Height of the page, may be a custom value in Hundredths of a Millimeter (100th MM), or one of the constants, $LOC_PAPER_HEIGHT_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $bLandscape          - [optional] a boolean value. Default is Null. If true, displays the page in Landscape layout.
+;                  $bLandscape          - [optional] a boolean value. Default is Null. If True, displays the page in Landscape layout.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2408,7 +2408,7 @@ EndFunc   ;==>_LOCalc_PageStyleSet
 ; Remarks .......: If Only a Document object is input, all available Page styles will be returned.
 ;                  Else if $bUserOnly is called with True, only User-Created Page Styles are returned.
 ;                  Else if $bAppliedOnly is called with True, only Applied Page Styles are returned.
-;                  If Both are true then only User-Created Page styles that are applied are returned.
+;                  If Both are True then only User-Created Page styles that are applied are returned.
 ; Related .......: _LOCalc_PageStyleGetObj
 ; Link ..........:
 ; Example .......: Yes

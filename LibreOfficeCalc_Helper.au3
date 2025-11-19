@@ -922,9 +922,9 @@ EndFunc   ;==>_LOCalc_FormatKeyGetString
 ;                  @Error 0 @Extended ? Return Array = Success. Returning a 2 or 3 column Array, depending on current $bIsUser setting. See remarks. @Extended is set to the number of Keys returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Column One (Array[0][0]) will contain the Format Key integer,
+; Remarks .......: Column One (Array[0][0]) will contain the Format Key Integer,
 ;                  Column two (Array[0][1]) will contain the Format Key String,
-;                  If $bIsUser is called with True, Column Three (Array[0][2]) will contain a Boolean, True if the Format Key is User-created, else false.
+;                  If $bIsUser is called with True, Column Three (Array[0][2]) will contain a Boolean, True if the Format Key is User-created, else False.
 ; Related .......: _LOCalc_FormatKeyDelete, _LOCalc_FormatKeyGetString, _LOCalc_FormatKeyGetStandard
 ; Link ..........:
 ; Example .......: Yes

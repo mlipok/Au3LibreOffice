@@ -194,7 +194,7 @@ EndFunc   ;==>_LOCalc_CellStyleBorderColor
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                  $iAll returns an integer value if all (Top, Bottom, Left, Right) padding values are equal, else Null is returned.
+;                  $iAll returns an Integer value if all (Top, Bottom, Left, Right) padding values are equal, else Null is returned.
 ; Related .......: _LOCalc_CellBorderPadding
 ; Link ..........:
 ; Example .......: Yes
@@ -804,9 +804,9 @@ EndFunc   ;==>_LOCalc_CellStyleOrganizer
 ; Description ...: Set and retrieve the Overline settings for a Cell style.
 ; Syntax ........: _LOCalc_CellStyleOverline(ByRef $oCellStyle[, $bWordOnly = Null[, $iOverLineStyle = Null[, $bOLHasColor = Null[, $iOLColor = Null]]]])
 ; Parameters ....: $oCellStyle          - [in/out] an object. A Cell Style object returned by a previous _LOCalc_CellStyleCreate, or _LOCalc_CellStyleGetObj function.
-;                  $bWordOnly           - [optional] a boolean value. Default is Null. If true, white spaces are not Overlined.
+;                  $bWordOnly           - [optional] a boolean value. Default is Null. If True, white spaces are not Overlined.
 ;                  $iOverLineStyle      - [optional] an integer value (0-18). Default is Null. The style of the Overline line, see constants, $LOC_UNDERLINE_* as defined in LibreOfficeCalc_Constants.au3. See Remarks.
-;                  $bOLHasColor         - [optional] a boolean value. Default is Null. If True, the Overline is colored, must be set to true in order to set the Overline color.
+;                  $bOLHasColor         - [optional] a boolean value. Default is Null. If True, the Overline is colored, must be set to True in order to set the Overline color.
 ;                  $iOLColor            - [optional] an integer value (-1-16777215). Default is Null. The Overline color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) for automatic color mode.
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -966,7 +966,7 @@ EndFunc   ;==>_LOCalc_CellStyleSet
 ; Remarks .......: If Only a Document object is input, all available Cell styles will be returned.
 ;                  Else if $bUserOnly is called with True, only User-Created Cell Styles are returned.
 ;                  Else if $bAppliedOnly is called with True, only Applied Cell Styles are returned.
-;                  If Both are true then only User-Created Cell styles that are applied are returned.
+;                  If Both are True then only User-Created Cell styles that are applied are returned.
 ; Related .......: _LOCalc_CellStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
@@ -1266,9 +1266,9 @@ EndFunc   ;==>_LOCalc_CellStyleTextProperties
 ; Description ...: Set and retrieve the Underline settings for a Cell style.
 ; Syntax ........: _LOCalc_CellStyleUnderline(ByRef $oCellStyle[, $bWordOnly = Null[, $iUnderLineStyle = Null[, $bULHasColor = Null[, $iULColor = Null]]]])
 ; Parameters ....: $oCellStyle          - [in/out] an object. A Cell Style object returned by a previous _LOCalc_CellStyleCreate, or _LOCalc_CellStyleGetObj function.
-;                  $bWordOnly           - [optional] a boolean value. Default is Null. If true, white spaces are not underlined.
+;                  $bWordOnly           - [optional] a boolean value. Default is Null. If True, white spaces are not underlined.
 ;                  $iUnderLineStyle     - [optional] an integer value (0-18). Default is Null. The Underline line style, see constants, $LOC_UNDERLINE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $bULHasColor         - [optional] a boolean value. Default is Null. If True, the underline is colored, must be set to true in order to set the underline color.
+;                  $bULHasColor         - [optional] a boolean value. Default is Null. If True, the underline is colored, must be set to True in order to set the underline color.
 ;                  $iULColor            - [optional] an integer value (-1-16777215). Default is Null. The underline color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) for automatic color mode.
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.

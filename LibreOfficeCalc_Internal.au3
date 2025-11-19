@@ -357,7 +357,7 @@ EndFunc   ;==>__LOCalc_CellBorder
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                  $iAll returns an integer value if all (Top, Bottom, Left, Right) padding values are equal, else Null is returned.
+;                  $iAll returns an Integer value if all (Top, Bottom, Left, Right) padding values are equal, else Null is returned.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -673,10 +673,10 @@ EndFunc   ;==>__LOCalc_CellNumberFormat
 ; Description ...: Internal function to Set and retrieve the OverLine settings for a Cell, Cell Range, or Cell Style.
 ; Syntax ........: __LOCalc_CellOverLine(ByRef $oObj, $bWordOnly, $iOverLineStyle, $bOLHasColor, $iOLColor)
 ; Parameters ....: $oObj                - [in/out] an object. A Cell, Cell Range or Cell Style Object returned from an applicable function.
-;                  $bWordOnly           - a boolean value. If true, white spaces are not Overlined.
 ;                  $iOverLineStyle      - an integer value (0-18). The style of the Overline line, see constants, $LOC_UNDERLINE_* as defined in LibreOfficeCalc_Constants.au3. See Remarks.
-;                  $bOLHasColor         - a boolean value. If True, the Overline is colored, must be set to true in order to set the Overline color.
 ;                  $iOLColor            - an integer value (-1-16777215). The Overline color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) for automatic color mode.
+;                  $bWordOnly           - a boolean value. If True, white spaces are not Overlined.
+;                  $bOLHasColor         - a boolean value. If True, the Overline is colored, must be set to True in order to set the Overline color.
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1401,10 +1401,10 @@ EndFunc   ;==>__LOCalc_CellTextProperties
 ; Description ...: Internal function to Set and retrieve the Underline settings for a Cell, Cell Range, or Cell Style.
 ; Syntax ........: __LOCalc_CellUnderLine(ByRef $oObj, $bWordOnly, $iUnderLineStyle, $bULHasColor, $iULColor)
 ; Parameters ....: $oObj                - [in/out] an object. A Cell, Cell Range or Cell Style Object returned from an applicable function.
-;                  $bWordOnly           - a boolean value. If true, white spaces are not underlined.
 ;                  $iUnderLineStyle     - an integer value (0-18). The Underline line style, see constants, $LOC_UNDERLINE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $bULHasColor         - a boolean value. If True, the underline is colored, must be set to true in order to set the underline color.
 ;                  $iULColor            - an integer value (-1-16777215). The underline color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) for automatic color mode.
+;                  $bWordOnly           - a boolean value. If True, white spaces are not underlined.
+;                  $bULHasColor         - a boolean value. If True, the underline is colored, must be set to True in order to set the underline color.
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1509,8 +1509,8 @@ EndFunc   ;==>__LOCalc_CellUnderLine
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Set either $iSubScript or $iSuperScript to 0 to return it to Normal setting.
 ;                  The way LibreOffice is set up Super/Subscript are set in the same setting, Super is a positive number from 1 to 100 (percentage), Subscript is a negative number set to 1 to 100 percentage. For the user's convenience this function accepts both positive and negative numbers for Subscript, if a positive number is called for Subscript, it is automatically changed to a negative.
-;                  Automatic Superscript has a integer value of 14000, Auto Subscript has a integer value of -14000. There is no settable setting of Automatic Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two separate parameters to be able to determine if the user wants to automatically set Superscript or Subscript.
-;                  If you set both Auto Superscript to True and Auto Subscript to True, or $iSuperScript to an integer and $iSubScript to an integer, Subscript will be set as it is the last in the line to be set in this function, and thus will over-write any Superscript settings.
+;                  Automatic Superscript has a Integer value of 14000, Auto Subscript has a Integer value of -14000. There is no settable setting of Automatic Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two separate parameters to be able to determine if the user wants to automatically set Superscript or Subscript.
+;                  If you set both Auto Superscript to True and Auto Subscript to True, or $iSuperScript to an Integer and $iSubScript to an Integer, Subscript will be set as it is the last in the line to be set in this function, and thus will over-write any Superscript settings.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No

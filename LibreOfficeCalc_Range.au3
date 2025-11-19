@@ -416,7 +416,7 @@ EndFunc   ;==>_LOCalc_RangeColumnInsert
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Setting $bStartOfPageBreak to True will insert a Manual Page Break, the same as setting $bManualPageBreak to True would.
-;                  $bStartOfPageBreak setting is available more for indicating where Calc is inserting Page Breaks rather than for applying a setting. You can retrieve the settings for each Column, and check if this value is True or not. If the Page break is an automatically inserted one, the value for $bManualPageBreak would be false.
+;                  $bStartOfPageBreak setting is available more for indicating where Calc is inserting Page Breaks rather than for applying a setting. You can retrieve the settings for each Column, and check if this value is True or not. If the Page break is an automatically inserted one, the value for $bManualPageBreak would be False.
 ;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......:
@@ -1354,7 +1354,7 @@ EndFunc   ;==>_LOCalc_RangeFill
 ; Parameters ....: $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
 ;                  $nMin                - [optional] a general number value (-2^31-2^31). Default is 0.0000. The minimum number value. Max is -2^31-2^31.
 ;                  $nMax                - [optional] a general number value (-2^31-2^31). Default is 1.0000. The maximum number value. Max is -2^31-2^31.
-;                  $iDecPlc             - [optional] an integer value (0-255). Default is 15. The decimal place to round the value to. Call with 0 to fill with integers only.
+;                  $iDecPlc             - [optional] an integer value (0-255). Default is 15. The decimal place to round the value to. Call with 0 to fill with Integers only.
 ;                  $nSeed               - [optional] a general number value. Default is Null. A seed to use for generating the Random number. Null means no seed is used.
 ;                  $bFillByRows         - [optional] a boolean value. Default is True. If True, the range is filled top to bottom, left to right. If False, the range is filled left to right, top to bottom.
 ; Return values .: Success: 1
@@ -5004,7 +5004,7 @@ EndFunc   ;==>_LOCalc_RangeRowInsert
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Setting $bStartOfPageBreak to True will insert a Manual Page Break, the same as setting $bManualPageBreak to True would.
-;                  $bStartOfPageBreak setting is available more for indicating where Calc is inserting Page Breaks rather than for applying a setting. You can retrieve the settings for each row, and check if this value is True or not. If the Page break is an automatically inserted one, the value for $bManualPageBreak would be false.
+;                  $bStartOfPageBreak setting is available more for indicating where Calc is inserting Page Breaks rather than for applying a setting. You can retrieve the settings for each row, and check if this value is True or not. If the Page break is an automatically inserted one, the value for $bManualPageBreak would be False.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
