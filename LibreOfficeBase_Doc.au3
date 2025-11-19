@@ -48,7 +48,7 @@
 ; Description ...: Close an existing Database Document.
 ; Syntax ........: _LOBase_DocClose(ByRef $oDoc[, $bSaveChanges = True[, $sSaveName = ""[, $bDeliverOwnership = True]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOBase_DocOpen, _LOBase_DocConnect, or _LOBase_DocCreate function.
-;                  $bSaveChanges        - [optional] a boolean value. Default is True. If true, saves changes if any were made before closing. See remarks.
+;                  $bSaveChanges        - [optional] a boolean value. Default is True. If True, saves changes if any were made before closing. See remarks.
 ;                  $sSaveName           - [optional] a string value. Default is "". The file name to save the file as, if the file hasn't been saved before. See Remarks.
 ;                  $bDeliverOwnership   - [optional] a boolean value. Default is True. If True, deliver ownership of the document Object from the script to LibreOffice, recommended is True.
 ; Return values .: Success: 1 or String
@@ -69,7 +69,7 @@
 ;                  @Error 0 @Extended 3 Return 1 = Success, Document was successfully closed.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: If $bSaveChanges is true and the document hasn't been saved yet, the document is saved to the desktop.
+; Remarks .......: If $bSaveChanges is True and the document hasn't been saved yet, the document is saved to the desktop.
 ;                  You must set the Database type using _LOBase_DocDatabaseType, before you can save the document that hasn't been saved before.
 ;                  If $sSaveName is undefined, it is saved as an .odb document to the desktop, named Year-Month-Day_Hour-Minute-Second.odb. $sSaveName may be a name only without an extension, in which case the file will be saved in .odb format, you may also include the extension, such as "Test.odb"
 ; Related .......: _LOBase_DocOpen, _LOBase_DocConnect, _LOBase_DocCreate, _LOBase_DocSaveAs, _LOBase_DocSave, _LOBase_DocDatabaseType
@@ -309,7 +309,7 @@ EndFunc   ;==>_LOBase_DocConnect
 ;                  @Error 0 @Extended 2 Return Object = Successfully created a new document. Returning Document's Object
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: If $bWizard is True, $bHidden must be false.
+; Remarks .......: If $bWizard is True, $bHidden must be False.
 ;                  If $bWizard is True, the function will not return until the user either cancels or completes the wizard. If the user cancels, an error will result.
 ;                  You must set the Database type using _LOBase_DocDatabaseType, before you can save the document.
 ; Related .......: LOBase_DocOpen, LOBase_DocClose, LOBase_DocConnect, _LOBase_DocDatabaseType
@@ -469,7 +469,7 @@ EndFunc   ;==>_LOBase_DocGetName
 ; Description ...: Returns a Document's current save path.
 ; Syntax ........: _LOBase_DocGetPath(ByRef $oDoc[, $bReturnLibreURL = False])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOBase_DocOpen, _LOBase_DocConnect, or _LOBase_DocCreate function.
-;                  $bReturnLibreURL     - [optional] a boolean value. Default is False. If True, returns a path in Libre Office URL format, else false returns a regular Windows path.
+;                  $bReturnLibreURL     - [optional] a boolean value. Default is False. If True, returns a path in Libre Office URL format, else False returns a regular Windows path.
 ; Return values .: Success: String
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -594,7 +594,7 @@ EndFunc   ;==>_LOBase_DocIsModified
 ; Description ...: Maximize or restore a document.
 ; Syntax ........: _LOBase_DocMaximize(ByRef $oDoc[, $bMaximize = Null])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOBase_DocOpen, _LOBase_DocConnect, or _LOBase_DocCreate function.
-;                  $bMaximize           - [optional] a boolean value. Default is Null. If True, document window is maximized, else if false, document is restored to its previous size and location.
+;                  $bMaximize           - [optional] a boolean value. Default is Null. If True, document window is maximized, else if False, document is restored to its previous size and location.
 ; Return values .: Success: 1 or Boolean.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -630,7 +630,7 @@ EndFunc   ;==>_LOBase_DocMaximize
 ; Description ...: Minimize or restore a document.
 ; Syntax ........: _LOBase_DocMinimize(ByRef $oDoc[, $bMinimize = Null])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOBase_DocOpen, _LOBase_DocConnect, or _LOBase_DocCreate function.
-;                  $bMinimize           - [optional] a boolean value. Default is Null. If True, document window is minimized, else if false, document is restored to its previous size and location.
+;                  $bMinimize           - [optional] a boolean value. Default is Null. If True, document window is minimized, else if False, document is restored to its previous size and location.
 ; Return values .: Success: 1 or Boolean
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -667,10 +667,10 @@ EndFunc   ;==>_LOBase_DocMinimize
 ; Syntax ........: _LOBase_DocOpen($sFilePath[, $bConnectIfOpen = True[, $bHidden = Null[, $bReadOnly = Null[, $sPassword = Null[, $bLoadAsTemplate = Null[, $sFilterName = Null]]]]]])
 ; Parameters ....: $sFilePath           - a string value. Full path and filename of the file to be opened.
 ;                  $bConnectIfOpen      - [optional] a boolean value. Default is True(Connect). Whether to connect to the requested document if it is already open. See remarks.
-;                  $bHidden             - [optional] a boolean value. Default is Null. If true, opens the document invisibly.
-;                  $bReadOnly           - [optional] a boolean value. Default is Null. If true, opens the document as read-only.
+;                  $bHidden             - [optional] a boolean value. Default is Null. If True, opens the document invisibly.
+;                  $bReadOnly           - [optional] a boolean value. Default is Null. If True, opens the document as read-only.
 ;                  $sPassword           - [optional] a string value. Default is Null. The password that was used to read-protect the document, if any.
-;                  $bLoadAsTemplate     - [optional] a boolean value. Default is Null. If true, opens the document as a Template, i.e. an untitled copy of the specified document is made instead of modifying the original document.
+;                  $bLoadAsTemplate     - [optional] a boolean value. Default is Null. If True, opens the document as a Template, i.e. an untitled copy of the specified document is made instead of modifying the original document.
 ; Return values .: Success: Object.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -964,7 +964,7 @@ EndFunc   ;==>_LOBase_DocSaveCopy
 ;                  @Error 0 @Extended 0 Return Boolean = Success. Returning a Boolean whether all SubComponents were closed successfully (True), or if some failed to close (False).
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: This functions attempts to close all open Sub components (Tables, Queries, Forms or Reports [Except Reports in Viewing mode]). This will fail if any of the following is true for any open components: there are unsaved changes, if a dialog is open or if the user is printing from one of the documents.
+; Remarks .......: This functions attempts to close all open Sub components (Tables, Queries, Forms or Reports [Except Reports in Viewing mode]). This will fail if any of the following is True for any open components: there are unsaved changes, if a dialog is open or if the user is printing from one of the documents.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
