@@ -898,6 +898,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - `_LOCalc_DocViewWindowSettings`, return values in wrong order. Thanks to user JALucena. <https://www.autoitscript.com/forum/topic/210514-libreoffice-udf-help-and-support/page/2/#findComment-1543326>
 - `_LOCalc_DocCreate` not finding a blank open document to connect to, if available, due to reversed logical operator, and non-existent method.
 - Missing error values in the header and wrong error values in `_LOCalc_CommentAreaTransparencyGradient`.
+- Some function header parameter descriptions were out of order.
+	- __LOCalc_CellOverLine
+	- __LOCalc_CellUnderLine
 
 #### Changed
 
@@ -946,6 +949,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - `_LOCalc_DocRedoCurActionTitle` to only have one Success return, either with an empty String or the Current Redo Action Title.
 - `_LOCalc_DocUndoCurActionTitle` to only have one Success return, either with an empty String or the Current Undo Action Title.
 - Merged LibreOfficeCalc_CellStyle into LibreOfficeCalc_Cell.
+- Made optional parameters in internal functions be set to Null.
 
 #### Removed
 
