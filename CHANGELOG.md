@@ -1307,6 +1307,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - `_LOWriter_DocRedoCurActionTitle` to only have one Success return, either with an empty String or the Current Redo Action Title.
 - `_LOWriter_DocUndoCurActionTitle` to only have one Success return, either with an empty String or the Current Undo Action Title.
 - Combined several Gradient examples.
+- Made optional parameters in internal functions be set to Null.
 
 #### Fixed
 
@@ -1357,6 +1358,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - `__LOWriter_Shape_CreateLine` was not checking if a Struct was created appropriately.
 - All `__LOWriter_Shape_Create*` functions did not use ByRef for one parameter.
 - One Shape line style (`$LOW_SHAPE_LINE_STYLE_LINE_STYLE_9`), was renamed in L.O. Version 24.2 to "Sparse Dash".
+- Some function header parameter descriptions were out of order.
+	- __LOWriter_CharOverLine
+	- __LOWriter_ParSpace
 
 #### Removed
 
