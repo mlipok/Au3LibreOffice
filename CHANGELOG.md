@@ -1320,6 +1320,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- `_LOWriter_DirFrmtParBackColor` --> `_LOWriter_DirFrmtParAreaColor`
 	- `__LOWriter_ParBackColor` --> `__LOWriter_ParAreaColor`
 	- `_LOWriter_ParStyleBackColor` --> `_LOWriter_ParStyleAreaColor`
+- Rename Table background color functions for consistency:
+	- `_LOWriter_TableColor` --> `_LOWriter_TableBackColor`
+	- `_LOWriter_TableRowColor` --> `_LOWriter_TableRowBackColor`
 
 #### Fixed
 

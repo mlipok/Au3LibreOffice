@@ -26,13 +26,13 @@
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
+; _LOWriter_TableBackColor
 ; _LOWriter_TableBorderColor
 ; _LOWriter_TableBorderPadding
 ; _LOWriter_TableBorderStyle
 ; _LOWriter_TableBorderWidth
 ; _LOWriter_TableBreak
 ; _LOWriter_TableCellsGetNames
-; _LOWriter_TableColor
 ; _LOWriter_TableColumnDelete
 ; _LOWriter_TableColumnGetCount
 ; _LOWriter_TableColumnInsert
@@ -50,7 +50,7 @@
 ; _LOWriter_TableInsert
 ; _LOWriter_TableMargin
 ; _LOWriter_TableProperties
-; _LOWriter_TableRowColor
+; _LOWriter_TableRowBackColor
 ; _LOWriter_TableRowDelete
 ; _LOWriter_TableRowGetCount
 ; _LOWriter_TableRowInsert
@@ -60,6 +60,66 @@
 ; _LOWriter_TableShadow
 ; _LOWriter_TableWidth
 ; ===============================================================================================================================
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_TableBackColor
+; Description ...: Set and retrieve the Background color settings of a Table.
+; Syntax ........: _LOWriter_TableBackColor(ByRef $oTable[, $iBackColor = Null[, $bBackTransparent = Null]])
+; Parameters ....: $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Table background color, as a RGB Color Integer. See Remarks. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) for no background color.
+;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
+; Return values .: Success: 1 or Array.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
+;                  @Error 1 @Extended 3 Return 0 = $bBackTransparent not a Boolean.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                               1 = Error setting $iBackColor
+;                  |                               2 = Error setting $bBackTransparent
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LO_ConvertColorFromLong, _LO_ConvertColorToLong
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_TableBackColor(ByRef $oTable, $iBackColor = Null, $bBackTransparent = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avColor[2]
+
+	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If __LO_VarsAreNull($iBackColor, $bBackTransparent) Then
+		__LO_ArrayFill($avColor, $oTable.BackColor(), $oTable.BackTransparent())
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avColor)
+	EndIf
+
+	If ($iBackColor <> Null) Then
+		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+		$oTable.BackColor = $iBackColor
+		$iError = ($oTable.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1)) ; Error setting color.
+	EndIf
+
+	If ($bBackTransparent <> Null) Then
+		If Not IsBool($bBackTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+		$oTable.BackTransparent = $bBackTransparent
+		$iError = ($oTable.BackTransparent() = $bBackTransparent) ? ($iError) : (BitOR($iError, 2)) ; Error setting BackTransparent.
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_TableBackColor
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_TableBorderColor
@@ -458,66 +518,6 @@ Func _LOWriter_TableCellsGetNames(ByRef $oTable)
 
 	Return SetError($__LO_STATUS_SUCCESS, UBound($asCellNames), $asCellNames)
 EndFunc   ;==>_LOWriter_TableCellsGetNames
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_TableColor
-; Description ...: Set and retrieve the Background color settings of a Table.
-; Syntax ........: _LOWriter_TableColor(ByRef $oTable[, $iBackColor = Null[, $bBackTransparent = Null]])
-; Parameters ....: $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Table background color, as a RGB Color Integer. See Remarks. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) for no background color.
-;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
-; Return values .: Success: 1 or Array.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
-;                  @Error 1 @Extended 3 Return 0 = $bBackTransparent not a Boolean.
-;                  --Property Setting Errors--
-;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                               1 = Error setting $iBackColor
-;                  |                               2 = Error setting $bBackTransparent
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
-;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LO_ConvertColorFromLong, _LO_ConvertColorToLong
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_TableColor(ByRef $oTable, $iBackColor = Null, $bBackTransparent = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $iError = 0
-	Local $avColor[2]
-
-	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-
-	If __LO_VarsAreNull($iBackColor, $bBackTransparent) Then
-		__LO_ArrayFill($avColor, $oTable.BackColor(), $oTable.BackTransparent())
-
-		Return SetError($__LO_STATUS_SUCCESS, 1, $avColor)
-	EndIf
-
-	If ($iBackColor <> Null) Then
-		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-		$oTable.BackColor = $iBackColor
-		$iError = ($oTable.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1)) ; Error setting color.
-	EndIf
-
-	If ($bBackTransparent <> Null) Then
-		If Not IsBool($bBackTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
-		$oTable.BackTransparent = $bBackTransparent
-		$iError = ($oTable.BackTransparent() = $bBackTransparent) ? ($iError) : (BitOR($iError, 2)) ; Error setting BackTransparent.
-	EndIf
-
-	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_TableColor
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_TableColumnDelete
@@ -1593,9 +1593,9 @@ Func _LOWriter_TableProperties(ByRef $oTable, $iTableAlign = Null, $bKeepTogethe
 EndFunc   ;==>_LOWriter_TableProperties
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_TableRowColor
+; Name ..........: _LOWriter_TableRowBackColor
 ; Description ...: Set the background color of an entire Table row.
-; Syntax ........: _LOWriter_TableRowColor(ByRef $oTable, $iRow[, $iBackColor = Null[, $bBackTransparent = Null]])
+; Syntax ........: _LOWriter_TableRowBackColor(ByRef $oTable, $iRow[, $iBackColor = Null[, $bBackTransparent = Null]])
 ; Parameters ....: $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
 ;                  $iRow                - an integer value. The row number to set the background color for. Rows are 0 based.
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Row background color, as a RGB Color Integer. See Remarks. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) to disable background color.
@@ -1626,7 +1626,7 @@ EndFunc   ;==>_LOWriter_TableProperties
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_TableRowColor(ByRef $oTable, $iRow, $iBackColor = Null, $bBackTransparent = Null)
+Func _LOWriter_TableRowBackColor(ByRef $oTable, $iRow, $iBackColor = Null, $bBackTransparent = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1664,7 +1664,7 @@ Func _LOWriter_TableRowColor(ByRef $oTable, $iRow, $iBackColor = Null, $bBackTra
 	EndIf
 
 	Return ($iError = 0) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
-EndFunc   ;==>_LOWriter_TableRowColor
+EndFunc   ;==>_LOWriter_TableRowBackColor
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_TableRowDelete
