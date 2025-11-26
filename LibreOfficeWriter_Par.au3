@@ -36,7 +36,7 @@
 ; _LOWriter_ParObjSectionsGet
 ; _LOWriter_ParObjSelect
 ; _LOWriter_ParStyleAlignment
-; _LOWriter_ParStyleBackColor
+; _LOWriter_ParStyleAreaColor
 ; _LOWriter_ParStyleBorderColor
 ; _LOWriter_ParStyleBorderPadding
 ; _LOWriter_ParStyleBorderStyle
@@ -417,9 +417,9 @@ Func _LOWriter_ParStyleAlignment(ByRef $oParStyle, $iHorAlign = Null, $iVertAlig
 EndFunc   ;==>_LOWriter_ParStyleAlignment
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_ParStyleBackColor
+; Name ..........: _LOWriter_ParStyleAreaColor
 ; Description ...: Set or Retrieve background color settings for a Paragraph style.
-; Syntax ........: _LOWriter_ParStyleBackColor(ByRef $oParStyle[, $iBackColor = Null[, $bBackTransparent = Null]])
+; Syntax ........: _LOWriter_ParStyleAreaColor(ByRef $oParStyle[, $iBackColor = Null[, $bBackTransparent = Null]])
 ; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1), to turn Background color off.
 ;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
@@ -446,7 +446,7 @@ EndFunc   ;==>_LOWriter_ParStyleAlignment
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_ParStyleBackColor(ByRef $oParStyle, $iBackColor = Null, $bBackTransparent = Null)
+Func _LOWriter_ParStyleAreaColor(ByRef $oParStyle, $iBackColor = Null, $bBackTransparent = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -455,10 +455,10 @@ Func _LOWriter_ParStyleBackColor(ByRef $oParStyle, $iBackColor = Null, $bBackTra
 	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	$vReturn = __LOWriter_ParBackColor($oParStyle, $iBackColor, $bBackTransparent)
+	$vReturn = __LOWriter_ParAreaColor($oParStyle, $iBackColor, $bBackTransparent)
 
 	Return SetError(@error, @extended, $vReturn)
-EndFunc   ;==>_LOWriter_ParStyleBackColor
+EndFunc   ;==>_LOWriter_ParStyleAreaColor
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ParStyleBorderColor

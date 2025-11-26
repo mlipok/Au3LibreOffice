@@ -1316,6 +1316,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - `_LOWriter_DocUndoCurActionTitle` to only have one Success return, either with an empty String or the Current Undo Action Title.
 - Combined several Gradient examples.
 - Made optional parameters in internal functions be set to Null.
+- Renamed Paragraph background color functions for consistency:
+	- `_LOWriter_DirFrmtParBackColor` --> `_LOWriter_DirFrmtParAreaColor`
+	- `__LOWriter_ParBackColor` --> `__LOWriter_ParAreaColor`
+	- `_LOWriter_ParStyleBackColor` --> `_LOWriter_ParStyleAreaColor`
 
 #### Fixed
 

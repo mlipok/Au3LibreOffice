@@ -42,7 +42,7 @@
 ; _LOWriter_DirFrmtGetCurStyles
 ; _LOWriter_DirFrmtOverLine
 ; _LOWriter_DirFrmtParAlignment
-; _LOWriter_DirFrmtParBackColor
+; _LOWriter_DirFrmtParAreaColor
 ; _LOWriter_DirFrmtParBorderColor
 ; _LOWriter_DirFrmtParBorderPadding
 ; _LOWriter_DirFrmtParBorderStyle
@@ -1145,9 +1145,9 @@ Func _LOWriter_DirFrmtParAlignment(ByRef $oSelection, $iHorAlign = Null, $iVertA
 EndFunc   ;==>_LOWriter_DirFrmtParAlignment
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_DirFrmtParBackColor
+; Name ..........: _LOWriter_DirFrmtParAreaColor
 ; Description ...: Set or Retrieve background color settings for a Paragraph by Direct Formatting.
-; Syntax ........: _LOWriter_DirFrmtParBackColor(ByRef $oSelection[, $iBackColor = Null[, $bBackTransparent = Null[, $bClearDirFrmt = False]]])
+; Syntax ........: _LOWriter_DirFrmtParAreaColor(ByRef $oSelection[, $iBackColor = Null[, $bBackTransparent = Null[, $bClearDirFrmt = False]]])
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object/Object Section returned from _LOWriter_ParObjCreateList or _LOWriter_ParObjSectionsGet function.
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) to turn Background color off.
 ;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
@@ -1178,7 +1178,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParAlignment
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_DirFrmtParBackColor(ByRef $oSelection, $iBackColor = Null, $bBackTransparent = Null, $bClearDirFrmt = False)
+Func _LOWriter_DirFrmtParAreaColor(ByRef $oSelection, $iBackColor = Null, $bBackTransparent = Null, $bClearDirFrmt = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1192,10 +1192,10 @@ Func _LOWriter_DirFrmtParBackColor(ByRef $oSelection, $iBackColor = Null, $bBack
 		If __LO_VarsAreNull($iBackColor, $bBackTransparent) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
-	$vReturn = __LOWriter_ParBackColor($oSelection, $iBackColor, $bBackTransparent)
+	$vReturn = __LOWriter_ParAreaColor($oSelection, $iBackColor, $bBackTransparent)
 
 	Return SetError(@error, @extended, $vReturn)
-EndFunc   ;==>_LOWriter_DirFrmtParBackColor
+EndFunc   ;==>_LOWriter_DirFrmtParAreaColor
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DirFrmtParBorderColor

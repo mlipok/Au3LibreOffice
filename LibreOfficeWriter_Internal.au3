@@ -76,7 +76,7 @@
 ; __LOWriter_ObjRelativeSize
 ; __LOWriter_PageStyleNameToggle
 ; __LOWriter_ParAlignment
-; __LOWriter_ParBackColor
+; __LOWriter_ParAreaColor
 ; __LOWriter_ParBorderPadding
 ; __LOWriter_ParDropCaps
 ; __LOWriter_ParHasTabStop
@@ -4229,9 +4229,9 @@ Func __LOWriter_ParAlignment(ByRef $oObj, $iHorAlign = Null, $iVertAlign = Null,
 EndFunc   ;==>__LOWriter_ParAlignment
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
-; Name ..........: __LOWriter_ParBackColor
+; Name ..........: __LOWriter_ParAreaColor
 ; Description ...: Set or Retrieve background color settings.
-; Syntax ........: __LOWriter_ParBackColor(ByRef $oObj[, $iBackColor = Null[, $bBackTransparent = Null]])
+; Syntax ........: __LOWriter_ParAreaColor(ByRef $oObj[, $iBackColor = Null[, $bBackTransparent = Null]])
 ; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) for "None".
 ;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent
@@ -4256,7 +4256,7 @@ EndFunc   ;==>__LOWriter_ParAlignment
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_ParBackColor(ByRef $oObj, $iBackColor = Null, $bBackTransparent = Null)
+Func __LOWriter_ParAreaColor(ByRef $oObj, $iBackColor = Null, $bBackTransparent = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -4286,7 +4286,7 @@ Func __LOWriter_ParBackColor(ByRef $oObj, $iBackColor = Null, $bBackTransparent 
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>__LOWriter_ParBackColor
+EndFunc   ;==>__LOWriter_ParAreaColor
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_ParBorderPadding
