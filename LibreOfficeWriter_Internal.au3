@@ -1109,7 +1109,7 @@ Func __LOWriter_CharSpacing(ByRef $oObj, $bAutoKerning = Null, $nKerning = Null)
 	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	If __LO_VarsAreNull($bAutoKerning, $nKerning) Then
-		$nKerning = _LO_UnitConvert($oObj.CharKerning(), $LO_CONVERT_UNIT_100THMM_PT)
+		$nKerning = _LO_UnitConvert($oObj.CharKerning(), $LO_CONVERT_UNIT_HMM_PT)
 		__LO_ArrayFill($avKerning, $oObj.CharAutoKerning(), (($nKerning > 928.8) ? (1000) : ($nKerning)))
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avKerning)
@@ -1125,7 +1125,7 @@ Func __LOWriter_CharSpacing(ByRef $oObj, $bAutoKerning = Null, $nKerning = Null)
 	If ($nKerning <> Null) Then
 		If Not __LO_NumIsBetween($nKerning, -2, 928.8) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
-		$nKerning = _LO_UnitConvert($nKerning, $LO_CONVERT_UNIT_PT_100THMM)
+		$nKerning = _LO_UnitConvert($nKerning, $LO_CONVERT_UNIT_PT_HMM)
 
 		$oObj.CharKerning = $nKerning
 		$iError = ($oObj.CharKerning() = $nKerning) ? ($iError) : (BitOR($iError, 2))
@@ -3399,16 +3399,16 @@ Func __LOWriter_ImageGetSuggestedSize($oGraphic, $oPageStyle)
 
 	; Retrieve the Current Page Style's height minus top/bottom margins
 	$iMaxH = Int($oPageStyle.Height() - $oPageStyle.LeftMargin() - $oPageStyle.RightMargin())
-	If ($iMaxH = 0) Then $iMaxH = 24130 ; If error or is equal to 0, then set to 9.5 Inches in Hundredths of a Millimeter (100th MM)
+	If ($iMaxH = 0) Then $iMaxH = 24130 ; If error or is equal to 0, then set to 9.5 Inches in Hundredths of a Millimeter (HMM)
 
 	; Retrieve the Current Page Style's width minus left/right margins
 	$iMaxW = Int($oPageStyle.Width() - $oPageStyle.TopMargin() - $oPageStyle.BottomMargin())
-	If ($iMaxW = 0) Then $iMaxW = 17145 ; If error or is equal to 0, then set to 6.75 Inches in Hundredths of a Millimeter (100th MM).
+	If ($iMaxW = 0) Then $iMaxW = 17145 ; If error or is equal to 0, then set to 6.75 Inches in Hundredths of a Millimeter (HMM).
 
 	$oSize = $oGraphic.Size100thMM()
 
 	If ($oSize.Height = 0) Or ($oSize.Width = 0) Then
-		; 2540 Hundredths of a Millimeter (100th MM) per Inch, 1440 TWIPS per inch
+		; 2540 Hundredths of a Millimeter (HMM) per Inch, 1440 TWIPS per inch
 		$oSize.Height = Int($oGraphic.SizePixel.Height * 2540 * _WinAPI_TwipsPerPixelY() / 1440)
 		$oSize.Width = Int($oGraphic.SizePixel.Width * 2540 * _WinAPI_TwipsPerPixelX() / 1440)
 	EndIf

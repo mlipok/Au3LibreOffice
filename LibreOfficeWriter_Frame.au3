@@ -1464,8 +1464,8 @@ EndFunc   ;==>_LOWriter_FrameColumnSize
 ;                  @Error 1 @Extended 4 Return 0 = $bOverwrite not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $sFrameName not a String.
 ;                  @Error 1 @Extended 6 Return 0 = Document already contains a Frame with same name as $sFrameName.
-;                  @Error 1 @Extended 7 Return 0 = $iWidth not an Integer, or less than 51 Hundredths of a Millimeter (100th MM).
-;                  @Error 1 @Extended 8 Return 0 = $iHeight not an Integer, or less than 51 Hundredths of a Millimeter (100th MM).
+;                  @Error 1 @Extended 7 Return 0 = $iWidth not an Integer, or less than 51 Hundredths of a Millimeter (HMM).
+;                  @Error 1 @Extended 8 Return 0 = $iHeight not an Integer, or less than 51 Hundredths of a Millimeter (HMM).
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.text.TextFrame" Object.
 ;                  --Success--

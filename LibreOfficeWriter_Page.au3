@@ -2999,7 +2999,7 @@ EndFunc   ;==>_LOWriter_PageStyleFootnoteArea
 ;                  @Error 1 @Extended 7 Return 0 = $iLength not an Integer, less than 0 or greater than 100.
 ;                  @Error 1 @Extended 8 Return 0 = $iSpacing not an Integer.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error converting from Printer's Points to Hundredths of a Millimeter (100th MM).
+;                  @Error 3 @Extended 1 Return 0 = Error converting from Printer's Points to Hundredths of a Millimeter (HMM).
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iPosition
@@ -3031,7 +3031,7 @@ Func _LOWriter_PageStyleFootnoteLine(ByRef $oPageStyle, $iPosition = Null, $iSty
 
 	If __LO_VarsAreNull($iPosition, $iStyle, $nThickness, $iColor, $iLength, $iSpacing) Then
 		__LO_ArrayFill($avFootnoteLine, $oPageStyle.FootnoteLineAdjust(), $oPageStyle.FootnoteLineStyle(), _
-				_LO_UnitConvert($oPageStyle.FootnoteLineWeight(), $LO_CONVERT_UNIT_100THMM_PT), _ ; Convert Thickness from 1/100thMM to Point.
+				_LO_UnitConvert($oPageStyle.FootnoteLineWeight(), $LO_CONVERT_UNIT_HMM_PT), _ ; Convert Thickness from HMM to Point.
 				$oPageStyle.FootnoteLineColor(), $oPageStyle.FootnoteLineRelativeWidth(), $oPageStyle.FootnoteLineDistance())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avFootnoteLine)
@@ -3054,7 +3054,7 @@ Func _LOWriter_PageStyleFootnoteLine(ByRef $oPageStyle, $iPosition = Null, $iSty
 	If ($nThickness <> Null) Then
 		If Not __LO_NumIsBetween($nThickness, 0, 9) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
-		$nThickness = _LO_UnitConvert($nThickness, $LO_CONVERT_UNIT_PT_100THMM) ; Convert Thickness from Point to 1/100thMM
+		$nThickness = _LO_UnitConvert($nThickness, $LO_CONVERT_UNIT_PT_HMM) ; Convert Thickness from Point to HMM
 		If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 		$oPageStyle.FootnoteLineWeight = $nThickness

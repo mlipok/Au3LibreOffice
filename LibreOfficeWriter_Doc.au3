@@ -3723,8 +3723,8 @@ Func _LOWriter_DocPrintSizeSettings(ByRef $oDoc, $iPaperFormat = Null, $iPaperWi
 
 	If __LO_VarsAreNull($iPaperFormat, $iPaperWidth, $iPaperHeight) Then
 		__LO_ArrayFill($aiPrintSettings, __LOWriter_GetPrinterSetting($oDoc, "PaperFormat"), _
-				_LO_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Width(), $LO_CONVERT_UNIT_TWIPS_100THMM), _
-				_LO_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Height(), $LO_CONVERT_UNIT_TWIPS_100THMM))
+				_LO_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Width(), $LO_CONVERT_UNIT_TWIPS_HMM), _
+				_LO_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Height(), $LO_CONVERT_UNIT_TWIPS_HMM))
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiPrintSettings)
 	EndIf
@@ -3754,17 +3754,17 @@ Func _LOWriter_DocPrintSizeSettings(ByRef $oDoc, $iPaperFormat = Null, $iPaperWi
 			If Not IsInt($iPaperWidth) And ($iPaperWidth <> Null) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 			If Not IsInt($iPaperHeight) And ($iPaperHeight <> Null) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-			; Set in Hundredths of a Millimeter (100th MM) but retrieved in TWIPS
+			; Set in Hundredths of a Millimeter (HMM) but retrieved in TWIPS
 			$tSize = __LO_CreateStruct("com.sun.star.awt.Size")
 			If Not IsObj($tSize) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-			$tSize.Width = ($iPaperWidth = Null) ? (_LO_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Width(), $LO_CONVERT_UNIT_TWIPS_100THMM)) : ($iPaperWidth)
-			$tSize.Height = ($iPaperWidth = Null) ? (_LO_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Height(), $LO_CONVERT_UNIT_TWIPS_100THMM)) : ($iPaperHeight)
+			$tSize.Width = ($iPaperWidth = Null) ? (_LO_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Width(), $LO_CONVERT_UNIT_TWIPS_HMM)) : ($iPaperWidth)
+			$tSize.Height = ($iPaperWidth = Null) ? (_LO_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Height(), $LO_CONVERT_UNIT_TWIPS_HMM)) : ($iPaperHeight)
 			$aoSetting[0] = __LO_SetPropertyValue("PaperSize", $tSize)
 			$oDoc.setPrinter($aoSetting)
 
-			$iError = ($iPaperWidth = Null) ? ($iError) : (__LO_IntIsBetween(_LO_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Width(), $LO_CONVERT_UNIT_TWIPS_100THMM), $iPaperWidth - 2, $iPaperWidth + 2)) ? ($iError) : (BitOR($iError, 2))
-			$iError = ($iPaperHeight = Null) ? ($iError) : (__LO_IntIsBetween(_LO_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Height(), $LO_CONVERT_UNIT_TWIPS_100THMM), $iPaperHeight - 2, $iPaperHeight + 2)) ? ($iError) : (BitOR($iError, 4))
+			$iError = ($iPaperWidth = Null) ? ($iError) : (__LO_IntIsBetween(_LO_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Width(), $LO_CONVERT_UNIT_TWIPS_HMM), $iPaperWidth - 2, $iPaperWidth + 2)) ? ($iError) : (BitOR($iError, 2))
+			$iError = ($iPaperHeight = Null) ? ($iError) : (__LO_IntIsBetween(_LO_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Height(), $LO_CONVERT_UNIT_TWIPS_HMM), $iPaperHeight - 2, $iPaperHeight + 2)) ? ($iError) : (BitOR($iError, 4))
 
 		Else
 
@@ -4723,7 +4723,7 @@ EndFunc   ;==>_LOWriter_DocUndoReset
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error determining Cursor type.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return Integer = Success. Current Cursor Coordinate position relative to the top-left of the first page of the document is returned. @Extended is the "X" coordinate, and Return value is the "Y" Coordinate. In Hundredths of a Millimeter (100th MM).
+;                  @Error 0 @Extended ? Return Integer = Success. Current Cursor Coordinate position relative to the top-left of the first page of the document is returned. @Extended is the "X" coordinate, and Return value is the "Y" Coordinate. In Hundredths of a Millimeter (HMM).
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:

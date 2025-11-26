@@ -602,7 +602,7 @@ Func _LOCalc_CommentAreaShadow(ByRef $oComment, $bShadow = Null, $iColor = Null,
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		__LO_ArrayFill($avShadow, $oAnnotationShape.Shadow(), $oAnnotationShape.ShadowColor(), $iInternalDistance, $oAnnotationShape.ShadowTransparence(), _
-				_LO_UnitConvert($oAnnotationShape.ShadowBlur(), $LO_CONVERT_UNIT_100THMM_PT), $iInternalLocation)
+				_LO_UnitConvert($oAnnotationShape.ShadowBlur(), $LO_CONVERT_UNIT_HMM_PT), $iInternalLocation)
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avShadow)
 	EndIf
@@ -642,10 +642,10 @@ Func _LOCalc_CommentAreaShadow(ByRef $oComment, $bShadow = Null, $iColor = Null,
 	EndIf
 
 	If ($iBlur <> Null) Then
-		If Not __LO_IntIsBetween($iBlur, 0, 150) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; 0 - 5292 max Hundredths of a Millimeter (100th MM).
+		If Not __LO_IntIsBetween($iBlur, 0, 150) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; 0 - 5292 max Hundredths of a Millimeter (HMM).
 
-		$oAnnotationShape.ShadowBlur = _LO_UnitConvert($iBlur, $LO_CONVERT_UNIT_PT_100THMM)
-		$iError = ($oAnnotationShape.ShadowBlur() = _LO_UnitConvert($iBlur, $LO_CONVERT_UNIT_PT_100THMM)) ? ($iError) : (BitOR($iError, 16))
+		$oAnnotationShape.ShadowBlur = _LO_UnitConvert($iBlur, $LO_CONVERT_UNIT_PT_HMM)
+		$iError = ($oAnnotationShape.ShadowBlur() = _LO_UnitConvert($iBlur, $LO_CONVERT_UNIT_PT_HMM)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($iLocation <> Null) Then

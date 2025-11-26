@@ -48,15 +48,15 @@ Global Const _
 Global Enum _
 		$LO_CONVERT_UNIT_TWIPS_CM, _             ; 0 Convert from TWIPS (Twentieth of a Printer Point) To Centimeters.
 		$LO_CONVERT_UNIT_TWIPS_INCH, _           ; 1 Convert from TWIPS (Twentieth of a Printer Point) To Inches.
-		$LO_CONVERT_UNIT_TWIPS_100THMM, _        ; 2 Convert from TWIPS(Twentieth of a Printer Point) To 1/100th of a Millimeter.
-		$LO_CONVERT_UNIT_MM_100THMM, _           ; 3 Convert from Millimeters To 1/100th of a Millimeter.
-		$LO_CONVERT_UNIT_100THMM_MM, _           ; 4 Convert from 1/100th of a Millimeter To Millimeters.
-		$LO_CONVERT_UNIT_CM_100THMM, _           ; 5 Convert from Centimeters To 1/100th of a Millimeter.
-		$LO_CONVERT_UNIT_100THMM_CM, _           ; 6 Convert from 1/100th of a Millimeter To Centimeters.
-		$LO_CONVERT_UNIT_INCH_100THMM, _         ; 7 Convert from Inches To 1/100th of a Millimeter.
-		$LO_CONVERT_UNIT_100THMM_INCH, _         ; 8 Convert from 1/100th of a Millimeter To Inches.
-		$LO_CONVERT_UNIT_PT_100THMM, _           ; 9 Convert from Printers Point to 1/100th of a Millimeter.
-		$LO_CONVERT_UNIT_100THMM_PT              ; 10 Convert from 1/100th of a Millimeter to Printers Point.
+		$LO_CONVERT_UNIT_TWIPS_HMM, _        ; 2 Convert from TWIPS(Twentieth of a Printer Point) To 1/100th of a Millimeter.
+		$LO_CONVERT_UNIT_MM_HMM, _           ; 3 Convert from Millimeters To 1/100th of a Millimeter.
+		$LO_CONVERT_UNIT_HMM_MM, _           ; 4 Convert from 1/100th of a Millimeter To Millimeters.
+		$LO_CONVERT_UNIT_CM_HMM, _           ; 5 Convert from Centimeters To 1/100th of a Millimeter.
+		$LO_CONVERT_UNIT_HMM_CM, _           ; 6 Convert from 1/100th of a Millimeter To Centimeters.
+		$LO_CONVERT_UNIT_INCH_HMM, _         ; 7 Convert from Inches To 1/100th of a Millimeter.
+		$LO_CONVERT_UNIT_HMM_INCH, _         ; 8 Convert from 1/100th of a Millimeter To Inches.
+		$LO_CONVERT_UNIT_PT_HMM, _           ; 9 Convert from Printers Point to 1/100th of a Millimeter.
+		$LO_CONVERT_UNIT_HMM_PT              ; 10 Convert from 1/100th of a Millimeter to Printers Point.
 
 ; Path Convert Constants.
 Global Const _

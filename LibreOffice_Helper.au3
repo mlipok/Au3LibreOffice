@@ -595,10 +595,10 @@ EndFunc   ;==>_LO_PathConvert
 ; Example .......: No
 ; ===============================================================================================================================
 Func _LO_UnitConvert($nValue, $iReturnType)
-	Local $i100thMM, $iMM, $iCM, $iInch
+	Local $iHMM, $iMM, $iCM, $iInch
 
 	If Not IsNumber($nValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LO_IntIsBetween($iReturnType, $LO_CONVERT_UNIT_TWIPS_CM, $LO_CONVERT_UNIT_100THMM_PT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LO_IntIsBetween($iReturnType, $LO_CONVERT_UNIT_TWIPS_CM, $LO_CONVERT_UNIT_HMM_PT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	Switch $iReturnType
 		Case $LO_CONVERT_UNIT_TWIPS_CM ; TWIPS TO CM
@@ -616,59 +616,59 @@ Func _LO_UnitConvert($nValue, $iReturnType)
 
 			Return SetError($__LO_STATUS_SUCCESS, 2, Number($iInch))
 
-		Case $LO_CONVERT_UNIT_MM_100THMM ; Millimeter to 1/100th of a Millimeter.
-			$i100thMM = ($nValue * 100)
-			$i100thMM = Round(Round($i100thMM, 1))
+		Case $LO_CONVERT_UNIT_MM_HMM ; Millimeter to 1/100th of a Millimeter.
+			$iHMM = ($nValue * 100)
+			$iHMM = Round(Round($iHMM, 1))
 
-			Return SetError($__LO_STATUS_SUCCESS, 3, Number($i100thMM))
+			Return SetError($__LO_STATUS_SUCCESS, 3, Number($iHMM))
 
-		Case $LO_CONVERT_UNIT_100THMM_MM ; 1/100th of a Millimeter to Millimeter
+		Case $LO_CONVERT_UNIT_HMM_MM ; 1/100th of a Millimeter to Millimeter
 			$iMM = ($nValue / 100)
 			$iMM = Round(Round($iMM, 3), 2)
 
 			Return SetError($__LO_STATUS_SUCCESS, 4, Number($iMM))
 
-		Case $LO_CONVERT_UNIT_CM_100THMM ; Centimeter to 1/100th of a Millimeter
-			$i100thMM = ($nValue * 1000)
-			$i100thMM = Round(Round($i100thMM, 1))
+		Case $LO_CONVERT_UNIT_CM_HMM ; Centimeter to 1/100th of a Millimeter
+			$iHMM = ($nValue * 1000)
+			$iHMM = Round(Round($iHMM, 1))
 
-			Return SetError($__LO_STATUS_SUCCESS, 5, Int($i100thMM))
+			Return SetError($__LO_STATUS_SUCCESS, 5, Int($iHMM))
 
-		Case $LO_CONVERT_UNIT_100THMM_CM ; 1/100th of a Millimeter to Centimeter
+		Case $LO_CONVERT_UNIT_HMM_CM ; 1/100th of a Millimeter to Centimeter
 			$iCM = ($nValue / 1000)
 			$iCM = Round(Round($iCM, 3), 2)
 
 			Return SetError($__LO_STATUS_SUCCESS, 6, Number($iCM))
 
-		Case $LO_CONVERT_UNIT_INCH_100THMM ; Inch to 1/100th of a Millimeter
+		Case $LO_CONVERT_UNIT_INCH_HMM ; Inch to 1/100th of a Millimeter
 			; 1 Inch - 2.54 Cm; 1/100th of a Millimeter = 1/1000 CM
-			$i100thMM = ($nValue * 2.54) * 1000
-			$i100thMM = Round(Round($i100thMM, 1))
+			$iHMM = ($nValue * 2.54) * 1000
+			$iHMM = Round(Round($iHMM, 1))
 
-			Return SetError($__LO_STATUS_SUCCESS, 7, Int($i100thMM))
+			Return SetError($__LO_STATUS_SUCCESS, 7, Int($iHMM))
 
-		Case $LO_CONVERT_UNIT_100THMM_INCH ; 1/100th of a Millimeter to Inch
+		Case $LO_CONVERT_UNIT_HMM_INCH ; 1/100th of a Millimeter to Inch
 			; 1 Inch - 2.54 Cm; 1/100th of a Millimeter = 1/1000 CM
 			$iInch = ($nValue / 1000) / 2.54
 			$iInch = Round(Round($iInch, 3), 2)
 
 			Return SetError($__LO_STATUS_SUCCESS, 8, $iInch)
 
-		Case $LO_CONVERT_UNIT_TWIPS_100THMM ; TWIPS to 1/100th of a Millimeter
+		Case $LO_CONVERT_UNIT_TWIPS_HMM ; TWIPS to 1/100th of a Millimeter
 			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
 			$iInch = (($nValue / 20) / 72)
 			$iInch = Round(Round($iInch, 3), 2)
 			; 1 Inch = 25.4 MM; 100 1/100th of a Millimeter = 1 MM
-			$i100thMM = Round($iInch * 25.4 * 100)
+			$iHMM = Round($iInch * 25.4 * 100)
 
-			Return SetError($__LO_STATUS_SUCCESS, 9, Int($i100thMM))
+			Return SetError($__LO_STATUS_SUCCESS, 9, Int($iHMM))
 
-		Case $LO_CONVERT_UNIT_PT_100THMM
+		Case $LO_CONVERT_UNIT_PT_HMM
 			; 1 pt = 35 1/100th of a Millimeter
 
 			Return ($nValue = 0) ? (SetError($__LO_STATUS_SUCCESS, 10, 0)) : (SetError($__LO_STATUS_SUCCESS, 10, Round(($nValue * 35.2778))))
 
-		Case $LO_CONVERT_UNIT_100THMM_PT
+		Case $LO_CONVERT_UNIT_HMM_PT
 
 			Return ($nValue = 0) ? (SetError($__LO_STATUS_SUCCESS, 11, 0)) : (SetError($__LO_STATUS_SUCCESS, 11, Round(($nValue / 35.2778), 2)))
 
