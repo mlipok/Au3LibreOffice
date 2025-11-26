@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oViewCursor, $oTable
-	Local $i100thMM
+	Local $iHMM
 	Local $avTableProps
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -29,11 +29,11 @@ Func Example()
 	_LOWriter_TableProperties($oTable, $LOW_ORIENT_HORI_LEFT)
 	If @error Then _ERROR($oDoc, "Failed to set Text Table settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Convert 4 inches to Hundredths of a Millimeter (100th MM).
-	$i100thMM = _LO_UnitConvert(4, $LO_CONVERT_UNIT_INCH_100THMM)
-	If @error Then _ERROR($oDoc, "Failed to convert inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 4 inches to Hundredths of a Millimeter (HMM).
+	$iHMM = _LO_UnitConvert(4, $LO_CONVERT_UNIT_INCH_HMM)
+	If @error Then _ERROR($oDoc, "Failed to convert inches to Hundredths of a Millimeter (HMM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	_LOWriter_TableWidth($oTable, $i100thMM)
+	_LOWriter_TableWidth($oTable, $iHMM)
 	If @error Then _ERROR($oDoc, "Failed to set Text Table settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve current settings.

@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oViewCursor, $oTable
-	Local $i100thMM
+	Local $iHMM
 	Local $avShadow
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -25,13 +25,13 @@ Func Example()
 	$oTable = _LOWriter_TableInsert($oDoc, $oViewCursor, $oTable)
 	If @error Then _ERROR($oDoc, "Failed to insert Text Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Convert 1/2 Inch to Hundredths of a Millimeter (100th MM).
-	$i100thMM = _LO_UnitConvert(0.5, $LO_CONVERT_UNIT_INCH_100THMM)
-	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1/2 Inch to Hundredths of a Millimeter (HMM).
+	$iHMM = _LO_UnitConvert(0.5, $LO_CONVERT_UNIT_INCH_HMM)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (HMM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set the Table shadow to 1/2 an inch wide, the color to $LO_COLOR_DKGRAY, Transparent to False, and shadow location to
 	; $LOW_SHADOW_BOTTOM_LEFT
-	_LOWriter_TableShadow($oTable, $i100thMM, $LO_COLOR_DKGRAY, False, $LOW_SHADOW_BOTTOM_LEFT)
+	_LOWriter_TableShadow($oTable, $iHMM, $LO_COLOR_DKGRAY, False, $LOW_SHADOW_BOTTOM_LEFT)
 	If @error Then _ERROR($oDoc, "Failed to set Table shadow settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve Table shadow settings. Return will be an Array, with values in order of function parameters.
@@ -39,7 +39,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve Table shadow settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Table shadow values are as follows: " & @CRLF & _
-			"Width = " & $avShadow[0] & " Hundredths of a Millimeter (100th MM)." & @CRLF & _
+			"Width = " & $avShadow[0] & " Hundredths of a Millimeter (HMM)." & @CRLF & _
 			"Color = " & $avShadow[1] & " (as a RGB Color Integer)." & @CRLF & _
 			"Is Color Transparent? True/False = " & $avShadow[2] & @CRLF & _
 			"Shadow Location (See constants) = " & $avShadow[3])

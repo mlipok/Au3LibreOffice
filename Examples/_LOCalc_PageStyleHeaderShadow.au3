@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oPageStyle
-	Local $i100thMM
+	Local $iHMM
 	Local $avPageStyleSettings
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -17,16 +17,16 @@ Func Example()
 	$oPageStyle = _LOCalc_PageStyleGetObj($oDoc, "Default")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Page Style Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Convert 1/8" to Hundredths of a Millimeter (100th MM)
-	$i100thMM = _LO_UnitConvert(.125, $LO_CONVERT_UNIT_INCH_100THMM)
-	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1/8" to Hundredths of a Millimeter (HMM)
+	$iHMM = _LO_UnitConvert(.125, $LO_CONVERT_UNIT_INCH_HMM)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (HMM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Turn Header on.
 	_LOCalc_PageStyleHeader($oPageStyle, True)
 	If @error Then _ERROR($oDoc, "Failed to turn Page Style headers on. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set Page style Header Shadow settings to: Width = 1/8", Color = $LO_COLOR_RED, Transparent = False, Location = $LOC_SHADOW_TOP_LEFT
-	_LOCalc_PageStyleHeaderShadow($oPageStyle, $i100thMM, $LO_COLOR_RED, False, $LOC_SHADOW_TOP_LEFT)
+	_LOCalc_PageStyleHeaderShadow($oPageStyle, $iHMM, $LO_COLOR_RED, False, $LOC_SHADOW_TOP_LEFT)
 	If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings. Return will be an array with elements in order of function parameters.
@@ -34,7 +34,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Page style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Page Style's current Header Shadow settings are as follows: " & @CRLF & _
-			"The shadow width is, in Hundredths of a Millimeter (100th MM): " & $avPageStyleSettings[0] & @CRLF & _
+			"The shadow width is, in Hundredths of a Millimeter (HMM): " & $avPageStyleSettings[0] & @CRLF & _
 			"The Shadow color is (as a RGB Color Integer): " & $avPageStyleSettings[1] & @CRLF & _
 			"Is the Color transparent? True/False: " & $avPageStyleSettings[2] & @CRLF & _
 			"The Shadow location is, (see UDF Constants): " & $avPageStyleSettings[3])

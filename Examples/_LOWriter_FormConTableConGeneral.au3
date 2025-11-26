@@ -41,7 +41,7 @@ Func Example()
 			"Is the Control a Tab Stop position? True/False: " & $avControl[5] & @CRLF & _
 			"If the Control is a Tab Stop position, what order position is it? " & $avControl[6] & @CRLF & _
 			"This is the current Font settings. I'll just check if it is a Map. " & IsMap($avControl[7]) & @CRLF & _
-			"The height of the row is (in Hundredths of a Millimeter (100th MM)): " & $avControl[8] & @CRLF & _
+			"The height of the row is (in Hundredths of a Millimeter (HMM)): " & $avControl[8] & @CRLF & _
 			"The background color is (as a RGB Color Integer): " & $avControl[9] & @CRLF & _
 			"The Border Style is (See UDF Constants): " & $avControl[10] & @CRLF & _
 			"The Border color is (as a RGB Color Integer): " & $avControl[11] & @CRLF & _

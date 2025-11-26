@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oParStyle
-	Local $i100thMM, $iTabStop
+	Local $iHMM, $iTabStop
 	Local $bDeleted
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -17,12 +17,12 @@ Func Example()
 	$oParStyle = _LOWriter_ParStyleGetObj($oDoc, "Default Paragraph Style")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Paragraph style object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Convert 1/4" to Hundredths of a Millimeter (100th MM)
-	$i100thMM = _LO_UnitConvert(0.25, $LO_CONVERT_UNIT_INCH_100THMM)
-	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1/4" to Hundredths of a Millimeter (HMM)
+	$iHMM = _LO_UnitConvert(0.25, $LO_CONVERT_UNIT_INCH_HMM)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (HMM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a TabStop at 1/4" Tab Stop position.
-	$iTabStop = _LOWriter_ParStyleTabStopCreate($oParStyle, $i100thMM)
+	$iTabStop = _LOWriter_ParStyleTabStopCreate($oParStyle, $iHMM)
 	If @error Then _ERROR($oDoc, "Failed to Create a Paragraph Tab stop. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Delete the newly created Tab Stop.

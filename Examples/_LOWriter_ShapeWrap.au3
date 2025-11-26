@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oViewCursor, $oShape
-	Local $i100thMM, $i100thMM2
+	Local $iHMM, $iHMM2
 	Local $avSettings
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -21,16 +21,16 @@ Func Example()
 	$oShape = _LOWriter_ShapeInsert($oDoc, $oViewCursor, $LOW_SHAPE_TYPE_BASIC_RECTANGLE, 3000, 6000)
 	If @error Then _ERROR($oDoc, "Failed to create a Shape. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Convert 1/2" to Hundredths of a Millimeter (100th MM)
-	$i100thMM = _LO_UnitConvert(.5, $LO_CONVERT_UNIT_INCH_100THMM)
-	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1/2" to Hundredths of a Millimeter (HMM)
+	$iHMM = _LO_UnitConvert(.5, $LO_CONVERT_UNIT_INCH_HMM)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (HMM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Convert 1" to Hundredths of a Millimeter (100th MM)
-	$i100thMM2 = _LO_UnitConvert(1, $LO_CONVERT_UNIT_INCH_100THMM)
-	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1" to Hundredths of a Millimeter (HMM)
+	$iHMM2 = _LO_UnitConvert(1, $LO_CONVERT_UNIT_INCH_HMM)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (HMM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Modify the Shape wrap type settings. Set wrap type to $LOW_WRAP_MODE_LEFT, Left and Right  Spacing to 1/2", and Top and Bottom spacing to 1"
-	_LOWriter_ShapeWrap($oShape, $LOW_WRAP_MODE_LEFT, $i100thMM, $i100thMM, $i100thMM2, $i100thMM2)
+	_LOWriter_ShapeWrap($oShape, $LOW_WRAP_MODE_LEFT, $iHMM, $iHMM, $iHMM2, $iHMM2)
 	If @error Then _ERROR($oDoc, "Failed to set Shape settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current Shape settings. Return will be an array in order of function parameters.
@@ -39,10 +39,10 @@ Func Example()
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Shape's wrap settings are as follows: " & @CRLF & _
 			"The Wrap style is, (see UDF constants): " & $avSettings[0] & @CRLF & _
-			"The spacing between the Left edge of the Shape and any text is, in Hundredths of a Millimeter (100th MM),: " & $avSettings[1] & @CRLF & _
-			"The spacing between the Right edge of the Shape and any text is, in Hundredths of a Millimeter (100th MM),: " & $avSettings[2] & @CRLF & _
-			"The spacing between the Top edge of the Shape and any text is, in Hundredths of a Millimeter (100th MM),: " & $avSettings[3] & @CRLF & _
-			"The spacing between the Bottom edge of the Shape and any text is, in Hundredths of a Millimeter (100th MM),: " & $avSettings[4])
+			"The spacing between the Left edge of the Shape and any text is, in Hundredths of a Millimeter (HMM),: " & $avSettings[1] & @CRLF & _
+			"The spacing between the Right edge of the Shape and any text is, in Hundredths of a Millimeter (HMM),: " & $avSettings[2] & @CRLF & _
+			"The spacing between the Top edge of the Shape and any text is, in Hundredths of a Millimeter (HMM),: " & $avSettings[3] & @CRLF & _
+			"The spacing between the Bottom edge of the Shape and any text is, in Hundredths of a Millimeter (HMM),: " & $avSettings[4])
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

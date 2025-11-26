@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oViewCursor, $oParStyle
-	Local $i100thMM, $i100thMM2
+	Local $iHMM, $iHMM2
 	Local $avParStyleSettings
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -29,12 +29,12 @@ Func Example()
 	_LOWriter_ParStyleBorderWidth($oParStyle, $LOW_BORDERWIDTH_THICK, $LOW_BORDERWIDTH_THICK, $LOW_BORDERWIDTH_THICK, $LOW_BORDERWIDTH_THICK)
 	If @error Then _ERROR($oDoc, "Failed to set the Paragraph style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Convert 1/4" to Hundredths of a Millimeter (100th MM)
-	$i100thMM = _LO_UnitConvert(0.25, $LO_CONVERT_UNIT_INCH_100THMM)
-	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1/4" to Hundredths of a Millimeter (HMM)
+	$iHMM = _LO_UnitConvert(0.25, $LO_CONVERT_UNIT_INCH_HMM)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (HMM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set "Default Paragraph Style" Border padding to 1/4"
-	_LOWriter_ParStyleBorderPadding($oParStyle, $i100thMM)
+	_LOWriter_ParStyleBorderPadding($oParStyle, $iHMM)
 	If @error Then _ERROR($oDoc, "Failed to set the Paragraph style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
@@ -42,20 +42,20 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Paragraph style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Paragraph's current Border padding distance settings are as follows: " & @CRLF & _
-			"All Padding distance, in Hundredths of a Millimeter (100th MM): " & $avParStyleSettings[0] & " This setting is best only used to set the distance, as" & _
+			"All Padding distance, in Hundredths of a Millimeter (HMM): " & $avParStyleSettings[0] & " This setting is best only used to set the distance, as" & _
 			" the value will still be present, even though there are individual settings per side present." & @CRLF & _
-			"Top Padding distance, in Hundredths of a Millimeter (100th MM): " & $avParStyleSettings[1] & @CRLF & _
-			"Bottom Padding distance, in Hundredths of a Millimeter (100th MM): " & $avParStyleSettings[2] & @CRLF & _
-			"Left Padding distance, in Hundredths of a Millimeter (100th MM): " & $avParStyleSettings[3] & @CRLF & _
-			"Right Padding distance, in Hundredths of a Millimeter (100th MM): " & $avParStyleSettings[4] & @CRLF & @CRLF & _
+			"Top Padding distance, in Hundredths of a Millimeter (HMM): " & $avParStyleSettings[1] & @CRLF & _
+			"Bottom Padding distance, in Hundredths of a Millimeter (HMM): " & $avParStyleSettings[2] & @CRLF & _
+			"Left Padding distance, in Hundredths of a Millimeter (HMM): " & $avParStyleSettings[3] & @CRLF & _
+			"Right Padding distance, in Hundredths of a Millimeter (HMM): " & $avParStyleSettings[4] & @CRLF & @CRLF & _
 			"Press Ok, and I will demonstrate setting individual border padding settings.")
 
-	; Convert 1/2" to Hundredths of a Millimeter (100th MM)
-	$i100thMM2 = _LO_UnitConvert(0.5, $LO_CONVERT_UNIT_INCH_100THMM)
-	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1/2" to Hundredths of a Millimeter (HMM)
+	$iHMM2 = _LO_UnitConvert(0.5, $LO_CONVERT_UNIT_INCH_HMM)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (HMM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set "Default Paragraph Style" Border padding to, Top and Right, 1/4", Bottom and left, 1/2".
-	_LOWriter_ParStyleBorderPadding($oParStyle, Null, $i100thMM, $i100thMM2, $i100thMM2, $i100thMM)
+	_LOWriter_ParStyleBorderPadding($oParStyle, Null, $iHMM, $iHMM2, $iHMM2, $iHMM)
 	If @error Then _ERROR($oDoc, "Failed to set the Paragraph style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
@@ -63,12 +63,12 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Paragraph style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Paragraph's current Border padding distance settings are as follows: " & @CRLF & _
-			"All Padding distance, in Hundredths of a Millimeter (100th MM): " & $avParStyleSettings[0] & " This setting is best only used to set the distance, as" & _
+			"All Padding distance, in Hundredths of a Millimeter (HMM): " & $avParStyleSettings[0] & " This setting is best only used to set the distance, as" & _
 			" the value will still be present, even though there are individual settings per side present." & @CRLF & _
-			"Top Padding distance, in Hundredths of a Millimeter (100th MM): " & $avParStyleSettings[1] & @CRLF & _
-			"Bottom Padding distance, in Hundredths of a Millimeter (100th MM): " & $avParStyleSettings[2] & @CRLF & _
-			"Left Padding distance, in Hundredths of a Millimeter (100th MM): " & $avParStyleSettings[3] & @CRLF & _
-			"Right Padding distance, in Hundredths of a Millimeter (100th MM): " & $avParStyleSettings[4])
+			"Top Padding distance, in Hundredths of a Millimeter (HMM): " & $avParStyleSettings[1] & @CRLF & _
+			"Bottom Padding distance, in Hundredths of a Millimeter (HMM): " & $avParStyleSettings[2] & @CRLF & _
+			"Left Padding distance, in Hundredths of a Millimeter (HMM): " & $avParStyleSettings[3] & @CRLF & _
+			"Right Padding distance, in Hundredths of a Millimeter (HMM): " & $avParStyleSettings[4])
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

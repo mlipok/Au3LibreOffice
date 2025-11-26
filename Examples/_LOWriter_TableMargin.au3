@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oViewCursor, $oTable
-	Local $i100thMM
+	Local $iHMM
 	Local $avTableProps
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -29,12 +29,12 @@ Func Example()
 	_LOWriter_TableProperties($oTable, $LOW_ORIENT_HORI_LEFT_AND_WIDTH)
 	If @error Then _ERROR($oDoc, "Failed to set Text Table settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Convert 1 inch to Hundredths of a Millimeter (100th MM).
-	$i100thMM = _LO_UnitConvert(1, $LO_CONVERT_UNIT_INCH_100THMM)
-	If @error Then _ERROR($oDoc, "Failed to convert inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1 inch to Hundredths of a Millimeter (HMM).
+	$iHMM = _LO_UnitConvert(1, $LO_CONVERT_UNIT_INCH_HMM)
+	If @error Then _ERROR($oDoc, "Failed to convert inches to Hundredths of a Millimeter (HMM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set all Table margins to 1 inch except the right.
-	_LOWriter_TableMargin($oTable, $i100thMM, $i100thMM, $i100thMM, Null)
+	_LOWriter_TableMargin($oTable, $iHMM, $iHMM, $iHMM, Null)
 	If @error Then _ERROR($oDoc, "Failed to set Text Table settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Insert some text.
@@ -46,10 +46,10 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve Text Table settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Current Text Table Margin settings are: " & @CRLF & _
-			"Top Table Margin: " & $avTableProps[0] & " Hundredths of a Millimeter (100th MM)" & @CRLF & _
-			"Bottom Table Margin: " & $avTableProps[1] & " Hundredths of a Millimeter (100th MM)" & @CRLF & _
-			"Left Table Margin: " & $avTableProps[2] & " Hundredths of a Millimeter (100th MM)" & @CRLF & _
-			"Right Table Margin: " & $avTableProps[3] & " Hundredths of a Millimeter (100th MM)")
+			"Top Table Margin: " & $avTableProps[0] & " Hundredths of a Millimeter (HMM)" & @CRLF & _
+			"Bottom Table Margin: " & $avTableProps[1] & " Hundredths of a Millimeter (HMM)" & @CRLF & _
+			"Left Table Margin: " & $avTableProps[2] & " Hundredths of a Millimeter (HMM)" & @CRLF & _
+			"Right Table Margin: " & $avTableProps[3] & " Hundredths of a Millimeter (HMM)")
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

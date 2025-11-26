@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oViewCursor, $oTable, $oCell
-	Local $iRows, $iColumns, $i100thMM
+	Local $iRows, $iColumns, $iHMM
 	Local $avRowProps
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -55,12 +55,12 @@ Func Example()
 			"Is Auto Height? True/False: " & $avRowProps[1] & @CRLF & _
 			"Is the Row allowed to split between pages? True/False: " & $avRowProps[2])
 
-	; Convert 1.5 inches to Hundredths of a Millimeter (100th MM)
-	$i100thMM = _LO_UnitConvert(1.5, $LO_CONVERT_UNIT_INCH_100THMM)
-	If @error Then _ERROR($oDoc, "Failed to convert inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1.5 inches to Hundredths of a Millimeter (HMM)
+	$iHMM = _LO_UnitConvert(1.5, $LO_CONVERT_UNIT_INCH_HMM)
+	If @error Then _ERROR($oDoc, "Failed to convert inches to Hundredths of a Millimeter (HMM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set the Row properties to: 1.5" height, turn off auto height, and disallow splitting the row between pages.
-	_LOWriter_TableRowProperty($oTable, 2, $i100thMM, False, False)
+	_LOWriter_TableRowProperty($oTable, 2, $iHMM, False, False)
 	If @error Then _ERROR($oDoc, "Failed to set row properties. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the third down (Row 2) settings again.

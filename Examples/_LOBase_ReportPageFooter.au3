@@ -54,7 +54,7 @@ Func Example()
 			"Is the Page Footer enabled? True/False: " & $avReport[0] & @CRLF & _
 			"The Section's name is: " & $avReport[1] & @CRLF & _
 			"Is the section visible? True/False: " & $avReport[2] & @CRLF & _
-			"The Height of the section is, in Hundredths of a Millimeter (100th MM): " & $avReport[3] & @CRLF & _
+			"The Height of the section is, in Hundredths of a Millimeter (HMM): " & $avReport[3] & @CRLF & _
 			"The Conditional Print statement is: " & $avReport[4] & @CRLF & _
 			"The Background color is (as a RGB Color Integer): " & $avReport[5])
 

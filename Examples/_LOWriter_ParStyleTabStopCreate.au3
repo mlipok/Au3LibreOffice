@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oParStyle
-	Local $i100thMM, $iTabStop
+	Local $iHMM, $iTabStop
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
@@ -16,13 +16,13 @@ Func Example()
 	$oParStyle = _LOWriter_ParStyleGetObj($oDoc, "Default Paragraph Style")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Paragraph style object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Convert 1/4" to Hundredths of a Millimeter (100th MM)
-	$i100thMM = _LO_UnitConvert(0.25, $LO_CONVERT_UNIT_INCH_100THMM)
-	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1/4" to Hundredths of a Millimeter (HMM)
+	$iHMM = _LO_UnitConvert(0.25, $LO_CONVERT_UNIT_INCH_HMM)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (HMM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a TabStop at 1/4" Tab Stop position, Set the fill character to Asc(~) the Tilde key ASCII Value 126.
 	; Set alignment To  $LOW_TAB_ALIGN_DECIMAL, and the decimal character to ASC(.) a period, ASCII value 46.
-	$iTabStop = _LOWriter_ParStyleTabStopCreate($oParStyle, $i100thMM, Asc("~"), $LOW_TAB_ALIGN_DECIMAL, Asc("."))
+	$iTabStop = _LOWriter_ParStyleTabStopCreate($oParStyle, $iHMM, Asc("~"), $LOW_TAB_ALIGN_DECIMAL, Asc("."))
 	If @error Then _ERROR($oDoc, "Failed to Create a Paragraph Tab stop. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The new Tab stop has the position of " & $iTabStop)

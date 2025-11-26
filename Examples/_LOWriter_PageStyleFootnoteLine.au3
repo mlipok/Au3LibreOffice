@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oPageStyle
-	Local $i100thMM
+	Local $iHMM
 	Local $avPageStyleSettings
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -17,13 +17,13 @@ Func Example()
 	$oPageStyle = _LOWriter_PageStyleGetObj($oDoc, "Default Page Style")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Page Style Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Convert 1/4" to Hundredths of a Millimeter (100th MM)
-	$i100thMM = _LO_UnitConvert(.25, $LO_CONVERT_UNIT_INCH_100THMM)
-	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1/4" to Hundredths of a Millimeter (HMM)
+	$iHMM = _LO_UnitConvert(.25, $LO_CONVERT_UNIT_INCH_HMM)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (HMM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set Page style Footnote separator line settings to: Position = $LOW_ALIGN_HORI_CENTER, Line style = $LOW_LINE_STYLE_DOTTED,
 	; Thickness = 1.25 Printer's Points, Color = $LO_COLOR_BLACK, Length = 75%, Spacing to 1/4".
-	_LOWriter_PageStyleFootnoteLine($oPageStyle, $LOW_ALIGN_HORI_CENTER, $LOW_LINE_STYLE_DOTTED, 1.25, $LO_COLOR_BLACK, 75, $i100thMM)
+	_LOWriter_PageStyleFootnoteLine($oPageStyle, $LOW_ALIGN_HORI_CENTER, $LOW_LINE_STYLE_DOTTED, 1.25, $LO_COLOR_BLACK, 75, $iHMM)
 	If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
@@ -36,7 +36,7 @@ Func Example()
 			"The Separator line's thickness is, in Printer's Points: " & $avPageStyleSettings[2] & @CRLF & _
 			"The Separator line's Color is (as a RGB Color Integer): " & $avPageStyleSettings[3] & @CRLF & _
 			"The percentage of the Separator line's length, is: " & $avPageStyleSettings[4] & @CRLF & _
-			"The distance between the Footnote body and the separator line, in Hundredths of a Millimeter (100th MM), is: " & $avPageStyleSettings[5])
+			"The distance between the Footnote body and the separator line, in Hundredths of a Millimeter (HMM), is: " & $avPageStyleSettings[5])
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

@@ -69,7 +69,7 @@ Func Example()
 			"Will the content be prevented from spreading across more than one page? True/False: " & $avGroup[3] & @CRLF & _
 			"Will the Header be repeated on each page this section spans? True/False: " & $avGroup[4] & @CRLF & _
 			"Is the Group Header visible? True/False: " & $avGroup[5] & @CRLF & _
-			"The Height of the Group Header is, in Hundredths of a Millimeter (100th MM): " & $avGroup[6] & @CRLF & _
+			"The Height of the Group Header is, in Hundredths of a Millimeter (HMM): " & $avGroup[6] & @CRLF & _
 			"The Conditional Print statement is: " & $avGroup[7] & @CRLF & _
 			"The Background color is (as a RGB Color Integer): " & $avGroup[8])
 

@@ -29,12 +29,12 @@ Func Example()
 			"6 = $LOW_PAPER_LEGAL;" & @CRLF & _
 			"7 = $LOW_PAPER_TABLOID;" & @CRLF & _
 			"8 = $LOW_PAPER_USER_DEFINED" & @CRLF & @CRLF & _
-			"Paper Width in Hundredths of a Millimeter (100th MM):— " & $avSettings[1] & @CRLF & _
-			"Which is " & _LO_UnitConvert($avSettings[1], $LO_CONVERT_UNIT_100THMM_INCH) & " Inches, and " & _
-			_LO_UnitConvert($avSettings[1], $LO_CONVERT_UNIT_100THMM_CM) & "Centimeters" & @CRLF & @CRLF & _
-			"Paper Height in Hundredths of a Millimeter (100th MM):— " & $avSettings[2] & @CRLF & _
-			"Which is " & _LO_UnitConvert($avSettings[2], $LO_CONVERT_UNIT_100THMM_INCH) & " Inches, and " & _
-			_LO_UnitConvert($avSettings[2], $LO_CONVERT_UNIT_100THMM_CM) & "Centimeters" & @CRLF & @CRLF & _
+			"Paper Width in Hundredths of a Millimeter (HMM):— " & $avSettings[1] & @CRLF & _
+			"Which is " & _LO_UnitConvert($avSettings[1], $LO_CONVERT_UNIT_HMM_INCH) & " Inches, and " & _
+			_LO_UnitConvert($avSettings[1], $LO_CONVERT_UNIT_HMM_CM) & "Centimeters" & @CRLF & @CRLF & _
+			"Paper Height in Hundredths of a Millimeter (HMM):— " & $avSettings[2] & @CRLF & _
+			"Which is " & _LO_UnitConvert($avSettings[2], $LO_CONVERT_UNIT_HMM_INCH) & " Inches, and " & _
+			_LO_UnitConvert($avSettings[2], $LO_CONVERT_UNIT_HMM_CM) & "Centimeters" & @CRLF & @CRLF & _
 			"I will now modify the settings and show the result.")
 
 	; Changes the print size settings to Tabloid.
@@ -57,12 +57,12 @@ Func Example()
 			"6 = $LOW_PAPER_LEGAL;" & @CRLF & _
 			"7 = $LOW_PAPER_TABLOID;" & @CRLF & _
 			"8 = $LOW_PAPER_USER_DEFINED" & @CRLF & @CRLF & _
-			"Paper Width in Hundredths of a Millimeter (100th MM):— " & $avSettingsNew[1] & @CRLF & _
-			"Which is " & _LO_UnitConvert($avSettingsNew[1], $LO_CONVERT_UNIT_100THMM_INCH) & " Inches, and " & _
-			_LO_UnitConvert($avSettingsNew[1], $LO_CONVERT_UNIT_100THMM_CM) & "Centimeters" & @CRLF & @CRLF & _
-			"Paper Height in Hundredths of a Millimeter (100th MM):— " & $avSettingsNew[2] & @CRLF & _
-			"Which is " & _LO_UnitConvert($avSettingsNew[2], $LO_CONVERT_UNIT_100THMM_INCH) & " Inches, and " & _
-			_LO_UnitConvert($avSettingsNew[2], $LO_CONVERT_UNIT_100THMM_CM) & "Centimeters" & @CRLF & @CRLF & _
+			"Paper Width in Hundredths of a Millimeter (HMM):— " & $avSettingsNew[1] & @CRLF & _
+			"Which is " & _LO_UnitConvert($avSettingsNew[1], $LO_CONVERT_UNIT_HMM_INCH) & " Inches, and " & _
+			_LO_UnitConvert($avSettingsNew[1], $LO_CONVERT_UNIT_HMM_CM) & "Centimeters" & @CRLF & @CRLF & _
+			"Paper Height in Hundredths of a Millimeter (HMM):— " & $avSettingsNew[2] & @CRLF & _
+			"Which is " & _LO_UnitConvert($avSettingsNew[2], $LO_CONVERT_UNIT_HMM_INCH) & " Inches, and " & _
+			_LO_UnitConvert($avSettingsNew[2], $LO_CONVERT_UNIT_HMM_CM) & "Centimeters" & @CRLF & @CRLF & _
 			"I will now modify the settings again and show the result.")
 
 	; Changes the print size settings to Tabloid, but set width to Japanese Postcard.
@@ -85,12 +85,12 @@ Func Example()
 			"6 = $LOW_PAPER_LEGAL;" & @CRLF & _
 			"7 = $LOW_PAPER_TABLOID;" & @CRLF & _
 			"8 = $LOW_PAPER_USER_DEFINED" & @CRLF & @CRLF & _
-			"Paper Width in Hundredths of a Millimeter (100th MM):— " & $avSettingsNew[1] & @CRLF & _
-			"Which is " & _LO_UnitConvert($avSettingsNew[1], $LO_CONVERT_UNIT_100THMM_INCH) & " Inches, and " & _
-			_LO_UnitConvert($avSettingsNew[1], $LO_CONVERT_UNIT_100THMM_CM) & "Centimeters" & @CRLF & @CRLF & _
-			"Paper Height in Hundredths of a Millimeter (100th MM):— " & $avSettingsNew[2] & @CRLF & _
-			"Which is " & _LO_UnitConvert($avSettingsNew[2], $LO_CONVERT_UNIT_100THMM_INCH) & " Inches, and " & _
-			_LO_UnitConvert($avSettingsNew[2], $LO_CONVERT_UNIT_100THMM_CM) & "Centimeters" & @CRLF & @CRLF & _
+			"Paper Width in Hundredths of a Millimeter (HMM):— " & $avSettingsNew[1] & @CRLF & _
+			"Which is " & _LO_UnitConvert($avSettingsNew[1], $LO_CONVERT_UNIT_HMM_INCH) & " Inches, and " & _
+			_LO_UnitConvert($avSettingsNew[1], $LO_CONVERT_UNIT_HMM_CM) & "Centimeters" & @CRLF & @CRLF & _
+			"Paper Height in Hundredths of a Millimeter (HMM):— " & $avSettingsNew[2] & @CRLF & _
+			"Which is " & _LO_UnitConvert($avSettingsNew[2], $LO_CONVERT_UNIT_HMM_INCH) & " Inches, and " & _
+			_LO_UnitConvert($avSettingsNew[2], $LO_CONVERT_UNIT_HMM_CM) & "Centimeters" & @CRLF & @CRLF & _
 			"I will now return the settings to their original values, and close the document.")
 
 	; Restore the original settings

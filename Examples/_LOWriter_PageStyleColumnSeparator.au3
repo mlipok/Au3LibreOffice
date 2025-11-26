@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oPageStyle
-	Local $i100thMM
+	Local $iHMM
 	Local $avPageStyleSettings
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -17,9 +17,9 @@ Func Example()
 	$oPageStyle = _LOWriter_PageStyleGetObj($oDoc, "Default Page Style")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Page Style Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Convert 1/16" to Hundredths of a Millimeter (100th MM)
-	$i100thMM = _LO_UnitConvert(.0625, $LO_CONVERT_UNIT_INCH_100THMM)
-	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1/16" to Hundredths of a Millimeter (HMM)
+	$iHMM = _LO_UnitConvert(.0625, $LO_CONVERT_UNIT_INCH_HMM)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (HMM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set Page style Column count to 4.
 	_LOWriter_PageStyleColumnSettings($oPageStyle, 4)
@@ -27,7 +27,7 @@ Func Example()
 
 	; Set Page style Column Separator line settings to: Separator on (True), Line Style = $LOW_LINE_STYLE_SOLID, Line width to 1/16"
 	; Line Color to $LO_COLOR_RED, Height to 75%, Line Position to $LOW_ALIGN_VERT_MIDDLE
-	_LOWriter_PageStyleColumnSeparator($oPageStyle, True, $LOW_LINE_STYLE_SOLID, $i100thMM, $LO_COLOR_RED, 75, $LOW_ALIGN_VERT_MIDDLE)
+	_LOWriter_PageStyleColumnSeparator($oPageStyle, True, $LOW_LINE_STYLE_SOLID, $iHMM, $LO_COLOR_RED, 75, $LOW_ALIGN_VERT_MIDDLE)
 	If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings. Return will be an array with elements in order of function parameters.
@@ -37,7 +37,7 @@ Func Example()
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Page Style's current Column Separator Line settings are as follows: " & @CRLF & _
 			"Is Column separated by a line? True/False: " & $avPageStyleSettings[0] & @CRLF & _
 			"The Separator Line style is, (see UDF constants): " & $avPageStyleSettings[1] & @CRLF & _
-			"The Separator Line width is, in Hundredths of a Millimeter (100th MM): " & $avPageStyleSettings[2] & @CRLF & _
+			"The Separator Line width is, in Hundredths of a Millimeter (HMM): " & $avPageStyleSettings[2] & @CRLF & _
 			"The Separator Line color is (as a RGB Color Integer): " & $avPageStyleSettings[3] & @CRLF & _
 			"The Separator Line length percentage is: " & $avPageStyleSettings[4] & @CRLF & _
 			"The Separator Line position is, (see UDF constants): " & $avPageStyleSettings[5])

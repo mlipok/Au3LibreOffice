@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oPageStyle
-	Local $i100thMM, $i100thMM2, $i100thMM3
+	Local $iHMM, $iHMM2, $iHMM3
 	Local $avPageStyleSettings
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -17,27 +17,27 @@ Func Example()
 	$oPageStyle = _LOWriter_PageStyleGetObj($oDoc, "Default Page Style")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Page Style Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Convert 1" to Hundredths of a Millimeter (100th MM)
-	$i100thMM = _LO_UnitConvert(1, $LO_CONVERT_UNIT_INCH_100THMM)
-	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1" to Hundredths of a Millimeter (HMM)
+	$iHMM = _LO_UnitConvert(1, $LO_CONVERT_UNIT_INCH_HMM)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (HMM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Convert 1/2" to Hundredths of a Millimeter (100th MM)
-	$i100thMM2 = _LO_UnitConvert(.5, $LO_CONVERT_UNIT_INCH_100THMM)
-	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1/2" to Hundredths of a Millimeter (HMM)
+	$iHMM2 = _LO_UnitConvert(.5, $LO_CONVERT_UNIT_INCH_HMM)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (HMM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Convert 1/4" to Hundredths of a Millimeter (100th MM)
-	$i100thMM3 = _LO_UnitConvert(.25, $LO_CONVERT_UNIT_INCH_100THMM)
-	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1/4" to Hundredths of a Millimeter (HMM)
+	$iHMM3 = _LO_UnitConvert(.25, $LO_CONVERT_UNIT_INCH_HMM)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (HMM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; If Libre Office version is higher or equal to 7.2 then set Gutter margin.
 	If (_LO_VersionGet(True) >= 7.2) Then
 		; Set Left and Right margins to 1", Top and Bottom Margins to 1/2" and Gutter Margin to 1/4".
-		_LOWriter_PageStyleMargins($oPageStyle, $i100thMM, $i100thMM, $i100thMM2, $i100thMM2, $i100thMM3)
+		_LOWriter_PageStyleMargins($oPageStyle, $iHMM, $iHMM, $iHMM2, $iHMM2, $iHMM3)
 		If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	Else ; Set all other margins, except the Gutter margin.
 		; Set Left and Right margins to 1", Top and Bottom Margins to 1/2".
-		_LOWriter_PageStyleMargins($oPageStyle, $i100thMM, $i100thMM, $i100thMM2, $i100thMM2)
+		_LOWriter_PageStyleMargins($oPageStyle, $iHMM, $iHMM, $iHMM2, $iHMM2)
 		If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 	EndIf
 
@@ -48,18 +48,18 @@ Func Example()
 	; If Libre Office version is higher or equal to 7.2 then display the Gutter margin setting.
 	If (_LO_VersionGet(True) >= 7.2) Then
 		MsgBox($MB_OK + $MB_TOPMOST, Default, "The Page Style's current Margin settings are as follows: " & @CRLF & _
-				"The Left page margin, in Hundredths of a Millimeter (100th MM), is: " & $avPageStyleSettings[0] & @CRLF & _
-				"The Right page margin, in Hundredths of a Millimeter (100th MM), is: " & $avPageStyleSettings[1] & @CRLF & _
-				"The Top page margin, in Hundredths of a Millimeter (100th MM), is: " & $avPageStyleSettings[2] & @CRLF & _
-				"The Bottom page margin, in Hundredths of a Millimeter (100th MM), is: " & $avPageStyleSettings[3] & @CRLF & _
-				"The Gutter page margin, in Hundredths of a Millimeter (100th MM), is: " & $avPageStyleSettings[4])
+				"The Left page margin, in Hundredths of a Millimeter (HMM), is: " & $avPageStyleSettings[0] & @CRLF & _
+				"The Right page margin, in Hundredths of a Millimeter (HMM), is: " & $avPageStyleSettings[1] & @CRLF & _
+				"The Top page margin, in Hundredths of a Millimeter (HMM), is: " & $avPageStyleSettings[2] & @CRLF & _
+				"The Bottom page margin, in Hundredths of a Millimeter (HMM), is: " & $avPageStyleSettings[3] & @CRLF & _
+				"The Gutter page margin, in Hundredths of a Millimeter (HMM), is: " & $avPageStyleSettings[4])
 
 	Else ; Display all other margin settings, except the Gutter margin.
 		MsgBox($MB_OK + $MB_TOPMOST, Default, "The Page Style's current Margin settings are as follows: " & @CRLF & _
-				"The Left page margin, in Hundredths of a Millimeter (100th MM), is: " & $avPageStyleSettings[0] & @CRLF & _
-				"The Right page margin, in Hundredths of a Millimeter (100th MM), is: " & $avPageStyleSettings[1] & @CRLF & _
-				"The Top page margin, in Hundredths of a Millimeter (100th MM), is: " & $avPageStyleSettings[2] & @CRLF & _
-				"The Bottom page margin, in Hundredths of a Millimeter (100th MM), is: " & $avPageStyleSettings[3])
+				"The Left page margin, in Hundredths of a Millimeter (HMM), is: " & $avPageStyleSettings[0] & @CRLF & _
+				"The Right page margin, in Hundredths of a Millimeter (HMM), is: " & $avPageStyleSettings[1] & @CRLF & _
+				"The Top page margin, in Hundredths of a Millimeter (HMM), is: " & $avPageStyleSettings[2] & @CRLF & _
+				"The Bottom page margin, in Hundredths of a Millimeter (HMM), is: " & $avPageStyleSettings[3])
 	EndIf
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")

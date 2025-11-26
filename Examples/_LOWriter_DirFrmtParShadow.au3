@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oViewCursor
-	Local $i100thMM
+	Local $iHMM
 	Local $avSettings
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -25,13 +25,13 @@ Func Example()
 	_LOWriter_CursorMove($oViewCursor, $LOW_VIEWCUR_GOTO_START)
 	If @error Then _ERROR($oDoc, "Failed to move ViewCursor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Convert 1/4" to Hundredths of a Millimeter (100th MM)
-	$i100thMM = _LO_UnitConvert(0.25, $LO_CONVERT_UNIT_INCH_100THMM)
-	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (100th MM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Convert 1/4" to Hundredths of a Millimeter (HMM)
+	$iHMM = _LO_UnitConvert(0.25, $LO_CONVERT_UNIT_INCH_HMM)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (HMM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set the paragraph at the current cursor's location Shadow to 1/4" wide, Color to $LO_COLOR_PURPLE, Transparent to false, and location to
 	; $LOW_SHADOW_TOP_LEFT
-	_LOWriter_DirFrmtParShadow($oViewCursor, $i100thMM, $LO_COLOR_PURPLE, False, $LOW_SHADOW_TOP_LEFT)
+	_LOWriter_DirFrmtParShadow($oViewCursor, $iHMM, $LO_COLOR_PURPLE, False, $LOW_SHADOW_TOP_LEFT)
 	If @error Then _ERROR($oDoc, "Failed to set the Selected text's settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
@@ -39,7 +39,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the selected text's settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Paragraph Shadow settings are as follows: " & @CRLF & _
-			"Shadow width, in Hundredths of a Millimeter (100th MM): " & $avSettings[0] & @CRLF & _
+			"Shadow width, in Hundredths of a Millimeter (HMM): " & $avSettings[0] & @CRLF & _
 			"Shadow color is (as a RGB Color Integer): " & $avSettings[1] & @CRLF & _
 			"Is shadow color transparent? True/False: " & $avSettings[2] & @CRLF & _
 			"Shadow location, (see UDF Constants): " & $avSettings[3] & @CRLF & @CRLF & _
