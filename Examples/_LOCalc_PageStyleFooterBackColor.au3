@@ -21,11 +21,11 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set Page style Footer Background color to $LO_COLOR_LIME, Background color transparent = False
-	_LOCalc_PageStyleFooterAreaColor($oPageStyle, $LO_COLOR_LIME, False)
+	_LOCalc_PageStyleFooterBackColor($oPageStyle, $LO_COLOR_LIME, False)
 	If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings. Return will be an array with elements in order of function parameters.
-	$avPageStyleSettings = _LOCalc_PageStyleFooterAreaColor($oPageStyle)
+	$avPageStyleSettings = _LOCalc_PageStyleFooterBackColor($oPageStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Page style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Page Style's current Footer Background color settings are as follows: " & @CRLF & _

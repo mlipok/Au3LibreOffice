@@ -21,11 +21,11 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to turn Page Style headers on. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set Page style Header Background color to $LO_COLOR_LIME, Background color transparent = False
-	_LOCalc_PageStyleHeaderAreaColor($oPageStyle, $LO_COLOR_LIME, False)
+	_LOCalc_PageStyleHeaderBackColor($oPageStyle, $LO_COLOR_LIME, False)
 	If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings. Return will be an integer.
-	$avPageStyleSettings = _LOCalc_PageStyleHeaderAreaColor($oPageStyle)
+	$avPageStyleSettings = _LOCalc_PageStyleHeaderBackColor($oPageStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Page style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Page Style's current Header Background color settings are as follows: " & @CRLF & _

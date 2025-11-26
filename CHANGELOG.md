@@ -954,6 +954,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - `_LOCalc_DocUndoCurActionTitle` to only have one Success return, either with an empty String or the Current Undo Action Title.
 - Merged LibreOfficeCalc_CellStyle into LibreOfficeCalc_Cell.
 - Made optional parameters in internal functions be set to Null.
+- Renamed Page background color functions for consistency:
+	- `_LOCalc_PageStyleAreaColor` --> `_LOCalc_PageStyleBackColor`
+	- `_LOCalc_PageStyleFooterAreaColor` --> `_LOCalc_PageStyleFooterBackColor`
+	- `_LOCalc_PageStyleHeaderAreaColor` --> `_LOCalc_PageStyleHeaderBackColor`
 
 #### Removed
 

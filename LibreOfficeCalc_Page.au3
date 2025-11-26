@@ -23,7 +23,7 @@
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
-; _LOCalc_PageStyleAreaColor
+; _LOCalc_PageStyleBackColor
 ; _LOCalc_PageStyleBorderColor
 ; _LOCalc_PageStyleBorderPadding
 ; _LOCalc_PageStyleBorderStyle
@@ -32,7 +32,7 @@
 ; _LOCalc_PageStyleDelete
 ; _LOCalc_PageStyleExists
 ; _LOCalc_PageStyleFooter
-; _LOCalc_PageStyleFooterAreaColor
+; _LOCalc_PageStyleFooterBackColor
 ; _LOCalc_PageStyleFooterBorderColor
 ; _LOCalc_PageStyleFooterBorderPadding
 ; _LOCalc_PageStyleFooterBorderStyle
@@ -42,7 +42,7 @@
 ; _LOCalc_PageStyleFooterShadow
 ; _LOCalc_PageStyleGetObj
 ; _LOCalc_PageStyleHeader
-; _LOCalc_PageStyleHeaderAreaColor
+; _LOCalc_PageStyleHeaderBackColor
 ; _LOCalc_PageStyleHeaderBorderColor
 ; _LOCalc_PageStyleHeaderBorderPadding
 ; _LOCalc_PageStyleHeaderBorderStyle
@@ -63,9 +63,9 @@
 ; ===============================================================================================================================
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_PageStyleAreaColor
+; Name ..........: _LOCalc_PageStyleBackColor
 ; Description ...: Set or Retrieve background color settings for a Page style.
-; Syntax ........: _LOCalc_PageStyleAreaColor(ByRef $oPageStyle[, $iBackColor = Null[, $bBackTransparent = Null]])
+; Syntax ........: _LOCalc_PageStyleBackColor(ByRef $oPageStyle[, $iBackColor = Null[, $bBackTransparent = Null]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOCalc_PageStyleCreate, or _LOCalc_PageStyleGetObj function.
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) for "None".
 ;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
@@ -91,7 +91,7 @@
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_PageStyleAreaColor(ByRef $oPageStyle, $iBackColor = Null, $bBackTransparent = Null)
+Func _LOCalc_PageStyleBackColor(ByRef $oPageStyle, $iBackColor = Null, $bBackTransparent = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -122,7 +122,7 @@ Func _LOCalc_PageStyleAreaColor(ByRef $oPageStyle, $iBackColor = Null, $bBackTra
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOCalc_PageStyleAreaColor
+EndFunc   ;==>_LOCalc_PageStyleBackColor
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_PageStyleBorderColor
@@ -661,9 +661,9 @@ Func _LOCalc_PageStyleFooter(ByRef $oPageStyle, $bFooterOn = Null, $bSameLeftRig
 EndFunc   ;==>_LOCalc_PageStyleFooter
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_PageStyleFooterAreaColor
+; Name ..........: _LOCalc_PageStyleFooterBackColor
 ; Description ...: Set or Retrieve background color settings for a Page style Footer.
-; Syntax ........: _LOCalc_PageStyleFooterAreaColor(ByRef $oPageStyle[, $iBackColor = Null[, $bBackTransparent = Null]])
+; Syntax ........: _LOCalc_PageStyleFooterBackColor(ByRef $oPageStyle[, $iBackColor = Null[, $bBackTransparent = Null]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOCalc_PageStyleCreate, or _LOCalc_PageStyleGetObj function.
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) for "None".
 ;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
@@ -691,7 +691,7 @@ EndFunc   ;==>_LOCalc_PageStyleFooter
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_PageStyleFooterAreaColor(ByRef $oPageStyle, $iBackColor = Null, $bBackTransparent = Null)
+Func _LOCalc_PageStyleFooterBackColor(ByRef $oPageStyle, $iBackColor = Null, $bBackTransparent = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -723,7 +723,7 @@ Func _LOCalc_PageStyleFooterAreaColor(ByRef $oPageStyle, $iBackColor = Null, $bB
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOCalc_PageStyleFooterAreaColor
+EndFunc   ;==>_LOCalc_PageStyleFooterBackColor
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_PageStyleFooterBorderColor
@@ -1418,9 +1418,9 @@ Func _LOCalc_PageStyleHeader(ByRef $oPageStyle, $bHeaderOn = Null, $bSameLeftRig
 EndFunc   ;==>_LOCalc_PageStyleHeader
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_PageStyleHeaderAreaColor
+; Name ..........: _LOCalc_PageStyleHeaderBackColor
 ; Description ...: Set or Retrieve background color settings for a Page style header.
-; Syntax ........: _LOCalc_PageStyleHeaderAreaColor(ByRef $oPageStyle[, $iBackColor = Null[, $bBackTransparent = Null]])
+; Syntax ........: _LOCalc_PageStyleHeaderBackColor(ByRef $oPageStyle[, $iBackColor = Null[, $bBackTransparent = Null]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOCalc_PageStyleCreate, or _LOCalc_PageStyleGetObj function.
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) for "None".
 ;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True the background color is transparent.
@@ -1448,7 +1448,7 @@ EndFunc   ;==>_LOCalc_PageStyleHeader
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_PageStyleHeaderAreaColor(ByRef $oPageStyle, $iBackColor = Null, $bBackTransparent = Null)
+Func _LOCalc_PageStyleHeaderBackColor(ByRef $oPageStyle, $iBackColor = Null, $bBackTransparent = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1480,7 +1480,7 @@ Func _LOCalc_PageStyleHeaderAreaColor(ByRef $oPageStyle, $iBackColor = Null, $bB
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOCalc_PageStyleHeaderAreaColor
+EndFunc   ;==>_LOCalc_PageStyleHeaderBackColor
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_PageStyleHeaderBorderColor
