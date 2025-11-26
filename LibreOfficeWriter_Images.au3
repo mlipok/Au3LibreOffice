@@ -903,11 +903,11 @@ EndFunc   ;==>_LOWriter_ImageBorderColor
 ; Description ...: Set or retrieve the Image Border Padding settings.
 ; Syntax ........: _LOWriter_ImageBorderPadding(ByRef $oImage[, $iAll = Null[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]]])
 ; Parameters ....: $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
-;                  $iAll                - [optional] an integer value. Default is Null. Set all four padding distances to one distance in Hundredths of a Millimeter (100th MM).
-;                  $iTop                - [optional] an integer value. Default is Null. The Top Distance between the Border and Image in Hundredths of a Millimeter (100th MM).
-;                  $iBottom             - [optional] an integer value. Default is Null. The Bottom Distance between the Border and Image in Hundredths of a Millimeter (100th MM).
-;                  $iLeft               - [optional] an integer value. Default is Null. The Left Distance between the Border and Image in Hundredths of a Millimeter (100th MM).
-;                  $iRight              - [optional] an integer value. Default is Null. The Right Distance between the Border and Image in Hundredths of a Millimeter (100th MM).
+;                  $iAll                - [optional] an integer value. Default is Null. Set all four padding distances to one distance in Hundredths of a Millimeter (HMM).
+;                  $iTop                - [optional] an integer value. Default is Null. The Top Distance between the Border and Image in Hundredths of a Millimeter (HMM).
+;                  $iBottom             - [optional] an integer value. Default is Null. The Bottom Distance between the Border and Image in Hundredths of a Millimeter (HMM).
+;                  $iLeft               - [optional] an integer value. Default is Null. The Left Distance between the Border and Image in Hundredths of a Millimeter (HMM).
+;                  $iRight              - [optional] an integer value. Default is Null. The Right Distance between the Border and Image in Hundredths of a Millimeter (HMM).
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1051,10 +1051,10 @@ EndFunc   ;==>_LOWriter_ImageBorderStyle
 ; Description ...: Set or Retrieve the Image Border Line Width. Libre Office Version 3.4 and Up.
 ; Syntax ........: _LOWriter_ImageBorderWidth(ByRef $oImage[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
 ; Parameters ....: $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
-;                  $iTop                - [optional] an integer value. Default is Null. The Top Border Line width of the Image in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBottom             - [optional] an integer value. Default is Null. The Bottom Border Line Width of the Image in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iLeft               - [optional] an integer value. Default is Null. The Left Border Line width of the Image in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iRight              - [optional] an integer value. Default is Null. The Right Border Line Width of the Image in Hundredths of a Millimeter (100th MM). Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iTop                - [optional] an integer value. Default is Null. The Top Border Line width of the Image in Hundredths of a Millimeter (HMM). Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBottom             - [optional] an integer value. Default is Null. The Bottom Border Line Width of the Image in Hundredths of a Millimeter (HMM). Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iLeft               - [optional] an integer value. Default is Null. The Left Border Line width of the Image in Hundredths of a Millimeter (HMM). Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iRight              - [optional] an integer value. Default is Null. The Right Border Line Width of the Image in Hundredths of a Millimeter (HMM). Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1226,10 +1226,10 @@ EndFunc   ;==>_LOWriter_ImageColorAdjust
 ; Description ...: Set or retrieve Image crop settings.
 ; Syntax ........: _LOWriter_ImageCrop(ByRef $oImage[, $iLeft = Null[, $iRight = Null[, $iTop = Null[, $iBottom = Null[, $bKeepScale = Null]]]]])
 ; Parameters ....: $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
-;                  $iLeft               - [optional] an integer value. Default is Null. The amount in Hundredths of a Millimeter (100th MM) to either extend the background of the image, (negative numbers), or to crop, (positive numbers) from the Left side.
-;                  $iRight              - [optional] an integer value. Default is Null. The amount in Hundredths of a Millimeter (100th MM) to either extend the background of the image, (negative numbers), or to crop, (positive numbers) from the Right side.
-;                  $iTop                - [optional] an integer value. Default is Null. The amount in Hundredths of a Millimeter (100th MM) to either extend the background of the image, (negative numbers), or to crop, (positive numbers) from the Top side.
-;                  $iBottom             - [optional] an integer value. Default is Null. The amount in Hundredths of a Millimeter (100th MM) to either extend the background of the image, (negative numbers), or to crop, (positive numbers) from the Bottom side.
+;                  $iLeft               - [optional] an integer value. Default is Null. The amount in Hundredths of a Millimeter (HMM) to either extend the background of the image, (negative numbers), or to crop, (positive numbers) from the Left side.
+;                  $iRight              - [optional] an integer value. Default is Null. The amount in Hundredths of a Millimeter (HMM) to either extend the background of the image, (negative numbers), or to crop, (positive numbers) from the Right side.
+;                  $iTop                - [optional] an integer value. Default is Null. The amount in Hundredths of a Millimeter (HMM) to either extend the background of the image, (negative numbers), or to crop, (positive numbers) from the Top side.
+;                  $iBottom             - [optional] an integer value. Default is Null. The amount in Hundredths of a Millimeter (HMM) to either extend the background of the image, (negative numbers), or to crop, (positive numbers) from the Bottom side.
 ;                  $bKeepScale          - [optional] a boolean value. Default is Null. If True, crop amounts are removed or added to the image, while keeping the scaling. If False, crop values are removed or added while retaining the image size. See remarks. This setting is internally static, you do not need to set this each call for as long as the script life, unless you wish to change the value. Default static setting is True.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1983,7 +1983,7 @@ EndFunc   ;==>_LOWriter_ImagesGetNames
 ; Description ...: Set or Retrieve the shadow settings for an Image.
 ; Syntax ........: _LOWriter_ImageShadow(ByRef $oImage[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null]]]])
 ; Parameters ....: $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
-;                  $iWidth              - [optional] an integer value. Default is Null. The Width of the Image Shadow set in Hundredths of a Millimeter (100th MM).
+;                  $iWidth              - [optional] an integer value. Default is Null. The Width of the Image Shadow set in Hundredths of a Millimeter (HMM).
 ;                  $iColor              - [optional] an integer value (-1-16777215). Default is Null. The Color of the Image shadow, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the Image Shadow is transparent.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. The Location of the Image Shadow. See constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
@@ -2011,7 +2011,7 @@ EndFunc   ;==>_LOWriter_ImagesGetNames
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                  LibreOffice may change the shadow width +/- a Hundredth of a Millimeter (100th MM).
+;                  LibreOffice may change the shadow width +/- a Hundredth of a Millimeter (HMM).
 ; Related .......: _LOWriter_ImageInsert, _LOWriter_ImageGetObjByName, _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_UnitConvert
 ; Link ..........:
 ; Example .......: Yes
@@ -2079,8 +2079,8 @@ EndFunc   ;==>_LOWriter_ImageShadow
 ; Parameters ....: $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ;                  $iScaleWidth         - [optional] an integer value (Min. 1%). Default is Null. The Scale Width percentage of the image.
 ;                  $iScaleHeight        - [optional] an integer value (Min. 1%). Default is Null. The Scale Height percentage of the image.
-;                  $iWidth              - [optional] an integer value. Default is Null. The Width of the image, set in Hundredths of a Millimeter (100th MM).
-;                  $iHeight             - [optional] an integer value. Default is Null. The Height of the image, set in Hundredths of a Millimeter (100th MM).
+;                  $iWidth              - [optional] an integer value. Default is Null. The Width of the image, set in Hundredths of a Millimeter (HMM).
+;                  $iHeight             - [optional] an integer value. Default is Null. The Height of the image, set in Hundredths of a Millimeter (HMM).
 ;                  $bOriginalSize       - [optional] a boolean value. Default is Null. Only accepts True. If True, the image is returned to its original size, or the maximum size allowed for the current page size.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -2239,11 +2239,11 @@ EndFunc   ;==>_LOWriter_ImageTransparency
 ; Syntax ........: _LOWriter_ImageTypePosition(ByRef $oImage[, $iHorAlign = Null[, $iHorPos = Null[, $iHorRelation = Null[, $bMirror = Null[, $iVertAlign = Null[, $iVertPos = Null[, $iVertRelation = Null[, $bKeepInside = Null[, $iAnchorPos = Null]]]]]]]]])
 ; Parameters ....: $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ;                  $iHorAlign           - [optional] an integer value (0-3). Default is Null. The horizontal orientation of the Image. See Constants, $LOW_ORIENT_HORI_* as defined in LibreOfficeWriter_Constants.au3. Can't be set if Anchor position is set to "As Character".
-;                  $iHorPos             - [optional] an integer value. Default is Null. The horizontal position of the Image. set in Hundredths of a Millimeter (100th MM). Only valid if $iHorAlign is set to $LOW_ORIENT_HORI_NONE().
+;                  $iHorPos             - [optional] an integer value. Default is Null. The horizontal position of the Image. set in Hundredths of a Millimeter (HMM). Only valid if $iHorAlign is set to $LOW_ORIENT_HORI_NONE().
 ;                  $iHorRelation        - [optional] an integer value (0-8). Default is Null. The reference point for the selected horizontal alignment option. See Constants, $LOW_RELATIVE_* as defined in LibreOfficeWriter_Constants.au3, and Remarks for acceptable values.
 ;                  $bMirror             - [optional] a boolean value. Default is Null. If True, Reverses the current horizontal alignment settings on even pages.
 ;                  $iVertAlign          - [optional] an integer value (0-9). Default is Null. The vertical orientation of the Image. See Constants, $LOW_ORIENT_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iVertPos            - [optional] an integer value. Default is Null. The vertical position of the Image. set in Hundredths of a Millimeter (100th MM). Only valid if $iVertAlign is set to $LOW_ORIENT_VERT_NONE().
+;                  $iVertPos            - [optional] an integer value. Default is Null. The vertical position of the Image. set in Hundredths of a Millimeter (HMM). Only valid if $iVertAlign is set to $LOW_ORIENT_VERT_NONE().
 ;                  $iVertRelation       - [optional] an integer value (-1-9). Default is Null. The reference point for the selected vertical alignment option. See Constants, $LOW_RELATIVE_* as defined in LibreOfficeWriter_Constants.au3, and Remarks for acceptable values.
 ;                  $bKeepInside         - [optional] a boolean value. Default is Null. If True, Keeps the Image within the layout boundaries of the text that the Image is anchored to.
 ;                  $iAnchorPos          - [optional] an integer value (0-2,4). Default is Null. Specify the anchoring options for the Image. See Constants, $LOW_ANCHOR_* as defined in LibreOfficeWriter_Constants.au3.
@@ -2479,10 +2479,10 @@ EndFunc   ;==>_LOWriter_ImageTypePosition
 ; Syntax ........: _LOWriter_ImageTypeSize(ByRef $oDoc, ByRef $oImage[, $iWidth = Null[, $iRelativeWidth = Null[, $iWidthRelativeTo = Null[, $iHeight = Null[, $iRelativeHeight = Null[, $iHeightRelativeTo = Null[, $bKeepRatio = Null]]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
-;                  $iWidth              - [optional] an integer value. Default is Null. The width of the Image, in Hundredths of a Millimeter (100th MM). Min. 51.
+;                  $iWidth              - [optional] an integer value. Default is Null. The width of the Image, in Hundredths of a Millimeter (HMM). Min. 51.
 ;                  $iRelativeWidth      - [optional] an integer value (0-254). Default is Null. Calculates the width of the Image as a percentage of the width of the page text area. 0 = off.
 ;                  $iWidthRelativeTo    - [optional] an integer value (0,7). Default is Null. Decides what 100% width means: either text area (excluding margins) or the entire page (including margins). See Constants, $LOW_RELATIVE_* as defined in LibreOfficeWriter_Constants.au3. Libre Office 4.3 and Up.
-;                  $iHeight             - [optional] an integer value. Default is Null. The height of the Image, in Hundredths of a Millimeter (100th MM). Min. 51.
+;                  $iHeight             - [optional] an integer value. Default is Null. The height of the Image, in Hundredths of a Millimeter (HMM). Min. 51.
 ;                  $iRelativeHeight     - [optional] an integer value (0-254). Default is Null. Calculates the Height of the Image as a percentage of the Height of the page text area. 0 = off.
 ;                  $iHeightRelativeTo   - [optional] an integer value (0,7). Default is Null. Decides what 100% Height means: either text area (excluding margins) or the entire page (including margins). See Constants, $LOW_RELATIVE_* as defined in LibreOfficeWriter_Constants.au3. Libre Office 4.3 and Up.
 ;                  $bKeepRatio          - [optional] a boolean value. Default is Null. Maintains the height and width ratio when you change the width or the height setting.
@@ -2611,10 +2611,10 @@ EndFunc   ;==>_LOWriter_ImageTypeSize
 ; Syntax ........: _LOWriter_ImageWrap(ByRef $oImage[, $iWrapType = Null[, $iLeft = Null[, $iRight = Null[, $iTop = Null[, $iBottom = Null]]]]])
 ; Parameters ....: $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ;                  $iWrapType           - [optional] an integer value (0-5). Default is Null. The way to wrap text around the Image. See Constants, $LOW_WRAP_MODE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iLeft               - [optional] an integer value. Default is Null. The amount of space between the left edge of the Image and the text. Set in Hundredths of a Millimeter (100th MM).
-;                  $iRight              - [optional] an integer value. Default is Null. The amount of space between the Right edge of the Image and the text. Set in Hundredths of a Millimeter (100th MM).
-;                  $iTop                - [optional] an integer value. Default is Null. The amount of space between the Top edge of the Image and the text. Set in Hundredths of a Millimeter (100th MM).
-;                  $iBottom             - [optional] an integer value. Default is Null. The amount of space between the Bottom edge of the Image and the text. Set in Hundredths of a Millimeter (100th MM).
+;                  $iLeft               - [optional] an integer value. Default is Null. The amount of space between the left edge of the Image and the text. Set in Hundredths of a Millimeter (HMM).
+;                  $iRight              - [optional] an integer value. Default is Null. The amount of space between the Right edge of the Image and the text. Set in Hundredths of a Millimeter (HMM).
+;                  $iTop                - [optional] an integer value. Default is Null. The amount of space between the Top edge of the Image and the text. Set in Hundredths of a Millimeter (HMM).
+;                  $iBottom             - [optional] an integer value. Default is Null. The amount of space between the Bottom edge of the Image and the text. Set in Hundredths of a Millimeter (HMM).
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--

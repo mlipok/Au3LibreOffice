@@ -180,7 +180,7 @@ EndFunc   ;==>__LOWriter_AnyAreDefault
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
-;                  All distance values are set in Hundredths of a Millimeter (100th MM).
+;                  All distance values are set in Hundredths of a Millimeter (HMM).
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LO_UnitConvert
 ; Link ..........:
@@ -290,7 +290,7 @@ EndFunc   ;==>__LOWriter_Border
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
-;                  All distance values are set in Hundredths of a Millimeter (100th MM).
+;                  All distance values are set in Hundredths of a Millimeter (HMM).
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LO_UnitConvert
 ; Link ..........:
@@ -374,11 +374,11 @@ EndFunc   ;==>__LOWriter_CharBorder
 ; Description ...: Set and retrieve the distance between the border and the characters.
 ; Syntax ........: __LOWriter_CharBorderPadding(ByRef $oObj[, $iAll = Null[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]]])
 ; Parameters ....: $oObj                - [in/out] an object. An Object that supports "com.sun.star.text.Paragraph" Or "com.sun.star.text.TextPortion" services, such as a Cursor with data selected or paragraph section.
-;                  $iAll                - [optional] an integer value. Default is Null. Set all four padding values to the same value. When used, all other parameters are ignored. In Hundredths of a Millimeter (100th MM).
-;                  $iTop                - [optional] an integer value. Default is Null. The Top border distance in Hundredths of a Millimeter (100th MM).
-;                  $iBottom             - [optional] an integer value. Default is Null. The Bottom border distance in Hundredths of a Millimeter (100th MM).
-;                  $iLeft               - [optional] an integer value. Default is Null. The left border distance in Hundredths of a Millimeter (100th MM).
-;                  $iRight              - [optional] an integer value. Default is Null. The Right border distance in Hundredths of a Millimeter (100th MM).
+;                  $iAll                - [optional] an integer value. Default is Null. Set all four padding values to the same value. When used, all other parameters are ignored. In Hundredths of a Millimeter (HMM).
+;                  $iTop                - [optional] an integer value. Default is Null. The Top border distance in Hundredths of a Millimeter (HMM).
+;                  $iBottom             - [optional] an integer value. Default is Null. The Bottom border distance in Hundredths of a Millimeter (HMM).
+;                  $iLeft               - [optional] an integer value. Default is Null. The left border distance in Hundredths of a Millimeter (HMM).
+;                  $iRight              - [optional] an integer value. Default is Null. The Right border distance in Hundredths of a Millimeter (HMM).
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -402,7 +402,7 @@ EndFunc   ;==>__LOWriter_CharBorder
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                  All distance values are set in Hundredths of a Millimeter (100th MM).
+;                  All distance values are set in Hundredths of a Millimeter (HMM).
 ; Related .......: _LO_UnitConvert
 ; Link ..........:
 ; Example .......: No
@@ -980,7 +980,7 @@ EndFunc   ;==>__LOWriter_CharRotateScale
 ; Description ...: Set and retrieve the Shadow for a Character Style.
 ; Syntax ........: __LOWriter_CharShadow(ByRef $oObj[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null]]]])
 ; Parameters ....: $oObj                - [in/out] an object. An Object that supports "com.sun.star.text.Paragraph" Or "com.sun.star.text.TextPortion" services, such as a Cursor with data selected or paragraph section.
-;                  $iWidth              - [optional] an integer value. Default is Null. The Shadow width, set in Hundredths of a Millimeter (100th MM).
+;                  $iWidth              - [optional] an integer value. Default is Null. The Shadow width, set in Hundredths of a Millimeter (HMM).
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The Shadow color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the shadow is transparent.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. Location of the shadow compared to the characters. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
@@ -1007,7 +1007,7 @@ EndFunc   ;==>__LOWriter_CharRotateScale
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
-;                  LibreOffice may adjust the set width +/- a Hundredth of a Millimeter (100th MM) after setting.
+;                  LibreOffice may adjust the set width +/- a Hundredth of a Millimeter (HMM) after setting.
 ; Related .......: _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_UnitConvert
 ; Link ..........:
 ; Example .......: No
@@ -1091,10 +1091,10 @@ EndFunc   ;==>__LOWriter_CharShadow
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                  When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User Display, however the internal setting is measured in Hundredths of a Millimeter (100th MM). They will be automatically converted from Points to Hundredths of a Millimeter and back for retrieval of settings.
+;                  When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User Display, however the internal setting is measured in Hundredths of a Millimeter (HMM). They will be automatically converted from Points to Hundredths of a Millimeter and back for retrieval of settings.
 ;                  The acceptable values for $nKerning are from -2 Pt to 928.8 Pt. the figures can be directly converted easily, however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative Hundredths of a Millimeter internally from 928.9 up to 1000 Pt (Max setting).
-;                  For example, 928.8Pt is the last correct value, which equals 32766 Hundredths of a Millimeter (100th MM), after this LibreOffice reports the following: 928.9 Pt = -32766 100th MM; 929 Pt = -32763 100th MM; 929.1 = -32759; 1000 pt = -30258.
-;                  Attempting to set Libre's kerning value to anything over 32768 100th MM causes a COM exception, and attempting to set the kerning to any of these negative numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the max settable kerning is -2.0 Pt to 928.8 Pt.
+;                  For example, 928.8Pt is the last correct value, which equals 32766 Hundredths of a Millimeter (HMM), after this LibreOffice reports the following: 928.9 Pt = -32766 HMM; 929 Pt = -32763 HMM; 929.1 = -32759; 1000 pt = -30258.
+;                  Attempting to set Libre's kerning value to anything over 32768 HMM causes a COM exception, and attempting to set the kerning to any of these negative numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the max settable kerning is -2.0 Pt to 928.8 Pt.
 ; Related .......: _LO_UnitConvert
 ; Link ..........:
 ; Example .......: No
@@ -1368,8 +1368,8 @@ EndFunc   ;==>__LOWriter_ColorRemoveAlpha
 ; Name ..........: __LOWriter_CreatePoint
 ; Description ...: Creates a Position structure.
 ; Syntax ........: __LOWriter_CreatePoint($iX, $iY)
-; Parameters ....: $iX                  - an integer value. The X position, in Hundredths of a Millimeter (100th MM).
-;                  $iY                  - an integer value. The Y position, in Hundredths of a Millimeter (100th MM).
+; Parameters ....: $iX                  - an integer value. The X position, in Hundredths of a Millimeter (HMM).
+;                  $iY                  - an integer value. The Y position, in Hundredths of a Millimeter (HMM).
 ; Return values .: Success: Structure
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2071,7 +2071,7 @@ EndFunc   ;==>__LOWriter_FindFormatRetrieveSetting
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                  All distance values are set in Hundredths of a Millimeter (100th MM).
+;                  All distance values are set in Hundredths of a Millimeter (HMM).
 ; Related .......: _LO_UnitConvert
 ; Link ..........:
 ; Example .......: No
@@ -3286,7 +3286,7 @@ EndFunc   ;==>__LOWriter_GradientPresets
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
-;                  All distance values are set in Hundredths of a Millimeter (100th MM).
+;                  All distance values are set in Hundredths of a Millimeter (HMM).
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LO_UnitConvert
 ; Link ..........:
@@ -4293,11 +4293,11 @@ EndFunc   ;==>__LOWriter_ParBackColor
 ; Description ...: Set or retrieve the Border Padding (spacing between the Paragraph and border) settings.
 ; Syntax ........: __LOWriter_ParBorderPadding(ByRef $oObj[, $iAll = Null[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]]])
 ; Parameters ....: $oObj                - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
-;                  $iAll                - [optional] an integer value. Default is Null. Set all four padding distances to one distance in Hundredths of a Millimeter (100th MM).
-;                  $iTop                - [optional] an integer value. Default is Null. The Top Distance between the Border and Paragraph in Hundredths of a Millimeter (100th MM).
-;                  $iBottom             - [optional] an integer value. Default is Null. The Bottom Distance between the Border and Paragraph in Hundredths of a Millimeter (100th MM).
-;                  $iLeft               - [optional] an integer value. Default is Null. The Left Distance between the Border and Paragraph in Hundredths of a Millimeter (100th MM).
-;                  $iRight              - [optional] an integer value. Default is Null. The Right Distance between the Border and Paragraph in Hundredths of a Millimeter (100th MM).
+;                  $iAll                - [optional] an integer value. Default is Null. Set all four padding distances to one distance in Hundredths of a Millimeter (HMM).
+;                  $iTop                - [optional] an integer value. Default is Null. The Top Distance between the Border and Paragraph in Hundredths of a Millimeter (HMM).
+;                  $iBottom             - [optional] an integer value. Default is Null. The Bottom Distance between the Border and Paragraph in Hundredths of a Millimeter (HMM).
+;                  $iLeft               - [optional] an integer value. Default is Null. The Left Distance between the Border and Paragraph in Hundredths of a Millimeter (HMM).
+;                  $iRight              - [optional] an integer value. Default is Null. The Right Distance between the Border and Paragraph in Hundredths of a Millimeter (HMM).
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -4386,7 +4386,7 @@ EndFunc   ;==>__LOWriter_ParBorderPadding
 ; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
 ;                  $iNumChar            - [optional] an integer value (0-9). Default is Null. The number of characters to make into DropCaps.
 ;                  $iLines              - [optional] an integer value (0, 2-9). Default is Null. The number of lines to drop down.
-;                  $iSpcTxt             - [optional] an integer value. Default is Null. The distance between the drop cap and the following text. In Hundredths of a Millimeter (100th MM).
+;                  $iSpcTxt             - [optional] an integer value. Default is Null. The distance between the drop cap and the following text. In Hundredths of a Millimeter (HMM).
 ;                  $bWholeWord          - [optional] a boolean value. Default is Null. If True, DropCap the whole first word. (Nullifys $iNumChars.)
 ;                  $sCharStyle          - [optional] a string value. Default is Null. The character style to use for the DropCaps. See Remarks.
 ; Return values .: Success: 1 or Array.
@@ -4631,9 +4631,9 @@ EndFunc   ;==>__LOWriter_ParHyphenation
 ; Description ...: Set or Retrieve Indent settings.
 ; Syntax ........: __LOWriter_ParIndent(ByRef $oObj[, $iBeforeTxt = Null[, $iAfterTxt = Null[, $iFirstLine = Null[, $bAutoFirstLine = Null]]]])
 ; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
-;                  $iBeforeTxt          - [optional] an integer value (-9998989-17094). Default is Null. The amount of space that you want to indent the paragraph from the page margin. If you want the paragraph to extend into the page margin, enter a negative number. Set in Hundredths of a Millimeter (100th MM).
-;                  $iAfterTxt           - [optional] an integer value (-9998989-17094). Default is Null. The amount of space that you want to indent the paragraph from the page margin. If you want the paragraph to extend into the page margin, enter a negative number. Set in Hundredths of a Millimeter (100th MM)
-;                  $iFirstLine          - [optional] an integer value (-57785-17094). Default is Null. Indentation distance of the first line of a paragraph. Set in Hundredths of a Millimeter (100th MM).
+;                  $iBeforeTxt          - [optional] an integer value (-9998989-17094). Default is Null. The amount of space that you want to indent the paragraph from the page margin. If you want the paragraph to extend into the page margin, enter a negative number. Set in Hundredths of a Millimeter (HMM).
+;                  $iAfterTxt           - [optional] an integer value (-9998989-17094). Default is Null. The amount of space that you want to indent the paragraph from the page margin. If you want the paragraph to extend into the page margin, enter a negative number. Set in Hundredths of a Millimeter (HMM)
+;                  $iFirstLine          - [optional] an integer value (-57785-17094). Default is Null. Indentation distance of the first line of a paragraph. Set in Hundredths of a Millimeter (HMM).
 ;                  $bAutoFirstLine      - [optional] a boolean value. Default is Null. If True, the first line will be indented automatically.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -4867,7 +4867,7 @@ EndFunc   ;==>__LOWriter_ParPageBreak
 ; Description ...: Set or Retrieve the Shadow settings for a Paragraph.
 ; Syntax ........: __LOWriter_ParShadow(ByRef $oObj[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null]]]])
 ; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
-;                  $iWidth              - [optional] an integer value. Default is Null. The shadow width in Hundredths of a Millimeter (100th MM).
+;                  $iWidth              - [optional] an integer value. Default is Null. The shadow width in Hundredths of a Millimeter (HMM).
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The shadow color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the shadow is transparent.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. The location of the shadow compared to the paragraph. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
@@ -4895,7 +4895,7 @@ EndFunc   ;==>__LOWriter_ParPageBreak
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                  LibreOffice may change the shadow width +/- a Hundredth of a Millimeter (100th MM).
+;                  LibreOffice may change the shadow width +/- a Hundredth of a Millimeter (HMM).
 ; Related .......: _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LO_UnitConvert
 ; Link ..........:
 ; Example .......: No
@@ -4961,8 +4961,8 @@ EndFunc   ;==>__LOWriter_ParShadow
 ; Description ...: Set and Retrieve Line Spacing settings.
 ; Syntax ........: __LOWriter_ParSpace(ByRef $oObj[, $iAbovePar = Null[, $iBelowPar = Null[, $bAddSpace = Null[, $iLineSpcMode = Null[, $iLineSpcHeight = Null[, $bPageLineSpc = Null]]]]]])
 ; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
-;                  $iAbovePar           - [optional] an integer value (0-10008). Default is Null. The Space above a paragraph, in Hundredths of a Millimeter (100th MM).
-;                  $iBelowPar           - [optional] an integer value (0-10008). Default is Null. The Space Below a paragraph, in Hundredths of a Millimeter (100th MM).
+;                  $iAbovePar           - [optional] an integer value (0-10008). Default is Null. The Space above a paragraph, in Hundredths of a Millimeter (HMM).
+;                  $iBelowPar           - [optional] an integer value (0-10008). Default is Null. The Space Below a paragraph, in Hundredths of a Millimeter (HMM).
 ;                  $bAddSpace           - [optional] a boolean value. Default is Null. If True, the top and bottom margins of the paragraph should not be applied when the previous and next paragraphs have the same style. Libre Office Version 3.6 and Up.
 ;                  $iLineSpcMode        - [optional] an integer value (0-3). Default is Null. The line spacing type of the paragraph. See Constants, $LOW_LINE_SPC_MODE_* as defined in LibreOfficeWriter_Constants.au3, also notice min and max values for each.
 ;                  $iLineSpcHeight      - [optional] an integer value. Default is Null. This value specifies the height in regard to Mode. See Remarks.
@@ -5000,7 +5000,7 @@ EndFunc   ;==>__LOWriter_ParShadow
 ; Remarks .......: $bPageLineSpc(Register mode) is only used if the register mode property of the page style is switched on. $bPageLineSpc(Register Mode) Aligns the baseline of each line of text to a vertical document grid, so that each line is the same height.
 ;                  The settings in Libre Office, (Single, 1.15, 1.5, Double), Use the Proportional mode, and are just varying percentages. e.g Single = 100, 1.15 = 115%, 1.5 = 150%, Double = 200%.
 ;                  $iLineSpcHeight depends on the $iLineSpcMode used, see constants for accepted Input values.
-;                  $iAbovePar, $iBelowPar, $iLineSpcHeight may change +/- a Hundredth of a Millimeter (100th MM) once set.
+;                  $iAbovePar, $iBelowPar, $iLineSpcHeight may change +/- a Hundredth of a Millimeter (HMM) once set.
 ;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LO_UnitConvert
@@ -5138,7 +5138,7 @@ EndFunc   ;==>__LOWriter_ParStyleNameToggle
 ; Description ...: Create a new TabStop for a Paragraph.
 ; Syntax ........: __LOWriter_ParTabStopCreate(ByRef $oObj, $iPosition, $iAlignment, $iFillChar, $iDecChar)
 ; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
-;                  $iPosition           - an integer value. The TabStop position to set the new TabStop to. Set in Hundredths of a Millimeter (100th MM). See Remarks.
+;                  $iPosition           - an integer value. The TabStop position to set the new TabStop to. Set in Hundredths of a Millimeter (HMM). See Remarks.
 ;                  $iAlignment          - an integer value (0-4). The position of where the end of a Tab is aligned to compared to the text. See Constants, $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iFillChar           - an integer value. The Asc (see AutoIt function) value of any character (except 0/Null) you want to act as a Tab Fill character. See remarks.
 ;                  $iDecChar            - an integer value. Enter a character(in Asc Value(See AutoIt Asc Function)) that you want the decimal tab to use as a decimal separator. Can only be set if $iAlignment is set to $LOW_TAB_ALIGN_DECIMAL.
@@ -5165,8 +5165,8 @@ EndFunc   ;==>__LOWriter_ParStyleNameToggle
 ;                  @Error 0 @Extended 0 Return Integer = Success. Settings were successfully set. New TabStop position is returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $iPosition once set can vary +/- a Hundredth of a Millimeter (100th MM). To ensure you can identify the tabstop to modify it again, This function returns the new TabStop position.
-;                  Since $iPosition can fluctuate +/- a Hundredth of a Millimeter (100th MM) when it is inserted into LibreOffice, it is possible to accidentally overwrite an already existing TabStop.
+; Remarks .......: $iPosition once set can vary +/- a Hundredth of a Millimeter (HMM). To ensure you can identify the tabstop to modify it again, This function returns the new TabStop position.
+;                  Since $iPosition can fluctuate +/- a Hundredth of a Millimeter (HMM) when it is inserted into LibreOffice, it is possible to accidentally overwrite an already existing TabStop.
 ;                  $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32. The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can also enter a custom ASC value. See ASC AutoIt Func. and "ASCII Character Codes" in the AutoIt help file.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  $iNewTabStop position is still returned as even though some settings weren't successfully set, the new TabStop was still created.
@@ -5331,7 +5331,7 @@ EndFunc   ;==>__LOWriter_ParTabStopDelete
 ; Syntax ........: __LOWriter_ParTabStopMod(ByRef $oObj, $iTabStop[, $iPosition = Null[, $iFillChar = Null[, $iAlignment = Null[, $iDecChar = Null]]]])
 ; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
 ;                  $iTabStop            - an integer value. The Tab position of the TabStop to modify. See Remarks.
-;                  $iPosition           - [optional] an integer value. Default is Null. The New position to set the input position to. Set in Hundredths of a Millimeter (100th MM). See Remarks.
+;                  $iPosition           - [optional] an integer value. Default is Null. The New position to set the input position to. Set in Hundredths of a Millimeter (HMM). See Remarks.
 ;                  $iFillChar           - [optional] an integer value. Default is Null. The Asc (see AutoIt function) value of any character (except 0/Null) you want to act as a Tab Fill character. See remarks.
 ;                  $iAlignment          - [optional] an integer value (0-4). Default is Null. The position of where the end of a Tab is aligned to compared to the text. See Constants, $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iDecChar            - [optional] an integer value. Default is Null. Enter a character(in Asc Value(See AutoIt Asc Function)) that you want the decimal tab to use as a decimal separator. Can only be set if $iAlignment is set to $LOW_TAB_ALIGN_DECIMAL.
@@ -5361,8 +5361,8 @@ EndFunc   ;==>__LOWriter_ParTabStopDelete
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page margin. This is the only reliable way to identify a Tabstop to be able to interact with it, as there can only be one of a certain length per Paragraph Style.
-;                  $iPosition once set can vary +/- a Hundredth of a Millimeter (100th MM). To ensure you can identify the tabstop to modify it again, This function returns the new TabStop position in @Extended when $iPosition is set, return value will be set to 2. See Return Values.
-;                  Since $iPosition can fluctuate +/- a Hundredth of a Millimeter (100th MM) when it is inserted into LibreOffice, it is possible to accidentally overwrite an already existing TabStop.
+;                  $iPosition once set can vary +/- a Hundredth of a Millimeter (HMM). To ensure you can identify the tabstop to modify it again, This function returns the new TabStop position in @Extended when $iPosition is set, return value will be set to 2. See Return Values.
+;                  Since $iPosition can fluctuate +/- a Hundredth of a Millimeter (HMM) when it is inserted into LibreOffice, it is possible to accidentally overwrite an already existing TabStop.
 ;                  $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32. The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can also enter a custom ASC value. See ASC AutoIt Func. and "ASCII Character Codes" in the AutoIt help file.
 ;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
@@ -5584,10 +5584,10 @@ EndFunc   ;==>__LOWriter_ParTxtFlowOpt
 ; Syntax ........: __LOWriter_Shape_CreateArrow(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight, $iX, $iY, $iShapeType)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions.
-;                  $iWidth              - an integer value. The Shape's Width in Hundredths of a Millimeter (100th MM).
-;                  $iHeight             - an integer value. The Shape's Height in Hundredths of a Millimeter (100th MM).
-;                  $iX                  - an integer value. The X position from the insertion point, in Hundredths of a Millimeter (100th MM).
-;                  $iY                  - an integer value. The Y position from the insertion point, in Hundredths of a Millimeter (100th MM).
+;                  $iWidth              - an integer value. The Shape's Width in Hundredths of a Millimeter (HMM).
+;                  $iHeight             - an integer value. The Shape's Height in Hundredths of a Millimeter (HMM).
+;                  $iX                  - an integer value. The X position from the insertion point, in Hundredths of a Millimeter (HMM).
+;                  $iY                  - an integer value. The Y position from the insertion point, in Hundredths of a Millimeter (HMM).
 ;                  $iShapeType          - an integer value (0-25). The Type of shape to create. See $LOW_SHAPE_TYPE_ARROWS_* as defined in LibreOfficeWriter_Constants.au3
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -5769,10 +5769,10 @@ EndFunc   ;==>__LOWriter_Shape_CreateArrow
 ; Syntax ........: __LOWriter_Shape_CreateBasic(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight, $iX, $iY, $iShapeType)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions.
-;                  $iWidth              - an integer value. The Shape's Width in Hundredths of a Millimeter (100th MM).
-;                  $iHeight             - an integer value. The Shape's Height in Hundredths of a Millimeter (100th MM).
-;                  $iX                  - an integer value. The X position from the insertion point, in Hundredths of a Millimeter (100th MM).
-;                  $iY                  - an integer value. The Y position from the insertion point, in Hundredths of a Millimeter (100th MM).
+;                  $iWidth              - an integer value. The Shape's Width in Hundredths of a Millimeter (HMM).
+;                  $iHeight             - an integer value. The Shape's Height in Hundredths of a Millimeter (HMM).
+;                  $iX                  - an integer value. The X position from the insertion point, in Hundredths of a Millimeter (HMM).
+;                  $iY                  - an integer value. The Y position from the insertion point, in Hundredths of a Millimeter (HMM).
 ;                  $iShapeType          - an integer value (26-49). The Type of shape to create. See $LOW_SHAPE_TYPE_BASIC_* as defined in LibreOfficeWriter_Constants.au3
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -5954,10 +5954,10 @@ EndFunc   ;==>__LOWriter_Shape_CreateBasic
 ; Syntax ........: __LOWriter_Shape_CreateCallout(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight, $iX, $iY, $iShapeType)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions.
-;                  $iWidth              - an integer value. The Shape's Width in Hundredths of a Millimeter (100th MM).
-;                  $iHeight             - an integer value. The Shape's Height in Hundredths of a Millimeter (100th MM).
-;                  $iX                  - an integer value. The X position from the insertion point, in Hundredths of a Millimeter (100th MM).
-;                  $iY                  - an integer value. The Y position from the insertion point, in Hundredths of a Millimeter (100th MM).
+;                  $iWidth              - an integer value. The Shape's Width in Hundredths of a Millimeter (HMM).
+;                  $iHeight             - an integer value. The Shape's Height in Hundredths of a Millimeter (HMM).
+;                  $iX                  - an integer value. The X position from the insertion point, in Hundredths of a Millimeter (HMM).
+;                  $iY                  - an integer value. The Y position from the insertion point, in Hundredths of a Millimeter (HMM).
 ;                  $iShapeType          - an integer value (50-56). The Type of shape to create. See $LOW_SHAPE_TYPE_CALLOUT_* as defined in LibreOfficeWriter_Constants.au3
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -6073,10 +6073,10 @@ EndFunc   ;==>__LOWriter_Shape_CreateCallout
 ; Syntax ........: __LOWriter_Shape_CreateFlowchart(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight, $iX, $iY, $iShapeType)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions.
-;                  $iWidth              - an integer value. The Shape's Width in Hundredths of a Millimeter (100th MM).
-;                  $iHeight             - an integer value. The Shape's Height in Hundredths of a Millimeter (100th MM).
-;                  $iX                  - an integer value. The X position from the insertion point, in Hundredths of a Millimeter (100th MM).
-;                  $iY                  - an integer value. The Y position from the insertion point, in Hundredths of a Millimeter (100th MM).
+;                  $iWidth              - an integer value. The Shape's Width in Hundredths of a Millimeter (HMM).
+;                  $iHeight             - an integer value. The Shape's Height in Hundredths of a Millimeter (HMM).
+;                  $iX                  - an integer value. The X position from the insertion point, in Hundredths of a Millimeter (HMM).
+;                  $iY                  - an integer value. The Y position from the insertion point, in Hundredths of a Millimeter (HMM).
 ;                  $iShapeType          - an integer value (57-84). The Type of shape to create. See $LOW_SHAPE_TYPE_FLOWCHART_* as defined in LibreOfficeWriter_Constants.au3
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -6255,10 +6255,10 @@ EndFunc   ;==>__LOWriter_Shape_CreateFlowchart
 ; Syntax ........: __LOWriter_Shape_CreateLine(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight, $iX, $iY, $iShapeType)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions.
-;                  $iWidth              - an integer value. The Shape's Width in Hundredths of a Millimeter (100th MM).
-;                  $iHeight             - an integer value. The Shape's Height in Hundredths of a Millimeter (100th MM).
-;                  $iX                  - an integer value. The X position from the insertion point, in Hundredths of a Millimeter (100th MM).
-;                  $iY                  - an integer value. The Y position from the insertion point, in Hundredths of a Millimeter (100th MM).
+;                  $iWidth              - an integer value. The Shape's Width in Hundredths of a Millimeter (HMM).
+;                  $iHeight             - an integer value. The Shape's Height in Hundredths of a Millimeter (HMM).
+;                  $iX                  - an integer value. The X position from the insertion point, in Hundredths of a Millimeter (HMM).
+;                  $iY                  - an integer value. The Y position from the insertion point, in Hundredths of a Millimeter (HMM).
 ;                  $iShapeType          - an integer value (85-92). The Type of shape to create. See $LOW_SHAPE_TYPE_LINE_* as defined in LibreOfficeWriter_Constants.au3
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -6553,10 +6553,10 @@ EndFunc   ;==>__LOWriter_Shape_CreateLine
 ; Syntax ........: __LOWriter_Shape_CreateStars(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight, $iX, $iY, $iShapeType)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions.
-;                  $iWidth              - an integer value. The Shape's Width in Hundredths of a Millimeter (100th MM).
-;                  $iHeight             - an integer value. The Shape's Height in Hundredths of a Millimeter (100th MM).
-;                  $iX                  - an integer value. The X position from the insertion point, in Hundredths of a Millimeter (100th MM).
-;                  $iY                  - an integer value. The Y position from the insertion point, in Hundredths of a Millimeter (100th MM).
+;                  $iWidth              - an integer value. The Shape's Width in Hundredths of a Millimeter (HMM).
+;                  $iHeight             - an integer value. The Shape's Height in Hundredths of a Millimeter (HMM).
+;                  $iX                  - an integer value. The X position from the insertion point, in Hundredths of a Millimeter (HMM).
+;                  $iY                  - an integer value. The Y position from the insertion point, in Hundredths of a Millimeter (HMM).
 ;                  $iShapeType          - an integer value (93-104). The Type of shape to create. See $LOW_SHAPE_TYPE_STARS_* as defined in LibreOfficeWriter_Constants.au3
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -6688,10 +6688,10 @@ EndFunc   ;==>__LOWriter_Shape_CreateStars
 ; Syntax ........: __LOWriter_Shape_CreateSymbol(ByRef $oDoc, ByRef $oCursor, $iWidth, $iHeight, $iX, $iY, $iShapeType)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions.
-;                  $iWidth              - an integer value. The Shape's Width in Hundredths of a Millimeter (100th MM).
-;                  $iHeight             - an integer value. The Shape's Height in Hundredths of a Millimeter (100th MM).
-;                  $iX                  - an integer value. The X position from the insertion point, in Hundredths of a Millimeter (100th MM).
-;                  $iY                  - an integer value. The Y position from the insertion point, in Hundredths of a Millimeter (100th MM).
+;                  $iWidth              - an integer value. The Shape's Width in Hundredths of a Millimeter (HMM).
+;                  $iHeight             - an integer value. The Shape's Height in Hundredths of a Millimeter (HMM).
+;                  $iX                  - an integer value. The X position from the insertion point, in Hundredths of a Millimeter (HMM).
+;                  $iY                  - an integer value. The Y position from the insertion point, in Hundredths of a Millimeter (HMM).
 ;                  $iShapeType          - an integer value (105-122). The Type of shape to create. See $LOW_SHAPE_TYPE_SYMBOL_* as defined in LibreOfficeWriter_Constants.au3
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -7600,8 +7600,8 @@ EndFunc   ;==>__LOWriter_ShapePointGetSettings
 ; Parameters ....: $aiFlags             - [in/out] an array of integers. An Array of Point Type Flags returned from the Shape. Array will be directly modified.
 ;                  $atPoints            - [in/out] an array of dll structs. An Array of Points returned from the Shape. Array will be directly modified.
 ;                  $iArrayElement       - [in/out] an integer value. The Array element that contains the point to modify. This may be directly modified, depending on the settings.
-;                  $iX                  - [optional] an integer value. Default is Null. The X coordinate value, set in Hundredths of a Millimeter (100th MM).
-;                  $iY                  - [optional] an integer value. Default is Null. The Y coordinate value, set in Hundredths of a Millimeter (100th MM).
+;                  $iX                  - [optional] an integer value. Default is Null. The X coordinate value, set in Hundredths of a Millimeter (HMM).
+;                  $iY                  - [optional] an integer value. Default is Null. The Y coordinate value, set in Hundredths of a Millimeter (HMM).
 ;                  $iPointType          - [optional] an integer value (0,1,3). Default is Null. The Type of Point to change the called point to. See Remarks. See constants $LOW_SHAPE_POINT_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ;                  $bIsCurve            - [optional] a boolean value. Default is Null. If True, the Normal Point is a Curve. See remarks.
 ; Return values .: Success: 1

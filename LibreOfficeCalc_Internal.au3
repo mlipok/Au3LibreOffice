@@ -330,11 +330,11 @@ EndFunc   ;==>__LOCalc_CellBorder
 ; Description ...: Internal function to Set or retrieve the Cell, Cell Range, or Cell Style Border Padding settings.
 ; Syntax ........: __LOCalc_CellBorderPadding(ByRef $oObj[, $iAll = Null[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]]])
 ; Parameters ....: $oObj                - [in/out] an object. A Cell, Cell Range or Cell Style Object returned from an applicable function.
-;                  $iAll                - [optional] an integer value. Default is Null. Set all four padding distances to one distance in Hundredths of a Millimeter (100th MM).
-;                  $iTop                - [optional] an integer value. Default is Null. The Top Distance between the Border and Cell contents, in Hundredths of a Millimeter (100th MM).
-;                  $iBottom             - [optional] an integer value. Default is Null. The Bottom Distance between the Border and Cell contents, in Hundredths of a Millimeter (100th MM).
-;                  $iLeft               - [optional] an integer value. Default is Null. The Left Distance between the Border and Cell contents, in Hundredths of a Millimeter (100th MM).
-;                  $iRight              - [optional] an integer value. Default is Null. The Right Distance between the Border and Cell contents, in Hundredths of a Millimeter (100th MM).
+;                  $iAll                - [optional] an integer value. Default is Null. Set all four padding distances to one distance in Hundredths of a Millimeter (HMM).
+;                  $iTop                - [optional] an integer value. Default is Null. The Top Distance between the Border and Cell contents, in Hundredths of a Millimeter (HMM).
+;                  $iBottom             - [optional] an integer value. Default is Null. The Bottom Distance between the Border and Cell contents, in Hundredths of a Millimeter (HMM).
+;                  $iLeft               - [optional] an integer value. Default is Null. The Left Distance between the Border and Cell contents, in Hundredths of a Millimeter (HMM).
+;                  $iRight              - [optional] an integer value. Default is Null. The Right Distance between the Border and Cell contents, in Hundredths of a Millimeter (HMM).
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -844,7 +844,7 @@ EndFunc   ;==>__LOCalc_CellProtection
 ; Description ...: Internal function to Set or Retrieve the Shadow settings for a Cell, Cell Range, or Cell style.
 ; Syntax ........: __LOCalc_CellShadow(ByRef $oObj[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null]]]])
 ; Parameters ....: $oObj                - [in/out] an object. A Cell, Cell Range or Cell Style Object returned from an applicable function.
-;                  $iWidth              - [optional] an integer value (0-5009). Default is Null. The shadow width, set in Hundredths of a Millimeter (100th MM).
+;                  $iWidth              - [optional] an integer value (0-5009). Default is Null. The shadow width, set in Hundredths of a Millimeter (HMM).
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The color of the shadow, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the shadow is transparent.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. The location of the shadow compared to the Cell. See Constants, $LOC_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
@@ -1141,7 +1141,7 @@ EndFunc   ;==>__LOCalc_CellStyleBorder
 ; Parameters ....: $oObj                - [in/out] an object. A Cell, Cell Range or Cell Style Object returned from an applicable function.
 ;                  $iHoriAlign          - [optional] an integer value (0-6). Default is Null. The Horizontal alignment of the text. See Constants, $LOC_CELL_ALIGN_HORI_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-5). Default is Null. The Vertical alignment of the text. See Constants, $LOC_CELL_ALIGN_VERT_* as defined in LibreOfficeCalc_Constants.au3.
-;                  $iIndent             - [optional] an integer value. Default is Null. The amount of indentation from the left side of the cell, in Hundredths of a Millimeter (100th MM).
+;                  $iIndent             - [optional] an integer value. Default is Null. The amount of indentation from the left side of the cell, in Hundredths of a Millimeter (HMM).
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1597,9 +1597,9 @@ EndFunc   ;==>__LOCalc_CharPosition
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                  When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User Display, however the internal setting is measured in Hundredths of a Millimeter (100th MM). They will be automatically converted from Points to Hundredths of a Millimeter and back for retrieval of settings.
+;                  When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User Display, however the internal setting is measured in Hundredths of a Millimeter (HMM). They will be automatically converted from Points to Hundredths of a Millimeter and back for retrieval of settings.
 ;                  The acceptable values for $nKerning are from -2 Pt to 928.8 Pt. The values can be directly converted easily, however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative Hundredths of a Millimeter internally from 928.9 up to 1000 Pt (Max setting).
-;                  For example, 928.8Pt is the last correct value, which equals 32766 Hundredths of a Millimeter (100th MM), after this LibreOffice reports the following: 928.9 Pt = -32766 100th MM; 929 Pt = -32763 100th MM; 929.1 = -32759; 1000 pt = -30258. Attempting to set Libre's kerning value to anything over 32768 100th MM causes a COM exception, and attempting to set the kerning to any of these negative numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the max settable kerning is -2.0 Pt to 928.8 Pt.
+;                  For example, 928.8Pt is the last correct value, which equals 32766 Hundredths of a Millimeter (HMM), after this LibreOffice reports the following: 928.9 Pt = -32766 HMM; 929 Pt = -32763 HMM; 929.1 = -32759; 1000 pt = -30258. Attempting to set Libre's kerning value to anything over 32768 HMM causes a COM exception, and attempting to set the kerning to any of these negative numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the max settable kerning is -2.0 Pt to 928.8 Pt.
 ; Related .......: _LO_UnitConvert
 ; Link ..........:
 ; Example .......: No
@@ -1644,7 +1644,7 @@ EndFunc   ;==>__LOCalc_CharSpacing
 ; Syntax ........: __LOCalc_CommentAreaShadowModify($oAnnotationShape[, $iLocation = Null[, $iDistance = Null]])
 ; Parameters ....: $oAnnotationShape    - an object. A Annotation Shape Object retrieved from a Comment.
 ;                  $iLocation           - [optional] an integer value (0-8). Default is Null. The Location of the Shadow, must be one of the Constants, $LOC_COMMENT_SHADOW_* as defined in LibreOfficeCalc_Constants.au3..
-;                  $iDistance           - [optional] an integer value. Default is Null. The distance of the Shadow from the Comment box, set in Hundredths of a Millimeter (100th MM).
+;                  $iDistance           - [optional] an integer value. Default is Null. The distance of the Shadow from the Comment box, set in Hundredths of a Millimeter (HMM).
 ; Return values .: Success: 1 or Integer
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--

@@ -4375,10 +4375,10 @@ EndFunc   ;==>_LOWriter_FormConImageControlGeneral
 ; Syntax ........: _LOWriter_FormConInsert(ByRef $oParentForm, $iControl, $iX, $iY, $iWidth, $iHeight[, $sName = ""])
 ; Parameters ....: $oParentForm         - [in/out] an object. A Form object returned by a previous _LOWriter_FormAdd, _LOWriter_FormGetObjByIndex or _LOWriter_FormsGetList function.
 ;                  $iControl            - an integer value (1-524288). The control type to insert. See Constants $LOW_FORM_CON_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iX                  - an integer value. The X Coordinate, in Hundredths of a Millimeter (100th MM).
-;                  $iY                  - an integer value. The Y Coordinate, in Hundredths of a Millimeter (100th MM).
-;                  $iWidth              - an integer value. The Width of the control, in Hundredths of a Millimeter (100th MM).
-;                  $iHeight             - an integer value. The Height of the control, in Hundredths of a Millimeter (100th MM).
+;                  $iX                  - an integer value. The X Coordinate, in Hundredths of a Millimeter (HMM).
+;                  $iY                  - an integer value. The Y Coordinate, in Hundredths of a Millimeter (HMM).
+;                  $iWidth              - an integer value. The Width of the control, in Hundredths of a Millimeter (HMM).
+;                  $iHeight             - an integer value. The Height of the control, in Hundredths of a Millimeter (HMM).
 ;                  $sName               - [optional] a string value. Default is "". The name of the control, if called with "", a name is automatically given it.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -7258,8 +7258,8 @@ EndFunc   ;==>_LOWriter_FormConPatternFieldValue
 ; Description ...: Set or Retrieve the Control's position settings.
 ; Syntax ........: _LOWriter_FormConPosition(ByRef $oControl[, $iX = Null[, $iY = Null[, $iAnchor = Null[, $bProtectPos = Null]]]])
 ; Parameters ....: $oControl            - [in/out] an object. A Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
-;                  $iX                  - [optional] an integer value. Default is Null. The X position from the insertion point, in Hundredths of a Millimeter (100th MM).
-;                  $iY                  - [optional] an integer value. Default is Null. The Y position from the insertion point, in Hundredths of a Millimeter (100th MM).
+;                  $iX                  - [optional] an integer value. Default is Null. The X position from the insertion point, in Hundredths of a Millimeter (HMM).
+;                  $iY                  - [optional] an integer value. Default is Null. The Y position from the insertion point, in Hundredths of a Millimeter (HMM).
 ;                  $iAnchor             - [optional] an integer value(0-4). Default is Null. The anchoring position for the Control. See Constants, $LOW_ANCHOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bProtectPos         - [optional] a boolean value. Default is Null. If True, the Shape's position is locked.
 ; Return values .: Success: 1 or Array.
@@ -8055,8 +8055,8 @@ EndFunc   ;==>_LOWriter_FormConsGetList
 ; Description ...: Set or Retrieve Control Size related settings.
 ; Syntax ........: _LOWriter_FormConSize(ByRef $oControl[, $iWidth = Null[, $iHeight = Null[, $bProtectSize = Null]]])
 ; Parameters ....: $oControl            - [in/out] an object. A Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
-;                  $iWidth              - [optional] an integer value. Default is Null. The width of the Shape, in Hundredths of a Millimeter (100th MM). Min. 51.
-;                  $iHeight             - [optional] an integer value. Default is Null. The height of the Shape, in Hundredths of a Millimeter (100th MM). Min. 51.
+;                  $iWidth              - [optional] an integer value. Default is Null. The width of the Shape, in Hundredths of a Millimeter (HMM). Min. 51.
+;                  $iHeight             - [optional] an integer value. Default is Null. The height of the Shape, in Hundredths of a Millimeter (HMM). Min. 51.
 ;                  $bProtectSize        - [optional] a boolean value. Default is Null. If True, Locks the size of the Shape.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -8209,7 +8209,7 @@ EndFunc   ;==>_LOWriter_FormConTableConCheckBoxData
 ;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
 ;                  $iDefaultState       - [optional] an integer value (0-2). Default is Null. The Default state of the Checkbox, $LOW_FORM_CON_CHKBX_STATE_NOT_DEFINED is only available if $bTriState is True. See Constants $LOW_FORM_CON_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (100th MM).
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (HMM).
 ;                  $iStyle              - [optional] an integer value (1-2). Default is Null. The display style of the checkbox. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bWordBreak          - [optional] a boolean value. Default is Null. If True, line breaks are allowed to be used.
@@ -8733,7 +8733,7 @@ EndFunc   ;==>_LOWriter_FormConTableConComboBoxData
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
 ;                  $bReadOnly           - [optional] a boolean value. Default is Null. If True, the control is Read-Only.
 ;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (100th MM).
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (HMM).
 ;                  $asList              - [optional] an array of strings. Default is Null. An array of entries. See remarks.
 ;                  $sDefaultTxt         - [optional] a string value. Default is Null. The default text of the combo Box.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
@@ -9077,7 +9077,7 @@ EndFunc   ;==>_LOWriter_FormConTableConCurrencyFieldData
 ;                  $bSpin               - [optional] a boolean value. Default is Null. If True, the field will act as a spin button.
 ;                  $bRepeat             - [optional] a boolean value. Default is Null. If True, the button action will repeat if the button is clicked and held down.
 ;                  $iDelay              - [optional] an integer value (0-2147483647). Default is Null. The delay between button repeats, set in milliseconds.
-;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (100th MM).
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (HMM).
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
@@ -9506,7 +9506,7 @@ EndFunc   ;==>_LOWriter_FormConTableConDateFieldData
 ;                  $bSpin               - [optional] a boolean value. Default is Null. If True, the field will act as a spin button.
 ;                  $bRepeat             - [optional] a boolean value. Default is Null. If True, the button action will repeat if the button is clicked and held down.
 ;                  $iDelay              - [optional] an integer value (0-2147483647). Default is Null. The delay between button repeats, set in milliseconds.
-;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (100th MM).
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (HMM).
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bDropdown           - [optional] a boolean value. Default is Null. If True, the field will behave as a dropdown control.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
@@ -9979,7 +9979,7 @@ EndFunc   ;==>_LOWriter_FormConTableConFormattedFieldData
 ;                  $bSpin               - [optional] a boolean value. Default is Null. If True, the field will act as a spin button.
 ;                  $bRepeat             - [optional] a boolean value. Default is Null. If True, the button action will repeat if the button is clicked and held down.
 ;                  $iDelay              - [optional] an integer value (0-2147483647). Default is Null. The delay between button repeats, set in milliseconds.
-;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (100th MM).
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (HMM).
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
@@ -10297,7 +10297,7 @@ EndFunc   ;==>_LOWriter_FormConTableConFormattedFieldGeneral
 ;                  $bTabStop            - [optional] a boolean value. Default is Null. If True, the control can be selected with the Tab key.
 ;                  $iTabOrder           - [optional] an integer value (0-2147483647). Default is Null. The order the control is focused by the Tab key.
 ;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
-;                  $nRowHeight          - [optional] a general number value (-21474836.48-21474836.48). Default is Null. The Row height, set in Hundredths of a Millimeter (100th MM).
+;                  $nRowHeight          - [optional] a general number value (-21474836.48-21474836.48). Default is Null. The Row height, set in Hundredths of a Millimeter (HMM).
 ;                  $iBackColor          - [optional] an integer value (0-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
 ;                  $iBorder             - [optional] an integer value (0-2). Default is Null. The Border Style. See Constants $LOW_FORM_CON_BORDER_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
 ;                  $iBorderColor        - [optional] an integer value (0-16777215). Default is Null. The Border color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
@@ -10669,7 +10669,7 @@ EndFunc   ;==>_LOWriter_FormConTableConListBoxData
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
 ;                  $bReadOnly           - [optional] a boolean value. Default is Null. If True, the control is Read-Only.
 ;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (100th MM).
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (HMM).
 ;                  $asList              - [optional] an array of strings. Default is Null. An array of List entries. See remarks.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iLines              - [optional] an integer value (-2147483648-2147483647). Default is Null. If $bDropdown is True, $iLines specifies how many lines are shown in the dropdown list.
@@ -10993,7 +10993,7 @@ EndFunc   ;==>_LOWriter_FormConTableConNumericFieldData
 ;                  $bSpin               - [optional] a boolean value. Default is Null. If True, the field will act as a spin button.
 ;                  $bRepeat             - [optional] a boolean value. Default is Null. If True, the button action will repeat if the button is clicked and held down.
 ;                  $iDelay              - [optional] an integer value (0-2147483647). Default is Null. The delay between button repeats, set in milliseconds.
-;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (100th MM).
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (HMM).
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
@@ -11420,7 +11420,7 @@ EndFunc   ;==>_LOWriter_FormConTableConPatternFieldData
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
 ;                  $bReadOnly           - [optional] a boolean value. Default is Null. If True, the control is Read-Only.
 ;                  $iMouseScroll        - [optional] an integer value (0-2). Default is Null. The behavior of the mouse scroll wheel on the Control. See Constants $LOW_FORM_CON_MOUSE_SCROLL_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (100th MM).
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (HMM).
 ;                  $sDefaultTxt         - [optional] a string value. Default is Null. The default text to display in the field.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
@@ -11777,7 +11777,7 @@ EndFunc   ;==>_LOWriter_FormConTableConTextBoxData
 ;                  $iMaxLen             - [optional] an integer value (-1-2147483647). Default is Null. The max length of text that can be entered. 0 = unlimited.
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
 ;                  $bReadOnly           - [optional] a boolean value. Default is Null. If True, the control is Read-Only.
-;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (100th MM).
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (HMM).
 ;                  $sDefaultTxt         - [optional] a string value. Default is Null. The default text to display in the control.
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bMultiLine          - [optional] a boolean value. Default is Null. If True, the text may contain multiple lines.
@@ -12106,7 +12106,7 @@ EndFunc   ;==>_LOWriter_FormConTableConTimeFieldData
 ;                  $bSpin               - [optional] a boolean value. Default is Null. If True, the field will act as a spin button.
 ;                  $bRepeat             - [optional] a boolean value. Default is Null. If True, the button action will repeat if the button is clicked and held down.
 ;                  $iDelay              - [optional] an integer value (0-2147483647). Default is Null. The delay between button repeats, set in milliseconds.
-;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (100th MM).
+;                  $iWidth              - [optional] an integer value (100-200000). Default is Null. The width of the Column tab, in Hundredths of a Millimeter (HMM).
 ;                  $iAlign              - [optional] an integer value (0-2). Default is Null. The Horizontal alignment of the text. See Constants $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bHideSel            - [optional] a boolean value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.

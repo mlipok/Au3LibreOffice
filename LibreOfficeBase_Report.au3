@@ -583,10 +583,10 @@ EndFunc   ;==>_LOBase_ReportConImageConGeneral
 ; Syntax ........: _LOBase_ReportConInsert(ByRef $oSection, $iControl, $iX, $iY, $iWidth, $iHeight[, $sName = ""])
 ; Parameters ....: $oSection            - [in/out] an object. A section object returned by a previous _LOBase_ReportSectionGetObj, _LOBase_ReportGroupAdd, or _LOBase_ReportGroupGetByIndex function.
 ;                  $iControl            - an integer value (1-32). The control type to insert. See Constants $LOB_REP_CON_TYPE_* as defined in LibreOfficeBase_Constants.au3.
-;                  $iX                  - an integer value.The X Coordinate, in Hundredths of a Millimeter (100th MM).
-;                  $iY                  - an integer value. The Y Coordinate, in Hundredths of a Millimeter (100th MM).
-;                  $iWidth              - an integer value. The Width of the control, in Hundredths of a Millimeter (100th MM).
-;                  $iHeight             - an integer value. The Height of the control, in Hundredths of a Millimeter (100th MM).
+;                  $iX                  - an integer value.The X Coordinate, in Hundredths of a Millimeter (HMM).
+;                  $iY                  - an integer value. The Y Coordinate, in Hundredths of a Millimeter (HMM).
+;                  $iWidth              - an integer value. The Width of the control, in Hundredths of a Millimeter (HMM).
+;                  $iHeight             - an integer value. The Height of the control, in Hundredths of a Millimeter (HMM).
 ;                  $sName               - [optional] a string value. Default is "". The name of the control, if called with "", a name is automatically given it.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -993,8 +993,8 @@ EndFunc   ;==>_LOBase_ReportConnect
 ; Description ...: Set or Retrieve the Control's position settings.
 ; Syntax ........: _LOBase_ReportConPosition(ByRef $oControl[, $iX = Null[, $iY = Null]])
 ; Parameters ....: $oControl            - [in/out] an object. A Control object returned by a previous _LOBase_ReportConInsert or _LOBase_ReportConsGetList function.
-;                  $iX                  - [optional] an integer value. Default is Null. The X position from the insertion point, in Hundredths of a Millimeter (100th MM).
-;                  $iY                  - [optional] an integer value. Default is Null. The Y position from the insertion point, in Hundredths of a Millimeter (100th MM).
+;                  $iX                  - [optional] an integer value. Default is Null. The X position from the insertion point, in Hundredths of a Millimeter (HMM).
+;                  $iY                  - [optional] an integer value. Default is Null. The Y position from the insertion point, in Hundredths of a Millimeter (HMM).
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1120,8 +1120,8 @@ EndFunc   ;==>_LOBase_ReportConsGetList
 ; Description ...: Set or Retrieve Control Size or related settings.
 ; Syntax ........: _LOBase_ReportConSize(ByRef $oControl[, $iWidth = Null[, $iHeight = Null[, $bAutoGrow = Null]]])
 ; Parameters ....: $oControl            - [in/out] an object. A Control object returned by a previous _LOBase_ReportConInsert or _LOBase_ReportConsGetList function.
-;                  $iWidth              - [optional] an integer value. Default is Null. The width of the Shape, in Hundredths of a Millimeter (100th MM). Min. 51.
-;                  $iHeight             - [optional] an integer value. Default is Null. The height of the Shape, in Hundredths of a Millimeter (100th MM). Min. 51.
+;                  $iWidth              - [optional] an integer value. Default is Null. The width of the Shape, in Hundredths of a Millimeter (HMM). Min. 51.
+;                  $iHeight             - [optional] an integer value. Default is Null. The height of the Shape, in Hundredths of a Millimeter (HMM). Min. 51.
 ;                  $bAutoGrow           - [optional] a boolean value. Default is Null. If True, the control's size will automatically adjust to fit content.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1526,7 +1526,7 @@ EndFunc   ;==>_LOBase_ReportDelete
 ;                  $iForceNewPage       - [optional] an integer value (0-3). Default is Null. If and when to force a new page. See Constants, $LOB_REP_FORCE_PAGE_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $bKeepTogether       - [optional] a boolean value. Default is Null. If True, the section should be printed on one page.
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
-;                  $iHeight             - [optional] an integer value (1753-??). Default is Null. The height of the Section, in Hundredths of a Millimeter (100th MM). See remarks.
+;                  $iHeight             - [optional] an integer value (1753-??). Default is Null. The height of the Section, in Hundredths of a Millimeter (HMM). See remarks.
 ;                  $sCondPrint          - [optional] a string value. Default is Null. The Conditional Print Statement.
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
 ; Return values .: Success: 1 or Array.
@@ -1555,7 +1555,7 @@ EndFunc   ;==>_LOBase_ReportDelete
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 7 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: The minimum height of a Section is 1753 Hundredths of a Millimeter (100th MM), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
+; Remarks .......: The minimum height of a Section is 1753 Hundredths of a Millimeter (HMM), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
 ;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LO_COLOR_OFF to set Background Transparent to True.
 ;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
@@ -2369,7 +2369,7 @@ EndFunc   ;==>_LOBase_ReportFoldersGetNames
 ;                  $iForceNewPage       - [optional] an integer value (0-3). Default is Null. If and when to force a new page. See Constants, $LOB_REP_FORCE_PAGE_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $bKeepTogether       - [optional] a boolean value. Default is Null. If True, the section should be printed on one page.
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
-;                  $iHeight             - [optional] an integer value (1753-??). Default is Null. The height of the Section, in Hundredths of a Millimeter (100th MM). See remarks.
+;                  $iHeight             - [optional] an integer value (1753-??). Default is Null. The height of the Section, in Hundredths of a Millimeter (HMM). See remarks.
 ;                  $sCondPrint          - [optional] a string value. Default is Null. The Conditional Print Statement.
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
 ; Return values .: Success: 1 or Array.
@@ -2401,7 +2401,7 @@ EndFunc   ;==>_LOBase_ReportFoldersGetNames
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Report Footer must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Footer is disabled, the return values will be Null, except for the Boolean value of $bEnabled.
-;                  The minimum height of a Section is 1753 Hundredths of a Millimeter (100th MM), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
+;                  The minimum height of a Section is 1753 Hundredths of a Millimeter (HMM), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
 ;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LO_COLOR_OFF to set Background Transparent to True.
 ;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
@@ -2777,7 +2777,7 @@ EndFunc   ;==>_LOBase_ReportGroupDeleteByObj
 ;                  $bKeepTogether       - [optional] a boolean value. Default is Null. If True, the section should be printed on one page.
 ;                  $bRepeatSec          - [optional] a boolean value. Default is Null. If True, the Group Footer section will be repeated on the next page if the section spans more than one page.
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
-;                  $iHeight             - [optional] an integer value (1753-??). Default is Null. The height of the Section, in Hundredths of a Millimeter (100th MM). See remarks.
+;                  $iHeight             - [optional] an integer value (1753-??). Default is Null. The height of the Section, in Hundredths of a Millimeter (HMM). See remarks.
 ;                  $sCondPrint          - [optional] a string value. Default is Null. The Conditional Print Statement.
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
 ; Return values .: Success: 1 or Array
@@ -2811,7 +2811,7 @@ EndFunc   ;==>_LOBase_ReportGroupDeleteByObj
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Group Footer must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Footer is disabled, the return values will be Null, except for the Boolean value of $bFooterOn.
-;                  The minimum height of a Section is 1753 Hundredths of a Millimeter (100th MM), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
+;                  The minimum height of a Section is 1753 Hundredths of a Millimeter (HMM), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
 ;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LO_COLOR_OFF to set Background Transparent to True.
 ;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
@@ -2998,7 +2998,7 @@ EndFunc   ;==>_LOBase_ReportGroupGetByIndex
 ;                  $bKeepTogether       - [optional] a boolean value. Default is Null. If True, the section should be printed on one page.
 ;                  $bRepeatSec          - [optional] a boolean value. Default is Null. If True, the Group Header section will be repeated on the next page if the section spans more than one page.
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
-;                  $iHeight             - [optional] an integer value (1753-??). Default is Null. The height of the Section, in Hundredths of a Millimeter (100th MM). See remarks.
+;                  $iHeight             - [optional] an integer value (1753-??). Default is Null. The height of the Section, in Hundredths of a Millimeter (HMM). See remarks.
 ;                  $sCondPrint          - [optional] a string value. Default is Null. The Conditional Print Statement.
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
 ; Return values .: Success: 1 or Array
@@ -3032,7 +3032,7 @@ EndFunc   ;==>_LOBase_ReportGroupGetByIndex
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Group Header must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Header is disabled, the return values will be Null, except for the Boolean value of $bHeaderOn.
-;                  The minimum height of a Section is 1753 Hundredths of a Millimeter (100th MM), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
+;                  The minimum height of a Section is 1753 Hundredths of a Millimeter (HMM), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
 ;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LO_COLOR_OFF to set Background Transparent to True.
 ;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
@@ -3384,7 +3384,7 @@ EndFunc   ;==>_LOBase_ReportGroupSort
 ;                  $iForceNewPage       - [optional] an integer value (0-3). Default is Null. If and when to force a new page. See Constants, $LOB_REP_FORCE_PAGE_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $bKeepTogether       - [optional] a boolean value. Default is Null. If True, the section should be printed on one page.
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
-;                  $iHeight             - [optional] an integer value (1753-??). Default is Null. The height of the Section, in Hundredths of a Millimeter (100th MM). See remarks.
+;                  $iHeight             - [optional] an integer value (1753-??). Default is Null. The height of the Section, in Hundredths of a Millimeter (HMM). See remarks.
 ;                  $sCondPrint          - [optional] a string value. Default is Null. The Conditional Print Statement.
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
 ; Return values .: Success: 1 or Array.
@@ -3416,7 +3416,7 @@ EndFunc   ;==>_LOBase_ReportGroupSort
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Report Header must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Header is disabled, the return values will be Null, except for the Boolean value of $bEnabled.
-;                  The minimum height of a Section is 1753 Hundredths of a Millimeter (100th MM), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
+;                  The minimum height of a Section is 1753 Hundredths of a Millimeter (HMM), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
 ;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LO_COLOR_OFF to set Background Transparent to True.
 ;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
@@ -3635,7 +3635,7 @@ EndFunc   ;==>_LOBase_ReportOpen
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the Page Footer is enabled.
 ;                  $sName               - [optional] a string value. Default is Null. The name of the Section.
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
-;                  $iHeight             - [optional] an integer value. Default is Null. (1753-??). Default is Null. The height of the Section, in Hundredths of a Millimeter (100th MM). See remarks.
+;                  $iHeight             - [optional] an integer value. Default is Null. (1753-??). Default is Null. The height of the Section, in Hundredths of a Millimeter (HMM). See remarks.
 ;                  $sCondPrint          - [optional] a string value. Default is Null. The Conditional Print Statement.
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
 ; Return values .: Success: 1 or Array.
@@ -3663,7 +3663,7 @@ EndFunc   ;==>_LOBase_ReportOpen
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Page Header must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Footer is disabled, the return values will be Null, except for the Boolean value of $bEnabled.
-;                  The minimum height of a Section is 1753 Hundredths of a Millimeter (100th MM), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
+;                  The minimum height of a Section is 1753 Hundredths of a Millimeter (HMM), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
 ;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LO_COLOR_OFF to set Background Transparent to True.
 ;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
@@ -3771,7 +3771,7 @@ EndFunc   ;==>_LOBase_ReportPageFooter
 ;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the Page Header is enabled.
 ;                  $sName               - [optional] a string value. Default is Null. The name of the Section.
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the section is visible in the Report.
-;                  $iHeight             - [optional] an integer value. Default is Null. (1753-??). Default is Null. The height of the Section, in Hundredths of a Millimeter (100th MM). See remarks.
+;                  $iHeight             - [optional] an integer value. Default is Null. (1753-??). Default is Null. The height of the Section, in Hundredths of a Millimeter (HMM). See remarks.
 ;                  $sCondPrint          - [optional] a string value. Default is Null. The Conditional Print Statement.
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The Background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF to set Background color to default / Background Transparent = True.
 ; Return values .: Success: 1 or Array.
@@ -3799,7 +3799,7 @@ EndFunc   ;==>_LOBase_ReportPageFooter
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Page Header must be enabled (turned on), before you can set or retrieve any other properties. When retrieving the current properties when the Header is disabled, the return values will be Null, except for the Boolean value of $bEnabled.
-;                  The minimum height of a Section is 1753 Hundredths of a Millimeter (100th MM), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
+;                  The minimum height of a Section is 1753 Hundredths of a Millimeter (HMM), the maximum is unknown, but I found that setting a large value tends to cause a freeze up/crash of the Report.
 ;                  Background Transparent is set automatically based on the value set for Background color. Set Background color to $LO_COLOR_OFF to set Background Transparent to True.
 ;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.

@@ -1126,10 +1126,10 @@ EndFunc   ;==>_LOWriter_ShapeGetType
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions. See Remarks.
 ;                  $iShapeType          - an integer value (0-122). The Type of shape to create. See remarks. See $LOW_SHAPE_TYPE_* as defined in LibreOfficeWriter_Constants.au3
-;                  $iWidth              - an integer value. The Shape's Width in Hundredths of a Millimeter (100th MM). Note, for Lines, Width is the length of the line
-;                  $iHeight             - an integer value. The Shape's Height in Hundredths of a Millimeter (100th MM). Note, for Lines, Height is the amount the line goes below the point of insertion.
-;                  $iX                  - [optional] an integer value. Default is 0. The X position from the insertion point, in Hundredths of a Millimeter (100th MM).
-;                  $iY                  - [optional] an integer value. Default is 0. The Y position from the insertion point, in Hundredths of a Millimeter (100th MM).
+;                  $iWidth              - an integer value. The Shape's Width in Hundredths of a Millimeter (HMM). Note, for Lines, Width is the length of the line
+;                  $iHeight             - an integer value. The Shape's Height in Hundredths of a Millimeter (HMM). Note, for Lines, Height is the amount the line goes below the point of insertion.
+;                  $iX                  - [optional] an integer value. Default is 0. The X position from the insertion point, in Hundredths of a Millimeter (HMM).
+;                  $iY                  - [optional] an integer value. Default is 0. The Y position from the insertion point, in Hundredths of a Millimeter (HMM).
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1222,11 +1222,11 @@ EndFunc   ;==>_LOWriter_ShapeInsert
 ; Syntax ........: _LOWriter_ShapeLineArrowStyles(ByRef $oShape[, $vStartStyle = Null[, $iStartWidth = Null[, $bStartCenter = Null[, $bSync = Null[, $vEndStyle = Null[, $iEndWidth = Null[, $bEndCenter = Null]]]]]]])
 ; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by a previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
 ;                  $vStartStyle         - [optional] a variant value (0-32, or String). Default is Null. The Arrow head to apply to the start of the line. Can be a Custom Arrowhead name, or one of the constants, $LOW_SHAPE_LINE_ARROW_TYPE_* as defined in LibreOfficeWriter_Constants.au3. See remarks.
-;                  $iStartWidth         - [optional] an integer value (0-5004). Default is Null. The Width of the Starting Arrowhead, in Hundredths of a Millimeter (100th MM).
+;                  $iStartWidth         - [optional] an integer value (0-5004). Default is Null. The Width of the Starting Arrowhead, in Hundredths of a Millimeter (HMM).
 ;                  $bStartCenter        - [optional] a boolean value. Default is Null. If True, Places the center of the Start arrowhead on the endpoint of the line.
 ;                  $bSync               - [optional] a boolean value. Default is Null. If True, Synchronizes the Start Arrowhead settings with the end Arrowhead settings. See remarks.
 ;                  $vEndStyle           - [optional] a variant value (0-32, or String). Default is Null. The Arrow head to apply to the end of the line. Can be a Custom Arrowhead name, or one of the constants, $LOW_SHAPE_LINE_ARROW_TYPE_* as defined in LibreOfficeWriter_Constants.au3. See remarks.
-;                  $iEndWidth           - [optional] an integer value (0-5004). Default is Null. The Width of the Ending Arrowhead, in Hundredths of a Millimeter (100th MM).
+;                  $iEndWidth           - [optional] an integer value (0-5004). Default is Null. The Width of the Ending Arrowhead, in Hundredths of a Millimeter (HMM).
 ;                  $bEndCenter          - [optional] a boolean value. Default is Null. If True, Places the center of the End arrowhead on the endpoint of the line.
 ; Return values .: Success: Integer or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1370,7 +1370,7 @@ EndFunc   ;==>_LOWriter_ShapeLineArrowStyles
 ; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by a previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
 ;                  $vStyle              - [optional] a variant value (0-31, or String). Default is Null. The Line Style to use. Can be a Custom Line Style name, or one of the constants, $LOW_SHAPE_LINE_STYLE_* as defined in LibreOfficeWriter_Constants.au3. See remarks.
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The Line color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $iWidth              - [optional] an integer value (0-5004). Default is Null. The line Width, set in Hundredths of a Millimeter (100th MM).
+;                  $iWidth              - [optional] an integer value (0-5004). Default is Null. The line Width, set in Hundredths of a Millimeter (HMM).
 ;                  $iTransparency       - [optional] an integer value (0-100). Default is Null. The Line transparency percentage. 100% = fully transparent.
 ;                  $iCornerStyle        - [optional] an integer value (0,2-4). Default is Null. The Line Corner Style. See Constants $LOW_SHAPE_LINE_JOINT_* as defined in LibreOfficeWriter_Constants.au3
 ;                  $iCapStyle           - [optional] an integer value (0-2). Default is Null. The Line Cap Style. See Constants $LOW_SHAPE_LINE_CAP_* as defined in LibreOfficeWriter_Constants.au3
@@ -1560,8 +1560,8 @@ EndFunc   ;==>_LOWriter_ShapeName
 ; Syntax ........: _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY[, $iPointType = $LOW_SHAPE_POINT_TYPE_NORMAL[, $bIsCurve = False]])
 ; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by a previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function. See remarks.
 ;                  $iPoint              - an integer value. The Point to insert the new point AFTER. 0 means insert at the beginning.
-;                  $iX                  - an integer value. The X coordinate value, set in Hundredths of a Millimeter (100th MM).
-;                  $iY                  - an integer value. The Y coordinate value, set in Hundredths of a Millimeter (100th MM).
+;                  $iX                  - an integer value. The X coordinate value, set in Hundredths of a Millimeter (HMM).
+;                  $iY                  - an integer value. The Y coordinate value, set in Hundredths of a Millimeter (HMM).
 ;                  $iPointType          - [optional] an integer value (0,1,3). Default is $LOW_SHAPE_POINT_TYPE_NORMAL. The Type of Point this new Point is. See Remarks. See constants $LOW_SHAPE_POINT_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ;                  $bIsCurve            - [optional] a boolean value. Default is False. If True, the Normal Point is a Curve. See remarks.
 ; Return values .: Success: 1
@@ -2052,8 +2052,8 @@ EndFunc   ;==>_LOWriter_ShapePointsGetCount
 ; Syntax ........: _LOWriter_ShapePointsModify(ByRef $oShape, $iPoint[, $iX = Null[, $iY = Null[, $iPointType = Null[, $bIsCurve = Null]]]])
 ; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by a previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function. See remarks.
 ;                  $iPoint              - an integer value. The Point to modify, starting at 1.
-;                  $iX                  - [optional] an integer value. Default is Null. The X coordinate value, set in Hundredths of a Millimeter (100th MM).
-;                  $iY                  - [optional] an integer value. Default is Null. The Y coordinate value, set in Hundredths of a Millimeter (100th MM).
+;                  $iX                  - [optional] an integer value. Default is Null. The X coordinate value, set in Hundredths of a Millimeter (HMM).
+;                  $iY                  - [optional] an integer value. Default is Null. The Y coordinate value, set in Hundredths of a Millimeter (HMM).
 ;                  $iPointType          - [optional] an integer value (0,1,3). Default is Null. The Type of Point to change the called point to. See Remarks. See constants $LOW_SHAPE_POINT_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ;                  $bIsCurve            - [optional] a boolean value. Default is Null. If True, the Normal Point is a Curve. See remarks.
 ; Return values .: Success: 1 or Array.
@@ -2511,8 +2511,8 @@ EndFunc   ;==>_LOWriter_ShapePointsRemove
 ; Description ...: Set or Retrieve the Shape's position settings.
 ; Syntax ........: _LOWriter_ShapePosition(ByRef $oShape[, $iX = Null[, $iY = Null[, $bProtectPos = Null]]])
 ; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by a previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
-;                  $iX                  - [optional] an integer value. Default is Null. The X position from the insertion point, in Hundredths of a Millimeter (100th MM).
-;                  $iY                  - [optional] an integer value. Default is Null. The Y position from the insertion point, in Hundredths of a Millimeter (100th MM).
+;                  $iX                  - [optional] an integer value. Default is Null. The X position from the insertion point, in Hundredths of a Millimeter (HMM).
+;                  $iY                  - [optional] an integer value. Default is Null. The Y position from the insertion point, in Hundredths of a Millimeter (HMM).
 ;                  $bProtectPos         - [optional] a boolean value. Default is Null. If True, the Shape's position is locked.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -2772,11 +2772,11 @@ EndFunc   ;==>_LOWriter_ShapeTextBox
 ; Syntax ........: _LOWriter_ShapeTypePosition(ByRef $oShape[, $iHorAlign = Null[, $iHorPos = Null[, $iHorRelation = Null[, $bMirror = Null[, $iVertAlign = Null[, $iVertPos = Null[, $iVertRelation = Null[, $bKeepInside = Null[, $iAnchorPos = Null]]]]]]]]])
 ; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by a previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
 ;                  $iHorAlign           - [optional] an integer value (0-3). Default is Null. The horizontal orientation of the Shape. See Constants, $LOW_ORIENT_HORI_* as defined in LibreOfficeWriter_Constants.au3. Can't be set if Anchor position is set to "As Character".
-;                  $iHorPos             - [optional] an integer value. Default is Null. The horizontal position of the Shape. set in Hundredths of a Millimeter (100th MM). Only valid if $iHorAlign is set to $LOW_ORIENT_HORI_NONE().
+;                  $iHorPos             - [optional] an integer value. Default is Null. The horizontal position of the Shape. set in Hundredths of a Millimeter (HMM). Only valid if $iHorAlign is set to $LOW_ORIENT_HORI_NONE().
 ;                  $iHorRelation        - [optional] an integer value (0-8). Default is Null. The reference point for the selected horizontal alignment option. See Constants, $LOW_RELATIVE_* as defined in LibreOfficeWriter_Constants.au3, and Remarks for acceptable values.
 ;                  $bMirror             - [optional] a boolean value. Default is Null. If True, Reverses the current horizontal alignment settings on even pages.
 ;                  $iVertAlign          - [optional] an integer value (0-9). Default is Null. The vertical orientation of the Shape. See Constants, $LOW_ORIENT_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iVertPos            - [optional] an integer value. Default is Null. The vertical position of the Shape. set in Hundredths of a Millimeter (100th MM). Only valid if $iVertAlign is set to $LOW_ORIENT_VERT_NONE().
+;                  $iVertPos            - [optional] an integer value. Default is Null. The vertical position of the Shape. set in Hundredths of a Millimeter (HMM). Only valid if $iVertAlign is set to $LOW_ORIENT_VERT_NONE().
 ;                  $iVertRelation       - [optional] an integer value (-1-9). Default is Null. The reference point for the selected vertical alignment option. See Constants, $LOW_RELATIVE_* as defined in LibreOfficeWriter_Constants.au3, and Remarks for acceptable values.
 ;                  $bKeepInside         - [optional] a boolean value. Default is Null. If True, Keeps the Shape within the layout boundaries of the text that the Shape is anchored to.
 ;                  $iAnchorPos          - [optional] an integer value(0,1,4). Default is Null. Specify the anchoring options for the Shape. See Constants, $LOW_ANCHOR_* as defined in LibreOfficeWriter_Constants.au3.
@@ -3021,8 +3021,8 @@ EndFunc   ;==>_LOWriter_ShapeTypePosition
 ; Description ...: Set or Retrieve Shape Size related settings.
 ; Syntax ........: _LOWriter_ShapeTypeSize(ByRef $oShape[, $iWidth = Null[, $iHeight = Null[, $bProtectSize = Null]]])
 ; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by a previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
-;                  $iWidth              - [optional] an integer value. Default is Null. The width of the Shape, in Hundredths of a Millimeter (100th MM). Min. 51.
-;                  $iHeight             - [optional] an integer value. Default is Null. The height of the Shape, in Hundredths of a Millimeter (100th MM). Min. 51.
+;                  $iWidth              - [optional] an integer value. Default is Null. The width of the Shape, in Hundredths of a Millimeter (HMM). Min. 51.
+;                  $iHeight             - [optional] an integer value. Default is Null. The height of the Shape, in Hundredths of a Millimeter (HMM). Min. 51.
 ;                  $bProtectSize        - [optional] a boolean value. Default is Null. If True, Locks the size of the Shape.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -3104,10 +3104,10 @@ EndFunc   ;==>_LOWriter_ShapeTypeSize
 ; Syntax ........: _LOWriter_ShapeWrap(ByRef $oShape[, $iWrapType = Null[, $iLeft = Null[, $iRight = Null[, $iTop = Null[, $iBottom = Null]]]]])
 ; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by a previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
 ;                  $iWrapType           - [optional] an integer value (0-5). Default is Null. The way you want text to wrap around the Shape. See Constants, $LOW_WRAP_MODE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iLeft               - [optional] an integer value. Default is Null. The amount of space between the left edge of the Shape and the text. Set in Hundredths of a Millimeter (100th MM).
-;                  $iRight              - [optional] an integer value. Default is Null. The amount of space between the Right edge of the Shape and the text. Set in Hundredths of a Millimeter (100th MM).
-;                  $iTop                - [optional] an integer value. Default is Null. The amount of space between the Top edge of the Shape and the text. Set in Hundredths of a Millimeter (100th MM).
-;                  $iBottom             - [optional] an integer value. Default is Null. The amount of space between the Bottom edge of the Shape and the text. Set in Hundredths of a Millimeter (100th MM).
+;                  $iLeft               - [optional] an integer value. Default is Null. The amount of space between the left edge of the Shape and the text. Set in Hundredths of a Millimeter (HMM).
+;                  $iRight              - [optional] an integer value. Default is Null. The amount of space between the Right edge of the Shape and the text. Set in Hundredths of a Millimeter (HMM).
+;                  $iTop                - [optional] an integer value. Default is Null. The amount of space between the Top edge of the Shape and the text. Set in Hundredths of a Millimeter (HMM).
+;                  $iBottom             - [optional] an integer value. Default is Null. The amount of space between the Bottom edge of the Shape and the text. Set in Hundredths of a Millimeter (HMM).
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--

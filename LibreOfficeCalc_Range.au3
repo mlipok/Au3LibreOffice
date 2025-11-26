@@ -537,7 +537,7 @@ EndFunc   ;==>_LOCalc_RangeColumnVisible
 ; Syntax ........: _LOCalc_RangeColumnWidth(ByRef $oColumn[, $bOptimal = Null[, $iWidth = Null]])
 ; Parameters ....: $oColumn             - an object. A Column object returned by a previous _LOCalc_RangeColumnGetObjByPosition, or _LOCalc_RangeColumnGetObjByName function.
 ;                  $bOptimal            - [optional] a boolean value. Default is Null. If True, the Optimal width is automatically chosen. See Remarks.
-;                  $iWidth              - [optional] an integer value (0-34464). Default is Null. The Width of the Column, set in Hundredths of a Millimeter (100th MM).
+;                  $iWidth              - [optional] an integer value (0-34464). Default is Null. The Width of the Column, set in Hundredths of a Millimeter (HMM).
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -4883,7 +4883,7 @@ EndFunc   ;==>_LOCalc_RangeRowGetObjByPosition
 ; Syntax ........: _LOCalc_RangeRowHeight(ByRef $oRow[, $bOptimal = Null[, $iHeight = Null]])
 ; Parameters ....: $oRow                - an object. A Row object returned by a previous _LOCalc_RangeRowGetObjByPosition function.
 ;                  $bOptimal            - [optional] a boolean value. Default is Null. If True, the Optimal height is automatically chosen.
-;                  $iHeight             - [optional] an integer value (0-34464). Default is Null. The Height of the row, set in Hundredths of a Millimeter (100th MM).
+;                  $iHeight             - [optional] an integer value (0-34464). Default is Null. The Height of the row, set in Hundredths of a Millimeter (HMM).
 ; Return values .: Success: 1 or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--

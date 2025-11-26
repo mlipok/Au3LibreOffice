@@ -1081,9 +1081,9 @@ EndFunc   ;==>_LOWriter_FindFormatModifyHyphenation
 ; Description ...: Modify or Add Find Format Indent Settings.
 ; Syntax ........: _LOWriter_FindFormatModifyIndent(ByRef $atFormat[, $iBeforeText = Null[, $iAfterText = Null[, $iFirstLine = Null[, $bAutoFirstLine = Null]]]])
 ; Parameters ....: $atFormat            - [in/out] an array of structs. A Find Format Array of Settings to modify. Array will be directly modified.
-;                  $iBeforeText         - [optional] an integer value (-9998989-17094). Default is Null. The amount of space that you want to indent the paragraph from the page margin. Set in Hundredths of a Millimeter (100th MM). Both $iBeforeText and $iAfterText must be set to perform a search for either.
-;                  $iAfterText          - [optional] an integer value (-9998989-17094). Default is Null. The amount of space that you want to indent the paragraph from the page margin. Set in Hundredths of a Millimeter (100th MM). Both $iBeforeText and $iAfterText must be set to perform a search for either.
-;                  $iFirstLine          - [optional] an integer value (-57785-17094). Default is Null. Indentation distance of the first line of a paragraph, Set in Hundredths of a Millimeter (100th MM). Both $iBeforeText and $iAfterText must be set to perform a search for $iFirstLine.
+;                  $iBeforeText         - [optional] an integer value (-9998989-17094). Default is Null. The amount of space that you want to indent the paragraph from the page margin. Set in Hundredths of a Millimeter (HMM). Both $iBeforeText and $iAfterText must be set to perform a search for either.
+;                  $iAfterText          - [optional] an integer value (-9998989-17094). Default is Null. The amount of space that you want to indent the paragraph from the page margin. Set in Hundredths of a Millimeter (HMM). Both $iBeforeText and $iAfterText must be set to perform a search for either.
+;                  $iFirstLine          - [optional] an integer value (-57785-17094). Default is Null. Indentation distance of the first line of a paragraph, Set in Hundredths of a Millimeter (HMM). Both $iBeforeText and $iAfterText must be set to perform a search for $iFirstLine.
 ;                  $bAutoFirstLine      - [optional] a boolean value. Default is Null. If True, the first line will be indented automatically. Both $iBeforeText and $iAfterText must be set to perform a search for $bAutoFirstLine.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1445,9 +1445,9 @@ EndFunc   ;==>_LOWriter_FindFormatModifyPosition
 ;                  If you do not have a pre-existing FindFormat Array, create and pass an Array with 0 elements. (Local $aArray[0])
 ;                  There is a bug in Libre Office, where searching for the Rotate setting using the $iRotation parameter causes any results matching the searched for string to be replaced, whether they contain the Rotate format or not, this is supposed to be fixed in L.O. 7.6.
 ;                  There is a bug in Libre Office, where searching for the Scale Width setting using the $iScaleWidth parameter causes any results matching the searched for string to be replaced, whether they contain the Scale Width format or not, this is supposed to be fixed in L.O. 7.6.
-;                  When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User Display, however the internal setting is measured in Hundredths of a Millimeter (100th MM). They will be automatically converted from Points to Hundredths of a Millimeter and back for retrieval of settings.
+;                  When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User Display, however the internal setting is measured in Hundredths of a Millimeter (HMM). They will be automatically converted from Points to Hundredths of a Millimeter and back for retrieval of settings.
 ;                  The acceptable values for $nKerning are from -2 Pt to 928.8 Pt. the figures can be directly converted easily, however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative Hundredths of a Millimeter internally from 928.9 up to 1000 Pt (Max setting).
-;                  For example, 928.8Pt is the last correct value, which equals 32766 Hundredths of a Millimeter (100th MM), after this LibreOffice reports the following: ;928.9 Pt = -32766 100th MM; 929 Pt = -32763 100th MM; 929.1 = -32759; 1000 pt = -30258.
+;                  For example, 928.8Pt is the last correct value, which equals 32766 Hundredths of a Millimeter (HMM), after this LibreOffice reports the following: ;928.9 Pt = -32766 HMM; 929 Pt = -32763 HMM; 929.1 = -32759; 1000 pt = -30258.
 ;                  Attempting to set Libre's kerning value to anything over 32768 Hundredths of a Millimeter causes a COM exception, and attempting to set the kerning to any of these negative numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the max settable kerning is -2.0 Pt to 928.8 Pt.
 ; Related .......: _LO_UnitConvert, _LOWriter_DocFindAll, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll, _LOWriter_DocReplaceAllInRange
 ; Link ..........:
@@ -1512,8 +1512,8 @@ EndFunc   ;==>_LOWriter_FindFormatModifyRotateScaleSpace
 ; Description ...: Modify or Add Find Format Spacing Settings.
 ; Syntax ........: _LOWriter_FindFormatModifySpacing(ByRef $atFormat[, $iAbovePar = Null[, $iBelowPar = Null[, $bAddSpace = Null[, $iLineSpcMode = Null[, $iLineSpcHeight = Null]]]]])
 ; Parameters ....: $atFormat            - [in/out] an array of structs. A Find Format Array of Settings to modify. Array will be directly modified.
-;                  $iAbovePar           - [optional] an integer value (0-10008). Default is Null. The Space above a paragraph, in Hundredths of a Millimeter (100th MM).
-;                  $iBelowPar           - [optional] an integer value (0-10008). Default is Null. The Space below a paragraph, in Hundredths of a Millimeter (100th MM).
+;                  $iAbovePar           - [optional] an integer value (0-10008). Default is Null. The Space above a paragraph, in Hundredths of a Millimeter (HMM).
+;                  $iBelowPar           - [optional] an integer value (0-10008). Default is Null. The Space below a paragraph, in Hundredths of a Millimeter (HMM).
 ;                  $bAddSpace           - [optional] a boolean value. Default is Null. If True, the top and bottom margins of the paragraph should not be applied when the previous and next paragraphs have the same style. Libre Office version 3.6 and up.
 ;                  $iLineSpcMode        - [optional] an integer value (0-3). Default is Null. The type of line spacing of a paragraph. See Constants, $LOW_LINE_SPC_MODE_* as defined in LibreOfficeWriter_Constants.au3, also notice min and max values for each. Must set both $iLineSpcMode and $iLineSpcHeight to be able to search either.
 ;                  $iLineSpcHeight      - [optional] an integer value. Default is Null. This value specifies the spacing of the lines. See Remarks for Minimum and Max values. Must set both $iLineSpcMode and $iLineSpcHeight to be able to search either.
@@ -1542,7 +1542,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyRotateScaleSpace
 ;                  If you do not have a pre-existing FindFormat Array, create and pass an Array with 0 elements. (Local $aArray[0])
 ;                  The settings in Libre Office, (Single,1.15, 1.5, Double,) Use the Proportional mode, and are just varying percentages. e.g Single = 100, 1.15 = 115%, 1.5 = 150%, Double = 200%.
 ;                  The values accepted by $iLineSpcHeight depends on the $iLineSpcMode used, see constants for accepted Input values.
-;                  $iAbovePar, $iBelowPar, $iLineSpcHeight may change +/- a Hundredth of a Millimeter (100th MM) once set.
+;                  $iAbovePar, $iBelowPar, $iLineSpcHeight may change +/- a Hundredth of a Millimeter (HMM) once set.
 ; Related .......: _LO_UnitConvert, _LOWriter_DocFindAll, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll _LOWriter_DocReplaceAllInRange
 ; Link ..........:
 ; Example .......: Yes
