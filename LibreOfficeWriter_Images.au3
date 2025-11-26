@@ -1903,7 +1903,7 @@ EndFunc   ;==>_LOWriter_ImageOptionsName
 ; Description ...: Replace an image with another image.
 ; Syntax ........: _LOWriter_ImageReplace(ByRef $oImage, $sNewImage)
 ; Parameters ....: $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
-;                  $sNewImage           - [optional] a string value. The file path to the new image.
+;                  $sNewImage           - a string value. The file path to the new image.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
