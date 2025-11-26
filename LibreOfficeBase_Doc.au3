@@ -664,7 +664,7 @@ EndFunc   ;==>_LOBase_DocMinimize
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_DocOpen
 ; Description ...: Open an existing Database Document.
-; Syntax ........: _LOBase_DocOpen($sFilePath[, $bConnectIfOpen = True[, $bHidden = Null[, $bReadOnly = Null[, $sPassword = Null[, $bLoadAsTemplate = Null[, $sFilterName = Null]]]]]])
+; Syntax ........: _LOBase_DocOpen($sFilePath[, $bConnectIfOpen = True[, $bHidden = Null[, $bReadOnly = Null[, $sPassword = Null[, $bLoadAsTemplate = Null]]]]])
 ; Parameters ....: $sFilePath           - a string value. Full path and filename of the file to be opened.
 ;                  $bConnectIfOpen      - [optional] a boolean value. Default is True(Connect). Whether to connect to the requested document if it is already open. See remarks.
 ;                  $bHidden             - [optional] a boolean value. Default is Null. If True, opens the document invisibly.

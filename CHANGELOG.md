@@ -382,6 +382,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Removed requirement of $oDoc in _LOBase_FontsGetNames
 - Added optional $oDoc parameter to _LOBase_FontExists for potential quicker execution.
 
+#### Fixed
+
+- `_LOBase_DocOpen` Header Syntax contained one incorrect parameter.
+
 #### Removed
 
 - $__LO_STATUS_DOC_ERROR Error Constant and renumber all after errors.
@@ -1365,6 +1369,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Some function header parameter descriptions were out of order.
 	- __LOWriter_CharOverLine
 	- __LOWriter_ParSpace
+- Wrong variables listed in header Syntax:
+	- _LOWriter_FormConComboBoxData
+	- _LOWriter_FormConTableConComboBoxData
+- `_LOWriter_FormConPushButtonGeneral` Removed duplicated parameter in Header Parameter description.
 
 #### Removed
 

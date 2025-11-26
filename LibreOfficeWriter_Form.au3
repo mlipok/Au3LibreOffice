@@ -659,7 +659,7 @@ EndFunc   ;==>_LOWriter_FormConCheckBoxState
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FormConComboBoxData
 ; Description ...: Set or Retrieve Combo Box Data Properties.
-; Syntax ........: _LOWriter_FormConComboBoxData(ByRef $oComboBox[, $sDataField = Null[, $bEmptyIsNull = Null[, $bInputRequired = Null[, $iType = Null[, $asListContent = Null]]]]])
+; Syntax ........: _LOWriter_FormConComboBoxData(ByRef $oComboBox[, $sDataField = Null[, $bEmptyIsNull = Null[, $bInputRequired = Null[, $iType = Null[, $sListContent = Null]]]]])
 ; Parameters ....: $oComboBox           - [in/out] an object. A Combo Box Control object returned by a previous _LOWriter_FormConInsert or _LOWriter_FormConsGetList function.
 ;                  $sDataField          - [optional] a string value. Default is Null. The Datafield name to retrieve content from, either a Table name, SQL query, or other.
 ;                  $bEmptyIsNull        - [optional] a boolean value. Default is Null. If True, an empty string will be treated as a Null value.
@@ -7372,7 +7372,6 @@ EndFunc   ;==>_LOWriter_FormConPosition
 ;                  $bDefault            - [optional] a boolean value. Default is Null. If True, this will be set as the Default button.
 ;                  $sGraphics           - [optional] a string value. Default is Null. The path to an Image file.
 ;                  $iGraphicAlign       - [optional] an integer value (0-12). Default is Null. The Alignment of the Image. See Constants $LOW_FORM_CON_IMG_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $sAddInfo            - [optional] a string value. Default is Null. If True, any selections in the control will not remain selected when the control loses focus.
 ;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
 ;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
 ;                  $sHelpURL            - [optional] a string value. Default is Null. The Help URL.
@@ -8627,7 +8626,7 @@ EndFunc   ;==>_LOWriter_FormConTableConColumnsGetList
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FormConTableConComboBoxData
 ; Description ...: Set or Retrieve Table Control Combo Box Data Properties.
-; Syntax ........: _LOWriter_FormConTableConComboBoxData(ByRef $oComboBox[, $sDataField = Null[, $bEmptyIsNull = Null[, $bInputRequired = Null[, $iType = Null[, $asListContent = Null]]]]])
+; Syntax ........: _LOWriter_FormConTableConComboBoxData(ByRef $oComboBox[, $sDataField = Null[, $bEmptyIsNull = Null[, $bInputRequired = Null[, $iType = Null[, $sListContent = Null]]]]])
 ; Parameters ....: $oComboBox           - [in/out] an object. A Table Control Combo Box Control object returned by a previous _LOWriter_FormConTableConColumnAdd or _LOWriter_FormConTableConColumnsGetList function.
 ;                  $sDataField          - [optional] a string value. Default is Null. The Datafield name to retrieve content from, either a Table name, SQL query, or other.
 ;                  $bEmptyIsNull        - [optional] a boolean value. Default is Null. If True, an empty string will be treated as a Null value.
