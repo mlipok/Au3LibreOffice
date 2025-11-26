@@ -578,18 +578,18 @@ EndFunc   ;==>_LO_PathConvert
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return Number = Returning Number converted from TWIPS to Centimeters.
 ;                  @Error 0 @Extended 2 Return Number = Returning Number converted from TWIPS to Inches.
-;                  @Error 0 @Extended 3 Return Integer = Returning Number converted from Millimeters to 1/100th of a Millimeter.
-;                  @Error 0 @Extended 4 Return Number = Returning Number converted from 1/100th of a Millimeter to MM
-;                  @Error 0 @Extended 5 Return Integer = Returning Number converted from Centimeters To 1/100th of a Millimeter
-;                  @Error 0 @Extended 6 Return Number = Returning Number converted from 1/100th of a Millimeter To CM
-;                  @Error 0 @Extended 7 Return Integer = Returning Number converted from Inches to 1/100th of a Millimeter.
-;                  @Error 0 @Extended 8 Return Number = Returning Number converted from 1/100th of a Millimeter to Inches.
-;                  @Error 0 @Extended 9 Return Integer = Returning Number converted from TWIPS to 1/100th of a Millimeter.
-;                  @Error 0 @Extended 10 Return Integer = Returning Number converted from Point to 1/100th of a Millimeter.
-;                  @Error 0 @Extended 11 Return Number = Returning Number converted from 1/100th of a Millimeter to Point.
+;                  @Error 0 @Extended 3 Return Integer = Returning Number converted from Millimeters to Hundredths of a Millimeter (HMM).
+;                  @Error 0 @Extended 4 Return Number = Returning Number converted from Hundredths of a Millimeter (HMM) to MM
+;                  @Error 0 @Extended 5 Return Integer = Returning Number converted from Centimeters To Hundredths of a Millimeter (HMM)
+;                  @Error 0 @Extended 6 Return Number = Returning Number converted from Hundredths of a Millimeter (HMM) To CM
+;                  @Error 0 @Extended 7 Return Integer = Returning Number converted from Inches to Hundredths of a Millimeter (HMM).
+;                  @Error 0 @Extended 8 Return Number = Returning Number converted from Hundredths of a Millimeter (HMM) to Inches.
+;                  @Error 0 @Extended 9 Return Integer = Returning Number converted from TWIPS to Hundredths of a Millimeter (HMM).
+;                  @Error 0 @Extended 10 Return Integer = Returning Number converted from Point to Hundredths of a Millimeter (HMM).
+;                  @Error 0 @Extended 11 Return Number = Returning Number converted from Hundredths of a Millimeter (HMM) to Point.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: 1/100th of a Millimeter, and is used in almost all LibreOffice functions that contain a measurement parameter.
+; Remarks .......: Hundredths of a Millimeter (HMM), is used in almost all LibreOffice functions that contain a measurement parameter.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -616,55 +616,55 @@ Func _LO_UnitConvert($nValue, $iReturnType)
 
 			Return SetError($__LO_STATUS_SUCCESS, 2, Number($iInch))
 
-		Case $LO_CONVERT_UNIT_MM_HMM ; Millimeter to 1/100th of a Millimeter.
+		Case $LO_CONVERT_UNIT_MM_HMM ; Millimeter to Hundredths of a Millimeter (HMM).
 			$iHMM = ($nValue * 100)
 			$iHMM = Round(Round($iHMM, 1))
 
 			Return SetError($__LO_STATUS_SUCCESS, 3, Number($iHMM))
 
-		Case $LO_CONVERT_UNIT_HMM_MM ; 1/100th of a Millimeter to Millimeter
+		Case $LO_CONVERT_UNIT_HMM_MM ; Hundredths of a Millimeter (HMM) to Millimeter
 			$iMM = ($nValue / 100)
 			$iMM = Round(Round($iMM, 3), 2)
 
 			Return SetError($__LO_STATUS_SUCCESS, 4, Number($iMM))
 
-		Case $LO_CONVERT_UNIT_CM_HMM ; Centimeter to 1/100th of a Millimeter
+		Case $LO_CONVERT_UNIT_CM_HMM ; Centimeter to Hundredths of a Millimeter (HMM)
 			$iHMM = ($nValue * 1000)
 			$iHMM = Round(Round($iHMM, 1))
 
 			Return SetError($__LO_STATUS_SUCCESS, 5, Int($iHMM))
 
-		Case $LO_CONVERT_UNIT_HMM_CM ; 1/100th of a Millimeter to Centimeter
+		Case $LO_CONVERT_UNIT_HMM_CM ; Hundredths of a Millimeter (HMM) to Centimeter
 			$iCM = ($nValue / 1000)
 			$iCM = Round(Round($iCM, 3), 2)
 
 			Return SetError($__LO_STATUS_SUCCESS, 6, Number($iCM))
 
-		Case $LO_CONVERT_UNIT_INCH_HMM ; Inch to 1/100th of a Millimeter
-			; 1 Inch - 2.54 Cm; 1/100th of a Millimeter = 1/1000 CM
+		Case $LO_CONVERT_UNIT_INCH_HMM ; Inch to Hundredths of a Millimeter (HMM)
+			; 1 Inch - 2.54 Cm; Hundredths of a Millimeter (HMM) = 1/1000 CM
 			$iHMM = ($nValue * 2.54) * 1000
 			$iHMM = Round(Round($iHMM, 1))
 
 			Return SetError($__LO_STATUS_SUCCESS, 7, Int($iHMM))
 
-		Case $LO_CONVERT_UNIT_HMM_INCH ; 1/100th of a Millimeter to Inch
-			; 1 Inch - 2.54 Cm; 1/100th of a Millimeter = 1/1000 CM
+		Case $LO_CONVERT_UNIT_HMM_INCH ; Hundredths of a Millimeter (HMM) to Inch
+			; 1 Inch - 2.54 Cm; Hundredths of a Millimeter (HMM) = 1/1000 CM
 			$iInch = ($nValue / 1000) / 2.54
 			$iInch = Round(Round($iInch, 3), 2)
 
 			Return SetError($__LO_STATUS_SUCCESS, 8, $iInch)
 
-		Case $LO_CONVERT_UNIT_TWIPS_HMM ; TWIPS to 1/100th of a Millimeter
+		Case $LO_CONVERT_UNIT_TWIPS_HMM ; TWIPS to Hundredths of a Millimeter (HMM)
 			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
 			$iInch = (($nValue / 20) / 72)
 			$iInch = Round(Round($iInch, 3), 2)
-			; 1 Inch = 25.4 MM; 100 1/100th of a Millimeter = 1 MM
+			; 1 Inch = 25.4 MM; 100 Hundredths of a Millimeter (HMM) = 1 MM
 			$iHMM = Round($iInch * 25.4 * 100)
 
 			Return SetError($__LO_STATUS_SUCCESS, 9, Int($iHMM))
 
 		Case $LO_CONVERT_UNIT_PT_HMM
-			; 1 pt = 35 1/100th of a Millimeter
+			; 1 pt = 35 Hundredths of a Millimeter (HMM)
 
 			Return ($nValue = 0) ? (SetError($__LO_STATUS_SUCCESS, 10, 0)) : (SetError($__LO_STATUS_SUCCESS, 10, Round(($nValue * 35.2778))))
 
