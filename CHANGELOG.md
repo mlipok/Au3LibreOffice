@@ -1048,8 +1048,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Line numbers to Example Error messages.
 - Top-Most attribute to Example message boxes.
 - Selection set and get functions
-	- _LOWriter_DocSelectionGet
-	- _LOWriter_DocSelectionSet
+	- ~~_LOWriter_DocSelectionGet~~
+	- ~~_LOWriter_DocSelectionSet~~
+	- _LOWriter_DocSelection
 - `__LOWriter_NumRuleCreateMap` for modifying Numbering Rules more efficiently.
 - LibreOffice SDK/API Constant names to constants.
 - Form/Form Control Constants
@@ -1327,6 +1328,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Rename Table background color functions for consistency:
 	- `_LOWriter_TableColor` --> `_LOWriter_TableBackColor`
 	- `_LOWriter_TableRowColor` --> `_LOWriter_TableRowBackColor`
+- Merged Selection Set/Get functions into one function, `_LOWriter_DocSelection`
 
 #### Fixed
 
@@ -1414,6 +1416,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Centralized some Constants. Thus removing the following individual Constants:
 	- $LOW_PATHCONV_*
 	- $LOW_COLOR_*
+- _LOWriter_DocSelectionGet
+- _LOWriter_DocSelectionSet
 
 [To Top](#releases)
 

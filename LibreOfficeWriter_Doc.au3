@@ -84,8 +84,7 @@
 ; _LOWriter_DocReplaceAllInRange
 ; _LOWriter_DocSave
 ; _LOWriter_DocSaveAs
-; _LOWriter_DocSelectionGet
-; _LOWriter_DocSelectionSet
+; _LOWriter_DocSelection
 ; _LOWriter_DocToFront
 ; _LOWriter_DocUndo
 ; _LOWriter_DocUndoActionBegin
@@ -4303,129 +4302,121 @@ Func _LOWriter_DocSaveAs(ByRef $oDoc, $sFilePath, $sFilterName = "", $bOverwrite
 EndFunc   ;==>_LOWriter_DocSaveAs
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_DocSelectionGet
-; Description ...: Retrieve the current user selection(s).
-; Syntax ........: _LOWriter_DocSelectionGet(ByRef $oDoc)
+; Name ..........: _LOWriter_DocSelection
+; Description ...: Set or Retrieve the current Document selection(s).
+; Syntax ........: _LOWriter_DocSelection(ByRef $oDoc[, $oObj = Null[, $bReturnMultiAsObj = False]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-; Return values .: Success: Object or Array
+;                  $oObj                - [in/out] an object. Default is Null. A selectable object. A Text Cursor with text selected, A ViewCursor with Text Selected, a Table Cursor with cells selected, a Shape or Frame Object, etc.
+;                  $bReturnMultiAsObj   - [optional] a boolean value. Default is False. If True, when Multiple selections are present, they will be returned as a single Object. See Remarks.
+; Return values .: Success: 1, Object or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oObj not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $bReturnMultiAsObj not a Boolean.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve current selection.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve TextCursor object.
 ;                  @Error 3 @Extended 3 Return 0 = There is no text selected.
 ;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve count of multiple selections.
 ;                  @Error 3 @Extended 5 Return 0 = Failed to identify current selection.
+;                  @Error 3 @Extended 6 Return 0 = Failed to select object.
 ;                  --Success--
-;                  @Error 0 @Extended -4 Return Object = Success. The current selection is within a Table, returning a Table Cursor Object.
-;                  @Error 0 @Extended -3 Return Object = Success. The current selection was a Frame, returning a Frame Object.
-;                  @Error 0 @Extended -2 Return Object = Success. The current selection was a Shape, returning a Shape Object.
-;                  @Error 0 @Extended -1 Return Object = Success. The current selection was a Chart or other OLE object, returning the Object.
-;                  @Error 0 @Extended 0 Return Object = Success. The current selection was an Image, returning a Image Object.
+;                  @Error 0 @Extended -6 Return Object = Success. The current selection is within a Table, returning a Table Cursor Object.
+;                  @Error 0 @Extended -5 Return Object = Success. The current selection was a Frame, returning a Frame Object.
+;                  @Error 0 @Extended -4 Return Object = Success. The current selection was a Shape, returning a Shape Object.
+;                  @Error 0 @Extended -3 Return Object = Success. The current selection was a Chart or other OLE object, returning the Object.
+;                  @Error 0 @Extended -2 Return Object = Success. The current selection was an Image, returning a Image Object.
+;                  @Error 0 @Extended -1 Return Object = Success. The current selection is multiple disconnected selections and $bReturnMultiAsObj was True, Returning a single Object.
+;                  @Error 0 @Extended 0 Return 1 = Success. Object called in $oObj successfully selected.
 ;                  @Error 0 @Extended 1 Return Object = Success. The current selection is a single span of text. Returning a Text Cursor.
 ;                  @Error 0 @Extended ? Return Array = Success. The current selection is multiple disconnected selections. Returning an Array of Text Cursors. @Extended is set to number of results.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: One returned cursor will usually be the present position of the Cursor in the current selection when multiple selections are present.
+; Remarks .......: Call $oObj with Null to retrieve the current selection.
+;                  If there are multiple selections present, the default behaviour of this function is to create a TextCursor for each selection and return them in an Array. When $bReturnMultiAsObj is True, the single multi-selection Object (com.sun.star.text.TextRanges) is returned, this is useless to the user (unless they use the API commands themselves to retrieve the individual selections), but can be used to restore the previous selections by calling the returned Object in this function.
+;                  Presently, I have no way to set multiple selections at a time other than the above mentioned method.
+;                  When multiple selections are present, one returned cursor will usually be the present position of the ViewCursor in the current selection.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_DocSelectionGet(ByRef $oDoc)
+Func _LOWriter_DocSelection(ByRef $oDoc, $oObj = Null, $bReturnMultiAsObj = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
+	Local $bSelect
 	Local $oSelection, $oCursor
 	Local $aoSelections[0]
 	Local $iCount
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not ($bReturnMultiAsObj <> Null) And Not IsBool($bReturnMultiAsObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-	$oSelection = $oDoc.getCurrentSelection()
-	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If __LO_VarsAreNull($oObj) Then
+		$oSelection = $oDoc.getCurrentSelection()
+		If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If $oSelection.supportsService("com.sun.star.text.TextTableCursor") Then
+		If $oSelection.supportsService("com.sun.star.text.TextTableCursor") Then
 
-		Return SetError($__LO_STATUS_SUCCESS, -4, $oSelection)
+			Return SetError($__LO_STATUS_SUCCESS, -6, $oSelection)
 
-	ElseIf $oSelection.supportsService("com.sun.star.text.TextFrame") Then
+		ElseIf $oSelection.supportsService("com.sun.star.text.TextFrame") Then
 
-		Return SetError($__LO_STATUS_SUCCESS, -3, $oSelection)
+			Return SetError($__LO_STATUS_SUCCESS, -5, $oSelection)
 
-	ElseIf $oSelection.supportsService("com.sun.star.drawing.Shapes") Then
+		ElseIf $oSelection.supportsService("com.sun.star.drawing.Shapes") Then
 
-		Return SetError($__LO_STATUS_SUCCESS, -2, $oSelection)
+			Return SetError($__LO_STATUS_SUCCESS, -4, $oSelection)
 
-	ElseIf $oSelection.supportsService("com.sun.star.text.TextEmbeddedObject") Then ; Chart? Function etc?
+		ElseIf $oSelection.supportsService("com.sun.star.text.TextEmbeddedObject") Then ; Chart? Function etc?
 
-		Return SetError($__LO_STATUS_SUCCESS, -1, $oSelection)
+			Return SetError($__LO_STATUS_SUCCESS, -3, $oSelection)
 
-	ElseIf $oSelection.supportsService("com.sun.star.text.TextGraphicObject") Then ; Image? etc?
+		ElseIf $oSelection.supportsService("com.sun.star.text.TextGraphicObject") Then ; Image? etc?
 
-		Return SetError($__LO_STATUS_SUCCESS, 0, $oSelection)
+			Return SetError($__LO_STATUS_SUCCESS, -2, $oSelection)
 
-	ElseIf $oSelection.supportsService("com.sun.star.text.TextRanges") Then
-		If ($oSelection.Count() = 1) Then
-			$oCursor = $oSelection.getByIndex(0).Text.createTextCursorByRange($oSelection.getByIndex(0))
-			If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-			If $oCursor.isCollapsed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		ElseIf $oSelection.supportsService("com.sun.star.text.TextRanges") Then
+			If ($oSelection.Count() > 1) Then
+				If $bReturnMultiAsObj Then
 
-			Return SetError($__LO_STATUS_SUCCESS, 1, $oCursor)
+					Return SetError($__LO_STATUS_SUCCESS, -1, $oSelection)
+
+				Else
+					$iCount = $oSelection.getCount()
+					If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
+					ReDim $aoSelections[$iCount]
+
+					For $i = 0 To $iCount - 1
+						$aoSelections[$i] = $oSelection.getByIndex($i).Text.createTextCursorByRange($oSelection.getByIndex($i))
+						If Not IsObj($aoSelections[$i]) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+					Next
+
+					Return SetError($__LO_STATUS_SUCCESS, $iCount, $aoSelections)
+				EndIf
+
+			Else
+				$oCursor = $oSelection.getByIndex(0).Text.createTextCursorByRange($oSelection.getByIndex(0))
+				If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+				If $oCursor.isCollapsed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+				Return SetError($__LO_STATUS_SUCCESS, 1, $oCursor)
+			EndIf
 
 		Else
-			$iCount = $oSelection.getCount()
-			If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
-			ReDim $aoSelections[$iCount]
-
-			For $i = 0 To $iCount - 1
-				$aoSelections[$i] = $oSelection.getByIndex($i).Text.createTextCursorByRange($oSelection.getByIndex($i))
-				If Not IsObj($aoSelections[$i]) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-			Next
-
-			Return SetError($__LO_STATUS_SUCCESS, $iCount, $aoSelections)
+			Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 		EndIf
 	EndIf
 
-	Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
-EndFunc   ;==>_LOWriter_DocSelectionGet
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_DocSelectionSet
-; Description ...: Set the current selection for the Document.
-; Syntax ........: _LOWriter_DocSelectionSet(ByRef $oDoc, ByRef $oObj)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oObj                - [in/out] an object. A selectable object. A Text Cursor with text selected, A ViewCursor with Text Selected, a Table Cursor with cells selected, a Shape or Frame Object, etc.
-; Return values .: Success: 1
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oObj not an Object.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to select object.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Object called in $oObj successfully selected.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: Presently, I have no way to set multiple selections at a time.
-; Related .......:
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_DocSelectionSet(ByRef $oDoc, ByRef $oObj)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $bSelect
-
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$bSelect = $oDoc.CurrentController.Select($oObj)
 
-	Return ($bSelect) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0))
-EndFunc   ;==>_LOWriter_DocSelectionSet
+	Return ($bSelect) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0))
+EndFunc   ;==>_LOWriter_DocSelection
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocToFront

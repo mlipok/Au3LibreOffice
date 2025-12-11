@@ -22,26 +22,28 @@ Func Example()
 			"Fourth Line of Text.")
 	If @error Then _ERROR($oDoc, "Failed to insert text into the Writer Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Create a TextCursor
+	; Create a TextCursor, I called false for $bCreateAtEnd, the cursor will be created at the beginning of the document.
 	$oTextCursor = _LOWriter_DocCreateTextCursor($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to create Text Cursor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Move the Text Cursor right 27 spaces, not selecting the text.
-	_LOWriter_CursorMove($oTextCursor, $LOW_TEXTCUR_GO_RIGHT, 27, False)
+	; Move the Text Cursor right 6 spaces, not selecting the text.
+	_LOWriter_CursorMove($oTextCursor, $LOW_TEXTCUR_GO_RIGHT, 6, False)
 	If @error Then _ERROR($oDoc, "Failed to move TextCursor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Move the Text Cursor right 4 spaces, selecting the text.
 	_LOWriter_CursorMove($oTextCursor, $LOW_TEXTCUR_GO_RIGHT, 4, True)
 	If @error Then _ERROR($oDoc, "Failed to move TextCursor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Select the Text Cursor
-	_LOWriter_DocSelectionSet($oDoc, $oTextCursor)
-	If @error Then _ERROR($oDoc, "Failed to select TextCursor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to select the text selected by the Text Cursor.")
+
+	; Select the text selected by the Text Cursor.
+	_LOWriter_DocSelection($oDoc, $oTextCursor)
+	If @error Then _ERROR($oDoc, "Failed to set selection. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to get the current selection.")
 
 	; Retrieve the current selection
-	$oSelection = _LOWriter_DocSelectionGet($oDoc)
+	$oSelection = _LOWriter_DocSelection($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve current selection. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The currently selected text is: " & _LOWriter_DocGetString($oSelection))
