@@ -1188,6 +1188,17 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 		- _LOWriter_ShapeAreaGradientMulticolor
 		- _LOWriter_ShapeAreaTransparencyGradientMulti
 - Position parameters (X and Y) to `_LOWriter_ShapeInsert`.
+- Paragraph Style and Direct Formatting background Gradient and Transparency functions.
+	- _LOWriter_DirFrmtParAreaFillStyle
+	- _LOWriter_DirFrmtParAreaGradient
+	- _LOWriter_DirFrmtParAreaGradientMulticolor
+	- _LOWriter_DirFrmtParAreaTransparency
+	- _LOWriter_ParStyleAreaFillStyle
+	- _LOWriter_ParStyleAreaGradient
+	- _LOWriter_ParStyleAreaGradientMulticolor
+	- _LOWriter_ParStyleAreaTransparency
+	- _LOWriter_ParStyleAreaTransparencyGradient
+	- _LOWriter_ParStyleAreaTransparencyGradientMulti
 
 #### Changed
 
