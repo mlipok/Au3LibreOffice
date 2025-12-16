@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oPageStyle
-	Local $avPageStyleSettings
+	Local $iColor
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOCalc_DocCreate(True, False)
@@ -16,17 +16,15 @@ Func Example()
 	$oPageStyle = _LOCalc_PageStyleGetObj($oDoc, "Default")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Page Style Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Set Page style Background color to $LO_COLOR_LIME, Background color transparent = False
-	_LOCalc_PageStyleBackColor($oPageStyle, $LO_COLOR_LIME, False)
+	; Set Page style Background color to $LO_COLOR_LIME
+	_LOCalc_PageStyleBackColor($oPageStyle, $LO_COLOR_LIME)
 	If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Retrieve the current settings. Return will be an array with elements in order of function parameters.
-	$avPageStyleSettings = _LOCalc_PageStyleBackColor($oPageStyle)
+	; Retrieve the current settings. Return will be an Integer.
+	$iColor = _LOCalc_PageStyleBackColor($oPageStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Page style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Page Style's current Background color settings are as follows: " & @CRLF & _
-			"The Background color is (as a RGB Color Integer): " & $avPageStyleSettings[0] & @CRLF & _
-			"Is the background color transparent? True/False: " & $avPageStyleSettings[1])
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Page Style's current Background color is: " & $iColor)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

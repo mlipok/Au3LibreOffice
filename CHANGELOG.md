@@ -958,6 +958,19 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- `_LOCalc_PageStyleAreaColor` --> `_LOCalc_PageStyleBackColor`
 	- `_LOCalc_PageStyleFooterAreaColor` --> `_LOCalc_PageStyleFooterBackColor`
 	- `_LOCalc_PageStyleHeaderAreaColor` --> `_LOCalc_PageStyleHeaderBackColor`
+- Removed $bBackTransparent/$bTransparent Parameter from the following functions, renumbering Return values also.
+	- _LOCalc_CellBackColor
+	- _LOCalc_CellStyleBackColor
+	- __LOCalc_CellBackColor
+	- _LOCalc_CellShadow
+	- _LOCalc_CellStyleShadow
+	- __LOCalc_CellShadow
+	- _LOCalc_PageStyleBackColor
+	- _LOCalc_PageStyleFooterBackColor
+	- _LOCalc_PageStyleHeaderBackColor
+	- _LOCalc_PageStyleShadow
+	- _LOCalc_PageStyleHeaderShadow
+	- _LOCalc_PageStyleFooterShadow
 
 #### Removed
 

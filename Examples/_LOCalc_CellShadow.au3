@@ -29,8 +29,8 @@ Func Example()
 	$iHMM = _LO_UnitConvert(0.25, $LO_CONVERT_UNIT_INCH_HMM)
 	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (HMM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Set the Cell's Shadow to 1/4" wide, Color to $LO_COLOR_PURPLE, Transparent to false, and location to $LOC_SHADOW_TOP_LEFT
-	_LOCalc_CellShadow($oCell, $iHMM, $LO_COLOR_PURPLE, False, $LOC_SHADOW_TOP_LEFT)
+	; Set the Cell's Shadow to 1/4" wide, Color to $LO_COLOR_PURPLE, and location to $LOC_SHADOW_TOP_LEFT
+	_LOCalc_CellShadow($oCell, $iHMM, $LO_COLOR_PURPLE, $LOC_SHADOW_TOP_LEFT)
 	If @error Then _ERROR($oDoc, "Failed to set the Cell's settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
@@ -40,8 +40,7 @@ Func Example()
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Cell's Shadow settings are as follows: " & @CRLF & _
 			"Shadow width, in Hundredths of a Millimeter (HMM): " & $avSettings[0] & @CRLF & _
 			"Shadow color is (as a RGB Color Integer): " & $avSettings[1] & @CRLF & _
-			"Is shadow color transparent? True/False: " & $avSettings[2] & @CRLF & _
-			"Shadow location, (see UDF Constants): " & $avSettings[3])
+			"Shadow location, (see UDF Constants): " & $avSettings[2])
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
