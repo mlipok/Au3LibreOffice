@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oViewCursor
-	Local $avSettings
+	Local $iColor
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
@@ -24,21 +24,19 @@ Func Example()
 	_LOWriter_CursorMove($oViewCursor, $LOW_VIEWCUR_GOTO_START)
 	If @error Then _ERROR($oDoc, "Failed to move ViewCursor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Set the paragraph at the current cursor's location background color to $LO_COLOR_GRAY, and back transparent to false.
-	_LOWriter_DirFrmtParAreaColor($oViewCursor, $LO_COLOR_GRAY, False)
+	; Set the paragraph at the current cursor's location background color to $LO_COLOR_GRAY.
+	_LOWriter_DirFrmtParAreaColor($oViewCursor, $LO_COLOR_GRAY)
 	If @error Then _ERROR($oDoc, "Failed to set the Selected text's settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
-	$avSettings = _LOWriter_DirFrmtParAreaColor($oViewCursor)
+	; Retrieve the current settings. Return will be an Integer.
+	$iColor = _LOWriter_DirFrmtParAreaColor($oViewCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the selected text's settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Paragraph Shadow settings are as follows: " & @CRLF & _
-			"The current background color is (as a RGB Color Integer): " & $avSettings[0] & @CRLF & _
-			"Is the background color transparent? True/False: " & $avSettings[1] & @CRLF & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Paragraph Background color settings are as follows is: " & $iColor & @CRLF & @CRLF & _
 			"Press ok to remove direct formatting.")
 
 	; Remove Direct formatting.
-	_LOWriter_DirFrmtParAreaColor($oViewCursor, Null, Null, True)
+	_LOWriter_DirFrmtParAreaColor($oViewCursor, Null, True)
 	If @error Then _ERROR($oDoc, "Failed to clear the selected text's direct formatting settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")

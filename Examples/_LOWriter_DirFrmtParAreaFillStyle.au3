@@ -42,8 +42,8 @@ Func Example()
 			"$LOW_AREA_FILL_STYLE_HATCH, 3 Fill Style is a Hatch style color." & @CRLF & _
 			"$LOW_AREA_FILL_STYLE_BITMAP, 4 Fill Style is a Bitmap.")
 
-	; Set the paragraph at the current cursor's location background color to $LO_COLOR_GRAY, and back transparent to false.
-	_LOWriter_DirFrmtParAreaColor($oViewCursor, $LO_COLOR_GRAY, False)
+	; Set the paragraph at the current cursor's location background color to $LO_COLOR_GRAY.
+	_LOWriter_DirFrmtParAreaColor($oViewCursor, $LO_COLOR_GRAY)
 	If @error Then _ERROR($oDoc, "Failed to set the Selected text's settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current Paragraph Fill Style

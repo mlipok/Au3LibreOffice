@@ -25,8 +25,8 @@ Func Example()
 	$oParStyle = _LOWriter_ParStyleGetObj($oDoc, "Default Paragraph Style")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Paragraph style object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Set Background Color to $LO_COLOR_RED, Color transparent to False.
-	_LOWriter_ParStyleAreaColor($oParStyle, $LO_COLOR_RED, False)
+	; Set Background Color to $LO_COLOR_RED.
+	_LOWriter_ParStyleAreaColor($oParStyle, $LO_COLOR_RED)
 	If @error Then _ERROR($oDoc, "Failed to modify Paragraph Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to modify the transparency value.")

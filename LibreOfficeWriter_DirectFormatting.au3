@@ -1151,40 +1151,36 @@ EndFunc   ;==>_LOWriter_DirFrmtParAlignment
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DirFrmtParAreaColor
 ; Description ...: Set or Retrieve background color settings for a Paragraph by Direct Formatting.
-; Syntax ........: _LOWriter_DirFrmtParAreaColor(ByRef $oSelection[, $iBackColor = Null[, $bBackTransparent = Null[, $bClearDirFrmt = False]]])
+; Syntax ........: _LOWriter_DirFrmtParAreaColor(ByRef $oSelection[, $iBackColor = Null[, $bClearDirFrmt = False]])
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object/Object Section returned from _LOWriter_ParObjCreateList or _LOWriter_ParObjSectionsGet function.
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) to turn Background color off.
-;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of Background color.
-; Return values .: Success: Integer or Array.
+; Return values .: Success: Integer.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
-;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                  @Error 1 @Extended 4 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
-;                  @Error 1 @Extended 5 Return 0 = $bBackTransparent not a Boolean.
+;                  @Error 1 @Extended 2 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
+;                  @Error 1 @Extended 3 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve TextParagraph Object.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve current background color.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve TextParagraph Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iBackColor
-;                  |                               2 = Error setting $bBackTransparent
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
-;                  @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was called with True, and rest of parameters were called with Null. Direct formatting has been successfully cleared.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current setting as an Integer.
+;                  @Error 0 @Extended 2 Return 2 = Success. $bClearDirFrmt was called with True, and rest of parameters were called with Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, False, Null, etc.
 ;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
-;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LO_ConvertColorFromLong, _LO_ConvertColorToLong, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_DirFrmtParAreaColor(ByRef $oSelection, $iBackColor = Null, $bBackTransparent = Null, $bClearDirFrmt = False)
+Func _LOWriter_DirFrmtParAreaColor(ByRef $oSelection, $iBackColor = Null, $bClearDirFrmt = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1192,17 +1188,17 @@ Func _LOWriter_DirFrmtParAreaColor(ByRef $oSelection, $iBackColor = Null, $bBack
 	Local $oTxtPar
 
 	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oTxtPar = $oSelection.TextParagraph()
-	If Not IsObj($oTxtPar) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsObj($oTxtPar) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If $bClearDirFrmt Then
 		$oTxtPar.setPropertyToDefault("FillColor")
-		If __LO_VarsAreNull($iBackColor, $bBackTransparent) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($iBackColor) Then Return SetError($__LO_STATUS_SUCCESS, 2, 2)
 	EndIf
 
-	$vReturn = __LOWriter_ParAreaColor($oTxtPar, $iBackColor, $bBackTransparent)
+	$vReturn = __LOWriter_ParAreaColor($oTxtPar, $iBackColor)
 
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtParAreaColor

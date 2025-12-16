@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oViewCursor, $oParStyle
-	Local $avParStyleSettings
+	Local $iColor
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
@@ -24,17 +24,15 @@ Func Example()
 	$oParStyle = _LOWriter_ParStyleGetObj($oDoc, "Default Paragraph Style")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Paragraph style object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Set "Default Paragraph Style" background color to $LO_COLOR_GRAY, and back transparent to false.
-	_LOWriter_ParStyleAreaColor($oParStyle, $LO_COLOR_GRAY, False)
+	; Set "Default Paragraph Style" background color to $LO_COLOR_GRAY.
+	_LOWriter_ParStyleAreaColor($oParStyle, $LO_COLOR_GRAY)
 	If @error Then _ERROR($oDoc, "Failed to set the Paragraph style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
-	$avParStyleSettings = _LOWriter_ParStyleAreaColor($oParStyle)
+	; Retrieve the current settings. Return will be an Integer.
+	$iColor = _LOWriter_ParStyleAreaColor($oParStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Paragraph style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Paragraph's current Background color settings are as follows: " & @CRLF & _
-			"The background color is (_LOWriter_ParStyleAreaColor): " & $avParStyleSettings[0] & @CRLF & _
-			"Is the background color transparent? True/False: " & $avParStyleSettings[1])
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Paragraph's current Background color is: " & $iColor)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

@@ -425,43 +425,40 @@ EndFunc   ;==>_LOWriter_ParStyleAlignment
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ParStyleAreaColor
 ; Description ...: Set or Retrieve background color settings for a Paragraph style.
-; Syntax ........: _LOWriter_ParStyleAreaColor(ByRef $oParStyle[, $iBackColor = Null[, $bBackTransparent = Null]])
+; Syntax ........: _LOWriter_ParStyleAreaColor(ByRef $oParStyle[, $iBackColor = Null])
 ; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1), to turn Background color off.
-;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
-; Return values .: Success: 1 or Array.
+; Return values .: Success: Integer.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oParStyle not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oParStyle not a Paragraph Object.
-;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                  @Error 1 @Extended 4 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
-;                  @Error 1 @Extended 5 Return 0 = $bBackTransparent not a Boolean.
+;                  @Error 1 @Extended 2 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
+;                  @Error 1 @Extended 3 Return 0 = $oParStyle not a Paragraph Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve current background color.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iBackColor
-;                  |                               2 = Error setting $bBackTransparent
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current setting as an Integer.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
-;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LO_ConvertColorFromLong, _LO_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_ParStyleAreaColor(ByRef $oParStyle, $iBackColor = Null, $bBackTransparent = Null)
+Func _LOWriter_ParStyleAreaColor(ByRef $oParStyle, $iBackColor = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $vReturn
 
 	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-	$vReturn = __LOWriter_ParAreaColor($oParStyle, $iBackColor, $bBackTransparent)
+	$vReturn = __LOWriter_ParAreaColor($oParStyle, $iBackColor)
 
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStyleAreaColor

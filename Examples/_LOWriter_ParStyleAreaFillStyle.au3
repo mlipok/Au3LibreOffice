@@ -36,8 +36,8 @@ Func Example()
 			"$LOW_AREA_FILL_STYLE_HATCH, 3 Fill Style is a Hatch style color." & @CRLF & _
 			"$LOW_AREA_FILL_STYLE_BITMAP, 4 Fill Style is a Bitmap.")
 
-	; Set Paragraph style Background color to $LO_COLOR_LIME, Background color transparent = False
-	_LOWriter_ParStyleAreaColor($oParStyle, $LO_COLOR_LIME, False)
+	; Set Paragraph style Background color to $LO_COLOR_LIME
+	_LOWriter_ParStyleAreaColor($oParStyle, $LO_COLOR_LIME)
 	If @error Then _ERROR($oDoc, "Failed to modify Paragraph Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current Paragraph Style Fill Style

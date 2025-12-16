@@ -4236,64 +4236,51 @@ EndFunc   ;==>__LOWriter_ParAlignment
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_ParAreaColor
-; Description ...: Set or Retrieve background color settings.
-; Syntax ........: __LOWriter_ParAreaColor(ByRef $oObj[, $iBackColor = Null[, $bBackTransparent = Null]])
+; Description ...: Set or Retrieve background color.
+; Syntax ........: __LOWriter_ParAreaColor(ByRef $oObj[, $iBackColor = Null])
 ; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) for "None".
-;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent
-; Return values .: Success: 1 or Array.
+; Return values .: Success: 1 or Integer.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                  @Error 1 @Extended 4 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
-;                  @Error 1 @Extended 5 Return 0 = $bBackTransparent not a Boolean.
+;                  @Error 1 @Extended 1 Return 0 = Passed Object for internal function not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve current background color.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iBackColor
-;                  |                               2 = Error setting $bBackTransparent
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current setting as an Integer.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
-;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LO_ConvertColorFromLong, _LO_ConvertColorToLong
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_ParAreaColor(ByRef $oObj, $iBackColor = Null, $bBackTransparent = Null)
+Func __LOWriter_ParAreaColor(ByRef $oObj, $iBackColor = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0
-	Local $avColor[2]
+	Local $iColor
 
-	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If __LO_VarsAreNull($iBackColor, $bBackTransparent) Then
-;~ 		__LO_ArrayFill($avColor, $oObj.ParaBackColor(), $oObj.ParaBackTransparent())
-		__LO_ArrayFill($avColor, $oObj.FillColor(), $oObj.ParaBackTransparent())
+	If __LO_VarsAreNull($iBackColor) Then
+		$iColor = $oObj.FillColor()
+		If Not IsInt($iColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-		Return SetError($__LO_STATUS_SUCCESS, 1, $avColor)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $iColor)
 	EndIf
 
-	If ($iBackColor <> Null) Then
-		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-;~ 		$oObj.ParaBackColor = $iBackColor
-		$oObj.FillStyle = ($iBackColor = $LO_COLOR_OFF) ? ($LOW_AREA_FILL_STYLE_OFF) : ($LOW_AREA_FILL_STYLE_SOLID)
-		$oObj.FillColor = $iBackColor
-;~ 		$iError = ($oObj.ParaBackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1))
-		$iError = ($oObj.FillColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1))
-	EndIf
-
-	If ($bBackTransparent <> Null) Then
-		If Not IsBool($bBackTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
-		$oObj.ParaBackTransparent = $bBackTransparent
-		$iError = ($oObj.ParaBackTransparent() = $bBackTransparent) ? ($iError) : (BitOR($iError, 2))
-	EndIf
+	$oObj.FillStyle = ($iBackColor = $LO_COLOR_OFF) ? ($LOW_AREA_FILL_STYLE_OFF) : ($LOW_AREA_FILL_STYLE_SOLID)
+	$oObj.FillColor = $iBackColor    ; Set FillColor, ParaBackColor works for Par Style, but not Direct Formatting.
+	$iError = ($oObj.FillColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1))
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_ParAreaColor

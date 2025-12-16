@@ -1340,6 +1340,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- `_LOWriter_TableColor` --> `_LOWriter_TableBackColor`
 	- `_LOWriter_TableRowColor` --> `_LOWriter_TableRowBackColor`
 - Merged Selection Set/Get functions into one function, `_LOWriter_DocSelection`
+- Removed $bBackTransparent Parameter from the following functions, renumbering Return values also.
+	- _LOWriter_DirFrmtParAreaColor
+	- _LOWriter_ParStyleAreaColor
+	- __LOWriter_ParAreaColor
 
 #### Fixed
 
