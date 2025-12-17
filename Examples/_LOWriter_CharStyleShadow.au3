@@ -45,8 +45,8 @@ Func Example()
 	$iHMM = _LO_UnitConvert(0.25, $LO_CONVERT_UNIT_INCH_HMM)
 	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (HMM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Set "Example" Character style Shadow to 1/4" wide, Color to $LO_COLOR_PURPLE, Transparent to false, and location to $LOW_SHADOW_TOP_LEFT
-	_LOWriter_CharStyleShadow($oCharStyle, $iHMM, $LO_COLOR_PURPLE, False, $LOW_SHADOW_TOP_LEFT)
+	; Set "Example" Character style Shadow to 1/4" wide, Color to $LO_COLOR_PURPLE, and location to $LOW_SHADOW_TOP_LEFT
+	_LOWriter_CharStyleShadow($oCharStyle, $iHMM, $LO_COLOR_PURPLE, $LOW_SHADOW_TOP_LEFT)
 	If @error Then _ERROR($oDoc, "Failed to set the Character style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
@@ -56,8 +56,7 @@ Func Example()
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Character style's current shadow settings are as follows: " & @CRLF & _
 			"Shadow width, in Hundredths of a Millimeter (HMM): " & $avCharStyleSettings[0] & @CRLF & _
 			"Shadow color is (as a RGB Color Integer): " & $avCharStyleSettings[1] & @CRLF & _
-			"Is shadow color transparent? True/False: " & $avCharStyleSettings[2] & @CRLF & _
-			"Shadow location, (see UDF Constants): " & $avCharStyleSettings[3])
+			"Shadow location, (see UDF Constants): " & $avCharStyleSettings[2])
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

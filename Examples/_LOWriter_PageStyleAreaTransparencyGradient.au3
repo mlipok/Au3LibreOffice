@@ -16,8 +16,8 @@ Func Example()
 	$oPageStyle = _LOWriter_PageStyleGetObj($oDoc, "Default Page Style")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Page Style Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Set Background Color to $LO_COLOR_RED, Color transparent to False.
-	_LOWriter_PageStyleAreaColor($oPageStyle, $LO_COLOR_RED, False)
+	; Set Background Color to $LO_COLOR_RED
+	_LOWriter_PageStyleAreaColor($oPageStyle, $LO_COLOR_RED)
 	If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set Page style Transparency Gradient settings to: Gradient Type = $LOW_GRAD_TYPE_ELLIPTICAL, XCenter to 75%, YCenter to 45%, Angle to 180 degrees

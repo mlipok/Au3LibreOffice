@@ -84,68 +84,57 @@
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_PageStyleAreaColor
 ; Description ...: Set or Retrieve background color settings for a Page style.
-; Syntax ........: _LOWriter_PageStyleAreaColor(ByRef $oPageStyle[, $iBackColor = Null[, $bBackTransparent = Null]])
+; Syntax ........: _LOWriter_PageStyleAreaColor(ByRef $oPageStyle[, $iBackColor = Null])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) for "None".
-;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
-; Return values .: Success: 1 or Array.
+; Return values .: Success: Integer.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
 ;                  @Error 1 @Extended 3 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
-;                  @Error 1 @Extended 4 Return 0 = $bBackTransparent not a Boolean.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve old Transparency value.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve current Background color.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve old Transparency value.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iBackColor
-;                  |                               2 = Error setting $bBackTransparent
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current setting as an Integer.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
-;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertColorFromLong, _LO_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_PageStyleAreaColor(ByRef $oPageStyle, $iBackColor = Null, $bBackTransparent = Null)
+Func _LOWriter_PageStyleAreaColor(ByRef $oPageStyle, $iBackColor = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0, $iOldTransparency
-	Local $avColor[2]
+	Local $iColor
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LO_VarsAreNull($iBackColor, $bBackTransparent) Then
-		__LO_ArrayFill($avColor, __LOWriter_ColorRemoveAlpha($oPageStyle.BackColor()), $oPageStyle.BackTransparent())
+	If __LO_VarsAreNull($iBackColor) Then
+		$iColor = __LOWriter_ColorRemoveAlpha($oPageStyle.BackColor())
+		If Not IsInt($iColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-		Return SetError($__LO_STATUS_SUCCESS, 1, $avColor)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $iColor)
 	EndIf
 
-	If ($iBackColor <> Null) Then
-		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-		$iOldTransparency = $oPageStyle.FillTransparence()
-		If Not IsInt($iOldTransparency) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	$iOldTransparency = $oPageStyle.FillTransparence()
+	If Not IsInt($iOldTransparency) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-		$oPageStyle.BackColor = $iBackColor
-		$iError = ($oPageStyle.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1))
+	$oPageStyle.BackColor = $iBackColor
+	$iError = ($oPageStyle.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1))
 
-		$oPageStyle.FillTransparence = $iOldTransparency
-	EndIf
-
-	If ($bBackTransparent <> Null) Then
-		If Not IsBool($bBackTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-
-		$oPageStyle.BackTransparent = $bBackTransparent
-		$iError = ($oPageStyle.BackTransparent() = $bBackTransparent) ? ($iError) : (BitOR($iError, 2))
-	EndIf
+	$oPageStyle.FillTransparence = $iOldTransparency
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_PageStyleAreaColor
@@ -1751,70 +1740,59 @@ EndFunc   ;==>_LOWriter_PageStyleFooter
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_PageStyleFooterAreaColor
 ; Description ...: Set or Retrieve background color settings for a Page style Footer.
-; Syntax ........: _LOWriter_PageStyleFooterAreaColor(ByRef $oPageStyle[, $iBackColor = Null[, $bBackTransparent = Null]])
+; Syntax ........: _LOWriter_PageStyleFooterAreaColor(ByRef $oPageStyle[, $iBackColor = Null])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) for "None".
-;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
-; Return values .: Success: 1 or Array.
+; Return values .: Success: Integer.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
 ;                  @Error 1 @Extended 3 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
-;                  @Error 1 @Extended 4 Return 0 = $bBackTransparent not a Boolean.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve old Transparency value.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve current Background color.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve old Transparency value.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iBackColor
-;                  |                               2 = Error setting $bBackTransparent
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current setting as an Integer
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
-;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertColorFromLong, _LO_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_PageStyleFooterAreaColor(ByRef $oPageStyle, $iBackColor = Null, $bBackTransparent = Null)
+Func _LOWriter_PageStyleFooterAreaColor(ByRef $oPageStyle, $iBackColor = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0, $iOldTransparency
-	Local $avColor[2]
+	Local $iColor
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($oPageStyle.FooterIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LO_VarsAreNull($iBackColor, $bBackTransparent) Then
-		__LO_ArrayFill($avColor, __LOWriter_ColorRemoveAlpha($oPageStyle.FooterBackColor()), $oPageStyle.FooterBackTransparent())
+	If __LO_VarsAreNull($iBackColor) Then
+		$iColor = __LOWriter_ColorRemoveAlpha($oPageStyle.FooterBackColor())
+		If Not IsInt($iColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-		Return SetError($__LO_STATUS_SUCCESS, 1, $avColor)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $iColor)
 	EndIf
 
-	If ($iBackColor <> Null) Then
-		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-		$iOldTransparency = $oPageStyle.FooterFillTransparence()
-		If Not IsInt($iOldTransparency) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	$iOldTransparency = $oPageStyle.FooterFillTransparence()
+	If Not IsInt($iOldTransparency) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
-		$oPageStyle.FooterBackColor = $iBackColor
-		$iError = ($oPageStyle.FooterBackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1))
+	$oPageStyle.FooterBackColor = $iBackColor
+	$iError = ($oPageStyle.FooterBackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1))
 
-		$oPageStyle.FooterFillTransparence = $iOldTransparency
-	EndIf
-
-	If ($bBackTransparent <> Null) Then
-		If Not IsBool($bBackTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-
-		$oPageStyle.FooterBackTransparent = $bBackTransparent
-		$iError = ($oPageStyle.FooterBackTransparent() = $bBackTransparent) ? ($iError) : (BitOR($iError, 2))
-	EndIf
+	$oPageStyle.FooterFillTransparence = $iOldTransparency
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_PageStyleFooterAreaColor
@@ -2819,11 +2797,10 @@ EndFunc   ;==>_LOWriter_PageStyleFooterBorderWidth
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_PageStyleFooterShadow
 ; Description ...: Set or Retrieve the shadow settings for a Page Style Footer.
-; Syntax ........: _LOWriter_PageStyleFooterShadow(ByRef $oPageStyle[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null]]]])
+; Syntax ........: _LOWriter_PageStyleFooterShadow(ByRef $oPageStyle[, $iWidth = Null[, $iColor = Null[, $iLocation = Null]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
 ;                  $iWidth              - [optional] an integer value. Default is Null. The Shadow Width of the footer, set in Hundredths of a Millimeter (HMM).
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The Color of the Footer shadow, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the Footer Shadow is transparent.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. The Location of the Footer Shadow. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -2832,8 +2809,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterBorderWidth
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
 ;                  @Error 1 @Extended 3 Return 0 = $iWidth not an Integer, or less than 0.
 ;                  @Error 1 @Extended 4 Return 0 = $iColor not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 5 Return 0 = $bTransparent not a Boolean.
-;                  @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving ShadowFormat Object.
@@ -2842,11 +2818,10 @@ EndFunc   ;==>_LOWriter_PageStyleFooterBorderWidth
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWidth
 ;                  |                               2 = Error setting $iColor
-;                  |                               4 = Error setting $bTransparent
-;                  |                               8 = Error setting $iLocation
+;                  |                               4 = Error setting $iLocation
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
@@ -2856,13 +2831,13 @@ EndFunc   ;==>_LOWriter_PageStyleFooterBorderWidth
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_PageStyleFooterShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = Null, $bTransparent = Null, $iLocation = Null)
+Func _LOWriter_PageStyleFooterShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = Null, $iLocation = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $tShdwFrmt
 	Local $iError = 0
-	Local $avShadow[4]
+	Local $avShadow[3]
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -2871,8 +2846,8 @@ Func _LOWriter_PageStyleFooterShadow(ByRef $oPageStyle, $iWidth = Null, $iColor 
 	$tShdwFrmt = $oPageStyle.FooterShadowFormat()
 	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	If __LO_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
-		__LO_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
+	If __LO_VarsAreNull($iWidth, $iColor, $iLocation) Then
+		__LO_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.Location())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avShadow)
 	EndIf
@@ -2889,14 +2864,8 @@ Func _LOWriter_PageStyleFooterShadow(ByRef $oPageStyle, $iWidth = Null, $iColor 
 		$tShdwFrmt.Color = $iColor
 	EndIf
 
-	If ($bTransparent <> Null) Then
-		If Not IsBool($bTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
-		$tShdwFrmt.IsTransparent = $bTransparent
-	EndIf
-
 	If ($iLocation <> Null) Then
-		If Not __LO_IntIsBetween($iLocation, $LOW_SHADOW_NONE, $LOW_SHADOW_BOTTOM_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iLocation, $LOW_SHADOW_NONE, $LOW_SHADOW_BOTTOM_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$tShdwFrmt.Location = $iLocation
 	EndIf
@@ -2908,8 +2877,7 @@ Func _LOWriter_PageStyleFooterShadow(ByRef $oPageStyle, $iWidth = Null, $iColor 
 
 	$iError = ($iWidth = Null) ? ($iError) : ((__LO_IntIsBetween($tShdwFrmt.ShadowWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
 	$iError = ($iColor = Null) ? ($iError) : (($tShdwFrmt.Color() = $iColor) ? ($iError) : (BitOR($iError, 2)))
-	$iError = ($bTransparent = Null) ? ($iError) : (($tShdwFrmt.IsTransparent() = $bTransparent) ? ($iError) : (BitOR($iError, 4)))
-	$iError = ($iLocation = Null) ? ($iError) : (($tShdwFrmt.Location() = $iLocation) ? ($iError) : (BitOR($iError, 8)))
+	$iError = ($iLocation = Null) ? ($iError) : (($tShdwFrmt.Location() = $iLocation) ? ($iError) : (BitOR($iError, 4)))
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_PageStyleFooterShadow
@@ -3271,70 +3239,59 @@ EndFunc   ;==>_LOWriter_PageStyleHeader
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_PageStyleHeaderAreaColor
 ; Description ...: Set or Retrieve background color settings for a Page style header.
-; Syntax ........: _LOWriter_PageStyleHeaderAreaColor(ByRef $oPageStyle[, $iBackColor = Null[, $bBackTransparent = Null]])
+; Syntax ........: _LOWriter_PageStyleHeaderAreaColor(ByRef $oPageStyle[, $iBackColor = Null])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) for "None".
-;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True the background color is transparent.
-; Return values .: Success: 1 or Array.
+; Return values .: Success: Integer.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
 ;                  @Error 1 @Extended 3 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
-;                  @Error 1 @Extended 4 Return 0 = $bBackTransparent not a Boolean.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve old Transparency value.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve current Background color.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve old Transparency value.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iBackColor
-;                  |                               2 = Error setting $bBackTransparent
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current setting as an Integer
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
-;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LO_ConvertColorFromLong, _LO_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_PageStyleHeaderAreaColor(ByRef $oPageStyle, $iBackColor = Null, $bBackTransparent = Null)
+Func _LOWriter_PageStyleHeaderAreaColor(ByRef $oPageStyle, $iBackColor = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0, $iOldTransparency
-	Local $avColor[2]
+	Local $iColor
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($oPageStyle.HeaderIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LO_VarsAreNull($iBackColor, $bBackTransparent) Then
-		__LO_ArrayFill($avColor, __LOWriter_ColorRemoveAlpha($oPageStyle.HeaderBackColor()), $oPageStyle.HeaderBackTransparent())
+	If __LO_VarsAreNull($iBackColor) Then
+		$iColor = __LOWriter_ColorRemoveAlpha($oPageStyle.HeaderBackColor())
+		If Not IsInt($iColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-		Return SetError($__LO_STATUS_SUCCESS, 1, $avColor)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $iColor)
 	EndIf
 
-	If ($iBackColor <> Null) Then
-		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-		$iOldTransparency = $oPageStyle.HeaderFillTransparence()
-		If Not IsInt($iOldTransparency) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	$iOldTransparency = $oPageStyle.HeaderFillTransparence()
+	If Not IsInt($iOldTransparency) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
-		$oPageStyle.HeaderBackColor = $iBackColor
-		$iError = ($oPageStyle.HeaderBackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1))
+	$oPageStyle.HeaderBackColor = $iBackColor
+	$iError = ($oPageStyle.HeaderBackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1))
 
-		$oPageStyle.HeaderFillTransparence = $iOldTransparency
-	EndIf
-
-	If ($bBackTransparent <> Null) Then
-		If Not IsBool($bBackTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-
-		$oPageStyle.HeaderBackTransparent = $bBackTransparent
-		$iError = ($oPageStyle.HeaderBackTransparent() = $bBackTransparent) ? ($iError) : (BitOR($iError, 2))
-	EndIf
+	$oPageStyle.HeaderFillTransparence = $iOldTransparency
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_PageStyleHeaderAreaColor
@@ -4339,11 +4296,10 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderBorderWidth
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_PageStyleHeaderShadow
 ; Description ...: Set or Retrieve the shadow settings for a Page Style Header.
-; Syntax ........: _LOWriter_PageStyleHeaderShadow(ByRef $oPageStyle[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null]]]])
+; Syntax ........: _LOWriter_PageStyleHeaderShadow(ByRef $oPageStyle[, $iWidth = Null[, $iColor = Null[, $iLocation = Null]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
 ;                  $iWidth              - [optional] an integer value. Default is Null. The Shadow Width of the Header, set in Hundredths of a Millimeter (HMM).
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The Color of the Header shadow, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the Header Shadow is transparent.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. The Location of the Header Shadow. See constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -4352,8 +4308,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderBorderWidth
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
 ;                  @Error 1 @Extended 3 Return 0 = $iWidth not an Integer, or less than 0.
 ;                  @Error 1 @Extended 4 Return 0 = $iColor not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 5 Return 0 = $bTransparent not a Boolean.
-;                  @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants.
+;                  @Error 1 @Extended 5 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving ShadowFormat Object.
@@ -4362,11 +4317,10 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderBorderWidth
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWidth
 ;                  |                               2 = Error setting $iColor
-;                  |                               4 = Error setting $bTransparent
-;                  |                               8 = Error setting $iLocation
+;                  |                               4 = Error setting $iLocation
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
@@ -4376,13 +4330,13 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderBorderWidth
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_PageStyleHeaderShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = Null, $bTransparent = Null, $iLocation = Null)
+Func _LOWriter_PageStyleHeaderShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = Null, $iLocation = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $tShdwFrmt
 	Local $iError = 0
-	Local $avShadow[4]
+	Local $avShadow[3]
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -4391,8 +4345,8 @@ Func _LOWriter_PageStyleHeaderShadow(ByRef $oPageStyle, $iWidth = Null, $iColor 
 	$tShdwFrmt = $oPageStyle.HeaderShadowFormat()
 	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	If __LO_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
-		__LO_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
+	If __LO_VarsAreNull($iWidth, $iColor, $iLocation) Then
+		__LO_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.Location())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avShadow)
 	EndIf
@@ -4409,14 +4363,8 @@ Func _LOWriter_PageStyleHeaderShadow(ByRef $oPageStyle, $iWidth = Null, $iColor 
 		$tShdwFrmt.Color = $iColor
 	EndIf
 
-	If ($bTransparent <> Null) Then
-		If Not IsBool($bTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
-		$tShdwFrmt.IsTransparent = $bTransparent
-	EndIf
-
 	If ($iLocation <> Null) Then
-		If Not __LO_IntIsBetween($iLocation, $LOW_SHADOW_NONE, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iLocation, $LOW_SHADOW_NONE, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$tShdwFrmt.Location = $iLocation
 	EndIf
@@ -4428,8 +4376,7 @@ Func _LOWriter_PageStyleHeaderShadow(ByRef $oPageStyle, $iWidth = Null, $iColor 
 
 	$iError = ($iWidth = Null) ? ($iError) : ((__LO_IntIsBetween($tShdwFrmt.ShadowWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
 	$iError = ($iColor = Null) ? ($iError) : (($tShdwFrmt.Color() = $iColor) ? ($iError) : (BitOR($iError, 2)))
-	$iError = ($bTransparent = Null) ? ($iError) : (($tShdwFrmt.IsTransparent() = $bTransparent) ? ($iError) : (BitOR($iError, 4)))
-	$iError = ($iLocation = Null) ? ($iError) : (($tShdwFrmt.Location() = $iLocation) ? ($iError) : (BitOR($iError, 8)))
+	$iError = ($iLocation = Null) ? ($iError) : (($tShdwFrmt.Location() = $iLocation) ? ($iError) : (BitOR($iError, 4)))
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_PageStyleHeaderShadow
@@ -4964,11 +4911,10 @@ EndFunc   ;==>_LOWriter_PageStylesGetNames
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_PageStyleShadow
 ; Description ...: Set or Retrieve the shadow settings for a Page Style.
-; Syntax ........: _LOWriter_PageStyleShadow(ByRef $oPageStyle[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null]]]])
+; Syntax ........: _LOWriter_PageStyleShadow(ByRef $oPageStyle[, $iWidth = Null[, $iColor = Null[, $iLocation = Null]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
 ;                  $iWidth              - [optional] an integer value. Default is Null. The Shadow Width of the Page, set in Hundredths of a Millimeter (HMM).
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The shadow Color of the Page, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the Page Shadow is transparent.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. The Location of the Page Shadow. See constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -4977,8 +4923,7 @@ EndFunc   ;==>_LOWriter_PageStylesGetNames
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
 ;                  @Error 1 @Extended 3 Return 0 = $iWidth not an Integer, or less than 0.
 ;                  @Error 1 @Extended 4 Return 0 = $iColor not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 5 Return 0 = $bTransparent not a Boolean.
-;                  @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error checking.
@@ -4986,11 +4931,10 @@ EndFunc   ;==>_LOWriter_PageStylesGetNames
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWidth
 ;                  |                               2 = Error setting $iColor
-;                  |                               4 = Error setting $bTransparent
-;                  |                               8 = Error setting $iLocation
+;                  |                               4 = Error setting $iLocation
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
@@ -5000,13 +4944,13 @@ EndFunc   ;==>_LOWriter_PageStylesGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_PageStyleShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = Null, $bTransparent = Null, $iLocation = Null)
+Func _LOWriter_PageStyleShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = Null, $iLocation = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $tShdwFrmt
 	Local $iError = 0
-	Local $avShadow[4]
+	Local $avShadow[3]
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -5014,8 +4958,8 @@ Func _LOWriter_PageStyleShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = Null
 	$tShdwFrmt = $oPageStyle.ShadowFormat()
 	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LO_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
-		__LO_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
+	If __LO_VarsAreNull($iWidth, $iColor, $iLocation) Then
+		__LO_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.Location())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avShadow)
 	EndIf
@@ -5032,14 +4976,8 @@ Func _LOWriter_PageStyleShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = Null
 		$tShdwFrmt.Color = $iColor
 	EndIf
 
-	If ($bTransparent <> Null) Then
-		If Not IsBool($bTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
-		$tShdwFrmt.IsTransparent = $bTransparent
-	EndIf
-
 	If ($iLocation <> Null) Then
-		If Not __LO_IntIsBetween($iLocation, $LOW_SHADOW_NONE, $LOW_SHADOW_BOTTOM_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iLocation, $LOW_SHADOW_NONE, $LOW_SHADOW_BOTTOM_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$tShdwFrmt.Location = $iLocation
 	EndIf
@@ -5051,8 +4989,7 @@ Func _LOWriter_PageStyleShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = Null
 
 	$iError = ($iWidth = Null) ? ($iError) : ((__LO_IntIsBetween($tShdwFrmt.ShadowWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
 	$iError = ($iColor = Null) ? ($iError) : (($tShdwFrmt.Color() = $iColor) ? ($iError) : (BitOR($iError, 2)))
-	$iError = ($bTransparent = Null) ? ($iError) : (($tShdwFrmt.IsTransparent() = $bTransparent) ? ($iError) : (BitOR($iError, 4)))
-	$iError = ($iLocation = Null) ? ($iError) : (($tShdwFrmt.Location() = $iLocation) ? ($iError) : (BitOR($iError, 8)))
+	$iError = ($iLocation = Null) ? ($iError) : (($tShdwFrmt.Location() = $iLocation) ? ($iError) : (BitOR($iError, 4)))
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_PageStyleShadow

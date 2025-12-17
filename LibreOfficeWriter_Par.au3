@@ -2037,11 +2037,10 @@ EndFunc   ;==>_LOWriter_ParStylesGetNames
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ParStyleShadow
 ; Description ...: Set or Retrieve the Shadow settings for a Paragraph style.
-; Syntax ........: _LOWriter_ParStyleShadow(ByRef $oParStyle[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null]]]])
+; Syntax ........: _LOWriter_ParStyleShadow(ByRef $oParStyle[, $iWidth = Null[, $iColor = Null[, $iLocation = Null]]])
 ; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iWidth              - [optional] an integer value. Default is Null. The shadow width, set in Hundredths of a Millimeter (HMM).
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The color of the shadow, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the shadow is transparent.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. The location of the shadow compared to the paragraph. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -2051,8 +2050,7 @@ EndFunc   ;==>_LOWriter_ParStylesGetNames
 ;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $iWidth not an Integer, or less than 0.
 ;                  @Error 1 @Extended 5 Return 0 = $iColor not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 6 Return 0 = $bTransparent not a Boolean.
-;                  @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Shadow Format Object.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving Shadow Format Object for Error checking.
@@ -2060,11 +2058,10 @@ EndFunc   ;==>_LOWriter_ParStylesGetNames
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWidth
 ;                  |                               2 = Error setting $iColor
-;                  |                               4 = Error setting $bTransparent
-;                  |                               8 = Error setting $iLocation
+;                  |                               4 = Error setting $iLocation
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
@@ -2074,7 +2071,7 @@ EndFunc   ;==>_LOWriter_ParStylesGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_ParStyleShadow(ByRef $oParStyle, $iWidth = Null, $iColor = Null, $bTransparent = Null, $iLocation = Null)
+Func _LOWriter_ParStyleShadow(ByRef $oParStyle, $iWidth = Null, $iColor = Null, $iLocation = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -2083,7 +2080,7 @@ Func _LOWriter_ParStyleShadow(ByRef $oParStyle, $iWidth = Null, $iColor = Null, 
 	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	$vReturn = __LOWriter_ParShadow($oParStyle, $iWidth, $iColor, $bTransparent, $iLocation)
+	$vReturn = __LOWriter_ParShadow($oParStyle, $iWidth, $iColor, $iLocation)
 
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStyleShadow

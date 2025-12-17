@@ -990,11 +990,10 @@ EndFunc   ;==>_LOWriter_CharStylesGetNames
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_CharStyleShadow
 ; Description ...: Set and retrieve the Shadow for a Character Style. Libre Office 4.2 and Up.
-; Syntax ........: _LOWriter_CharStyleShadow(ByRef $oCharStyle[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null]]]])
+; Syntax ........: _LOWriter_CharStyleShadow(ByRef $oCharStyle[, $iWidth = Null[, $iColor = Null[, $iLocation = Null]]])
 ; Parameters ....: $oCharStyle          - [in/out] an object. A Character Style object returned by a previous _LOWriter_CharStyleCreate, or _LOWriter_CharStyleGetObj, function.
 ;                  $iWidth              - [optional] an integer value. Default is Null. Width of the shadow, set in Hundredths of a Millimeter (HMM).
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. Color of the shadow, as a RGB Color Integer. Can be a custom value or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the shadow is transparent.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. Location of the shadow compared to the characters. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1004,8 +1003,7 @@ EndFunc   ;==>_LOWriter_CharStylesGetNames
 ;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $iWidth not an Integer.
 ;                  @Error 1 @Extended 5 Return 0 = $iColor not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 6 Return 0 = $bTransparent not a boolean.
-;                  @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Shadow format Object.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving Shadow format Object for Error Checking.
@@ -1013,13 +1011,12 @@ EndFunc   ;==>_LOWriter_CharStylesGetNames
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWidth
 ;                  |                               2 = Error setting $iColor
-;                  |                               4 = Error setting $bTransparent
-;                  |                               8 = Error setting $iLocation
+;                  |                               4 = Error setting $iLocation
 ;                  --Version Related Errors--
 ;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 4.2.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
@@ -1029,7 +1026,7 @@ EndFunc   ;==>_LOWriter_CharStylesGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_CharStyleShadow(ByRef $oCharStyle, $iWidth = Null, $iColor = Null, $bTransparent = Null, $iLocation = Null)
+Func _LOWriter_CharStyleShadow(ByRef $oCharStyle, $iWidth = Null, $iColor = Null, $iLocation = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1039,7 +1036,7 @@ Func _LOWriter_CharStyleShadow(ByRef $oCharStyle, $iWidth = Null, $iColor = Null
 	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	$vReturn = __LOWriter_CharShadow($oCharStyle, $iWidth, $iColor, $bTransparent, $iLocation)
+	$vReturn = __LOWriter_CharShadow($oCharStyle, $iWidth, $iColor, $iLocation)
 
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_CharStyleShadow

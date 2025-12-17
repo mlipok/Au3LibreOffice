@@ -30,7 +30,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve Frame style object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set "Labels" frame Style background color to $LO_COLOR_RED
-	_LOWriter_FrameStyleAreaColor($oFrameStyle, $LO_COLOR_RED, False)
+	_LOWriter_FrameStyleAreaColor($oFrameStyle, $LO_COLOR_RED)
 	If @error Then _ERROR($oDoc, "Failed to set the Frame style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")

@@ -578,11 +578,10 @@ EndFunc   ;==>_LOWriter_DirFrmtCharRotateScale
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DirFrmtCharShadow
 ; Description ...: Set and retrieve the Shadow for a Character Style by Direct Formatting. Libre Office 4.2 and Up.
-; Syntax ........: _LOWriter_DirFrmtCharShadow(ByRef $oSelection[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null[, $bClearDirFrmt = False]]]]])
+; Syntax ........: _LOWriter_DirFrmtCharShadow(ByRef $oSelection[, $iWidth = Null[, $iColor = Null[, $iLocation = Null[, $bClearDirFrmt = False]]]])
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval function, Or A Paragraph Object, or other Object containing a selection of text.
 ;                  $iWidth              - [optional] an integer value. Default is Null. Width of the shadow, set in Hundredths of a Millimeter (HMM).
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. Color of the shadow, as a RGB Color Integer. Can be a custom value or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. See remarks.
-;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the shadow is transparent.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. Location of the shadow compared to the characters. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of Character Shadow, Width, Color and Location.
 ; Return values .: Success: Integer or Array.
@@ -593,8 +592,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharRotateScale
 ;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $iWidth not an Integer.
 ;                  @Error 1 @Extended 5 Return 0 = $iColor not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 6 Return 0 = $bTransparent not a boolean.
-;                  @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Shadow format Object.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving Shadow format Object for Error checking.
@@ -602,13 +600,12 @@ EndFunc   ;==>_LOWriter_DirFrmtCharRotateScale
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWidth
 ;                  |                               2 = Error setting $iColor
-;                  |                               4 = Error setting $bTransparent
-;                  |                               8 = Error setting $iLocation
+;                  |                               4 = Error setting $iLocation
 ;                  --Version Related Errors--
 ;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 4.2.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ;                  @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was called with True, and rest of parameters were called with Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
@@ -621,7 +618,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharRotateScale
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_DirFrmtCharShadow(ByRef $oSelection, $iWidth = Null, $iColor = Null, $bTransparent = Null, $iLocation = Null, $bClearDirFrmt = False)
+Func _LOWriter_DirFrmtCharShadow(ByRef $oSelection, $iWidth = Null, $iColor = Null, $iLocation = Null, $bClearDirFrmt = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -633,10 +630,10 @@ Func _LOWriter_DirFrmtCharShadow(ByRef $oSelection, $iWidth = Null, $iColor = Nu
 
 	If $bClearDirFrmt Then
 		$oSelection.setPropertyToDefault("CharShadowFormat")
-		If __LO_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($iWidth, $iColor, $iLocation) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
-	$vReturn = __LOWriter_CharShadow($oSelection, $iWidth, $iColor, $bTransparent, $iLocation)
+	$vReturn = __LOWriter_CharShadow($oSelection, $iWidth, $iColor, $iLocation)
 
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtCharShadow
@@ -2119,11 +2116,10 @@ EndFunc   ;==>_LOWriter_DirFrmtParPageBreak
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DirFrmtParShadow
 ; Description ...: Set or Retrieve the Shadow settings for a Paragraph by Direct Formatting.
-; Syntax ........: _LOWriter_DirFrmtParShadow(ByRef $oSelection[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null[, $bClearDirFrmt = False]]]]])
+; Syntax ........: _LOWriter_DirFrmtParShadow(ByRef $oSelection[, $iWidth = Null[, $iColor = Null[, $iLocation = Null[, $bClearDirFrmt = False]]]])
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object/Object Section returned from _LOWriter_ParObjCreateList or _LOWriter_ParObjSectionsGet function.
 ;                  $iWidth              - [optional] an integer value. Default is Null. The width of the shadow set in Hundredths of a Millimeter (HMM).
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The color of the shadow, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the shadow is transparent.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. The location of the shadow compared to the paragraph. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of Shadow Width, Color and Location.
 ; Return values .: Success: Integer or Array.
@@ -2134,8 +2130,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParPageBreak
 ;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $iWidth not an Integer, or less than 0.
 ;                  @Error 1 @Extended 5 Return 0 = $iColor not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 6 Return 0 = $bTransparent not a Boolean.
-;                  @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants.
+;                  @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Shadow Format Object.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving Shadow Format Object for Error checking.
@@ -2143,11 +2138,10 @@ EndFunc   ;==>_LOWriter_DirFrmtParPageBreak
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWidth
 ;                  |                               2 = Error setting $iColor
-;                  |                               4 = Error setting $bTransparent
-;                  |                               8 = Error setting $iLocation
+;                  |                               4 = Error setting $iLocation
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ;                  @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was called with True, and rest of parameters were called with Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
@@ -2160,7 +2154,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParPageBreak
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_DirFrmtParShadow(ByRef $oSelection, $iWidth = Null, $iColor = Null, $bTransparent = Null, $iLocation = Null, $bClearDirFrmt = False)
+Func _LOWriter_DirFrmtParShadow(ByRef $oSelection, $iWidth = Null, $iColor = Null, $iLocation = Null, $bClearDirFrmt = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -2171,10 +2165,10 @@ Func _LOWriter_DirFrmtParShadow(ByRef $oSelection, $iWidth = Null, $iColor = Nul
 
 	If $bClearDirFrmt Then
 		$oSelection.setPropertyToDefault("ParaShadowFormat")
-		If __LO_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+		If __LO_VarsAreNull($iWidth, $iColor, $iLocation) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
-	$vReturn = __LOWriter_ParShadow($oSelection, $iWidth, $iColor, $bTransparent, $iLocation)
+	$vReturn = __LOWriter_ParShadow($oSelection, $iWidth, $iColor, $iLocation)
 
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtParShadow

@@ -16,7 +16,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve Page Style Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set the Page Background color to $LO_COLOR_GREEN, to demonstrate that I retrieved the Page Style's Object.
-	_LOWriter_PageStyleAreaColor($oPageStyle, $LO_COLOR_GREEN, False)
+	_LOWriter_PageStyleAreaColor($oPageStyle, $LO_COLOR_GREEN)
 	If @error Then _ERROR($oDoc, "Failed to set Page Style Background color. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")

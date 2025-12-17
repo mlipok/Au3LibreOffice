@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oViewCursor, $oTable
-	Local $avTableProps
+	Local $iColor
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
@@ -24,17 +24,15 @@ Func Example()
 	$oTable = _LOWriter_TableInsert($oDoc, $oViewCursor, $oTable)
 	If @error Then _ERROR($oDoc, "Failed to insert Text Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Set the table Background color, and set Transparent to False.
-	_LOWriter_TableBackColor($oTable, $LO_COLOR_LIME, False)
+	; Set the table Background color to $LO_COLOR_LIME.
+	_LOWriter_TableBackColor($oTable, $LO_COLOR_LIME)
 	If @error Then _ERROR($oDoc, "Failed to set Text Table settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve current settings.
-	$avTableProps = _LOWriter_TableBackColor($oTable)
+	$iColor = _LOWriter_TableBackColor($oTable)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Text Table settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Current Text Table color settings are: " & @CRLF & _
-			"Table background color is (as a RGB Color Integer): " & $avTableProps[0] & @CRLF & _
-			"Background is transparent? True/False: " & $avTableProps[1])
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Current Text Table color is (as a RGB Color Integer): " & $iColor)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

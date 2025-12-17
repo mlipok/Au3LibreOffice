@@ -25,8 +25,8 @@ Func Example()
 	$iHMM = _LO_UnitConvert(.125, $LO_CONVERT_UNIT_INCH_HMM)
 	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (HMM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Set Frame Shadow settings to: Width = 1/8", Color = $LO_COLOR_RED, Transparent = False, Location = $LOW_SHADOW_TOP_LEFT
-	_LOWriter_FrameShadow($oFrame, $iHMM, $LO_COLOR_RED, False, $LOW_SHADOW_TOP_LEFT)
+	; Set Frame Shadow settings to: Width = 1/8", Color = $LO_COLOR_RED, Location = $LOW_SHADOW_TOP_LEFT
+	_LOWriter_FrameShadow($oFrame, $iHMM, $LO_COLOR_RED, $LOW_SHADOW_TOP_LEFT)
 	If @error Then _ERROR($oDoc, "Failed to set Frame settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current Frame settings. Return will be an array in order of function parameters.
@@ -36,8 +36,7 @@ Func Example()
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Frame's Shadow settings are as follows: " & @CRLF & _
 			"The shadow width is, in Hundredths of a Millimeter (HMM): " & $avSettings[0] & @CRLF & _
 			"The Shadow color is (as a RGB Color Integer): " & $avSettings[1] & @CRLF & _
-			"Is the Color transparent? True/False: " & $avSettings[2] & @CRLF & _
-			"The Shadow location is, (see UDF Constants): " & $avSettings[3])
+			"The Shadow location is, (see UDF Constants): " & $avSettings[2])
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

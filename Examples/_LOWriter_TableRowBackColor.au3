@@ -6,8 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oViewCursor, $oTable, $oCell
-	Local $iRows, $iColumns
-	Local $avColor
+	Local $iRows, $iColumns, $iColor
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
@@ -46,17 +45,15 @@ Func Example()
 	Next
 
 	; Change the 3rd row down (Row 2) background color to: $LO_COLOR_ORANGE
-	_LOWriter_TableRowBackColor($oTable, 2, $LO_COLOR_ORANGE, False)
+	_LOWriter_TableRowBackColor($oTable, 2, $LO_COLOR_ORANGE)
 	If @error Then _ERROR($oDoc, "Failed to set the row background color settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve row's current background color settings.
-	$avColor = _LOWriter_TableRowBackColor($oTable, 2)
+	$iColor = _LOWriter_TableRowBackColor($oTable, 2)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the row background color settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Array elements will be in order of function's parameters.
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "The background color settings for the Third row down, (Row 2), is: " & @CRLF & _
-			"Background color: " & $avColor[0] & @CRLF & _
-			"Background color is transparent? True/False: " & $avColor[1])
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The background color for the Third row down, (Row 2), is (as a RGB Color Integer): " & $iColor)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

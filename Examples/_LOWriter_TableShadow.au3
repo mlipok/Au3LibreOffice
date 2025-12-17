@@ -29,9 +29,8 @@ Func Example()
 	$iHMM = _LO_UnitConvert(0.5, $LO_CONVERT_UNIT_INCH_HMM)
 	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (HMM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Set the Table shadow to 1/2 an inch wide, the color to $LO_COLOR_DKGRAY, Transparent to False, and shadow location to
-	; $LOW_SHADOW_BOTTOM_LEFT
-	_LOWriter_TableShadow($oTable, $iHMM, $LO_COLOR_DKGRAY, False, $LOW_SHADOW_BOTTOM_LEFT)
+	; Set the Table shadow to 1/2 an inch wide, the color to $LO_COLOR_DKGRAY, and shadow location to $LOW_SHADOW_BOTTOM_LEFT
+	_LOWriter_TableShadow($oTable, $iHMM, $LO_COLOR_DKGRAY, $LOW_SHADOW_BOTTOM_LEFT)
 	If @error Then _ERROR($oDoc, "Failed to set Table shadow settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve Table shadow settings. Return will be an Array, with values in order of function parameters.
@@ -41,8 +40,7 @@ Func Example()
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Table shadow values are as follows: " & @CRLF & _
 			"Width = " & $avShadow[0] & " Hundredths of a Millimeter (HMM)." & @CRLF & _
 			"Color = " & $avShadow[1] & " (as a RGB Color Integer)." & @CRLF & _
-			"Is Color Transparent? True/False = " & $avShadow[2] & @CRLF & _
-			"Shadow Location (See constants) = " & $avShadow[3])
+			"Shadow Location (See constants) = " & $avShadow[2])
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

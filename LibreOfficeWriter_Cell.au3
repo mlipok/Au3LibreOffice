@@ -42,60 +42,49 @@
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_CellBackColor
 ; Description ...: Set and Retrieve the Background color of a Cell or Cell Range.
-; Syntax ........: _LOWriter_CellBackColor(ByRef $oCell[, $iBackColor = Null[, $bBackTransparent = Null]])
+; Syntax ........: _LOWriter_CellBackColor(ByRef $oCell[, $iBackColor = Null])
 ; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned by a previous _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition function.
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. Specify the Cell background color as a RGB Color Integer. Call with $LO_COLOR_OFF(-1) to disable Background color. Can also be one of the constants $LO_COLOR_* as defined in LibreOffice_Constants.au3
-;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
-; Return values .: Success: 1 or Array.
+; Return values .: Success: Integer.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iBackColor not an Integer, set less than -1 or greater than 16777215.
-;                  @Error 1 @Extended 3 Return 0 = $bBackTransparent not a Boolean.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve current Background color.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iBackColor
-;                  |                               2 = Error setting $bBackTransparent
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current setting as an Integer
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
-;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition, _LO_ConvertColorFromLong, _LO_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_CellBackColor(ByRef $oCell, $iBackColor = Null, $bBackTransparent = Null)
+Func _LOWriter_CellBackColor(ByRef $oCell, $iBackColor = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0
-	Local $avColor[2]
+	Local $iColor
 
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If __LO_VarsAreNull($iBackColor, $bBackTransparent) Then
-		__LO_ArrayFill($avColor, $oCell.BackColor(), $oCell.BackTransparent())
+	If __LO_VarsAreNull($iBackColor) Then
+		$iColor = $oCell.BackColor()
+		If Not IsInt($iColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-		Return SetError($__LO_STATUS_SUCCESS, 0, $avColor)
+		Return SetError($__LO_STATUS_SUCCESS, 0, $iColor)
 	EndIf
 
-	If ($iBackColor <> Null) Then
-		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-		$oCell.BackColor = $iBackColor
-		If ($iBackColor = $LO_COLOR_OFF) Then $oCell.BackTransparent = True
-		$iError = ($oCell.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1)) ; Error setting color.
-	EndIf
-
-	If ($bBackTransparent <> Null) Then
-		If Not IsBool($bBackTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
-		$oCell.BackTransparent = $bBackTransparent
-		$iError = ($oCell.BackTransparent() = $bBackTransparent) ? ($iError) : (BitOR($iError, 2)) ; Error setting BackTransparent.
-	EndIf
+	$oCell.BackColor = $iBackColor
+	$iError = ($oCell.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1)) ; Error setting color.
 
 	Return ($iError = 0) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
 EndFunc   ;==>_LOWriter_CellBackColor

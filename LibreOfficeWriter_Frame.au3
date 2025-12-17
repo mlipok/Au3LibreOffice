@@ -88,66 +88,55 @@
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FrameAreaColor
 ; Description ...: Set or Retrieve background color settings for a Frame.
-; Syntax ........: _LOWriter_FrameAreaColor(ByRef $oFrame[, $iBackColor = Null[, $bBackTransparent = Null]])
+; Syntax ........: _LOWriter_FrameAreaColor(ByRef $oFrame[, $iBackColor = Null])
 ; Parameters ....: $oFrame              - [in/out] an object. A Frame object returned by a previous _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, or _LOWriter_FrameGetObjByCursor function.
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) for "None".
-;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
-; Return values .: Success: 1 or Array.
+; Return values .: Success: Integer.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oFrame not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
-;                  @Error 1 @Extended 3 Return 0 = $bBackTransparent not a Boolean.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve old Transparency value.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve current Background color.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve old Transparency value.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iBackColor
-;                  |                               2 = Error setting $bBackTransparent
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current setting as an Integer.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
-;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, _LOWriter_FrameGetObjByCursor, _LO_ConvertColorFromLong, _LO_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FrameAreaColor(ByRef $oFrame, $iBackColor = Null, $bBackTransparent = Null)
+Func _LOWriter_FrameAreaColor(ByRef $oFrame, $iBackColor = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0, $iOldTransparency
-	Local $avColor[2]
+	Local $iColor
 
 	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If __LO_VarsAreNull($iBackColor, $bBackTransparent) Then
-		__LO_ArrayFill($avColor, __LOWriter_ColorRemoveAlpha($oFrame.BackColor()), $oFrame.BackTransparent())
+	If __LO_VarsAreNull($iBackColor) Then
+		$iColor = __LOWriter_ColorRemoveAlpha($oFrame.BackColor())
+		If Not IsInt($iColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-		Return SetError($__LO_STATUS_SUCCESS, 1, $avColor)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $iColor)
 	EndIf
 
-	If ($iBackColor <> Null) Then
-		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-		$iOldTransparency = $oFrame.FillTransparence()
-		If Not IsInt($iOldTransparency) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	$iOldTransparency = $oFrame.FillTransparence()
+	If Not IsInt($iOldTransparency) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-		$oFrame.BackColor = $iBackColor
-		$iError = ($oFrame.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1))
+	$oFrame.BackColor = $iBackColor
+	$iError = ($oFrame.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1))
 
-		$oFrame.FillTransparence = $iOldTransparency
-	EndIf
-
-	If ($bBackTransparent <> Null) Then
-		If Not IsBool($bBackTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
-		$oFrame.BackTransparent = $bBackTransparent
-		$iError = ($oFrame.BackTransparent() = $bBackTransparent) ? ($iError) : (BitOR($iError, 2))
-	EndIf
+	$oFrame.FillTransparence = $iOldTransparency
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameAreaColor
@@ -2129,11 +2118,10 @@ EndFunc   ;==>_LOWriter_FramesGetNames
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FrameShadow
 ; Description ...: Set or Retrieve the shadow settings for a Frame.
-; Syntax ........: _LOWriter_FrameShadow(ByRef $oFrame[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null]]]])
+; Syntax ........: _LOWriter_FrameShadow(ByRef $oFrame[, $iWidth = Null[, $iColor = Null[, $iLocation = Null]]])
 ; Parameters ....: $oFrame              - [in/out] an object. A Frame object returned by a previous _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, or _LOWriter_FrameGetObjByCursor function.
 ;                  $iWidth              - [optional] an integer value. Default is Null. The Width of the Frame Shadow set in Hundredths of a Millimeter (HMM).
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The Color of the Frame shadow, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3..
-;                  $bTransparent        - [optional] a boolean value. Default is Null. Whether the Frame Shadow is transparent or not.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. The Location of the Frame Shadow, must be one of the Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3..
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -2141,8 +2129,7 @@ EndFunc   ;==>_LOWriter_FramesGetNames
 ;                  @Error 1 @Extended 1 Return 0 = $oFrame not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iWidth not an Integer, or less than 0.
 ;                  @Error 1 @Extended 3 Return 0 = $iColor not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 4 Return 0 = $bTransparent not a Boolean.
-;                  @Error 1 @Extended 5 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3..
+;                  @Error 1 @Extended 4 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3..
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error checking.
@@ -2150,11 +2137,10 @@ EndFunc   ;==>_LOWriter_FramesGetNames
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWidth
 ;                  |                               2 = Error setting $iColor
-;                  |                               4 = Error setting $bTransparent
-;                  |                               8 = Error setting $iLocation
+;                  |                               4 = Error setting $iLocation
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
@@ -2164,21 +2150,21 @@ EndFunc   ;==>_LOWriter_FramesGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FrameShadow(ByRef $oFrame, $iWidth = Null, $iColor = Null, $bTransparent = Null, $iLocation = Null)
+Func _LOWriter_FrameShadow(ByRef $oFrame, $iWidth = Null, $iColor = Null, $iLocation = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $tShdwFrmt
 	Local $iError = 0
-	Local $avShadow[4]
+	Local $avShadow[3]
 
 	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$tShdwFrmt = $oFrame.ShadowFormat()
 	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LO_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
-		__LO_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
+	If __LO_VarsAreNull($iWidth, $iColor, $iLocation) Then
+		__LO_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.Location())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avShadow)
 	EndIf
@@ -2195,14 +2181,8 @@ Func _LOWriter_FrameShadow(ByRef $oFrame, $iWidth = Null, $iColor = Null, $bTran
 		$tShdwFrmt.Color = $iColor
 	EndIf
 
-	If ($bTransparent <> Null) Then
-		If Not IsBool($bTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-
-		$tShdwFrmt.IsTransparent = $bTransparent
-	EndIf
-
 	If ($iLocation <> Null) Then
-		If Not __LO_IntIsBetween($iLocation, $LOW_SHADOW_NONE, $LOW_SHADOW_BOTTOM_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LO_IntIsBetween($iLocation, $LOW_SHADOW_NONE, $LOW_SHADOW_BOTTOM_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		$tShdwFrmt.Location = $iLocation
 	EndIf
@@ -2214,8 +2194,7 @@ Func _LOWriter_FrameShadow(ByRef $oFrame, $iWidth = Null, $iColor = Null, $bTran
 
 	$iError = ($iWidth = Null) ? ($iError) : ((__LO_IntIsBetween($tShdwFrmt.ShadowWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
 	$iError = ($iColor = Null) ? ($iError) : (($tShdwFrmt.Color() = $iColor) ? ($iError) : (BitOR($iError, 2)))
-	$iError = ($bTransparent = Null) ? ($iError) : (($tShdwFrmt.IsTransparent() = $bTransparent) ? ($iError) : (BitOR($iError, 4)))
-	$iError = ($iLocation = Null) ? ($iError) : (($tShdwFrmt.Location() = $iLocation) ? ($iError) : (BitOR($iError, 8)))
+	$iError = ($iLocation = Null) ? ($iError) : (($tShdwFrmt.Location() = $iLocation) ? ($iError) : (BitOR($iError, 4)))
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameShadow
@@ -2223,68 +2202,57 @@ EndFunc   ;==>_LOWriter_FrameShadow
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FrameStyleAreaColor
 ; Description ...: Set or Retrieve background color settings for a Frame style.
-; Syntax ........: _LOWriter_FrameStyleAreaColor(ByRef $oFrameStyle[, $iBackColor = Null[, $bBackTransparent = Null]])
+; Syntax ........: _LOWriter_FrameStyleAreaColor(ByRef $oFrameStyle[, $iBackColor = Null])
 ; Parameters ....: $oFrameStyle         - [in/out] an object. A Frame Style object returned by a previous _LOWriter_FrameStyleCreate, or _LOWriter_FrameStyleGetObj function.
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The background color, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3. Call with $LO_COLOR_OFF(-1) for "None".
-;                  $bBackTransparent    - [optional] a boolean value. Default is Null. Whether the background color is transparent or not. True = visible.
-; Return values .: Success: 1 or Array.
+; Return values .: Success: Integer.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oFrameStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oFrameStyle not a Frame Style Object.
 ;                  @Error 1 @Extended 3 Return 0 = $iBackColor not an Integer, less than -1 or greater than 16777215.
-;                  @Error 1 @Extended 4 Return 0 = $bBackTransparent not a Boolean.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve old Transparency value.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve current Background color.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve old Transparency value.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iBackColor
-;                  |                               2 = Error setting $bBackTransparent
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were called with Null, returning current setting as an Integer.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
-;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj, _LO_ConvertColorFromLong, _LO_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FrameStyleAreaColor(ByRef $oFrameStyle, $iBackColor = Null, $bBackTransparent = Null)
+Func _LOWriter_FrameStyleAreaColor(ByRef $oFrameStyle, $iBackColor = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0, $iOldTransparency
-	Local $avColor[2]
+	Local $iColor
 
 	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LO_VarsAreNull($iBackColor, $bBackTransparent) Then
-		__LO_ArrayFill($avColor, __LOWriter_ColorRemoveAlpha($oFrameStyle.BackColor()), $oFrameStyle.BackTransparent())
+	If __LO_VarsAreNull($iBackColor) Then
+		$iColor = __LOWriter_ColorRemoveAlpha($oFrameStyle.BackColor())
+		If Not IsInt($iColor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-		Return SetError($__LO_STATUS_SUCCESS, 1, $avColor)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $iColor)
 	EndIf
 
-	If ($iBackColor <> Null) Then
-		If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LO_IntIsBetween($iBackColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-		$iOldTransparency = $oFrameStyle.FillTransparence()
-		If Not IsInt($iOldTransparency) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	$iOldTransparency = $oFrameStyle.FillTransparence()
+	If Not IsInt($iOldTransparency) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-		$oFrameStyle.BackColor = $iBackColor
-		$iError = ($oFrameStyle.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1))
+	$oFrameStyle.BackColor = $iBackColor
+	$iError = ($oFrameStyle.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1))
 
-		$oFrameStyle.FillTransparence = $iOldTransparency
-	EndIf
-
-	If ($bBackTransparent <> Null) Then
-		If Not IsBool($bBackTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-
-		$oFrameStyle.BackTransparent = $bBackTransparent
-		$iError = ($oFrameStyle.BackTransparent() = $bBackTransparent) ? ($iError) : (BitOR($iError, 2))
-	EndIf
+	$oFrameStyle.FillTransparence = $iOldTransparency
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameStyleAreaColor
@@ -4123,11 +4091,10 @@ EndFunc   ;==>_LOWriter_FrameStylesGetNames
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FrameStyleShadow
 ; Description ...: Set or Retrieve the shadow settings for a Frame Style.
-; Syntax ........: _LOWriter_FrameStyleShadow(ByRef $oFrameStyle[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null]]]])
+; Syntax ........: _LOWriter_FrameStyleShadow(ByRef $oFrameStyle[, $iWidth = Null[, $iColor = Null[, $iLocation = Null]]])
 ; Parameters ....: $oFrameStyle         - [in/out] an object. A Frame Style object returned by a previous _LOWriter_FrameStyleCreate, or _LOWriter_FrameStyleGetObj function.
 ;                  $iWidth              - [optional] an integer value. Default is Null. The Width of the Frame Shadow set in Hundredths of a Millimeter (HMM).
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The Color of the Frame shadow, as a RGB Color Integer. Can be a custom value, or one of the constants, $LO_COLOR_* as defined in LibreOffice_Constants.au3.
-;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the Frame Shadow is transparent.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. The Location of the Frame Shadow, must be one of the Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -4136,8 +4103,7 @@ EndFunc   ;==>_LOWriter_FrameStylesGetNames
 ;                  @Error 1 @Extended 2 Return 0 = $oFrameStyle not a Frame Style Object.
 ;                  @Error 1 @Extended 3 Return 0 = $iWidth not an Integer, or less than 0.
 ;                  @Error 1 @Extended 4 Return 0 = $iColor not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 5 Return 0 = $bTransparent not a Boolean.
-;                  @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error checking.
@@ -4145,11 +4111,10 @@ EndFunc   ;==>_LOWriter_FrameStylesGetNames
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWidth
 ;                  |                               2 = Error setting $iColor
-;                  |                               4 = Error setting $bTransparent
-;                  |                               8 = Error setting $iLocation
+;                  |                               4 = Error setting $iLocation
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were called with Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
@@ -4159,13 +4124,13 @@ EndFunc   ;==>_LOWriter_FrameStylesGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FrameStyleShadow(ByRef $oFrameStyle, $iWidth = Null, $iColor = Null, $bTransparent = Null, $iLocation = Null)
+Func _LOWriter_FrameStyleShadow(ByRef $oFrameStyle, $iWidth = Null, $iColor = Null, $iLocation = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $tShdwFrmt
 	Local $iError = 0
-	Local $avShadow[4]
+	Local $avShadow[3]
 
 	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -4173,8 +4138,8 @@ Func _LOWriter_FrameStyleShadow(ByRef $oFrameStyle, $iWidth = Null, $iColor = Nu
 	$tShdwFrmt = $oFrameStyle.ShadowFormat()
 	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LO_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
-		__LO_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
+	If __LO_VarsAreNull($iWidth, $iColor, $iLocation) Then
+		__LO_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.Location())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avShadow)
 	EndIf
@@ -4191,14 +4156,8 @@ Func _LOWriter_FrameStyleShadow(ByRef $oFrameStyle, $iWidth = Null, $iColor = Nu
 		$tShdwFrmt.Color = $iColor
 	EndIf
 
-	If ($bTransparent <> Null) Then
-		If Not IsBool($bTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
-		$tShdwFrmt.IsTransparent = $bTransparent
-	EndIf
-
 	If ($iLocation <> Null) Then
-		If Not __LO_IntIsBetween($iLocation, $LOW_SHADOW_NONE, $LOW_SHADOW_BOTTOM_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LO_IntIsBetween($iLocation, $LOW_SHADOW_NONE, $LOW_SHADOW_BOTTOM_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$tShdwFrmt.Location = $iLocation
 	EndIf
@@ -4210,8 +4169,7 @@ Func _LOWriter_FrameStyleShadow(ByRef $oFrameStyle, $iWidth = Null, $iColor = Nu
 
 	$iError = ($iWidth = Null) ? ($iError) : ((__LO_IntIsBetween($tShdwFrmt.ShadowWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
 	$iError = ($iColor = Null) ? ($iError) : (($tShdwFrmt.Color() = $iColor) ? ($iError) : (BitOR($iError, 2)))
-	$iError = ($bTransparent = Null) ? ($iError) : (($tShdwFrmt.IsTransparent() = $bTransparent) ? ($iError) : (BitOR($iError, 4)))
-	$iError = ($iLocation = Null) ? ($iError) : (($tShdwFrmt.Location() = $iLocation) ? ($iError) : (BitOR($iError, 8)))
+	$iError = ($iLocation = Null) ? ($iError) : (($tShdwFrmt.Location() = $iLocation) ? ($iError) : (BitOR($iError, 4)))
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameStyleShadow

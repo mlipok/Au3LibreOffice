@@ -1353,10 +1353,32 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- `_LOWriter_TableColor` --> `_LOWriter_TableBackColor`
 	- `_LOWriter_TableRowColor` --> `_LOWriter_TableRowBackColor`
 - Merged Selection Set/Get functions into one function, `_LOWriter_DocSelection`
-- Removed $bBackTransparent Parameter from the following functions, renumbering Return values also.
-	- _LOWriter_DirFrmtParAreaColor
+- Removed $bBackTransparent/$bTransparent Parameter from the following functions, renumbering Return values also.
+	- _LOWriter_CellBackColor
+	- _LOWriter_CharStyleShadow
+	- _LOWriter_DirFrmtCharShadow
+	- __LOWriter_CharShadow
+	- _LOWriter_FrameAreaColor
+	- _LOWriter_FrameStyleAreaColor
+	- _LOWriter_FrameShadow
+	- _LOWriter_FrameStyleShadow
+	- _LOWriter_ImageAreaColor
+	- _LOWriter_ImageShadow
+	- _LOWriter_PageStyleAreaColor
+	- _LOWriter_PageStyleFooterAreaColor
+	- _LOWriter_PageStyleHeaderAreaColor
+	- _LOWriter_PageStyleFooterShadow
+	- _LOWriter_PageStyleHeaderShadow
+	- _LOWriter_PageStyleShadow
+	- _LOWriter_ParStyleShadow
+	- _LOWriter_DirFrmtParShadow
+	- __LOWriter_ParShadow
 	- _LOWriter_ParStyleAreaColor
+	- _LOWriter_DirFrmtParAreaColor
 	- __LOWriter_ParAreaColor
+	- _LOWriter_TableBackColor
+	- _LOWriter_TableRowBackColor
+	- _LOWriter_TableShadow
 
 #### Fixed
 
