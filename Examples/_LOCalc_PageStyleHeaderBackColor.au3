@@ -28,7 +28,7 @@ Func Example()
 	$iColor = _LOCalc_PageStyleHeaderBackColor($oPageStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Page style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Page Style's current Header Background color is: " & $iColor)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Page Style's current Header Background color is (as a RGB Color Integer): " & $iColor)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
