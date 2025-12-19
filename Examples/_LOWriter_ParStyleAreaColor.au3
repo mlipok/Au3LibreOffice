@@ -32,7 +32,7 @@ Func Example()
 	$iColor = _LOWriter_ParStyleAreaColor($oParStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Paragraph style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Paragraph's current Background color is: " & $iColor)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Paragraph's current Background color is (as a RGB Color Integer): " & $iColor)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

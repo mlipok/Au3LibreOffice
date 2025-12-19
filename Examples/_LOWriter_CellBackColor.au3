@@ -48,7 +48,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve current Text Table Cell Background settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have set the cell's background color to a random number." & @CRLF & _
-			"The current Background color value is: " & $iColor)
+			"The current Background color value is (as a RGB Color Integer): " & $iColor)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

@@ -32,7 +32,7 @@ Func Example()
 	$iColor = _LOWriter_DirFrmtParAreaColor($oViewCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the selected text's settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Paragraph Background color settings are as follows is: " & $iColor & @CRLF & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Paragraph Background color settings are as follows is (as a RGB Color Integer): " & $iColor & @CRLF & @CRLF & _
 			"Press ok to remove direct formatting.")
 
 	; Remove Direct formatting.
