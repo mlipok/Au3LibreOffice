@@ -132,7 +132,6 @@ EndFunc   ;==>_LOCalc_PageStyleBackColor
 ;                  @Error 1 @Extended 4 Return 0 = $iBottom not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 5 Return 0 = $iLeft not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 6 Return 0 = $iRight not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
@@ -285,7 +284,6 @@ EndFunc   ;==>_LOCalc_PageStyleBorderPadding
 ;                  @Error 1 @Extended 4 Return 0 = $iBottom not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 5 Return 0 = $iLeft not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 6 Return 0 = $iRight not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
@@ -345,7 +343,6 @@ EndFunc   ;==>_LOCalc_PageStyleBorderStyle
 ;                  @Error 1 @Extended 4 Return 0 = $iBottom not an Integer, or less than 0.
 ;                  @Error 1 @Extended 5 Return 0 = $iLeft not an Integer, or less than 0.
 ;                  @Error 1 @Extended 6 Return 0 = $iRight not an Integer, or less than 0.
-;                  @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
@@ -722,7 +719,6 @@ EndFunc   ;==>_LOCalc_PageStyleFooterBackColor
 ;                  @Error 1 @Extended 4 Return 0 = $iBottom not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 5 Return 0 = $iLeft not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 6 Return 0 = $iRight not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
@@ -878,7 +874,6 @@ EndFunc   ;==>_LOCalc_PageStyleFooterBorderPadding
 ;                  @Error 1 @Extended 4 Return 0 = $iBottom not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 5 Return 0 = $iLeft not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 6 Return 0 = $iRight not an Integer, less than 0 or greater than 17, but not equal to 0x7FFF. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
@@ -938,7 +933,6 @@ EndFunc   ;==>_LOCalc_PageStyleFooterBorderStyle
 ;                  @Error 1 @Extended 4 Return 0 = $iBottom not an Integer, or less than 0.
 ;                  @Error 1 @Extended 5 Return 0 = $iLeft not an Integer, or less than 0.
 ;                  @Error 1 @Extended 6 Return 0 = $iRight not an Integer, or less than 0.
-;                  @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
@@ -1458,7 +1452,6 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderBackColor
 ;                  @Error 1 @Extended 4 Return 0 = $iBottom not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 5 Return 0 = $iLeft not an Integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 6 Return 0 = $iRight not an Integer, less than 0 or greater than 16777215.
-;                  @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
@@ -1673,7 +1666,6 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderBorderStyle
 ;                  @Error 1 @Extended 4 Return 0 = $iBottom not an Integer, or less than 0.
 ;                  @Error 1 @Extended 5 Return 0 = $iLeft not an Integer, or less than 0.
 ;                  @Error 1 @Extended 6 Return 0 = $iRight not an Integer, or less than 0.
-;                  @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--

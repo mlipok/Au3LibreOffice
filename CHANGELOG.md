@@ -959,18 +959,86 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- `_LOCalc_PageStyleFooterAreaColor` --> `_LOCalc_PageStyleFooterBackColor`
 	- `_LOCalc_PageStyleHeaderAreaColor` --> `_LOCalc_PageStyleHeaderBackColor`
 - Removed $bBackTransparent/$bTransparent Parameter from the following functions, renumbering Return values also.
-	- _LOCalc_CellBackColor
-	- _LOCalc_CellStyleBackColor
 	- __LOCalc_CellBackColor
-	- _LOCalc_CellShadow
-	- _LOCalc_CellStyleShadow
 	- __LOCalc_CellShadow
+	- _LOCalc_CellBackColor
+	- _LOCalc_CellShadow
+	- _LOCalc_CellStyleBackColor
+	- _LOCalc_CellStyleShadow
 	- _LOCalc_PageStyleBackColor
 	- _LOCalc_PageStyleFooterBackColor
-	- _LOCalc_PageStyleHeaderBackColor
-	- _LOCalc_PageStyleShadow
-	- _LOCalc_PageStyleHeaderShadow
 	- _LOCalc_PageStyleFooterShadow
+	- _LOCalc_PageStyleHeaderBackColor
+	- _LOCalc_PageStyleHeaderShadow
+	- _LOCalc_PageStyleShadow
+- Renumbered some error values, after removing redundant error checking.
+	- __LOCalc_CellBorder
+	- __LOCalc_CellBorderPadding
+	- __LOCalc_CellEffect
+	- __LOCalc_CellFont
+	- __LOCalc_CellFontColor
+	- __LOCalc_CellNumberFormat
+	- __LOCalc_CellOverLine
+	- __LOCalc_CellProtection
+	- __LOCalc_CellShadow
+	- __LOCalc_CellStrikeOut
+	- __LOCalc_CellStyleBorder
+	- __LOCalc_CellTextAlign
+	- __LOCalc_CellTextOrient
+	- __LOCalc_CellTextProperties
+	- __LOCalc_CellUnderLine
+	- __LOCalc_PageStyleBorder
+	- __LOCalc_PageStyleFooterBorder
+	- __LOCalc_PageStyleHeaderBorder
+	- _LOCalc_CellBorderColor
+	- _LOCalc_CellBorderPadding
+	- _LOCalc_CellBorderStyle
+	- _LOCalc_CellBorderWidth
+	- _LOCalc_CellEffect
+	- _LOCalc_CellFont
+	- _LOCalc_CellFontColor
+	- _LOCalc_CellNumberFormat
+	- _LOCalc_CellOverline
+	- _LOCalc_CellProtection
+	- _LOCalc_CellShadow
+	- _LOCalc_CellStrikeOut
+	- _LOCalc_CellStyleBorderPadding
+	- _LOCalc_CellStyleEffect
+	- _LOCalc_CellStyleFont
+	- _LOCalc_CellStyleFontColor
+	- _LOCalc_CellStyleNumberFormat
+	- _LOCalc_CellStyleOverline
+	- _LOCalc_CellStyleProtection
+	- _LOCalc_CellStyleShadow
+	- _LOCalc_CellStyleStrikeOut
+	- _LOCalc_CellStyleBorderColor
+	- _LOCalc_CellStyleBorderStyle
+	- _LOCalc_CellStyleBorderWidth
+	- _LOCalc_CellStyleTextAlign
+	- _LOCalc_CellStyleTextOrient
+	- _LOCalc_CellStyleTextProperties
+	- _LOCalc_CellStyleUnderline
+	- _LOCalc_CellTextAlign
+	- _LOCalc_CellTextOrient
+	- _LOCalc_CellTextProperties
+	- _LOCalc_CellUnderline
+	- _LOCalc_PageStyleBorderColor
+	- _LOCalc_PageStyleBorderStyle
+	- _LOCalc_PageStyleBorderWidth
+	- _LOCalc_PageStyleFooterBorderColor
+	- _LOCalc_PageStyleFooterBorderStyle
+	- _LOCalc_PageStyleFooterBorderWidth
+	- _LOCalc_PageStyleHeaderBorderColor
+	- _LOCalc_PageStyleHeaderBorderStyle
+	- _LOCalc_PageStyleHeaderBorderWidth
+	- _LOCalc_TextCursorCharPosition
+	- _LOCalc_TextCursorCharSpacing
+	- _LOCalc_TextCursorEffect
+	- _LOCalc_TextCursorFont
+	- _LOCalc_TextCursorFontColor
+	- _LOCalc_TextCursorOverline
+	- _LOCalc_TextCursorStrikeOut
+	- _LOCalc_TextCursorUnderline
 
 #### Removed
 
@@ -997,6 +1065,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Centralized some Constants. Thus removing the following individual Constants:
 	- $LOC_PATHCONV_*
 	- $LOC_COLOR_*
+- Unnecessary internal functions:
+	- __LOCalc_CharPosition
+	- __LOCalc_CharSpacing
 
 ### LibreOfficeWriter
 
@@ -1354,28 +1425,28 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- `_LOWriter_TableRowColor` --> `_LOWriter_TableRowBackColor`
 - Merged Selection Set/Get functions into one function, `_LOWriter_DocSelection`
 - Removed $bBackTransparent/$bTransparent Parameter from the following functions, renumbering Return values also.
+	- __LOWriter_CharShadow
+	- __LOWriter_ParAreaColor
+	- __LOWriter_ParShadow
 	- _LOWriter_CellBackColor
 	- _LOWriter_CharStyleShadow
 	- _LOWriter_DirFrmtCharShadow
-	- __LOWriter_CharShadow
+	- _LOWriter_DirFrmtParAreaColor
+	- _LOWriter_DirFrmtParShadow
 	- _LOWriter_FrameAreaColor
-	- _LOWriter_FrameStyleAreaColor
 	- _LOWriter_FrameShadow
+	- _LOWriter_FrameStyleAreaColor
 	- _LOWriter_FrameStyleShadow
 	- _LOWriter_ImageAreaColor
 	- _LOWriter_ImageShadow
 	- _LOWriter_PageStyleAreaColor
 	- _LOWriter_PageStyleFooterAreaColor
-	- _LOWriter_PageStyleHeaderAreaColor
 	- _LOWriter_PageStyleFooterShadow
+	- _LOWriter_PageStyleHeaderAreaColor
 	- _LOWriter_PageStyleHeaderShadow
 	- _LOWriter_PageStyleShadow
-	- _LOWriter_ParStyleShadow
-	- _LOWriter_DirFrmtParShadow
-	- __LOWriter_ParShadow
 	- _LOWriter_ParStyleAreaColor
-	- _LOWriter_DirFrmtParAreaColor
-	- __LOWriter_ParAreaColor
+	- _LOWriter_ParStyleShadow
 	- _LOWriter_TableBackColor
 	- _LOWriter_TableRowBackColor
 	- _LOWriter_TableShadow
