@@ -75,7 +75,7 @@ Func _LOBase_DatabaseAutoCommit(ByRef $oConnection, $bAutoCommit = Null)
 	If Not IsObj($oConnection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oConnection.supportsService("com.sun.star.sdbc.Connection") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If ($bAutoCommit = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oConnection.getAutoCommit())
+	If __LO_VarsAreNull($bAutoCommit) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oConnection.getAutoCommit())
 
 	If Not IsBool($bAutoCommit) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 

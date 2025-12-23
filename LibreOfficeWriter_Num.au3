@@ -312,15 +312,15 @@ Func _LOWriter_NumStyleCustomize(ByRef $oDoc, $oNumStyle, $iLevel, $iNumFormat =
 		If Not IsMap($mNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		; Error Checking
-		$iError = ($iNumFormat = Null) ? ($iError) : (($atNumLevel[$mNumLevel["NumberingType"]].Value() = $iNumFormat) ? ($iError) : (BitOR($iError, 1)))
-		$iError = ($iStartAt = Null) ? ($iError) : (($atNumLevel[$mNumLevel["StartWith"]].Value() = $iStartAt) ? ($iError) : (BitOR($iError, 2)))
-		$iError = ($sCharStyle = Null) ? ($iError) : (($atNumLevel[$mNumLevel["CharStyleName"]].Value() = $sCharStyle) ? ($iError) : (BitOR($iError, 4)))
-		$iError = ($iSubLevels = Null) ? ($iError) : (($atNumLevel[$mNumLevel["ParentNumbering"]].Value() = $iSubLevels) ? ($iError) : (BitOR($iError, 8)))
-		$iError = ($sSepBefore = Null) ? ($iError) : (($atNumLevel[$mNumLevel["Prefix"]].Value() = $sSepBefore) ? ($iError) : (BitOR($iError, 16)))
-		$iError = ($sSepAfter = Null) ? ($iError) : (($atNumLevel[$mNumLevel["Suffix"]].Value() = $sSepAfter) ? ($iError) : (BitOR($iError, 32)))
-		$iError = ($bConsecutiveNum = Null) ? ($iError) : (($oNumStyle.NumberingRules.IsContinuousNumbering = $bConsecutiveNum) ? ($iError) : (BitOR($iError, 64)))
-		$iError = ($sBulletFont = Null) ? ($iError) : (($atNumLevel[$mNumLevel["BulletFont"]].Value.Name() = $sBulletFont) ? ($iError) : (BitOR($iError, 128)))
-		$iError = ($iCharDecimal = Null) ? ($iError) : ((Asc($atNumLevel[$mNumLevel["BulletChar"]].Value()) = $iCharDecimal) ? ($iError) : (BitOR($iError, 256)))
+		$iError = (__LO_VarsAreNull($iNumFormat)) ? ($iError) : (($atNumLevel[$mNumLevel["NumberingType"]].Value() = $iNumFormat) ? ($iError) : (BitOR($iError, 1)))
+		$iError = (__LO_VarsAreNull($iStartAt)) ? ($iError) : (($atNumLevel[$mNumLevel["StartWith"]].Value() = $iStartAt) ? ($iError) : (BitOR($iError, 2)))
+		$iError = (__LO_VarsAreNull($sCharStyle)) ? ($iError) : (($atNumLevel[$mNumLevel["CharStyleName"]].Value() = $sCharStyle) ? ($iError) : (BitOR($iError, 4)))
+		$iError = (__LO_VarsAreNull($iSubLevels)) ? ($iError) : (($atNumLevel[$mNumLevel["ParentNumbering"]].Value() = $iSubLevels) ? ($iError) : (BitOR($iError, 8)))
+		$iError = (__LO_VarsAreNull($sSepBefore)) ? ($iError) : (($atNumLevel[$mNumLevel["Prefix"]].Value() = $sSepBefore) ? ($iError) : (BitOR($iError, 16)))
+		$iError = (__LO_VarsAreNull($sSepAfter)) ? ($iError) : (($atNumLevel[$mNumLevel["Suffix"]].Value() = $sSepAfter) ? ($iError) : (BitOR($iError, 32)))
+		$iError = (__LO_VarsAreNull($bConsecutiveNum)) ? ($iError) : (($oNumStyle.NumberingRules.IsContinuousNumbering = $bConsecutiveNum) ? ($iError) : (BitOR($iError, 64)))
+		$iError = (__LO_VarsAreNull($sBulletFont)) ? ($iError) : (($atNumLevel[$mNumLevel["BulletFont"]].Value.Name() = $sBulletFont) ? ($iError) : (BitOR($iError, 128)))
+		$iError = (__LO_VarsAreNull($iCharDecimal)) ? ($iError) : ((Asc($atNumLevel[$mNumLevel["BulletChar"]].Value()) = $iCharDecimal) ? ($iError) : (BitOR($iError, 256)))
 	Next
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
@@ -660,11 +660,11 @@ Func _LOWriter_NumStylePosition(ByRef $oDoc, $oNumStyle, $iLevel, $iAlignedAt = 
 
 		; Error Checking:
 
-		$iError = ($iAlignedAt = Null) ? ($iError) : ((__LO_IntIsBetween($atNumLevel[$mNumLevel["FirstLineIndent"]].Value(), $iAlignedAt - 1, $iAlignedAt + 1)) ? ($iError) : (BitOR($iError, 1)))
-		$iError = ($iNumAlign = Null) ? ($iError) : (($atNumLevel[$mNumLevel["Adjust"]].Value() = $iNumAlign) ? ($iError) : (BitOR($iError, 2)))
-		$iError = ($iFollowedBy = Null) ? ($iError) : (($atNumLevel[$mNumLevel["LabelFollowedBy"]].Value() = $iFollowedBy) ? ($iError) : (BitOR($iError, 4)))
-		$iError = ($iTabStop = Null) ? ($iError) : ((__LO_IntIsBetween($atNumLevel[$mNumLevel["ListtabStopPosition"]].Value(), $iTabStop - 1, $iTabStop + 1)) ? ($iError) : (BitOR($iError, 8)))
-		$iError = ($iIndent = Null) ? ($iError) : ((__LO_IntIsBetween($atNumLevel[$mNumLevel["IndentAt"]].Value(), $iIndent - 1, $iIndent + 1)) ? ($iError) : (BitOR($iError, 16)))
+		$iError = (__LO_VarsAreNull($iAlignedAt)) ? ($iError) : ((__LO_IntIsBetween($atNumLevel[$mNumLevel["FirstLineIndent"]].Value(), $iAlignedAt - 1, $iAlignedAt + 1)) ? ($iError) : (BitOR($iError, 1)))
+		$iError = (__LO_VarsAreNull($iNumAlign)) ? ($iError) : (($atNumLevel[$mNumLevel["Adjust"]].Value() = $iNumAlign) ? ($iError) : (BitOR($iError, 2)))
+		$iError = (__LO_VarsAreNull($iFollowedBy)) ? ($iError) : (($atNumLevel[$mNumLevel["LabelFollowedBy"]].Value() = $iFollowedBy) ? ($iError) : (BitOR($iError, 4)))
+		$iError = (__LO_VarsAreNull($iTabStop)) ? ($iError) : ((__LO_IntIsBetween($atNumLevel[$mNumLevel["ListtabStopPosition"]].Value(), $iTabStop - 1, $iTabStop + 1)) ? ($iError) : (BitOR($iError, 8)))
+		$iError = (__LO_VarsAreNull($iIndent)) ? ($iError) : ((__LO_IntIsBetween($atNumLevel[$mNumLevel["IndentAt"]].Value(), $iIndent - 1, $iIndent + 1)) ? ($iError) : (BitOR($iError, 16)))
 	Next
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
@@ -742,7 +742,7 @@ Func _LOWriter_NumStyleSetLevel(ByRef $oObj, $iLevel = Null)
 	If Not $oObj.supportsService("com.sun.star.style.ParagraphProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not __LO_IntIsBetween($iLevel, 1, 10) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-	If ($iLevel = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, ($oObj.NumberingLevel() + 1)) ; Plus one to compensate for Levels being 0 Based.
+	If __LO_VarsAreNull($iLevel) Then Return SetError($__LO_STATUS_SUCCESS, 1, ($oObj.NumberingLevel() + 1)) ; Plus one to compensate for Levels being 0 Based.
 
 	$iLevel -= 1 ; Level is 0 Based, minus one to compensate.
 

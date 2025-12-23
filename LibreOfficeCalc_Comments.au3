@@ -142,7 +142,7 @@ Func _LOCalc_CommentAreaColor(ByRef $oComment, $iColor = Null)
 	$oAnnotationShape = $oComment.AnnotationShape()
 	If Not IsObj($oAnnotationShape) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If ($iColor = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oAnnotationShape.FillColor())
+	If __LO_VarsAreNull($iColor) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oAnnotationShape.FillColor())
 
 	If Not __LO_IntIsBetween($iColor, $LO_COLOR_BLACK, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
@@ -409,15 +409,15 @@ Func _LOCalc_CommentAreaGradient(ByRef $oComment, $sGradientName = Null, $iType 
 	$oAnnotationShape.FillGradient = $tStyleGradient
 
 	; Error checking
-	$iError = ($iType = Null) ? ($iError) : (($oAnnotationShape.FillGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 2)))
-	$iError = ($iXCenter = Null) ? ($iError) : (($oAnnotationShape.FillGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 8)))
-	$iError = ($iYCenter = Null) ? ($iError) : (($oAnnotationShape.FillGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 16)))
-	$iError = ($iAngle = Null) ? ($iError) : ((Int($oAnnotationShape.FillGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 32)))
-	$iError = ($iTransitionStart = Null) ? ($iError) : (($oAnnotationShape.FillGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 64)))
-	$iError = ($iFromColor = Null) ? ($iError) : (($oAnnotationShape.FillGradient.StartColor() = $iFromColor) ? ($iError) : (BitOR($iError, 128)))
-	$iError = ($iToColor = Null) ? ($iError) : (($oAnnotationShape.FillGradient.EndColor() = $iToColor) ? ($iError) : (BitOR($iError, 256)))
-	$iError = ($iFromIntense = Null) ? ($iError) : (($oAnnotationShape.FillGradient.StartIntensity() = $iFromIntense) ? ($iError) : (BitOR($iError, 512)))
-	$iError = ($iToIntense = Null) ? ($iError) : (($oAnnotationShape.FillGradient.EndIntensity() = $iToIntense) ? ($iError) : (BitOR($iError, 1024)))
+	$iError = (__LO_VarsAreNull($iType)) ? ($iError) : (($oAnnotationShape.FillGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 2)))
+	$iError = (__LO_VarsAreNull($iXCenter)) ? ($iError) : (($oAnnotationShape.FillGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 8)))
+	$iError = (__LO_VarsAreNull($iYCenter)) ? ($iError) : (($oAnnotationShape.FillGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 16)))
+	$iError = (__LO_VarsAreNull($iAngle)) ? ($iError) : ((Int($oAnnotationShape.FillGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 32)))
+	$iError = (__LO_VarsAreNull($iTransitionStart)) ? ($iError) : (($oAnnotationShape.FillGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 64)))
+	$iError = (__LO_VarsAreNull($iFromColor)) ? ($iError) : (($oAnnotationShape.FillGradient.StartColor() = $iFromColor) ? ($iError) : (BitOR($iError, 128)))
+	$iError = (__LO_VarsAreNull($iToColor)) ? ($iError) : (($oAnnotationShape.FillGradient.EndColor() = $iToColor) ? ($iError) : (BitOR($iError, 256)))
+	$iError = (__LO_VarsAreNull($iFromIntense)) ? ($iError) : (($oAnnotationShape.FillGradient.StartIntensity() = $iFromIntense) ? ($iError) : (BitOR($iError, 512)))
+	$iError = (__LO_VarsAreNull($iToIntense)) ? ($iError) : (($oAnnotationShape.FillGradient.EndIntensity() = $iToIntense) ? ($iError) : (BitOR($iError, 1024)))
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOCalc_CommentAreaGradient
@@ -895,13 +895,13 @@ Func _LOCalc_CommentAreaTransparencyGradient(ByRef $oDoc, ByRef $oComment, $iTyp
 
 	$oAnnotationShape.FillTransparenceGradient = $tGradient
 
-	$iError = ($iType = Null) ? ($iError) : (($oAnnotationShape.FillTransparenceGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 1)))
-	$iError = ($iXCenter = Null) ? ($iError) : (($oAnnotationShape.FillTransparenceGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 2)))
-	$iError = ($iYCenter = Null) ? ($iError) : (($oAnnotationShape.FillTransparenceGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 4)))
-	$iError = ($iAngle = Null) ? ($iError) : ((Int($oAnnotationShape.FillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 8)))
-	$iError = ($iTransitionStart = Null) ? ($iError) : (($oAnnotationShape.FillTransparenceGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 16)))
-	$iError = ($iStart = Null) ? ($iError) : (($oAnnotationShape.FillTransparenceGradient.StartColor() = __LOCalc_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 32)))
-	$iError = ($iEnd = Null) ? ($iError) : (($oAnnotationShape.FillTransparenceGradient.EndColor() = __LOCalc_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 64)))
+	$iError = (__LO_VarsAreNull($iType)) ? ($iError) : (($oAnnotationShape.FillTransparenceGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 1)))
+	$iError = (__LO_VarsAreNull($iXCenter)) ? ($iError) : (($oAnnotationShape.FillTransparenceGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 2)))
+	$iError = (__LO_VarsAreNull($iYCenter)) ? ($iError) : (($oAnnotationShape.FillTransparenceGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 4)))
+	$iError = (__LO_VarsAreNull($iAngle)) ? ($iError) : ((Int($oAnnotationShape.FillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 8)))
+	$iError = (__LO_VarsAreNull($iTransitionStart)) ? ($iError) : (($oAnnotationShape.FillTransparenceGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 16)))
+	$iError = (__LO_VarsAreNull($iStart)) ? ($iError) : (($oAnnotationShape.FillTransparenceGradient.StartColor() = __LOCalc_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 32)))
+	$iError = (__LO_VarsAreNull($iEnd)) ? ($iError) : (($oAnnotationShape.FillTransparenceGradient.EndColor() = __LOCalc_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 64)))
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOCalc_CommentAreaTransparencyGradient
@@ -1795,8 +1795,8 @@ Func _LOCalc_CommentPosition(ByRef $oComment, $iX = Null, $iY = Null, $bProtectP
 
 		$oAnnotationShape.Position = $tPos
 
-		$iError = ($iX = Null) ? ($iError) : ((__LO_IntIsBetween($oAnnotationShape.Position.X(), $iX - 1, $iX + 1)) ? ($iError) : (BitOR($iError, 1)))
-		$iError = ($iY = Null) ? ($iError) : ((__LO_IntIsBetween($oAnnotationShape.Position.Y(), $iY - 1, $iY + 1)) ? ($iError) : (BitOR($iError, 2)))
+		$iError = (__LO_VarsAreNull($iX)) ? ($iError) : ((__LO_IntIsBetween($oAnnotationShape.Position.X(), $iX - 1, $iX + 1)) ? ($iError) : (BitOR($iError, 1)))
+		$iError = (__LO_VarsAreNull($iY)) ? ($iError) : ((__LO_IntIsBetween($oAnnotationShape.Position.Y(), $iY - 1, $iY + 1)) ? ($iError) : (BitOR($iError, 2)))
 	EndIf
 
 	If ($bProtectPos <> Null) Then
@@ -1847,7 +1847,7 @@ Func _LOCalc_CommentRotate(ByRef $oComment, $nRotate = Null)
 	$oAnnotationShape = $oComment.AnnotationShape()
 	If Not IsObj($oAnnotationShape) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If ($nRotate = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, (($oAnnotationShape.RotateAngle()) / 100)) ; Divide by 100 to match L.O. values.
+	If __LO_VarsAreNull($nRotate) Then Return SetError($__LO_STATUS_SUCCESS, 1, (($oAnnotationShape.RotateAngle()) / 100)) ; Divide by 100 to match L.O. values.
 
 	If Not __LO_NumIsBetween($nRotate, 0, 359.99) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
@@ -2016,8 +2016,8 @@ Func _LOCalc_CommentSize(ByRef $oComment, $iWidth = Null, $iHeight = Null, $bPro
 
 		$oAnnotationShape.Size = $tSize
 
-		$iError = ($iWidth = Null) ? ($iError) : ((__LO_IntIsBetween($oAnnotationShape.Size.Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
-		$iError = ($iHeight = Null) ? ($iError) : ((__LO_IntIsBetween($oAnnotationShape.Size.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 2)))
+		$iError = (__LO_VarsAreNull($iWidth)) ? ($iError) : ((__LO_IntIsBetween($oAnnotationShape.Size.Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
+		$iError = (__LO_VarsAreNull($iHeight)) ? ($iError) : ((__LO_IntIsBetween($oAnnotationShape.Size.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 2)))
 	EndIf
 
 	If ($bProtectSize <> Null) Then
@@ -2064,7 +2064,7 @@ Func _LOCalc_CommentText(ByRef $oComment, $sText = Null)
 
 	If Not IsObj($oComment) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($sText = Null) Then
+	If __LO_VarsAreNull($sText) Then
 		$sString = $oComment.String()
 		If Not IsString($sString) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -2463,8 +2463,8 @@ Func _LOCalc_CommentTextColumns(ByRef $oDoc, ByRef $oComment, $iColumns = Null, 
 
 	$oAnnotationShape.TextColumns = $oTextColumns
 
-	$iError = ($iColumns = Null) ? ($iError) : (($oAnnotationShape.TextColumns.ColumnCount() = $iColumns) ? ($iError) : (BitOR($iError, 1)))
-	$iError = ($iSpacing = Null) ? ($iError) : ((__LO_IntIsBetween($oAnnotationShape.TextColumns.AutomaticDistance(), $iSpacing - 1, $iSpacing + 1)) ? ($iError) : (BitOR($iError, 1)))
+	$iError = (__LO_VarsAreNull($iColumns)) ? ($iError) : (($oAnnotationShape.TextColumns.ColumnCount() = $iColumns) ? ($iError) : (BitOR($iError, 1)))
+	$iError = (__LO_VarsAreNull($iSpacing)) ? ($iError) : ((__LO_IntIsBetween($oAnnotationShape.TextColumns.AutomaticDistance(), $iSpacing - 1, $iSpacing + 1)) ? ($iError) : (BitOR($iError, 1)))
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOCalc_CommentTextColumns
@@ -2645,7 +2645,7 @@ Func _LOCalc_CommentVisible(ByRef $oComment, $bVisible = Null)
 
 	If Not IsObj($oComment) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($bVisible = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oComment.IsVisible())
+	If __LO_VarsAreNull($bVisible) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oComment.IsVisible())
 
 	If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 

@@ -617,7 +617,7 @@ Func _LOCalc_CellFormula(ByRef $oCell, $sFormula = Null)
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not ($oCell.supportsService("com.sun.star.sheet.SheetCell")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Only single cells supported.
 
-	If ($sFormula = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oCell.getFormula())
+	If __LO_VarsAreNull($sFormula) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oCell.getFormula())
 
 	If Not IsString($sFormula) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
@@ -947,7 +947,7 @@ Func _LOCalc_CellString(ByRef $oCell, $sText = Null)
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not ($oCell.supportsService("com.sun.star.sheet.SheetCell")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Only single cells supported.
 
-	If ($sText = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oCell.getString())
+	If __LO_VarsAreNull($sText) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oCell.getString())
 
 	If Not IsString($sText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
@@ -2430,7 +2430,7 @@ Func _LOCalc_CellValue(ByRef $oCell, $nValue = Null)
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not ($oCell.supportsService("com.sun.star.sheet.SheetCell")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Only single cells supported.
 
-	If ($nValue = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oCell.getValue())
+	If __LO_VarsAreNull($nValue) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oCell.getValue())
 
 	If Not IsNumber($nValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 

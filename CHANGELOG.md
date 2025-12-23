@@ -381,6 +381,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOBase_FormatKeyList-->_LOBase_FormatKeysGetList
 - Removed requirement of $oDoc in _LOBase_FontsGetNames
 - Added optional $oDoc parameter to _LOBase_FontExists for potential quicker execution.
+- Changed checks for a variable being null to use internal function `__LO_VarsAreNull`.
 
 #### Fixed
 
@@ -1039,6 +1040,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_TextCursorOverline
 	- _LOCalc_TextCursorStrikeOut
 	- _LOCalc_TextCursorUnderline
+- Changed checks for a variable being null to use internal function `__LO_VarsAreNull`.
 
 #### Removed
 
@@ -1477,6 +1479,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- __LOWriter_ParTabStopMod
 	- __LOWriter_ParTabStopsGetList
 	- __LOWriter_ParTxtFlowOpt
+	- _LOWriter_CellFormula
+	- _LOWriter_CellString
+	- _LOWriter_CellValue
 	- _LOWriter_CharStyleBorderPadding
 	- _LOWriter_CharStyleEffect
 	- _LOWriter_CharStyleFont
@@ -1539,6 +1544,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_ParStyleTabStopsGetList
 	- _LOWriter_ParStyleTxtFlowOpt
 	- _LOWriter_ParStyleUnderLine
+- Changed checks for a variable being null to use internal function `__LO_VarsAreNull`.
 
 #### Fixed
 

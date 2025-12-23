@@ -823,10 +823,10 @@ Func __LOCalc_CellProtection(ByRef $oObj, $bHideAll = Null, $bProtected = Null, 
 
 	$oObj.CellProtection = $tCellProtection
 
-	$iError = ($bHideAll = Null) ? ($iError) : ($oObj.CellProtection.IsHidden() = $bHideAll) ? ($iError) : (BitOR($iError, 1))
-	$iError = ($bProtected = Null) ? ($iError) : ($oObj.CellProtection.IsLocked() = $bProtected) ? ($iError) : (BitOR($iError, 2))
-	$iError = ($bHideFormula = Null) ? ($iError) : ($oObj.CellProtection.IsFormulaHidden() = $bHideFormula) ? ($iError) : (BitOR($iError, 4))
-	$iError = ($bHideWhenPrint = Null) ? ($iError) : ($oObj.CellProtection.IsPrintHidden() = $bHideWhenPrint) ? ($iError) : (BitOR($iError, 8))
+	$iError = (__LO_VarsAreNull($bHideAll)) ? ($iError) : ($oObj.CellProtection.IsHidden() = $bHideAll) ? ($iError) : (BitOR($iError, 1))
+	$iError = (__LO_VarsAreNull($bProtected)) ? ($iError) : ($oObj.CellProtection.IsLocked() = $bProtected) ? ($iError) : (BitOR($iError, 2))
+	$iError = (__LO_VarsAreNull($bHideFormula)) ? ($iError) : ($oObj.CellProtection.IsFormulaHidden() = $bHideFormula) ? ($iError) : (BitOR($iError, 4))
+	$iError = (__LO_VarsAreNull($bHideWhenPrint)) ? ($iError) : ($oObj.CellProtection.IsPrintHidden() = $bHideWhenPrint) ? ($iError) : (BitOR($iError, 8))
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOCalc_CellProtection
@@ -903,9 +903,9 @@ Func __LOCalc_CellShadow(ByRef $oObj, $iWidth = Null, $iColor = Null, $iLocation
 
 	$oObj.ShadowFormat = $tShdwFrmt
 
-	$iError = ($iWidth = Null) ? ($iError) : ((__LO_IntIsBetween($oObj.ShadowFormat.ShadowWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
-	$iError = ($iColor = Null) ? ($iError) : (($oObj.ShadowFormat.Color() = $iColor) ? ($iError) : (BitOR($iError, 2)))
-	$iError = ($iLocation = Null) ? ($iError) : (($oObj.ShadowFormat.Location() = $iLocation) ? ($iError) : (BitOR($iError, 4)))
+	$iError = (__LO_VarsAreNull($iWidth)) ? ($iError) : ((__LO_IntIsBetween($oObj.ShadowFormat.ShadowWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
+	$iError = (__LO_VarsAreNull($iColor)) ? ($iError) : (($oObj.ShadowFormat.Color() = $iColor) ? ($iError) : (BitOR($iError, 2)))
+	$iError = (__LO_VarsAreNull($iLocation)) ? ($iError) : (($oObj.ShadowFormat.Location() = $iLocation) ? ($iError) : (BitOR($iError, 4)))
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOCalc_CellShadow

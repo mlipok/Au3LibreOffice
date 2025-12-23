@@ -367,15 +367,15 @@ Func _LOWriter_ImageAreaGradient(ByRef $oDoc, ByRef $oImage, $sGradientName = Nu
 	$oImage.FillGradient = $tStyleGradient
 
 	; Error checking
-	$iError = ($iType = Null) ? ($iError) : (($oImage.FillGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 2)))
-	$iError = ($iXCenter = Null) ? ($iError) : (($oImage.FillGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 8)))
-	$iError = ($iYCenter = Null) ? ($iError) : (($oImage.FillGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 16)))
-	$iError = ($iAngle = Null) ? ($iError) : ((Int($oImage.FillGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 32)))
-	$iError = ($iTransitionStart = Null) ? ($iError) : (($oImage.FillGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 64)))
-	$iError = ($iFromColor = Null) ? ($iError) : (($oImage.FillGradient.StartColor() = $iFromColor) ? ($iError) : (BitOR($iError, 128)))
-	$iError = ($iToColor = Null) ? ($iError) : (($oImage.FillGradient.EndColor() = $iToColor) ? ($iError) : (BitOR($iError, 256)))
-	$iError = ($iFromIntense = Null) ? ($iError) : (($oImage.FillGradient.StartIntensity() = $iFromIntense) ? ($iError) : (BitOR($iError, 512)))
-	$iError = ($iToIntense = Null) ? ($iError) : (($oImage.FillGradient.EndIntensity() = $iToIntense) ? ($iError) : (BitOR($iError, 1024)))
+	$iError = (__LO_VarsAreNull($iType)) ? ($iError) : (($oImage.FillGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 2)))
+	$iError = (__LO_VarsAreNull($iXCenter)) ? ($iError) : (($oImage.FillGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 8)))
+	$iError = (__LO_VarsAreNull($iYCenter)) ? ($iError) : (($oImage.FillGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 16)))
+	$iError = (__LO_VarsAreNull($iAngle)) ? ($iError) : ((Int($oImage.FillGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 32)))
+	$iError = (__LO_VarsAreNull($iTransitionStart)) ? ($iError) : (($oImage.FillGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 64)))
+	$iError = (__LO_VarsAreNull($iFromColor)) ? ($iError) : (($oImage.FillGradient.StartColor() = $iFromColor) ? ($iError) : (BitOR($iError, 128)))
+	$iError = (__LO_VarsAreNull($iToColor)) ? ($iError) : (($oImage.FillGradient.EndColor() = $iToColor) ? ($iError) : (BitOR($iError, 256)))
+	$iError = (__LO_VarsAreNull($iFromIntense)) ? ($iError) : (($oImage.FillGradient.StartIntensity() = $iFromIntense) ? ($iError) : (BitOR($iError, 512)))
+	$iError = (__LO_VarsAreNull($iToIntense)) ? ($iError) : (($oImage.FillGradient.EndIntensity() = $iToIntense) ? ($iError) : (BitOR($iError, 1024)))
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ImageAreaGradient
@@ -709,13 +709,13 @@ Func _LOWriter_ImageAreaTransparencyGradient(ByRef $oDoc, ByRef $oImage, $iType 
 
 	$oImage.FillTransparenceGradient = $tStyleGradient
 
-	$iError = ($iType = Null) ? ($iError) : (($oImage.FillTransparenceGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 1)))
-	$iError = ($iXCenter = Null) ? ($iError) : (($oImage.FillTransparenceGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 2)))
-	$iError = ($iYCenter = Null) ? ($iError) : (($oImage.FillTransparenceGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 4)))
-	$iError = ($iAngle = Null) ? ($iError) : ((Int($oImage.FillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 8)))
-	$iError = ($iTransitionStart = Null) ? ($iError) : (($oImage.FillTransparenceGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 16)))
-	$iError = ($iStart = Null) ? ($iError) : (($oImage.FillTransparenceGradient.StartColor() = __LOWriter_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 32)))
-	$iError = ($iEnd = Null) ? ($iError) : (($oImage.FillTransparenceGradient.EndColor() = __LOWriter_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 64)))
+	$iError = (__LO_VarsAreNull($iType)) ? ($iError) : (($oImage.FillTransparenceGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 1)))
+	$iError = (__LO_VarsAreNull($iXCenter)) ? ($iError) : (($oImage.FillTransparenceGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 2)))
+	$iError = (__LO_VarsAreNull($iYCenter)) ? ($iError) : (($oImage.FillTransparenceGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 4)))
+	$iError = (__LO_VarsAreNull($iAngle)) ? ($iError) : ((Int($oImage.FillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 8)))
+	$iError = (__LO_VarsAreNull($iTransitionStart)) ? ($iError) : (($oImage.FillTransparenceGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 16)))
+	$iError = (__LO_VarsAreNull($iStart)) ? ($iError) : (($oImage.FillTransparenceGradient.StartColor() = __LOWriter_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 32)))
+	$iError = (__LO_VarsAreNull($iEnd)) ? ($iError) : (($oImage.FillTransparenceGradient.EndColor() = __LOWriter_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 64)))
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ImageAreaTransparencyGradient
@@ -1309,10 +1309,10 @@ Func _LOWriter_ImageCrop(ByRef $oImage, $iLeft = Null, $iRight = Null, $iTop = N
 	If ($bKeepScaleInternal = True) Then $oImage.Size = $tSize
 
 	; Error checking
-	$iError = ($iLeft = Null) ? ($iError) : ((__LO_IntIsBetween($oImage.GraphicCrop.Left(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 1)))
-	$iError = ($iRight = Null) ? ($iError) : ((__LO_IntIsBetween($oImage.GraphicCrop.Right(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 2)))
-	$iError = ($iTop = Null) ? ($iError) : ((__LO_IntIsBetween($oImage.GraphicCrop.Top(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 4)))
-	$iError = ($iBottom = Null) ? ($iError) : ((__LO_IntIsBetween($oImage.GraphicCrop.Bottom(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 8)))
+	$iError = (__LO_VarsAreNull($iLeft)) ? ($iError) : ((__LO_IntIsBetween($oImage.GraphicCrop.Left(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 1)))
+	$iError = (__LO_VarsAreNull($iRight)) ? ($iError) : ((__LO_IntIsBetween($oImage.GraphicCrop.Right(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 2)))
+	$iError = (__LO_VarsAreNull($iTop)) ? ($iError) : ((__LO_IntIsBetween($oImage.GraphicCrop.Top(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 4)))
+	$iError = (__LO_VarsAreNull($iBottom)) ? ($iError) : ((__LO_IntIsBetween($oImage.GraphicCrop.Bottom(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 8)))
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ImageCrop
@@ -2043,9 +2043,9 @@ Func _LOWriter_ImageShadow(ByRef $oImage, $iWidth = Null, $iColor = Null, $iLoca
 	$tShdwFrmt = $oImage.ShadowFormat
 	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	$iError = ($iWidth = Null) ? ($iError) : ((__LO_IntIsBetween($tShdwFrmt.ShadowWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
-	$iError = ($iColor = Null) ? ($iError) : (($tShdwFrmt.Color() = $iColor) ? ($iError) : (BitOR($iError, 2)))
-	$iError = ($iLocation = Null) ? ($iError) : (($tShdwFrmt.Location() = $iLocation) ? ($iError) : (BitOR($iError, 4)))
+	$iError = (__LO_VarsAreNull($iWidth)) ? ($iError) : ((__LO_IntIsBetween($tShdwFrmt.ShadowWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
+	$iError = (__LO_VarsAreNull($iColor)) ? ($iError) : (($tShdwFrmt.Color() = $iColor) ? ($iError) : (BitOR($iError, 2)))
+	$iError = (__LO_VarsAreNull($iLocation)) ? ($iError) : (($tShdwFrmt.Location() = $iLocation) ? ($iError) : (BitOR($iError, 4)))
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ImageShadow
@@ -2135,8 +2135,8 @@ Func _LOWriter_ImageSize(ByRef $oImage, $iScaleWidth = Null, $iScaleHeight = Nul
 		If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		; Error checking
-		$iError = ($iScaleWidth = Null) ? ($iError) : ((Round(($tSize.Width() / $tOrigSize.Width()) * 100) = $iScaleWidth) ? ($iError) : (BitOR($iError, 1)))
-		$iError = ($iScaleHeight = Null) ? ($iError) : ((Round(($tSize.Height() / $tOrigSize.Height()) * 100) = $iScaleHeight) ? ($iError) : (BitOR($iError, 2)))
+		$iError = (__LO_VarsAreNull($iScaleWidth)) ? ($iError) : ((Round(($tSize.Width() / $tOrigSize.Width()) * 100) = $iScaleWidth) ? ($iError) : (BitOR($iError, 1)))
+		$iError = (__LO_VarsAreNull($iScaleHeight)) ? ($iError) : ((Round(($tSize.Height() / $tOrigSize.Height()) * 100) = $iScaleHeight) ? ($iError) : (BitOR($iError, 2)))
 	EndIf
 
 	If ($iWidth <> Null) Or ($iHeight <> Null) Then
@@ -2155,8 +2155,8 @@ Func _LOWriter_ImageSize(ByRef $oImage, $iScaleWidth = Null, $iScaleHeight = Nul
 		$oImage.Size = $tSize
 
 		; Error checking
-		$iError = ($iWidth = Null) ? ($iError) : ((__LO_IntIsBetween($oImage.Size.Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 4)))
-		$iError = ($iHeight = Null) ? ($iError) : ((__LO_IntIsBetween($oImage.Size.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 8)))
+		$iError = (__LO_VarsAreNull($iWidth)) ? ($iError) : ((__LO_IntIsBetween($oImage.Size.Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 4)))
+		$iError = (__LO_VarsAreNull($iHeight)) ? ($iError) : ((__LO_IntIsBetween($oImage.Size.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 8)))
 	EndIf
 
 	If ($bOriginalSize = True) Then
@@ -2202,7 +2202,7 @@ Func _LOWriter_ImageTransparency(ByRef $oImage, $iTransparency = Null)
 
 	If Not IsObj($oImage) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($iTransparency = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oImage.Transparency())
+	If __LO_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oImage.Transparency())
 
 	If Not __LO_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 

@@ -7322,8 +7322,8 @@ Func _LOWriter_FormConPosition(ByRef $oControl, $iX = Null, $iY = Null, $iAnchor
 
 		$oControl.Position = $tPos
 
-		$iError = ($iX = Null) ? ($iError) : ((__LO_IntIsBetween($oControl.Position.X(), $iX - 1, $iX + 1)) ? ($iError) : (BitOR($iError, 1)))
-		$iError = ($iY = Null) ? ($iError) : ((__LO_IntIsBetween($oControl.Position.Y(), $iY - 1, $iY + 1)) ? ($iError) : (BitOR($iError, 2)))
+		$iError = (__LO_VarsAreNull($iX)) ? ($iError) : ((__LO_IntIsBetween($oControl.Position.X(), $iX - 1, $iX + 1)) ? ($iError) : (BitOR($iError, 1)))
+		$iError = (__LO_VarsAreNull($iY)) ? ($iError) : ((__LO_IntIsBetween($oControl.Position.Y(), $iY - 1, $iY + 1)) ? ($iError) : (BitOR($iError, 2)))
 	EndIf
 
 	If ($iAnchor <> Null) Then
@@ -8117,8 +8117,8 @@ Func _LOWriter_FormConSize(ByRef $oControl, $iWidth = Null, $iHeight = Null, $bP
 
 		$oControl.Size = $tSize
 
-		$iError = ($iWidth = Null) ? ($iError) : ((__LO_IntIsBetween($oControl.Size.Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
-		$iError = ($iHeight = Null) ? ($iError) : ((__LO_IntIsBetween($oControl.Size.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 2)))
+		$iError = (__LO_VarsAreNull($iWidth)) ? ($iError) : ((__LO_IntIsBetween($oControl.Size.Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
+		$iError = (__LO_VarsAreNull($iHeight)) ? ($iError) : ((__LO_IntIsBetween($oControl.Size.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 2)))
 	EndIf
 
 	If ($bProtectSize <> Null) Then

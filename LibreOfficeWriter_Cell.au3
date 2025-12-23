@@ -368,8 +368,8 @@ EndFunc   ;==>_LOWriter_CellCreateTextCursor
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $sFormula not a String.
-;                  @Error 1 @Extended 3 Return 0 = $oCell is a CellRange not an individual cell.
+;                  @Error 1 @Extended 2 Return 0 = $oCell is a CellRange not an individual cell.
+;                  @Error 1 @Extended 3 Return 0 = $sFormula not a String.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Formula was successfully set.
 ;                  @Error 0 @Extended 1 Return String = Success. Current formula is returned in String format.
@@ -388,10 +388,11 @@ Func _LOWriter_CellFormula(ByRef $oCell, $sFormula = Null)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sFormula) And Not ($sFormula = Null) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If __LOWriter_IsCellRange($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; Can only set/get formula value for individual cells.
+	If __LOWriter_IsCellRange($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Can only set/get formula value for individual cells.
 
-	If ($sFormula = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oCell.getFormula())
+	If __LO_VarsAreNull($sFormula) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oCell.getFormula())
+
+	If Not IsString($sFormula) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oCell.setFormula($sFormula)
 
@@ -517,7 +518,7 @@ Func _LOWriter_CellProtect(ByRef $oCell, $bProtect = Null)
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If __LOWriter_IsCellRange($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Can only set individual cell protect property.
 
-	If ($bProtect = Null) Then Return SetError($__LO_STATUS_SUCCESS, 0, $oCell.IsProtected())
+	If __LO_VarsAreNull($bProtect) Then Return SetError($__LO_STATUS_SUCCESS, 0, $oCell.IsProtected())
 
 	If Not IsBool($bProtect) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
@@ -536,8 +537,8 @@ EndFunc   ;==>_LOWriter_CellProtect
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $sString not a String.
-;                  @Error 1 @Extended 3 Return 0 = $oCell is a CellRange not an individual cell.
+;                  @Error 1 @Extended 2 Return 0 = $oCell is a CellRange not an individual cell.
+;                  @Error 1 @Extended 3 Return 0 = $sString not a String.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Successfully set the cell String.
 ;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were called with Null, returning current string.
@@ -555,10 +556,11 @@ Func _LOWriter_CellString(ByRef $oCell, $sString = Null)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sString) And Not ($sString = Null) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If __LOWriter_IsCellRange($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; Can only set/get a String for individual cells.
+	If __LOWriter_IsCellRange($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Can only set/get a String for individual cells.
 
-	If ($sString = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oCell.getString())
+	If __LO_VarsAreNull($sString) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oCell.getString())
+
+	If Not IsString($sString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oCell.setString($sString)
 
@@ -575,8 +577,8 @@ EndFunc   ;==>_LOWriter_CellString
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $nValue not a Number.
-;                  @Error 1 @Extended 3 Return 0 = $oCell is a CellRange not an individual cell.
+;                  @Error 1 @Extended 2 Return 0 = $oCell is a CellRange not an individual cell.
+;                  @Error 1 @Extended 3 Return 0 = $nValue not a Number.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Successfully set cell value.
 ;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were called with Null, returning current cell value.
@@ -595,10 +597,11 @@ Func _LOWriter_CellValue(ByRef $oCell, $nValue = Null)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsNumber($nValue) And Not ($nValue = Null) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If __LOWriter_IsCellRange($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; Can only set/get individual cell values.
+	If __LOWriter_IsCellRange($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Can only set/get individual cell values.
 
-	If ($nValue = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oCell.getValue())
+	If __LO_VarsAreNull($nValue) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oCell.getValue())
+
+	If Not IsNumber($nValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oCell.setValue($nValue)
 
@@ -636,7 +639,8 @@ Func _LOWriter_CellVertOrient(ByRef $oCell, $iVertOrient = Null)
 
 	; 3 = Vert Orient Bottom, 1 = Vert orient Top
 
-	If ($iVertOrient = Null) Then Return SetError($__LO_STATUS_SUCCESS, 0, $oCell.VertOrient())
+	If __LO_VarsAreNull($iVertOrient) Then Return SetError($__LO_STATUS_SUCCESS, 0, $oCell.VertOrient())
+
 	If Not __LO_IntIsBetween($iVertOrient, $LOW_ORIENT_VERT_NONE, $LOW_ORIENT_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oCell.VertOrient = $iVertOrient

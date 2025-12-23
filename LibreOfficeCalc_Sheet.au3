@@ -981,7 +981,7 @@ Func _LOCalc_SheetMove(ByRef $oDoc, ByRef $oSheet, $iPosition = Null)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If ($iPosition = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oSheet.RangeAddress.Sheet())
+	If __LO_VarsAreNull($iPosition) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oSheet.RangeAddress.Sheet())
 
 	$sName = $oSheet.Name()
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -1034,7 +1034,7 @@ Func _LOCalc_SheetName(ByRef $oDoc, ByRef $oSheet, $sName = Null)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If ($sName = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oSheet.Name())
+	If __LO_VarsAreNull($sName) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oSheet.Name())
 
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
@@ -1186,7 +1186,7 @@ Func _LOCalc_SheetPrintRangeModify(ByRef $oSheet, $aoRange = Null)
 
 	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($aoRange = Null) Then
+	If __LO_VarsAreNull($aoRange) Then
 		$aoRange = $oSheet.getPrintAreas()
 		If Not IsArray($aoRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -1541,7 +1541,7 @@ Func _LOCalc_SheetTabColor(ByRef $oSheet, $iColor = Null)
 
 	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($iColor = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oSheet.TabColor())
+	If __LO_VarsAreNull($iColor) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oSheet.TabColor())
 
 	If Not __LO_IntIsBetween($iColor, $LO_COLOR_OFF, $LO_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
@@ -1620,7 +1620,7 @@ Func _LOCalc_SheetVisible(ByRef $oSheet, $bVisible = Null)
 
 	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($bVisible = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oSheet.IsVisible())
+	If __LO_VarsAreNull($bVisible) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oSheet.IsVisible())
 
 	If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 

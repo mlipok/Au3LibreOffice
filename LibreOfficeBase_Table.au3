@@ -395,8 +395,8 @@ Func _LOBase_TableColDefinition(ByRef $oTable, ByRef $oColumn, $sName = Null, $i
 
 		$oColumn = $oNewCol
 
-		$iError = ($iType = Null) ? ($iError) : (($oColumn.Type() = $iType) ? ($iError) : (BitOR($iError, 2)))
-		$iError = ($sTypeName = Null) ? ($iError) : (($oColumn.TypeName() = $sTypeName) ? ($iError) : (BitOR($iError, 4)))
+		$iError = (__LO_VarsAreNull($iType)) ? ($iError) : (($oColumn.Type() = $iType) ? ($iError) : (BitOR($iError, 2)))
+		$iError = (__LO_VarsAreNull($sTypeName)) ? ($iError) : (($oColumn.TypeName() = $sTypeName) ? ($iError) : (BitOR($iError, 4)))
 	EndIf
 
 	If ($sDescription <> Null) Then
@@ -691,10 +691,10 @@ Func _LOBase_TableColProperties(ByRef $oConnection, ByRef $oTable, ByRef $oColum
 
 	ConsoleWrite($oNewCol.Align() & @CRLF)
 
-	$iError = ($iLength = Null) ? ($iError) : (($oColumn.Precision() = $iLength) ? ($iError) : (BitOR($iError, 1)))
-	$iError = ($bRequired = Null) ? ($iError) : (($oColumn.IsNullable() = (($bRequired) ? ($__LOB_IS_REQUIRED_YES) : ($__LOB_IS_REQUIRED_NO))) ? ($iError) : (BitOR($iError, 4)))
-	$iError = ($iDecimalPlace = Null) ? ($iError) : (($oColumn.Scale() = $iDecimalPlace) ? ($iError) : (BitOR($iError, 8)))
-	$iError = ($bAutoValue = Null) ? ($iError) : (($oColumn.IsAutoIncrement() = $bAutoValue) ? ($iError) : (BitOR($iError, 16)))
+	$iError = (__LO_VarsAreNull($iLength)) ? ($iError) : (($oColumn.Precision() = $iLength) ? ($iError) : (BitOR($iError, 1)))
+	$iError = (__LO_VarsAreNull($bRequired)) ? ($iError) : (($oColumn.IsNullable() = (($bRequired) ? ($__LOB_IS_REQUIRED_YES) : ($__LOB_IS_REQUIRED_NO))) ? ($iError) : (BitOR($iError, 4)))
+	$iError = (__LO_VarsAreNull($iDecimalPlace)) ? ($iError) : (($oColumn.Scale() = $iDecimalPlace) ? ($iError) : (BitOR($iError, 8)))
+	$iError = (__LO_VarsAreNull($bAutoValue)) ? ($iError) : (($oColumn.IsAutoIncrement() = $bAutoValue) ? ($iError) : (BitOR($iError, 16)))
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOBase_TableColProperties
@@ -1345,7 +1345,7 @@ Func _LOBase_TableName(ByRef $oTable, $sName = Null)
 
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($sName = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oTable.Name())
+	If __LO_VarsAreNull($sName) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oTable.Name())
 
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
@@ -1404,7 +1404,7 @@ Func _LOBase_TablePrimaryKey(ByRef $oTable, $aoPrimary = Null)
 		Sleep((IsInt($i / $__LOBCONST_SLEEP_DIV)) ? (10) : (0))
 	Next
 
-	If ($aoPrimary = Null) Then
+	If __LO_VarsAreNull($aoPrimary) Then
 		If IsObj($oPrimary) Then
 			$oKeysColumns = $oPrimary.Columns()
 			If Not IsObj($oKeysColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
@@ -1864,7 +1864,7 @@ Func _LOBase_TableUIVisible(ByRef $oTableUI, $bVisible = Null)
 
 	If Not IsObj($oTableUI) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($bVisible = Null) Then
+	If __LO_VarsAreNull($bVisible) Then
 		$bVisible = $oTableUI.Frame.ContainerWindow.IsVisible()
 		If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 

@@ -1050,8 +1050,8 @@ Func _LOBase_ReportConPosition(ByRef $oControl, $iX = Null, $iY = Null)
 
 	$oControl.Position = $tPos
 
-	$iError = ($iX = Null) ? ($iError) : ((__LO_IntIsBetween($oControl.Position.X(), $iX - 1, $iX + 1)) ? ($iError) : (BitOR($iError, 1)))
-	$iError = ($iY = Null) ? ($iError) : ((__LO_IntIsBetween($oControl.Position.Y(), $iY - 1, $iY + 1)) ? ($iError) : (BitOR($iError, 2)))
+	$iError = (__LO_VarsAreNull($iX)) ? ($iError) : ((__LO_IntIsBetween($oControl.Position.X(), $iX - 1, $iX + 1)) ? ($iError) : (BitOR($iError, 1)))
+	$iError = (__LO_VarsAreNull($iY)) ? ($iError) : ((__LO_IntIsBetween($oControl.Position.Y(), $iY - 1, $iY + 1)) ? ($iError) : (BitOR($iError, 2)))
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOBase_ReportConPosition
@@ -1182,8 +1182,8 @@ Func _LOBase_ReportConSize(ByRef $oControl, $iWidth = Null, $iHeight = Null, $bA
 
 		$oControl.Size = $tSize
 
-		$iError = ($iWidth = Null) ? ($iError) : ((__LO_IntIsBetween($oControl.Size.Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
-		$iError = ($iHeight = Null) ? ($iError) : ((__LO_IntIsBetween($oControl.Size.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 2)))
+		$iError = (__LO_VarsAreNull($iWidth)) ? ($iError) : ((__LO_IntIsBetween($oControl.Size.Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
+		$iError = (__LO_VarsAreNull($iHeight)) ? ($iError) : ((__LO_IntIsBetween($oControl.Size.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 2)))
 	EndIf
 
 	If ($bAutoGrow <> Null) Then
@@ -1663,7 +1663,7 @@ Func _LOBase_ReportDocVisible(ByRef $oReportDoc, $bVisible = Null)
 
 	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($bVisible = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oReportDoc.CurrentController.Frame.ContainerWindow.isVisible())
+	If __LO_VarsAreNull($bVisible) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oReportDoc.CurrentController.Frame.ContainerWindow.isVisible())
 
 	If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
@@ -2652,7 +2652,7 @@ Func _LOBase_ReportGroupAdd(ByRef $oReportDoc, $iPosition = Null)
 	If Not IsObj($oReportDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oReportDoc.supportsService("com.sun.star.report.ReportDefinition") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If ($iPosition = Null) Then $iPosition = $oReportDoc.Groups.Count()
+	If __LO_VarsAreNull($iPosition) Then $iPosition = $oReportDoc.Groups.Count()
 
 	If Not __LO_IntIsBetween($iPosition, 0, $oReportDoc.Groups.Count()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 

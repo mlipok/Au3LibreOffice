@@ -718,7 +718,7 @@ Func _LOBase_QueryName(ByRef $oQuery, $sName = Null)
 
 	If Not IsObj($oQuery) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($sName = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oQuery.Name())
+	If __LO_VarsAreNull($sName) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oQuery.Name())
 
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
@@ -758,7 +758,7 @@ Func _LOBase_QuerySQLCommand(ByRef $oQuery, $sSQL_Command = Null)
 
 	If Not IsObj($oQuery) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($sSQL_Command = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oQuery.Command())
+	If __LO_VarsAreNull($sSQL_Command) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oQuery.Command())
 
 	If Not IsString($sSQL_Command) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
@@ -1098,7 +1098,7 @@ Func _LOBase_QueryUIVisible(ByRef $oQueryUI, $bVisible = Null)
 
 	If Not IsObj($oQueryUI) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($bVisible = Null) Then
+	If __LO_VarsAreNull($bVisible) Then
 		$bVisible = $oQueryUI.Frame.ContainerWindow.IsVisible()
 		If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 

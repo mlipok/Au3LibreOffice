@@ -521,7 +521,7 @@ Func _LOCalc_RangeColumnVisible(ByRef $oColumn, $bVisible = Null)
 
 	If Not IsObj($oColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($bVisible = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oColumn.IsVisible())
+	If __LO_VarsAreNull($bVisible) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oColumn.IsVisible())
 
 	If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
@@ -781,7 +781,7 @@ Func _LOCalc_RangeData(ByRef $oRange, $aavData = Null, $bStrictSize = False)
 
 	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($aavData = Null) Then
+	If __LO_VarsAreNull($aavData) Then
 		$aavData = $oRange.getDataArray()
 		If Not IsArray($aavData) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -1739,7 +1739,7 @@ Func _LOCalc_RangeFormula(ByRef $oRange, $aasFormulas = Null, $bStrictSize = Fal
 
 	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($aasFormulas = Null) Then
+	If __LO_VarsAreNull($aasFormulas) Then
 		$aasFormulas = $oRange.getFormulaArray()
 		If Not IsArray($aasFormulas) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -1968,7 +1968,7 @@ Func _LOCalc_RangeGetCellByPosition(ByRef $oRange, $iColumn, $iRow, $iToColumn =
 		If ($iToRow < $iRow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 	EndIf
 
-	If ($iToColumn = Null) And ($iToRow = Null) Then
+	If __LO_VarsAreNull($iToColumn, $iToRow) Then
 		$oCell = $oRange.getCellByPosition($iColumn, $iRow)
 		If Not IsObj($oCell) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -2712,7 +2712,7 @@ Func _LOCalc_RangeNumbers(ByRef $oRange, $aanNumbers = Null, $bStrictSize = Fals
 
 	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($aanNumbers = Null) Then
+	If __LO_VarsAreNull($aanNumbers) Then
 		$aanNumbers = $oRange.getData()
 		If Not IsArray($aanNumbers) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -2945,7 +2945,7 @@ Func _LOCalc_RangePivotDest(ByRef $oDoc, ByRef $oPivotTable, $oDestRange = Null)
 	$oOrigRange = $oSheet.getCellRangeByPosition($oPivotTable.OutputRange.StartColumn(), $oPivotTable.OutputRange.StartRow(), $oPivotTable.OutputRange.EndColumn(), $oPivotTable.OutputRange.EndRow())
 	If Not IsObj($oOrigRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	If ($oDestRange = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oOrigRange)
+	If __LO_VarsAreNull($oDestRange) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oOrigRange)
 
 	If Not IsObj($oDestRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
@@ -3389,10 +3389,10 @@ Func _LOCalc_RangePivotFieldSettings(ByRef $oPivotField, $iFieldType = Null, $iF
 
 		$oPivotField.Reference = $tReference
 
-		$iError = ($iDisplayType = Null) ? ($iError) : (($oPivotField.Reference.ReferenceType() = $iDisplayType) ? ($iError) : (BitOR($iError, 8)))
-		$iError = ($sBaseField = Null) ? ($iError) : (($oPivotField.Reference.ReferenceField() = $sBaseField) ? ($iError) : (BitOR($iError, 16)))
-		$iError = ($iBaseItem = Null) ? ($iError) : (($oPivotField.Reference.ReferenceItemType() = $iBaseItem) ? ($iError) : (BitOR($iError, 32)))
-		$iError = ($sBaseItem = Null) ? ($iError) : (($oPivotField.Reference.ReferenceItemName() = $sBaseItem) ? ($iError) : (BitOR($iError, 64)))
+		$iError = (__LO_VarsAreNull($iDisplayType)) ? ($iError) : (($oPivotField.Reference.ReferenceType() = $iDisplayType) ? ($iError) : (BitOR($iError, 8)))
+		$iError = (__LO_VarsAreNull($sBaseField)) ? ($iError) : (($oPivotField.Reference.ReferenceField() = $sBaseField) ? ($iError) : (BitOR($iError, 16)))
+		$iError = (__LO_VarsAreNull($iBaseItem)) ? ($iError) : (($oPivotField.Reference.ReferenceItemType() = $iBaseItem) ? ($iError) : (BitOR($iError, 32)))
+		$iError = (__LO_VarsAreNull($sBaseItem)) ? ($iError) : (($oPivotField.Reference.ReferenceItemName() = $sBaseItem) ? ($iError) : (BitOR($iError, 64)))
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
@@ -3930,7 +3930,7 @@ Func _LOCalc_RangePivotName(ByRef $oDoc, ByRef $oPivotTable, $sName = Null)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oPivotTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If ($sName = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oPivotTable.Name())
+	If __LO_VarsAreNull($sName) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oPivotTable.Name())
 
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
@@ -4195,7 +4195,7 @@ Func _LOCalc_RangePivotSource(ByRef $oDoc, ByRef $oPivotTable, $oSourceRange = N
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oPivotTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If ($oSourceRange = Null) Then
+	If __LO_VarsAreNull($oSourceRange) Then
 		$oSheet = $oDoc.Sheets.getByIndex($oPivotTable.SourceRange.Sheet())
 		If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -5107,7 +5107,7 @@ Func _LOCalc_RangeRowVisible(ByRef $oRow, $bVisible = Null)
 
 	If Not IsObj($oRow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($bVisible = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oRow.IsVisible())
+	If __LO_VarsAreNull($bVisible) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oRow.IsVisible())
 
 	If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
@@ -5614,13 +5614,13 @@ Func _LOCalc_RangeValidation(ByRef $oRange, $iType = Null, $iCondition = Null, $
 
 	$oRange.Validation = $oValidation
 
-	$iError = ($iType = Null) ? ($iError) : ($oRange.Validation.Type() = $iType) ? ($iError) : (BitOR($iError, 1))
-	$iError = ($iCondition = Null) ? ($iError) : ($oRange.Validation.getOperator() = $iCondition) ? ($iError) : (BitOR($iError, 2))
-	$iError = ($sValue1 = Null) ? ($iError) : ($oRange.Validation.getFormula1() = $sValue1) ? ($iError) : (BitOR($iError, 4))
-	$iError = ($sValue2 = Null) ? ($iError) : ($oRange.Validation.getFormula2() = $sValue2) ? ($iError) : (BitOR($iError, 8))
-	$iError = ($oBaseCell = Null) ? ($iError) : (__LOCalc_CellAddressIsSame($oRange.Validation.getSourcePosition(), $tCellAddress)) ? ($iError) : (BitOR($iError, 16))
-	$iError = ($bIgnoreBlanks = Null) ? ($iError) : ($oRange.Validation.IgnoreBlankCells() = $bIgnoreBlanks) ? ($iError) : (BitOR($iError, 32))
-	$iError = ($iShowList = Null) ? ($iError) : ($oRange.Validation.ShowList() = $iShowList) ? ($iError) : (BitOR($iError, 64))
+	$iError = (__LO_VarsAreNull($iType)) ? ($iError) : ($oRange.Validation.Type() = $iType) ? ($iError) : (BitOR($iError, 1))
+	$iError = (__LO_VarsAreNull($iCondition)) ? ($iError) : ($oRange.Validation.getOperator() = $iCondition) ? ($iError) : (BitOR($iError, 2))
+	$iError = (__LO_VarsAreNull($sValue1)) ? ($iError) : ($oRange.Validation.getFormula1() = $sValue1) ? ($iError) : (BitOR($iError, 4))
+	$iError = (__LO_VarsAreNull($sValue2)) ? ($iError) : ($oRange.Validation.getFormula2() = $sValue2) ? ($iError) : (BitOR($iError, 8))
+	$iError = (__LO_VarsAreNull($oBaseCell)) ? ($iError) : (__LOCalc_CellAddressIsSame($oRange.Validation.getSourcePosition(), $tCellAddress)) ? ($iError) : (BitOR($iError, 16))
+	$iError = (__LO_VarsAreNull($bIgnoreBlanks)) ? ($iError) : ($oRange.Validation.IgnoreBlankCells() = $bIgnoreBlanks) ? ($iError) : (BitOR($iError, 32))
+	$iError = (__LO_VarsAreNull($iShowList)) ? ($iError) : ($oRange.Validation.ShowList() = $iShowList) ? ($iError) : (BitOR($iError, 64))
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOCalc_RangeValidation
@@ -5736,13 +5736,13 @@ Func _LOCalc_RangeValidationSettings(ByRef $oRange, $bInputMsg = Null, $sInputTi
 
 	$oRange.Validation = $oValidation
 
-	$iError = ($bInputMsg = Null) ? ($iError) : ($oRange.Validation.ShowInputMessage() = $bInputMsg) ? ($iError) : (BitOR($iError, 1))
-	$iError = ($sInputTitle = Null) ? ($iError) : ($oRange.Validation.InputTitle() = $sInputTitle) ? ($iError) : (BitOR($iError, 2))
-	$iError = ($sInputMsg = Null) ? ($iError) : ($oRange.Validation.InputMessage() = $sInputMsg) ? ($iError) : (BitOR($iError, 4))
-	$iError = ($bErrorMsg = Null) ? ($iError) : ($oRange.Validation.ShowErrorMessage() = $bErrorMsg) ? ($iError) : (BitOR($iError, 8))
-	$iError = ($iErrorStyle = Null) ? ($iError) : ($oRange.Validation.ErrorAlertStyle() = $iErrorStyle) ? ($iError) : (BitOR($iError, 16))
-	$iError = ($sErrorTitle = Null) ? ($iError) : ($oRange.Validation.ErrorTitle() = $sErrorTitle) ? ($iError) : (BitOR($iError, 32))
-	$iError = ($sErrorMsg = Null) ? ($iError) : ($oRange.Validation.ErrorMessage() = $sErrorMsg) ? ($iError) : (BitOR($iError, 64))
+	$iError = (__LO_VarsAreNull($bInputMsg)) ? ($iError) : ($oRange.Validation.ShowInputMessage() = $bInputMsg) ? ($iError) : (BitOR($iError, 1))
+	$iError = (__LO_VarsAreNull($sInputTitle)) ? ($iError) : ($oRange.Validation.InputTitle() = $sInputTitle) ? ($iError) : (BitOR($iError, 2))
+	$iError = (__LO_VarsAreNull($sInputMsg)) ? ($iError) : ($oRange.Validation.InputMessage() = $sInputMsg) ? ($iError) : (BitOR($iError, 4))
+	$iError = (__LO_VarsAreNull($bErrorMsg)) ? ($iError) : ($oRange.Validation.ShowErrorMessage() = $bErrorMsg) ? ($iError) : (BitOR($iError, 8))
+	$iError = (__LO_VarsAreNull($iErrorStyle)) ? ($iError) : ($oRange.Validation.ErrorAlertStyle() = $iErrorStyle) ? ($iError) : (BitOR($iError, 16))
+	$iError = (__LO_VarsAreNull($sErrorTitle)) ? ($iError) : ($oRange.Validation.ErrorTitle() = $sErrorTitle) ? ($iError) : (BitOR($iError, 32))
+	$iError = (__LO_VarsAreNull($sErrorMsg)) ? ($iError) : ($oRange.Validation.ErrorMessage() = $sErrorMsg) ? ($iError) : (BitOR($iError, 64))
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOCalc_RangeValidationSettings
