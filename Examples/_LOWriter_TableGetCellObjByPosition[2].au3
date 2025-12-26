@@ -16,13 +16,9 @@ Func Example()
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Create a Table, 3 rows, 5 columns
-	$oTable = _LOWriter_TableCreate($oDoc, 3, 5)
+	; Create a Table, 5 columns, 3 rows.
+	$oTable = _LOWriter_TableCreate($oDoc, $oViewCursor, 5, 3)
 	If @error Then _ERROR($oDoc, "Failed to create Text Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
-	; Insert the Table into the document.
-	$oTable = _LOWriter_TableInsert($oDoc, $oViewCursor, $oTable)
-	If @error Then _ERROR($oDoc, "Failed to insert Text Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; When retrieving multiple cells, a cell range will be returned, a cell range is largely the same as a single cell Object,
 	; but some functions don't accept a cell range.

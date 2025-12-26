@@ -66,7 +66,6 @@
 ; __LOWriter_Internal_CursorGetType
 ; __LOWriter_InternalComErrorHandler
 ; __LOWriter_IsCellRange
-; __LOWriter_IsTableInDoc
 ; __LOWriter_NumRuleCreateMap
 ; __LOWriter_NumStyleCreateScript
 ; __LOWriter_NumStyleDeleteScript
@@ -116,6 +115,7 @@
 ; __LOWriter_TableHasColumnRange
 ; __LOWriter_TableHasRowRange
 ; __LOWriter_TableRowSplitToggle
+; __LOWriter_TableStyleNameToggle
 ; __LOWriter_TextCursorMove
 ; __LOWriter_TransparencyGradientConvert
 ; __LOWriter_TransparencyGradientNameInsert
@@ -3651,40 +3651,6 @@ Func __LOWriter_IsCellRange(ByRef $oCell)
 
 	Return ($oCell.supportsService("com.sun.star.text.CellRange")) ? (SetError($__LO_STATUS_SUCCESS, 0, True)) : (SetError($__LO_STATUS_SUCCESS, 0, False))
 EndFunc   ;==>__LOWriter_IsCellRange
-
-; #INTERNAL_USE_ONLY# ===========================================================================================================
-; Name ..........: __LOWriter_IsTableInDoc
-; Description ...: Check if Table is inserted in a Document or has only been created and not inserted.
-; Syntax ........: __LOWriter_IsTableInDoc(ByRef $oTable)
-; Parameters ....: $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
-; Return values .: Success: Boolean
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error retrieving Table cell names.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = If True, Table is inserted into the document, If False Table has been created with _LOWriter_TableCreate but not inserted.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func __LOWriter_IsTableInDoc(ByRef $oTable)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $aTableNames
-
-	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-
-	$aTableNames = $oTable.getCellNames()
-	If Not IsArray($aTableNames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	Return SetError($__LO_STATUS_SUCCESS, 0, (UBound($aTableNames)) ? (True) : (False)) ; If 0 elements = False = not in doc.
-EndFunc   ;==>__LOWriter_IsTableInDoc
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_NumRuleCreateMap
@@ -9250,6 +9216,43 @@ Func __LOWriter_TableRowSplitToggle(ByRef $oTable, $bSplitRows = Null)
 		Return SetError($__LO_STATUS_SUCCESS, 2, 1)
 	EndIf
 EndFunc   ;==>__LOWriter_TableRowSplitToggle
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_TableStyleNameToggle
+; Description ...: Toggle from Table Style Display Name to Internal Name for error checking, or setting retrieval.
+; Syntax ........: __LOWriter_TableStyleNameToggle($sTableStyle[, $bReverse = False])
+; Parameters ....: $sTableStyle         - a string value. The Table Style Name to Toggle.
+;                  $bReverse            - [optional] a boolean value. Default is False. If True, Reverse toggles the name.
+; Return values .: Success: String.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $sTableStyle not a String.
+;                  @Error 1 @Extended 2 Return 0 = $bReverse not a Boolean.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return String = Success. Table Style Name was Successfully toggled. Returning toggled name as a string.
+;                  @Error 0 @Extended 1 Return String = Success. Table Style Name was Successfully reverse toggled. Returning toggled name as a string.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_TableStyleNameToggle($sTableStyle, $bReverse = False)
+	If Not IsString($sTableStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsBool($bReverse) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	If ($bReverse = False) Then
+		$sTableStyle = ($sTableStyle = "Default Table Style") ? ("Default Style") : ($sTableStyle)
+
+		Return SetError($__LO_STATUS_SUCCESS, 0, $sTableStyle)
+
+	Else
+		$sTableStyle = ($sTableStyle = "Default Style") ? ("Default Table Style") : ($sTableStyle)
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $sTableStyle)
+	EndIf
+EndFunc   ;==>__LOWriter_TableStyleNameToggle
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_TextCursorMove

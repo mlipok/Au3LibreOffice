@@ -630,7 +630,7 @@ EndFunc   ;==>_LOWriter_DocConnect
 ; Description ...: Convert a Table to Text, separated by a delimiter.
 ; Syntax ........: _LOWriter_DocConvertTableToText(ByRef $oDoc, ByRef $oTable[, $sDelimiter = @TAB])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
+;                  $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableCreate, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
 ;                  $sDelimiter          - [optional] a string value. Default is @TAB. A character to separate each column by, such as a Tab character, etc.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -650,7 +650,7 @@ EndFunc   ;==>_LOWriter_DocConnect
 ; Modified ......:
 ; Remarks .......: This function temporarily moves the Viewcursor to the Table indicated, and then attempts to restore the ViewCursor to its former position.
 ;                  This could cause a COM error if the Cursor was presently in the Table.
-; Related .......: _LOWriter_DocConvertTextToTable, _LOWriter_TableGetObjByName, _LOWriter_TableGetObjByCursor, _LOWriter_TableInsert
+; Related .......: _LOWriter_DocConvertTextToTable, _LOWriter_TableGetObjByName, _LOWriter_TableGetObjByCursor, _LOWriter_TableCreate
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================

@@ -335,7 +335,7 @@ EndFunc   ;==>_LOWriter_ParObjSectionsGet
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function causes the ViewCursor to move and select a Paragraph, Table, Frame, TextCursor data, etc., usually in preparation for calling _LOWriter_ParObjCopy.
-; Related .......: _LOWriter_ParObjCreateList, _LOWriter_ParObjCopy, _LOWriter_TableGetObjByName, _LOWriter_TableGetObjByCursor, _LOWriter_TableInsert, _LOWriter_FrameGetObjByCursor, _LOWriter_FrameGetObjByName, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_ParObjCreateList, _LOWriter_ParObjCopy, _LOWriter_TableGetObjByName, _LOWriter_TableGetObjByCursor, _LOWriter_TableCreate, _LOWriter_FrameGetObjByCursor, _LOWriter_FrameGetObjByName, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================

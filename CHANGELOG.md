@@ -1285,6 +1285,11 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_ParStyleAreaTransparency
 	- _LOWriter_ParStyleAreaTransparencyGradient
 	- _LOWriter_ParStyleAreaTransparencyGradientMulti
+- Table functions
+	- _LOWriter_TableStyleExists
+	- _LOWriter_TableStyleSet
+	- _LOWriter_TableStylesGetNames
+	- __LOWriter_TableStyleNameToggle
 
 #### Changed
 
@@ -1545,6 +1550,31 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_ParStyleTxtFlowOpt
 	- _LOWriter_ParStyleUnderLine
 - Changed checks for a variable being null to use internal function `__LO_VarsAreNull`.
+- Removed check for Table being inserted in the document, changing error return values:
+	- _LOWriter_TableBorderColor
+	- _LOWriter_TableBorderPadding
+	- _LOWriter_TableBorderStyle
+	- _LOWriter_TableBorderWidth
+	- _LOWriter_TableColumnDelete
+	- _LOWriter_TableColumnGetCount
+	- _LOWriter_TableColumnInsert
+	- _LOWriter_TableDelete
+	- _LOWriter_TableGetCellObjByCursor
+	- _LOWriter_TableGetCellObjByName
+	- _LOWriter_TableGetCellObjByPosition
+	- _LOWriter_TableGetData
+	- _LOWriter_TableMargin
+	- _LOWriter_TableProperties
+	- _LOWriter_TableRowBackColor
+	- _LOWriter_TableRowDelete
+	- _LOWriter_TableRowGetCount
+	- _LOWriter_TableRowInsert
+	- _LOWriter_TableRowProperty
+	- _LOWriter_TableSetData
+	- _LOWriter_TableShadow
+	- _LOWriter_TableWidth
+- Reworked `_LOWriter_TableCreate` to eliminate the need for a separate insertion function. Also rearranged and added parameters.
+- Added $oDoc parameter to `_LOWriter_TableProperties`.
 
 #### Fixed
 
@@ -1634,6 +1664,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOW_COLOR_*
 - _LOWriter_DocSelectionGet
 - _LOWriter_DocSelectionSet
+- _LOWriter_TableInsert
+- __LOWriter_IsTableInDoc
 
 [To Top](#releases)
 
