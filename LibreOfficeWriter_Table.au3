@@ -1126,26 +1126,20 @@ EndFunc   ;==>_LOWriter_TableGetCellObjByName
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_TableGetCellObjByPosition
 ; Description ...: Retrieve a Cell object or Cell Range by position. See Remarks
-; Syntax ........: _LOWriter_TableGetCellObjByPosition(ByRef $oTable, $iColumn, $iRow[, $iToColumn = $iColumn[, $iToRow = $iRow]])
+; Syntax ........: _LOWriter_TableGetCellObjByPosition(ByRef $oTable, $iColumn, $iRow[, $iToColumn = Null[, $iToRow = Null]])
 ; Parameters ....: $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableCreate, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
 ;                  $iColumn             - an integer value. The column the desired cell is located in, or where to start the the cell range from.
 ;                  $iRow                - an integer value. The row the desired cell is located in, or where to start the the cell range from.
-;                  $iToColumn           - [optional] an integer value. Default is $iColumn. The column containing the cell where to end the the cell range. Can be the same as $iRow or higher. If left blank $iToColumn will be the same as $iColumn.
-;                  $iToRow              - [optional] an integer value. Default is $iRow. The row containing the cell where to end the the cell range. Can be the same as $iRow or higher. If left blank $iToRow will be the same as $iRow.
+;                  $iToColumn           - [optional] an integer value. Default is Null. The column containing the cell where to end the the cell range. Can be the same as $iRow or higher. If left blank $iToColumn will be the same as $iColumn.
+;                  $iToRow              - [optional] an integer value. Default is Null. The row containing the cell where to end the the cell range. Can be the same as $iRow or higher. If left blank $iToRow will be the same as $iRow.
 ; Return values .: Success: Object.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iColumn not an Integer, or less than 0.
-;                  @Error 1 @Extended 3 Return 0 = $iRow not an Integer, or less than 0.
-;                  @Error 1 @Extended 4 Return 0 = $iToColumn not an Integer, or less than 0.
-;                  @Error 1 @Extended 5 Return 0 = $iToRow not an Integer, or less than 0.
-;                  @Error 1 @Extended 6 Return 0 = Table does not contain sufficient number of columns for column called in $iColumn.
-;                  @Error 1 @Extended 7 Return 0 = Table does not contain sufficient number of columns for column called in $iToColumn.
-;                  @Error 1 @Extended 8 Return 0 = Table does not contain sufficient number of Rows for Row called in $iRow.
-;                  @Error 1 @Extended 9 Return 0 = Table does not contain sufficient number of Rows for Row called in $iToRow.
-;                  @Error 1 @Extended 10 Return 0 = $iToColumn lower Integer than $iColumn.
-;                  @Error 1 @Extended 11 Return 0 = $iToRow lower Integer than $iRow.
+;                  @Error 1 @Extended 2 Return 0 = $iColumn not an Integer, or less than 0 or greater than number of Columns contained in the table.
+;                  @Error 1 @Extended 3 Return 0 = $iRow not an Integer, or less than 0 or greater than number of Rows contained in the table.
+;                  @Error 1 @Extended 4 Return 0 = $iToColumn not an Integer, or less than $iColumn or greater than number of Columns contained in the table.
+;                  @Error 1 @Extended 5 Return 0 = $iToRow not an Integer, or less than $iRow or greater than number of Rows contained in the table.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Cell Object.
 ;                  --Success--
@@ -1153,34 +1147,36 @@ EndFunc   ;==>_LOWriter_TableGetCellObjByName
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function can fail with complex Tables. Complex tables are tables that contain cells that have been split or joined.
-;                  If Both $iToColumn and $iToRow are uncalled, a single cell will be returned.
-;                  Rows and Columns in a Table are 0 based, meaning they start their count at 0. the first cell is row 0 column 0.
+;                  Rows and Columns in a Table are 0 based, meaning they start their count at 0. The first cell is column 0 row 0.
 ;                  To retrieve a single cell, only call the $iColumn and $iRow parameters.
-;                  To retrieve a cell range, call $iColumn with the lowest Integer value column and then $iToColumn with the highest Integer value column desired. Same for $iRow and $iToRow.
+;                  To retrieve a cell range, call $iColumn with the lowest Integer value column and then $iToColumn with the highest Integer value column. As also for $iRow and $iToRow.
 ;                  You may request the same row in both $iRow and $iToRow, but neither $iToRow or $iToColumn may be a lower Integer value than $iRow and $iColumn respectively.
 ; Related .......: _LOWriter_TableCreate, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_TableColumnGetCount, _LOWriter_TableRowGetCount
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_TableGetCellObjByPosition(ByRef $oTable, $iColumn, $iRow, $iToColumn = $iColumn, $iToRow = $iRow)
+Func _LOWriter_TableGetCellObjByPosition(ByRef $oTable, $iColumn, $iRow, $iToColumn = Null, $iToRow = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $oCell
 
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LO_IntIsBetween($iColumn, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LO_IntIsBetween($iRow, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not __LO_IntIsBetween($iToColumn, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If Not __LO_IntIsBetween($iToRow, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If Not __LOWriter_TableHasColumnRange($oTable, $iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-	If Not __LOWriter_TableHasColumnRange($oTable, $iToColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
-	If Not __LOWriter_TableHasRowRange($oTable, $iRow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
-	If Not __LOWriter_TableHasRowRange($oTable, $iToRow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
-	If ($iToColumn < $iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0) ; ToColumn Lower than beginning column.
-	If ($iToRow < $iRow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0) ; ToRow Lower than beginning Row.
+	If Not __LO_IntIsBetween($iColumn, 0, ($oTable.getColumns.getCount() - 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LO_IntIsBetween($iRow, 0, ($oTable.getRows.getCount() - 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-	$oCell = (($iColumn = $iToColumn) And ($iRow = $iToRow)) ? ($oTable.getCellByPosition($iColumn, $iRow)) : ($oTable.getCellRangeByPosition($iColumn, $iRow, $iToColumn, $iToRow))
+	If __LO_VarsAreNull($iToColumn, $iToRow) Then
+		$oCell = $oTable.getCellByPosition($iColumn, $iRow)
+
+	Else
+		If Not __LO_IntIsBetween($iToColumn, $iColumn, ($oTable.getColumns.getCount() - 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LO_IntIsBetween($iToRow, $iRow, ($oTable.getRows.getCount() - 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$iToColumn = ($iToColumn = Null) ? ($iColumn) : ($iToColumn)
+		$iToRow = ($iToRow = Null) ? ($iRow) : ($iToRow)
+
+		$oCell = $oTable.getCellRangeByPosition($iColumn, $iRow, $iToColumn, $iToRow)
+	EndIf
+
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oCell)

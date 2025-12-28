@@ -1575,6 +1575,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_TableWidth
 - Reworked `_LOWriter_TableCreate` to eliminate the need for a separate insertion function. Also rearranged and added parameters.
 - Added $oDoc parameter to `_LOWriter_TableProperties`.
+- Modified `_LOWriter_TableGetCellObjByPosition` error values, and also the default value for ToColumn and ToRow.
 
 #### Fixed
 
