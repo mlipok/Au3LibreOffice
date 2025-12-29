@@ -1576,6 +1576,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Reworked `_LOWriter_TableCreate` to eliminate the need for a separate insertion function. Also rearranged and added parameters.
 - Added $oDoc parameter to `_LOWriter_TableProperties`.
 - Modified `_LOWriter_TableGetCellObjByPosition` error values, and also the default value for ToColumn and ToRow.
+- Switched order of parameters in `_LOWriter_TableGetData`, changing $iRow to come after $iColumn.
+- Removed replacement of CRLF with CR in `_LOWriter_TableGetData`.
+- Added replacement of CRLF to CR in `_LOWriter_TableSetData`, to prevent adding extra newlines (L.O. uses CR and LF separately).
 
 #### Fixed
 
@@ -1667,6 +1670,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - _LOWriter_DocSelectionSet
 - _LOWriter_TableInsert
 - __LOWriter_IsTableInDoc
+- __LOWriter_TableHasColumnRange
+- __LOWriter_TableHasRowRange
 
 [To Top](#releases)
 

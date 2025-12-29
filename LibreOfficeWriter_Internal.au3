@@ -9096,66 +9096,6 @@ Func __LOWriter_TableHasCellName(ByRef $oTable, ByRef $sCellName)
 EndFunc   ;==>__LOWriter_TableHasCellName
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
-; Name ..........: __LOWriter_TableHasColumnRange
-; Description ...: Check if Table contains the requested Column.
-; Syntax ........: __LOWriter_TableHasColumnRange(ByRef $oTable, ByRef $iColumn)
-; Parameters ....: $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
-;                  $iColumn             - [in/out] an integer value. The requested Column.
-; Return values .: Success: Boolean.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iColumn not an Integer.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = If True, the table contains the requested Column. Else False.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func __LOWriter_TableHasColumnRange(ByRef $oTable, ByRef $iColumn)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsInt($iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-	Return SetError($__LO_STATUS_SUCCESS, 0, ($iColumn <= ($oTable.getColumns.getCount() - 1)) ? (True) : (False))
-EndFunc   ;==>__LOWriter_TableHasColumnRange
-
-; #INTERNAL_USE_ONLY# ===========================================================================================================
-; Name ..........: __LOWriter_TableHasRowRange
-; Description ...: Check if a Table contains the requested row.
-; Syntax ........: __LOWriter_TableHasRowRange(ByRef $oTable, ByRef $iRow)
-; Parameters ....: $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
-;                  $iRow                - [in/out] an integer value. The requested row.
-; Return values .: Success: Boolean.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iRow not an Integer.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = If True, the table contains the requested row. Else False.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func __LOWriter_TableHasRowRange(ByRef $oTable, ByRef $iRow)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsInt($iRow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-	Return SetError($__LO_STATUS_SUCCESS, 0, ($iRow <= ($oTable.getRows.getCount() - 1)) ? (True) : (False))
-EndFunc   ;==>__LOWriter_TableHasRowRange
-
-; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_TableRowSplitToggle
 ; Description ...: Set or Retrieve Table Row split setting for an entire Table.
 ; Syntax ........: __LOWriter_TableRowSplitToggle(ByRef $oTable[, $bSplitRows = Null])

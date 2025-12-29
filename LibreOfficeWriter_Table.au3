@@ -1171,6 +1171,7 @@ Func _LOWriter_TableGetCellObjByPosition(ByRef $oTable, $iColumn, $iRow, $iToCol
 	Else
 		If Not __LO_IntIsBetween($iToColumn, $iColumn, ($oTable.getColumns.getCount() - 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		If Not __LO_IntIsBetween($iToRow, $iRow, ($oTable.getRows.getCount() - 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$iToColumn = ($iToColumn = Null) ? ($iColumn) : ($iToColumn)
 		$iToRow = ($iToRow = Null) ? ($iRow) : ($iToRow)
 
@@ -1185,18 +1186,16 @@ EndFunc   ;==>_LOWriter_TableGetCellObjByPosition
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_TableGetData
 ; Description ...: Retrieve current text of a Text Table.
-; Syntax ........: _LOWriter_TableGetData(ByRef $oTable[, $iRow = -1[, $iColumn = -1]])
+; Syntax ........: _LOWriter_TableGetData(ByRef $oTable[, $iColumn = -1[, $iRow = -1]])
 ; Parameters ....: $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableCreate, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
-;                  $iRow                - [optional] an integer value. Default is -1. The desired Row, See Remarks.
 ;                  $iColumn             - [optional] an integer value. Default is -1. The desired Column, See Remarks.
+;                  $iRow                - [optional] an integer value. Default is -1. The desired Row, See Remarks.
 ; Return values .: Success: Array or String.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iRow not an Integer.
-;                  @Error 1 @Extended 3 Return 0 = $iColumn not an Integer.
-;                  @Error 1 @Extended 4 Return 0 = Row called in $iRow greater than contained rows in Table.
-;                  @Error 1 @Extended 5 Return 0 = Column called in $iColumn greater than contained Columns in Table.
+;                  @Error 1 @Extended 2 Return 0 = $iColumn not an Integer, less than -1 or greater than number of Columns containted in the Table.
+;                  @Error 1 @Extended 3 Return 0 = $iRow not an Integer, less than -1 or greater than number of Rows containted in the Table.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Array of Table data.
 ;                  --Success--
@@ -1212,57 +1211,46 @@ EndFunc   ;==>_LOWriter_TableGetCellObjByPosition
 ;                  If you want only a certain column, set $iRow to -1 and $iColumn to the desired column.
 ;                  LibreOffice Tables start at 0, so to get the first Row/Column, you would set $iRow or $iColumn to 0.
 ;                  This function can fail if the Table is "complex", meaning it has joined or split cells.
+;                  Strings returned will have CRLF for hard newlines, and LF for soft newlines.
 ; Related .......: _LOWriter_TableCreate, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_TableColumnGetCount, _LOWriter_TableRowGetCount
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_TableGetData(ByRef $oTable, $iRow = -1, $iColumn = -1)
+Func _LOWriter_TableGetData(ByRef $oTable, $iColumn = Null, $iRow = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $avTableDataReturn, $avTableData, $avTempArray
-	Local $iExtended
+	Local $avTableDataReturn[0], $avTableData
 
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsInt($iRow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsInt($iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iColumn <> Null) And Not __LO_IntIsBetween($iColumn, 0, ($oTable.getColumns.getCount() - 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If ($iRow <> Null) And Not __LO_IntIsBetween($iRow, 0, ($oTable.getRows.getCount() - 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$avTableData = $oTable.getDataArray() ; Will fail if Columns are joined
 	If Not IsArray($avTableData) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	; LibreOffice uses @CR and @LF, whereas AutoIt uses @CRLF, I need to convert @CRLF back to @CR. So cycle through all Table
-	; Data and replace @CRLF with @CR
-	For $k = 0 To UBound($avTableData) - 1
-		$avTempArray = $avTableData[$k]
-		For $j = 0 To UBound($avTempArray) - 1
-			$avTempArray[$j] = StringReplace($avTempArray[$j], @CRLF, @CR)
-		Next
-		$avTableData[$k] = $avTempArray
-		Sleep((IsInt($k / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
-	Next
+	If __LO_VarsAreNull($iColumn, $iRow) Then ; Returning whole Table of Data.
 
-	If (UBound($avTableData) <= $iRow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0) ; Requested Row higher than number of contained Rows.
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avTableData)
 
-	$avTableDataReturn = ($iRow > -1) ? ($avTableData[$iRow]) : ($avTableData)
-	$iExtended = ($iRow > -1) ? (2) : (1) ; Set Extended to 1 If retrieving the full Table Data, else 2 if getting a specific row.
+	ElseIf __LO_VarsAreNull($iColumn) Then ; Returning a specific Row's data.
+		$avTableDataReturn = $avTableData[$iRow]
 
-	If ($iRow = -1) And ($iColumn <> -1) Then ;  getting only a specific column of Data
-		If (UBound($avTableData[0]) <= $iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; Requested Column higher than number of contained columns.
+		Return SetError($__LO_STATUS_SUCCESS, 2, $avTableDataReturn)
 
+	ElseIf __LO_VarsAreNull($iRow) Then ; Returning a specific Column's data.
 		ReDim $avTableDataReturn[UBound($avTableData)]
 		For $i = 0 To UBound($avTableData) - 1
 			$avTableDataReturn[$i] = ($avTableData[$i])[$iColumn]
 		Next
-		$iExtended = 3 ; Set extended to 3 if retrieving a Specific column
 
-	ElseIf ($iRow <> -1) And ($iColumn <> -1) Then ;
-		If (UBound($avTableDataReturn) <= $iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; Requested Column higher than number of contained columns.
-
-		$avTableDataReturn = $avTableDataReturn[$iColumn]
-		$iExtended = 4 ; Set Extended to 4 if retrieving a specific cell of Data
+		Return SetError($__LO_STATUS_SUCCESS, 3, $avTableDataReturn)
 	EndIf
 
-	Return SetError($__LO_STATUS_SUCCESS, $iExtended, $avTableDataReturn)
+	; Returning a specific Cell's data.
+	$avTableDataReturn = ($avTableData[$iRow])[$iColumn]
+
+	Return SetError($__LO_STATUS_SUCCESS, 4, $avTableDataReturn)
 EndFunc   ;==>_LOWriter_TableGetData
 
 ; #FUNCTION# ====================================================================================================================
@@ -1838,7 +1826,7 @@ EndFunc   ;==>_LOWriter_TableRowProperty
 ;                  The Main Array must contain the same number of elements as there are rows, and each sub Array must have the same number of Elements as there are columns.
 ;                  To skip a Cell, just leave the sub array element blank you want to skip.
 ;                  This will replace all previous data in the Table.
-;                  The Array will not be modified.
+;                  The array is cycled through, and all @CRLF's are replaced with @CR so that additional new lines are not added when inserting the data into LibreOffice.
 ; Related .......: _LOWriter_TableCreate, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName
 ; Link ..........:
 ; Example .......: Yes
@@ -1848,6 +1836,7 @@ Func _LOWriter_TableSetData(ByRef $oTable, ByRef $avData)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iColumns
+	Local $avTemp
 
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsArray($avData) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -1857,6 +1846,12 @@ Func _LOWriter_TableSetData(ByRef $oTable, ByRef $avData)
 	For $i = 0 To UBound($avData) - 1
 		If (UBound($avData[$i]) <> $iColumns) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, $i) ; Array contains too short of array for Table column count.
 
+		$avTemp = $avData[$i]
+		For $j = 0 To UBound($avTemp) - 1
+			If IsString($avTemp[$j]) Then $avTemp[$j] = StringRegExpReplace($avTemp[$j], @CRLF, @CR)
+			Sleep((IsInt($j / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
+		Next
+		$avData[$i] = $avTemp
 		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	Next
 	$oTable.setDataArray($avData)

@@ -43,13 +43,13 @@ Func Example()
 	Next
 
 	; Retrieve Table data, second over column (Column 1).
-	$avData = _LOWriter_TableGetData($oTable, -1, 1)
+	$avData = _LOWriter_TableGetData($oTable, 1)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Text Table Data. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	_ArrayDisplay($avData, "Column 1")
 
 	; Retrieve Table data, second down Row (row 1).
-	$avData = _LOWriter_TableGetData($oTable, 1)
+	$avData = _LOWriter_TableGetData($oTable, Null, 1)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Text Table Data. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	_ArrayDisplay($avData, "Row 1")
