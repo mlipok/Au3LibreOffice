@@ -382,6 +382,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Removed requirement of $oDoc in _LOBase_FontsGetNames
 - Added optional $oDoc parameter to _LOBase_FontExists for potential quicker execution.
 - Changed checks for a variable being null to use internal function `__LO_VarsAreNull`.
+- Changed Property Setting error values to other error type(s) for the following:
+	- _LOBase_DocSaveCopy
 
 #### Fixed
 
