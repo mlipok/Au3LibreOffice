@@ -473,14 +473,14 @@ EndFunc   ;==>_LOCalc_DocCreate
 ;                  @Error 1 @Extended 4 Return 0 = $sFilterName not a String.
 ;                  @Error 1 @Extended 5 Return 0 = $bOverwrite not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $sPassword not a String.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error creating FilterName Property
+;                  @Error 2 @Extended 2 Return 0 = Error creating Overwrite Property
+;                  @Error 2 @Extended 3 Return 0 = Error creating Password Property
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error Converting Path to/from L.O. URL
 ;                  @Error 3 @Extended 2 Return 0 = Document has no save path, and $bSamePath is called with True.
 ;                  @Error 3 @Extended 3 Return 0 = Error retrieving FilterName.
-;                  --Property Setting Errors--
-;                  @Error 4 @Extended 1 Return 0 = Error setting FilterName Property
-;                  @Error 4 @Extended 2 Return 0 = Error setting Overwrite Property
-;                  @Error 4 @Extended 3 Return 0 = Error setting Password Property
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return String = Success. Returning save path for exported document.
 ; Author ........: donnyh13
@@ -525,14 +525,14 @@ Func _LOCalc_DocExport(ByRef $oDoc, $sFilePath, $bSamePath = False, $sFilterName
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	$aProperties[0] = __LO_SetPropertyValue("FilterName", $sFilterName)
-	If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If ($bOverwrite <> Null) Then
 		If Not IsBool($bOverwrite) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		ReDim $aProperties[UBound($aProperties) + 1]
 		$aProperties[UBound($aProperties) - 1] = __LO_SetPropertyValue("Overwrite", $bOverwrite)
-		If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 2, 0)
+		If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 	EndIf
 
 	If ($sPassword <> Null) Then
@@ -540,7 +540,7 @@ Func _LOCalc_DocExport(ByRef $oDoc, $sFilePath, $bSamePath = False, $sFilterName
 
 		ReDim $aProperties[UBound($aProperties) + 1]
 		$aProperties[UBound($aProperties) - 1] = __LO_SetPropertyValue("Password", $sPassword)
-		If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 3, 0)
+		If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 	EndIf
 
 	$oDoc.storeToURL($sFilePath, $aProperties)
@@ -1092,15 +1092,16 @@ EndFunc   ;==>_LOCalc_DocPosAndSize
 ;                  @Error 1 @Extended 7 Return 0 = $iDuplexMode not an Integer, less than 0 or greater than 3. See Constants, $LOC_DUPLEX_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 8 Return 0 = $sPrinter not a String.
 ;                  @Error 1 @Extended 9 Return 0 = $sFilePathName not a String.
-;                  --Property Setting Errors--
-;                  @Error 4 @Extended 1 Return 0 = Error setting "Printer Name".
-;                  @Error 4 @Extended 2 Return 0 = Error setting "Copies".
-;                  @Error 4 @Extended 3 Return 0 = Error setting "Collate".
-;                  @Error 4 @Extended 4 Return 0 = Error setting "Wait".
-;                  @Error 4 @Extended 5 Return 0 = Error setting "DuplexMode".
-;                  @Error 4 @Extended 6 Return 0 = Error setting "Pages".
-;                  @Error 4 @Extended 7 Return 0 = Error converting PrintToFile Path.
-;                  @Error 4 @Extended 8 Return 0 = Error setting "PrintToFile".
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error creating "Printer Name" property.
+;                  @Error 2 @Extended 2 Return 0 = Error creating "Copies" property.
+;                  @Error 2 @Extended 3 Return 0 = Error creating "Collate" property.
+;                  @Error 2 @Extended 4 Return 0 = Error creating "Wait" property.
+;                  @Error 2 @Extended 5 Return 0 = Error creating "DuplexMode" property.
+;                  @Error 2 @Extended 6 Return 0 = Error creating "Pages" property.
+;                  @Error 2 @Extended 7 Return 0 = Error creating "PrintToFile" property.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error converting PrintToFile Path.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success Document was successfully printed.
 ; Author ........: donnyh13
@@ -1139,35 +1140,35 @@ Func _LOCalc_DocPrint(ByRef $oDoc, $iCopies = 1, $bCollate = True, $vPages = "AL
 	$sFilePathName = StringStripWS(StringStripWS($sFilePathName, $__STR_STRIPTRAILING), $__STR_STRIPLEADING)
 	If $sPrinter <> "" Then
 		$asSetPrinterOpt[0] = __LO_SetPropertyValue("Name", $sPrinter)
-		If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0)
+		If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 		$oDoc.setPrinter($asSetPrinterOpt)
 	EndIf
 	$avPrintOpt[0] = __LO_SetPropertyValue("CopyCount", $iCopies)
-	If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	$avPrintOpt[1] = __LO_SetPropertyValue("Collate", $bCollate)
-	If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 3, 0)
+	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 	$avPrintOpt[2] = __LO_SetPropertyValue("Wait", $bWait)
-	If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 4, 0)
+	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
 
 	$avPrintOpt[3] = __LO_SetPropertyValue("DuplexMode", $iDuplexMode)
-	If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 5, 0)
+	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
 
 	If $vPages <> "ALL" Then
 		ReDim $avPrintOpt[UBound($avPrintOpt) + 1]
 		$avPrintOpt[UBound($avPrintOpt) - 1] = __LO_SetPropertyValue("Pages", $vPages)
-		If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 6, 0)
+		If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 6, 0)
 	EndIf
 	If $sFilePathName <> "" Then
 		$sFilePathName = $sFilePathName & ".prn"
 		$sFilePathName = _LO_PathConvert($sFilePathName, $LO_PATHCONV_OFFICE_RETURN)
-		If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 7, 0)
+		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 		ReDim $avPrintOpt[UBound($avPrintOpt) + 1]
 		$avPrintOpt[UBound($avPrintOpt) - 1] = __LO_SetPropertyValue("FileName", $sFilePathName)
-		If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 8, 0)
+		If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 7, 0)
 	EndIf
 	$oDoc.print($avPrintOpt)
 
@@ -2355,7 +2356,8 @@ EndFunc   ;==>_LOCalc_DocViewWindowSettings
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $bVisible not a Boolean.
 ;                  --Property Setting Errors--
-;                  @Error 4 @Extended 1 Return 0 = Error setting $bVisible.
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $bVisible
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. $bVisible successfully set.
 ;                  @Error 0 @Extended 1 Return Boolean = Success. Returning current visibility state of the Document, True if visible, False if invisible.

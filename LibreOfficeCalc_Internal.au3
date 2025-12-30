@@ -168,15 +168,24 @@ EndFunc   ;==>__LOCalc_CellBackColor
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
 ;                  @Error 3 @Extended 2 Return 0 = Error Retrieving TableBorder2 Object.
+;                  @Error 3 @Extended 3 Return 0 = Cannot set Top Border Style/Color when Top Border width not set.
+;                  @Error 3 @Extended 4 Return 0 = Cannot set Bottom Border Style/Color when Bottom Border width not set.
+;                  @Error 3 @Extended 5 Return 0 = Cannot set Left Border Style/Color when Left Border width not set.
+;                  @Error 3 @Extended 6 Return 0 = Cannot set Right Border Style/Color when Right Border width not set.
+;                  @Error 3 @Extended 7 Return 0 = Cannot set Vertical Border Style/Color when Vertical Border width not set.
+;                  @Error 3 @Extended 8 Return 0 = Cannot set Horizontal Border Style/Color when Horizontal Border width not set.
+;                  @Error 3 @Extended 9 Return 0 = Cannot set Top-Left to Bottom-Right Diagonal Border Style/Color when Top-Left to Bottom-Right Diagonal Border width not set.
+;                  @Error 3 @Extended 10 Return 0 = Cannot set Bottom-Left to Top-Right Diagonal Border Style/Color when Bottom-Left to Top-Right Diagonal Border width not set.
 ;                  --Property Setting Errors--
-;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style/Color when Top Border width not set.
-;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style/Color when Bottom Border width not set.
-;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style/Color when Left Border width not set.
-;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style/Color when Right Border width not set.
-;                  @Error 4 @Extended 5 Return 0 = Cannot set Vertical Border Style/Color when Vertical Border width not set.
-;                  @Error 4 @Extended 6 Return 0 = Cannot set Horizontal Border Style/Color when Horizontal Border width not set.
-;                  @Error 4 @Extended 7 Return 0 = Cannot set Top-Left to Bottom-Right Diagonal Border Style/Color when Top-Left to Bottom-Right Diagonal Border width not set.
-;                  @Error 4 @Extended 8 Return 0 = Cannot set Bottom-Left to Top-Right Diagonal Border Style/Color when Bottom-Left to Top-Right Diagonal Border width not set.
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iTop
+;                  |                               2 = Error setting $iBottom
+;                  |                               4 = Error setting $iLeft
+;                  |                               8 = Error setting $iRight
+;                  |                               16 = Error setting $iVert
+;                  |                               32 = Error setting $iHori
+;                  |                               64 = Error setting $iTLBRDiag
+;                  |                               128 = Error setting $iBLTRDiag
 ;                  --Version Related Errors--
 ;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
 ;                  --Success--
@@ -196,6 +205,7 @@ Func __LOCalc_CellBorder(ByRef $oRange, $bWid, $bSty, $bCol, $iTop = Null, $iBot
 
 	Local $avBorder[8]
 	Local $tBL2, $tTB2
+	Local $iError = 0
 
 	If Not __LO_VersionCheck(3.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
@@ -228,7 +238,7 @@ Func __LOCalc_CellBorder(ByRef $oRange, $bWid, $bSty, $bCol, $iTop = Null, $iBot
 	If Not IsObj($tTB2) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If $iTop <> Null Then
-		If Not $bWid And ($tTB2.TopLine.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0) ; If Width not set, cant set color or style.
+		If Not $bWid And ($tTB2.TopLine.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0) ; If Width not set, cant set color or style.
 
 		; Top Line
 		$tBL2.LineWidth = ($bWid) ? ($iTop) : ($tTB2.TopLine.LineWidth()) ; copy Line Width over to new size structure
@@ -238,7 +248,7 @@ Func __LOCalc_CellBorder(ByRef $oRange, $bWid, $bSty, $bCol, $iTop = Null, $iBot
 	EndIf
 
 	If $iBottom <> Null Then
-		If Not $bWid And ($tTB2.BottomLine.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 2, 0) ; If Width not set, cant set color or style.
+		If Not $bWid And ($tTB2.BottomLine.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; If Width not set, cant set color or style.
 
 		; Bottom Line
 		$tBL2.LineWidth = ($bWid) ? ($iBottom) : ($tTB2.BottomLine.LineWidth()) ; copy Line Width over to new size structure
@@ -248,7 +258,7 @@ Func __LOCalc_CellBorder(ByRef $oRange, $bWid, $bSty, $bCol, $iTop = Null, $iBot
 	EndIf
 
 	If $iLeft <> Null Then
-		If Not $bWid And ($tTB2.LeftLine.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 3, 0) ; If Width not set, cant set color or style.
+		If Not $bWid And ($tTB2.LeftLine.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0) ; If Width not set, cant set color or style.
 
 		; Left Line
 		$tBL2.LineWidth = ($bWid) ? ($iLeft) : ($tTB2.LeftLine.LineWidth()) ; copy Line Width over to new size structure
@@ -258,7 +268,7 @@ Func __LOCalc_CellBorder(ByRef $oRange, $bWid, $bSty, $bCol, $iTop = Null, $iBot
 	EndIf
 
 	If $iRight <> Null Then
-		If Not $bWid And ($tTB2.RightLine.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 4, 0) ; If Width not set, cant set color or style.
+		If Not $bWid And ($tTB2.RightLine.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0) ; If Width not set, cant set color or style.
 
 		; Right Line
 		$tBL2.LineWidth = ($bWid) ? ($iRight) : ($tTB2.RightLine.LineWidth()) ; copy Line Width over to new size structure
@@ -268,7 +278,7 @@ Func __LOCalc_CellBorder(ByRef $oRange, $bWid, $bSty, $bCol, $iTop = Null, $iBot
 	EndIf
 
 	If $iVert <> Null Then
-		If Not $bWid And ($tTB2.VerticalLine.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 5, 0) ; If Width not set, cant set color or style.
+		If Not $bWid And ($tTB2.VerticalLine.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0) ; If Width not set, cant set color or style.
 
 		; Vertical Line
 		$tBL2.LineWidth = ($bWid) ? ($iVert) : ($tTB2.VerticalLine.LineWidth()) ; copy Line Width over to new size structure
@@ -278,7 +288,7 @@ Func __LOCalc_CellBorder(ByRef $oRange, $bWid, $bSty, $bCol, $iTop = Null, $iBot
 	EndIf
 
 	If $iHori <> Null Then
-		If Not $bWid And ($tTB2.HorizontalLine.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 6, 0) ; If Width not set, cant set color or style.
+		If Not $bWid And ($tTB2.HorizontalLine.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 8, 0) ; If Width not set, cant set color or style.
 
 		; Horizontal Line
 ;~ 		$tBL2.LineWidth = ($bWid) ? ($iHori) : ($tTB2.HorizontalLine.LineWidth()) ; copy Line Width over to new size structure
@@ -293,7 +303,7 @@ Func __LOCalc_CellBorder(ByRef $oRange, $bWid, $bSty, $bCol, $iTop = Null, $iBot
 	$oRange.TableBorder2 = $tTB2
 
 	If $iTLBRDiag <> Null Then
-		If Not $bWid And ($oRange.DiagonalTLBR2.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 7, 0) ; If Width not set, cant set color or style.
+		If Not $bWid And ($oRange.DiagonalTLBR2.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 9, 0) ; If Width not set, cant set color or style.
 
 		; Top-Left to Bottom Right Diagonal Line
 		$tBL2.LineWidth = ($bWid) ? ($iTLBRDiag) : ($oRange.DiagonalTLBR2.LineWidth()) ; copy Line Width over to new size structure
@@ -303,7 +313,7 @@ Func __LOCalc_CellBorder(ByRef $oRange, $bWid, $bSty, $bCol, $iTop = Null, $iBot
 	EndIf
 
 	If $iBLTRDiag <> Null Then
-		If Not $bWid And ($oRange.DiagonalBLTR2.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 8, 0) ; If Width not set, cant set color or style.
+		If Not $bWid And ($oRange.DiagonalBLTR2.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 10, 0) ; If Width not set, cant set color or style.
 
 		; Bottom-Left to Top-Right Diagonal Line
 		$tBL2.LineWidth = ($bWid) ? ($iBLTRDiag) : ($oRange.DiagonalBLTR2.LineWidth()) ; copy Line Width over to new size structure
@@ -311,6 +321,40 @@ Func __LOCalc_CellBorder(ByRef $oRange, $bWid, $bSty, $bCol, $iTop = Null, $iBot
 		$tBL2.Color = ($bCol) ? ($iBLTRDiag) : ($oRange.DiagonalBLTR2.Color()) ; copy Color over to new size structure
 		$oRange.DiagonalBLTR2 = $tBL2
 	EndIf
+
+	If $bWid Then
+		$iError = ($iTop <> Null) ? ($iError) : (__LO_IntIsBetween($oRange.TableBorder2.TopLine.LineWidth(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 1))
+		$iError = ($iBottom <> Null) ? ($iError) : (__LO_IntIsBetween($oRange.TableBorder2.BottomLine.LineWidth(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 2))
+		$iError = ($iLeft <> Null) ? ($iError) : (__LO_IntIsBetween($oRange.TableBorder2.LeftLine.LineWidth(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 4))
+		$iError = ($iRight <> Null) ? ($iError) : (__LO_IntIsBetween($oRange.TableBorder2.RightLine.LineWidth(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 8))
+		$iError = ($iVert <> Null) ? ($iError) : (__LO_IntIsBetween($oRange.TableBorder2.VerticalLine.LineWidth(), $iVert - 1, $iVert + 1)) ? ($iError) : (BitOR($iError, 16))
+		$iError = ($iHori <> Null) ? ($iError) : (__LO_IntIsBetween($oRange.TableBorder2.HorizontalLine.LineWidth(), $iHori - 1, $iHori + 1)) ? ($iError) : (BitOR($iError, 32))
+		$iError = ($iTLBRDiag <> Null) ? ($iError) : (__LO_IntIsBetween($oRange.DiagonalTLBR2.LineWidth(), $iTLBRDiag - 1, $iTLBRDiag + 1)) ? ($iError) : (BitOR($iError, 64))
+		$iError = ($iBLTRDiag <> Null) ? ($iError) : (__LO_IntIsBetween($oRange.DiagonalBLTR2.LineWidth(), $iBLTRDiag - 1, $iBLTRDiag + 1)) ? ($iError) : (BitOR($iError, 128))
+
+	ElseIf $bSty Then
+		$iError = ($iTop <> Null) ? ($iError) : ($oRange.TableBorder2.TopLine.LineStyle() = $iTop) ? ($iError) : (BitOR($iError, 1))
+		$iError = ($iBottom <> Null) ? ($iError) : ($oRange.TableBorder2.BottomLine.LineStyle() = $iBottom) ? ($iError) : (BitOR($iError, 2))
+		$iError = ($iLeft <> Null) ? ($iError) : ($oRange.TableBorder2.LeftLine.LineStyle() = $iLeft) ? ($iError) : (BitOR($iError, 4))
+		$iError = ($iRight <> Null) ? ($iError) : ($oRange.TableBorder2.RightLine.LineStyle() = $iRight) ? ($iError) : (BitOR($iError, 8))
+		$iError = ($iVert <> Null) ? ($iError) : ($oRange.TableBorder2.VerticalLine.LineStyle() = $iVert) ? ($iError) : (BitOR($iError, 16))
+		$iError = ($iHori <> Null) ? ($iError) : ($oRange.TableBorder2.HorizontalLine.LineStyle() = $iHori) ? ($iError) : (BitOR($iError, 32))
+		$iError = ($iTLBRDiag <> Null) ? ($iError) : ($oRange.DiagonalTLBR2.LineStyle() = $iTLBRDiag) ? ($iError) : (BitOR($iError, 64))
+		$iError = ($iBLTRDiag <> Null) ? ($iError) : ($oRange.DiagonalBLTR2.LineStyle() = $iBLTRDiag) ? ($iError) : (BitOR($iError, 128))
+
+	Else
+		$iError = ($iTop <> Null) ? ($iError) : ($oRange.TableBorder2.TopLine.Color() = $iTop) ? ($iError) : (BitOR($iError, 1))
+		$iError = ($iBottom <> Null) ? ($iError) : ($oRange.TableBorder2.BottomLine.Color() = $iBottom) ? ($iError) : (BitOR($iError, 2))
+		$iError = ($iLeft <> Null) ? ($iError) : ($oRange.TableBorder2.LeftLine.Color() = $iLeft) ? ($iError) : (BitOR($iError, 4))
+		$iError = ($iRight <> Null) ? ($iError) : ($oRange.TableBorder2.RightLine.Color() = $iRight) ? ($iError) : (BitOR($iError, 8))
+		$iError = ($iVert <> Null) ? ($iError) : ($oRange.TableBorder2.VerticalLine.Color() = $iVert) ? ($iError) : (BitOR($iError, 16))
+		$iError = ($iHori <> Null) ? ($iError) : ($oRange.TableBorder2.HorizontalLine.Color() = $iHori) ? ($iError) : (BitOR($iError, 32))
+		$iError = ($iTLBRDiag <> Null) ? ($iError) : ($oRange.DiagonalTLBR2.Color() = $iTLBRDiag) ? ($iError) : (BitOR($iError, 64))
+		$iError = ($iBLTRDiag <> Null) ? ($iError) : ($oRange.DiagonalBLTR2.Color() = $iBLTRDiag) ? ($iError) : (BitOR($iError, 128))
+
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOCalc_CellBorder
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -373,10 +417,10 @@ Func __LOCalc_CellBorderPadding(ByRef $oObj, $iAll = Null, $iTop = Null, $iBotto
 		$oObj.ParaBottomMargin = $iAll
 		$oObj.ParaLeftMargin = $iAll
 		$oObj.ParaRightMargin = $iAll
-		$iError = ($iTop <> Null) ? ($iError) : (__LO_IntIsBetween($oObj.ParaTopMargin(), $iAll - 1, $iAll + 1)) ? ($iError) : (BitOR($iError, 1))
-		$iError = ($iBottom <> Null) ? ($iError) : (__LO_IntIsBetween($oObj.ParaBottomMargin(), $iAll - 1, $iAll + 1)) ? ($iError) : (BitOR($iError, 2))
-		$iError = ($iLeft <> Null) ? ($iError) : (__LO_IntIsBetween($oObj.ParaLeftMargin(), $iAll - 1, $iAll + 1)) ? ($iError) : (BitOR($iError, 4))
-		$iError = ($iRight <> Null) ? ($iError) : (__LO_IntIsBetween($oObj.ParaRightMargin(), $iAll - 1, $iAll + 1)) ? ($iError) : (BitOR($iError, 8))
+		$iError = (__LO_IntIsBetween($oObj.ParaTopMargin(), $iAll - 1, $iAll + 1)) ? ($iError) : (BitOR($iError, 1))
+		$iError = (__LO_IntIsBetween($oObj.ParaBottomMargin(), $iAll - 1, $iAll + 1)) ? ($iError) : (BitOR($iError, 2))
+		$iError = (__LO_IntIsBetween($oObj.ParaLeftMargin(), $iAll - 1, $iAll + 1)) ? ($iError) : (BitOR($iError, 4))
+		$iError = (__LO_IntIsBetween($oObj.ParaRightMargin(), $iAll - 1, $iAll + 1)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iTop <> Null) Then
@@ -1002,13 +1046,20 @@ EndFunc   ;==>__LOCalc_CellStrikeOut
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
+;                  @Error 3 @Extended 2 Return 0 = Cannot set Top Border Style/Color when Top Border width not set.
+;                  @Error 3 @Extended 3 Return 0 = Cannot set Bottom Border Style/Color when Bottom Border width not set.
+;                  @Error 3 @Extended 4 Return 0 = Cannot set Left Border Style/Color when Left Border width not set.
+;                  @Error 3 @Extended 5 Return 0 = Cannot set Right Border Style/Color when Right Border width not set.
+;                  @Error 3 @Extended 6 Return 0 = Cannot set Top-Left to Bottom-Right Diagonal Border Style/Color when Top-Left to Bottom-Right Diagonal Border width not set.
+;                  @Error 3 @Extended 7 Return 0 = Cannot set Bottom-Left to Top-Right Diagonal Border Style/Color when Bottom-Left to Top-Right Diagonal Border width not set.
 ;                  --Property Setting Errors--
-;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style/Color when Top Border width not set.
-;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style/Color when Bottom Border width not set.
-;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style/Color when Left Border width not set.
-;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style/Color when Right Border width not set.
-;                  @Error 4 @Extended 5 Return 0 = Cannot set Top-Left to Bottom-Right Diagonal Border Style/Color when Top-Left to Bottom-Right Diagonal Border width not set.
-;                  @Error 4 @Extended 6 Return 0 = Cannot set Bottom-Left to Top-Right Diagonal Border Style/Color when Bottom-Left to Top-Right Diagonal Border width not set.
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iTop
+;                  |                               2 = Error setting $iBottom
+;                  |                               4 = Error setting $iLeft
+;                  |                               8 = Error setting $iRight
+;                  |                               16 = Error setting $iTLBRDiag
+;                  |                               32 = Error setting $iBLTRDiag
 ;                  --Version Related Errors--
 ;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
 ;                  --Success--
@@ -1028,6 +1079,7 @@ Func __LOCalc_CellStyleBorder(ByRef $oCellStyle, $bWid, $bSty, $bCol, $iTop = Nu
 
 	Local $avBorder[6]
 	Local $tBL2
+	Local $iError = 0
 
 	If Not __LO_VersionCheck(3.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 	If Not IsObj($oCellStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
@@ -1054,7 +1106,7 @@ Func __LOCalc_CellStyleBorder(ByRef $oCellStyle, $bWid, $bSty, $bCol, $iTop = Nu
 	If Not IsObj($tBL2) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If $iTop <> Null Then
-		If Not $bWid And ($oCellStyle.TopBorder2.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0) ; If Width not set, cant set color or style.
+		If Not $bWid And ($oCellStyle.TopBorder2.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; If Width not set, cant set color or style.
 
 		; Top Line
 		$tBL2.LineWidth = ($bWid) ? ($iTop) : ($oCellStyle.TopBorder2.LineWidth()) ; copy Line Width over to new size structure
@@ -1064,7 +1116,7 @@ Func __LOCalc_CellStyleBorder(ByRef $oCellStyle, $bWid, $bSty, $bCol, $iTop = Nu
 	EndIf
 
 	If $iBottom <> Null Then
-		If Not $bWid And ($oCellStyle.BottomBorder2.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 2, 0) ; If Width not set, cant set color or style.
+		If Not $bWid And ($oCellStyle.BottomBorder2.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0) ; If Width not set, cant set color or style.
 
 		; Bottom Line
 		$tBL2.LineWidth = ($bWid) ? ($iBottom) : ($oCellStyle.BottomBorder2.LineWidth()) ; copy Line Width over to new size structure
@@ -1074,7 +1126,7 @@ Func __LOCalc_CellStyleBorder(ByRef $oCellStyle, $bWid, $bSty, $bCol, $iTop = Nu
 	EndIf
 
 	If $iLeft <> Null Then
-		If Not $bWid And ($oCellStyle.LeftBorder2.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 3, 0) ; If Width not set, cant set color or style.
+		If Not $bWid And ($oCellStyle.LeftBorder2.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; If Width not set, cant set color or style.
 
 		; Left Line
 		$tBL2.LineWidth = ($bWid) ? ($iLeft) : ($oCellStyle.LeftBorder2.LineWidth()) ; copy Line Width over to new size structure
@@ -1084,7 +1136,7 @@ Func __LOCalc_CellStyleBorder(ByRef $oCellStyle, $bWid, $bSty, $bCol, $iTop = Nu
 	EndIf
 
 	If $iRight <> Null Then
-		If Not $bWid And ($oCellStyle.RightBorder2.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 4, 0) ; If Width not set, cant set color or style.
+		If Not $bWid And ($oCellStyle.RightBorder2.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0) ; If Width not set, cant set color or style.
 
 		; Right Line
 		$tBL2.LineWidth = ($bWid) ? ($iRight) : ($oCellStyle.RightBorder2.LineWidth()) ; copy Line Width over to new size structure
@@ -1094,7 +1146,7 @@ Func __LOCalc_CellStyleBorder(ByRef $oCellStyle, $bWid, $bSty, $bCol, $iTop = Nu
 	EndIf
 
 	If $iTLBRDiag <> Null Then
-		If Not $bWid And ($oCellStyle.DiagonalTLBR2.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 5, 0) ; If Width not set, cant set color or style.
+		If Not $bWid And ($oCellStyle.DiagonalTLBR2.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0) ; If Width not set, cant set color or style.
 
 		; Right Line
 		$tBL2.LineWidth = ($bWid) ? ($iTLBRDiag) : ($oCellStyle.DiagonalTLBR2.LineWidth()) ; copy Line Width over to new size structure
@@ -1104,7 +1156,7 @@ Func __LOCalc_CellStyleBorder(ByRef $oCellStyle, $bWid, $bSty, $bCol, $iTop = Nu
 	EndIf
 
 	If $iBLTRDiag <> Null Then
-		If Not $bWid And ($oCellStyle.DiagonalBLTR2.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 6, 0) ; If Width not set, cant set color or style.
+		If Not $bWid And ($oCellStyle.DiagonalBLTR2.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0) ; If Width not set, cant set color or style.
 
 		; Right Line
 		$tBL2.LineWidth = ($bWid) ? ($iBLTRDiag) : ($oCellStyle.DiagonalBLTR2.LineWidth()) ; copy Line Width over to new size structure
@@ -1113,7 +1165,33 @@ Func __LOCalc_CellStyleBorder(ByRef $oCellStyle, $bWid, $bSty, $bCol, $iTop = Nu
 		$oCellStyle.DiagonalBLTR2 = $tBL2
 	EndIf
 
-	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+	If $bWid Then
+		$iError = ($iTop <> Null) ? ($iError) : (__LO_IntIsBetween($oCellStyle.TopBorder2.LineWidth(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 1))
+		$iError = ($iBottom <> Null) ? ($iError) : (__LO_IntIsBetween($oCellStyle.BottomBorder2.LineWidth(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 2))
+		$iError = ($iLeft <> Null) ? ($iError) : (__LO_IntIsBetween($oCellStyle.LeftBorder2.LineWidth(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 4))
+		$iError = ($iRight <> Null) ? ($iError) : (__LO_IntIsBetween( $oCellStyle.RightBorder2.LineWidth(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 8))
+		$iError = ($iTLBRDiag <> Null) ? ($iError) : (__LO_IntIsBetween($oCellStyle.DiagonalTLBR2.LineWidth(), $iTLBRDiag - 1, $iTLBRDiag + 1)) ? ($iError) : (BitOR($iError, 16))
+		$iError = ($iBLTRDiag <> Null) ? ($iError) : (__LO_IntIsBetween($oCellStyle.DiagonalBLTR2.LineWidth(), $iBLTRDiag - 1, $iBLTRDiag + 1)) ? ($iError) : (BitOR($iError, 32))
+
+	ElseIf $bSty Then
+		$iError = ($iTop <> Null) ? ($iError) : ($oCellStyle.TopBorder2.LineStyle() = $iTop) ? ($iError) : (BitOR($iError, 1))
+		$iError = ($iBottom <> Null) ? ($iError) : ($oCellStyle.BottomBorder2.LineStyle() = $iBottom) ? ($iError) : (BitOR($iError, 2))
+		$iError = ($iLeft <> Null) ? ($iError) : ($oCellStyle.LeftBorder2.LineStyle() = $iLeft) ? ($iError) : (BitOR($iError, 4))
+		$iError = ($iRight <> Null) ? ($iError) : ($oCellStyle.RightBorder2.LineStyle() = $iRight) ? ($iError) : (BitOR($iError, 8))
+		$iError = ($iTLBRDiag <> Null) ? ($iError) : ($oCellStyle.DiagonalTLBR2.LineStyle() = $iTLBRDiag) ? ($iError) : (BitOR($iError, 16))
+		$iError = ($iBLTRDiag <> Null) ? ($iError) : ($oCellStyle.DiagonalBLTR2.LineStyle() = $iBLTRDiag) ? ($iError) : (BitOR($iError, 32))
+
+	Else
+		$iError = ($iTop <> Null) ? ($iError) : ($oCellStyle.TopBorder2.Color() = $iTop) ? ($iError) : (BitOR($iError, 1))
+		$iError = ($iBottom <> Null) ? ($iError) : ($oCellStyle.BottomBorder2.Color() = $iBottom) ? ($iError) : (BitOR($iError, 2))
+		$iError = ($iLeft <> Null) ? ($iError) : ($oCellStyle.LeftBorder2.Color() = $iLeft) ? ($iError) : (BitOR($iError, 4))
+		$iError = ($iRight <> Null) ? ($iError) : ($oCellStyle.RightBorder2.Color() = $iRight) ? ($iError) : (BitOR($iError, 8))
+		$iError = ($iTLBRDiag <> Null) ? ($iError) : ($oCellStyle.DiagonalTLBR2.Color() = $iTLBRDiag) ? ($iError) : (BitOR($iError, 16))
+		$iError = ($iBLTRDiag <> Null) ? ($iError) : ($oCellStyle.DiagonalBLTR2.Color() = $iBLTRDiag) ? ($iError) : (BitOR($iError, 32))
+
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOCalc_CellStyleBorder
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -2262,11 +2340,16 @@ EndFunc   ;==>__LOCalc_NamedRangeGetScopeObj
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
+;                  @Error 3 @Extended 2 Return 0 = Cannot set Top Border Style/Color when Top Border width not set.
+;                  @Error 3 @Extended 3 Return 0 = Cannot set Bottom Border Style/Color when Bottom Border width not set.
+;                  @Error 3 @Extended 4 Return 0 = Cannot set Left Border Style/Color when Left Border width not set.
+;                  @Error 3 @Extended 5 Return 0 = Cannot set Right Border Style/Color when Right Border width not set.
 ;                  --Property Setting Errors--
-;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style/Color when Top Border width not set.
-;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style/Color when Bottom Border width not set.
-;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style/Color when Left Border width not set.
-;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style/Color when Right Border width not set.
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iTop
+;                  |                               2 = Error setting $iBottom
+;                  |                               4 = Error setting $iLeft
+;                  |                               8 = Error setting $iRight
 ;                  --Version Related Errors--
 ;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
 ;                  --Success--
@@ -2286,6 +2369,7 @@ Func __LOCalc_PageStyleBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTop = Nu
 
 	Local $avBorder[4]
 	Local $tBL2
+	Local $iError = 0
 
 	If Not __LO_VersionCheck(3.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
@@ -2309,7 +2393,7 @@ Func __LOCalc_PageStyleBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTop = Nu
 	If Not IsObj($tBL2) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If $iTop <> Null Then
-		If Not $bWid And ($oPageStyle.TopBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0) ; If Width not set, cant set color or style.
+		If Not $bWid And ($oPageStyle.TopBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; If Width not set, cant set color or style.
 
 		; Top Line
 		$tBL2.LineWidth = ($bWid) ? ($iTop) : ($oPageStyle.TopBorder.LineWidth()) ; copy Line Width over to new size structure
@@ -2319,7 +2403,7 @@ Func __LOCalc_PageStyleBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTop = Nu
 	EndIf
 
 	If $iBottom <> Null Then
-		If Not $bWid And ($oPageStyle.BottomBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 2, 0) ; If Width not set, cant set color or style.
+		If Not $bWid And ($oPageStyle.BottomBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0) ; If Width not set, cant set color or style.
 
 		; Bottom Line
 		$tBL2.LineWidth = ($bWid) ? ($iBottom) : ($oPageStyle.BottomBorder.LineWidth()) ; copy Line Width over to new size structure
@@ -2329,7 +2413,7 @@ Func __LOCalc_PageStyleBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTop = Nu
 	EndIf
 
 	If $iLeft <> Null Then
-		If Not $bWid And ($oPageStyle.LeftBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 3, 0) ; If Width not set, cant set color or style.
+		If Not $bWid And ($oPageStyle.LeftBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; If Width not set, cant set color or style.
 
 		; Left Line
 		$tBL2.LineWidth = ($bWid) ? ($iLeft) : ($oPageStyle.LeftBorder.LineWidth()) ; copy Line Width over to new size structure
@@ -2339,7 +2423,7 @@ Func __LOCalc_PageStyleBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTop = Nu
 	EndIf
 
 	If $iRight <> Null Then
-		If Not $bWid And ($oPageStyle.RightBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 4, 0) ; If Width not set, cant set color or style.
+		If Not $bWid And ($oPageStyle.RightBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0) ; If Width not set, cant set color or style.
 
 		; Right Line
 		$tBL2.LineWidth = ($bWid) ? ($iRight) : ($oPageStyle.RightBorder.LineWidth()) ; copy Line Width over to new size structure
@@ -2348,7 +2432,27 @@ Func __LOCalc_PageStyleBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTop = Nu
 		$oPageStyle.RightBorder = $tBL2
 	EndIf
 
-	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+	If $bWid Then
+		$iError = ($iTop <> Null) ? ($iError) : (__LO_IntIsBetween($oPageStyle.TopBorder.LineWidth(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 1))
+		$iError = ($iBottom <> Null) ? ($iError) : (__LO_IntIsBetween($oPageStyle.BottomBorder.LineWidth(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 2))
+		$iError = ($iLeft <> Null) ? ($iError) : (__LO_IntIsBetween($oPageStyle.LeftBorder.LineWidth(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 4))
+		$iError = ($iRight <> Null) ? ($iError) : (__LO_IntIsBetween($oPageStyle.RightBorder.LineWidth(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 8))
+
+	ElseIf $bSty Then
+		$iError = ($iTop <> Null) ? ($iError) : ($oPageStyle.TopBorder.LineStyle() = $iTop) ? ($iError) : (BitOR($iError, 1))
+		$iError = ($iBottom <> Null) ? ($iError) : ($oPageStyle.BottomBorder.LineStyle() = $iBottom) ? ($iError) : (BitOR($iError, 2))
+		$iError = ($iLeft <> Null) ? ($iError) : ($oPageStyle.LeftBorder.LineStyle() = $iLeft) ? ($iError) : (BitOR($iError, 4))
+		$iError = ($iRight <> Null) ? ($iError) : ($oPageStyle.RightBorder.LineStyle() = $iRight) ? ($iError) : (BitOR($iError, 8))
+
+	Else
+		$iError = ($iTop <> Null) ? ($iError) : ($oPageStyle.TopBorder.Color() = $iTop) ? ($iError) : (BitOR($iError, 1))
+		$iError = ($iBottom <> Null) ? ($iError) : ($oPageStyle.BottomBorder.Color() = $iBottom) ? ($iError) : (BitOR($iError, 2))
+		$iError = ($iLeft <> Null) ? ($iError) : ($oPageStyle.LeftBorder.Color() = $iLeft) ? ($iError) : (BitOR($iError, 4))
+		$iError = ($iRight <> Null) ? ($iError) : ($oPageStyle.RightBorder.Color() = $iRight) ? ($iError) : (BitOR($iError, 8))
+
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOCalc_PageStyleBorder
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -2371,11 +2475,17 @@ EndFunc   ;==>__LOCalc_PageStyleBorder
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
+;                  @Error 3 @Extended 2 Return 0 = Footers are not enabled for this Page Style.
+;                  @Error 3 @Extended 3 Return 0 = Cannot set Top Border Style/Color when Top Border width not set.
+;                  @Error 3 @Extended 4 Return 0 = Cannot set Bottom Border Style/Color when Bottom Border width not set.
+;                  @Error 3 @Extended 5 Return 0 = Cannot set Left Border Style/Color when Left Border width not set.
+;                  @Error 3 @Extended 6 Return 0 = Cannot set Right Border Style/Color when Right Border width not set.
 ;                  --Property Setting Errors--
-;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style/Color when Top Border width not set.
-;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style/Color when Bottom Border width not set.
-;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style/Color when Left Border width not set.
-;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style/Color when Right Border width not set.
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iTop
+;                  |                               2 = Error setting $iBottom
+;                  |                               4 = Error setting $iLeft
+;                  |                               8 = Error setting $iRight
 ;                  --Version Related Errors--
 ;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
 ;                  --Success--
@@ -2395,10 +2505,12 @@ Func __LOCalc_PageStyleFooterBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTo
 
 	Local $avBorder[4]
 	Local $tBL2
+	Local $iError = 0
 
 	If Not __LO_VersionCheck(3.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If (($bWid + $bSty + $bCol) <> 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; If more than one Boolean is true = error
+	If ($oPageStyle.FooterIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If __LO_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then
 		If $bWid Then
@@ -2418,7 +2530,7 @@ Func __LOCalc_PageStyleFooterBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTo
 	If Not IsObj($tBL2) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If $iTop <> Null Then
-		If Not $bWid And ($oPageStyle.FooterTopBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0) ; If Width not set, cant set color or style.
+		If Not $bWid And ($oPageStyle.FooterTopBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0) ; If Width not set, cant set color or style.
 
 		; Top Line
 		$tBL2.LineWidth = ($bWid) ? ($iTop) : ($oPageStyle.FooterTopBorder.LineWidth()) ; copy Line Width over to new size structure
@@ -2428,7 +2540,7 @@ Func __LOCalc_PageStyleFooterBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTo
 	EndIf
 
 	If $iBottom <> Null Then
-		If Not $bWid And ($oPageStyle.FooterBottomBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 2, 0) ; If Width not set, cant set color or style.
+		If Not $bWid And ($oPageStyle.FooterBottomBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; If Width not set, cant set color or style.
 
 		; Bottom Line
 		$tBL2.LineWidth = ($bWid) ? ($iBottom) : ($oPageStyle.FooterBottomBorder.LineWidth()) ; copy Line Width over to new size structure
@@ -2438,7 +2550,7 @@ Func __LOCalc_PageStyleFooterBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTo
 	EndIf
 
 	If $iLeft <> Null Then
-		If Not $bWid And ($oPageStyle.FooterLeftBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 3, 0) ; If Width not set, cant set color or style.
+		If Not $bWid And ($oPageStyle.FooterLeftBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0) ; If Width not set, cant set color or style.
 
 		; Left Line
 		$tBL2.LineWidth = ($bWid) ? ($iLeft) : ($oPageStyle.FooterLeftBorder.LineWidth()) ; copy Line Width over to new size structure
@@ -2448,7 +2560,7 @@ Func __LOCalc_PageStyleFooterBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTo
 	EndIf
 
 	If $iRight <> Null Then
-		If Not $bWid And ($oPageStyle.FooterRightBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 4, 0) ; If Width not set, cant set color or style.
+		If Not $bWid And ($oPageStyle.FooterRightBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0) ; If Width not set, cant set color or style.
 
 		; Right Line
 		$tBL2.LineWidth = ($bWid) ? ($iRight) : ($oPageStyle.FooterRightBorder.LineWidth()) ; copy Line Width over to new size structure
@@ -2457,7 +2569,27 @@ Func __LOCalc_PageStyleFooterBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTo
 		$oPageStyle.FooterRightBorder = $tBL2
 	EndIf
 
-	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+	If $bWid Then
+		$iError = ($iTop <> Null) ? ($iError) : (__LO_IntIsBetween($oPageStyle.FooterTopBorder.LineWidth(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 1))
+		$iError = ($iBottom <> Null) ? ($iError) : (__LO_IntIsBetween($oPageStyle.FooterBottomBorder.LineWidth(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 2))
+		$iError = ($iLeft <> Null) ? ($iError) : (__LO_IntIsBetween($oPageStyle.FooterLeftBorder.LineWidth(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 4))
+		$iError = ($iRight <> Null) ? ($iError) : (__LO_IntIsBetween($oPageStyle.FooterRightBorder.LineWidth(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 8))
+
+	ElseIf $bSty Then
+		$iError = ($iTop <> Null) ? ($iError) : ($oPageStyle.FooterTopBorder.LineStyle() = $iTop) ? ($iError) : (BitOR($iError, 1))
+		$iError = ($iBottom <> Null) ? ($iError) : ($oPageStyle.FooterBottomBorder.LineStyle() = $iBottom) ? ($iError) : (BitOR($iError, 2))
+		$iError = ($iLeft <> Null) ? ($iError) : ($oPageStyle.FooterLeftBorder.LineStyle() = $iLeft) ? ($iError) : (BitOR($iError, 4))
+		$iError = ($iRight <> Null) ? ($iError) : ($oPageStyle.FooterRightBorder.LineStyle() = $iRight) ? ($iError) : (BitOR($iError, 8))
+
+	Else
+		$iError = ($iTop <> Null) ? ($iError) : ($oPageStyle.FooterTopBorder.Color() = $iTop) ? ($iError) : (BitOR($iError, 1))
+		$iError = ($iBottom <> Null) ? ($iError) : ($oPageStyle.FooterBottomBorder.Color() = $iBottom) ? ($iError) : (BitOR($iError, 2))
+		$iError = ($iLeft <> Null) ? ($iError) : ($oPageStyle.FooterLeftBorder.Color() = $iLeft) ? ($iError) : (BitOR($iError, 4))
+		$iError = ($iRight <> Null) ? ($iError) : ($oPageStyle.FooterRightBorder.Color() = $iRight) ? ($iError) : (BitOR($iError, 8))
+
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOCalc_PageStyleFooterBorder
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -2480,11 +2612,17 @@ EndFunc   ;==>__LOCalc_PageStyleFooterBorder
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
+;                  @Error 3 @Extended 2 Return 0 = Headers are not enabled for this Page Style.
+;                  @Error 3 @Extended 3 Return 0 = Cannot set Top Border Style/Color when Top Border width not set.
+;                  @Error 3 @Extended 4 Return 0 = Cannot set Bottom Border Style/Color when Bottom Border width not set.
+;                  @Error 3 @Extended 5 Return 0 = Cannot set Left Border Style/Color when Left Border width not set.
+;                  @Error 3 @Extended 6 Return 0 = Cannot set Right Border Style/Color when Right Border width not set.
 ;                  --Property Setting Errors--
-;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style/Color when Top Border width not set.
-;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style/Color when Bottom Border width not set.
-;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style/Color when Left Border width not set.
-;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style/Color when Right Border width not set.
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iTop
+;                  |                               2 = Error setting $iBottom
+;                  |                               4 = Error setting $iLeft
+;                  |                               8 = Error setting $iRight
 ;                  --Version Related Errors--
 ;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
 ;                  --Success--
@@ -2504,10 +2642,12 @@ Func __LOCalc_PageStyleHeaderBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTo
 
 	Local $avBorder[4]
 	Local $tBL2
+	Local $iError = 0
 
 	If Not __LO_VersionCheck(3.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If (($bWid + $bSty + $bCol) <> 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; If more than one Boolean is true = error
+	If ($oPageStyle.HeaderIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If __LO_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then
 		If $bWid Then
@@ -2527,7 +2667,7 @@ Func __LOCalc_PageStyleHeaderBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTo
 	If Not IsObj($tBL2) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If $iTop <> Null Then
-		If Not $bWid And ($oPageStyle.HeaderTopBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0) ; If Width not set, cant set color or style.
+		If Not $bWid And ($oPageStyle.HeaderTopBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0) ; If Width not set, cant set color or style.
 
 		; Top Line
 		$tBL2.LineWidth = ($bWid) ? ($iTop) : ($oPageStyle.HeaderTopBorder.LineWidth()) ; copy Line Width over to new size structure
@@ -2537,7 +2677,7 @@ Func __LOCalc_PageStyleHeaderBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTo
 	EndIf
 
 	If $iBottom <> Null Then
-		If Not $bWid And ($oPageStyle.HeaderBottomBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 2, 0) ; If Width not set, cant set color or style.
+		If Not $bWid And ($oPageStyle.HeaderBottomBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; If Width not set, cant set color or style.
 
 		; Bottom Line
 		$tBL2.LineWidth = ($bWid) ? ($iBottom) : ($oPageStyle.HeaderBottomBorder.LineWidth()) ; copy Line Width over to new size structure
@@ -2547,7 +2687,7 @@ Func __LOCalc_PageStyleHeaderBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTo
 	EndIf
 
 	If $iLeft <> Null Then
-		If Not $bWid And ($oPageStyle.HeaderLeftBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 3, 0) ; If Width not set, cant set color or style.
+		If Not $bWid And ($oPageStyle.HeaderLeftBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0) ; If Width not set, cant set color or style.
 
 		; Left Line
 		$tBL2.LineWidth = ($bWid) ? ($iLeft) : ($oPageStyle.HeaderLeftBorder.LineWidth()) ; copy Line Width over to new size structure
@@ -2557,7 +2697,7 @@ Func __LOCalc_PageStyleHeaderBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTo
 	EndIf
 
 	If $iRight <> Null Then
-		If Not $bWid And ($oPageStyle.HeaderRightBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 4, 0) ; If Width not set, cant set color or style.
+		If Not $bWid And ($oPageStyle.HeaderRightBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0) ; If Width not set, cant set color or style.
 
 		; Right Line
 		$tBL2.LineWidth = ($bWid) ? ($iRight) : ($oPageStyle.HeaderRightBorder.LineWidth()) ; copy Line Width over to new size structure
@@ -2566,7 +2706,27 @@ Func __LOCalc_PageStyleHeaderBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTo
 		$oPageStyle.HeaderRightBorder = $tBL2
 	EndIf
 
-	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+	If $bWid Then
+		$iError = ($iTop <> Null) ? ($iError) : (__LO_IntIsBetween($oPageStyle.HeaderTopBorder.LineWidth(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 1))
+		$iError = ($iBottom <> Null) ? ($iError) : (__LO_IntIsBetween($oPageStyle.HeaderBottomBorder.LineWidth(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 2))
+		$iError = ($iLeft <> Null) ? ($iError) : (__LO_IntIsBetween($oPageStyle.HeaderLeftBorder.LineWidth(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 4))
+		$iError = ($iRight <> Null) ? ($iError) : (__LO_IntIsBetween($oPageStyle.HeaderRightBorder.LineWidth(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 8))
+
+	ElseIf $bSty Then
+		$iError = ($iTop <> Null) ? ($iError) : ($oPageStyle.HeaderTopBorder.LineStyle() = $iTop) ? ($iError) : (BitOR($iError, 1))
+		$iError = ($iBottom <> Null) ? ($iError) : ($oPageStyle.HeaderBottomBorder.LineStyle() = $iBottom) ? ($iError) : (BitOR($iError, 2))
+		$iError = ($iLeft <> Null) ? ($iError) : ($oPageStyle.HeaderLeftBorder.LineStyle() = $iLeft) ? ($iError) : (BitOR($iError, 4))
+		$iError = ($iRight <> Null) ? ($iError) : ($oPageStyle.HeaderRightBorder.LineStyle() = $iRight) ? ($iError) : (BitOR($iError, 8))
+
+	Else
+		$iError = ($iTop <> Null) ? ($iError) : ($oPageStyle.HeaderTopBorder.Color() = $iTop) ? ($iError) : (BitOR($iError, 1))
+		$iError = ($iBottom <> Null) ? ($iError) : ($oPageStyle.HeaderBottomBorder.Color() = $iBottom) ? ($iError) : (BitOR($iError, 2))
+		$iError = ($iLeft <> Null) ? ($iError) : ($oPageStyle.HeaderLeftBorder.Color() = $iLeft) ? ($iError) : (BitOR($iError, 4))
+		$iError = ($iRight <> Null) ? ($iError) : ($oPageStyle.HeaderRightBorder.Color() = $iRight) ? ($iError) : (BitOR($iError, 8))
+
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOCalc_PageStyleHeaderBorder
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================

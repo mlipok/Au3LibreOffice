@@ -1043,6 +1043,29 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_TextCursorStrikeOut
 	- _LOCalc_TextCursorUnderline
 - Changed checks for a variable being null to use internal function `__LO_VarsAreNull`.
+- Changed error values for the following:
+	- __LOCalc_CellBorder
+	- __LOCalc_CellStyleBorder
+	- __LOCalc_PageStyleBorder
+	- __LOCalc_PageStyleFooterBorder
+	- __LOCalc_PageStyleHeaderBorder
+	- _LOCalc_CellBorderColor
+	- _LOCalc_CellBorderStyle
+	- _LOCalc_CellBorderWidth
+	- _LOCalc_CellStyleBorderColor
+	- _LOCalc_CellStyleBorderStyle
+	- _LOCalc_CellStyleBorderWidth
+	- _LOCalc_DocExport
+	- _LOCalc_DocPrint
+	- _LOCalc_PageStyleBorderColor
+	- _LOCalc_PageStyleBorderStyle
+	- _LOCalc_PageStyleBorderWidth
+	- _LOCalc_PageStyleFooterBorderColor
+	- _LOCalc_PageStyleFooterBorderStyle
+	- _LOCalc_PageStyleFooterBorderWidth
+	- _LOCalc_PageStyleHeaderBorderColor
+	- _LOCalc_PageStyleHeaderBorderStyle
+	- _LOCalc_PageStyleHeaderBorderWidth
 
 #### Removed
 
