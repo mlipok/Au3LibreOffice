@@ -2101,8 +2101,7 @@ EndFunc   ;==>_LOWriter_TableStyleExists
 ;                  @Error 1 @Extended 3 Return 0 = $bAppliedOnly not a Boolean.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Table Styles Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Table Styles list.
-;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Table Styles Count.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Table Styles Count.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Array = Success. An Array containing all Table Styles matching the input parameters. See remarks. @Extended contains the count of results returned.
 ; Author ........: donnyh13
@@ -2122,7 +2121,7 @@ Func _LOWriter_TableStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnl
 
 	Local $oStyles
 	Local $aStyles[0]
-	Local $iCount = 0
+	Local $iResults = 0, $iCount
 	Local $sExecute = ""
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
@@ -2132,18 +2131,16 @@ Func _LOWriter_TableStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnl
 	$oStyles = $oDoc.StyleFamilies.getByName("TableStyles")
 	If Not IsObj($oStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	ReDim $aStyles[$oStyles.getCount()]
+	$iCount = $oStyles.getCount()
+	If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	ReDim $aStyles[$iCount]
 
 	If Not $bUserOnly And Not $bAppliedOnly Then
-		$aStyles = $oStyles.getElementNames()
-		If Not IsArray($aStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-		For $i = 0 To UBound($aStyles) - 1
-			$aStyles[$i] = __LOWriter_TableStyleNameToggle($aStyles[$i], True)
+		For $i = 0 To $iCount - 1
+			$aStyles[$i] = $oStyles.getByIndex($i).DisplayName()
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
-
-		$iCount = $oStyles.getCount()
-		If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		Return SetError($__LO_STATUS_SUCCESS, $iCount, $aStyles)
 	EndIf
@@ -2152,16 +2149,16 @@ Func _LOWriter_TableStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnl
 	$sExecute = ($bUserOnly And $bAppliedOnly) ? ($sExecute & " And ") : ($sExecute)
 	$sExecute = ($bAppliedOnly) ? ($sExecute & "($oStyles.getByIndex($i).isInUse())") : ($sExecute)
 
-	For $i = 0 To $oStyles.getCount() - 1
+	For $i = 0 To $iCount - 1
 		If Execute($sExecute) Then
-			$aStyles[$iCount] = $oStyles.getByIndex($i).DisplayName()
-			$iCount += 1
+			$aStyles[$iResults] = $oStyles.getByIndex($i).DisplayName()
+			$iResults += 1
 		EndIf
 		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	Next
-	ReDim $aStyles[$iCount]
+	ReDim $aStyles[$iResults]
 
-	Return SetError($__LO_STATUS_SUCCESS, $iCount, $aStyles)
+	Return SetError($__LO_STATUS_SUCCESS, $iResults, $aStyles)
 EndFunc   ;==>_LOWriter_TableStylesGetNames
 
 ; #FUNCTION# ====================================================================================================================
