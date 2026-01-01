@@ -217,7 +217,8 @@ EndFunc   ;==>_LOWriter_EndnoteInsert
 ;                  @Error 1 @Extended 1 Return 0 = $oEndNote not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sLabel not a String.
 ;                  --Property Setting Errors--
-;                  @Error 4 @Extended 1 Return 0 = $sLabel was not set successfully.
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sLabel
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Endnote settings were successfully modified.
 ;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were called with Null, current Endnote Label returned.
@@ -235,6 +236,8 @@ Func _LOWriter_EndnoteModifyAnchor(ByRef $oEndNote, $sLabel = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
+	Local $iError = 0
+
 	If Not IsObj($oEndNote) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If ($sLabel = Null) Then
@@ -249,9 +252,9 @@ Func _LOWriter_EndnoteModifyAnchor(ByRef $oEndNote, $sLabel = Null)
 	If Not IsString($sLabel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oEndNote.Label = $sLabel
-	If ($oEndNote.Label() <> $sLabel) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0)
+	$iError = ($oEndNote.Label() <> $sLabel) ? ($iError) : (BitOR($iError, 1))
 
-	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_EndnoteModifyAnchor
 
 ; #FUNCTION# ====================================================================================================================
@@ -652,7 +655,8 @@ EndFunc   ;==>_LOWriter_FootnoteInsert
 ;                  @Error 1 @Extended 1 Return 0 = $oFootNote not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sLabel not a String.
 ;                  --Property Setting Errors--
-;                  @Error 4 @Extended 1 Return 0 = Failed to set $sLabel.
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sLabel
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Footnote settings were successfully modified.
 ;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were called with Null, current Footnote Custom Label returned.
@@ -670,6 +674,8 @@ Func _LOWriter_FootnoteModifyAnchor(ByRef $oFootNote, $sLabel = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
+	Local $iError = 0
+
 	If Not IsObj($oFootNote) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If ($sLabel = Null) Then
@@ -684,9 +690,9 @@ Func _LOWriter_FootnoteModifyAnchor(ByRef $oFootNote, $sLabel = Null)
 	If Not IsString($sLabel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oFootNote.Label = $sLabel
-	If ($oFootNote.Label() <> $sLabel) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0)
+	$iError = ($oFootNote.Label() <> $sLabel) ? ($iError) : (BitOR($iError, 1))
 
-	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FootnoteModifyAnchor
 
 ; #FUNCTION# ====================================================================================================================

@@ -90,11 +90,16 @@
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
+;                  @Error 3 @Extended 2 Return 0 = Cannot set Top Border Color when Top Border width not set.
+;                  @Error 3 @Extended 3 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
+;                  @Error 3 @Extended 4 Return 0 = Cannot set Left Border Color when Left Border width not set.
+;                  @Error 3 @Extended 5 Return 0 = Cannot set Right Border Color when Right Border width not set.
 ;                  --Property Setting Errors--
-;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Top Border width not set.
-;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
-;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Left Border width not set.
-;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Right Border width not set.
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iTop
+;                  |                               2 = Error setting $iBottom
+;                  |                               4 = Error setting $iLeft
+;                  |                               8 = Error setting $iRight
 ;                  --Version Related Errors--
 ;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 4.2.
 ;                  --Success--
@@ -228,11 +233,16 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderPadding
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
+;                  @Error 3 @Extended 2 Return 0 = Cannot set Top Border Style when Top Border width not set.
+;                  @Error 3 @Extended 3 Return 0 = Cannot set Bottom Border Style when Bottom Border width not set.
+;                  @Error 3 @Extended 4 Return 0 = Cannot set Left Border Style when Left Border width not set.
+;                  @Error 3 @Extended 5 Return 0 = Cannot set Right Border Style when Right Border width not set.
 ;                  --Property Setting Errors--
-;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Top Border width not set.
-;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Bottom Border width not set.
-;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Left Border width not set.
-;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Right Border width not set.
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iTop
+;                  |                               2 = Error setting $iBottom
+;                  |                               4 = Error setting $iLeft
+;                  |                               8 = Error setting $iRight
 ;                  --Version Related Errors--
 ;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 4.2.
 ;                  --Success--
@@ -301,6 +311,12 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderStyle
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iTop
+;                  |                               2 = Error setting $iBottom
+;                  |                               4 = Error setting $iLeft
+;                  |                               8 = Error setting $iRight
 ;                  --Version Related Errors--
 ;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 4.2.
 ;                  --Success--
@@ -1470,11 +1486,16 @@ EndFunc   ;==>_LOWriter_DirFrmtParAreaTransparency
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
+;                  @Error 3 @Extended 2 Return 0 = Cannot set Top Border Color when Top Border width not set.
+;                  @Error 3 @Extended 3 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
+;                  @Error 3 @Extended 4 Return 0 = Cannot set Left Border Color when Left Border width not set.
+;                  @Error 3 @Extended 5 Return 0 = Cannot set Right Border Color when Right Border width not set.
 ;                  --Property Setting Errors--
-;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Top Border width not set.
-;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
-;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Left Border width not set.
-;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Right Border width not set.
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iTop
+;                  |                               2 = Error setting $iBottom
+;                  |                               4 = Error setting $iLeft
+;                  |                               8 = Error setting $iRight
 ;                  --Version Related Errors--
 ;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
 ;                  --Success--
@@ -1604,11 +1625,16 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderPadding
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
+;                  @Error 3 @Extended 2 Return 0 = Cannot set Top Border Style when Top Border width not set.
+;                  @Error 3 @Extended 3 Return 0 = Cannot set Bottom Border Style when Bottom Border width not set.
+;                  @Error 3 @Extended 4 Return 0 = Cannot set Left Border Style when Left Border width not set.
+;                  @Error 3 @Extended 5 Return 0 = Cannot set Right Border Style when Right Border width not set.
 ;                  --Property Setting Errors--
-;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Top Border width not set.
-;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Bottom Border width not set.
-;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Left Border width not set.
-;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Right Border width not set.
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iTop
+;                  |                               2 = Error setting $iBottom
+;                  |                               4 = Error setting $iLeft
+;                  |                               8 = Error setting $iRight
 ;                  --Version Related Errors--
 ;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
 ;                  --Success--
@@ -1679,6 +1705,13 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderStyle
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iTop
+;                  |                               2 = Error setting $iBottom
+;                  |                               4 = Error setting $iLeft
+;                  |                               8 = Error setting $iRight
+;                  |                               16 = Error setting $bConnectBorder
 ;                  --Version Related Errors--
 ;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
 ;                  --Success--
@@ -1739,9 +1772,20 @@ Func _LOWriter_DirFrmtParBorderWidth(ByRef $oSelection, $iTop = Null, $iBottom =
 
 		If @error Then Return SetError(@error, @extended, $vReturn)
 	EndIf
-	If ($bConnectBorder <> Null) Then $oSelection.ParaIsConnectBorder = $bConnectBorder
+	If ($bConnectBorder <> Null) Then
+		$oSelection.ParaIsConnectBorder = $bConnectBorder
 
-	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+		If ($oSelection.ParaIsConnectBorder() <> $bConnectBorder) Then
+			If (@error = $__LO_STATUS_PROP_SETTING_ERROR) Then
+				SetError(@error, BitOR(@extended, 16), $vReturn)
+
+			Else
+				SetError($__LO_STATUS_PROP_SETTING_ERROR, BitOR(0, 16), $vReturn)
+			EndIf
+		EndIf
+	EndIf
+
+	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtParBorderWidth
 
 ; #FUNCTION# ====================================================================================================================

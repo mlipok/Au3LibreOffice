@@ -1604,6 +1604,51 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Switched order of parameters in `_LOWriter_TableGetData`, changing $iRow to come after $iColumn.
 - Removed replacement of CRLF with CR in `_LOWriter_TableGetData`.
 - Added replacement of CRLF to CR in `_LOWriter_TableSetData`, to prevent adding extra newlines (L.O. uses CR and LF separately).
+- Changed error values for the following:
+	- __LOWriter_Border
+	- __LOWriter_CharBorder
+	- __LOWriter_FooterBorder
+	- __LOWriter_HeaderBorder
+	- __LOWriter_TableBorder
+	- _LOWriter_CellBorderColor
+	- _LOWriter_CellBorderStyle
+	- _LOWriter_CellBorderWidth
+	- _LOWriter_CharStyleBorderColor
+	- _LOWriter_CharStyleBorderStyle
+	- _LOWriter_CharStyleBorderWidth
+	- _LOWriter_DirFrmtCharBorderColor
+	- _LOWriter_DirFrmtCharBorderStyle
+	- _LOWriter_DirFrmtCharBorderWidth
+	- _LOWriter_DirFrmtParBorderColor
+	- _LOWriter_DirFrmtParBorderStyle
+	- _LOWriter_DirFrmtParBorderWidth
+	- _LOWriter_DocExport
+	- _LOWriter_DocPrint
+	- _LOWriter_FrameBorderColor
+	- _LOWriter_FrameBorderStyle
+	- _LOWriter_FrameBorderWidth
+	- _LOWriter_FrameStyleBorderColor
+	- _LOWriter_FrameStyleBorderStyle
+	- _LOWriter_FrameStyleBorderWidth
+	- _LOWriter_ImageBorderColor
+	- _LOWriter_ImageBorderStyle
+	- _LOWriter_ImageBorderWidth
+	- _LOWriter_PageStyleBorderColor
+	- _LOWriter_PageStyleBorderStyle
+	- _LOWriter_PageStyleBorderWidth
+	- _LOWriter_PageStyleFooterBorderColor
+	- _LOWriter_PageStyleFooterBorderStyle
+	- _LOWriter_PageStyleFooterBorderWidth
+	- _LOWriter_PageStyleHeaderBorderColor
+	- _LOWriter_PageStyleHeaderBorderStyle
+	- _LOWriter_PageStyleHeaderBorderWidth
+	- _LOWriter_ParStyleBorderColor
+	- _LOWriter_ParStyleBorderStyle
+	- _LOWriter_ParStyleBorderWidth
+	- _LOWriter_ShapePointsModify
+	- _LOWriter_TableBorderColor
+	- _LOWriter_TableBorderStyle
+	- _LOWriter_TableBorderWidth
 
 #### Fixed
 

@@ -139,13 +139,20 @@ EndFunc   ;==>_LOWriter_TableBackColor
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving Object "TableBorder2".
+;                  @Error 3 @Extended 3 Return 0 = Cannot set Top Border Color when Top Border width not set.
+;                  @Error 3 @Extended 4 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
+;                  @Error 3 @Extended 5 Return 0 = Cannot set Left Border Color when Left Border width not set.
+;                  @Error 3 @Extended 6 Return 0 = Cannot set Right Border Color when Right Border width not set.
+;                  @Error 3 @Extended 7 Return 0 = Cannot set Vertical Border Color when Vertical Border width not set.
+;                  @Error 3 @Extended 8 Return 0 = Cannot set Horizontal Border Color when Horizontal Border width not set.
 ;                  --Property Setting Errors--
-;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Top Border width not set.
-;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
-;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Left Border width not set.
-;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Right Border width not set.
-;                  @Error 4 @Extended 5 Return 0 = Cannot set Vertical Border Color when Vertical Border width not set.
-;                  @Error 4 @Extended 6 Return 0 = Cannot set Horizontal Border Color when Horizontal Border width not set.
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iTop
+;                  |                               2 = Error setting $iBottom
+;                  |                               4 = Error setting $iLeft
+;                  |                               8 = Error setting $iRight
+;                  |                               16 = Error setting $iVert
+;                  |                               32 = Error setting $iHori
 ;                  --Version Related Errors--
 ;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
 ;                  --Success--
@@ -296,13 +303,20 @@ EndFunc   ;==>_LOWriter_TableBorderPadding
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving Object "TableBorder2".
+;                  @Error 3 @Extended 3 Return 0 = Cannot set Top Border Style when Top Border width not set.
+;                  @Error 3 @Extended 4 Return 0 = Cannot set Bottom Border Style when Bottom Border width not set.
+;                  @Error 3 @Extended 5 Return 0 = Cannot set Left Border Style when Left Border width not set.
+;                  @Error 3 @Extended 6 Return 0 = Cannot set Right Border Style when Right Border width not set.
+;                  @Error 3 @Extended 7 Return 0 = Cannot set Vertical Border Style when Vertical Border width not set.
+;                  @Error 3 @Extended 8 Return 0 = Cannot set Horizontal Border Style when Horizontal Border width not set.
 ;                  --Property Setting Errors--
-;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Top Border width not set.
-;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Bottom Border width not set.
-;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Left Border width not set.
-;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Right Border width not set.
-;                  @Error 4 @Extended 5 Return 0 = Cannot set Vertical Border Style when Vertical Border width not set.
-;                  @Error 4 @Extended 6 Return 0 = Cannot set Horizontal Border Style when Horizontal Border width not set.
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iTop
+;                  |                               2 = Error setting $iBottom
+;                  |                               4 = Error setting $iLeft
+;                  |                               8 = Error setting $iRight
+;                  |                               16 = Error setting $iVert
+;                  |                               32 = Error setting $iHori
 ;                  --Version Related Errors--
 ;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
 ;                  --Success--
@@ -359,6 +373,14 @@ EndFunc   ;==>_LOWriter_TableBorderStyle
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving Object "TableBorder2".
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iTop
+;                  |                               2 = Error setting $iBottom
+;                  |                               4 = Error setting $iLeft
+;                  |                               8 = Error setting $iRight
+;                  |                               16 = Error setting $iVert
+;                  |                               32 = Error setting $iHori
 ;                  --Version Related Errors--
 ;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
 ;                  --Success--

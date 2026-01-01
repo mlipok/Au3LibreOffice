@@ -108,13 +108,16 @@ EndFunc   ;==>_LOWriter_CellBackColor
 ;                  @Error 1 @Extended 5 Return 0 = $iRight not an Integer, less than 0 or greater than 16777215.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating "com.sun.star.table.BorderLine2" Object
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
+;                  @Error 3 @Extended 2 Return 0 = Cannot set Top Border Color when Top Border width not set.
+;                  @Error 3 @Extended 3 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
+;                  @Error 3 @Extended 4 Return 0 = Cannot set Left Border Color when Left Border width not set.
+;                  @Error 3 @Extended 5 Return 0 = Cannot set Right Border Color when Right Border width not set.
 ;                  --Property Setting Errors--
-;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Top Border width not set.
-;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
-;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Left Border width not set.
-;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Right Border width not set.
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iTop
+;                  |                               2 = Error setting $iBottom
+;                  |                               4 = Error setting $iLeft
+;                  |                               8 = Error setting $iRight
 ;                  --Version Related Errors--
 ;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
 ;                  --Success--
@@ -245,11 +248,16 @@ EndFunc   ;==>_LOWriter_CellBorderPadding
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
+;                  @Error 3 @Extended 2 Return 0 = Cannot set Top Border Style when Top Border width not set.
+;                  @Error 3 @Extended 3 Return 0 = Cannot set Bottom Border Style when Bottom Border width not set.
+;                  @Error 3 @Extended 4 Return 0 = Cannot set Left Border Style when Left Border width not set.
+;                  @Error 3 @Extended 5 Return 0 = Cannot set Right Border Style when Right Border width not set.
 ;                  --Property Setting Errors--
-;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Top Border width not set.
-;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Bottom Border width not set.
-;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Left Border width not set.
-;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Right Border width not set.
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iTop
+;                  |                               2 = Error setting $iBottom
+;                  |                               4 = Error setting $iLeft
+;                  |                               8 = Error setting $iRight
 ;                  --Version Related Errors--
 ;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
 ;                  --Success--
@@ -300,6 +308,12 @@ EndFunc   ;==>_LOWriter_CellBorderStyle
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iTop
+;                  |                               2 = Error setting $iBottom
+;                  |                               4 = Error setting $iLeft
+;                  |                               8 = Error setting $iRight
 ;                  --Version Related Errors--
 ;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
 ;                  --Success--
@@ -500,7 +514,8 @@ EndFunc   ;==>_LOWriter_CellGetName
 ;                  @Error 1 @Extended 2 Return 0 = $oCell is a Cell Range. Can only set Write-Protect on individual cells.
 ;                  @Error 1 @Extended 3 Return 0 = $bProtect not a Boolean or not Null keyword.
 ;                  --Property Setting Errors--
-;                  @Error 4 @Extended 1 Return 0 = Failed to set Write-Protect property.
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $bProtect
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Successfully set Cell Protect setting.
 ;                  @Error 0 @Extended 0 Return Boolean = Success. All optional parameters were called with Null, return will be the current setting of write-protection for the cell.
@@ -620,7 +635,8 @@ EndFunc   ;==>_LOWriter_CellValue
 ;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iVertOrient not an Integer, less than 0 or greater than 3. See constants, $LOW_ORIENT_VERT_* as defined in LibreOfficeWriter_Constants.au3
 ;                  --Property Setting Errors--
-;                  @Error 4 @Extended 1 Return 0 = Failed to set Cell Vertical Orientation property.
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iVertOrient
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Successfully set Vertical Orientation.
 ;                  @Error 0 @Extended 0 Return Integer = Success. All optional parameters were called with Null, returning current Cell Vertical orientation, see constants $LOW_ORIENT_VERT_* as defined in LibreOfficeWriter_Constants.au3.

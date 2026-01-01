@@ -70,11 +70,16 @@
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
+;                  @Error 3 @Extended 2 Return 0 = Cannot set Top Border Color when Top Border width not set.
+;                  @Error 3 @Extended 3 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
+;                  @Error 3 @Extended 4 Return 0 = Cannot set Left Border Color when Left Border width not set.
+;                  @Error 3 @Extended 5 Return 0 = Cannot set Right Border Color when Right Border width not set.
 ;                  --Property Setting Errors--
-;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Border width not set.
-;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Border width not set.
-;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Border width not set.
-;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Border width not set.
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iTop
+;                  |                               2 = Error setting $iBottom
+;                  |                               4 = Error setting $iLeft
+;                  |                               8 = Error setting $iRight
 ;                  --Version Related Errors--
 ;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 4.2.
 ;                  --Success--
@@ -186,11 +191,16 @@ EndFunc   ;==>_LOWriter_CharStyleBorderPadding
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
+;                  @Error 3 @Extended 2 Return 0 = Cannot set Top Border Style when Top Border width not set.
+;                  @Error 3 @Extended 3 Return 0 = Cannot set Bottom Border Style when Bottom Border width not set.
+;                  @Error 3 @Extended 4 Return 0 = Cannot set Left Border Style when Left Border width not set.
+;                  @Error 3 @Extended 5 Return 0 = Cannot set Right Border Style when Right Border width not set.
 ;                  --Property Setting Errors--
-;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Top Border width not set.
-;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Bottom Border width not set.
-;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Left Border width not set.
-;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Right Border width not set.
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iTop
+;                  |                               2 = Error setting $iBottom
+;                  |                               4 = Error setting $iLeft
+;                  |                               8 = Error setting $iRight
 ;                  --Version Related Errors--
 ;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 4.2.
 ;                  --Success--
@@ -246,6 +256,12 @@ EndFunc   ;==>_LOWriter_CharStyleBorderStyle
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one parameter called with True. UDF Must be fixed.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iTop
+;                  |                               2 = Error setting $iBottom
+;                  |                               4 = Error setting $iLeft
+;                  |                               8 = Error setting $iRight
 ;                  --Version Related Errors--
 ;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 4.2.
 ;                  --Success--
@@ -877,7 +893,8 @@ EndFunc   ;==>_LOWriter_CharStyleRotateScale
 ;                  @Error 1 @Extended 4 Return 0 = $sCharStyle not a String.
 ;                  @Error 1 @Extended 5 Return 0 = Character Style called in $sCharStyle doesn't exist in Document.
 ;                  --Property Setting Errors--
-;                  @Error 4 @Extended 1 Return 0 = Error setting Character Style.
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sCharStyle
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Character Style successfully set.
 ; Author ........: donnyh13

@@ -351,7 +351,6 @@ Func __LOCalc_CellBorder(ByRef $oRange, $bWid, $bSty, $bCol, $iTop = Null, $iBot
 		$iError = ($iHori <> Null) ? ($iError) : ($oRange.TableBorder2.HorizontalLine.Color() = $iHori) ? ($iError) : (BitOR($iError, 32))
 		$iError = ($iTLBRDiag <> Null) ? ($iError) : ($oRange.DiagonalTLBR2.Color() = $iTLBRDiag) ? ($iError) : (BitOR($iError, 64))
 		$iError = ($iBLTRDiag <> Null) ? ($iError) : ($oRange.DiagonalBLTR2.Color() = $iBLTRDiag) ? ($iError) : (BitOR($iError, 128))
-
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
@@ -1169,7 +1168,7 @@ Func __LOCalc_CellStyleBorder(ByRef $oCellStyle, $bWid, $bSty, $bCol, $iTop = Nu
 		$iError = ($iTop <> Null) ? ($iError) : (__LO_IntIsBetween($oCellStyle.TopBorder2.LineWidth(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 1))
 		$iError = ($iBottom <> Null) ? ($iError) : (__LO_IntIsBetween($oCellStyle.BottomBorder2.LineWidth(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 2))
 		$iError = ($iLeft <> Null) ? ($iError) : (__LO_IntIsBetween($oCellStyle.LeftBorder2.LineWidth(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 4))
-		$iError = ($iRight <> Null) ? ($iError) : (__LO_IntIsBetween( $oCellStyle.RightBorder2.LineWidth(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 8))
+		$iError = ($iRight <> Null) ? ($iError) : (__LO_IntIsBetween($oCellStyle.RightBorder2.LineWidth(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 8))
 		$iError = ($iTLBRDiag <> Null) ? ($iError) : (__LO_IntIsBetween($oCellStyle.DiagonalTLBR2.LineWidth(), $iTLBRDiag - 1, $iTLBRDiag + 1)) ? ($iError) : (BitOR($iError, 16))
 		$iError = ($iBLTRDiag <> Null) ? ($iError) : (__LO_IntIsBetween($oCellStyle.DiagonalBLTR2.LineWidth(), $iBLTRDiag - 1, $iBLTRDiag + 1)) ? ($iError) : (BitOR($iError, 32))
 
@@ -1188,7 +1187,6 @@ Func __LOCalc_CellStyleBorder(ByRef $oCellStyle, $bWid, $bSty, $bCol, $iTop = Nu
 		$iError = ($iRight <> Null) ? ($iError) : ($oCellStyle.RightBorder2.Color() = $iRight) ? ($iError) : (BitOR($iError, 8))
 		$iError = ($iTLBRDiag <> Null) ? ($iError) : ($oCellStyle.DiagonalTLBR2.Color() = $iTLBRDiag) ? ($iError) : (BitOR($iError, 16))
 		$iError = ($iBLTRDiag <> Null) ? ($iError) : ($oCellStyle.DiagonalBLTR2.Color() = $iBLTRDiag) ? ($iError) : (BitOR($iError, 32))
-
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
@@ -2449,7 +2447,6 @@ Func __LOCalc_PageStyleBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTop = Nu
 		$iError = ($iBottom <> Null) ? ($iError) : ($oPageStyle.BottomBorder.Color() = $iBottom) ? ($iError) : (BitOR($iError, 2))
 		$iError = ($iLeft <> Null) ? ($iError) : ($oPageStyle.LeftBorder.Color() = $iLeft) ? ($iError) : (BitOR($iError, 4))
 		$iError = ($iRight <> Null) ? ($iError) : ($oPageStyle.RightBorder.Color() = $iRight) ? ($iError) : (BitOR($iError, 8))
-
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
@@ -2586,7 +2583,6 @@ Func __LOCalc_PageStyleFooterBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTo
 		$iError = ($iBottom <> Null) ? ($iError) : ($oPageStyle.FooterBottomBorder.Color() = $iBottom) ? ($iError) : (BitOR($iError, 2))
 		$iError = ($iLeft <> Null) ? ($iError) : ($oPageStyle.FooterLeftBorder.Color() = $iLeft) ? ($iError) : (BitOR($iError, 4))
 		$iError = ($iRight <> Null) ? ($iError) : ($oPageStyle.FooterRightBorder.Color() = $iRight) ? ($iError) : (BitOR($iError, 8))
-
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
@@ -2723,7 +2719,6 @@ Func __LOCalc_PageStyleHeaderBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTo
 		$iError = ($iBottom <> Null) ? ($iError) : ($oPageStyle.HeaderBottomBorder.Color() = $iBottom) ? ($iError) : (BitOR($iError, 2))
 		$iError = ($iLeft <> Null) ? ($iError) : ($oPageStyle.HeaderLeftBorder.Color() = $iLeft) ? ($iError) : (BitOR($iError, 4))
 		$iError = ($iRight <> Null) ? ($iError) : ($oPageStyle.HeaderRightBorder.Color() = $iRight) ? ($iError) : (BitOR($iError, 8))
-
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))

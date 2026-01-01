@@ -686,7 +686,8 @@ EndFunc   ;==>_LOWriter_NumStylePosition
 ;                  @Error 1 @Extended 4 Return 0 = $sNumStyle not a String.
 ;                  @Error 1 @Extended 5 Return 0 = Numbering Style called in $sNumStyle doesn't exist in Document.
 ;                  --Property Setting Errors--
-;                  @Error 4 @Extended 1 Return 0 = Error setting Numbering Style.
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sNumStyle
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Numbering Style successfully set.
 ; Author ........: donnyh13
@@ -724,7 +725,8 @@ EndFunc   ;==>_LOWriter_NumStyleSet
 ;                  @Error 1 @Extended 2 Return 0 = $oObj does not support Paragraph Properties Service.
 ;                  @Error 1 @Extended 3 Return 0 = $iLevel not an Integer, less than 1 or greater than 10.
 ;                  --Property Setting Errors--
-;                  @Error 4 @Extended 1 Return 0 = Error setting Numbering Style level.
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iLevel
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Numbering Style successfully set.
 ; Author ........: donnyh13
