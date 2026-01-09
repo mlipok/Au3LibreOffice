@@ -1619,13 +1619,10 @@ Func _LOWriter_ParStyleOrganizer(ByRef $oDoc, ByRef $oParStyle, $sNewParStyleNam
 
 	If __LO_VarsAreNull($sNewParStyleName, $sFollowStyle, $sParentStyle, $bAutoUpdate, $bHidden) Then
 		If __LO_VersionCheck(4.0) Then
-			__LO_ArrayFill($avOrganizer, $oParStyle.Name(), __LOWriter_ParStyleNameToggle($oParStyle.getPropertyValue("FollowStyle"), True), _
-					__LOWriter_ParStyleNameToggle($oParStyle.ParentStyle(), True), _
-					$oParStyle.IsAutoUpdate(), $oParStyle.Hidden())
+			__LO_ArrayFill($avOrganizer, $oParStyle.Name(), $oParStyle.getPropertyValue("FollowStyle"), $oParStyle.ParentStyle(), $oParStyle.IsAutoUpdate(), $oParStyle.Hidden())
 
 		Else
-			__LO_ArrayFill($avOrganizer, $oParStyle.Name(), __LOWriter_ParStyleNameToggle($oParStyle.getPropertyValue("FollowStyle"), True), _
-					__LOWriter_ParStyleNameToggle($oParStyle.ParentStyle(), True), $oParStyle.IsAutoUpdate())
+			__LO_ArrayFill($avOrganizer, $oParStyle.Name(), $oParStyle.getPropertyValue("FollowStyle"), $oParStyle.ParentStyle(), $oParStyle.IsAutoUpdate())
 		EndIf
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avOrganizer)
@@ -1643,7 +1640,6 @@ Func _LOWriter_ParStyleOrganizer(ByRef $oDoc, ByRef $oParStyle, $sNewParStyleNam
 		If Not IsString($sFollowStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		If Not _LOWriter_ParStyleExists($oDoc, $sFollowStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
-		$sFollowStyle = __LOWriter_ParStyleNameToggle($sFollowStyle)
 		$oParStyle.setPropertyValue("FollowStyle", $sFollowStyle)
 		$iError = ($oParStyle.getPropertyValue("FollowStyle") = $sFollowStyle) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -1651,11 +1647,8 @@ Func _LOWriter_ParStyleOrganizer(ByRef $oDoc, ByRef $oParStyle, $sNewParStyleNam
 	If ($sParentStyle <> Null) Then
 		If Not IsString($sParentStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
-		If ($sParentStyle <> "") Then
-			If Not _LOWriter_ParStyleExists($oDoc, $sParentStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If ($sParentStyle <> "") And Not _LOWriter_ParStyleExists($oDoc, $sParentStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
-			$sParentStyle = __LOWriter_ParStyleNameToggle($sParentStyle)
-		EndIf
 		$oParStyle.ParentStyle = $sParentStyle
 		$iError = ($oParStyle.ParentStyle() = $sParentStyle) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -1969,7 +1962,6 @@ Func _LOWriter_ParStyleSet(ByRef $oDoc, ByRef $oObj, $sParStyle)
 	If Not IsString($sParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not _LOWriter_ParStyleExists($oDoc, $sParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
-	$sParStyle = __LOWriter_ParStyleNameToggle($sParStyle)
 	$oObj.ParaStyleName = $sParStyle
 
 	Return ($oObj.ParaStyleName() = $sParStyle) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
@@ -1978,73 +1970,50 @@ EndFunc   ;==>_LOWriter_ParStyleSet
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ParStylesGetNames
 ; Description ...: Retrieve an array of all Paragraph Style names available for a document.
-; Syntax ........: _LOWriter_ParStylesGetNames(ByRef $oDoc[, $bUserOnly = False[, $bAppliedOnly = False]])
+; Syntax ........: _LOWriter_ParStylesGetNames(ByRef $oDoc[, $bUserOnly = False[, $bAppliedOnly = False[, $bDisplayName = False]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $bUserOnly           - [optional] a boolean value. Default is False. If True only User-Created Paragraph Styles are returned.
-;                  $bAppliedOnly        - [optional] a boolean value. Default is False. If True only Applied Paragraph Styles are returned.
+;                  $bUserOnly           - [optional] a boolean value. Default is False. If True, only User-Created Paragraph Styles are returned.
+;                  $bAppliedOnly        - [optional] a boolean value. Default is False. If True, only Applied Paragraph Styles are returned.
+;                  $bDisplayName        - [optional] a boolean value. Default is False. If True, the style name displayed in the UI (Display Name), instead of the programmatic style name, is returned. See remarks.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $bUserOnly not a Boolean.
 ;                  @Error 1 @Extended 3 Return 0 = $bAppliedOnly not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = $bDisplayName not a Boolean.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Paragraph Styles Object.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Array of Paragraph Style names.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return Array = Success. An Array containing all Paragraph Styles matching the input parameters. See remarks. @Extended contains the count of results returned.
+;                  @Error 0 @Extended ? Return Array = Success. An Array containing all Paragraph Styles matching the called parameters. See remarks. @Extended contains the count of results returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: If Only a Document object is input, all available Paragraph styles will be returned.
-;                  Else if $bUserOnly is called with True, only User-Created Paragraph Styles are returned.
-;                  Else if $bAppliedOnly is called with True, only Applied paragraph Styles are returned.
-;                  If Both are True then only User-Created paragraph styles that are applied are returned.
-;                  Two paragraph styles have two separate names, Default Paragraph Style is also internally called "Standard" and Complimentary Close, which is internally called "Salutation".
-;                  Either name works when setting a Paragraph Style, but on certain functions that return a Paragraph Style Name, you may see one of these alternative names.
+; Remarks .......: If Only a Document object is called, all available Paragraph styles will be returned.
+;                  If Both $bUserOnly and $bAppliedOnly are called with True, only User-Created styles that are applied are returned.
+;                  Two paragraph styles have different internal names:
+;                  - "Default Paragraph Style" is internally called "Standard".
+;                  - "Complimentary Close" is internally called "Salutation".
+;                  Previous to LibreOffice 25.2 either name would work when setting a Style, however after 25.2 only the internal, or programmatic style names, will work.
+;                  Calling $bDisplayName with True will return a list of Style names, as the user sees them in the UI, in the same order as they are returned if $bDisplayName is False. It is best not to use these when setting Paragraph Styling.
 ; Related .......: _LOWriter_ParStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_ParStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly = False)
+Func _LOWriter_ParStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly = False, $bDisplayName = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $oStyles
-	Local $aStyles[0]
-	Local $iCount = 0
-	Local $sExecute = ""
+	Local $asStyles[0]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsBool($bUserOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bAppliedOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bDisplayName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-	$oStyles = $oDoc.StyleFamilies.getByName("ParagraphStyles")
-	If Not IsObj($oStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	$asStyles = __LO_StylesGetNames($oDoc, "ParagraphStyles", $bUserOnly, $bAppliedOnly, $bDisplayName)
+	If Not IsArray($asStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	ReDim $aStyles[$oStyles.getCount()]
-
-	If Not $bUserOnly And Not $bAppliedOnly Then
-		For $i = 0 To $oStyles.getCount() - 1
-			$aStyles[$i] = $oStyles.getByIndex($i).DisplayName()
-			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
-		Next
-
-		Return SetError($__LO_STATUS_SUCCESS, $i, $aStyles)
-	EndIf
-
-	$sExecute = ($bUserOnly) ? ("($oStyles.getByIndex($i).isUserDefined())") : ($sExecute)
-	$sExecute = ($bUserOnly And $bAppliedOnly) ? ($sExecute & " And ") : ($sExecute)
-	$sExecute = ($bAppliedOnly) ? ($sExecute & "($oStyles.getByIndex($i).isInUse())") : ($sExecute)
-
-	For $i = 0 To $oStyles.getCount() - 1
-		If Execute($sExecute) Then
-			$aStyles[$iCount] = $oStyles.getByIndex($i).DisplayName
-			$iCount += 1
-		EndIf
-		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
-	Next
-	ReDim $aStyles[$iCount]
-
-	Return SetError($__LO_STATUS_SUCCESS, $iCount, $aStyles)
+	Return SetError($__LO_STATUS_SUCCESS, UBound($asStyles), $asStyles)
 EndFunc   ;==>_LOWriter_ParStylesGetNames
 
 ; #FUNCTION# ====================================================================================================================

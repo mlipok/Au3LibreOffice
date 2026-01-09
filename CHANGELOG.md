@@ -56,6 +56,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 		- __LO_ServiceManager
 		- __LO_SetPortableServiceManager
 		- __LO_SetPropertyValue
+		- __LO_StylesGetNames
 		- __LO_VarsAreNull
 		- __LO_VersionCheck
 - Central UDF File for all components (@mLipok)
@@ -1742,6 +1743,11 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - __LOWriter_IsTableInDoc
 - __LOWriter_TableHasColumnRange
 - __LOWriter_TableHasRowRange
+- Style Toggles:
+	- __LOWriter_CharStyleNameToggle
+	- __LOWriter_PageStyleNameToggle
+	- __LOWriter_ParStyleNameToggle
+	- __LOWriter_TableStyleNameToggle
 
 [To Top](#releases)
 
@@ -1941,10 +1947,13 @@ Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents were based on 
 - `Added` for new features.
 - `Changed` for changes in existing functionality.
 - `Deprecated` for soon-to-be removed features.
+- `Documented` for documentation only changes.
 - `Fixed` for any bug fixes.
+- `Project` for overall project improvements or documentation.
+- `Refactored` for changes that neither fixes a bug nor adds a feature.
 - `Removed` for now removed features.
 - `Security` in case of vulnerabilities.
-- `Project` for documentation or overall project improvements.
+- `Styled` for changes like whitespaces, formatting, missing semicolons etc.
 
 [To the top](#changelog)
 

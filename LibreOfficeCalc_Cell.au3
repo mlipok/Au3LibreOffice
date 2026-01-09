@@ -1892,71 +1892,46 @@ EndFunc   ;==>_LOCalc_CellStyleSet
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_CellStylesGetNames
 ; Description ...: Retrieve an array of Cell Style names.
-; Syntax ........: _LOCalc_CellStylesGetNames(ByRef $oDoc[, $bUserOnly = False[, $bAppliedOnly = False]])
+; Syntax ........: _LOCalc_CellStylesGetNames(ByRef $oDoc[, $bUserOnly = False[, $bAppliedOnly = False[, $bDisplayName = False]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $bUserOnly           - [optional] a boolean value. Default is False. If True only User-Created Cell Styles are returned. See remarks.
 ;                  $bAppliedOnly        - [optional] a boolean value. Default is False. If True only Applied Cell Styles are returned. See remarks.
+;                  $bDisplayName        - [optional] a boolean value. Default is False. If True, the style name displayed in the UI (Display Name), instead of the programmatic style name, is returned. See remarks.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $bUserOnly not a Boolean.
 ;                  @Error 1 @Extended 3 Return 0 = $bAppliedOnly not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = $bDisplayName not a Boolean.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Cell Styles Object.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Array of Cell Style names.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return Array = Success. An Array containing all Cell Styles matching the input parameters. @Extended contains the count of results returned.
+;                  @Error 0 @Extended ? Return Array = Success. An Array containing all Cell Styles matching the called parameters. @Extended contains the count of results returned.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If Only a Document object is input, all available Cell styles will be returned.
-;                  Else if $bUserOnly is called with True, only User-Created Cell Styles are returned.
-;                  Else if $bAppliedOnly is called with True, only Applied Cell Styles are returned.
-;                  If Both are True then only User-Created Cell styles that are applied are returned.
+;                  If Both $bUserOnly and $bAppliedOnly are called with True, only User-Created styles that are applied are returned.
+;                  Calling $bDisplayName with True will return a list of Style names, as the user sees them in the UI, in the same order as they are returned if $bDisplayName is False. It is best not to use these when setting Paragraph Styling.
 ; Related .......: _LOCalc_CellStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_CellStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly = False)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+Func _LOCalc_CellStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly = False, $bDisplayName = False)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $oStyles
 	Local $asStyles[0]
-	Local $iCount = 0
-	Local $sExecute = ""
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsBool($bUserOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bAppliedOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bDisplayName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-	$oStyles = $oDoc.StyleFamilies.getByName("CellStyles")
-	If Not IsObj($oStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	$asStyles = __LO_StylesGetNames($oDoc, "CellStyles", $bUserOnly, $bAppliedOnly, $bDisplayName)
+	If Not IsArray($asStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	ReDim $asStyles[$oStyles.getCount()]
-
-	If Not $bUserOnly And Not $bAppliedOnly Then
-		For $i = 0 To $oStyles.getCount() - 1
-			$asStyles[$i] = $oStyles.getByIndex($i).DisplayName()
-			Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
-		Next
-
-		Return SetError($__LO_STATUS_SUCCESS, $i, $asStyles)
-	EndIf
-
-	$sExecute = ($bUserOnly) ? ("($oStyles.getByIndex($i).isUserDefined())") : ($sExecute)
-	$sExecute = ($bUserOnly And $bAppliedOnly) ? ($sExecute & " And ") : ($sExecute)
-	$sExecute = ($bAppliedOnly) ? ($sExecute & "($oStyles.getByIndex($i).isInUse())") : ($sExecute)
-
-	For $i = 0 To $oStyles.getCount() - 1
-		If Execute($sExecute) Then
-			$asStyles[$iCount] = $oStyles.getByIndex($i).DisplayName
-			$iCount += 1
-		EndIf
-		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
-	Next
-	ReDim $asStyles[$iCount]
-
-	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asStyles)
+	Return SetError($__LO_STATUS_SUCCESS, UBound($asStyles), $asStyles)
 EndFunc   ;==>_LOCalc_CellStylesGetNames
 
 ; #FUNCTION# ====================================================================================================================

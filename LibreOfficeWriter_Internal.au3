@@ -38,7 +38,6 @@
 ; __LOWriter_CharShadow
 ; __LOWriter_CharSpacing
 ; __LOWriter_CharStrikeOut
-; __LOWriter_CharStyleNameToggle
 ; __LOWriter_CharUnderLine
 ; __LOWriter_ColorRemoveAlpha
 ; __LOWriter_CreatePoint
@@ -73,7 +72,6 @@
 ; __LOWriter_NumStyleListFormat
 ; __LOWriter_NumStyleModify
 ; __LOWriter_ObjRelativeSize
-; __LOWriter_PageStyleNameToggle
 ; __LOWriter_ParAlignment
 ; __LOWriter_ParAreaColor
 ; __LOWriter_ParAreaFillStyle
@@ -91,7 +89,6 @@
 ; __LOWriter_ParPageBreak
 ; __LOWriter_ParShadow
 ; __LOWriter_ParSpace
-; __LOWriter_ParStyleNameToggle
 ; __LOWriter_ParTabStopCreate
 ; __LOWriter_ParTabStopDelete
 ; __LOWriter_ParTabStopMod
@@ -112,10 +109,7 @@
 ; __LOWriter_TableBorder
 ; __LOWriter_TableCursorMove
 ; __LOWriter_TableHasCellName
-; __LOWriter_TableHasColumnRange
-; __LOWriter_TableHasRowRange
 ; __LOWriter_TableRowSplitToggle
-; __LOWriter_TableStyleNameToggle
 ; __LOWriter_TextCursorMove
 ; __LOWriter_TransparencyGradientConvert
 ; __LOWriter_TransparencyGradientNameInsert
@@ -1252,51 +1246,6 @@ Func __LOWriter_CharStrikeOut(ByRef $oObj, $bWordOnly = Null, $bStrikeOut = Null
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_CharStrikeOut
-
-; #INTERNAL_USE_ONLY# ===========================================================================================================
-; Name ..........: __LOWriter_CharStyleNameToggle
-; Description ...: Toggle from Character Style Display Name to Internal Name for error checking and setting retrieval.
-; Syntax ........: __LOWriter_CharStyleNameToggle(ByRef $sCharStyle[, $bReverse = False])
-; Parameters ....: $sCharStyle          - a string value. The Character Style Name to Toggle.
-;                  $bReverse            - [optional] a boolean value. Default is False. If True, the Character Style name is reverse toggled.
-; Return values .: Success: String.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $sCharStyle not a String.
-;                  @Error 1 @Extended 2 Return 0 = $bReverse not a Boolean.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return String = Success. Character Style Name was successfully toggled. Returning toggled name as a string.
-;                  @Error 0 @Extended 1 Return String = Success. Character Style Name was successfully reverse toggled. Returning toggled name as a string.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func __LOWriter_CharStyleNameToggle($sCharStyle, $bReverse = False)
-	If Not IsString($sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsBool($bReverse) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-	If ($bReverse = False) Then
-		$sCharStyle = ($sCharStyle = "Footnote Characters") ? ("Footnote Symbol") : ($sCharStyle)
-		$sCharStyle = ($sCharStyle = "Bullets") ? ("Bullet Symbols") : ($sCharStyle)
-		$sCharStyle = ($sCharStyle = "Endnote Characters") ? ("Endnote Symbol") : ($sCharStyle)
-		$sCharStyle = ($sCharStyle = "Quotation") ? ("Citation") : ($sCharStyle)
-		$sCharStyle = ($sCharStyle = "No Character Style") ? ("Standard") : ($sCharStyle)
-
-		Return SetError($__LO_STATUS_SUCCESS, 0, $sCharStyle)
-
-	Else
-		$sCharStyle = ($sCharStyle = "Footnote Symbol") ? ("Footnote Characters") : ($sCharStyle)
-		$sCharStyle = ($sCharStyle = "Bullet Symbols") ? ("Bullets") : ($sCharStyle)
-		$sCharStyle = ($sCharStyle = "Endnote Symbol") ? ("Endnote Characters") : ($sCharStyle)
-		$sCharStyle = ($sCharStyle = "Citation") ? ("Quotation") : ($sCharStyle)
-		$sCharStyle = ($sCharStyle = "Standard") ? ("No Character Style") : ($sCharStyle)
-
-		Return SetError($__LO_STATUS_SUCCESS, 1, $sCharStyle)
-	EndIf
-EndFunc   ;==>__LOWriter_CharStyleNameToggle
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_CharUnderLine
@@ -4157,43 +4106,6 @@ Func __LOWriter_ObjRelativeSize(ByRef $oDoc, ByRef $oObj, $bRelativeWidth = Fals
 EndFunc   ;==>__LOWriter_ObjRelativeSize
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
-; Name ..........: __LOWriter_PageStyleNameToggle
-; Description ...: Toggle from Page Style Display Name to Internal Name for error checking and setting retrieval.
-; Syntax ........: __LOWriter_PageStyleNameToggle(ByRef $sPageStyle[, $bReverse = False])
-; Parameters ....: $sPageStyle          - a string value. The Page Style Name to Toggle.
-;                  $bReverse            - [optional] a boolean value. Default is False. If True Reverse toggles the Page Style Name.
-; Return values .: Success: String
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $sPageStyle not a String.
-;                  @Error 1 @Extended 2 Return 0 = $bReverse not a Boolean.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return String = Success. Page Style Name successfully toggled. Returning changed name as a string.
-;                  @Error 0 @Extended 1 Return String = Success. Page Style Name successfully reverse toggled. Returning changed name as a string.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func __LOWriter_PageStyleNameToggle($sPageStyle, $bReverse = False)
-	If Not IsString($sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsBool($bReverse) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-	If ($bReverse = False) Then
-		$sPageStyle = ($sPageStyle = "Default Page Style") ? ("Standard") : ($sPageStyle)
-
-		Return SetError($__LO_STATUS_SUCCESS, 0, $sPageStyle)
-
-	Else
-		$sPageStyle = ($sPageStyle = "Standard") ? ("Default Page Style") : ($sPageStyle)
-
-		Return SetError($__LO_STATUS_SUCCESS, 1, $sPageStyle)
-	EndIf
-EndFunc   ;==>__LOWriter_PageStyleNameToggle
-
-; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_ParAlignment
 ; Description ...: Set and Retrieve Alignment settings.
 ; Syntax ........: __LOWriter_ParAlignment(ByRef $oObj[, $iHorAlign = Null[, $iVertAlign = Null[, $iLastLineAlign = Null[, $bExpandSingleWord = Null[, $bSnapToGrid = Null[, $iTxtDirection = Null]]]]]])
@@ -5211,7 +5123,7 @@ Func __LOWriter_ParDropCaps(ByRef $oDoc, ByRef $oObj, $iNumChar = Null, $iLines 
 
 	If __LO_VarsAreNull($iNumChar, $iLines, $iSpcTxt, $bWholeWord, $sCharStyle) Then
 		__LO_ArrayFill($avDropCaps, $tDCFrmt.Count(), $tDCFrmt.Lines(), $tDCFrmt.Distance(), $oObj.DropCapWholeWord(), _
-				__LOWriter_CharStyleNameToggle($oObj.DropCapCharStyleName(), True))
+				$oObj.DropCapCharStyleName())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDropCaps)
 	EndIf
@@ -5252,7 +5164,6 @@ Func __LOWriter_ParDropCaps(ByRef $oDoc, ByRef $oObj, $iNumChar = Null, $iLines 
 		If Not IsString($sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		If Not _LOWriter_CharStyleExists($oDoc, $sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
-		$sCharStyle = __LOWriter_CharStyleNameToggle($sCharStyle)
 		$oObj.DropCapCharStyleName = $sCharStyle
 		$iError = ($oObj.DropCapCharStyleName() = $sCharStyle) ? ($iError) : (BitOR($iError, 16))
 	EndIf
@@ -5870,45 +5781,6 @@ Func __LOWriter_ParSpace(ByRef $oObj, $iAbovePar = Null, $iBelowPar = Null, $bAd
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_ParSpace
-
-; #INTERNAL_USE_ONLY# ===========================================================================================================
-; Name ..........: __LOWriter_ParStyleNameToggle
-; Description ...: Toggle from Par Style Display Name to Internal Name for error checking, or setting retrieval.
-; Syntax ........: __LOWriter_ParStyleNameToggle(ByRef $sParStyle[, $bReverse = False])
-; Parameters ....: $sParStyle           - a string value. The Paragraph Style Name to Toggle.
-;                  $bReverse            - [optional] a boolean value. Default is False. If True, Reverse toggles the name.
-; Return values .: Success: String.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $sParStyle not a String.
-;                  @Error 1 @Extended 2 Return 0 = $bReverse not a Boolean.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return String = Success. Paragraph Style Name was Successfully toggled. Returning toggled name as a string.
-;                  @Error 0 @Extended 1 Return String = Success. Paragraph Style Name was Successfully reverse toggled. Returning toggled name as a string.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func __LOWriter_ParStyleNameToggle($sParStyle, $bReverse = False)
-	If Not IsString($sParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsBool($bReverse) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-	If ($bReverse = False) Then
-		$sParStyle = ($sParStyle = "Default Paragraph Style") ? ("Standard") : ($sParStyle)
-		$sParStyle = ($sParStyle = "Complimentary Close") ? ("Salutation") : ($sParStyle)
-
-		Return SetError($__LO_STATUS_SUCCESS, 0, $sParStyle)
-
-	Else
-		$sParStyle = ($sParStyle = "Standard") ? ("Default Paragraph Style") : ($sParStyle)
-		$sParStyle = ($sParStyle = "Salutation") ? ("Complimentary Close") : ($sParStyle)
-
-		Return SetError($__LO_STATUS_SUCCESS, 1, $sParStyle)
-	EndIf
-EndFunc   ;==>__LOWriter_ParStyleNameToggle
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_ParTabStopCreate
@@ -9293,43 +9165,6 @@ Func __LOWriter_TableRowSplitToggle(ByRef $oTable, $bSplitRows = Null)
 		Return SetError($__LO_STATUS_SUCCESS, 2, 1)
 	EndIf
 EndFunc   ;==>__LOWriter_TableRowSplitToggle
-
-; #INTERNAL_USE_ONLY# ===========================================================================================================
-; Name ..........: __LOWriter_TableStyleNameToggle
-; Description ...: Toggle from Table Style Display Name to Internal Name for error checking, or setting retrieval.
-; Syntax ........: __LOWriter_TableStyleNameToggle($sTableStyle[, $bReverse = False])
-; Parameters ....: $sTableStyle         - a string value. The Table Style Name to Toggle.
-;                  $bReverse            - [optional] a boolean value. Default is False. If True, Reverse toggles the name.
-; Return values .: Success: String.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $sTableStyle not a String.
-;                  @Error 1 @Extended 2 Return 0 = $bReverse not a Boolean.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return String = Success. Table Style Name was Successfully toggled. Returning toggled name as a string.
-;                  @Error 0 @Extended 1 Return String = Success. Table Style Name was Successfully reverse toggled. Returning toggled name as a string.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func __LOWriter_TableStyleNameToggle($sTableStyle, $bReverse = False)
-	If Not IsString($sTableStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsBool($bReverse) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-	If ($bReverse = False) Then
-		$sTableStyle = ($sTableStyle = "Default Table Style") ? ("Default Style") : ($sTableStyle)
-
-		Return SetError($__LO_STATUS_SUCCESS, 0, $sTableStyle)
-
-	Else
-		$sTableStyle = ($sTableStyle = "Default Style") ? ("Default Table Style") : ($sTableStyle)
-
-		Return SetError($__LO_STATUS_SUCCESS, 1, $sTableStyle)
-	EndIf
-EndFunc   ;==>__LOWriter_TableStyleNameToggle
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_TextCursorMove

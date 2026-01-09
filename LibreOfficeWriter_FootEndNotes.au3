@@ -386,10 +386,7 @@ Func _LOWriter_EndnoteSettingsStyles(ByRef $oDoc, $sParagraph = Null, $sPage = N
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If __LO_VarsAreNull($sParagraph, $sPage, $sTextArea, $sEndnoteArea) Then
-		__LO_ArrayFill($asENSettings, __LOWriter_ParStyleNameToggle($oDoc.EndnoteSettings.ParaStyleName(), True), _
-				__LOWriter_PageStyleNameToggle($oDoc.EndnoteSettings.PageStyleName(), True), _
-				__LOWriter_CharStyleNameToggle($oDoc.EndnoteSettings.AnchorCharStyleName(), True), _
-				__LOWriter_CharStyleNameToggle($oDoc.EndnoteSettings.CharStyleName(), True))
+		__LO_ArrayFill($asENSettings, $oDoc.EndnoteSettings.ParaStyleName(), $oDoc.EndnoteSettings.PageStyleName(), $oDoc.EndnoteSettings.AnchorCharStyleName(), $oDoc.EndnoteSettings.CharStyleName())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $asENSettings)
 	EndIf
@@ -398,7 +395,6 @@ Func _LOWriter_EndnoteSettingsStyles(ByRef $oDoc, $sParagraph = Null, $sPage = N
 		If Not IsString($sParagraph) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		If Not _LOWriter_ParStyleExists($oDoc, $sParagraph) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-		$sParagraph = __LOWriter_ParStyleNameToggle($sParagraph)
 		$oDoc.EndnoteSettings.ParaStyleName = $sParagraph
 		$iError = ($oDoc.EndnoteSettings.ParaStyleName() = $sParagraph) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -407,7 +403,6 @@ Func _LOWriter_EndnoteSettingsStyles(ByRef $oDoc, $sParagraph = Null, $sPage = N
 		If Not IsString($sPage) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		If Not _LOWriter_PageStyleExists($oDoc, $sPage) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
-		$sPage = __LOWriter_PageStyleNameToggle($sPage)
 		$oDoc.EndnoteSettings.PageStyleName = $sPage
 		$iError = ($oDoc.EndnoteSettings.PageStyleName() = $sPage) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -416,7 +411,6 @@ Func _LOWriter_EndnoteSettingsStyles(ByRef $oDoc, $sParagraph = Null, $sPage = N
 		If Not IsString($sTextArea) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		If Not _LOWriter_CharStyleExists($oDoc, $sTextArea) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
-		$sTextArea = __LOWriter_CharStyleNameToggle($sTextArea)
 		$oDoc.EndnoteSettings.AnchorCharStyleName = $sTextArea
 		$iError = ($oDoc.EndnoteSettings.AnchorCharStyleName() = $sTextArea) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -425,7 +419,6 @@ Func _LOWriter_EndnoteSettingsStyles(ByRef $oDoc, $sParagraph = Null, $sPage = N
 		If Not IsString($sEndnoteArea) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		If Not _LOWriter_CharStyleExists($oDoc, $sEndnoteArea) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
-		$sEndnoteArea = __LOWriter_CharStyleNameToggle($sEndnoteArea)
 		$oDoc.EndnoteSettings.CharStyleName = $sEndnoteArea
 		$iError = ($oDoc.EndnoteSettings.CharStyleName() = $sEndnoteArea) ? ($iError) : (BitOR($iError, 8))
 	EndIf
@@ -906,10 +899,7 @@ Func _LOWriter_FootnoteSettingsStyles(ByRef $oDoc, $sParagraph = Null, $sPage = 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If __LO_VarsAreNull($sParagraph, $sPage, $sTextArea, $sFootnoteArea) Then
-		__LO_ArrayFill($avFNSettings, __LOWriter_ParStyleNameToggle($oDoc.FootnoteSettings.ParaStyleName(), True), _
-				__LOWriter_PageStyleNameToggle($oDoc.FootnoteSettings.PageStyleName(), True), _
-				__LOWriter_CharStyleNameToggle($oDoc.FootnoteSettings.AnchorCharStyleName(), True), _
-				__LOWriter_CharStyleNameToggle($oDoc.FootnoteSettings.CharStyleName(), True))
+		__LO_ArrayFill($avFNSettings, $oDoc.FootnoteSettings.ParaStyleName(), $oDoc.FootnoteSettings.PageStyleName(), $oDoc.FootnoteSettings.AnchorCharStyleName(), $oDoc.FootnoteSettings.CharStyleName())
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avFNSettings)
 	EndIf
@@ -918,7 +908,6 @@ Func _LOWriter_FootnoteSettingsStyles(ByRef $oDoc, $sParagraph = Null, $sPage = 
 		If Not IsString($sParagraph) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		If Not _LOWriter_ParStyleExists($oDoc, $sParagraph) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-		$sParagraph = __LOWriter_ParStyleNameToggle($sParagraph)
 		$oDoc.FootnoteSettings.ParaStyleName = $sParagraph
 		$iError = ($oDoc.FootnoteSettings.ParaStyleName() = $sParagraph) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -927,7 +916,6 @@ Func _LOWriter_FootnoteSettingsStyles(ByRef $oDoc, $sParagraph = Null, $sPage = 
 		If Not IsString($sPage) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		If Not _LOWriter_PageStyleExists($oDoc, $sPage) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
-		$sPage = __LOWriter_PageStyleNameToggle($sPage)
 		$oDoc.FootnoteSettings.PageStyleName = $sPage
 		$iError = ($oDoc.FootnoteSettings.PageStyleName() = $sPage) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -936,7 +924,6 @@ Func _LOWriter_FootnoteSettingsStyles(ByRef $oDoc, $sParagraph = Null, $sPage = 
 		If Not IsString($sTextArea) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		If Not _LOWriter_CharStyleExists($oDoc, $sTextArea) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
-		$sTextArea = __LOWriter_CharStyleNameToggle($sTextArea)
 		$oDoc.FootnoteSettings.AnchorCharStyleName = $sTextArea
 		$iError = ($oDoc.FootnoteSettings.AnchorCharStyleName() = $sTextArea) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -945,7 +932,6 @@ Func _LOWriter_FootnoteSettingsStyles(ByRef $oDoc, $sParagraph = Null, $sPage = 
 		If Not IsString($sFootnoteArea) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		If Not _LOWriter_CharStyleExists($oDoc, $sFootnoteArea) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
-		$sFootnoteArea = __LOWriter_CharStyleNameToggle($sFootnoteArea)
 		$oDoc.FootnoteSettings.CharStyleName = $sFootnoteArea
 		$iError = ($oDoc.FootnoteSettings.CharStyleName() = $sFootnoteArea) ? ($iError) : (BitOR($iError, 8))
 	EndIf

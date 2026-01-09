@@ -969,10 +969,7 @@ Func _LOWriter_DirFrmtGetCurStyles(ByRef $oSelection)
 	If Not $oSelection.supportsService("com.sun.star.style.ParagraphProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not $oSelection.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-	__LO_ArrayFill($asStyles, __LOWriter_ParStyleNameToggle($oSelection.ParaStyleName(), True), _
-			__LOWriter_CharStyleNameToggle($oSelection.CharStyleName(), True), _
-			__LOWriter_PageStyleNameToggle($oSelection.PageStyleName(), True), _
-			$oSelection.NumberingStyleName())
+	__LO_ArrayFill($asStyles, $oSelection.ParaStyleName(), $oSelection.CharStyleName(), $oSelection.PageStyleName(), $oSelection.NumberingStyleName())
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $asStyles)
 EndFunc   ;==>_LOWriter_DirFrmtGetCurStyles
