@@ -20,11 +20,11 @@ Func Example()
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "Some text to demonstrate modifying a paragraph style.")
 	If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Retrieve the "Default Paragraph Style" object.
-	$oParStyle = _LOWriter_ParStyleGetObj($oDoc, "Default Paragraph Style")
+	; Retrieve the Default Paragraph Style object.
+	$oParStyle = _LOWriter_ParStyleGetObj($oDoc, "Standard")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Paragraph style object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Set "Default Paragraph Style" font color to $LO_COLOR_RED, Transparency to 50%, and Highlight to $LO_COLOR_GOLD
+	; Set Default Paragraph Style font color to $LO_COLOR_RED, Transparency to 50%, and Highlight to $LO_COLOR_GOLD
 	_LOWriter_ParStyleFontColor($oParStyle, $LO_COLOR_RED, 50, $LO_COLOR_GOLD)
 	If @error Then _ERROR($oDoc, "Failed to set the Paragraph style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 

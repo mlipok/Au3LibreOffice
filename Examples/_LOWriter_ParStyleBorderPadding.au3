@@ -21,11 +21,11 @@ Func Example()
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "Some text to demonstrate modifying a paragraph style." & @CR & "Next Line")
 	If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Retrieve the "Default Paragraph Style" object.
-	$oParStyle = _LOWriter_ParStyleGetObj($oDoc, "Default Paragraph Style")
+	; Retrieve the Default Paragraph Style object.
+	$oParStyle = _LOWriter_ParStyleGetObj($oDoc, "Standard")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Paragraph style object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Set "Default Paragraph Style" Border Width to $LOW_BORDERWIDTH_THICK.
+	; Set Default Paragraph Style Border Width to $LOW_BORDERWIDTH_THICK.
 	_LOWriter_ParStyleBorderWidth($oParStyle, $LOW_BORDERWIDTH_THICK, $LOW_BORDERWIDTH_THICK, $LOW_BORDERWIDTH_THICK, $LOW_BORDERWIDTH_THICK)
 	If @error Then _ERROR($oDoc, "Failed to set the Paragraph style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
@@ -33,7 +33,7 @@ Func Example()
 	$iHMM = _LO_UnitConvert(0.25, $LO_CONVERT_UNIT_INCH_HMM)
 	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (HMM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Set "Default Paragraph Style" Border padding to 1/4"
+	; Set Default Paragraph Style Border padding to 1/4"
 	_LOWriter_ParStyleBorderPadding($oParStyle, $iHMM)
 	If @error Then _ERROR($oDoc, "Failed to set the Paragraph style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
@@ -54,7 +54,7 @@ Func Example()
 	$iHMM2 = _LO_UnitConvert(0.5, $LO_CONVERT_UNIT_INCH_HMM)
 	If @error Then _ERROR($oDoc, "Failed to convert from inches to Hundredths of a Millimeter (HMM). Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Set "Default Paragraph Style" Border padding to, Top and Right, 1/4", Bottom and left, 1/2".
+	; Set Default Paragraph Style Border padding to, Top and Right, 1/4", Bottom and left, 1/2".
 	_LOWriter_ParStyleBorderPadding($oParStyle, Null, $iHMM, $iHMM2, $iHMM2, $iHMM)
 	If @error Then _ERROR($oDoc, "Failed to set the Paragraph style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 

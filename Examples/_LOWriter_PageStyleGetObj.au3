@@ -12,7 +12,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the Default Page Style's Object, to modify its settings.
-	$oPageStyle = _LOWriter_PageStyleGetObj($oDoc, "Default Page Style")
+	$oPageStyle = _LOWriter_PageStyleGetObj($oDoc, "Standard")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Page Style Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set the Page Background color to $LO_COLOR_GREEN, to demonstrate that I retrieved the Page Style's Object.
