@@ -706,7 +706,6 @@ EndFunc   ;==>__LO_SetPropertyValue
 ;                  @Error 1 @Extended 6 Return 0 = Style family called in $sStyleFamily doesn't exist.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve called Style family Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to Array of Style names.
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return Array = Success. An Array containing all Styles matching the called parameters. See remarks.
 ; Author ........: donnyh13
@@ -790,17 +789,16 @@ Func __LO_StylesGetNames(ByRef $oDoc, $sStyleFamily, $bUserOnly = False, $bAppli
 		ReDim $asStyles[$iCount]
 
 	Else ; Get all Styles.
-		If $bDisplayName Then
-			For $i = 0 To $oStyles.getCount() - 1
+		For $i = 0 To $oStyles.getCount() - 1
+			If $bDisplayName Then
 				$asStyles[$i] = $oStyles.getByIndex($i).DisplayName()
-				Sleep((IsInt($i / $__LOCONST_SLEEP_DIV) ? (10) : (0)))
-			Next
 
-		Else
-			$asStyles = $oStyles.getElementNames()
-			If Not IsArray($asStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-		EndIf
+			Else
+				$asStyles[$i] = $oStyles.getByIndex($i).Name()
+			EndIf
 
+			Sleep((IsInt($i / $__LOCONST_SLEEP_DIV) ? (10) : (0)))
+		Next
 	EndIf
 
 	Return SetError($__LO_STATUS_SUCCESS, 1, $asStyles)

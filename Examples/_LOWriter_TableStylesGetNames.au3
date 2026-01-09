@@ -6,8 +6,8 @@ Example()
 
 Func Example()
 	Local $oDoc, $oViewCursor
-	Local $asNames
-	Local $sTableStyles = ""
+	Local $asTableStyles, $asTableStylesDisplay
+	Local $sStyles = ""
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
@@ -22,26 +22,46 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to create Text Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve an Array of all available Table Style Names.
-	$asNames = _LOWriter_TableStylesGetNames($oDoc)
+	$asTableStyles = _LOWriter_TableStylesGetNames($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Table style list. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	For $i = 0 To (UBound($asNames) - 1)
-		$sTableStyles &= $asNames[$i] & @CRLF
+	; Retrieve an Array of all available Table Style display Names.
+	$asTableStylesDisplay = _LOWriter_TableStylesGetNames($oDoc, False, False, True)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Table style list. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	For $i = 0 To (UBound($asTableStyles) - 1)
+		If ($asTableStyles[$i] <> $asTableStylesDisplay[$i]) Then
+			$sStyles &= $asTableStyles[$i] & @CRLF & "(Display Name: " & $asTableStylesDisplay[$i] & ")" & @CRLF & @CRLF
+
+		Else
+			$sStyles &= $asTableStyles[$i] & @CRLF & @CRLF
+
+		EndIf
 	Next
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "The available Table Styles are:" & @CRLF & $sTableStyles)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The available Table Styles are:" & @CRLF & $sStyles)
 
 	; Retrieve an Array of all Table Styles used in the Document.
-	$asNames = _LOWriter_TableStylesGetNames($oDoc, False, True)
+	$asTableStyles = _LOWriter_TableStylesGetNames($oDoc, False, True)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Table style list. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	$sTableStyles = ""
+	; Retrieve an Array of all Table Styles used in the Document.
+	$asTableStylesDisplay = _LOWriter_TableStylesGetNames($oDoc, False, True, True)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Table style list. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	For $i = 0 To (UBound($asNames) - 1)
-		$sTableStyles &= $asNames[$i] & @CRLF
+	$sStyles = ""
+
+	For $i = 0 To (UBound($asTableStyles) - 1)
+		If ($asTableStyles[$i] <> $asTableStylesDisplay[$i]) Then
+			$sStyles &= $asTableStyles[$i] & @CRLF & "(Display Name: " & $asTableStylesDisplay[$i] & ")" & @CRLF & @CRLF
+
+		Else
+			$sStyles &= $asTableStyles[$i] & @CRLF & @CRLF
+
+		EndIf
 	Next
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Table Styles used in this document are:" & @CRLF & $sTableStyles)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Table Styles used in this document are:" & @CRLF & $sStyles)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

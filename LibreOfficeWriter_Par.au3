@@ -1116,7 +1116,7 @@ EndFunc   ;==>_LOWriter_ParStyleCreate
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function. Must be a User-Created Style, not a built-in Style native to LibreOffice.
 ;                  $bForceDelete        - [optional] a boolean value. Default is False. If True, Paragraph style will be deleted regardless of whether it is in use or not.
-;                  $sReplacementStyle   - [optional] a string value. Default is "Default Paragraph Style". The Paragraph style to use instead of the one being deleted if the paragraph style being deleted is applied to text in the document.
+;                  $sReplacementStyle   - [optional] a string value. Default is "Standard". The Paragraph style to use instead of the one being deleted if the paragraph style being deleted is applied to text in the document.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1141,7 +1141,7 @@ EndFunc   ;==>_LOWriter_ParStyleCreate
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_ParStyleDelete(ByRef $oDoc, ByRef $oParStyle, $bForceDelete = False, $sReplacementStyle = "Default Paragraph Style")
+Func _LOWriter_ParStyleDelete(ByRef $oDoc, ByRef $oParStyle, $bForceDelete = False, $sReplacementStyle = "Standard")
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1163,8 +1163,8 @@ Func _LOWriter_ParStyleDelete(ByRef $oDoc, ByRef $oParStyle, $bForceDelete = Fal
 	If Not $oParStyle.isUserDefined() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	If $oParStyle.isInUse() And Not ($bForceDelete) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; If Style is in use return an error unless force delete is true.
 
-	If ($oParStyle.getParentStyle() = Null) Or ($sReplacementStyle <> "Default Paragraph Style") Then $oParStyle.setParentStyle($sReplacementStyle)
-	; If Parent style is blank set it to "Default Paragraph Style", Or if not but User has called a specific style set it to that.
+	If ($oParStyle.getParentStyle() = Null) Or ($sReplacementStyle <> "Standard") Then $oParStyle.setParentStyle($sReplacementStyle)
+	; If Parent style is blank set it to "Default Paragraph Style" (Standard), Or if not but User has called a specific style set it to that.
 
 	$oParStyles.removeByName($sParStyle)
 
@@ -1990,9 +1990,12 @@ EndFunc   ;==>_LOWriter_ParStyleSet
 ; Modified ......:
 ; Remarks .......: If Only a Document object is called, all available Paragraph styles will be returned.
 ;                  If Both $bUserOnly and $bAppliedOnly are called with True, only User-Created styles that are applied are returned.
-;                  Two paragraph styles have different internal names:
+;                  Five paragraph styles have different internal names:
 ;                  - "Default Paragraph Style" is internally called "Standard".
 ;                  - "Complimentary Close" is internally called "Salutation".
+;                  - "Body Text" is internally called "Text body".
+;                  - "Body Text, Indented" is internally called "Text body indent".
+;                  - "Block Quotation" is internally called "Quotations".
 ;                  Previous to LibreOffice 25.2 either name would work when setting a Style, however after 25.2 only the internal, or programmatic style names, will work.
 ;                  Calling $bDisplayName with True will return a list of Style names, as the user sees them in the UI, in the same order as they are returned if $bDisplayName is False. It is best not to use these when setting Paragraph Styling.
 ; Related .......: _LOWriter_ParStyleGetObj
