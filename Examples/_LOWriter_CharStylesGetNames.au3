@@ -37,7 +37,6 @@ Func Example()
 
 		Else
 			$sStyles &= $asCharStyles[$i] & @CR & @CR
-
 		EndIf
 	Next
 
@@ -75,7 +74,6 @@ Func Example()
 
 		Else
 			$sStyles &= $asCharStyles[$i] & @CR & @CR
-
 		EndIf
 	Next
 

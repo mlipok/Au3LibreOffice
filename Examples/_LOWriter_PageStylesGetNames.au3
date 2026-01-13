@@ -37,7 +37,6 @@ Func Example()
 
 		Else
 			$sStyles &= $asPageStyles[$i] & @CR & @CR
-
 		EndIf
 	Next
 
@@ -83,7 +82,6 @@ Func Example()
 
 		Else
 			$sStyles &= $asPageStyles[$i] & @CR & @CR
-
 		EndIf
 	Next
 

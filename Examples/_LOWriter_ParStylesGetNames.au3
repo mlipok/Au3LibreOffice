@@ -37,7 +37,6 @@ Func Example()
 
 		Else
 			$sStyles &= $asParStyles[$i] & @CR & @CR
-
 		EndIf
 	Next
 
@@ -75,7 +74,6 @@ Func Example()
 
 		Else
 			$sStyles &= $asParStyles[$i] & @CR & @CR
-
 		EndIf
 	Next
 
@@ -94,4 +92,4 @@ Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
-EndFunc   ;==>_ERROR
+EndFunc

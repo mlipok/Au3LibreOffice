@@ -47,13 +47,12 @@ Func Example()
 			; Insert the Cell Style name and display name.
 			_LOCalc_CellString($oCell, $asCellStyles[$i] & " (Display Name: " & $asCellStylesDisplay[$i] & ")")
 			If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-		Else
 
+		Else
 			; Insert the Cell Style name.
 			_LOCalc_CellString($oCell, $asCellStyles[$i])
 			If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 		EndIf
-
 	Next
 
 	; Retrieve Array of Cell Style names that are applied to the document
@@ -87,8 +86,8 @@ Func Example()
 			; Insert the Cell Style name and display name.
 			_LOCalc_CellString($oCell, $asCellStyles[$i] & " (Display Name: " & $asCellStylesDisplay[$i] & ")")
 			If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-		Else
 
+		Else
 			; Insert the Cell Style name.
 			_LOCalc_CellString($oCell, $asCellStyles[$i])
 			If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)

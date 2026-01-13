@@ -49,7 +49,6 @@ Func Example()
 
 		Else
 			$sStyles &= $asFrameStyles[$i] & @CR & @CR
-
 		EndIf
 	Next
 
@@ -91,7 +90,6 @@ Func Example()
 
 		Else
 			$sStyles &= $asFrameStyles[$i] & @CR & @CR
-
 		EndIf
 	Next
 
@@ -133,7 +131,6 @@ Func Example()
 
 		Else
 			$sStyles &= $asFrameStyles[$i] & @CR & @CR
-
 		EndIf
 	Next
 

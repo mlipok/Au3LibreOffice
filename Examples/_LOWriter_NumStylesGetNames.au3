@@ -37,7 +37,6 @@ Func Example()
 
 		Else
 			$sStyles &= $asNumStyles[$i] & @CR & @CR
-
 		EndIf
 	Next
 
@@ -79,7 +78,6 @@ Func Example()
 
 		Else
 			$sStyles &= $asNumStyles[$i] & @CR & @CR
-
 		EndIf
 	Next
 

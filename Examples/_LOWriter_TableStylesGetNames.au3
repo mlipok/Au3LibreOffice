@@ -35,7 +35,6 @@ Func Example()
 
 		Else
 			$sStyles &= $asTableStyles[$i] & @CRLF & @CRLF
-
 		EndIf
 	Next
 
@@ -57,7 +56,6 @@ Func Example()
 
 		Else
 			$sStyles &= $asTableStyles[$i] & @CRLF & @CRLF
-
 		EndIf
 	Next
 
