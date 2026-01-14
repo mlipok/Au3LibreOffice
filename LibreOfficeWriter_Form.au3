@@ -8431,12 +8431,13 @@ EndFunc   ;==>_LOWriter_FormConTableConCheckBoxGeneral
 ;                  @Error 1 @Extended 2 Return 0 = Object called in $oTableCon not a Table Control Object.
 ;                  @Error 1 @Extended 3 Return 0 = Control type called in $iControl not an Integer, or not one of the accepted controls.
 ;                  @Error 1 @Extended 4 Return 0 = $iPos not an Integer, less than 0 or greater than count of Columns + 1.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create Column object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Control type name.
 ;                  @Error 3 @Extended 3 Return 0 = Failed to split Control type name.
-;                  @Error 3 @Extended 4 Return 0 = Failed to create Column object.
-;                  @Error 3 @Extended 5 Return 0 = Failed to insert new Column.
+;                  @Error 3 @Extended 4 Return 0 = Failed to insert new Column.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Successfully created the Column, returning its Object.
 ; Author ........: donnyh13
@@ -8470,7 +8471,7 @@ Func _LOWriter_FormConTableConColumnAdd(ByRef $oTableCon, $iControl, $iPos = Nul
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	$oColumn = $oTableCon.Control.createColumn($sControl)
-	If Not IsObj($oColumn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+	If Not IsObj($oColumn) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	Switch $iControl
 		Case $LOW_FORM_CON_TYPE_CHECK_BOX
@@ -8518,7 +8519,7 @@ Func _LOWriter_FormConTableConColumnAdd(ByRef $oTableCon, $iControl, $iPos = Nul
 	$oTableCon.Control.insertByIndex($iPos, $oColumn)
 
 	$oColumn = $oTableCon.Control.getByIndex($iPos)
-	If Not IsObj($oColumn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+	If Not IsObj($oColumn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oColumn)
 EndFunc   ;==>_LOWriter_FormConTableConColumnAdd
@@ -13809,17 +13810,18 @@ EndFunc   ;==>_LOWriter_FormGetObjByIndex
 ;                  @Error 1 @Extended 4 Return 0 = Object called in $oParent not an Form and not a Document.
 ;                  @Error 1 @Extended 5 Return 0 = Destination called in $oParent is the same as form's current parent.
 ;                  @Error 1 @Extended 6 Return 0 = Destination called in $oParent is the same as form called in $oForm.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to clone the form Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Form's parent Object.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Document's Forms Object.
 ;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Destination Parent Object.
 ;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Form's name.
 ;                  @Error 3 @Extended 5 Return 0 = Failed to rename Form.
-;                  @Error 3 @Extended 6 Return 0 = Failed to clone the form Object.
-;                  @Error 3 @Extended 7 Return 0 = Failed to insert cloned form into destination.
-;                  @Error 3 @Extended 8 Return 0 = Failed to delete original form.
-;                  @Error 3 @Extended 9 Return 0 = Failed to retrieve new form's Object.
-;                  @Error 3 @Extended 10 Return 0 = Failed to set form's name back to original name.
+;                  @Error 3 @Extended 6 Return 0 = Failed to insert cloned form into destination.
+;                  @Error 3 @Extended 7 Return 0 = Failed to delete original form.
+;                  @Error 3 @Extended 8 Return 0 = Failed to retrieve new form's Object.
+;                  @Error 3 @Extended 9 Return 0 = Failed to set form's name back to original name.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Form was successfully moved, Object called in $oForm has been updated to new Object.
 ;                  @Error 0 @Extended 1 Return Object = Success. Returning Form's parent Object, which is a Document Object.
@@ -13885,21 +13887,21 @@ Func _LOWriter_FormParent(ByRef $oForm, $oParent = Null)
 	If ($oForm.Name() <> ($sTempName)) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
 	$oFormCopy = $oForm.CreateClone()
-	If Not IsObj($oFormCopy) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
+	If Not IsObj($oFormCopy) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oDestParent.insertByName($sTempName, $oFormCopy)
-	If Not $oDestParent.hasByName($sTempName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0)
+	If Not $oDestParent.hasByName($sTempName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
 
 	$oOldParent.removeByName($sTempName)
-	If $oOldParent.hasByName($sTempName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 8, 0)
+	If $oOldParent.hasByName($sTempName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0)
 
 	$oNewForm = $oDestParent.getByName($sTempName)
-	If Not IsObj($oNewForm) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 9, 0)
+	If Not IsObj($oNewForm) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 8, 0)
 
 	$oForm = $oNewForm
 
 	$oForm.Name = $sOldName
-	If ($oForm.Name() <> $sOldName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 10, 0)
+	If ($oForm.Name() <> $sOldName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 9, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_FormParent

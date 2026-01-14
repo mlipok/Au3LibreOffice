@@ -402,10 +402,11 @@ EndFunc   ;==>_LOWriter_DocBookmarksGetNames
 ;                  @Error 1 @Extended 2 Return 0 = $bSaveChanges not a Boolean.
 ;                  @Error 1 @Extended 3 Return 0 = $sSaveName not a String.
 ;                  @Error 1 @Extended 4 Return 0 = $bDeliverOwnership not a Boolean.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error while creating Filter Name properties.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Path Conversion to L.O. URL Failed.
 ;                  @Error 3 @Extended 2 Return 0 = Error while retrieving FilterName.
-;                  @Error 3 @Extended 3 Return 0 = Error while setting Filter Name properties.
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return String = Success, Document was successfully closed, and was saved to the returned file Path.
 ;                  @Error 0 @Extended 2 Return String = Success, Document was successfully closed, document's changes were saved to its existing location.
@@ -445,7 +446,7 @@ Func _LOWriter_DocClose(ByRef $oDoc, $bSaveChanges = True, $sSaveName = "", $bDe
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		$aArgs[0] = __LO_SetPropertyValue("FilterName", $sFilterName)
-		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	EndIf
 
 	If ($bSaveChanges = True) Then
@@ -946,6 +947,8 @@ Func _LOWriter_DocCreateTextCursor(ByRef $oDoc, $bCreateAtEnd = True, $bCreateAt
 		If Not IsObj($oText) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		$oCursor = $oText.createTextCursor()
+		If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 		$iCursorType = $LOW_CURDATA_BODY_TEXT
 
 		If ($bCreateAtEnd = True) Then
@@ -4243,12 +4246,13 @@ EndFunc   ;==>_LOWriter_DocSave
 ;                  @Error 1 @Extended 3 Return 0 = $sFilterName not a String.
 ;                  @Error 1 @Extended 4 Return 0 = $bOverwrite not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $sPassword not a String.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error creating FilterName Property
+;                  @Error 2 @Extended 2 Return 0 = Error creating Overwrite Property
+;                  @Error 2 @Extended 3 Return 0 = Error creating Password Property
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error Converting Path to/from L.O. URL
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving FilterName.
-;                  @Error 3 @Extended 3 Return 0 = Error setting FilterName Property
-;                  @Error 3 @Extended 4 Return 0 = Error setting Overwrite Property
-;                  @Error 3 @Extended 5 Return 0 = Error setting Password Property
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return String = Successfully Saved the document. Returning document save path.
 ; Author ........: donnyh13
@@ -4276,14 +4280,14 @@ Func _LOWriter_DocSaveAs(ByRef $oDoc, $sFilePath, $sFilterName = "", $bOverwrite
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$aProperties[0] = __LO_SetPropertyValue("FilterName", $sFilterName)
-	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If ($bOverwrite <> Null) Then
 		If Not IsBool($bOverwrite) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		ReDim $aProperties[UBound($aProperties) + 1]
 		$aProperties[UBound($aProperties) - 1] = __LO_SetPropertyValue("Overwrite", $bOverwrite)
-		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+		If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 	EndIf
 
 	If $sPassword <> Null Then
@@ -4291,7 +4295,7 @@ Func _LOWriter_DocSaveAs(ByRef $oDoc, $sFilePath, $sFilterName = "", $bOverwrite
 
 		ReDim $aProperties[UBound($aProperties) + 1]
 		$aProperties[UBound($aProperties) - 1] = __LO_SetPropertyValue("Password", $sPassword)
-		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+		If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 	EndIf
 
 	$oDoc.storeAsURL($sFilePath, $aProperties)
@@ -4315,13 +4319,14 @@ EndFunc   ;==>_LOWriter_DocSaveAs
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oObj not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $bReturnMultiAsObj not a Boolean.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create a TextCursor.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve current selection.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve TextCursor object.
-;                  @Error 3 @Extended 3 Return 0 = There is no text selected.
-;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve count of multiple selections.
-;                  @Error 3 @Extended 5 Return 0 = Failed to identify current selection.
-;                  @Error 3 @Extended 6 Return 0 = Failed to select object.
+;                  @Error 3 @Extended 2 Return 0 =There is no text selected.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve count of multiple selections.
+;                  @Error 3 @Extended 4 Return 0 = Failed to identify current selection.
+;                  @Error 3 @Extended 5 Return 0 = Failed to select object.
 ;                  --Success--
 ;                  @Error 0 @Extended -6 Return Object = Success. The current selection is within a Table, returning a Table Cursor Object.
 ;                  @Error 0 @Extended -5 Return Object = Success. The current selection was a Frame, returning a Frame Object.
@@ -4386,13 +4391,13 @@ Func _LOWriter_DocSelection(ByRef $oDoc, $oObj = Null, $bReturnMultiAsObj = Fals
 
 				Else
 					$iCount = $oSelection.getCount()
-					If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+					If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 					ReDim $aoSelections[$iCount]
 
 					For $i = 0 To $iCount - 1
 						$aoSelections[$i] = $oSelection.getByIndex($i).Text.createTextCursorByRange($oSelection.getByIndex($i))
-						If Not IsObj($aoSelections[$i]) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+						If Not IsObj($aoSelections[$i]) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 					Next
 
 					Return SetError($__LO_STATUS_SUCCESS, $iCount, $aoSelections)
@@ -4400,15 +4405,15 @@ Func _LOWriter_DocSelection(ByRef $oDoc, $oObj = Null, $bReturnMultiAsObj = Fals
 
 			Else
 				$oCursor = $oSelection.getByIndex(0).Text.createTextCursorByRange($oSelection.getByIndex(0))
-				If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-				If $oCursor.isCollapsed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+				If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+				If $oCursor.isCollapsed() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 				Return SetError($__LO_STATUS_SUCCESS, 1, $oCursor)
 			EndIf
 
 		Else
 
-			Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+			Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 		EndIf
 	EndIf
 
@@ -4416,7 +4421,7 @@ Func _LOWriter_DocSelection(ByRef $oDoc, $oObj = Null, $bReturnMultiAsObj = Fals
 
 	$bSelect = $oDoc.CurrentController.Select($oObj)
 
-	Return ($bSelect) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0))
+	Return ($bSelect) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0))
 EndFunc   ;==>_LOWriter_DocSelection
 
 ; #FUNCTION# ====================================================================================================================

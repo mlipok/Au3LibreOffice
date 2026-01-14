@@ -692,8 +692,7 @@ EndFunc   ;==>_LO_UnitConvert
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.ServiceManager" Object.
 ;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.configuration.ConfigurationProvider" Object.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error setting property value.
+;                  @Error 2 @Extended 3 Return 0 = Error creating property value.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return String = Success. Returning the Office version in String format.
 ; Author ........: Laurent Godard as found in Andrew Pitonyak's book; Zizi64 as found on OpenOffice forum.
@@ -722,7 +721,7 @@ Func _LO_VersionGet($bSimpleVersion = False, $bReturnName = False)
 	If Not IsObj($oConfigProvider) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	$aParamArray[0] = __LO_SetPropertyValue("nodepath", "/org.openoffice.Setup/Product")
-	If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If (@error > 0) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 	$oSettings = $oConfigProvider.createInstanceWithArguments($sAccess, $aParamArray)
 

@@ -3913,8 +3913,8 @@ EndFunc   ;==>__LOWriter_NumStyleInitiateDocument
 ;                  @Error 1 @Extended 1 Return 0 = $oNumRules not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iLevel not an Integer.
 ;                  @Error 1 @Extended 3 Return 0 = $iSubLevels not an Integer.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 =  Error mapping setting values.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error mapping setting values.
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return String = Success. A String used for modifying ListFormat Numbering Style setting.
 ; Author ........: donnyh13
@@ -3937,7 +3937,7 @@ Func __LOWriter_NumStyleListFormat(ByRef $atNumLevel, $iLevel, $iSubLevels, $sPr
 	If Not IsInt($iSubLevels) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$mNumLevel = __LOWriter_NumRuleCreateMap($atNumLevel)
-	If Not IsMap($mNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsMap($mNumLevel) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$iEndLevel = ($iLevel - $iSubLevels + 1) ; Start at the called level minus any Sub-levels.
 

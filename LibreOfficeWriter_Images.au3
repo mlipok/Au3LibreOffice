@@ -1591,13 +1591,13 @@ EndFunc   ;==>_LOWriter_ImageHyperlink
 ;                  @Error 2 @Extended 1 Return 0 = Failure creating "com.sun.star.text.TextGraphicObject" Object.
 ;                  @Error 2 @Extended 2 Return 0 = Failure creating "com.sun.star.ServiceManager" Object.
 ;                  @Error 2 @Extended 3 Return 0 = Failure Creating "com.sun.star.graphic.GraphicProvider" Object.
+;                  @Error 2 @Extended 4 Return 0 = Error creating a property value for retrieving the Image's size.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error getting Cursor type.
 ;                  @Error 3 @Extended 2 Return 0 = Error converting Image Path to Libre Office URL.
-;                  @Error 3 @Extended 3 Return 0 = Error setting a property value for retrieving the Image's size.
-;                  @Error 3 @Extended 4 Return 0 = Error retrieving current Page Style name at insertion point.
-;                  @Error 3 @Extended 5 Return 0 = Error retrieving Page Style Object.
-;                  @Error 3 @Extended 6 Return 0 = Error calculating suggested image size.
+;                  @Error 3 @Extended 3 Return 0 = Error retrieving current Page Style name at insertion point.
+;                  @Error 3 @Extended 4 Return 0 = Error retrieving Page Style Object.
+;                  @Error 3 @Extended 5 Return 0 = Error calculating suggested image size.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Image was successfully inserted, returning image Object.
 ; Author ........: donnyh13
@@ -1641,16 +1641,16 @@ Func _LOWriter_ImageInsert(ByRef $oDoc, $sImage, ByRef $oCursor, $iAnchorType = 
 	If Not IsObj($oProvider) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 	$atProp[0] = __LO_SetPropertyValue("URL", $sImage)
-	If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If (@error > 0) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
 
 	$sPageStyle = $oCursor.PageStyleName()
-	If Not IsString($sPageStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+	If Not IsString($sPageStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	$oPageStyle = _LOWriter_PageStyleGetObj($oDoc, $sPageStyle)
-	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 	$oSize = __LOWriter_ImageGetSuggestedSize(($oProvider.queryGraphicDescriptor($atProp)), $oPageStyle)
-	If Not IsObj($oSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
+	If Not IsObj($oSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
 	With $oImage
 		.GraphicURL = $sImage

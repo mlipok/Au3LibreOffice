@@ -129,10 +129,11 @@ EndFunc   ;==>_LOWriter_NumStyleCreate
 ;                  @Error 1 @Extended 17 Return 0 = $sBulletFont was called and Number Format not set to $LOW_NUM_STYLE_CHAR_SPECIAL.
 ;                  @Error 1 @Extended 18 Return 0 = $iCharDecimal not an Integer.
 ;                  @Error 1 @Extended 19 Return 0 = $iCharDecimal was called and Number Format not set to $LOW_NUM_STYLE_CHAR_SPECIAL.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error mapping setting values.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Numbering Rules Object.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving Numbering Rule Array for level.
-;                  @Error 3 @Extended 3 Return 0 = Error mapping setting values.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iNumFormat
@@ -187,7 +188,7 @@ Func _LOWriter_NumStyleCustomize(ByRef $oDoc, $oNumStyle, $iLevel, $iNumFormat =
 			If Not IsArray($atNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 			$mNumLevel = __LOWriter_NumRuleCreateMap($atNumLevel)
-			If Not IsMap($mNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+			If Not IsMap($mNumLevel) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 			If MapExists($mNumLevel, "BulletFont") Then
 				__LO_ArrayFill($avCustomize, $atNumLevel[$mNumLevel["NumberingType"]].Value(), _
@@ -221,7 +222,7 @@ Func _LOWriter_NumStyleCustomize(ByRef $oDoc, $oNumStyle, $iLevel, $iNumFormat =
 		If Not IsArray($atNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		$mNumLevel = __LOWriter_NumRuleCreateMap($atNumLevel) ; Map what elements each setting is located at.
-		If Not IsMap($mNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		If Not IsMap($mNumLevel) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 		If ($iNumFormat <> Null) Then
 			If Not __LO_IntIsBetween($iNumFormat, $LOW_NUM_STYLE_CHARS_UPPER_LETTER, $LOW_NUM_STYLE_NUMBER_LEGAL_KO) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
@@ -234,7 +235,7 @@ Func _LOWriter_NumStyleCustomize(ByRef $oDoc, $oNumStyle, $iLevel, $iNumFormat =
 			If Not IsArray($atNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 			$mNumLevel = __LOWriter_NumRuleCreateMap($atNumLevel)
-			If Not IsMap($mNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+			If Not IsMap($mNumLevel) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 		EndIf
 
 		If ($iStartAt <> Null) Then
@@ -309,7 +310,7 @@ Func _LOWriter_NumStyleCustomize(ByRef $oDoc, $oNumStyle, $iLevel, $iNumFormat =
 		If Not IsArray($atNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		$mNumLevel = __LOWriter_NumRuleCreateMap($atNumLevel)
-		If Not IsMap($mNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		If Not IsMap($mNumLevel) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 		; Error Checking
 		$iError = (__LO_VarsAreNull($iNumFormat)) ? ($iError) : (($atNumLevel[$mNumLevel["NumberingType"]].Value() = $iNumFormat) ? ($iError) : (BitOR($iError, 1)))
@@ -547,10 +548,11 @@ EndFunc   ;==>_LOWriter_NumStyleOrganizer
 ;                  @Error 1 @Extended 7 Return 0 = $iFollowedBy not an Integer, less than 0 or greater than 2. See Constants, $LOW_FOLLOW_BY_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 8 Return 0 = $iTabstop not an Integer.
 ;                  @Error 1 @Extended 9 Return 0 = $iIndent not an Integer.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error mapping setting values.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Numbering Rules Object.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving Numbering Rule Array for level.
-;                  @Error 3 @Extended 3 Return 0 = Error mapping setting values.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iAlignedAt
@@ -598,7 +600,7 @@ Func _LOWriter_NumStylePosition(ByRef $oDoc, $oNumStyle, $iLevel, $iAlignedAt = 
 			If Not IsArray($atNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 			$mNumLevel = __LOWriter_NumRuleCreateMap($atNumLevel)
-			If Not IsMap($mNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+			If Not IsMap($mNumLevel) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 			__LO_ArrayFill($avPosition, $atNumLevel[$mNumLevel["FirstLineIndent"]].Value(), _
 					$atNumLevel[$mNumLevel["Adjust"]].Value(), _
@@ -617,7 +619,7 @@ Func _LOWriter_NumStylePosition(ByRef $oDoc, $oNumStyle, $iLevel, $iAlignedAt = 
 		If Not IsArray($atNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		$mNumLevel = __LOWriter_NumRuleCreateMap($atNumLevel) ; Map what elements each setting is located at.
-		If Not IsMap($mNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		If Not IsMap($mNumLevel) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 		If ($iAlignedAt <> Null) Then
 			If Not IsInt($iAlignedAt) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
@@ -656,7 +658,7 @@ Func _LOWriter_NumStylePosition(ByRef $oDoc, $oNumStyle, $iLevel, $iAlignedAt = 
 		If Not IsArray($atNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		$mNumLevel = __LOWriter_NumRuleCreateMap($atNumLevel)
-		If Not IsMap($mNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		If Not IsMap($mNumLevel) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 		; Error Checking:
 
