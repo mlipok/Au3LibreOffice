@@ -1,6 +1,6 @@
 #include <MsgBoxConstants.au3>
 
-#include "..\LibreOfficeWriter.au3"
+#include "..\LibreOffice_Helper.au3"
 
 Example()
 
@@ -10,7 +10,7 @@ Func Example()
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will list your currently available printers")
 
-	$asPrinters = _LOWriter_DocPrintersAltGetNames()
+	$asPrinters = _LO_PrintersGetNamesAlt()
 	If @error Then _ERROR("Error retrieving array of Printers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "There were " & @extended & " results.")
@@ -22,7 +22,7 @@ Func Example()
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will list your currently default printer next.")
 
-	$sDefault = _LOWriter_DocPrintersAltGetNames("", True)
+	$sDefault = _LO_PrintersGetNamesAlt("", True)
 	If @error Then _ERROR("Error retrieving Default Printer. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	If ($sDefault = "") Then
@@ -40,7 +40,7 @@ Func Example()
 		$sSearch = "*PDF*"
 	EndIf
 
-	$asPrinters = _LOWriter_DocPrintersAltGetNames($sSearch)
+	$asPrinters = _LO_PrintersGetNamesAlt($sSearch)
 	If @error Then _ERROR("Error retrieving array of Printers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "There were: " & @extended & " results")

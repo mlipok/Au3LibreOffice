@@ -69,8 +69,6 @@
 ; _LOWriter_DocOpen
 ; _LOWriter_DocPosAndSize
 ; _LOWriter_DocPrint
-; _LOWriter_DocPrintersAltGetNames
-; _LOWriter_DocPrintersGetNames
 ; _LOWriter_DocPrintIncludedSettings
 ; _LOWriter_DocPrintMiscSettings
 ; _LOWriter_DocPrintPageSettings
@@ -3156,7 +3154,7 @@ EndFunc   ;==>_LOWriter_DocPosAndSize
 ; Remarks .......: Based on OOoCalc UDF Print function by GMK.
 ;                  $vPages range can be called as entered in the user interface, as follows: "1-4,10" to print the pages 1 to 4 and 10. Default is "ALL". Must be in String format to accept more than just a single page number. e.g. This will work: "1-6,12,27" This will not 1-6,12,27. This will work: "7", This will also: 7.
 ;                  Setting $bWait to True is highly recommended. Otherwise following actions (as e.g. closing the Document) can fail.
-; Related .......: _LOWriter_DocPrintersAltGetNames, _LOWriter_DocPrintersGetNames, _LOWriter_DocPrintSizeSettings, _LOWriter_DocPrintPageSettings, _LOWriter_DocPrintMiscSettings, _LOWriter_DocPrintIncludedSettings
+; Related .......: _LO_PrintersGetNamesAlt, _LO_PrintersGetNames, _LOWriter_DocPrintSizeSettings, _LOWriter_DocPrintPageSettings, _LOWriter_DocPrintMiscSettings, _LOWriter_DocPrintIncludedSettings
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3220,133 +3218,6 @@ Func _LOWriter_DocPrint(ByRef $oDoc, $iCopies = 1, $bCollate = True, $vPages = "
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_DocPrint
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_DocPrintersAltGetNames
-; Description ...: Alternate function; Enumerates all installed printers, or current default printer.
-; Syntax ........: _LOWriter_DocPrintersAltGetNames([$sPrinterName = ""[, $bReturnDefault = False]])
-; Parameters ....: $sPrinterName        - [optional] a string value. Default is "". Name of the printer to list. Default "" returns the list of all printers. See Remarks.
-;                  $bReturnDefault      - [optional] a boolean value. Default is False. If True, returns only the name of the current default printer.
-; Return values .: Success: Array or String.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $sPrinterName not a String.
-;                  @Error 1 @Extended 2 Return 0 = $bReturnDefault not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failure Creating Object.
-;                  @Error 2 @Extended 2 Return 0 = Failure retrieving printer list Object.
-;                  --Printer Related Errors--
-;                  @Error 5 @Extended 1 Return 0 = No default printer found.
-;                  --Success--
-;                  @Error 0 @Extended 1 Return String = Returning the default printer name. See remarks. @Extended is set to the number of results.
-;                  @Error 0 @Extended ? Return Array = Returning an array of strings containing all installed printers. See remarks. Number of results returned in @Extended.
-; Author ........: jguinch (_PrintMgr_EnumPrinter)
-; Modified ......: donnyh13 - Added input error checking. Added a return default printer only option.
-; Remarks .......: When $bReturnDefault is False, The function returns all installed printers for the user running the script in an array.
-;                  If $sPrinterName is set, the name must be exact, or no results will be found, unless you use an asterisk (*) for partial name searches, either prefixed (*Canon), suffixed (Canon*), or both (*Canon*).
-;                  When $bReturnDefault is True, The function returns only the default printer's name or sets an error if no default printer is found.
-; Related .......: _LOWriter_DocPrintersGetNames
-; Link ..........: https://www.autoitscript.com/forum/topic/155485-printers-management-udf/
-; UDF title......: Printmgr.au3
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_DocPrintersAltGetNames($sPrinterName = "", $bReturnDefault = False)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $asPrinterNames[10]
-	Local $sFilter
-	Local $iCount = 0
-	Local Const $wbemFlagReturnImmediately = 0x10, $wbemFlagForwardOnly = 0x20
-	Local $oWMIService, $oPrinters
-
-	If Not IsString($sPrinterName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsBool($bReturnDefault) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-	If $sPrinterName <> "" Then $sFilter = StringReplace(" Where Name like '" & StringReplace($sPrinterName, "\", "\\") & "'", "*", "%")
-	$oWMIService = ObjGet("winmgmts:{impersonationLevel=impersonate}!\\.\root\cimv2")
-	If Not IsObj($oWMIService) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-
-	$oPrinters = $oWMIService.ExecQuery("Select * from Win32_Printer" & $sFilter, "WQL", $wbemFlagReturnImmediately + $wbemFlagForwardOnly)
-	If Not IsObj($oPrinters) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
-
-	For $oPrinter In $oPrinters
-		Switch $bReturnDefault
-			Case False
-				If $iCount >= (UBound($asPrinterNames) - 1) Then ReDim $asPrinterNames[UBound($asPrinterNames) * 2]
-				$asPrinterNames[$iCount] = $oPrinter.Name
-				$iCount += 1
-
-			Case True
-				If $oPrinter.Default Then Return SetError($__LO_STATUS_SUCCESS, 1, $oPrinter.Name)
-		EndSwitch
-	Next
-	If $bReturnDefault Then Return SetError($__LO_STATUS_PRINTER_RELATED_ERROR, 1, 0)
-
-	ReDim $asPrinterNames[$iCount]
-
-	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asPrinterNames)
-EndFunc   ;==>_LOWriter_DocPrintersAltGetNames
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_DocPrintersGetNames
-; Description ...: Enumerates all installed printers, or current default printer.
-; Syntax ........: _LOWriter_DocPrintersGetNames([$bDefaultOnly = False])
-; Parameters ....: $bDefaultOnly        - [optional] a boolean value. Default is False. If True, returns only the name of the current default printer. Libre 6.3 and up only.
-; Return values .: Success: An array or String.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $bDefaultOnly not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failure Creating "com.sun.star.ServiceManager" Object.
-;                  @Error 2 @Extended 2 Return 0 = Failure creating "com.sun.star.awt.PrinterServer" Object.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Default printer name.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Array of printer names.
-;                  --Version Related Errors--
-;                  @Error 6 @Extended 1 Return 0 = Current Libre Office version lower than 4.1.
-;                  @Error 6 @Extended 2 Return 0 = Current Libre Office version lower than 6.3.
-;                  --Success--
-;                  @Error 0 @Extended 1 Return String = Returning the default printer name.
-;                  @Error 0 @Extended ? Return Array = Returning an array of strings containing all installed printers. @Extended set to number of results.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: This function works for LibreOffice 4.1 and Up.
-; Related .......: _LOWriter_DocPrintersAltGetNames
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_DocPrintersGetNames($bDefaultOnly = False)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $oServiceManager, $oPrintServer
-	Local $sDefault
-	Local $asPrinters[0]
-
-	If Not __LO_VersionCheck(4.1) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
-	If Not IsBool($bDefaultOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-
-	$oServiceManager = __LO_ServiceManager()
-	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-
-	$oPrintServer = $oServiceManager.createInstance("com.sun.star.awt.PrinterServer")
-	If Not IsObj($oPrintServer) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
-
-	If $bDefaultOnly Then
-		If Not __LO_VersionCheck(6.3) Then Return SetError($__LO_STATUS_VER_ERROR, 2, 0)
-
-		$sDefault = $oPrintServer.getDefaultPrinterName()
-		If IsString($sDefault) Then Return SetError($__LO_STATUS_SUCCESS, 1, $sDefault)
-
-		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-	EndIf
-
-	$asPrinters = $oPrintServer.getPrinterNames()
-	If IsArray($asPrinters) Then Return SetError($__LO_STATUS_SUCCESS, UBound($asPrinters), $asPrinters)
-
-	Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-EndFunc   ;==>_LOWriter_DocPrintersGetNames
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocPrintIncludedSettings

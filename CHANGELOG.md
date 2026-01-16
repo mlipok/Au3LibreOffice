@@ -59,6 +59,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Support for LibreOffice Portable usage. See `_LO_InitializePortable`.
 - $LO_CONVERT_* Constant.
 - `_LO_UnitConvert` Function for converting Inches, Centimeters, etc. Replacing `_LO_ConvertFromMicrometer` and `_LO_ConvertToMicrometer`.
+- `_LO_PrintersGetNames` and `_LO_PrintersGetNamesAlt` central functions for retrieving Printer names instead of individual component functions.
 
 #### Changed
 
@@ -1088,6 +1089,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Unnecessary internal functions:
 	- __LOCalc_CharPosition
 	- __LOCalc_CharSpacing
+- Individual component Printer name retrieval functions:
+	- _LOCalc_DocPrintersGetNames
+	- _LOCalc_DocPrintersAltGetNames
 
 ### LibreOfficeWriter
 
@@ -1792,6 +1796,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- __LOWriter_PageStyleNameToggle
 	- __LOWriter_ParStyleNameToggle
 	- __LOWriter_TableStyleNameToggle
+- Individual component Printer name retrieval functions:
+	- _LOWriter_DocPrintersGetNames
+	- _LOWriter_DocPrintersAltGetNames
 
 [To Top](#releases)
 

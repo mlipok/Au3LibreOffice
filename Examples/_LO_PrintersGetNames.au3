@@ -1,6 +1,6 @@
 #include <MsgBoxConstants.au3>
 
-#include "..\LibreOfficeCalc.au3"
+#include "..\LibreOffice_Helper.au3"
 
 Example()
 
@@ -15,7 +15,7 @@ Func Example()
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will list your currently available printers.")
 
 	; Retrieve Array of available printers.
-	$asPrinters = _LOCalc_DocPrintersGetNames()
+	$asPrinters = _LO_PrintersGetNames()
 	$iCount = @extended
 	If @error Then _ERROR("Error retrieving array of Printers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
@@ -39,7 +39,7 @@ Func Example()
 	EndIf
 
 	; Return default printer.
-	$sDefault = _LOCalc_DocPrintersGetNames(True)
+	$sDefault = _LO_PrintersGetNames(True)
 	If @error Then _ERROR("Error retrieving Default Printer. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	If ($sDefault = "") Then
