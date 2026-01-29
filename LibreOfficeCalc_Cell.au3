@@ -980,7 +980,9 @@ Func _LOCalc_CellString(ByRef $oCell, $sText = Null)
 	If Not IsString($sText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oCell.setString($sText)
-	If ($oCell.getString() <> $sText) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0)
+
+	; Strip @CR / @LF from both to compare, otherwise they don't match.
+	If (StringRegExpReplace($oCell.getString(), @CR & "|" & @LF, "") <> StringRegExpReplace($sText, @CR & "|" & @LF, "")) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0) ; Calc Automatically converts @CR etc to @LF
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOCalc_CellString

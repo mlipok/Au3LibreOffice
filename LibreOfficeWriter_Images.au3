@@ -1896,7 +1896,7 @@ Func _LOWriter_ImageOptionsName(ByRef $oDoc, ByRef $oImage, $sName = Null, $sAlt
 		If Not IsString($sDesc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oImage.Description = $sDesc
-		$iError = ($oImage.Description = $sDesc) ? ($iError) : (BitOR($iError, 4))
+		$iError = ($oImage.Description() = $sDesc) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))

@@ -1043,6 +1043,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - `LibreOfficeCalc_Sheet.au3` was missing an Include file.
 - `_LOCalc_DocViewWindowSettings`, returning values in wrong order. Thanks to user JALucena. <https://www.autoitscript.com/forum/topic/210514-libreoffice-udf-help-and-support/page/2/#findComment-1543326>
 - `_LOCalc_DocCreate` not finding a blank open document to connect to, if available, due to reversed logical operator, and non-existent method.
+- Certain functions would have Property setting errors triggered if there were CR, LF or CRLF present in them:
+	- _LOCalc_CellString
+	- _LOCalc_CommentText
 
 #### Refactored
 
@@ -1597,7 +1600,6 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Modified `_LOWriter_TableGetCellObjByPosition` error values, and also the default value for ToColumn and ToRow.
 - Switched order of parameters in `_LOWriter_TableGetData`, changing $iRow to come after $iColumn.
 - Removed replacement of CRLF with CR in `_LOWriter_TableGetData`.
-- Added replacement of CRLF to CR in `_LOWriter_TableSetData`, to prevent adding extra newlines (L.O. uses CR and LF separately).
 - Changed error values for the following:
 	- __LOWriter_Border
 	- __LOWriter_CharBorder
@@ -1673,6 +1675,11 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_ImageInsert
 	- _LOWriter_NumStyleCustomize
 	- _LOWriter_NumStylePosition
+- Added find and replace of CRLF to CR to certain functions, to prevent adding extra newlines accidentally (L.O. uses CR and LF separately):
+	- _LOWriter_CellString
+	- _LOWriter_DocInsertString
+	- _LOWriter_ShapeTextBox
+	- _LOWriter_TableSetData
 
 #### Documented
 

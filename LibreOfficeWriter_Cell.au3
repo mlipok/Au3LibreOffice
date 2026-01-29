@@ -562,6 +562,7 @@ EndFunc   ;==>_LOWriter_CellProtect
 ; Remarks .......: String can only be set for an individual cell, not a range.
 ;                  Setting the String will overwrite any existing data in the cell.
 ;                  Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
+;                  To prevent accidental and unwanted newlines, @CRLF is automatically replaced with @CR to match LibreOffice's newline style.
 ; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ; Link ..........:
 ; Example .......: Yes
@@ -576,6 +577,9 @@ Func _LOWriter_CellString(ByRef $oCell, $sString = Null)
 	If __LO_VarsAreNull($sString) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oCell.getString())
 
 	If Not IsString($sString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	; Exchange CRLF for CR to prevent errors.
+	$sString = StringRegExpReplace($sString, @CRLF, @CR)
 
 	$oCell.setString($sString)
 

@@ -1866,7 +1866,7 @@ Func _LOWriter_TableSetData(ByRef $oTable, ByRef $avData)
 
 	$iColumns = $oTable.getColumns.getCount()
 	For $i = 0 To UBound($avData) - 1
-		If (UBound($avData[$i]) <> $iColumns) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, $i) ; Array contains too short of array for Table column count.
+		If (UBound($avData[$i]) <> $iColumns) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, $i) ; Array contains too small of array for Table column count.
 
 		$avTemp = $avData[$i]
 		For $j = 0 To UBound($avTemp) - 1

@@ -2075,7 +2075,8 @@ Func _LOCalc_CommentText(ByRef $oComment, $sText = Null)
 
 	$oComment.String = $sText
 
-	If ($oComment.String() <> $sText) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0)
+	; Strip @CR / @LF from both to compare, otherwise they don't match.
+	If (StringRegExpReplace($oComment.String(), @CR & "|" & @LF, "") <> StringRegExpReplace($sText, @CR & "|" & @LF, "")) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOCalc_CommentText
