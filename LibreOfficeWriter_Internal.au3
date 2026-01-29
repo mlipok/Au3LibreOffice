@@ -89,6 +89,7 @@
 ; __LOWriter_ParPageBreak
 ; __LOWriter_ParShadow
 ; __LOWriter_ParSpace
+; __LOWriter_ParStyleCompare
 ; __LOWriter_ParTabStopCreate
 ; __LOWriter_ParTabStopDelete
 ; __LOWriter_ParTabStopMod
@@ -5781,6 +5782,52 @@ Func __LOWriter_ParSpace(ByRef $oObj, $iAbovePar = Null, $iBelowPar = Null, $bAd
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_ParSpace
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_ParStyleCompare
+; Description ...: Test whether a set and current Paragraph Style match.
+; Syntax ........: __LOWriter_ParStyleCompare(ByRef $oDoc, $sCurParStyle, $sSetParStyle)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $sCurParStyle        - a string value. The currently set Paragraph Style's name.
+;                  $sSetParStyle        - a string value. The Paragraph Style's name intended to be set.
+; Return values .: Success: Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sCurParStyle not a String.
+;                  @Error 1 @Extended 3 Return 0 = $sSetParStyle not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Paragraph Style's internal name.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returning True if both style names are the same, else False.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: This is to aid in preventing false Property setting errors if a Display name is used instead of the Internal name for a style.
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_ParStyleCompare(ByRef $oDoc, $sCurParStyle, $sSetParStyle)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $sInternalSetParStyleName
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sCurParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsString($sSetParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	If ($sCurParStyle = $sSetParStyle) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+	If $oDoc.StyleFamilies.getByName("ParagraphStyles").hasByName($sSetParStyle) Then
+		$sInternalSetParStyleName = $oDoc.StyleFamilies.getByName("ParagraphStyles").getByName($sSetParStyle).Name()
+		If Not IsString($sInternalSetParStyleName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+		If ($sCurParStyle = $sInternalSetParStyleName) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+	EndIf
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, False)
+EndFunc   ;==>__LOWriter_ParStyleCompare
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_ParTabStopCreate

@@ -4521,7 +4521,7 @@ Func _LOWriter_PageStyleLayout(ByRef $oDoc, ByRef $oPageStyle, $iLayout = Null, 
 		If Not _LOWriter_ParStyleExists($oDoc, $sRefStyle) And Not ($sRefStyle = "") Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$oPageStyle.RegisterParagraphStyle = $sRefStyle
-		$iError = ($oPageStyle.RegisterParagraphStyle() = $sRefStyle) ? ($iError) : (BitOR($iError, 4))
+		$iError = (__LOWriter_ParStyleCompare($oDoc, $oPageStyle.RegisterParagraphStyle(), $sRefStyle)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bGutterOnRight <> Null) Then

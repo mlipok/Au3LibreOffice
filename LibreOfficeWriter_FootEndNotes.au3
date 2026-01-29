@@ -396,7 +396,7 @@ Func _LOWriter_EndnoteSettingsStyles(ByRef $oDoc, $sParagraph = Null, $sPage = N
 		If Not _LOWriter_ParStyleExists($oDoc, $sParagraph) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oDoc.EndnoteSettings.ParaStyleName = $sParagraph
-		$iError = ($oDoc.EndnoteSettings.ParaStyleName() = $sParagraph) ? ($iError) : (BitOR($iError, 1))
+		$iError = (__LOWriter_ParStyleCompare($oDoc, $oDoc.EndnoteSettings.ParaStyleName(), $sParagraph)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sPage <> Null) Then
@@ -909,7 +909,7 @@ Func _LOWriter_FootnoteSettingsStyles(ByRef $oDoc, $sParagraph = Null, $sPage = 
 		If Not _LOWriter_ParStyleExists($oDoc, $sParagraph) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		$oDoc.FootnoteSettings.ParaStyleName = $sParagraph
-		$iError = ($oDoc.FootnoteSettings.ParaStyleName() = $sParagraph) ? ($iError) : (BitOR($iError, 1))
+		$iError = (__LOWriter_ParStyleCompare($oDoc, $oDoc.FootnoteSettings.ParaStyleName(), $sParagraph)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sPage <> Null) Then

@@ -1311,6 +1311,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_TableStyleSet
 	- _LOWriter_TableStylesGetNames
 	- __LOWriter_TableStyleNameToggle
+- Added functions for checking both Internal and Display names for certain Styles.
+	- __LOWriter_ParStyleCompare
 
 #### Changed
 
@@ -1680,6 +1682,12 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_DocInsertString
 	- _LOWriter_ShapeTextBox
 	- _LOWriter_TableSetData
+- Added internal function to check whether a Paragraph Style was set, checking both internal and display names. Affected functions are:
+	- _LOWriter_EndnoteSettingsStyles
+	- _LOWriter_FootnoteSettingsStyles
+	- _LOWriter_PageStyleLayout
+	- _LOWriter_ParStyleOrganizer
+	- _LOWriter_ParStyleSet
 
 #### Documented
 

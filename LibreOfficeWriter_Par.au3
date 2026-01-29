@@ -1633,7 +1633,7 @@ Func _LOWriter_ParStyleOrganizer(ByRef $oDoc, ByRef $oParStyle, $sNewParStyleNam
 		If _LOWriter_ParStyleExists($oDoc, $sNewParStyleName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oParStyle.Name = $sNewParStyleName
-		$iError = ($oParStyle.Name() = $sNewParStyleName) ? ($iError) : (BitOR($iError, 1))
+		$iError = (__LOWriter_ParStyleCompare($oDoc, $oParStyle.Name(), $sNewParStyleName)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sFollowStyle <> Null) Then
@@ -1641,7 +1641,7 @@ Func _LOWriter_ParStyleOrganizer(ByRef $oDoc, ByRef $oParStyle, $sNewParStyleNam
 		If Not _LOWriter_ParStyleExists($oDoc, $sFollowStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$oParStyle.setPropertyValue("FollowStyle", $sFollowStyle)
-		$iError = ($oParStyle.getPropertyValue("FollowStyle") = $sFollowStyle) ? ($iError) : (BitOR($iError, 2))
+		$iError = (__LOWriter_ParStyleCompare($oDoc, $oParStyle.getPropertyValue("FollowStyle"), $sFollowStyle)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($sParentStyle <> Null) Then
@@ -1649,7 +1649,7 @@ Func _LOWriter_ParStyleOrganizer(ByRef $oDoc, ByRef $oParStyle, $sNewParStyleNam
 		If ($sParentStyle <> "") And Not _LOWriter_ParStyleExists($oDoc, $sParentStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 		$oParStyle.ParentStyle = $sParentStyle
-		$iError = ($oParStyle.ParentStyle() = $sParentStyle) ? ($iError) : (BitOR($iError, 4))
+		$iError = (__LOWriter_ParStyleCompare($oDoc, $oParStyle.ParentStyle(), $sParentStyle)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bAutoUpdate <> Null) Then
@@ -1963,7 +1963,7 @@ Func _LOWriter_ParStyleSet(ByRef $oDoc, ByRef $oObj, $sParStyle)
 
 	$oObj.ParaStyleName = $sParStyle
 
-	Return ($oObj.ParaStyleName() = $sParStyle) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
+	Return (__LOWriter_ParStyleCompare($oDoc, $oObj.ParaStyleName(), $sParStyle)) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
 EndFunc   ;==>_LOWriter_ParStyleSet
 
 ; #FUNCTION# ====================================================================================================================
