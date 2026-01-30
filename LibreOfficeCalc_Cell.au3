@@ -46,6 +46,7 @@
 ; _LOCalc_CellStyleBorderStyle
 ; _LOCalc_CellStyleBorderWidth
 ; _LOCalc_CellStyleCreate
+; _LOCalc_CellStyleCurrent
 ; _LOCalc_CellStyleDelete
 ; _LOCalc_CellStyleEffect
 ; _LOCalc_CellStyleExists
@@ -56,7 +57,6 @@
 ; _LOCalc_CellStyleOrganizer
 ; _LOCalc_CellStyleOverline
 ; _LOCalc_CellStyleProtection
-; _LOCalc_CellStyleSet
 ; _LOCalc_CellStylesGetNames
 ; _LOCalc_CellStyleShadow
 ; _LOCalc_CellStyleStrikeOut
@@ -1347,6 +1347,63 @@ Func _LOCalc_CellStyleCreate(ByRef $oDoc, $sCellStyle)
 EndFunc   ;==>_LOCalc_CellStyleCreate
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_CellStyleCurrent
+; Description ...: Set or Retrieve the current Cell Style for a Cell or Cell Range.
+; Syntax ........: _LOCalc_CellStyleCurrent(ByRef $oDoc, ByRef $oRange[, $sCellStyle = Null])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $sCellStyle          - [optional] a string value. Default is Null. The Cell Style name to set for the Cell or Cell Range.
+; Return values .: Success: 1 or String
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oRange not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $oRange does not support Cell Properties service.
+;                  @Error 1 @Extended 4 Return 0 = $sCellStyle not a String.
+;                  @Error 1 @Extended 5 Return 0 = Cell Style called in $sCellStyle not found in Document.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve current Cell Style.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sCellStyle
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Cell Style successfully set.
+;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were called with Null, returning current Cell Style set for this Range.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
+; Related .......: _LOCalc_CellStylesGetNames
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_CellStyleCurrent(ByRef $oDoc, ByRef $oRange, $sCellStyle = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $sCurrStyle
+	Local $iError = 0
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oRange.supportsService("com.sun.star.table.CellProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	If __LO_VarsAreNull($sCellStyle) Then
+		$sCurrStyle = $oRange.CellStyle()
+		If Not IsString($sCurrStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $sCurrStyle)
+	EndIf
+
+	If Not IsString($sCellStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not _LOCalc_CellStyleExists($oDoc, $sCellStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
+	$oRange.CellStyle = $sCellStyle
+	$iError = ($oRange.CellStyle() = $sCellStyle) ? ($iError) : (BitOR($iError, 1))
+
+	Return ($iError = 0) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
+EndFunc   ;==>_LOCalc_CellStyleCurrent
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_CellStyleDelete
 ; Description ...: Delete a User-Created Cell Style.
 ; Syntax ........: _LOCalc_CellStyleDelete(ByRef $oDoc, ByRef $oCellStyle[, $bForceDelete = False[, $sReplacementStyle = "Default"]])
@@ -1848,48 +1905,6 @@ Func _LOCalc_CellStyleProtection(ByRef $oCellStyle, $bHideAll = Null, $bProtecte
 
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellStyleProtection
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_CellStyleSet
-; Description ...: Set the Cell Style for a Cell or Cell Range.
-; Syntax ........: _LOCalc_CellStyleSet(ByRef $oDoc, ByRef $oRange, $sCellStyle)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
-;                  $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
-;                  $sCellStyle          - a string value. The Cell Style name to set for the Cell or Cell Range.
-; Return values .: Success: 1
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oRange not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $oRange does not support Cell Properties service.
-;                  @Error 1 @Extended 4 Return 0 = $sCellStyle not a String.
-;                  @Error 1 @Extended 5 Return 0 = Cell Style called in $sCellStyle not found in Document.
-;                  --Property Setting Errors--
-;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                               1 = Error setting $sCellStyle
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Cell Style successfully set.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......: _LOCalc_CellStylesGetNames
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOCalc_CellStyleSet(ByRef $oDoc, ByRef $oRange, $sCellStyle)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oRange.supportsService("com.sun.star.table.CellProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsString($sCellStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If Not _LOCalc_CellStyleExists($oDoc, $sCellStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
-	$oRange.CellStyle = $sCellStyle
-
-	Return ($oRange.CellStyle() = $sCellStyle) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
-EndFunc   ;==>_LOCalc_CellStyleSet
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_CellStylesGetNames

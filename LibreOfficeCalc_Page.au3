@@ -29,6 +29,7 @@
 ; _LOCalc_PageStyleBorderStyle
 ; _LOCalc_PageStyleBorderWidth
 ; _LOCalc_PageStyleCreate
+; _LOCalc_PageStyleCurrent
 ; _LOCalc_PageStyleDelete
 ; _LOCalc_PageStyleExists
 ; _LOCalc_PageStyleFooter
@@ -54,7 +55,6 @@
 ; _LOCalc_PageStyleMargins
 ; _LOCalc_PageStyleOrganizer
 ; _LOCalc_PageStylePaperFormat
-; _LOCalc_PageStyleSet
 ; _LOCalc_PageStylesGetNames
 ; _LOCalc_PageStyleShadow
 ; _LOCalc_PageStyleSheetPageOrder
@@ -447,6 +447,63 @@ Func _LOCalc_PageStyleCreate(ByRef $oDoc, $sPageStyle)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oPageStyle)
 EndFunc   ;==>_LOCalc_PageStyleCreate
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_PageStyleCurrent
+; Description ...: Set or Retrieve the current Page style for a Sheet.
+; Syntax ........: _LOCalc_PageStyleCurrent(ByRef $oDoc, ByRef $oSheet[, $sPageStyle = Null])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+;                  $sPageStyle          - [optional] a string value. Default is Null. The Page Style name to set the Page to.
+; Return values .: Success: 1 or String.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSheet not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $oSheet is not a Sheet Object.
+;                  @Error 1 @Extended 4 Return 0 = $sPageStyle not a String.
+;                  @Error 1 @Extended 5 Return 0 = Page Style called in $sPageStyle doesn't exist in Document.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve current Page Style.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sPageStyle
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were called with Null, returning current Page Style set for this Sheet.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
+; Related .......: _LOCalc_PageStylesGetNames
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_PageStyleCurrent(ByRef $oDoc, ByRef $oSheet, $sPageStyle = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $sCurrStyle
+	Local $iError = 0
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oSheet.supportsService("com.sun.star.sheet.Spreadsheet") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	If __LO_VarsAreNull($sPageStyle) Then
+		$sCurrStyle = $oSheet.PageStyle()
+		If Not IsString($sCurrStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $sCurrStyle)
+	EndIf
+
+	If Not IsString($sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not _LOCalc_PageStyleExists($oDoc, $sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
+	$oSheet.PageStyle = $sPageStyle
+	$iError = ($oSheet.PageStyle() = $sPageStyle) ? ($iError) : (BitOR($iError, 1))
+
+	Return ($iError = 0) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
+EndFunc   ;==>_LOCalc_PageStyleCurrent
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_PageStyleDelete
@@ -2321,52 +2378,6 @@ Func _LOCalc_PageStylePaperFormat(ByRef $oPageStyle, $iWidth = Null, $iHeight = 
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOCalc_PageStylePaperFormat
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_PageStyleSet
-; Description ...: Set the Page style for a Sheet.
-; Syntax ........: _LOCalc_PageStyleSet(ByRef $oDoc, ByRef $oSheet[, $sPageStyle = Null])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
-;                  $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
-;                  $sPageStyle          - [optional] a string value. Default is Null. The Page Style name to set the Page to.
-; Return values .: Success: 1 or String.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oSheet not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $oSheet is not a Sheet Object.
-;                  @Error 1 @Extended 4 Return 0 = $sPageStyle not a String.
-;                  @Error 1 @Extended 5 Return 0 = Page Style called in $sPageStyle doesn't exist in Document.
-;                  --Property Setting Errors--
-;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                               1 = Error setting $sPageStyle
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were called with Null, returning current Page Style set for this Sheet.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
-; Related .......: _LOCalc_PageStylesGetNames
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOCalc_PageStyleSet(ByRef $oDoc, ByRef $oSheet, $sPageStyle = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oSheet.supportsService("com.sun.star.sheet.Spreadsheet") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
-	If __LO_VarsAreNull($sPageStyle) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oSheet.PageStyle())
-
-	If Not IsString($sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If Not _LOCalc_PageStyleExists($oDoc, $sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
-	$oSheet.PageStyle = $sPageStyle
-
-	Return ($oSheet.PageStyle() = $sPageStyle) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
-EndFunc   ;==>_LOCalc_PageStyleSet
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_PageStylesGetNames

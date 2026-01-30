@@ -17,11 +17,11 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve Sheet Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set the Page style to Report using the ViewCursor.
-	_LOCalc_PageStyleSet($oDoc, $oSheet, "Report")
+	_LOCalc_PageStyleCurrent($oDoc, $oSheet, "Report")
 	If @error Then _ERROR($oDoc, "Failed to set the page style. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current Page Style set for this Sheet
-	$sPageStyle = _LOCalc_PageStyleSet($oDoc, $oSheet)
+	$sPageStyle = _LOCalc_PageStyleCurrent($oDoc, $oSheet)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the current page style. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Page Style used by this sheet is: " & $sPageStyle)

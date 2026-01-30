@@ -1022,6 +1022,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_PageStyleHeaderBorderWidth
 - LibreOffice 25.2 fixed a "bug" where translated style names (Display Names) were accepted as well as programmatic style names for style management (Paragraph, Character, etc). Previously this UDF internally automatically switched between the Display Name to the internal name and vice versa, this however limited its usage to the English version of LibreOffice. This UDF has been modified to now return by default the internal programmatic style names. Up and until L.O. 25.2 the Display Name should still work in this UDF, though property setting errors may occur because L.O. switches all style names to use the internal name. All Style name retrieval functions now have an option to return the DisplayName also for convenience. Any functions the accept a Style name will now return the internal style name instead of the Display Name as before. The following functions were affected by these changes:
 	- _LOCalc_CellStylesGetNames
+- Changed Style setting functions to Set and Retrieve, also renamed them to reflect the change:
+	- `_LOCalc_CellStyleSet` --> `_LOCalc_CellStyleCurrent`
+	- `_LOCalc_PageStyleSet` --> `_LOCalc_PageStyleCurrent`
 
 #### Documented
 
