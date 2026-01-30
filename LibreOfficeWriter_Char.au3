@@ -701,7 +701,7 @@ Func _LOWriter_CharStyleOrganizer(ByRef $oDoc, ByRef $oCharStyle, $sNewCharStyle
 		If _LOWriter_CharStyleExists($oDoc, $sNewCharStyleName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oCharStyle.Name = $sNewCharStyleName
-		$iError = ($oCharStyle.Name() = $sNewCharStyleName) ? ($iError) : (BitOR($iError, 1))
+		$iError = (__LOWriter_CharacterStyleCompare($oDoc, $oCharStyle.Name(), $sNewCharStyleName)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sParentStyle <> Null) Then
@@ -709,7 +709,7 @@ Func _LOWriter_CharStyleOrganizer(ByRef $oDoc, ByRef $oCharStyle, $sNewCharStyle
 		If ($sParentStyle <> "") And Not _LOWriter_CharStyleExists($oDoc, $sParentStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		$oCharStyle.ParentStyle = $sParentStyle
-		$iError = ($oCharStyle.ParentStyle() = $sParentStyle) ? ($iError) : (BitOR($iError, 2))
+		$iError = (__LOWriter_CharacterStyleCompare($oDoc, $oCharStyle.ParentStyle(), $sParentStyle)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bHidden <> Null) Then
@@ -912,7 +912,7 @@ Func _LOWriter_CharStyleSet(ByRef $oDoc, ByRef $oObj, $sCharStyle)
 
 	$oObj.CharStyleName = $sCharStyle
 
-	Return ($oObj.CharStyleName() = $sCharStyle) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
+	Return (__LOWriter_CharacterStyleCompare($oDoc, $oObj.CharStyleName(), $sCharStyle)) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
 EndFunc   ;==>_LOWriter_CharStyleSet
 
 ; #FUNCTION# ====================================================================================================================

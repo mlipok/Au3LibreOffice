@@ -27,6 +27,7 @@
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; __LOWriter_AnyAreDefault
 ; __LOWriter_Border
+; __LOWriter_CharacterStyleCompare
 ; __LOWriter_CharBorder
 ; __LOWriter_CharBorderPadding
 ; __LOWriter_CharEffect
@@ -65,6 +66,7 @@
 ; __LOWriter_Internal_CursorGetType
 ; __LOWriter_InternalComErrorHandler
 ; __LOWriter_IsCellRange
+; __LOWriter_NumberingStyleCompare
 ; __LOWriter_NumRuleCreateMap
 ; __LOWriter_NumStyleCreateScript
 ; __LOWriter_NumStyleDeleteScript
@@ -72,6 +74,7 @@
 ; __LOWriter_NumStyleListFormat
 ; __LOWriter_NumStyleModify
 ; __LOWriter_ObjRelativeSize
+; __LOWriter_PageStyleCompare
 ; __LOWriter_ParAlignment
 ; __LOWriter_ParAreaColor
 ; __LOWriter_ParAreaFillStyle
@@ -111,6 +114,7 @@
 ; __LOWriter_TableCursorMove
 ; __LOWriter_TableHasCellName
 ; __LOWriter_TableRowSplitToggle
+; __LOWriter_TableStyleCompare
 ; __LOWriter_TextCursorMove
 ; __LOWriter_TransparencyGradientConvert
 ; __LOWriter_TransparencyGradientNameInsert
@@ -284,6 +288,52 @@ Func __LOWriter_Border(ByRef $oObj, $bWid, $bSty, $bCol, $iTop = Null, $iBottom 
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_Border
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_CharacterStyleCompare
+; Description ...: Test whether a set and current Character Style match.
+; Syntax ........: __LOWriter_CharacterStyleCompare(ByRef $oDoc, $sCurCharacterStyle, $sSetCharacterStyle)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $sCurCharacterStyle  - a string value. The currently set Character Style's name.
+;                  $sSetCharacterStyle  - a string value. The Character Style's name intended to be set.
+; Return values .: Success: Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sCurCharacterStyle not a String.
+;                  @Error 1 @Extended 3 Return 0 = $sSetCharacterStyle not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Character Style's internal name.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returning True if both style names are the same, else False.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: This is to aid in preventing false Property setting errors if a Display name is used instead of the Internal name for a style.
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_CharacterStyleCompare(ByRef $oDoc, $sCurCharacterStyle, $sSetCharacterStyle)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $sInternalSetCharacterStyleName
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sCurCharacterStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsString($sSetCharacterStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	If ($sCurCharacterStyle = $sSetCharacterStyle) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+	If $oDoc.StyleFamilies.getByName("CharacterStyles").hasByName($sSetCharacterStyle) Then
+		$sInternalSetCharacterStyleName = $oDoc.StyleFamilies.getByName("CharacterStyles").getByName($sSetCharacterStyle).Name()
+		If Not IsString($sInternalSetCharacterStyleName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+		If ($sCurCharacterStyle = $sInternalSetCharacterStyleName) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+	EndIf
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, False)
+EndFunc   ;==>__LOWriter_CharacterStyleCompare
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_CharBorder
@@ -3707,6 +3757,52 @@ Func __LOWriter_IsCellRange(ByRef $oCell)
 EndFunc   ;==>__LOWriter_IsCellRange
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_NumberingStyleCompare
+; Description ...: Test whether a set and current Numbering Style match.
+; Syntax ........: __LOWriter_NumberingStyleCompare(ByRef $oDoc, $sCurNumberingStyle, $sSetNumberingStyle)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $sCurNumberingStyle  - a string value. The currently set Numbering Style's name.
+;                  $sSetNumberingStyle  - a string value. The Numbering Style's name intended to be set.
+; Return values .: Success: Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sCurNumberingStyle not a String.
+;                  @Error 1 @Extended 3 Return 0 = $sSetNumberingStyle not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Numbering Style's internal name.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returning True if both style names are the same, else False.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: This is to aid in preventing false Property setting errors if a Display name is used instead of the Internal name for a style.
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_NumberingStyleCompare(ByRef $oDoc, $sCurNumberingStyle, $sSetNumberingStyle)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $sInternalSetNumberingStyleName
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sCurNumberingStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsString($sSetNumberingStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	If ($sCurNumberingStyle = $sSetNumberingStyle) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+	If $oDoc.StyleFamilies.getByName("NumberingStyles").hasByName($sSetNumberingStyle) Then
+		$sInternalSetNumberingStyleName = $oDoc.StyleFamilies.getByName("NumberingStyles").getByName($sSetNumberingStyle).Name()
+		If Not IsString($sInternalSetNumberingStyleName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+		If ($sCurNumberingStyle = $sInternalSetNumberingStyleName) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+	EndIf
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, False)
+EndFunc   ;==>__LOWriter_NumberingStyleCompare
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_NumRuleCreateMap
 ; Description ...: Creates a map with values for each setting location in the Array.
 ; Syntax ........: __LOWriter_NumRuleCreateMap(ByRef $atNumLevel)
@@ -4105,6 +4201,52 @@ Func __LOWriter_ObjRelativeSize(ByRef $oDoc, ByRef $oObj, $bRelativeWidth = Fals
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>__LOWriter_ObjRelativeSize
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_PageStyleCompare
+; Description ...: Test whether a set and current Page Style match.
+; Syntax ........: __LOWriter_PageStyleCompare(ByRef $oDoc, $sCurPageStyle, $sSetPageStyle)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $sCurPageStyle       - a string value. The currently set Page Style's name.
+;                  $sSetPageStyle       - a string value. The Page Style's name intended to be set.
+; Return values .: Success: Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sCurPageStyle not a String.
+;                  @Error 1 @Extended 3 Return 0 = $sSetPageStyle not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Page Style's internal name.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returning True if both style names are the same, else False.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: This is to aid in preventing false Property setting errors if a Display name is used instead of the Internal name for a style.
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_PageStyleCompare(ByRef $oDoc, $sCurPageStyle, $sSetPageStyle)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $sInternalSetPageStyleName
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sCurPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsString($sSetPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	If ($sCurPageStyle = $sSetPageStyle) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+	If $oDoc.StyleFamilies.getByName("PageStyles").hasByName($sSetPageStyle) Then
+		$sInternalSetPageStyleName = $oDoc.StyleFamilies.getByName("PageStyles").getByName($sSetPageStyle).Name()
+		If Not IsString($sInternalSetPageStyleName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+		If ($sCurPageStyle = $sInternalSetPageStyleName) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+	EndIf
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, False)
+EndFunc   ;==>__LOWriter_PageStyleCompare
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_ParAlignment
@@ -5166,7 +5308,7 @@ Func __LOWriter_ParDropCaps(ByRef $oDoc, ByRef $oObj, $iNumChar = Null, $iLines 
 		If Not _LOWriter_CharStyleExists($oDoc, $sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 		$oObj.DropCapCharStyleName = $sCharStyle
-		$iError = ($oObj.DropCapCharStyleName() = $sCharStyle) ? ($iError) : (BitOR($iError, 16))
+		$iError = (__LOWriter_CharacterStyleCompare($oDoc, $oObj.DropCapCharStyleName(), $sCharStyle)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
@@ -5464,7 +5606,7 @@ Func __LOWriter_ParOutLineAndList(ByRef $oDoc, ByRef $oObj, $iOutline = Null, $s
 		If ($sNumStyle <> "") And Not _LOWriter_NumStyleExists($oDoc, $sNumStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oObj.NumberingStyleName = $sNumStyle
-		$iError = ($oObj.NumberingStyleName = $sNumStyle) ? ($iError) : (BitOR($iError, 2))
+		$iError = (__LOWriter_NumberingStyleCompare($oDoc, $oObj.NumberingStyleName(), $sNumStyle)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bParLineCount <> Null) Then
@@ -5548,7 +5690,7 @@ Func __LOWriter_ParPageBreak(ByRef $oDoc, ByRef $oObj, $iBreakType = Null, $sPag
 		If ($sPageStyle <> Null) And Not _LOWriter_PageStyleExists($oDoc, $sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oObj.PageDescName = $sPageStyle
-		$iError = ($oObj.PageDescName = $sPageStyle) ? ($iError) : (BitOR($iError, 2))
+		$iError = (__LOWriter_PageStyleCompare($oDoc, $oObj.PageDescName(), $sPageStyle)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iPgNumOffSet <> Null) Then
@@ -9212,6 +9354,52 @@ Func __LOWriter_TableRowSplitToggle(ByRef $oTable, $bSplitRows = Null)
 		Return SetError($__LO_STATUS_SUCCESS, 2, 1)
 	EndIf
 EndFunc   ;==>__LOWriter_TableRowSplitToggle
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_TableStyleCompare
+; Description ...: Test whether a set and current Table Style match.
+; Syntax ........: __LOWriter_TableStyleCompare(ByRef $oDoc, $sCurTableStyle, $sSetTableStyle)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $sCurTableStyle      - a string value. The currently set Table Style's name.
+;                  $sSetTableStyle      - a string value. The Table Style's name intended to be set.
+; Return values .: Success: Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sCurTableStyle not a String.
+;                  @Error 1 @Extended 3 Return 0 = $sSetTableStyle not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Table Style's internal name.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returning True if both style names are the same, else False.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: This is to aid in preventing false Property setting errors if a Display name is used instead of the Internal name for a style.
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_TableStyleCompare(ByRef $oDoc, $sCurTableStyle, $sSetTableStyle)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $sInternalSetTableStyleName
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sCurTableStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsString($sSetTableStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	If ($sCurTableStyle = $sSetTableStyle) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+	If $oDoc.StyleFamilies.getByName("TableStyles").hasByName($sSetTableStyle) Then
+		$sInternalSetTableStyleName = $oDoc.StyleFamilies.getByName("TableStyles").getByName($sSetTableStyle).Name()
+		If Not IsString($sInternalSetTableStyleName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+		If ($sCurTableStyle = $sInternalSetTableStyleName) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+	EndIf
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, False)
+EndFunc   ;==>__LOWriter_TableStyleCompare
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_TextCursorMove

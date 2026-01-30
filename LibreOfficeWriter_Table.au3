@@ -475,7 +475,7 @@ Func _LOWriter_TableBreak(ByRef $oDoc, ByRef $oTable, $iBreakType = Null, $sPage
 		If ($sPageStyle <> "") And Not _LOWriter_PageStyleExists($oDoc, $sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oTable.PageDescName = $sPageStyle
-		$iError = ($oTable.PageDescName() = $sPageStyle) ? ($iError) : (BitOR($iError, 2))
+		$iError = (__LOWriter_PageStyleCompare($oDoc, $oTable.PageDescName(), $sPageStyle)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iPgNumOffSet <> Null) Then
@@ -776,7 +776,7 @@ Func _LOWriter_TableCreate(ByRef $oDoc, ByRef $oCursor, $iColumns = 2, $iRows = 
 		If Not _LOWriter_TableStyleExists($oDoc, $sStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
 		$oTable.TableTemplateName = $sStyle
-		$iError = ($oTable.TableTemplateName() = $sStyle) ? ($iError) : (BitOR($iError, 8))
+		$iError = (__LOWriter_TableStyleCompare($oDoc, $oTable.TableTemplateName(), $sStyle)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($bSplit <> Null) Then
@@ -2046,7 +2046,7 @@ Func _LOWriter_TableStyle(ByRef $oDoc, ByRef $oTable, $sTableStyle = Null)
 	If Not _LOWriter_TableStyleExists($oDoc, $sTableStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$oTable.TableTemplateName = $sTableStyle
-	$iError = ($oTable.TableTemplateName() = $sTableStyle) ? ($iError) : (BitOR($iError, 1))
+	$iError = (__LOWriter_TableStyleCompare($oDoc, $oTable.TableTemplateName(), $sTableStyle)) ? ($iError) : (BitOR($iError, 1))
 
 	Return ($iError = 0) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
 EndFunc   ;==>_LOWriter_TableStyle
