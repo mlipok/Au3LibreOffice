@@ -2112,7 +2112,7 @@ EndFunc   ;==>_LOWriter_TableStyleExists
 ;                  - "Default Table Style" is internally called "Default Style".
 ;                  Previous to LibreOffice 25.2 either name would work when setting a Style, however after 25.2 only the internal, or programmatic style names, will work.
 ;                  Calling $bDisplayName with True will return a list of Style names, as the user sees them in the UI, in the same order as they are returned if $bDisplayName is False. It is best not to use these when setting Paragraph Styling.
-; Related .......: _LOWriter_TableStyle, _LOWriter_TableStyleExists
+; Related .......: _LOWriter_TableStyleCurrent, _LOWriter_TableStyleExists
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
