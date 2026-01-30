@@ -1686,33 +1686,13 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_DocInsertString
 	- _LOWriter_ShapeTextBox
 	- _LOWriter_TableSetData
-- Added internal function to check whether a Character Style was set, checking both internal and display names. Affected functions are:
-	- __LOWriter_ParDropCaps
-	- _LOWriter_CharStyleOrganizer
-	- _LOWriter_CharStyleSet
-	- _LOWriter_EndnoteSettingsStyles
-	- _LOWriter_FootnoteSettingsStyles
-	- _LOWriter_NumStyleCustomize
-- Added internal function to check whether a Numbering Style was set, checking both internal and display names. Affected functions are:
-	- __LOWriter_ParOutLineAndList
-	- _LOWriter_NumStyleOrganizer
-	- _LOWriter_NumStyleSet
-- Added internal function to check whether a Page Style was set, checking both internal and display names. Affected functions are:
-	- __LOWriter_ParPageBreak
-	- _LOWriter_EndnoteSettingsStyles
-	- _LOWriter_FootnoteSettingsStyles
-	- _LOWriter_PageStyleOrganizer
-	- _LOWriter_PageStyleSet
-	- _LOWriter_TableBreak
-- Added internal function to check whether a Paragraph Style was set, checking both internal and display names. Affected functions are:
-	- _LOWriter_EndnoteSettingsStyles
-	- _LOWriter_FootnoteSettingsStyles
-	- _LOWriter_PageStyleLayout
-	- _LOWriter_ParStyleOrganizer
-	- _LOWriter_ParStyleSet
-- Added internal function to check whether a Table Style was set, checking both internal and display names. Affected functions are:
-	- _LOWriter_TableCreate
-	- _LOWriter_TableStyle
+- Changed Style setting functions to Set and Retrieve, also renamed them to reflect the change:
+	- `_LOWriter_CharStyleSet` --> `_LOWriter_CharStyleCurrent`
+	- `_LOWriter_FrameStyleSet` --> `_LOWriter_FrameStyleCurrent`
+	- `_LOWriter_NumStyleSet` --> `_LOWriter_NumStyleCurrent`
+	- `_LOWriter_PageStyleSet` --> `_LOWriter_PageStyleCurrent`
+	- `_LOWriter_ParStyleSet` --> `_LOWriter_ParStyleCurrent`
+	- `_LOWriter_TableStyle` --> `_LOWriter_TableStyleCurrent`
 
 #### Documented
 
@@ -1795,6 +1775,33 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_VersionGet
 - Changed checks for a variable being null to use internal function `__LO_VarsAreNull`.
 - All `__LOWriter_Shape_Create*` functions did not use ByRef for one parameter.
+- Added internal function to check whether a Character Style was set, checking both internal and display names. Affected functions are:
+	- __LOWriter_ParDropCaps
+	- _LOWriter_CharStyleOrganizer
+	- _LOWriter_CharStyleSet
+	- _LOWriter_EndnoteSettingsStyles
+	- _LOWriter_FootnoteSettingsStyles
+	- _LOWriter_NumStyleCustomize
+- Added internal function to check whether a Numbering Style was set, checking both internal and display names. Affected functions are:
+	- __LOWriter_ParOutLineAndList
+	- _LOWriter_NumStyleOrganizer
+	- _LOWriter_NumStyleSet
+- Added internal function to check whether a Page Style was set, checking both internal and display names. Affected functions are:
+	- __LOWriter_ParPageBreak
+	- _LOWriter_EndnoteSettingsStyles
+	- _LOWriter_FootnoteSettingsStyles
+	- _LOWriter_PageStyleOrganizer
+	- _LOWriter_PageStyleSet
+	- _LOWriter_TableBreak
+- Added internal function to check whether a Paragraph Style was set, checking both internal and display names. Affected functions are:
+	- _LOWriter_EndnoteSettingsStyles
+	- _LOWriter_FootnoteSettingsStyles
+	- _LOWriter_PageStyleLayout
+	- _LOWriter_ParStyleOrganizer
+	- _LOWriter_ParStyleSet
+- Added internal function to check whether a Table Style was set, checking both internal and display names. Affected functions are:
+	- _LOWriter_TableCreate
+	- _LOWriter_TableStyle
 
 #### Removed
 

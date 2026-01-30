@@ -48,6 +48,7 @@
 ; _LOWriter_ParStyleBorderStyle
 ; _LOWriter_ParStyleBorderWidth
 ; _LOWriter_ParStyleCreate
+; _LOWriter_ParStyleCurrent
 ; _LOWriter_ParStyleDelete
 ; _LOWriter_ParStyleDropCaps
 ; _LOWriter_ParStyleEffect
@@ -63,7 +64,6 @@
 ; _LOWriter_ParStylePageBreak
 ; _LOWriter_ParStylePosition
 ; _LOWriter_ParStyleRotateScale
-; _LOWriter_ParStyleSet
 ; _LOWriter_ParStylesGetNames
 ; _LOWriter_ParStyleShadow
 ; _LOWriter_ParStyleSpace
@@ -1110,6 +1110,63 @@ Func _LOWriter_ParStyleCreate(ByRef $oDoc, $sParStyle)
 EndFunc   ;==>_LOWriter_ParStyleCreate
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_ParStyleCurrent
+; Description ...: Set or Retrieve the current Paragraph style for a paragraph by Cursor or paragraph Object.
+; Syntax ........: _LOWriter_ParStyleCurrent(ByRef $oDoc, ByRef $oObj[, $sParStyle = Null])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oObj                - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object returned from _LOWriter_ParObjCreateList function.
+;                  $sParStyle           - [optional] a string value. Default is Null. The Paragraph Style name to set the paragraph to.
+; Return values .: Success: 1 or String.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oObj not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $oObj does not support Paragraph Properties Service.
+;                  @Error 1 @Extended 4 Return 0 = $sParStyle not a String.
+;                  @Error 1 @Extended 5 Return 0 = Paragraph Style called in $sParStyle not found in Document.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve current Paragraph Style.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sParStyle
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Paragraph Style successfully set.
+;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were called with Null, returning current Paragraph Style set for the selection.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
+; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParStylesGetNames
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_ParStyleCurrent(ByRef $oDoc, ByRef $oObj, $sParStyle = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $sCurrStyle
+	Local $iError = 0
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oObj.supportsService("com.sun.star.style.ParagraphProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	If __LO_VarsAreNull($sParStyle) Then
+		$sCurrStyle = $oObj.ParaStyleName()
+		If Not IsString($sCurrStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $sCurrStyle)
+	EndIf
+
+	If Not IsString($sParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not _LOWriter_ParStyleExists($oDoc, $sParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
+	$oObj.ParaStyleName = $sParStyle
+	$iError = (__LOWriter_ParStyleCompare($oDoc, $oObj.ParaStyleName(), $sParStyle)) ? ($iError) : (BitOR($iError, 1))
+
+	Return ($iError = 0) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
+EndFunc   ;==>_LOWriter_ParStyleCurrent
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ParStyleDelete
 ; Description ...: Delete a User-Created Paragraph Style from a Document.
 ; Syntax ........: _LOWriter_ParStyleDelete(ByRef $oDoc, $oParStyle[, $bForceDelete = False[, $sReplacementStyle = "Default Paragraph Style"]])
@@ -1923,48 +1980,6 @@ Func _LOWriter_ParStyleRotateScale(ByRef $oParStyle, $iRotation = Null, $iScaleW
 
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStyleRotateScale
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_ParStyleSet
-; Description ...: Set a Paragraph style for a paragraph by Cursor or paragraph Object.
-; Syntax ........: _LOWriter_ParStyleSet(ByRef $oDoc, ByRef $oObj, $sParStyle)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oObj                - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object returned from _LOWriter_ParObjCreateList function.
-;                  $sParStyle           - a string value. The Paragraph Style name to set the paragraph to.
-; Return values .: Success: 1
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oObj not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $oObj does not support Paragraph Properties Service.
-;                  @Error 1 @Extended 4 Return 0 = $sParStyle not a String.
-;                  @Error 1 @Extended 5 Return 0 = Paragraph Style called in $sParStyle not found in Document.
-;                  --Property Setting Errors--
-;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                               1 = Error setting $sParStyle
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Paragraph Style successfully set.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParStylesGetNames
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_ParStyleSet(ByRef $oDoc, ByRef $oObj, $sParStyle)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oObj.supportsService("com.sun.star.style.ParagraphProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsString($sParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If Not _LOWriter_ParStyleExists($oDoc, $sParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
-	$oObj.ParaStyleName = $sParStyle
-
-	Return (__LOWriter_ParStyleCompare($oDoc, $oObj.ParaStyleName(), $sParStyle)) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
-EndFunc   ;==>_LOWriter_ParStyleSet
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ParStylesGetNames

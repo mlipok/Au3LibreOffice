@@ -30,6 +30,7 @@
 ; _LOWriter_CharStyleBorderStyle
 ; _LOWriter_CharStyleBorderWidth
 ; _LOWriter_CharStyleCreate
+; _LOWriter_CharStyleCurrent
 ; _LOWriter_CharStyleDelete
 ; _LOWriter_CharStyleEffect
 ; _LOWriter_CharStyleExists
@@ -40,7 +41,6 @@
 ; _LOWriter_CharStyleOverLine
 ; _LOWriter_CharStylePosition
 ; _LOWriter_CharStyleRotateScale
-; _LOWriter_CharStyleSet
 ; _LOWriter_CharStylesGetNames
 ; _LOWriter_CharStyleShadow
 ; _LOWriter_CharStyleSpacing
@@ -348,6 +348,63 @@ Func _LOWriter_CharStyleCreate(ByRef $oDoc, $sCharStyle)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oCharStyle)
 EndFunc   ;==>_LOWriter_CharStyleCreate
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_CharStyleCurrent
+; Description ...: Set or Retrieve the current Character style for a section of text by Cursor or paragraph Object.
+; Syntax ........: _LOWriter_CharStyleCurrent(ByRef $oDoc, ByRef $oObj[, $sCharStyle = Null])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oObj                - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object returned from _LOWriter_ParObjCreateList function.
+;                  $sCharStyle          - [optional] a string value. Default is Null. The Character Style name to set the text to.
+; Return values .: Success: 1 or String
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oObj not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $oObj does not support Character Properties.
+;                  @Error 1 @Extended 4 Return 0 = $sCharStyle not a String.
+;                  @Error 1 @Extended 5 Return 0 = Character Style called in $sCharStyle doesn't exist in Document.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve current Character Style.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sCharStyle
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Character Style successfully set.
+;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were called with Null, returning current Character Style set for the selection.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
+; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_ParObjCreateList, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_CharStylesGetNames
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_CharStyleCurrent(ByRef $oDoc, ByRef $oObj, $sCharStyle = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $sCurrStyle
+	Local $iError = 0
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oObj.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	If __LO_VarsAreNull($sCharStyle) Then
+		$sCurrStyle = $oObj.CharStyleName()
+		If Not IsString($sCurrStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $sCurrStyle)
+	EndIf
+
+	If Not IsString($sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not _LOWriter_CharStyleExists($oDoc, $sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
+	$oObj.CharStyleName = $sCharStyle
+	$iError = (__LOWriter_CharacterStyleCompare($oDoc, $oObj.CharStyleName(), $sCharStyle)) ? ($iError) : (BitOR($iError, 1))
+
+	Return ($iError = 0) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
+EndFunc   ;==>_LOWriter_CharStyleCurrent
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_CharStyleDelete
@@ -872,48 +929,6 @@ Func _LOWriter_CharStyleRotateScale(ByRef $oCharStyle, $iRotation = Null, $iScal
 
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_CharStyleRotateScale
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_CharStyleSet
-; Description ...: Set a Character style for a section of text by Cursor or paragraph Object.
-; Syntax ........: _LOWriter_CharStyleSet(ByRef $oDoc, ByRef $oObj, $sCharStyle)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oObj                - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object returned from _LOWriter_ParObjCreateList function.
-;                  $sCharStyle          - a string value. The Character Style name to set the text to.
-; Return values .: Success: 1
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oObj not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $oObj does not support Character Properties.
-;                  @Error 1 @Extended 4 Return 0 = $sCharStyle not a String.
-;                  @Error 1 @Extended 5 Return 0 = Character Style called in $sCharStyle doesn't exist in Document.
-;                  --Property Setting Errors--
-;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                               1 = Error setting $sCharStyle
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Character Style successfully set.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_ParObjCreateList, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_CharStylesGetNames
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_CharStyleSet(ByRef $oDoc, ByRef $oObj, $sCharStyle)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oObj.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsString($sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If Not _LOWriter_CharStyleExists($oDoc, $sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
-	$oObj.CharStyleName = $sCharStyle
-
-	Return (__LOWriter_CharacterStyleCompare($oDoc, $oObj.CharStyleName(), $sCharStyle)) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
-EndFunc   ;==>_LOWriter_CharStyleSet
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_CharStylesGetNames

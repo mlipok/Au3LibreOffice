@@ -57,7 +57,7 @@
 ; _LOWriter_TableSetData
 ; _LOWriter_TablesGetNames
 ; _LOWriter_TableShadow
-; _LOWriter_TableStyle
+; _LOWriter_TableStyleCurrent
 ; _LOWriter_TableStyleExists
 ; _LOWriter_TableStylesGetNames
 ; _LOWriter_TableWidth
@@ -751,7 +751,7 @@ Func _LOWriter_TableCreate(ByRef $oDoc, ByRef $oCursor, $iColumns = 2, $iRows = 
 		$oTable.HeaderRowCount = 1
 		For $i = 0 To $oTable.getColumns.getCount() - 1
 			$oTextCursor = $oTable.getCellByPosition($i, 0).Text.createTextCursor()
-			_LOWriter_ParStyleSet($oDoc, $oTextCursor, "Table Heading")
+			_LOWriter_ParStyleCurrent($oDoc, $oTextCursor, "Table Heading")
 			If @error Then
 				$iError = BitOR($iError, 4)
 				ExitLoop
@@ -763,7 +763,7 @@ Func _LOWriter_TableCreate(ByRef $oDoc, ByRef $oCursor, $iColumns = 2, $iRows = 
 		$oTable.HeaderRowCount = 0
 		For $i = 0 To $oTable.getColumns.getCount() - 1
 			$oTextCursor = $oTable.getCellByPosition($i, 0).Text.createTextCursor()
-			_LOWriter_ParStyleSet($oDoc, $oTextCursor, "Table Contents")
+			_LOWriter_ParStyleCurrent($oDoc, $oTextCursor, "Table Contents")
 			If @error Then
 				$iError = BitOR($iError, 4)
 				ExitLoop
@@ -1999,12 +1999,12 @@ Func _LOWriter_TableShadow(ByRef $oTable, $iWidth = Null, $iColor = Null, $iLoca
 EndFunc   ;==>_LOWriter_TableShadow
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_TableStyle
-; Description ...: Set a Table style for a Table.
-; Syntax ........: _LOWriter_TableStyle(ByRef $oDoc, ByRef $oTable, $sTableStyle)
+; Name ..........: _LOWriter_TableStyleCurrent
+; Description ...: Set or Retrieve the current Table style for a Table.
+; Syntax ........: _LOWriter_TableStyleCurrent(ByRef $oDoc, ByRef $oTable[, $sTableStyle = Null])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableCreate, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
-;                  $sTableStyle         - a string value. The Table Style name to set the Table to.
+;                  $sTableStyle         - [optional] a string value. Default is Null. The Table Style name to set the Table to.
 ; Return values .: Success: 1 or String.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2012,6 +2012,8 @@ EndFunc   ;==>_LOWriter_TableShadow
 ;                  @Error 1 @Extended 2 Return 0 = $oTable not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $sTableStyle not a String.
 ;                  @Error 1 @Extended 4 Return 0 = TableStyle called in $sTableStyle not found in Document.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve current Table Style.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $sTableStyle
@@ -2025,21 +2027,21 @@ EndFunc   ;==>_LOWriter_TableShadow
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_TableStyle(ByRef $oDoc, ByRef $oTable, $sTableStyle = Null)
+Func _LOWriter_TableStyleCurrent(ByRef $oDoc, ByRef $oTable, $sTableStyle = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $sCurrTableStyle
+	Local $sCurrStyle
 	Local $iError = 0
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LO_VarsAreNull($sTableStyle) Then
-		$sCurrTableStyle = $oTable.TableTemplateName()
-		If Not IsString($sCurrTableStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		$sCurrStyle = $oTable.TableTemplateName()
+		If Not IsString($sCurrStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-		Return SetError($__LO_STATUS_SUCCESS, 1, $sCurrTableStyle)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $sCurrStyle)
 	EndIf
 
 	If Not IsString($sTableStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
@@ -2049,7 +2051,7 @@ Func _LOWriter_TableStyle(ByRef $oDoc, ByRef $oTable, $sTableStyle = Null)
 	$iError = (__LOWriter_TableStyleCompare($oDoc, $oTable.TableTemplateName(), $sTableStyle)) ? ($iError) : (BitOR($iError, 1))
 
 	Return ($iError = 0) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
-EndFunc   ;==>_LOWriter_TableStyle
+EndFunc   ;==>_LOWriter_TableStyleCurrent
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_TableStyleExists

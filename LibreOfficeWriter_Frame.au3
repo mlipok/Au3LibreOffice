@@ -67,12 +67,12 @@
 ; _LOWriter_FrameStyleColumnSettings
 ; _LOWriter_FrameStyleColumnSize
 ; _LOWriter_FrameStyleCreate
+; _LOWriter_FrameStyleCurrent
 ; _LOWriter_FrameStyleDelete
 ; _LOWriter_FrameStyleExists
 ; _LOWriter_FrameStyleGetObj
 ; _LOWriter_FrameStyleOptions
 ; _LOWriter_FrameStyleOrganizer
-; _LOWriter_FrameStyleSet
 ; _LOWriter_FrameStylesGetNames
 ; _LOWriter_FrameStyleShadow
 ; _LOWriter_FrameStyleTypePosition
@@ -3660,6 +3660,63 @@ Func _LOWriter_FrameStyleCreate(ByRef $oDoc, $sFrameStyle)
 EndFunc   ;==>_LOWriter_FrameStyleCreate
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FrameStyleCurrent
+; Description ...: Set or Retrieve the current Frame Style used for a Frame.
+; Syntax ........: _LOWriter_FrameStyleCurrent(ByRef $oDoc, ByRef $oFrameObj[, $sFrameStyle = Null])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oFrameObj           - [in/out] an object. A Frame object returned by a previous _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, or _LOWriter_FrameGetObjByCursor function.
+;                  $sFrameStyle         - [optional] a string value. Default is Null. The Frame Style name to set the frame to.
+; Return values .: Success: 1 or String.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oFrameObj not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $oFrameObj does not support Base Frame Service, not a Frame Object.
+;                  @Error 1 @Extended 4 Return 0 = $sFrameStyle not a String.
+;                  @Error 1 @Extended 5 Return 0 = Frame Style called in $sFrameStyle doesn't exist in Document.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve current Frame Style.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sFrameStyle
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Frame Style successfully set.
+;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were called with Null, returning current Frame Style set for the Frame.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or by calling all other parameters with the Null keyword), to get the current settings.
+; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByCursor, _LOWriter_FrameGetObjByName, _LOWriter_FrameStylesGetNames
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FrameStyleCurrent(ByRef $oDoc, ByRef $oFrameObj, $sFrameStyle = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $sCurrStyle
+	Local $iError = 0
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrameObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oFrameObj.supportsService("com.sun.star.text.BaseFrame") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	If __LO_VarsAreNull($sFrameStyle) Then
+		$sCurrStyle = $oFrameObj.FrameStyleName()
+		If Not IsString($sCurrStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $sCurrStyle)
+	EndIf
+
+	If Not IsString($sFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not _LOWriter_FrameStyleExists($oDoc, $sFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
+	$oFrameObj.FrameStyleName = $sFrameStyle
+	$iError = ($oFrameObj.FrameStyleName() = $sFrameStyle) ? ($iError) : (BitOR($iError, 1))
+
+	Return ($iError = 0) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
+EndFunc   ;==>_LOWriter_FrameStyleCurrent
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FrameStyleDelete
 ; Description ...: Delete a User-Created Frame Style from a Document.
 ; Syntax ........: _LOWriter_FrameStyleDelete(ByRef $oDoc, $oFrameStyle[, $bForceDelete = False[, $sReplacementStyle = "Frame"]])
@@ -4003,48 +4060,6 @@ Func _LOWriter_FrameStyleOrganizer(ByRef $oDoc, $oFrameStyle, $sNewFrameStyleNam
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameStyleOrganizer
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FrameStyleSet
-; Description ...: Set a Frame to a certain Frame style.
-; Syntax ........: _LOWriter_FrameStyleSet(ByRef $oDoc, ByRef $oFrameObj, $sFrameStyle)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oFrameObj           - [in/out] an object. A Frame object returned by a previous _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, or _LOWriter_FrameGetObjByCursor function.
-;                  $sFrameStyle         - a string value. The Frame Style name to set the frame to.
-; Return values .: Success: 1
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oFrameObj not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $oFrameObj does not support Base Frame Service, not a Frame Object.
-;                  @Error 1 @Extended 4 Return 0 = $sFrameStyle not a String.
-;                  @Error 1 @Extended 5 Return 0 = Frame Style called in $sFrameStyle doesn't exist in Document.
-;                  --Property Setting Errors--
-;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                               1 = Error setting $sFrameStyle
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Frame Style successfully set.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByCursor, _LOWriter_FrameGetObjByName, _LOWriter_FrameStylesGetNames
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_FrameStyleSet(ByRef $oDoc, ByRef $oFrameObj, $sFrameStyle)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oFrameObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oFrameObj.supportsService("com.sun.star.text.BaseFrame") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsString($sFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If Not _LOWriter_FrameStyleExists($oDoc, $sFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-
-	$oFrameObj.FrameStyleName = $sFrameStyle
-
-	Return ($oFrameObj.FrameStyleName() = $sFrameStyle) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
-EndFunc   ;==>_LOWriter_FrameStyleSet
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FrameStylesGetNames

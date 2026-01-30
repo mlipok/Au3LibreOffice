@@ -5,7 +5,7 @@
 Example()
 
 Func Example()
-	Local $oDoc, $oViewCursor, $oTable
+	Local $oDoc, $oViewCursor
 	Local $sStyle
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -16,20 +16,17 @@ Func Example()
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Create a Table, 3 columns, 5 rows.
-	$oTable = _LOWriter_TableCreate($oDoc, $oViewCursor, 3, 5, $LO_COLOR_TEAL, "AutoIt-Table", True, "Simple Grid Columns")
-	If @error Then _ERROR($oDoc, "Failed to create Text Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now set the current numbering style to ""Numbering 123.""")
 
-	; Retrieve the currently applied Table Style.
-	$sStyle = _LOWriter_TableStyle($oDoc, $oTable)
-	If @error Then _ERROR($oDoc, "Failed to retrieve current TableStyle. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Set the numbering style to Numbering 123 using the ViewCursor.
+	_LOWriter_NumStyleCurrent($oDoc, $oViewCursor, "Numbering 123")
+	If @error Then _ERROR($oDoc, "Failed to set the Numbering style. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current TableStyle applied to the table is: " & $sStyle & @CRLF & @CRLF & _
-			"Press ok to apply ""Elegant"" Table Style to the Table.")
+	; Retrieve the current Numbering Style set for this paragraph
+	$sStyle = _LOWriter_NumStyleCurrent($oDoc, $oViewCursor)
+	If @error Then _ERROR($oDoc, "Failed to retrieve the current style name. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Apply "Elegant" tablestyle to the Table.
-	_LOWriter_TableStyle($oDoc, $oTable, "Elegant")
-	If @error Then _ERROR($oDoc, "Failed to apply TableStyle to Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Numbering Style used by this paragraph is: " & $sStyle)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
