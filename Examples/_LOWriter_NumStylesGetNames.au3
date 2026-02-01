@@ -45,7 +45,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Apply List 3 Numbering Style.
-	_LOWriter_NumStyleSet($oDoc, $oViewCursor, "List 3")
+	_LOWriter_NumStyleCurrent($oDoc, $oViewCursor, "List 3")
 	If @error Then _ERROR($oDoc, "Failed to apply Numbering Style. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve Array of Numbering Style names that are applied to the document

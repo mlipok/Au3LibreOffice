@@ -45,7 +45,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Apply the Page Style "Left Page"
-	_LOWriter_PageStyleSet($oDoc, $oViewCursor, "Left Page")
+	_LOWriter_PageStyleCurrent($oDoc, $oViewCursor, "Left Page")
 	If @error Then _ERROR($oDoc, "Failed to Apply Page Style. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Move the View Cursor to the start of the document.
