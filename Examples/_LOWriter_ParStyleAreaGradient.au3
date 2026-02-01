@@ -24,10 +24,8 @@ Func Example()
 	$oParStyle = _LOWriter_ParStyleGetObj($oDoc, "Standard")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Paragraph style object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Set Paragraph style Gradient settings to: skip pre-set gradient name,, Gradient type = $LOW_GRAD_TYPE_SQUARE, increment steps = 150,
-	; horizontal (X) offset = 25%, vertical offset (Y) = 56%, rotational angle = 135 degrees, percentage not covered by "From" color = 50%
-	; Starting color = $LO_COLOR_ORANGE, Ending color = $LO_COLOR_TEAL, Starting color intensity = 100%, ending color intensity = 68%
-	_LOWriter_ParStyleAreaGradient($oDoc, $oParStyle, Null, $LOW_GRAD_TYPE_SQUARE, 150, 25, 56, 135, 50, $LO_COLOR_ORANGE, $LO_COLOR_TEAL, 100, 68)
+	; Set Paragraph style Gradient settings to: Preset Gradient name = $LOW_GRAD_NAME_TEAL_TO_BLUE
+	_LOWriter_ParStyleAreaGradient($oDoc, $oParStyle, $LOW_GRAD_NAME_TEAL_TO_BLUE)
 	If @error Then _ERROR($oDoc, "Failed to modify Paragraph Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings. Return will be an array with elements in order of function parameters.
@@ -47,8 +45,10 @@ Func Example()
 			"The starting color intensity percentage is: " & $avSettings[9] & @CRLF & _
 			"The ending color intensity percentage is: " & $avSettings[10])
 
-	; Set Paragraph style Gradient settings to: Preset Gradient name = $LOW_GRAD_NAME_TEAL_TO_BLUE
-	_LOWriter_ParStyleAreaGradient($oDoc, $oParStyle, $LOW_GRAD_NAME_TEAL_TO_BLUE)
+	; Set Paragraph style Gradient settings to: skip pre-set gradient name,, Gradient type = $LOW_GRAD_TYPE_SQUARE, increment steps = 150,
+	; horizontal (X) offset = 25%, vertical offset (Y) = 56%, rotational angle = 135 degrees, percentage not covered by "From" color = 50%
+	; Starting color = $LO_COLOR_ORANGE, Ending color = $LO_COLOR_TEAL, Starting color intensity = 100%, ending color intensity = 68%
+	_LOWriter_ParStyleAreaGradient($oDoc, $oParStyle, Null, $LOW_GRAD_TYPE_SQUARE, 150, 25, 56, 135, 50, $LO_COLOR_ORANGE, $LO_COLOR_TEAL, 100, 68)
 	If @error Then _ERROR($oDoc, "Failed to modify Paragraph Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings. Return will be an array with elements in order of function parameters.

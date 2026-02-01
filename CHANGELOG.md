@@ -1320,6 +1320,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- __LOWriter_PageStyleCompare
 	- __LOWriter_ParStyleCompare
 	- __LOWriter_TableStyleCompare
+- __LOWriter_GradientIsModified
 
 #### Changed
 
@@ -1746,6 +1747,17 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - `_LOWriter_DocCreate` not finding a blank open document to connect to, if available, due to reversed logical operator.
 - `__LOWriter_Shape_CreateLine` was not checking if a Struct was created appropriately.
 - One Shape line style (`$LOW_SHAPE_LINE_STYLE_LINE_STYLE_9`), was renamed in L.O. Version 24.2 to "Sparse Dash".
+- When modifying values of a Gradient from a pre-set Gradient the name would stay the same instead of being changed to "Gradient X":
+	- __LOWriter_ParAreaGradient
+	- _LOWriter_DirFrmtParAreaGradient
+	- _LOWriter_FrameAreaGradient
+	- _LOWriter_FrameStyleAreaGradient,
+	- _LOWriter_ImageAreaGradient
+	- _LOWriter_PageStyleAreaGradient
+	- _LOWriter_PageStyleFooterAreaGradient
+	- _LOWriter_PageStyleHeaderAreaGradient
+	- _LOWriter_ParStyleAreaGradient
+	- _LOWriter_ShapeAreaGradient
 
 #### Refactored
 

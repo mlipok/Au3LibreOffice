@@ -356,7 +356,7 @@ Func _LOWriter_ImageAreaGradient(ByRef $oDoc, ByRef $oImage, $sGradientName = Nu
 		$tStyleGradient.EndIntensity = $iToIntense
 	EndIf
 
-	If ($oImage.FillGradientName() = "") Then
+	If ($oImage.FillGradientName() = "") Or __LOWriter_GradientIsModified($tStyleGradient, $oImage.FillGradientName()) Then
 		$sGradName = __LOWriter_GradientNameInsert($oDoc, $tStyleGradient)
 		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 

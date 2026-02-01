@@ -381,7 +381,7 @@ Func _LOWriter_FrameAreaGradient(ByRef $oDoc, ByRef $oFrame, $sGradientName = Nu
 		$tStyleGradient.EndIntensity = $iToIntense
 	EndIf
 
-	If ($oFrame.FillGradientName() = "") Then
+	If ($oFrame.FillGradientName() = "") Or __LOWriter_GradientIsModified($tStyleGradient, $oFrame.FillGradientName()) Then
 		$sGradName = __LOWriter_GradientNameInsert($oDoc, $tStyleGradient)
 		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
@@ -2515,7 +2515,7 @@ Func _LOWriter_FrameStyleAreaGradient(ByRef $oDoc, ByRef $oFrameStyle, $sGradien
 		$tStyleGradient.EndIntensity = $iToIntense
 	EndIf
 
-	If ($oFrameStyle.FillGradientName() = "") Then
+	If ($oFrameStyle.FillGradientName() = "") Or __LOWriter_GradientIsModified($tStyleGradient, $oFrameStyle.FillGradientName()) Then
 		$sGradName = __LOWriter_GradientNameInsert($oDoc, $tStyleGradient)
 		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 

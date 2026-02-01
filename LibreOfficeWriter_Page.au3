@@ -380,7 +380,7 @@ Func _LOWriter_PageStyleAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGradientN
 		$tStyleGradient.EndIntensity = $iToIntense
 	EndIf
 
-	If ($oPageStyle.FillGradientName() = "") Then
+	If ($oPageStyle.FillGradientName() = "") Or __LOWriter_GradientIsModified($tStyleGradient, $oPageStyle.FillGradientName()) Then
 		$sGradName = __LOWriter_GradientNameInsert($oDoc, $tStyleGradient)
 		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
@@ -2113,7 +2113,7 @@ Func _LOWriter_PageStyleFooterAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 		$tStyleGradient.EndIntensity = $iToIntense
 	EndIf
 
-	If ($oPageStyle.FooterFillGradientName = "") Then
+	If ($oPageStyle.FooterFillGradientName = "") Or __LOWriter_GradientIsModified($tStyleGradient, $oPageStyle.FooterFillGradientName()) Then
 		$sGradName = __LOWriter_GradientNameInsert($oDoc, $tStyleGradient)
 		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
@@ -3625,7 +3625,7 @@ Func _LOWriter_PageStyleHeaderAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 		$tStyleGradient.EndIntensity = $iToIntense
 	EndIf
 
-	If ($oPageStyle.HeaderFillGradientName = "") Then
+	If ($oPageStyle.HeaderFillGradientName = "") Or __LOWriter_GradientIsModified($tStyleGradient, $oPageStyle.HeaderFillGradientName()) Then
 		$sGradName = __LOWriter_GradientNameInsert($oDoc, $tStyleGradient)
 		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 

@@ -58,6 +58,7 @@
 ; __LOWriter_FormConSetGetFontDesc
 ; __LOWriter_GetPrinterSetting
 ; __LOWriter_GetShapeName
+; __LOWriter_GradientIsModified
 ; __LOWriter_GradientNameInsert
 ; __LOWriter_GradientPresets
 ; __LOWriter_HeaderBorder
@@ -2563,6 +2564,807 @@ Func __LOWriter_GetShapeName(ByRef $oDoc, $sShapeName)
 EndFunc   ;==>__LOWriter_GetShapeName
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_GradientIsModified
+; Description ...: Check whether a pre-set gradient has been modified from its default values.
+; Syntax ........: __LOWriter_GradientIsModified($tGradient, $sGradientName)
+; Parameters ....: $tGradient           - a dll struct value. A Gradient Structure to compare property values with.
+;                  $sGradientName       - a string value. The Gradient's current name.
+; Return values .: Success: Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $tGradient not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sGradientName not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve current color stop array.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returning True if the Gradient has been modified, else False.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_GradientIsModified($tGradient, $sGradientName)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $tStopColor
+	Local $atColorStop[0]
+
+	If Not IsObj($tGradient) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sGradientName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	Switch $sGradientName
+		Case $LOW_GRAD_NAME_PASTEL_BOUQUET
+			With $tGradient
+				If _
+						(.Style() <> $LOW_GRAD_TYPE_LINEAR) Or _
+						(.StepCount() <> 0) Or _
+						(.XOffset() <> 0) Or _
+						(.YOffset() <> 0) Or _
+						(.Angle() <> 300) Or _
+						(.Border() <> 0) Or _
+						(.StartColor() <> 14543051) Or _
+						(.EndColor() <> 16766935) Or _
+						(.StartIntensity() <> 100) Or _
+						(.EndIntensity() <> 100) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+				If __LO_VersionCheck(7.6) Then
+					$atColorStop = .ColorStops()
+					If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+					If (UBound($atColorStop) <> 2) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[0].StopColor() ; "Start Color" Value.
+					If _
+							($tStopColor.Red() <> (BitAND(BitShift(.StartColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green() <> (BitAND(BitShift(.StartColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue() <> (BitAND(.StartColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[0].StopOffset() <> 0) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[1].StopColor() ; Last element is "End Color" Value.
+					If _
+							($tStopColor.Red <> (BitAND(BitShift(.EndColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green <> (BitAND(BitShift(.EndColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue <> (BitAND(.EndColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[1].StopOffset <> 1) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+				EndIf
+			EndWith
+
+		Case $LOW_GRAD_NAME_PASTEL_DREAM
+			With $tGradient
+				If _
+						(.Style() <> $LOW_GRAD_TYPE_RECT) Or _
+						(.StepCount() <> 0) Or _
+						(.XOffset() <> 50) Or _
+						(.YOffset() <> 50) Or _
+						(.Angle() <> 450) Or _
+						(.Border() <> 0) Or _
+						(.StartColor() <> 16766935) Or _
+						(.EndColor() <> 11847644) Or _
+						(.StartIntensity() <> 100) Or _
+						(.EndIntensity() <> 100) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+				If __LO_VersionCheck(7.6) Then
+					$atColorStop = .ColorStops()
+					If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+					If (UBound($atColorStop) <> 2) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[0].StopColor() ; "Start Color" Value.
+					If _
+							($tStopColor.Red() <> (BitAND(BitShift(.StartColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green() <> (BitAND(BitShift(.StartColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue() <> (BitAND(.StartColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[0].StopOffset() <> 0) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[1].StopColor() ; Last element is "End Color" Value.
+					If _
+							($tStopColor.Red <> (BitAND(BitShift(.EndColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green <> (BitAND(BitShift(.EndColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue <> (BitAND(.EndColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[1].StopOffset <> 1) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+				EndIf
+			EndWith
+
+		Case $LOW_GRAD_NAME_BLUE_TOUCH
+			With $tGradient
+				If _
+						(.Style() <> $LOW_GRAD_TYPE_LINEAR) Or _
+						(.StepCount() <> 0) Or _
+						(.XOffset() <> 0) Or _
+						(.YOffset() <> 0) Or _
+						(.Angle() <> 10) Or _
+						(.Border() <> 0) Or _
+						(.StartColor() <> 11847644) Or _
+						(.EndColor() <> 14608111) Or _
+						(.StartIntensity() <> 100) Or _
+						(.EndIntensity() <> 100) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+				If __LO_VersionCheck(7.6) Then
+					$atColorStop = .ColorStops()
+					If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+					If (UBound($atColorStop) <> 2) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[0].StopColor() ; "Start Color" Value.
+					If _
+							($tStopColor.Red() <> (BitAND(BitShift(.StartColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green() <> (BitAND(BitShift(.StartColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue() <> (BitAND(.StartColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[0].StopOffset() <> 0) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[1].StopColor() ; Last element is "End Color" Value.
+					If _
+							($tStopColor.Red <> (BitAND(BitShift(.EndColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green <> (BitAND(BitShift(.EndColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue <> (BitAND(.EndColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[1].StopOffset <> 1) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+				EndIf
+			EndWith
+
+		Case $LOW_GRAD_NAME_BLANK_W_GRAY
+			With $tGradient
+				If _
+						(.Style() <> $LOW_GRAD_TYPE_LINEAR) Or _
+						(.StepCount() <> 0) Or _
+						(.XOffset() <> 0) Or _
+						(.YOffset() <> 0) Or _
+						(.Angle() <> 900) Or _
+						(.Border() <> 75) Or _
+						(.StartColor() <> $LO_COLOR_WHITE) Or _
+						(.EndColor() <> 14540253) Or _
+						(.StartIntensity() <> 100) Or _
+						(.EndIntensity() <> 100) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+				If __LO_VersionCheck(7.6) Then
+					$atColorStop = .ColorStops()
+					If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+					If (UBound($atColorStop) <> 2) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[0].StopColor() ; "Start Color" Value.
+					If _
+							($tStopColor.Red() <> (BitAND(BitShift(.StartColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green() <> (BitAND(BitShift(.StartColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue() <> (BitAND(.StartColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[0].StopOffset() <> 0) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[1].StopColor() ; Last element is "End Color" Value.
+					If _
+							($tStopColor.Red <> (BitAND(BitShift(.EndColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green <> (BitAND(BitShift(.EndColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue <> (BitAND(.EndColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[1].StopOffset <> 1) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+				EndIf
+			EndWith
+
+		Case $LOW_GRAD_NAME_SPOTTED_GRAY
+			With $tGradient
+				If _
+						(.Style() <> $LOW_GRAD_TYPE_RADIAL) Or _
+						(.StepCount() <> 0) Or _
+						(.XOffset() <> 50) Or _
+						(.YOffset() <> 50) Or _
+						(.Angle() <> 0) Or _
+						(.Border() <> 0) Or _
+						(.StartColor() <> 11711154) Or _
+						(.EndColor() <> 15658734) Or _
+						(.StartIntensity() <> 100) Or _
+						(.EndIntensity() <> 100) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+				If __LO_VersionCheck(7.6) Then
+					$atColorStop = .ColorStops()
+					If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+					If (UBound($atColorStop) <> 2) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[0].StopColor() ; "Start Color" Value.
+					If _
+							($tStopColor.Red() <> (BitAND(BitShift(.StartColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green() <> (BitAND(BitShift(.StartColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue() <> (BitAND(.StartColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[0].StopOffset() <> 0) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[1].StopColor() ; Last element is "End Color" Value.
+					If _
+							($tStopColor.Red <> (BitAND(BitShift(.EndColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green <> (BitAND(BitShift(.EndColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue <> (BitAND(.EndColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[1].StopOffset <> 1) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+				EndIf
+			EndWith
+
+		Case $LOW_GRAD_NAME_LONDON_MIST
+			With $tGradient
+				If _
+						(.Style() <> $LOW_GRAD_TYPE_LINEAR) Or _
+						(.StepCount() <> 0) Or _
+						(.XOffset() <> 0) Or _
+						(.YOffset() <> 0) Or _
+						(.Angle() <> 300) Or _
+						(.Border() <> 0) Or _
+						(.StartColor() <> 13421772) Or _
+						(.EndColor() <> 6710886) Or _
+						(.StartIntensity() <> 100) Or _
+						(.EndIntensity() <> 100) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+				If __LO_VersionCheck(7.6) Then
+					$atColorStop = .ColorStops()
+					If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+					If (UBound($atColorStop) <> 2) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[0].StopColor() ; "Start Color" Value.
+					If _
+							($tStopColor.Red() <> (BitAND(BitShift(.StartColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green() <> (BitAND(BitShift(.StartColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue() <> (BitAND(.StartColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[0].StopOffset() <> 0) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[1].StopColor() ; Last element is "End Color" Value.
+					If _
+							($tStopColor.Red <> (BitAND(BitShift(.EndColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green <> (BitAND(BitShift(.EndColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue <> (BitAND(.EndColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[1].StopOffset <> 1) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+				EndIf
+			EndWith
+
+		Case $LOW_GRAD_NAME_TEAL_TO_BLUE
+			With $tGradient
+				If _
+						(.Style() <> $LOW_GRAD_TYPE_LINEAR) Or _
+						(.StepCount() <> 0) Or _
+						(.XOffset() <> 0) Or _
+						(.YOffset() <> 0) Or _
+						(.Angle() <> 300) Or _
+						(.Border() <> 0) Or _
+						(.StartColor() <> 5280650) Or _
+						(.EndColor() <> 5866416) Or _
+						(.StartIntensity() <> 100) Or _
+						(.EndIntensity() <> 100) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+				If __LO_VersionCheck(7.6) Then
+					$atColorStop = .ColorStops()
+					If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+					If (UBound($atColorStop) <> 2) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[0].StopColor() ; "Start Color" Value.
+					If _
+							($tStopColor.Red() <> (BitAND(BitShift(.StartColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green() <> (BitAND(BitShift(.StartColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue() <> (BitAND(.StartColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[0].StopOffset() <> 0) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[1].StopColor() ; Last element is "End Color" Value.
+					If _
+							($tStopColor.Red <> (BitAND(BitShift(.EndColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green <> (BitAND(BitShift(.EndColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue <> (BitAND(.EndColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[1].StopOffset <> 1) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+				EndIf
+			EndWith
+
+		Case $LOW_GRAD_NAME_MIDNIGHT
+			With $tGradient
+				If _
+						(.Style() <> $LOW_GRAD_TYPE_LINEAR) Or _
+						(.StepCount() <> 0) Or _
+						(.XOffset() <> 0) Or _
+						(.YOffset() <> 0) Or _
+						(.Angle() <> 0) Or _
+						(.Border() <> 0) Or _
+						(.StartColor() <> $LO_COLOR_BLACK) Or _
+						(.EndColor() <> 2777241) Or _
+						(.StartIntensity() <> 100) Or _
+						(.EndIntensity() <> 100) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+				If __LO_VersionCheck(7.6) Then
+					$atColorStop = .ColorStops()
+					If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+					If (UBound($atColorStop) <> 2) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[0].StopColor() ; "Start Color" Value.
+					If _
+							($tStopColor.Red() <> (BitAND(BitShift(.StartColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green() <> (BitAND(BitShift(.StartColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue() <> (BitAND(.StartColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[0].StopOffset() <> 0) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[1].StopColor() ; Last element is "End Color" Value.
+					If _
+							($tStopColor.Red <> (BitAND(BitShift(.EndColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green <> (BitAND(BitShift(.EndColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue <> (BitAND(.EndColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[1].StopOffset <> 1) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+				EndIf
+			EndWith
+
+		Case $LOW_GRAD_NAME_DEEP_OCEAN
+			With $tGradient
+				If _
+						(.Style() <> $LOW_GRAD_TYPE_RADIAL) Or _
+						(.StepCount() <> 0) Or _
+						(.XOffset() <> 50) Or _
+						(.YOffset() <> 50) Or _
+						(.Angle() <> 0) Or _
+						(.Border() <> 0) Or _
+						(.StartColor() <> $LO_COLOR_BLACK) Or _
+						(.EndColor() <> 7512015) Or _
+						(.StartIntensity() <> 100) Or _
+						(.EndIntensity() <> 100) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+				If __LO_VersionCheck(7.6) Then
+					$atColorStop = .ColorStops()
+					If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+					If (UBound($atColorStop) <> 2) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[0].StopColor() ; "Start Color" Value.
+					If _
+							($tStopColor.Red() <> (BitAND(BitShift(.StartColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green() <> (BitAND(BitShift(.StartColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue() <> (BitAND(.StartColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[0].StopOffset() <> 0) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[1].StopColor() ; Last element is "End Color" Value.
+					If _
+							($tStopColor.Red <> (BitAND(BitShift(.EndColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green <> (BitAND(BitShift(.EndColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue <> (BitAND(.EndColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[1].StopOffset <> 1) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+				EndIf
+			EndWith
+
+		Case $LOW_GRAD_NAME_SUBMARINE
+			With $tGradient
+				If _
+						(.Style() <> $LOW_GRAD_TYPE_LINEAR) Or _
+						(.StepCount() <> 0) Or _
+						(.XOffset() <> 0) Or _
+						(.YOffset() <> 0) Or _
+						(.Angle() <> 0) Or _
+						(.Border() <> 0) Or _
+						(.StartColor() <> 14543051) Or _
+						(.EndColor() <> 11847644) Or _
+						(.StartIntensity() <> 100) Or _
+						(.EndIntensity() <> 100) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+				If __LO_VersionCheck(7.6) Then
+					$atColorStop = .ColorStops()
+					If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+					If (UBound($atColorStop) <> 2) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[0].StopColor() ; "Start Color" Value.
+					If _
+							($tStopColor.Red() <> (BitAND(BitShift(.StartColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green() <> (BitAND(BitShift(.StartColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue() <> (BitAND(.StartColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[0].StopOffset() <> 0) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[1].StopColor() ; Last element is "End Color" Value.
+					If _
+							($tStopColor.Red <> (BitAND(BitShift(.EndColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green <> (BitAND(BitShift(.EndColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue <> (BitAND(.EndColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[1].StopOffset <> 1) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+				EndIf
+			EndWith
+
+		Case $LOW_GRAD_NAME_GREEN_GRASS
+			With $tGradient
+				If _
+						(.Style() <> $LOW_GRAD_TYPE_LINEAR) Or _
+						(.StepCount() <> 0) Or _
+						(.XOffset() <> 0) Or _
+						(.YOffset() <> 0) Or _
+						(.Angle() <> 300) Or _
+						(.Border() <> 0) Or _
+						(.StartColor() <> 16776960) Or _
+						(.EndColor() <> 8508442) Or _
+						(.StartIntensity() <> 100) Or _
+						(.EndIntensity() <> 100) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+				If __LO_VersionCheck(7.6) Then
+					$atColorStop = .ColorStops()
+					If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+					If (UBound($atColorStop) <> 2) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[0].StopColor() ; "Start Color" Value.
+					If _
+							($tStopColor.Red() <> (BitAND(BitShift(.StartColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green() <> (BitAND(BitShift(.StartColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue() <> (BitAND(.StartColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[0].StopOffset() <> 0) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[1].StopColor() ; Last element is "End Color" Value.
+					If _
+							($tStopColor.Red <> (BitAND(BitShift(.EndColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green <> (BitAND(BitShift(.EndColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue <> (BitAND(.EndColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[1].StopOffset <> 1) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+				EndIf
+			EndWith
+
+		Case $LOW_GRAD_NAME_NEON_LIGHT
+			With $tGradient
+				If _
+						(.Style() <> $LOW_GRAD_TYPE_ELLIPTICAL) Or _
+						(.StepCount() <> 0) Or _
+						(.XOffset() <> 50) Or _
+						(.YOffset() <> 50) Or _
+						(.Angle() <> 0) Or _
+						(.Border() <> 15) Or _
+						(.StartColor() <> 1209890) Or _
+						(.EndColor() <> $LO_COLOR_WHITE) Or _
+						(.StartIntensity() <> 100) Or _
+						(.EndIntensity() <> 100) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+				If __LO_VersionCheck(7.6) Then
+					$atColorStop = .ColorStops()
+					If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+					If (UBound($atColorStop) <> 2) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[0].StopColor() ; "Start Color" Value.
+					If _
+							($tStopColor.Red() <> (BitAND(BitShift(.StartColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green() <> (BitAND(BitShift(.StartColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue() <> (BitAND(.StartColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[0].StopOffset() <> 0) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[1].StopColor() ; Last element is "End Color" Value.
+					If _
+							($tStopColor.Red <> (BitAND(BitShift(.EndColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green <> (BitAND(BitShift(.EndColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue <> (BitAND(.EndColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[1].StopOffset <> 1) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+				EndIf
+			EndWith
+
+		Case $LOW_GRAD_NAME_SUNSHINE
+			With $tGradient
+				If _
+						(.Style() <> $LOW_GRAD_TYPE_RADIAL) Or _
+						(.StepCount() <> 0) Or _
+						(.XOffset() <> 66) Or _
+						(.YOffset() <> 33) Or _
+						(.Angle() <> 0) Or _
+						(.Border() <> 33) Or _
+						(.StartColor() <> 16760576) Or _
+						(.EndColor() <> 16776960) Or _
+						(.StartIntensity() <> 100) Or _
+						(.EndIntensity() <> 100) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+				If __LO_VersionCheck(7.6) Then
+					$atColorStop = .ColorStops()
+					If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+					If (UBound($atColorStop) <> 2) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[0].StopColor() ; "Start Color" Value.
+					If _
+							($tStopColor.Red() <> (BitAND(BitShift(.StartColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green() <> (BitAND(BitShift(.StartColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue() <> (BitAND(.StartColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[0].StopOffset() <> 0) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[1].StopColor() ; Last element is "End Color" Value.
+					If _
+							($tStopColor.Red <> (BitAND(BitShift(.EndColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green <> (BitAND(BitShift(.EndColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue <> (BitAND(.EndColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[1].StopOffset <> 1) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+				EndIf
+			EndWith
+
+		Case $LOW_GRAD_NAME_PRESENT
+			With $tGradient
+				If _
+						(.Style() <> $LOW_GRAD_TYPE_SQUARE) Or _
+						(.StepCount() <> 0) Or _
+						(.XOffset() <> 70) Or _
+						(.YOffset() <> 60) Or _
+						(.Angle() <> 450) Or _
+						(.Border() <> 72) Or _
+						(.StartColor() <> 8468233) Or _
+						(.EndColor() <> 16728064) Or _
+						(.StartIntensity() <> 100) Or _
+						(.EndIntensity() <> 100) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+				If __LO_VersionCheck(7.6) Then
+					$atColorStop = .ColorStops()
+					If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+					If (UBound($atColorStop) <> 2) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[0].StopColor() ; "Start Color" Value.
+					If _
+							($tStopColor.Red() <> (BitAND(BitShift(.StartColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green() <> (BitAND(BitShift(.StartColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue() <> (BitAND(.StartColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[0].StopOffset() <> 0) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[1].StopColor() ; Last element is "End Color" Value.
+					If _
+							($tStopColor.Red <> (BitAND(BitShift(.EndColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green <> (BitAND(BitShift(.EndColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue <> (BitAND(.EndColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[1].StopOffset <> 1) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+				EndIf
+			EndWith
+
+		Case $LOW_GRAD_NAME_MAHOGANY
+			With $tGradient
+				If _
+						(.Style() <> $LOW_GRAD_TYPE_SQUARE) Or _
+						(.StepCount() <> 0) Or _
+						(.XOffset() <> 50) Or _
+						(.YOffset() <> 50) Or _
+						(.Angle() <> 450) Or _
+						(.Border() <> 0) Or _
+						(.StartColor() <> $LO_COLOR_BLACK) Or _
+						(.EndColor() <> 9250846) Or _
+						(.StartIntensity() <> 100) Or _
+						(.EndIntensity() <> 100) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+				If __LO_VersionCheck(7.6) Then
+					$atColorStop = .ColorStops()
+					If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+					If (UBound($atColorStop) <> 2) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[0].StopColor() ; "Start Color" Value.
+					If _
+							($tStopColor.Red() <> (BitAND(BitShift(.StartColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green() <> (BitAND(BitShift(.StartColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue() <> (BitAND(.StartColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[0].StopOffset() <> 0) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[1].StopColor() ; Last element is "End Color" Value.
+					If _
+							($tStopColor.Red <> (BitAND(BitShift(.EndColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green <> (BitAND(BitShift(.EndColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue <> (BitAND(.EndColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[1].StopOffset <> 1) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+				EndIf
+			EndWith
+
+		Case $LOW_GRAD_NAME_RAINBOW
+			With $tGradient
+				If _
+						(.Style() <> $LOW_GRAD_TYPE_RADIAL) Or _
+						(.StepCount() <> 0) Or _
+						(.XOffset() <> 50) Or _
+						(.YOffset() <> 100) Or _
+						(.Angle() <> 0) Or _
+						(.Border() <> 0) Or _
+						(.StartColor() <> $LO_COLOR_WHITE) Or _
+						(.EndColor() <> $LO_COLOR_WHITE) Or _
+						(.StartIntensity() <> 100) Or _
+						(.EndIntensity() <> 100) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+				If __LO_VersionCheck(7.6) Then
+					$atColorStop = .ColorStops()
+					If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+					If (UBound($atColorStop) <> 7) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[0].StopColor() ; "Start Color" Value.
+					If _
+							($tStopColor.Red() <> (BitAND(BitShift(.StartColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green() <> (BitAND(BitShift(.StartColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue() <> (BitAND(.StartColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[0].StopOffset() <> 0.2) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[1].StopColor()
+					If _
+							($tStopColor.Red() <> 1) Or _
+							($tStopColor.Green() <> 0) Or _
+							($tStopColor.Blue() <> 0) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[1].StopOffset() <> 0.2) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[2].StopColor()
+					If _
+							($tStopColor.Red() <> 1) Or _
+							($tStopColor.Green() <> 1) Or _
+							($tStopColor.Blue() <> 0) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[2].StopOffset() <> 0.4) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[3].StopColor()
+					If _
+							($tStopColor.Red() <> 0) Or _
+							($tStopColor.Green() <> 1) Or _
+							($tStopColor.Blue() <> 0) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[3].StopOffset() <> 0.5) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[4].StopColor()
+					If _
+							($tStopColor.Red() <> 0) Or _
+							($tStopColor.Green() <> 1) Or _
+							($tStopColor.Blue() <> 1) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[4].StopOffset() <> 0.65) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[5].StopColor()
+					If _
+							($tStopColor.Red() <> 1) Or _
+							($tStopColor.Green() <> 0) Or _
+							($tStopColor.Blue() <> 1) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[5].StopOffset() <> 0.8) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[6].StopColor() ; Last element is "End Color" Value.
+					If _
+							($tStopColor.Red <> (BitAND(BitShift(.EndColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green <> (BitAND(BitShift(.EndColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue <> (BitAND(.EndColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[6].StopOffset <> 0.8) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+				EndIf
+			EndWith
+
+		Case $LOW_GRAD_NAME_SUNRISE
+			With $tGradient
+				If _
+						(.Style() <> $LOW_GRAD_TYPE_LINEAR) Or _
+						(.StepCount() <> 0) Or _
+						(.XOffset() <> 0) Or _
+						(.YOffset() <> 0) Or _
+						(.Angle() <> 0) Or _
+						(.Border() <> 0) Or _
+						(.StartColor() <> 3713206) Or _
+						(.EndColor() <> 14065797) Or _
+						(.StartIntensity() <> 100) Or _
+						(.EndIntensity() <> 100) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+				If __LO_VersionCheck(7.6) Then
+					$atColorStop = .ColorStops()
+					If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+					If (UBound($atColorStop) <> 4) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[0].StopColor() ; "Start Color" Value.
+					If _
+							($tStopColor.Red() <> (BitAND(BitShift(.StartColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green() <> (BitAND(BitShift(.StartColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue() <> (BitAND(.StartColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[0].StopOffset() <> 0) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[1].StopColor() ; "Start Color" Value.
+					If _
+							($tStopColor.Red() <> 0.505882352941176) Or _
+							($tStopColor.Green() <> 0.784313725490196) Or _
+							($tStopColor.Blue() <> 0.768627450980392) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[1].StopOffset() <> 0.5) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[2].StopColor() ; "Start Color" Value.
+					If _
+							($tStopColor.Red() <> 0.717647058823529) Or _
+							($tStopColor.Green() <> 0.807843137254902) Or _
+							($tStopColor.Blue() <> 0.698039215686275) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[2].StopOffset() <> 0.75) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[3].StopColor() ; Last element is "End Color" Value.
+					If _
+							($tStopColor.Red <> (BitAND(BitShift(.EndColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green <> (BitAND(BitShift(.EndColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue <> (BitAND(.EndColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[3].StopOffset <> 1) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+				EndIf
+			EndWith
+
+		Case $LOW_GRAD_NAME_SUNDOWN
+			With $tGradient
+				If _
+						(.Style() <> $LOW_GRAD_TYPE_LINEAR) Or _
+						(.StepCount() <> 0) Or _
+						(.XOffset() <> 0) Or _
+						(.YOffset() <> 0) Or _
+						(.Angle() <> 0) Or _
+						(.Border() <> 0) Or _
+						(.StartColor() <> 985943) Or _
+						(.EndColor() <> 16759664) Or _
+						(.StartIntensity() <> 100) Or _
+						(.EndIntensity() <> 100) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+				If __LO_VersionCheck(7.6) Then
+					$atColorStop = .ColorStops()
+					If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+					If (UBound($atColorStop) <> 5) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[0].StopColor() ; "Start Color" Value.
+					If _
+							($tStopColor.Red() <> (BitAND(BitShift(.StartColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green() <> (BitAND(BitShift(.StartColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue() <> (BitAND(.StartColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[0].StopOffset() <> 0) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[1].StopColor() ; "Start Color" Value.
+					If _
+							($tStopColor.Red() <> 0.392156862745098) Or _
+							($tStopColor.Green() <> 0.305882352941177) Or _
+							($tStopColor.Blue() <> 0.690196078431373) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[1].StopOffset() <> 0.3) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[2].StopColor() ; "Start Color" Value.
+					If _
+							($tStopColor.Red() <> 0.827450980392157) Or _
+							($tStopColor.Green() <> 0.572549019607843) Or _
+							($tStopColor.Blue() <> 0.83921568627451) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[2].StopOffset() <> 0.5) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[3].StopColor() ; "Start Color" Value.
+					If _
+							($tStopColor.Red() <> 0.996078431372549) Or _
+							($tStopColor.Green() <> 0.733333333333333) Or _
+							($tStopColor.Blue() <> 0.76078431372549) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[3].StopOffset() <> 0.75) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					$tStopColor = $atColorStop[4].StopColor() ; Last element is "End Color" Value.
+					If _
+							($tStopColor.Red <> (BitAND(BitShift(.EndColor(), 16), 0xff) / 255)) Or _
+							($tStopColor.Green <> (BitAND(BitShift(.EndColor(), 8), 0xff) / 255)) Or _
+							($tStopColor.Blue <> (BitAND(.EndColor(), 0xff) / 255)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+					If ($atColorStop[4].StopOffset <> 1) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+				EndIf
+			EndWith
+	EndSwitch
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, False)
+EndFunc   ;==>__LOWriter_GradientIsModified
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_GradientNameInsert
 ; Description ...: Create and insert a new Gradient name.
 ; Syntax ........: __LOWriter_GradientNameInsert(ByRef $oDoc, $tGradient[, $sGradientName = "Gradient "])
@@ -4642,7 +5444,7 @@ Func __LOWriter_ParAreaGradient(ByRef $oDoc, ByRef $oObj, $sGradientName = Null,
 		$tStyleGradient.EndIntensity = $iToIntense
 	EndIf
 
-	If ($oObj.FillGradientName() = "") Then
+	If ($oObj.FillGradientName() = "") Or __LOWriter_GradientIsModified($tStyleGradient, $oObj.FillGradientName()) Then
 		$sGradName = __LOWriter_GradientNameInsert($oDoc, $tStyleGradient)
 		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 

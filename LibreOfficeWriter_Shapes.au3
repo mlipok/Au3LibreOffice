@@ -348,7 +348,7 @@ Func _LOWriter_ShapeAreaGradient(ByRef $oDoc, ByRef $oShape, $sGradientName = Nu
 		$tStyleGradient.EndIntensity = $iToIntense
 	EndIf
 
-	If ($oShape.FillGradientName() = "") Then
+	If ($oShape.FillGradientName() = "") Or __LOWriter_GradientIsModified($tStyleGradient, $oShape.FillGradientName()) Then
 		$sGradName = __LOWriter_GradientNameInsert($oDoc, $tStyleGradient)
 		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
