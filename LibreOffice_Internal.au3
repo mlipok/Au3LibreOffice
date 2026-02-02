@@ -1,6 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
-#Tidy_Parameters=/sf /reel
+#Tidy_Parameters=/sf /reel /tcl=1
 
 #include-once
 
@@ -27,7 +27,7 @@
 ; __LO_ServiceManager
 ; __LO_SetPortableServiceManager
 ; __LO_SetPropertyValue
-; __LO_UnitConvert
+; __LO_StylesGetNames
 ; __LO_VarsAreNull
 ; __LO_VersionCheck
 ; ===============================================================================================================================
@@ -45,7 +45,7 @@
 ;                  @Error 1 @Extended 1 Return 0 = $aArray not an Array
 ;                  @Error 1 @Extended 2 Return 0 = $bCountinFirst not a Boolean.
 ;                  @Error 1 @Extended 3 Return 0 = $aArray contains too many columns.
-;                  @Error 1 @Extended 4 Return 0 = $aArray[0] contains non integer data or is not empty, and $bCountInFirst is set to True.
+;                  @Error 1 @Extended 4 Return 0 = $aArray[0] contains non-Integer data or is not empty, and $bCountInFirst is called with True.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Array item was successfully added.
 ; Author ........: donnyh13
@@ -687,119 +687,122 @@ Func __LO_SetPropertyValue($sName, $vValue)
 EndFunc   ;==>__LO_SetPropertyValue
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
-; Name ..........: __LO_UnitConvert
-; Description ...: For converting measurement units.
-; Syntax ........: __LO_UnitConvert($nValue, $iReturnType)
-; Parameters ....: $nValue              - a general number value. The Number to be converted.
-;                  $iReturnType         - a Integer value. Determines conversion type. See Constants, $__LOCONST_CONVERT_* as defined in LibreOffice_Constants.au3.
-; Return values .: Success: Integer or Number.
+; Name ..........: __LO_StylesGetNames
+; Description ...: Retrieve an Array of Style names available.
+; Syntax ........: __LO_StylesGetNames(ByRef $oDoc, $sStyleFamily[, $bUserOnly = False[, $bAppliedOnly = False[, $bDisplayName = False]]])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LO*_DocOpen, _LO*_DocConnect, or _LO*_DocCreate function.
+;                  $sStyleFamily        - a string value. The Style type to retrieve names for.
+;                  $bUserOnly           - [optional] a boolean value. Default is False. If True, only user-created Styles are returned.
+;                  $bAppliedOnly        - [optional] a boolean value. Default is False. If True, only applied styles are returned.
+;                  $bDisplayName        - [optional] a boolean value. Default is False. If True, the style name displayed in the UI (Display Name), instead of the programmatic style name, is returned. See remarks.
+; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $nValue is not a Number.
-;                  @Error 1 @Extended 2 Return 0 = $iReturnType is not a Integer.
-;                  @Error 1 @Extended 3 Return 0 = $iReturnType does not match constants, See Constants, $__LOCONST_CONVERT_* as defined in LibreOffice_Constants.au3.
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sStyleFamily not a String.
+;                  @Error 1 @Extended 3 Return 0 = $bUserOnly not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = $bAppliedOnly not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $bDisplayName not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = Style family called in $sStyleFamily doesn't exist.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve called Style family Object.
 ;                  --Success--
-;                  @Error 0 @Extended 1 Return Number = Returns Number converted from TWIPS to Centimeters.
-;                  @Error 0 @Extended 2 Return Number = Returns Number converted from TWIPS to Inches.
-;                  @Error 0 @Extended 3 Return Integer = Returns Number converted from Millimeters to uM (Micrometers).
-;                  @Error 0 @Extended 4 Return Number = Returns Number converted from Micrometers to MM
-;                  @Error 0 @Extended 5 Return Integer = Returns Number converted from Centimeters To uM
-;                  @Error 0 @Extended 6 Return Number = Returns Number converted from um (Micrometers) To CM
-;                  @Error 0 @Extended 7 Return Integer = Returns Number converted from Inches to uM(Micrometers).
-;                  @Error 0 @Extended 8 Return Number = Returns Number converted from uM(Micrometers) to Inches.
-;                  @Error 0 @Extended 9 Return Integer = Returns Number converted from TWIPS to uM(Micrometers).
-;                  @Error 0 @Extended 10 Return Integer = Returns Number converted from Point to uM(Micrometers).
-;                  @Error 0 @Extended 11 Return Number = Returns Number converted from uM(Micrometers) to Point.
+;                  @Error 0 @Extended 1 Return Array = Success. An Array containing all Styles matching the called parameters. See remarks.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:
-; Related .......: _LO_ConvertFromMicrometer, _LO_ConvertToMicrometer
+; Remarks .......: If Only a Document object is called, all available Paragraph styles will be returned.
+;                  If Both $bUserOnly and $bAppliedOnly are called with True, only User-Created styles that are applied are returned.
+;                  Calling $bDisplayName with True will return a list of Style names, as the user sees them in the UI, in the same order as they are returned if $bDisplayName is False. It is best not to use these when setting Paragraph Styling.
+; Related .......:
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LO_UnitConvert($nValue, $iReturnType)
-	Local $iUM, $iMM, $iCM, $iInch
+Func __LO_StylesGetNames(ByRef $oDoc, $sStyleFamily, $bUserOnly = False, $bAppliedOnly = False, $bDisplayName = False)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LO_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
 
-	If Not IsNumber($nValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsInt($iReturnType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	Local $oStyles
+	Local $asStyles[0]
+	Local $iCount = 0
 
-	Switch $iReturnType
-		Case $__LOCONST_CONVERT_TWIPS_CM ; TWIPS TO CM
-			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
-			$iInch = ($nValue / 20 / 72)
-			; 1 Inch = 2.54 CM
-			$iCM = Round(Round($iInch * 2.54, 3), 2)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sStyleFamily) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bUserOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bAppliedOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsBool($bDisplayName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not $oDoc.StyleFamilies.hasByName($sStyleFamily) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
-			Return SetError($__LO_STATUS_SUCCESS, 1, Number($iCM))
+	$oStyles = $oDoc.StyleFamilies.getByName($sStyleFamily)
+	If Not IsObj($oStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-		Case $__LOCONST_CONVERT_TWIPS_INCH ; TWIPS to Inch
-			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
-			$iInch = ($nValue / 20 / 72)
-			$iInch = Round(Round($iInch, 3), 2)
+	ReDim $asStyles[$oStyles.getCount()]
 
-			Return SetError($__LO_STATUS_SUCCESS, 2, Number($iInch))
+	If $bUserOnly And $bAppliedOnly Then
+		For $i = 0 To $oStyles.getCount() - 1
+			If ($oStyles.getByIndex($i).isUserDefined()) And ($oStyles.getByIndex($i).isInUse()) Then
+				If $bDisplayName Then
+					$asStyles[$iCount] = $oStyles.getByIndex($i).DisplayName()
 
-		Case $__LOCONST_CONVERT_MM_UM ; Millimeter to Micrometer
-			$iUM = ($nValue * 100)
-			$iUM = Round(Round($iUM, 1))
+				Else
+					$asStyles[$iCount] = $oStyles.getByIndex($i).Name()
+				EndIf
+				$iCount += 1
+			EndIf
 
-			Return SetError($__LO_STATUS_SUCCESS, 3, Number($iUM))
+			Sleep((IsInt($i / $__LOCONST_SLEEP_DIV) ? (10) : (0)))
+		Next
 
-		Case $__LOCONST_CONVERT_UM_MM ; Micrometer to Millimeter
-			$iMM = ($nValue / 100)
-			$iMM = Round(Round($iMM, 3), 2)
+		ReDim $asStyles[$iCount]
 
-			Return SetError($__LO_STATUS_SUCCESS, 4, Number($iMM))
+	ElseIf $bUserOnly Then
+		For $i = 0 To $oStyles.getCount() - 1
+			If $oStyles.getByIndex($i).isUserDefined() Then
+				If $bDisplayName Then
+					$asStyles[$iCount] = $oStyles.getByIndex($i).DisplayName()
 
-		Case $__LOCONST_CONVERT_CM_UM ; Centimeter to Micrometer
-			$iUM = ($nValue * 1000)
-			$iUM = Round(Round($iUM, 1))
+				Else
+					$asStyles[$iCount] = $oStyles.getByIndex($i).Name()
+				EndIf
+				$iCount += 1
+			EndIf
 
-			Return SetError($__LO_STATUS_SUCCESS, 5, Int($iUM))
+			Sleep((IsInt($i / $__LOCONST_SLEEP_DIV) ? (10) : (0)))
+		Next
 
-		Case $__LOCONST_CONVERT_UM_CM ; Micrometer to Centimeter
-			$iCM = ($nValue / 1000)
-			$iCM = Round(Round($iCM, 3), 2)
+		ReDim $asStyles[$iCount]
 
-			Return SetError($__LO_STATUS_SUCCESS, 6, Number($iCM))
+	ElseIf $bAppliedOnly Then
+		For $i = 0 To $oStyles.getCount() - 1
+			If $oStyles.getByIndex($i).isInUse() Then
+				If $bDisplayName Then
+					$asStyles[$iCount] = $oStyles.getByIndex($i).DisplayName()
 
-		Case $__LOCONST_CONVERT_INCH_UM ; Inch to Micrometer
-			; 1 Inch - 2.54 Cm; Micrometer = 1/1000 CM
-			$iUM = ($nValue * 2.54) * 1000 ; + .0055
-			$iUM = Round(Round($iUM, 1))
+				Else
+					$asStyles[$iCount] = $oStyles.getByIndex($i).Name()
+				EndIf
+				$iCount += 1
+			EndIf
 
-			Return SetError($__LO_STATUS_SUCCESS, 7, Int($iUM))
+			Sleep((IsInt($i / $__LOCONST_SLEEP_DIV) ? (10) : (0)))
+		Next
 
-		Case $__LOCONST_CONVERT_UM_INCH ; Micrometer to Inch
-			; 1 Inch - 2.54 Cm; Micrometer = 1/1000 CM
-			$iInch = ($nValue / 1000) / 2.54 ; + .0055
-			$iInch = Round(Round($iInch, 3), 2)
+		ReDim $asStyles[$iCount]
 
-			Return SetError($__LO_STATUS_SUCCESS, 8, $iInch)
+	Else ; Get all Styles.
+		For $i = 0 To $oStyles.getCount() - 1
+			If $bDisplayName Then
+				$asStyles[$i] = $oStyles.getByIndex($i).DisplayName()
 
-		Case $__LOCONST_CONVERT_TWIPS_UM ; TWIPS to MicroMeter
-			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
-			$iInch = (($nValue / 20) / 72)
-			$iInch = Round(Round($iInch, 3), 2)
-			; 1 Inch - 25.4 MM; Micrometer = 1/100 MM
-			$iUM = Round($iInch * 25.4 * 100)
+			Else
+				$asStyles[$i] = $oStyles.getByIndex($i).Name()
+			EndIf
 
-			Return SetError($__LO_STATUS_SUCCESS, 9, Int($iUM))
+			Sleep((IsInt($i / $__LOCONST_SLEEP_DIV) ? (10) : (0)))
+		Next
+	EndIf
 
-		Case $__LOCONST_CONVERT_PT_UM
-			; 1 pt = 35 uM
-
-			Return ($nValue = 0) ? (SetError($__LO_STATUS_SUCCESS, 10, 0)) : (SetError($__LO_STATUS_SUCCESS, 10, Round(($nValue * 35.2778))))
-
-		Case $__LOCONST_CONVERT_UM_PT
-
-			Return ($nValue = 0) ? (SetError($__LO_STATUS_SUCCESS, 11, 0)) : (SetError($__LO_STATUS_SUCCESS, 11, Round(($nValue / 35.2778), 2)))
-
-		Case Else
-
-			Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	EndSwitch
-EndFunc   ;==>__LO_UnitConvert
+	Return SetError($__LO_STATUS_SUCCESS, 1, $asStyles)
+EndFunc   ;==>__LO_StylesGetNames
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LO_VarsAreNull
@@ -888,7 +891,7 @@ EndFunc   ;==>__LO_VarsAreNull
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Current L.O. Version.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Success. If the Current L.O. version is higher than or equal to the required version, then True is returned, else False.
+;                  @Error 0 @Extended 0 Return Boolean = Success. If the Current L.O. version is greater than or equal to the required version, then True is returned, else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:

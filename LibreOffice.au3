@@ -4,13 +4,13 @@
 #include "LibreOffice_Helper.au3"
 #include "LibreOfficeWriter.au3"
 #include "LibreOfficeCalc.au3"
-;~ #include "LibreOfficeDraw.au3" - not supported yet
+#include "LibreOfficeBase.au3"
 
 ; #INDEX# =======================================================================================================================
 ; Title .........: LibreOffice UDF
 ; AutoIt Version : v3.3.16.1
 ; UDF Version    : 0.9.1
-; Description ...: Provides basic functionality through AutoIt for interacting with Libre Office.
+; Description ...: Provides basic functionality through AutoIt for interacting with LibreOffice.
 ; Author(s) .....: donnyh13, mLipok
 ; Dll ...........:
 ;
